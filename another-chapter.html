@@ -38,8 +38,8 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="distributions.html">
-<link rel="next" href="data-frames.html">
+<link rel="prev" href="r2.html">
+
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -166,121 +166,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="programming-basics" class="section level1">
-<h1><span class="header-section-number">Chapter 7</span> Programming Basics</h1>
-<div id="logical-operators" class="section level2">
-<h2><span class="header-section-number">7.1</span> Logical Operators</h2>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Operator</th>
-<th align="left">Summary</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><code>&lt;</code></td>
-<td align="left">Less than</td>
-</tr>
-<tr class="even">
-<td align="left"><code>&gt;</code></td>
-<td align="left">Greater than</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>&lt;=</code></td>
-<td align="left">Less than or equal to</td>
-</tr>
-<tr class="even">
-<td align="left"><code>&gt;=</code></td>
-<td align="left">Greater than or equal to</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>==</code></td>
-<td align="left">Equal to</td>
-</tr>
-<tr class="even">
-<td align="left"><code>!=</code></td>
-<td align="left">Not equal to</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>!x</code></td>
-<td align="left">NOT x</td>
-</tr>
-<tr class="even">
-<td align="left"><code>x | y</code></td>
-<td align="left">x OR y</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>x &amp; y</code></td>
-<td align="left">x AND y</td>
-</tr>
-</tbody>
-</table>
-<p>In <code>R</code>, logical operators are vectorized.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">heights &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">110</span>, <span class="dv">120</span>, <span class="dv">115</span>, <span class="dv">136</span>, <span class="dv">205</span>, <span class="dv">156</span>, <span class="dv">175</span>)
-weights &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">64</span>, <span class="dv">67</span>, <span class="dv">62</span>, <span class="dv">60</span>, <span class="dv">77</span>, <span class="dv">70</span>, <span class="dv">66</span>)
-heights &lt;<span class="st"> </span><span class="dv">121</span> |<span class="st"> </span>heights ==<span class="st"> </span><span class="dv">156</span></code></pre></div>
-<pre><code>## [1]  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">weights[heights &gt;<span class="st"> </span><span class="dv">150</span>]</code></pre></div>
-<pre><code>## [1] 77 70 66</code></pre>
-<p>In <code>R</code>, the if/else syntax is:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">if (...) {
-  some R code
-} else {
-  more R code
-}</code></pre></div>
-<p>For example,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">1</span>
-y &lt;-<span class="st"> </span><span class="dv">3</span>
-if (x &gt;<span class="st"> </span>y) {
-  z &lt;-<span class="st"> </span>x *<span class="st"> </span>y
-  <span class="kw">print</span>(<span class="st">&quot;x is larger than y&quot;</span>)
-} else {
-  z &lt;-<span class="st"> </span>x +<span class="st"> </span><span class="dv">5</span> *<span class="st"> </span>y
-  <span class="kw">print</span>(<span class="st">&quot;x is less than or equal to y&quot;</span>)
-}</code></pre></div>
-<pre><code>## [1] &quot;x is less than or equal to y&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z</code></pre></div>
-<pre><code>## [1] 16</code></pre>
-<p>TODO: ifelse</p>
-<p>Now a <code>for</code> loop example,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">11</span>:<span class="dv">15</span>
-for (i in <span class="dv">1</span>:<span class="dv">5</span>) {
-  x[i] &lt;-<span class="st"> </span>x[i] +<span class="st"> </span><span class="dv">1</span>
-}
+<div id="another-chapter" class="section level1">
+<h1><span class="header-section-number">Chapter 23</span> Another Chapter</h1>
 
-x</code></pre></div>
-<pre><code>## [1] 12 13 14 15 16</code></pre>
-<p>Note that this <code>for</code> loop is very normal in many programming languages, but not in <code>R</code>. In <code>R</code> we would not use a loop, instead we would simply use a vectorized operation:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">11</span>:<span class="dv">15</span>
-x &lt;-<span class="st"> </span>x +<span class="st"> </span><span class="dv">1</span>
-x</code></pre></div>
-<pre><code>## [1] 12 13 14 15 16</code></pre>
-<p>Lastly, we can write our own functions in <code>R</code>. For example,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">standardize &lt;-<span class="st"> </span>function(x) {
-  m &lt;-<span class="st"> </span><span class="kw">mean</span>(x)
-  std &lt;-<span class="st"> </span><span class="kw">sd</span>(x)
-  result &lt;-<span class="st"> </span>(x -<span class="st"> </span>m) /<span class="st"> </span>std
-  result
-}
-  
-x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">2</span>, <span class="dv">25</span>)
-<span class="kw">standardize</span>(x)</code></pre></div>
-<pre><code>##  [1]  0.4584618 -0.5404380 -0.5226300 -0.6944174  0.1746983
-##  [6] -0.9352976  1.8752665  0.6982227 -1.4190243  0.9051582</code></pre>
-<p><br />
-<br />
- TODO: function with arguments, control flow, if based return, how return works</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_sd &lt;-<span class="st"> </span>function(y, <span class="dt">biased =</span> <span class="ot">FALSE</span>) {
-  n &lt;-<span class="st"> </span><span class="kw">length</span>(y)
-  if (biased) {
-    std &lt;-<span class="st"> </span><span class="kw">sqrt</span>((<span class="dv">1</span> /<span class="st"> </span>n) *<span class="st"> </span><span class="kw">sum</span>((y -<span class="st"> </span><span class="kw">mean</span>(y)) ^<span class="st"> </span><span class="dv">2</span>))
-  } else {
-    std &lt;-<span class="st"> </span><span class="kw">sqrt</span>((<span class="dv">1</span> /<span class="st"> </span>(n -<span class="st"> </span><span class="dv">1</span>)) *<span class="st"> </span><span class="kw">sum</span>((y -<span class="st"> </span><span class="kw">mean</span>(y)) ^<span class="st"> </span><span class="dv">2</span>))
-  }
-  std
-}</code></pre></div>
-<p>TODO: Potentially save this for the SLR document, since it is already somewhat there.</p>
+<div id="refs" class="references">
+
 </div>
 </div>
             </section>
@@ -288,8 +178,8 @@ x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">1
           </div>
         </div>
       </div>
-<a href="distributions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="data-frames.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="r2.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -316,7 +206,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/daviddalpiaz/appliedstats/edit/master/02-r-intro.Rmd",
+"link": "https://github.com/daviddalpiaz/appliedstats/edit/master/04-slr-inf.Rmd",
 "text": null
 },
 "download": null,
