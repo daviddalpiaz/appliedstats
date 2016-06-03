@@ -38,8 +38,8 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="index.html">
-<link rel="next" href="introduction.html">
+<link rel="prev" href="introduction.html">
+<link rel="next" href="inference-for-simple-linear-regressino.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -169,10 +169,118 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="the-world-of-applied-statistics" class="section level1">
-<h1><span class="header-section-number">Chapter 2</span> The World of Applied Statistics</h1>
-<div id="subheader" class="section level2">
-<h2><span class="header-section-number">2.1</span> Subheader</h2>
+<div id="simple-linear-regression" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Simple Linear Regression</h1>
+<blockquote>
+<p>“All models are wrong, but some are useful.”<br />
+ - <strong>George E. P. Box</strong></p>
+</blockquote>
+<div id="motivating-example" class="section level2">
+<h2><span class="header-section-number">4.1</span> Motivating Example</h2>
+<p>Suppose you are the owner of the <em>Momma Leona’s Pizza</em>, a restaurant chain located near several college campuses. You currently own 10 stores and have data on the size of the student population as well as quarterly sales for each. Your data is summarized in the table below.</p>
+<table style="width:128%;">
+<colgroup>
+<col width="25%" />
+<col width="52%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Restaurant, <span class="math inline">\(i\)</span></th>
+<th align="left">Student Population,<br> <span class="math inline">\(x_i\)</span>, in 1000s</th>
+<th align="left">Quarterly Sales,<br> <span class="math inline">\(y_i\)</span>, in $1000s</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left">2</td>
+<td align="left">58</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">6</td>
+<td align="left">105</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left">8</td>
+<td align="left">88</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">8</td>
+<td align="left">118</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">12</td>
+<td align="left">117</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">16</td>
+<td align="left">137</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="left">20</td>
+<td align="left">157</td>
+</tr>
+<tr class="even">
+<td align="left">8</td>
+<td align="left">20</td>
+<td align="left">169</td>
+</tr>
+<tr class="odd">
+<td align="left">9</td>
+<td align="left">22</td>
+<td align="left">149</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="left">26</td>
+<td align="left">202</td>
+</tr>
+</tbody>
+</table>
+<p>How can you use this data to</p>
+<ul>
+<li>Explain relationship</li>
+<li>Predict</li>
+</ul>
+<p>One tool will do both, LINEAR REGRESSION</p>
+</div>
+<div id="wh___-s" class="section level2">
+<h2><span class="header-section-number">4.2</span> WH___ ?s</h2>
+</div>
+<div id="model" class="section level2">
+<h2><span class="header-section-number">4.3</span> Model</h2>
+</div>
+<div id="what-is-the-best-line" class="section level2">
+<h2><span class="header-section-number">4.4</span> What is the Best Line?</h2>
+<p>historical, easy math</p>
+</div>
+<div id="least-squares-approach" class="section level2">
+<h2><span class="header-section-number">4.5</span> Least Squares Approach</h2>
+</div>
+<div id="mle-approach" class="section level2">
+<h2><span class="header-section-number">4.6</span> MLE Approach</h2>
+</div>
+<div id="example" class="section level2">
+<h2><span class="header-section-number">4.7</span> Example</h2>
+</div>
+<div id="r" class="section level2">
+<h2><span class="header-section-number">4.8</span> <code>R</code></h2>
+</div>
+<div id="decomposition" class="section level2">
+<h2><span class="header-section-number">4.9</span> Decomposition</h2>
+</div>
+<div id="r2" class="section level2">
+<h2><span class="header-section-number">4.10</span> <span class="math inline">\(R^2\)</span></h2>
+<p><span class="math display">\[
+\sum_{i=1}^{n}(y_i - \bar{y})^2 = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2
+\]</span></p>
 
 </div>
 </div>
@@ -181,8 +289,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="introduction.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="inference-for-simple-linear-regressino.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -209,7 +317,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/daviddalpiaz/appliedstats/edit/master/01-world.Rmd",
+"link": "https://github.com/daviddalpiaz/appliedstats/edit/master/03-slr.rmd",
 "text": null
 },
 "download": null,
