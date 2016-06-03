@@ -38,8 +38,8 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="the-world-of-applied-statistics.html">
+<link rel="prev" href="hypothesis-tests-in-r.html">
+<link rel="next" href="motivating-example.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -165,23 +165,113 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Applied Statistics</h1>
-<h4 class="author"><em>David Dalpiaz</em></h4>
-<h4 class="date"><em>2016-06-03</em></h4>
-</div>
-<div id="preface" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Preface</h1>
-<p>Fill me in later</p>
+<div id="simulation-in-r" class="section level1">
+<h1><span class="header-section-number">Chapter 14</span> Simulation in <code>R</code></h1>
+<p><br />
+<br />
+</p>
+<div id="paired-differences" class="section level2">
+<h2><span class="header-section-number">14.1</span> Paired Differences</h2>
+<p>Consider the model:</p>
+<p><span class="math display">\[
+\begin{split}
+X_{11}, X_{12}, \ldots, X_{1n} \sim N(\mu_1,\sigma^2)\\
+X_{21}, X_{22}, \ldots, X_{2n} \sim N(\mu_2,\sigma^2)
+\end{split}
+\]</span></p>
+<p>Assume that <span class="math inline">\(\mu_1 = 6\)</span>, <span class="math inline">\(\mu_2 = 5\)</span>, <span class="math inline">\(\sigma^2 = 4\)</span> and <span class="math inline">\(n = 25\)</span>.</p>
+<p>Let <span class="math inline">\(\bar{X_1} = \displaystyle\frac{1}{n}\sum_{i=1}^{n}X_{1i}\)</span>, <span class="math inline">\(\bar{X_2} = \displaystyle\frac{1}{n}\sum_{i=1}^{n}X_{2i}\)</span> and <span class="math inline">\(D = \bar{X_1} - \bar{X_2}.\)</span></p>
+<p><strong>Find <span class="math inline">\(P(0 &lt; D &lt; 2)\)</span>.</strong></p>
+<p><span class="math display">\[
+D = \bar{X_1} - \bar{X_2} \sim N\left(\mu_1-\mu_2, \displaystyle\frac{\sigma^2}{n}+\displaystyle\frac{\sigma^2}{n}\right) = N\left(6-5, \displaystyle\frac{4}{25}+\displaystyle\frac{4}{25}\right)
+\]</span></p>
+<p>So,</p>
+<p><span class="math display">\[
+D \sim N(1, 0.32)
+\]</span></p>
+<p>Thus,</p>
+<p><span class="math display">\[
+P(0 &lt; D &lt; 2) = P ( – 1.77 &lt; Z &lt; 1.77 )  =  0.9616  - 0.0384  =  0.9232.
+\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z &lt;-<span class="st"> </span><span class="dv">1</span> /<span class="st"> </span><span class="kw">sqrt</span>(<span class="fl">0.32</span>)
+<span class="kw">pnorm</span>(z) -<span class="st"> </span><span class="kw">pnorm</span>(-z)</code></pre></div>
+<pre><code>## [1] 0.9229001</code></pre>
+<p><strong>Empirical distribution of <span class="math inline">\(D\)</span></strong></p>
+<p>Generate <span class="math inline">\(S = 1000\)</span> datasets for each of group 1 and group 2. For each of the <span class="math inline">\(s = 1 : 1000\)</span> datasets, compute <span class="math inline">\(d_s = \bar{x}_{1s} - \bar{x}_{2s}\)</span>. Make a histogram for the <span class="math inline">\(1000\)</span> values of <span class="math inline">\(d\)</span>. What is the proportion of values of <span class="math inline">\(d\)</span> (among the 1000 values of <span class="math inline">\(d\)</span> generated) that are between 0 and 2?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
+sampleSize &lt;-<span class="st"> </span><span class="dv">25</span>
+mu1 &lt;-<span class="st"> </span><span class="dv">6</span>
+mu2 &lt;-<span class="st"> </span><span class="dv">5</span>
+std &lt;-<span class="st"> </span><span class="dv">2</span>
 
+samples &lt;-<span class="st"> </span><span class="dv">1000</span>
+count &lt;-<span class="st"> </span><span class="dv">0</span>
+differences &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>:samples)
+
+for (i in <span class="dv">1</span>:samples) {
+  x1 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(sampleSize, mu1, std)
+  x2 &lt;-<span class="st"> </span><span class="kw">rnorm</span>(sampleSize, mu2, std)
+  differences[i] &lt;-<span class="st"> </span><span class="kw">mean</span>(x1) -<span class="st"> </span><span class="kw">mean</span>(x2)
+  if ((differences[i] &gt;<span class="st"> </span><span class="dv">0</span>) &amp;<span class="st"> </span>(differences[i] &lt;<span class="st"> </span><span class="dv">2</span>)) {
+  count &lt;-<span class="st"> </span>count +<span class="st"> </span><span class="dv">1</span>
+  }
+}
+
+count /<span class="st"> </span>samples</code></pre></div>
+<pre><code>## [1] 0.923</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(<span class="dv">0</span> &lt;<span class="st"> </span>differences &amp;<span class="st"> </span>differences &lt;<span class="st"> </span><span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] 0.923</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(differences, <span class="dt">breaks =</span> <span class="dv">20</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(differences)
+<span class="kw">qqline</span>(differences)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-38-2.png" width="672" /></p>
+</div>
+<div id="distribution-of-barx" class="section level2">
+<h2><span class="header-section-number">14.2</span> Distribution of <span class="math inline">\(\bar{x}\)</span></h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sampleSize &lt;-<span class="st"> </span><span class="dv">50</span>
+mu &lt;-<span class="st"> </span><span class="dv">10</span>
+samples &lt;-<span class="st"> </span><span class="dv">100000</span>
+xBar &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, samples)
+
+for(i in <span class="dv">1</span>:samples){
+  xBar[i] &lt;-<span class="st"> </span><span class="kw">mean</span>(<span class="kw">rpois</span>(sampleSize, <span class="dt">lambda =</span> mu))
+}
+
+<span class="kw">hist</span>(xBar, <span class="dt">breaks =</span> <span class="dv">50</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">mean</span>(xBar), mu)</code></pre></div>
+<pre><code>## [1] 10.00015 10.00000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">sd</span>(xBar), <span class="kw">sqrt</span>(mu) /<span class="st"> </span><span class="kw">sqrt</span>(sampleSize))</code></pre></div>
+<pre><code>## [1] 0.4470015 0.4472136</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(xBar &gt;<span class="st"> </span>mu -<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span><span class="kw">sqrt</span>(mu) /<span class="st"> </span><span class="kw">sqrt</span>(sampleSize) &amp;
+<span class="st">       </span>xBar &lt;<span class="st"> </span>mu +<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span><span class="kw">sqrt</span>(mu) /<span class="st"> </span><span class="kw">sqrt</span>(sampleSize))</code></pre></div>
+<pre><code>## [1] 0.95389</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">histgm &lt;-<span class="st"> </span><span class="kw">hist</span>(xBar, <span class="dt">breaks =</span> <span class="dv">50</span>, <span class="dt">plot =</span> <span class="ot">FALSE</span>)
+<span class="kw">plot</span>(
+  histgm,
+  <span class="dt">col =</span> <span class="kw">ifelse</span>(
+    histgm$breaks &gt;<span class="st"> </span>mu -<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span><span class="kw">sqrt</span>(mu) /<span class="st"> </span><span class="kw">sqrt</span>(sampleSize) &amp;
+<span class="st">      </span>histgm$breaks &lt;<span class="st"> </span>mu +<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span><span class="kw">sqrt</span>(mu) /<span class="st"> </span><span class="kw">sqrt</span>(sampleSize),
+    <span class="st">&quot;red&quot;</span>,
+    <span class="st">&quot;gray50&quot;</span>
+  )
+)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-39-2.png" width="672" /></p>
+
+<blockquote>
+<p>“All models are wrong, but some are useful.”<br />
+ - <strong>George E. P. Box</strong></p>
+</blockquote>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="the-world-of-applied-statistics.html" class="navigation navigation-next navigation-unique" aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="hypothesis-tests-in-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="motivating-example.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -208,7 +298,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/daviddalpiaz/appliedstats/edit/master/index.Rmd",
+"link": "https://github.com/daviddalpiaz/appliedstats/edit/master/02-r_intro.rmd",
 "text": null
 },
 "download": null,

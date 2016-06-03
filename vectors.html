@@ -38,8 +38,8 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="the-world-of-applied-statistics.html">
+<link rel="prev" href="getting-help.html">
+<link rel="next" href="matrix-calculations.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -165,23 +165,54 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Applied Statistics</h1>
-<h4 class="author"><em>David Dalpiaz</em></h4>
-<h4 class="date"><em>2016-06-03</em></h4>
-</div>
-<div id="preface" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Preface</h1>
-<p>Fill me in later</p>
-
+<div id="vectors" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Vectors</h1>
+<p>Many operations in <code>R</code> make heavy use of vectors. Note that vectors in <code>R</code> are indexed starting at 1.</p>
+<p>TODO: Note about [1] in output. Ouput a big vector?</p>
+<p>TODO: make a vector TODO: assignment</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>)
+x</code></pre></div>
+<pre><code>## [1] 1 3 5 7 8 9</code></pre>
+<p>TODO: vector sequence</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">20</span>
+y</code></pre></div>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20</code></pre>
+<p>TODO: fine control sequence TODO: directly output</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(z &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="fl">0.1</span>))</code></pre></div>
+<pre><code>##  [1] 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0</code></pre>
+<p>TODO: add <code>rep</code></p>
+<p>TODO: Accessing elements</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x</code></pre></div>
+<pre><code>## [1] 1 3 5 7 8 9</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x[<span class="dv">3</span>]</code></pre></div>
+<pre><code>## [1] 5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x[<span class="dv">1</span>:<span class="dv">3</span>]</code></pre></div>
+<pre><code>## [1] 1 3 5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x[-<span class="dv">2</span>]</code></pre></div>
+<pre><code>## [1] 1 5 7 8 9</code></pre>
+<p>One of the biggest strengths of <code>R</code> is its use of vectorized operations. (Frequently the lack of understanding of this concept leads of a belief that <code>R</code> is <em>slow</em>. <code>R</code> isn’t the fastest language, but it has a reputation for being slower than it really is.)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</span>
+x +<span class="st"> </span><span class="dv">1</span></code></pre></div>
+<pre><code>##  [1]  2  3  4  5  6  7  8  9 10 11</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span> *<span class="st"> </span>x</code></pre></div>
+<pre><code>##  [1]  2  4  6  8 10 12 14 16 18 20</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span> ^<span class="st"> </span>x</code></pre></div>
+<pre><code>##  [1]    2    4    8   16   32   64  128  256  512 1024</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(x)</code></pre></div>
+<pre><code>##  [1] 1.000000 1.414214 1.732051 2.000000 2.236068 2.449490
+##  [7] 2.645751 2.828427 3.000000 3.162278</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">log</span>(x)</code></pre></div>
+<pre><code>##  [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595
+##  [7] 1.9459101 2.0794415 2.1972246 2.3025851</code></pre>
+<p>We see that when a function like <code>log()</code> is called on a vector <code>x</code>, a vector is returned which has applied the function to each element of the vector <code>x</code>.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="the-world-of-applied-statistics.html" class="navigation navigation-next navigation-unique" aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="getting-help.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="matrix-calculations.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -208,7 +239,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/daviddalpiaz/appliedstats/edit/master/index.Rmd",
+"link": "https://github.com/daviddalpiaz/appliedstats/edit/master/02-r_intro.rmd",
 "text": null
 },
 "download": null,

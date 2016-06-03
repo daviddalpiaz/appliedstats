@@ -38,8 +38,8 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="the-world-of-applied-statistics.html">
+<link rel="prev" href="matrix-calculations.html">
+<link rel="next" href="programming-basics.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -165,23 +165,78 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Applied Statistics</h1>
-<h4 class="author"><em>David Dalpiaz</em></h4>
-<h4 class="date"><em>2016-06-03</em></h4>
-</div>
-<div id="preface" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Preface</h1>
-<p>Fill me in later</p>
-
+<div id="distributions" class="section level1">
+<h1><span class="header-section-number">Chapter 8</span> Distributions</h1>
+<p>When working with different statistical distributions, we often want to make probabilistic statements based on the distribution.</p>
+<p>We typically want to know one of four things:</p>
+<ul>
+<li>The density (pdf) value at a particular value of <code>x</code>.</li>
+<li>The distribution (cdf) value at a particular value of <code>x</code>.</li>
+<li>The quantile <code>x</code> value corresponding to a particular probability.</li>
+<li>A random value from a particular distribution.</li>
+</ul>
+<p>This used to be done with statistical tables printed in the back of textbooks. Now, R has functions for obtaining density, distribution, quantile and random values.</p>
+<p>The general naming structure of the relevant R functions is:</p>
+<ul>
+<li><code>dname</code> calculates density (pdf) value at input <code>x</code>.</li>
+<li><code>pname</code> calculates distribution (cdf) value at input <code>x</code>.</li>
+<li><code>qname</code> calculates quantile <code>x</code> value at input probability.</li>
+<li><code>rname</code> generates a random value from a particular distribution.</li>
+</ul>
+<p>Note that <code>name</code> represents the name of the given distribution.</p>
+<p>For example, to calculate the value of the pdf for a <span class="math inline">\(N(2, 25)\)</span> for <code>x = 3</code>, use:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dnorm</span>(<span class="dv">3</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</code></pre></div>
+<pre><code>## [1] 0.07820854</code></pre>
+<p>Or, to calculate the value of the cdf for a <span class="math inline">\(N(2, 25)\)</span> for <code>x = 3</code>, use:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pnorm</span>(<span class="dv">3</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</code></pre></div>
+<pre><code>## [1] 0.5792597</code></pre>
+<p>Or, to calculate the quantile for probability 0.975, use:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qnorm</span>(<span class="fl">0.975</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</code></pre></div>
+<pre><code>## [1] 11.79982</code></pre>
+<p>Lastly, to generate a random sample of size <code>n = 10</code>, use:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</code></pre></div>
+<pre><code>##  [1] -1.9490611 -0.7558020  5.0083353  0.6904022  3.9405849
+##  [6]  3.8643033 -8.2163738 -3.7887468  0.1956914 -2.1820998</code></pre>
+<p>These functions exist for many other distributions, including but not limited to:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Command</th>
+<th align="left">Distribution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>*binom</code></td>
+<td align="left">Binomial</td>
+</tr>
+<tr class="even">
+<td align="left"><code>*t</code></td>
+<td align="left">t</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>*pois</code></td>
+<td align="left">Poisson</td>
+</tr>
+<tr class="even">
+<td align="left"><code>*f</code></td>
+<td align="left">F</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>*chisq</code></td>
+<td align="left">Chi-Squared</td>
+</tr>
+</tbody>
+</table>
+<p>Where <code>*</code> can be <code>d</code>, <code>p</code>, <code>q</code>, and <code>r</code>.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="the-world-of-applied-statistics.html" class="navigation navigation-next navigation-unique" aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="matrix-calculations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="programming-basics.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -208,7 +263,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/daviddalpiaz/appliedstats/edit/master/index.Rmd",
+"link": "https://github.com/daviddalpiaz/appliedstats/edit/master/02-r_intro.rmd",
 "text": null
 },
 "download": null,

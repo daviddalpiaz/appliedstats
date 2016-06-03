@@ -38,8 +38,8 @@ MathJax.Hub.Config({
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="the-world-of-applied-statistics.html">
+<link rel="prev" href="vectors.html">
+<link rel="next" href="distributions.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -165,23 +165,162 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Applied Statistics</h1>
-<h4 class="author"><em>David Dalpiaz</em></h4>
-<h4 class="date"><em>2016-06-03</em></h4>
-</div>
-<div id="preface" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Preface</h1>
-<p>Fill me in later</p>
-
+<div id="matrix-calculations" class="section level1">
+<h1><span class="header-section-number">Chapter 7</span> Matrix Calculations</h1>
+<p><code>R</code> can also be used for matrix calculations. Matrices can be created using the <code>matrix</code> function.</p>
+<p>TODO: matrix all same “data”&quot; type. “order matters”. has rows and columns</p>
+<p>By default the <code>matrix</code> function reorders a vector into columns, but we can also tell <code>R</code> to use rows instead.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">9</span>
+x</code></pre></div>
+<pre><code>## [1] 1 2 3 4 5 6 7 8 9</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X &lt;-<span class="st"> </span><span class="kw">matrix</span>(x, <span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">ncol =</span> <span class="dv">3</span>)
+X</code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    4    7
+## [2,]    2    5    8
+## [3,]    3    6    9</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Y &lt;-<span class="st"> </span><span class="kw">matrix</span>(x, <span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
+Y</code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    2    3
+## [2,]    4    5    6
+## [3,]    7    8    9</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Z &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">4</span>)
+Z</code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    0    0    0    0
+## [2,]    0    0    0    0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X</code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    4    7
+## [2,]    2    5    8
+## [3,]    3    6    9</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X[<span class="dv">1</span>, <span class="dv">2</span>]</code></pre></div>
+<pre><code>## [1] 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X[<span class="dv">1</span>, ]</code></pre></div>
+<pre><code>## [1] 1 4 7</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X[, <span class="dv">2</span>]</code></pre></div>
+<pre><code>## [1] 4 5 6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X[<span class="dv">2</span>, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</code></pre></div>
+<pre><code>## [1] 2 8</code></pre>
+<p>Matrices can also be created by combining vectors as columns, using <code>cbind</code> or combining vectors as rows using <code>rbind</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">9</span>
+<span class="kw">rev</span>(x)</code></pre></div>
+<pre><code>## [1] 9 8 7 6 5 4 3 2 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>)</code></pre></div>
+<pre><code>## [1] 1 1 1 1 1 1 1 1 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cbind</span>(x, <span class="kw">rev</span>(x), <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>))</code></pre></div>
+<pre><code>##       x    
+##  [1,] 1 9 1
+##  [2,] 2 8 1
+##  [3,] 3 7 1
+##  [4,] 4 6 1
+##  [5,] 5 5 1
+##  [6,] 6 4 1
+##  [7,] 7 3 1
+##  [8,] 8 2 1
+##  [9,] 9 1 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rbind</span>(x, <span class="kw">rev</span>(x), <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>))</code></pre></div>
+<pre><code>##   [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9]
+## x    1    2    3    4    5    6    7    8    9
+##      9    8    7    6    5    4    3    2    1
+##      1    1    1    1    1    1    1    1    1</code></pre>
+<p><code>R</code> can then be used to perform matrix calculations.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="dv">1</span>:<span class="dv">9</span>
+y &lt;-<span class="st"> </span><span class="dv">9</span>:<span class="dv">1</span>
+X &lt;-<span class="st"> </span><span class="kw">matrix</span>(x, <span class="dv">3</span>, <span class="dv">3</span>)
+Y &lt;-<span class="st"> </span><span class="kw">matrix</span>(y, <span class="dv">3</span>, <span class="dv">3</span>)
+X</code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    4    7
+## [2,]    2    5    8
+## [3,]    3    6    9</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Y</code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    9    6    3
+## [2,]    8    5    2
+## [3,]    7    4    1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X +<span class="st"> </span>Y</code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]   10   10   10
+## [2,]   10   10   10
+## [3,]   10   10   10</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X -<span class="st"> </span>Y</code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]   -8   -2    4
+## [2,]   -6    0    6
+## [3,]   -4    2    8</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X *<span class="st"> </span>Y</code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    9   24   21
+## [2,]   16   25   16
+## [3,]   21   24    9</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X /<span class="st"> </span>Y</code></pre></div>
+<pre><code>##           [,1]      [,2]     [,3]
+## [1,] 0.1111111 0.6666667 2.333333
+## [2,] 0.2500000 1.0000000 4.000000
+## [3,] 0.4285714 1.5000000 9.000000</code></pre>
+<p>Note that <code>X * Y</code> is not matrix multiplication. It is element by element multiplication. (Same for <code>X / Y</code>). Instead, matrix multiplication uses <code>%*%</code>. <code>t()</code> gives the transpose of a matrix, and <code>solve()</code> returns the inverse of a matrix.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X %*%<span class="st"> </span>Y</code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]   90   54   18
+## [2,]  114   69   24
+## [3,]  138   84   30</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t</span>(X)</code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    2    3
+## [2,]    4    5    6
+## [3,]    7    8    9</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Z &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">2</span>, -<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">4</span>, -<span class="dv">2</span>, -<span class="dv">3</span>, -<span class="dv">2</span>, <span class="dv">16</span>), <span class="dv">3</span>, <span class="dt">byrow =</span> T)
+Z</code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    9    2   -3
+## [2,]    2    4   -2
+## [3,]   -3   -2   16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">solve</span>(Z)</code></pre></div>
+<pre><code>##             [,1]        [,2]       [,3]
+## [1,]  0.12931034 -0.05603448 0.01724138
+## [2,] -0.05603448  0.29094828 0.02586207
+## [3,]  0.01724138  0.02586207 0.06896552</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span>:<span class="dv">6</span>, <span class="dv">2</span>, <span class="dv">3</span>)
+X</code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    2    4    6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(X)</code></pre></div>
+<pre><code>## [1] 2 3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rowSums</span>(X)</code></pre></div>
+<pre><code>## [1]  9 12</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colSums</span>(X)</code></pre></div>
+<pre><code>## [1]  3  7 11</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rowMeans</span>(X)</code></pre></div>
+<pre><code>## [1] 3 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colMeans</span>(X)</code></pre></div>
+<pre><code>## [1] 1.5 3.5 5.5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">diag</span>(Z)</code></pre></div>
+<pre><code>## [1]  9  4 16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">diag</span>(<span class="dv">1</span>:<span class="dv">5</span>)</code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    0    0    0    0
+## [2,]    0    2    0    0    0
+## [3,]    0    0    3    0    0
+## [4,]    0    0    0    4    0
+## [5,]    0    0    0    0    5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">diag</span>(<span class="dv">5</span>)</code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    0    0    0    0
+## [2,]    0    1    0    0    0
+## [3,]    0    0    1    0    0
+## [4,]    0    0    0    1    0
+## [5,]    0    0    0    0    1</code></pre>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="the-world-of-applied-statistics.html" class="navigation navigation-next navigation-unique" aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="vectors.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="distributions.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -208,7 +347,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/daviddalpiaz/appliedstats/edit/master/index.Rmd",
+"link": "https://github.com/daviddalpiaz/appliedstats/edit/master/02-r_intro.rmd",
 "text": null
 },
 "download": null,
