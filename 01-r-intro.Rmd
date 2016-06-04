@@ -1,19 +1,20 @@
 # Introduction to `R`
 
+> "Measuring programming progress by lines of code is like measuring aircraft building progress by weight."\
+        - **Bill Gates**
+
 `R` is both a programming language and software environment for statistical computing, which is *free* and *open-source*. To get started, you will need to install two pieces of software:
 
 - `R`, the actual programming language, which can be installed from <http://cran.r-project.org/>
     - Chose your operating system, and select the most recent version. (As of writing, 3.3.0.)
 - RStudio, an excellent IDE for working with `R`, which can be obtained from <http://www.rstudio.com/> (Note, you must have `R` installed to use RStudio. RStudio is simply a way to interact with `R`.)
 
-`R`'s popularity is on the rise, and everyday it becomes a better tool for statistical analysis. It even generated this document! (A skill you will learn in this coruse.) To get started, we'll use `R` like a simple calculator. Note, in `R` the `#` symbol is used for comments. Lines which begin with two, `##` will indicate output.
-
-There are many good resoruces for learning `R`. They are not necessary for this course, but you may find them useful if you would like a deeper understanding of `R`:
+`R`'s popularity is on the rise, and everyday it becomes a better tool for statistical analysis. It even generated this book! (A skill you will learn in this coruse.) There are many good resoruces for learning `R`. They are not necessary for this course, but you may find them useful if you would like a deeper understanding of `R`:
 
 - [Try R](http://tryr.codeschool.com/) from Code School.
     - An interactive introduction to the basics of `R`. Could be very useful for getting up to speed on `R`'s syntax.
 - [The Art of `R` Programming](https://www.nostarch.com/artofr.htm) by Norman Matloff
-    - Gentle introduction to the programming side of `R`. (Whereas we will focus more on the data analysis side.) Free electronic version available through Illinois library.
+    - Gentle introduction to the programming side of `R`. (Whereas we will focus more on the data analysis side.) A free electronic version is available through the Illinois library.
 - [Advanced `R`](http://adv-r.had.co.nz/) by Hadley Wickham
     - From the author of several extremely popular `R` packages. Good follow-up to The Art of `R` Programming. (And more up-to-date material.)
 - [The R Inferno](http://www.burns-stat.com/documents/books/the-r-inferno/) by Patrick Burns
@@ -28,7 +29,7 @@ The RStudio team has developed a number of "cheatsheets" for working with both `
 
 ## Basic Calculations
 
-`R`'s most most basic function is that of a simple calculator.
+To get started, we'll use `R` like a simple calculator. Note, in `R` the `#` symbol is used for comments. Lines which begin with two, `##` will indicate output.
 
 - Addition, Subtraction, Multiplication and Division
 
@@ -83,39 +84,61 @@ In using `R` as a calculator, we have seen a number of functions. `sqrt()`, `exp
 ?lm
 ```
 
-TODO: how to ask for help
+Frequently one of the most difficult things to do when learning `R` is asking for help. First, you need to decide to ask for help, then you need to know how to ask for help. Your very first line of defense should be to google your error message or a short description of your issue. (The ability to solve problems using this method is quickly becoming an extremely valuable skill.) If that fails, and it eventually will, you should ask for help There are a number of things you should include when emailing an instructor, or posting to a help website such as http://stats.stackexchange.com/.
+
+- Describe what you expect the code to do.
+- State the end goal you are trying to acheive. (Sometimes what you expect the code to do, is not what you want to actually do.)
+- The full text of any errors you have recieved.
+- Provide enough code to recreate the error. Often for the purpose of this course, you could simply email your entire `.R` or `.Rmd` file.
+- Sometimes it is also helpful to include a screenshot of your entire RStudio window when the error occurs.
+
+If you follow these steps, you will get your issue resolved much quicker, and possibly learn more in the process.
 
 ## Vectors
 
-Many operations in `R` make heavy use of vectors. Note that vectors in `R` are indexed starting at 1.
+Many operations in `R` make heavy use of vectors. Vectors in `R` are indexed starting at 1. That is what the `[1]` in the output is indicating, that the first element of the row being displayed is the first element of the vector. Larger vectors will start additional rows with `[*]` where `*` is the index of the first element of the row.
 
-TODO: Note about [1] in output. Output a big vector?
+Possibly the most common way to create a vector in `R` is using the `c()` function, which is short for combine. As the name suggests, it combines a list of numbers separated by commas. 
 
-TODO: make a vector
-TODO: assignment
+```{r}
+c(1, 3, 5, 7, 8, 9)
+```
+
+Here `R` simply outputs this vector. If we would like to store this vector in a **variable** we can do so with the assignment operator `=`. In this case the variable `x` now holds the vector we just created, and we can access the vector by typing `x`.
 
 ```{r}
 x = c(1, 3, 5, 7, 8, 9)
 x
 ```
 
-TODO: vector sequence
+As an aside, there is a long history of the assignment operator in `R`. For simplicity we will use `=`, but know that often you will see `<-` as the assignment operator. The pros and cons of these two are well beyond the scope of this book, but know that for our purposes you will have no issue if you simply use `=`.
+
+Frequently you may wish to create a vector based on a sequence of numbers. The quickest and easiest way to do this is with the `:` operator, which creates a sequence of integers between two specified integers.
 
 ```{r}
-y = 1:20
-y
+(y = 1:100)
 ```
 
+Here we see `R` labeling the rows after the first since this is a large vector. Also, we see that by putting parentheses around the assignment, `R` both stores the vector in a variable called `y` and automatically outputs `y` to the console.
+
+If we want to create a sequence that isn't limit to 
+
 TODO: fine control sequence
-TODO: directly output
+TODO: function and arguemnts, etc. where to put?
 
 ```{r}
-(z = seq(1, 2, 0.1))
+(z = seq(from = 1, to = 2, by = 0.1))
 ```
 
 TODO: add `rep`
 
+```{r}
+rep(0.5, times = 10)
+```
 
+```{r}
+rep(x, 3)
+```
 
 TODO: Accessing elements
 
@@ -364,18 +387,31 @@ standardize(x)
 TODO: function with arguments, control flow, if based return, how return works
 
 ```{r}
-get_sd = function(y, biased = FALSE) {
-  n = length(y)
+get_sd = function(x, biased = FALSE) {
+  n = length(x)
   if (biased) {
-    std = sqrt((1 / n) * sum((y - mean(y)) ^ 2))
+    std = sqrt((1 / n) * sum((x - mean(x)) ^ 2))
   } else {
-    std = sqrt((1 / (n - 1)) * sum((y - mean(y)) ^ 2))
+    std = sqrt((1 / (n - 1)) * sum((x - mean(x)) ^ 2))
   }
   std
 }
 ```
 
+```{r}
+get_sd = function(x, biased = FALSE) {
+  n = length(x) - 1 * biased
+  sqrt((1 / n) * sum((x - mean(x)) ^ 2))
+}
+```
 
+\[
+s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
+\]
+
+\[
+\hat{\sigma} = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(x - \bar{x})^2}
+\]
 
 TODO: Potentially save this for the SLR document, since it is already somewhat there.
 
@@ -633,7 +669,7 @@ D \sim N(1, 0.32)
 Thus,
 
 \[
-P(0 < D < 2) = P ( – 1.77 < Z < 1.77 )  =  0.9616  - 0.0384  =  0.9232.
+P(0 < D < 2) = P (-1.77 < Z < 1.77 )  =  0.9616  - 0.0384  =  0.9232.
 \]
 
 ```{r}
