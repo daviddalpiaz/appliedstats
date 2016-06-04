@@ -101,14 +101,14 @@ TODO: make a vector
 TODO: assignment
 
 ```{r}
-x <- c(1, 3, 5, 7, 8, 9)
+x = c(1, 3, 5, 7, 8, 9)
 x
 ```
 
 TODO: vector sequence
 
 ```{r}
-y <- 1:20
+y = 1:20
 y
 ```
 
@@ -116,7 +116,7 @@ TODO: fine control sequence
 TODO: directly output
 
 ```{r}
-(z <- seq(1, 2, 0.1))
+(z = seq(1, 2, 0.1))
 ```
 
 TODO: add `rep`
@@ -135,7 +135,7 @@ x[-2]
 One of the biggest strengths of `R` is its use of vectorized operations. (Frequently the lack of understanding of this concept leads of a belief that `R` is *slow*. `R` isn't the fastest language, but it has a reputation for being slower than it really is.)
 
 ```{r}
-x <- 1:10
+x = 1:10
 x + 1
 2 * x
 2 ^ x
@@ -154,13 +154,13 @@ TODO: matrix all same "data"" type. "order matters". has rows and columns
 By default the `matrix` function reorders a vector into columns, but we can also tell `R` to use rows instead.
 
 ```{r}
-x <- 1:9
+x = 1:9
 x
-X <- matrix(x, nrow = 3, ncol = 3)
+X = matrix(x, nrow = 3, ncol = 3)
 X
-Y <- matrix(x, nrow = 3, ncol = 3, byrow = TRUE)
+Y = matrix(x, nrow = 3, ncol = 3, byrow = TRUE)
 Y
-Z <- matrix(0, 2, 4)
+Z = matrix(0, 2, 4)
 Z
 X
 X[1, 2]
@@ -172,7 +172,7 @@ X[2, c(1, 3)]
 Matrices can also be created by combining vectors as columns, using `cbind` or combining vectors as rows using `rbind`.
 
 ```{r}
-x <- 1:9
+x = 1:9
 rev(x)
 rep(1, 9)
 cbind(x, rev(x), rep(1, 9))
@@ -182,10 +182,10 @@ rbind(x, rev(x), rep(1, 9))
 `R` can then be used to perform matrix calculations.
 
 ```{r}
-x <- 1:9
-y <- 9:1
-X <- matrix(x, 3, 3)
-Y <- matrix(y, 3, 3)
+x = 1:9
+y = 9:1
+X = matrix(x, 3, 3)
+Y = matrix(y, 3, 3)
 X
 Y
 ```
@@ -202,10 +202,10 @@ Note that `X * Y` is not matrix multiplication. It is element by element multipl
 ```{r}
 X %*% Y
 t(X)
-Z <- matrix(c(9, 2, -3, 2, 4, -2, -3, -2, 16), 3, byrow = T)
+Z = matrix(c(9, 2, -3, 2, 4, -2, -3, -2, 16), 3, byrow = T)
 Z
 solve(Z)
-X <- matrix(1:6, 2, 3)
+X = matrix(1:6, 2, 3)
 X
 dim(X)
 rowSums(X)
@@ -298,8 +298,8 @@ Operator | Summary
 In `R`, logical operators are vectorized.
 
 ```{r}
-heights <- c(110, 120, 115, 136, 205, 156, 175)
-weights <- c(64, 67, 62, 60, 77, 70, 66)
+heights = c(110, 120, 115, 136, 205, 156, 175)
+weights = c(64, 67, 62, 60, 77, 70, 66)
 heights < 121 | heights == 156
 weights[heights > 150]
 ```
@@ -317,13 +317,13 @@ if (...) {
 For example,
 
 ```{r}
-x <- 1
-y <- 3
+x = 1
+y = 3
 if (x > y) {
-  z <- x * y
+  z = x * y
   print("x is larger than y")
 } else {
-  z <- x + 5 * y
+  z = x + 5 * y
   print("x is less than or equal to y")
 }
 
@@ -335,9 +335,9 @@ TODO: ifelse
 Now a `for` loop example,
 
 ```{r}
-x <- 11:15
+x = 11:15
 for (i in 1:5) {
-  x[i] <- x[i] + 1
+  x[i] = x[i] + 1
 }
 
 x
@@ -346,22 +346,22 @@ x
 Note that this `for` loop is very normal in many programming languages, but not in `R`. In `R` we would not use a loop, instead we would simply use a vectorized operation:
 
 ```{r}
-x <- 11:15
-x <- x + 1
+x = 11:15
+x = x + 1
 x
 ```
 
 
 Lastly, we can write our own functions in `R`. For example,
 ```{r}
-standardize <- function(x) {
-  m <- mean(x)
-  std <- sd(x)
-  result <- (x - m) / std
+standardize = function(x) {
+  m = mean(x)
+  std = sd(x)
+  result = (x - m) / std
   result
 }
   
-x <- rnorm(10, 2, 25)
+x = rnorm(10, 2, 25)
 standardize(x)
 ```
 \
@@ -370,12 +370,12 @@ standardize(x)
 TODO: function with arguments, control flow, if based return, how return works
 
 ```{r}
-get_sd <- function(y, biased = FALSE) {
-  n <- length(y)
+get_sd = function(y, biased = FALSE) {
+  n = length(y)
   if (biased) {
-    std <- sqrt((1 / n) * sum((y - mean(y)) ^ 2))
+    std = sqrt((1 / n) * sum((y - mean(y)) ^ 2))
   } else {
-    std <- sqrt((1 / (n - 1)) * sum((y - mean(y)) ^ 2))
+    std = sqrt((1 / (n - 1)) * sum((y - mean(y)) ^ 2))
   }
   std
 }
@@ -447,7 +447,7 @@ s &= \sqrt{0.0625} = \textbf{0.25}
 \]
 
 ```{r}
-x <- c(15.5, 16.2, 16.1, 15.8, 15.6, 16.0, 15.8, 15.9, 16.2)
+x = c(15.5, 16.2, 16.1, 15.8, 15.6, 16.0, 15.8, 15.9, 16.2)
 mean(x)
 sd(x)
 ```
@@ -469,7 +469,7 @@ t.test(x, alternative = c("two.sided"), conf.level = 0.95)
 
 Or if we only wanted to display the interval:
 ```{r}
-tt <- t.test(x, alternative = c("two.sided"), conf.level = 0.95)
+tt = t.test(x, alternative = c("two.sided"), conf.level = 0.95)
 tt$conf.int
 ```
 
@@ -585,18 +585,18 @@ t_{12}^{(0.025)} = 1.782< 1.82337 < t_{12}^{(0.05)} = 2.179.
 
 
 ```{r}
-x <- c(70, 82, 78, 74, 94, 82)
-y <- c(64, 72, 60, 76, 72, 80, 84, 68)
+x = c(70, 82, 78, 74, 94, 82)
+y = c(64, 72, 60, 76, 72, 80, 84, 68)
 t.test(x, y, alternative = c("greater"), var.equal = TRUE)
 ```
 
 
 Or, performing the calculations `by hand' in `R`:
 ```{r}
-sPooled2 <- ((6 - 1) * var(x) + (8 - 1) * var(y)) / (6 + 8 - 2)
+sPooled2 = ((6 - 1) * var(x) + (8 - 1) * var(y)) / (6 + 8 - 2)
 sPooled2
 
-test_stat <- (mean(x) - mean(y)) / sqrt(sPooled2 * (1 / 6 + 1 / 8))
+test_stat = (mean(x) - mean(y)) / sqrt(sPooled2 * (1 / 6 + 1 / 8))
 test_stat
 1 - pt(test_stat, 6 + 8 - 2)
 ```
@@ -643,7 +643,7 @@ P(0 < D < 2) = P ( – 1.77 < Z < 1.77 )  =  0.9616  - 0.0384  =  0.9232.
 \]
 
 ```{r}
-z <- 1 / sqrt(0.32)
+z = 1 / sqrt(0.32)
 pnorm(z) - pnorm(-z)
 ```
 
@@ -655,21 +655,21 @@ Generate  $S = 1000$ datasets for each of group 1 and group 2. For each of the  
 
 ```{r}
 set.seed(42)
-sampleSize <- 25
-mu1 <- 6
-mu2 <- 5
-std <- 2
+sampleSize = 25
+mu1 = 6
+mu2 = 5
+std = 2
 
-samples <- 1000
-count <- 0
-differences <- c(1:samples)
+samples = 1000
+count = 0
+differences = c(1:samples)
 
 for (i in 1:samples) {
-  x1 <- rnorm(sampleSize, mu1, std)
-  x2 <- rnorm(sampleSize, mu2, std)
-  differences[i] <- mean(x1) - mean(x2)
+  x1 = rnorm(sampleSize, mu1, std)
+  x2 = rnorm(sampleSize, mu2, std)
+  differences[i] = mean(x1) - mean(x2)
   if ((differences[i] > 0) & (differences[i] < 2)) {
-  count <- count + 1
+  count = count + 1
   }
 }
 
@@ -685,13 +685,13 @@ qqline(differences)
 ### Distribution of $\bar{x}$
 
 ```{r}
-sampleSize <- 50
-mu <- 10
-samples <- 100000
-xBar <- rep(0, samples)
+sampleSize = 50
+mu = 10
+samples = 100000
+xBar = rep(0, samples)
 
 for(i in 1:samples){
-  xBar[i] <- mean(rpois(sampleSize, lambda = mu))
+  xBar[i] = mean(rpois(sampleSize, lambda = mu))
 }
 
 hist(xBar, breaks = 50)
@@ -702,7 +702,7 @@ c(sd(xBar), sqrt(mu) / sqrt(sampleSize))
 mean(xBar > mu - 2 * sqrt(mu) / sqrt(sampleSize) &
        xBar < mu + 2 * sqrt(mu) / sqrt(sampleSize))
 
-histgm <- hist(xBar, breaks = 50, plot = FALSE)
+histgm = hist(xBar, breaks = 50, plot = FALSE)
 plot(
   histgm,
   col = ifelse(
