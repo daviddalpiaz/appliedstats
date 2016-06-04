@@ -428,7 +428,7 @@ TODO: read() or RStudio
 
 ## Hypothesis Tests in `R`
 
-### One Sample $t$ Test: Review
+### One Sample t-Test: Review
 
 Suppose $x_{i} \sim \mathrm{N}(\mu,\sigma^{2})$ and we want to test $H_{0}: \mu = \mu_{0}$ versus $H_{1}: \mu \neq \mu_{0}.$
 
@@ -448,7 +448,7 @@ A $100(1-\alpha)$\% CI for $\mu$ is given by
 
 where $t_{n-1}^{(\alpha/2)}$ is the critical value such that $P\left(T>t_{n-1}^{(\alpha/2)}\right)=\alpha/2$ for $n-1$ degrees of freedom.
 
-### One Sample $t$ Test: Example
+### One Sample t-Test: Example
 
 ```{r, eval = FALSE, echo = FALSE}
 # this example needs to be cleaned up
@@ -528,7 +528,7 @@ Therefore, we **do NOT reject the null hypothesis** at the $\alpha=.05$ level. W
 t.test(x, mu = 16, alternative = c("less"), conf.level = 0.95)
 ```
 
-### Two Sample $t$ Test: Review
+### Two Sample t-Test: Review
 
 Suppose $x_{i}\sim\mathrm{N}(\mu_{x},\sigma^{2})$ and $y_{i}\sim\mathrm{N}(\mu_{y},\sigma^{2}).$ 
 
@@ -550,7 +550,7 @@ A $100(1-\alpha)$\% CI for $\mu_{x}-\mu_{y}$ is given by
 
 where $t_{n+m-2}^{(\alpha/2)}$ is critical $t_{n+m-2}$ value such that $P\left(T>t_{n+m-2}^{(\alpha/2)}\right)=\alpha/2$.
 
-### Two Sample $t$ Test: Example
+### Two Sample t-Test: Example
 \
 
 Assume that the distributions of $X$ and $Y$ are $\mathrm{N}(\mu_{1},\sigma^{2})$ and $\mathrm{N}(\mu_{2},\sigma^{2})$, respectively. Given the $n = 6$ observations of $X$,
@@ -685,25 +685,21 @@ Generate  $S = 1000$ datasets for each of group 1 and group 2. For each of the  
 
 ```{r}
 set.seed(42)
-sampleSize = 25
+sample_size = 25
 mu1 = 6
 mu2 = 5
 std = 2
 
-samples = 1000
+samples = 10000
 count = 0
-differences = c(1:samples)
+differences = rep(0, samples)
 
 for (i in 1:samples) {
-  x1 = rnorm(sampleSize, mu1, std)
-  x2 = rnorm(sampleSize, mu2, std)
+  x1 = rnorm(sample_size, mu1, std)
+  x2 = rnorm(sample_size, mu2, std)
   differences[i] = mean(x1) - mean(x2)
-  if ((differences[i] > 0) & (differences[i] < 2)) {
-  count = count + 1
-  }
 }
 
-count / samples
 mean(0 < differences & differences < 2)
 
 hist(differences, breaks = 20)
@@ -712,34 +708,34 @@ qqnorm(differences)
 qqline(differences)
 ```
 
-### Distribution of $\bar{x}$
+### Distribution of a Sample Mean
 
 ```{r}
-sampleSize = 50
+set.seed(42)
+sample_size = 50
 mu = 10
 samples = 100000
-xBar = rep(0, samples)
+x_bar = rep(0, samples)
 
 for(i in 1:samples){
-  xBar[i] = mean(rpois(sampleSize, lambda = mu))
+  x_bar[i] = mean(rpois(sample_size, lambda = mu))
 }
 
-hist(xBar, breaks = 50)
+x_bar_hist = hist(x_bar, breaks = 50, 
+                  main = "Histogram of Sample Means",
+                  xlab = "Sample Means")
 
-c(mean(xBar), mu)
-c(sd(xBar), sqrt(mu) / sqrt(sampleSize))
+c(mean(x_bar), mu)
+c(sd(x_bar), sqrt(mu) / sqrt(sample_size))
 
-mean(xBar > mu - 2 * sqrt(mu) / sqrt(sampleSize) &
-       xBar < mu + 2 * sqrt(mu) / sqrt(sampleSize))
+mean(x_bar > mu - 2 * sqrt(mu) / sqrt(sample_size) &
+       x_bar < mu + 2 * sqrt(mu) / sqrt(sample_size))
 
-histgm = hist(xBar, breaks = 50, plot = FALSE)
-plot(
-  histgm,
-  col = ifelse(
-    histgm$breaks > mu - 2 * sqrt(mu) / sqrt(sampleSize) &
-      histgm$breaks < mu + 2 * sqrt(mu) / sqrt(sampleSize),
-    "red",
-    "gray50"
-  )
-)
+shading = ifelse(x_bar_hist$breaks > mu - 2 * sqrt(mu) / sqrt(sample_size) & 
+                   x_bar_hist$breaks < mu + 2 * sqrt(mu) / sqrt(sample_size),
+                  "darkorange", "dodgerblue")
+
+x_bar_hist = hist(x_bar, breaks = 50, col = shading,
+                  main = "Histogram of Sample Means, Two Standard Deviations",
+                  xlab = "Sample Means")
 ```
