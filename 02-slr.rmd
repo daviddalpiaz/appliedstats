@@ -35,15 +35,90 @@ How can you use this data to
 
 One tool will do both, LINEAR REGRESSION
 
-##  WH___ ?s
+##  History
 
 ##  Model
 
+\[
+y = f(x) + \epsilon
+\]
+
+\[
+y = \beta_0 + \beta_1 x + \epsilon
+\]
+
 ##  What is the Best Line?
+
+TODO: picture with lines
+
+\[
+\underset{\beta_0, \beta_1}{\mathrm{argmin}} \max|y_i - (\beta_0 + \beta_1 x_i)|
+\]
+
+\[
+\underset{\beta_0, \beta_1}{\mathrm{argmin}} \sum_{i = 1}^{n}|y_i - (\beta_0 + \beta_1 x_i)|
+\]
+
+\[
+\underset{\beta_0, \beta_1}{\mathrm{argmin}} \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2
+\]
 
 historical, easy math
 
+
 ##  Least Squares Approach
+
+Funciton to minimize.
+
+\[
+f(\beta_0, \beta_1) = \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2 = \sum_{i = 1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2
+\]
+
+Take derivatives.
+
+\[
+\begin{aligned}
+\frac{df}{d\beta_0} &= -2 \sum_{i = 1}^{n}(y_i - \beta_0 - \beta_1 x_i) \\
+\frac{df}{d\beta_1} &= -2 \sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i)
+\end{aligned}
+\]
+
+Set equal to zero.
+
+\[
+\begin{aligned}
+\sum_{i = 1}^{n}(y_i - \beta_0 - \beta_1 x_i) &= 0 \\
+\sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i) &= 0 
+\end{aligned}
+\]
+
+Rearrange, **normal equations**.
+
+\[
+\begin{aligned}
+\sum_{i = 1}^{n} y_i &= n \beta_0 + \beta_1 \sum_{i = 1}^{n} x_i \\
+\sum_{i = 1}^{n} x_i y_i &= \beta_0 \sum_{i = 1}^{n} x_i + \beta_1 \sum_{i = 1}^{n} x_i^2
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+\hat{\beta}_1 &= \frac{\sum_{i = 1}^{n} x_i y_i - \frac{(\sum_{i = 1}^{n} x_i)(\sum_{i = 1}^{n} y_i)}{n}}{\sum_{i = 1}^{n} x_i^2 - \frac{(\sum_{i = 1}^{n} x_i)^2}{n}} = \frac{SXY}{SXX}\\
+\hat{\beta}_0 &= \bar{y} - \hat{\beta}_1 \bar{x}
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+SXY &= \sum_{i = 1}^{n} x_i y_i - \frac{(\sum_{i = 1}^{n} x_i)(\sum_{i = 1}^{n} y_i)}{n}  = \sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y})\\
+SXX &= \sum_{i = 1}^{n} x_i^2 - \frac{(\sum_{i = 1}^{n} x_i)^2}{n}  = \sum_{i = 1}^{n}(x_i - \bar{x})^2\\
+SYY &= \sum_{i = 1}^{n} y_i^2 - \frac{(\sum_{i = 1}^{n} y_i)^2}{n}  = \sum_{i = 1}^{n}(y_i - \bar{y})^2
+\end{aligned}
+\]
+
+\[
+\hat{\beta}_1 = \frac{SXY}{SXX} = \frac{\sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i = 1}^{n}(x_i - \bar{x})^2}
+\]
 
 ##  MLE Approach
 
