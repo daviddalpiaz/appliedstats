@@ -139,7 +139,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html"><i class="fa fa-check"></i><b>3</b> Simple Linear Regression</a><ul>
 <li class="chapter" data-level="3.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#motivating-example"><i class="fa fa-check"></i><b>3.1</b> Motivating Example</a></li>
-<li class="chapter" data-level="3.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#wh___-s"><i class="fa fa-check"></i><b>3.2</b> WH___ ?s</a></li>
+<li class="chapter" data-level="3.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#history"><i class="fa fa-check"></i><b>3.2</b> History</a></li>
 <li class="chapter" data-level="3.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#model"><i class="fa fa-check"></i><b>3.3</b> Model</a></li>
 <li class="chapter" data-level="3.4" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#what-is-the-best-line"><i class="fa fa-check"></i><b>3.4</b> What is the Best Line?</a></li>
 <li class="chapter" data-level="3.5" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#least-squares-approach"><i class="fa fa-check"></i><b>3.5</b> Least Squares Approach</a></li>
@@ -190,15 +190,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul>
 <li>An interactive introduction to the basics of <code>R</code>. Could be very useful for getting up to speed on <code>R</code>’s syntax.</li>
 </ul></li>
-<li><a href="https://www.nostarch.com/artofr.htm">The Art of <code>R</code> Programming</a> by Norman Matloff
+<li><a href="https://www.nostarch.com/artofr.htm">The Art of <code>R</code> Programming</a> by Norman Matloff.
 <ul>
 <li>Gentle introduction to the programming side of <code>R</code>. (Whereas we will focus more on the data analysis side.) A free electronic version is available through the Illinois library.</li>
 </ul></li>
-<li><a href="http://adv-r.had.co.nz/">Advanced <code>R</code></a> by Hadley Wickham
+<li><a href="http://adv-r.had.co.nz/">Advanced <code>R</code></a> by Hadley Wickham.
 <ul>
 <li>From the author of several extremely popular <code>R</code> packages. Good follow-up to The Art of <code>R</code> Programming. (And more up-to-date material.)</li>
 </ul></li>
-<li><a href="http://www.burns-stat.com/documents/books/the-r-inferno/">The R Inferno</a> by Patrick Burns
+<li><a href="http://www.burns-stat.com/documents/books/the-r-inferno/">The R Inferno</a> by Patrick Burns.
 <ul>
 <li>Likens learning the tricks of <code>R</code> to descending through the levels of hell. Very advanced material, but may be important if <code>R</code> becomes a part of your everyday toolkit.</li>
 </ul></li>
@@ -513,8 +513,8 @@ X</code></pre></div>
 <pre><code>## [1] 11.79982</code></pre>
 <p>Lastly, to generate a random sample of size <code>n = 10</code>, use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</code></pre></div>
-<pre><code>##  [1]  0.4548562 -4.8375917  6.4221847  7.8046986  0.5465363
-##  [6]  4.7455085  4.0782645  6.1851531 -3.3194351 12.4302689</code></pre>
+<pre><code>##  [1]  0.9910808 -0.9145556  1.0293958 -2.5004662  0.7645474
+##  [6] -1.7663952 -7.3972296  3.8033743  1.4834999 -1.6377884</code></pre>
 <p>These functions exist for many other distributions, including but not limited to:</p>
 <table>
 <thead>
@@ -648,8 +648,8 @@ x</code></pre></div>
   
 x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">2</span>, <span class="dv">25</span>)
 <span class="kw">standardize</span>(x)</code></pre></div>
-<pre><code>##  [1] -0.9020181  1.6491119  0.3839376  1.1421558 -0.9989114
-##  [6]  1.0909098 -0.3975215 -1.0649704 -0.1990140 -0.7036797</code></pre>
+<pre><code>##  [1] -0.1586322  0.8393534  0.7776487 -0.3104351  0.1159801
+##  [6]  1.1604830 -0.7325785 -0.1634342  0.7320825 -2.2604679</code></pre>
 <p><br />
 <br />
  TODO: function with arguments, control flow, if based return, how return works</p>
@@ -914,7 +914,7 @@ for (i in <span class="dv">1</span>:samples) {
 
 <span class="kw">mean</span>(<span class="dv">0</span> &lt;<span class="st"> </span>differences &amp;<span class="st"> </span>differences &lt;<span class="st"> </span><span class="dv">2</span>)</code></pre></div>
 <pre><code>## [1] 0.9222</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(differences, <span class="dt">breaks =</span> <span class="dv">20</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(differences, <span class="dt">breaks =</span> <span class="dv">20</span>, <span class="dt">main =</span> <span class="st">&quot;Empirical Distribution of Differences&quot;</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(differences)
 <span class="kw">qqline</span>(differences)</code></pre></div>

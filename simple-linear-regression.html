@@ -139,7 +139,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li class="chapter" data-level="3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html"><i class="fa fa-check"></i><b>3</b> Simple Linear Regression</a><ul>
 <li class="chapter" data-level="3.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#motivating-example"><i class="fa fa-check"></i><b>3.1</b> Motivating Example</a></li>
-<li class="chapter" data-level="3.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#wh___-s"><i class="fa fa-check"></i><b>3.2</b> WH___ ?s</a></li>
+<li class="chapter" data-level="3.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#history"><i class="fa fa-check"></i><b>3.2</b> History</a></li>
 <li class="chapter" data-level="3.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#model"><i class="fa fa-check"></i><b>3.3</b> Model</a></li>
 <li class="chapter" data-level="3.4" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#what-is-the-best-line"><i class="fa fa-check"></i><b>3.4</b> What is the Best Line?</a></li>
 <li class="chapter" data-level="3.5" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#least-squares-approach"><i class="fa fa-check"></i><b>3.5</b> Least Squares Approach</a></li>
@@ -253,18 +253,75 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 <p>One tool will do both, LINEAR REGRESSION</p>
 </div>
-<div id="wh___-s" class="section level2">
-<h2><span class="header-section-number">3.2</span> WH___ ?s</h2>
+<div id="history" class="section level2">
+<h2><span class="header-section-number">3.2</span> History</h2>
 </div>
 <div id="model" class="section level2">
 <h2><span class="header-section-number">3.3</span> Model</h2>
+<p><span class="math display">\[
+y = f(x) + \epsilon
+\]</span></p>
+<p><span class="math display">\[
+y = \beta_0 + \beta_1 x + \epsilon
+\]</span></p>
 </div>
 <div id="what-is-the-best-line" class="section level2">
 <h2><span class="header-section-number">3.4</span> What is the Best Line?</h2>
+<p>TODO: picture with lines</p>
+<p><span class="math display">\[
+\underset{\beta_0, \beta_1}{\mathrm{argmin}} \max|y_i - (\beta_0 + \beta_1 x_i)|
+\]</span></p>
+<p><span class="math display">\[
+\underset{\beta_0, \beta_1}{\mathrm{argmin}} \sum_{i = 1}^{n}|y_i - (\beta_0 + \beta_1 x_i)|
+\]</span></p>
+<p><span class="math display">\[
+\underset{\beta_0, \beta_1}{\mathrm{argmin}} \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2
+\]</span></p>
 <p>historical, easy math</p>
 </div>
 <div id="least-squares-approach" class="section level2">
 <h2><span class="header-section-number">3.5</span> Least Squares Approach</h2>
+<p>Funciton to minimize.</p>
+<p><span class="math display">\[
+f(\beta_0, \beta_1) = \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2 = \sum_{i = 1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2
+\]</span></p>
+<p>Take derivatives.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{df}{d\beta_0} &amp;= -2 \sum_{i = 1}^{n}(y_i - \beta_0 - \beta_1 x_i) \\
+\frac{df}{d\beta_1} &amp;= -2 \sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i)
+\end{aligned}
+\]</span></p>
+<p>Set equal to zero.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sum_{i = 1}^{n}(y_i - \beta_0 - \beta_1 x_i) &amp;= 0 \\
+\sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i) &amp;= 0 
+\end{aligned}
+\]</span></p>
+<p>Rearrange, <strong>normal equations</strong>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sum_{i = 1}^{n} y_i &amp;= n \beta_0 + \beta_1 \sum_{i = 1}^{n} x_i \\
+\sum_{i = 1}^{n} x_i y_i &amp;= \beta_0 \sum_{i = 1}^{n} x_i + \beta_1 \sum_{i = 1}^{n} x_i^2
+\end{aligned}
+\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\beta}_1 &amp;= \frac{\sum_{i = 1}^{n} x_i y_i - \frac{(\sum_{i = 1}^{n} x_i)(\sum_{i = 1}^{n} y_i)}{n}}{\sum_{i = 1}^{n} x_i^2 - \frac{(\sum_{i = 1}^{n} x_i)^2}{n}} = \frac{SXY}{SXX}\\
+\hat{\beta}_0 &amp;= \bar{y} - \hat{\beta}_1 \bar{x}
+\end{aligned}
+\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+SXY &amp;= \sum_{i = 1}^{n} x_i y_i - \frac{(\sum_{i = 1}^{n} x_i)(\sum_{i = 1}^{n} y_i)}{n}  = \sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y})\\
+SXX &amp;= \sum_{i = 1}^{n} x_i^2 - \frac{(\sum_{i = 1}^{n} x_i)^2}{n}  = \sum_{i = 1}^{n}(x_i - \bar{x})^2\\
+SYY &amp;= \sum_{i = 1}^{n} y_i^2 - \frac{(\sum_{i = 1}^{n} y_i)^2}{n}  = \sum_{i = 1}^{n}(y_i - \bar{y})^2
+\end{aligned}
+\]</span></p>
+<p><span class="math display">\[
+\hat{\beta}_1 = \frac{SXY}{SXX} = \frac{\sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i = 1}^{n}(x_i - \bar{x})^2}
+\]</span></p>
 </div>
 <div id="mle-approach" class="section level2">
 <h2><span class="header-section-number">3.6</span> MLE Approach</h2>
