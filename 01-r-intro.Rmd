@@ -13,12 +13,18 @@
 
 - [Try R](http://tryr.codeschool.com/) from Code School.
     - An interactive introduction to the basics of `R`. Could be very useful for getting up to speed on `R`'s syntax.
+- [Quick-R](http://www.statmethods.net/) by Robert Kabacoff.
+    - A good reference for `R` basics.
+- [R Tutorial](http://www.r-tutor.com/) by Chi Yau.
+    - A combination reference and tutorial for `R` basics.
 - [The Art of `R` Programming](https://www.nostarch.com/artofr.htm) by Norman Matloff.
     - Gentle introduction to the programming side of `R`. (Whereas we will focus more on the data analysis side.) A free electronic version is available through the Illinois library.
 - [Advanced `R`](http://adv-r.had.co.nz/) by Hadley Wickham.
     - From the author of several extremely popular `R` packages. Good follow-up to The Art of `R` Programming. (And more up-to-date material.)
 - [The R Inferno](http://www.burns-stat.com/documents/books/the-r-inferno/) by Patrick Burns.
     - Likens learning the tricks of `R` to descending through the levels of hell. Very advanced material, but may be important if `R` becomes a part of your everyday toolkit.
+- [R Markdown](http://rmarkdown.rstudio.com/) from RStudio.
+    - Reference materials for RMarkdown.
 
 RStudio has a large number of useful keyboard shortcuts. A list of these can be found using a keyboard shortcut, the keyboard shortcut to rule them all:
 
@@ -94,9 +100,41 @@ Frequently one of the most difficult things to do when learning `R` is asking fo
 
 If you follow these steps, you will get your issue resolved much quicker, and possibly learn more in the process.
 
+## Installing Packages
+
+TODO: ...
+
+## Data Types
+
+`R` has a number of basic data *types*.
+
+- Numeric
+    - Also known as Double. The default type when dealing with numbers.
+    - Examples: `1`, `1.0`, `42.5`.
+- Integer
+    - Examples: `1`, `2`, `42`
+- Complex
+    - Example: `4 + 2i`
+- Logical
+    - Two possible values: `TRUE` and `FALSE`.
+    - You can also use `T` and `F`, but this is *not* recommended.
+    - `NA` is also considered logical.
+- Character
+    - Examples: `"a"`, `"Statistics"`, `"1 plus 2."`
+
+`R` also has a number of basic data *structures*. Data structures can be either homogeneous (contain only a single data type) or heterogeneous. (Contain more than one data type.)
+
+| Dimension | **Homogeneous** | **Heterogeneous** |
+|-----------|-----------------|-------------------|
+| 1         | Vector          | List              |
+| 2         | Matrix          | Data Frame        |
+| 3+        | Array           |                   |
+
+We will discuss both vectors and matricies in this chapter. Discussion of lists and data frames will be saved for the following chapter when we encoutner them during data analysis.
+
 ## Vectors
 
-Many operations in `R` make heavy use of vectors. Vectors in `R` are indexed starting at 1. That is what the `[1]` in the output is indicating, that the first element of the row being displayed is the first element of the vector. Larger vectors will start additional rows with `[*]` where `*` is the index of the first element of the row.
+Many operations in `R` make heavy use of vectors. Vectors in `R` are indexed starting at `1`. That is what the `[1]` in the output is indicating, that the first element of the row being displayed is the first element of the vector. Larger vectors will start additional rows with `[*]` where `*` is the index of the first element of the row.
 
 Possibly the most common way to create a vector in `R` is using the `c()` function, which is short for combine. As the name suggests, it combines a list of numbers separated by commas. 
 
@@ -104,7 +142,7 @@ Possibly the most common way to create a vector in `R` is using the `c()` functi
 c(1, 3, 5, 7, 8, 9)
 ```
 
-Here `R` simply outputs this vector. If we would like to store this vector in a **variable** we can do so with the assignment operator `=`. In this case the variable `x` now holds the vector we just created, and we can access the vector by typing `x`.
+Here `R` simply outputs this vector. If we would like to store this vector in a **variable** we can do so with the **assignment** operator `=`. In this case the variable `x` now holds the vector we just created, and we can access the vector by typing `x`.
 
 ```{r}
 x = c(1, 3, 5, 7, 8, 9)
@@ -121,12 +159,16 @@ Frequently you may wish to create a vector based on a sequence of numbers. The q
 
 Here we see `R` labeling the rows after the first since this is a large vector. Also, we see that by putting parentheses around the assignment, `R` both stores the vector in a variable called `y` and automatically outputs `y` to the console.
 
-If we want to create a sequence that isn't limit to ...
+If we want to create a sequence that isn't limited to integers and increasing by 1 at a time, we can use the `seq()` function.
+
+```{r}
+seq(from = 1.5, to = 4.2, by = 0.1)
+```
 
 TODO: function and arguments, etc. where to put?
 
 ```{r}
-(z = seq(from = 1, to = 2, by = 0.1))
+seq(1.5, 4.2, 0.1)
 ```
 
 TODO: add `rep`
@@ -146,9 +188,10 @@ x
 x[3]
 x[1:3]
 x[-2]
+x[c(1,3,4)]
 ```
 
-One of the biggest strengths of `R` is its use of vectorized operations. (Frequently the lack of understanding of this concept leads of a belief that `R` is *slow*. `R` isn't the fastest language, but it has a reputation for being slower than it really is.)
+One of the biggest strengths of `R` is its use of vectorized operations. (Frequently the lack of understanding of this concept leads of a belief that `R` is *slow*. `R` is not the fastest language, but it has a reputation for being slower than it really is.)
 
 ```{r}
 x = 1:10
@@ -161,7 +204,27 @@ log(x)
 
 We see that when a function like `log()` is called on a vector `x`, a vector is returned which has applied the function to each element of the vector  `x`.
 
+TODO: length (no scalar, just a vector of length 1)
+
 TODO: Basic stat functions. Mean. SD. Etc.
+
+```{r}
+y
+```
+
+```{r}
+mean(y)
+median(y)
+```
+
+```{r}
+var(y)
+sd(y)
+IQR(y)
+min(y)
+max(y)
+range(y)
+```
 
 ## Matrix Calculations
 
@@ -207,6 +270,8 @@ Y = matrix(y, 3, 3)
 X
 Y
 ```
+
+TODO: byrow
 
 ```{r}
 X + Y
@@ -285,40 +350,55 @@ rnorm(10, mean = 2, sd = 5)
 
 These functions exist for many other distributions, including but not limited to:
 
-Command  | Distribution
-------------- | -------------
-`*binom`  | Binomial
-`*t`  | t
-`*pois`  | Poisson
-`*f`  | F
-`*chisq`  | Chi-Squared
+| Command  | Distribution |
+|----------|--------------|
+| `*binom` | Binomial     |
+| `*t`     | t            |
+| `*pois`  | Poisson      |
+| `*f`     | F            |
+| `*chisq` | Chi-Squared  |
 
-Where `*` can be `d`, `p`, `q`, and `r`.
+Where `*` can be `d`, `p`, `q`, and `r`. Each distribution will have its own set of parameters which need to be passed to the functions as arguments. For example, `pbinom()` would not have arguments for `mean` and `sd`, since those are not parameters of the distribution. Instead a binomial distribution is usually parameterized by $n$ and $p$, however `R` chooses to call them something else. To find the names that `R` uses we would use `?pbinom` and see that `R` instead calls the arguments `size` and `prob`. For example:
+
+```{r}
+pbinom(5, size = 10, prob = 0.75)
+```
 
 ## Programming Basics
 
 ### Logical Operators
 
-Operator | Summary
-------------- | -------------
-`<` |Less than
-`>` |Greater than
-`<=` |Less than or equal to
-`>=` |Greater than or equal to
-`==` |Equal to
-`!=` |Not equal to
-`!x` |NOT x
-`x | y` |x OR y
-`x & y` |x AND y
+| Operator | Summary                          |
+|----------|----------------------------------|
+| `x < y`  | `x` less than `y`                |
+| `x > y`  | `x` greater than `y`             |
+| `x <= y` | `x` less than or equal to `y`    |
+| `x >= y` | `x` greater than or equal to `y` |
+| `x == y` | `x`equal to `y`                  |
+| `x != y` | `x` not equal to `y`             |
+| `!x`     | not `x`                          |
+| `x | y`  | `x` or `y`                       |
+| `x & y`  | `x` and `y`                      |
 
 In `R`, logical operators are vectorized.
 
 ```{r}
 heights = c(110, 120, 115, 136, 205, 156, 175)
 weights = c(64, 67, 62, 60, 77, 70, 66)
+heights < 121
 heights < 121 | heights == 156
 weights[heights > 150]
 ```
+
+Be careful when comparing vectors that you are comparing vectors of the same length.
+
+```{r}
+a = 1:10
+b = 2:4
+a < b
+```
+
+What happened here? `R` still performed the operation, but it also gives us a warning. (To perform the operation automatically made `b` longer by repeating `b` as needed.)
 
 In `R`, the if/else syntax is:
 
@@ -353,7 +433,7 @@ Now a `for` loop example,
 ```{r}
 x = 11:15
 for (i in 1:5) {
-  x[i] = x[i] + 1
+  x[i] = x[i] * 2
 }
 
 x
@@ -363,12 +443,12 @@ Note that this `for` loop is very normal in many programming languages, but not 
 
 ```{r}
 x = 11:15
-x = x + 1
+x = x * 2
 x
 ```
 
-
 Lastly, we can write our own functions in `R`. For example,
+
 ```{r}
 standardize = function(x) {
   m = mean(x)
@@ -380,10 +460,8 @@ standardize = function(x) {
 x = rnorm(10, 2, 25)
 standardize(x)
 ```
-\
-\
 
-TODO: function with arguments, control flow, if based return, how return works
+TODO: function with arguments, control flow, if based return, how return works. compare these two?
 
 ```{r}
 get_sd = function(x, biased = FALSE) {
@@ -411,19 +489,6 @@ s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
 \[
 \hat{\sigma} = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(x - \bar{x})^2}
 \]
-
-TODO: Potentially save this for the SLR document, since it is already somewhat there.
-
-## Data Frames
-
-TODO: data frames. have observations and variables
-
-## Importing Data
-
-TODO: read() or RStudio
-
-## Scatter Plots
-
 
 ## Hypothesis Tests in `R`
 
@@ -492,17 +557,20 @@ $t_{n-1}^{(\alpha/2)}=t_{8}^{(0.025)}=2.306$, so the 95\% CI for the average wei
 \]
 
 Or, in R:
+
 ```{r}
 t.test(x, alternative = c("two.sided"), conf.level = 0.95)
 ```
 
 Or if we only wanted to display the interval:
+
 ```{r}
 tt = t.test(x, alternative = c("two.sided"), conf.level = 0.95)
 tt$conf.int
 ```
 
 Or, we could calculate it "by hand" in `R`.
+
 ```{r}
 qt(0.975, 8)
 c(mean(x) - qt(0.975, 8) * sd(x) / sqrt(9),
@@ -550,7 +618,6 @@ A $100(1-\alpha)$\% CI for $\mu_{x}-\mu_{y}$ is given by
 where $t_{n+m-2}^{(\alpha/2)}$ is critical $t_{n+m-2}$ value such that $P\left(T>t_{n+m-2}^{(\alpha/2)}\right)=\alpha/2$.
 
 ### Two Sample t-Test: Example
-\
 
 Assume that the distributions of $X$ and $Y$ are $\mathrm{N}(\mu_{1},\sigma^{2})$ and $\mathrm{N}(\mu_{2},\sigma^{2})$, respectively. Given the $n = 6$ observations of $X$,
 
@@ -565,8 +632,6 @@ and the $m = 8$ observations of $Y$,
 \]
 
 find the p-value for the test $H_{0}: \mu_{1} = \mu_{2}$ versus $H_{1}: \mu_{1} > \mu_{2}$.
-\
-
 
 First, note that the sample means and variances are given by
 
@@ -629,10 +694,6 @@ test_stat = (mean(x) - mean(y)) / sqrt(sPooled2 * (1 / 6 + 1 / 8))
 test_stat
 1 - pt(test_stat, 6 + 8 - 2)
 ```
-\
-\
-
-
 
 ## Simulation in `R`
 
@@ -680,7 +741,6 @@ pnorm(z) - pnorm(-z)
 **Empirical distribution of $D$**
 
 Generate  $S = 1000$ datasets for each of group 1 and group 2. For each of the  $s = 1 : 1000$  datasets,  compute $d_s =   \bar{x}_{1s} - \bar{x}_{2s}$. Make a histogram for the $1000$ values of  $d$. What is the proportion of values of  $d$  (among the 1000 values of  $d$  generated) that are between 0 and 2?
-
 
 ```{r}
 set.seed(42)

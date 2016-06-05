@@ -3,9 +3,7 @@
 > "All models are wrong, but some are useful."\
         - **George E. P. Box**
 
-## Motivating Example
-
-Suppose you are the owner of the *Momma Leona’s Pizza*, a restaurant chain located near several college campuses. You currently own 10 stores and have data on the size of the student population as well as quarterly sales for each. Your data is summarized in the table below.
+Suppose you are the owner of the *Momma Leona's Pizza*, a restaurant chain located near several college campuses. You currently own 10 stores and have data on the size of the student population as well as quarterly sales for each. Your data is summarized in the table below.
 
 | Restaurant | Student Population | Quarterly Sales |
 |------------|--------------------|-----------------|
@@ -29,29 +27,66 @@ Here,
 ```{r}
 momma_leona <- data.frame(students = c(2, 6, 8, 8, 12, 16, 20, 20, 22, 26), 
                           sales = c(58, 105, 88, 118, 117, 137, 157, 169, 149, 202))
-
 ```
+
+We have previously seen vectors and matrices for storing data as we introduced `R`. We will now introduce a **data frame** which will be the most common way that we store and interact with data in this course.
+
+list of vectors
+observations and variables
+order "doesn't matter" (unlike a matrix)
+
+```{r}
+names(momma_leona)
+```
+
+```{r}
+momma_leona$sales
+momma_leona$students
+```
+
+```{r}
+dim(momma_leona)
+nrow(momma_leona)
+ncol(momma_leona)
+```
+
+```{r}
+str(momma_leona)
+```
+
 
 ```{r, echo = FALSE}
 write.csv(momma_leona, "data/momma_leona.csv", row.names = FALSE)
 ```
 
-
-
 [data is csv here](data/momma_leona.csv)
 
+TODO: import into R/RStudio  
 
 ```{r}
 plot(momma_leona$students, momma_leona$sales)
 ```
 
-How can you use this data to 
+
+```{r}
+plot(momma_leona$students, momma_leona$sales,
+     xlab = "Students (in 1000s)",
+     ylab = "Sales (in $1000s)",
+     main = "Quarterly Sales vs Student Population",
+     pch  = 20,
+     cex  = 2,
+     col  = "dodgerblue")
+```
+
+response, outcome
+predictor, explanatory
+
+How can you use this data to:
 
 - Explain relationship
     - Significant?
     - Which *variables* (word?) are most important? (Say, a variable for public/private)
 - Predict
-    - 
 
 One tool will do both, LINEAR REGRESSION
 
@@ -67,6 +102,12 @@ y = f(x) + \epsilon
 y = \beta_0 + \beta_1 x + \epsilon
 \]
 
+PARAMETERS
+
+DATA = PREDICTION + ERRORS
+     = SIGNAL + NOISE
+     = MODEL + ERROR
+
 Unexplained:
 
 - missing variables
@@ -74,12 +115,13 @@ Unexplained:
 
 ##  What is the Best Line?
 
+note about indepedence
+
 goldilocks
 
 - Underfitting (Just using y_bar)
 - Just right (SLR)
 - Overfitting (Connect the dots)
-
 
 TODO: picture with lines. one for overall mean. one for LS?
 
@@ -96,7 +138,6 @@ TODO: picture with lines. one for overall mean. one for LS?
 \]
 
 historical, easy math
-
 
 ##  Least Squares Approach
 
@@ -152,11 +193,42 @@ SYY &= \sum_{i = 1}^{n} y_i^2 - \frac{(\sum_{i = 1}^{n} y_i)^2}{n}  = \sum_{i = 
 \hat{\beta}_1 = \frac{SXY}{SXX} = \frac{\sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i = 1}^{n}(x_i - \bar{x})^2}
 \]
 
-##  Example
+TODO: Fitted line.
+TODO: variance estimate
 
-##  `R`
+```{r}
+momma_leona_model = lm(sales ~ students, data = momma_leona)
+```
+
+```{r}
+plot(momma_leona$students, momma_leona$sales,
+     xlab = "Students (in 1000s)",
+     ylab = "Sales (in $1000s)",
+     main = "Quarterly Sales vs Student Population",
+     pch  = 20,
+     cex  = 2,
+     col  = "dodgerblue")
+abline(momma_leona_model, lwd = 2, col = "darkorange")
+```
+
+```{r}
+plot(sales ~ students, data = momma_leona,
+     xlab = "Students (in 1000s)",
+     ylab = "Sales (in $1000s)",
+     main = "Quarterly Sales vs Student Population",
+     pch  = 20,
+     cex  = 2,
+     col  = "dodgerblue")
+abline(momma_leona_model, lwd = 2, col = "darkorange")
+```
+
+TODO: fit in R
+TODO: extrapolation
+TODO: interpretation
 
 ##  Decomposition of Variation
+
+TODO: Residuals
 
 ##  Coefficient of Determination
 
