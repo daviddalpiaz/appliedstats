@@ -3,7 +3,6 @@
 > "All models are wrong, but some are useful."\
         - **George E. P. Box**
 
-
 ## Motivating Example
 
 Suppose you are the owner of the *Momma Leona’s Pizza*, a restaurant chain located near several college campuses. You currently own 10 stores and have data on the size of the student population as well as quarterly sales for each. Your data is summarized in the table below.
@@ -27,11 +26,32 @@ Here,
 - Student Population, $x_i$, in 1000s
 - Quarterly Sales, $y_i$, in $1000s
 
+```{r}
+momma_leona <- data.frame(students = c(2, 6, 8, 8, 12, 16, 20, 20, 22, 26), 
+                          sales = c(58, 105, 88, 118, 117, 137, 157, 169, 149, 202))
+
+```
+
+```{r, echo = FALSE}
+write.csv(momma_leona, "data/momma_leona.csv", row.names = FALSE)
+```
+
+
+
+[data is csv here](data/momma_leona.csv)
+
+
+```{r}
+plot(momma_leona$students, momma_leona$sales)
+```
 
 How can you use this data to 
 
 - Explain relationship
+    - Significant?
+    - Which *variables* (word?) are most important? (Say, a variable for public/private)
 - Predict
+    - 
 
 One tool will do both, LINEAR REGRESSION
 
@@ -47,7 +67,19 @@ y = f(x) + \epsilon
 y = \beta_0 + \beta_1 x + \epsilon
 \]
 
+Unexplained:
+
+- missing variables
+- measurement error
+
 ##  What is the Best Line?
+
+goldilocks
+
+- Underfitting (Just using y_bar)
+- Just right (SLR)
+- Overfitting (Connect the dots)
+
 
 TODO: picture with lines. one for overall mean. one for LS?
 
