@@ -1,7 +1,8 @@
-# INTRO to `R`
+# Introduction to `R`
 
-> "Measuring programming progress by lines of code is like measuring aircraft building progress by weight."\
-        - **Bill Gates**
+> "Measuring programming progress by lines of code is like measuring aircraft building progress by weight."
+>
+> --- **Bill Gates**
 
 `R` is both a programming language and software environment for statistical computing, which is *free* and *open-source*. To get started, you will need to install two pieces of software:
 
@@ -32,6 +33,9 @@ RStudio has a large number of useful keyboard shortcuts. A list of these can be 
 - On Mac:  `Alt` + `Shift` + `K`
 
 The RStudio team has developed a number of "cheatsheets" for working with both `R` and RStudio which can be found [here](https://www.rstudio.com/resources/cheatsheets/) or from the help menu inside of RStudio. [This one for Base `R` in particular](http://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf) will summarize many of the concepts in this document.
+
+http://adv-r.had.co.nz/Style.html
+https://google.github.io/styleguide/Rguide.xml
 
 ## `R` Basics
 
@@ -196,20 +200,24 @@ log(x)
 
 We see that when a function like `log()` is called on a vector `x`, a vector is returned which has applied the function to each element of the vector  `x`.
 
-TODO: length (no scalar, just a vector of length 1)
+The length of a vector can be obtained with the `length()` function.
 
-### Functions
+```{r}
+vec_1 = 1:10
+vec_2 = seq(2, 4, by = 0.01)
+vec_3 = 42
+length(vec_1)
+length(vec_2)
+length(vec_3)
+```
+
+Note that there scalars do not exists in `R`. They are simply vectors of lenght `1`.
 
 If we want to create a sequence that isn't limited to integers and increasing by 1 at a time, we can use the `seq()` function.
 
 ```{r}
 seq(from = 1.5, to = 4.2, by = 0.1)
 ```
-
-
-
-
-TODO: function and arguments, etc. where to put?
 
 ```{r}
 seq(1.5, 4.2, 0.1)
@@ -226,10 +234,10 @@ rep(x, 3)
 ```
 
 ```{r}
-c(x, c(x, x), 42, 42, 42)
+c(x, rep(seq(1, 9, 2), 3), c(1, 2, 3), 42)
 ```
 
-TODO: Basic stat functions. Mean. SD. Etc.
+### Summary Statistics
 
 ```{r}
 y
@@ -323,14 +331,85 @@ diag(1:5)
 diag(5)
 ```
 
+### Data Frames
+
+TODO: get data???
+TODO: basic idea
+TODO: make with R
+TODO: import from .csv
+TODO: from package
+
+```{r}
+pizza = data.frame(students = c(2, 6, 8, 8, 12, 16, 20, 20, 22, 26), 
+                          sales = c(58, 105, 88, 118, 117, 137, 157, 169, 149, 202))
+```
+
+We have previously seen vectors and matrices for storing data as we introduced `R`. We will now introduce a **data frame** which will be the most common way that we store and interact with data in this course.
+
+list of vectors
+observations and variables
+order "doesn't matter" (unlike a matrix)
+
+```{r}
+names(pizza)
+```
+
+```{r}
+pizza$sales
+pizza$students
+```
+
+```{r}
+dim(pizza)
+nrow(pizza)
+ncol(pizza)
+```
+
+```{r}
+str(pizza)
+```
+
+```{r, echo = FALSE}
+write.csv(pizza, "data/pizza.csv", row.names = FALSE)
+```
+
+[data is csv here](data/pizza.csv)
+
+TODO: import into R/RStudio  
+
+```{r}
+plot(pizza$students, pizza$sales)
+```
+
+### Plotting
+
+TODO: hist
+TODO: plot (scatter) (y ~ x formula)
+TODO: boxplot
+
+```{r}
+plot(pizza$students, pizza$sales,
+     xlab = "Students (in 1000s)",
+     ylab = "Sales (in $1000s)",
+     main = "Quarterly Sales vs Student Population",
+     pch  = 20,
+     cex  = 2,
+     col  = "dodgerblue")
+```
+
+```{r}
+plot(sales ~ students, data = pizza,
+     xlab = "Students (in 1000s)",
+     ylab = "Sales (in $1000s)",
+     main = "Quarterly Sales vs Student Population",
+     pch  = 20,
+     cex  = 2,
+     col  = "dodgerblue")
+```
+
 ### Distributions
 
 When working with different statistical distributions, we often want to make probabilistic statements based on the distribution.
-
-```{r, eval = FALSE, include = FALSE}
-# TODO
-# add pictures for d, p, q, r
-```
 
 We typically want to know one of four things:
 
@@ -345,28 +424,33 @@ The general naming structure of the relevant R functions is:
 
 * `dname` calculates density (pdf) value at input `x`.
 * `pname` calculates distribution (cdf) value at input `x`.
-* `qname` calculates quantile `x` value at input probability.
-* `rname` generates a random value from a particular distribution.
+* `qname` calculates the quantile `x` value at input probability.
+* `rname` generates a random draw from a particular distribution.
 
 Note that `name` represents the name of the given distribution.
 
-For example, to calculate the value of the pdf for a $N(2, 25)$ for `x = 3`, use:
+For example, consider a random variable $X$ which is $N(\mu = 2, \sigma = 5)$. (Note, we are parameterizing using the standard deviation, $\sigma$, not the variance $\sigma^2$. This is to stay consistent with `R`.)
+
+To calculate the value of the pdf at `x = 3`, that is, the height of the curve at `x = 3`, use:
 
 ```{r}
 dnorm(3, mean = 2, sd = 5)
 ```
 
-Or, to calculate the value of the cdf for a $N(2, 25)$ for `x = 3`, use:
+To calculate the value of the cdf at `x = 3`, that is, $P(X \leq 3)$, the probability that $X$ is less than or equal to `3`, use:
+
 ```{r}
 pnorm(3, mean = 2, sd = 5)
 ```
 
 Or, to calculate the quantile for probability 0.975, use:
+
 ```{r}
 qnorm(0.975, mean = 2, sd = 5)
 ```
 
 Lastly, to generate a random sample of size `n = 10`, use:
+
 ```{r}
 rnorm(10, mean = 2, sd = 5)
 ```
@@ -381,15 +465,19 @@ These functions exist for many other distributions, including but not limited to
 | `*f`     | F            |
 | `*chisq` | Chi-Squared  |
 
-Where `*` can be `d`, `p`, `q`, and `r`. Each distribution will have its own set of parameters which need to be passed to the functions as arguments. For example, `pbinom()` would not have arguments for `mean` and `sd`, since those are not parameters of the distribution. Instead a binomial distribution is usually parameterized by $n$ and $p$, however `R` chooses to call them something else. To find the names that `R` uses we would use `?pbinom` and see that `R` instead calls the arguments `size` and `prob`. For example:
+Where `*` can be `d`, `p`, `q`, and `r`. Each distribution will have its own set of parameters which need to be passed to the functions as arguments. For example, `dbinom()` would not have arguments for `mean` and `sd`, since those are not parameters of the distribution. Instead a binomial distribution is usually parameterized by $n$ and $p$, however `R` chooses to call them something else. To find the names that `R` uses we would use `?dbinom` and see that `R` instead calls the arguments `size` and `prob`. For example:
 
 ```{r}
-pbinom(5, size = 10, prob = 0.75)
+dbinom(6, size = 10, prob = 0.75)
 ```
+
+Also note that, when using the `dname` functions with discrete distributions, they are the pmf of the distribution. For example, the above command is $P(Y = 5)$ if $Y \sim b(n = 10, p = 0.75)$. (The probability of flipping an unfair coin `10` times and seeing `6` heads, if the probability of heads is `0.75`.)
 
 ## Programming Basics
 
 ### Logical Operators
+
+TODO: finish table
 
 | Operator | Summary                          | Example  | Result     |
 |----------|----------------------------------|----------|------------|
@@ -413,6 +501,8 @@ heights < 121 | heights == 156
 weights[heights > 150]
 ```
 
+TODO: explain `weights[heights > 150]`
+
 Be careful when comparing vectors that you are comparing vectors of the same length.
 
 ```{r}
@@ -424,6 +514,8 @@ a < b
 What happened here? `R` still performed the operation, but it also gives us a warning. (To perform the operation automatically made `b` longer by repeating `b` as needed.)
 
 TODO: add comparison to "scalar"
+
+TODO: which.max()
 
 ### Control Flow
 
@@ -453,7 +545,7 @@ if (x > y) {
 z
 ```
 
-TODO: ifelse
+TODO: ifelse, single, vectorized
 
 Now a `for` loop example,
 
@@ -474,7 +566,13 @@ x = x * 2
 x
 ```
 
-### Writing Functions
+### Functions
+
+TODO: use
+TODO: write
+TODO: arguments
+TODO: defaults (order?)
+TODO: return (side effects like plotting?)
 
 Lastly, we can write our own functions in `R`. For example,
 
@@ -508,22 +606,12 @@ s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
 
 ```{r}
 get_sd = function(x, biased = FALSE) {
-  n = length(x)
-  if (biased) {
-    std = sqrt((1 / n) * sum((x - mean(x)) ^ 2))
-  } else {
-    std = sqrt((1 / (n - 1)) * sum((x - mean(x)) ^ 2))
-  }
-  std
-}
-```
-
-```{r}
-get_sd = function(x, biased = FALSE) {
   n = length(x) - 1 * biased
   sqrt((1 / n) * sum((x - mean(x)) ^ 2))
 }
 ```
+
+TODO: explain 1 * biased
 
 ## Hypothesis Tests in `R`
 
@@ -730,7 +818,11 @@ test_stat
 
 ## Simulation
 
+TODO: genearl comments on simulations
+
 ### Paired Differences
+
+TODO: change example splits into narration
 
 Consider the model:
 
@@ -762,7 +854,7 @@ D \sim N(1, 0.32)
 Thus,
 
 \[
-P(0 < D < 2) = P (-1.77 < Z < 1.77 )  =  0.9616  - 0.0384  =  0.9232.
+P(0 < D < 2) = P (-1.77 < Z < 1.77)  =  0.9616  - 0.0384  =  0.9232.
 \]
 
 ```{r}
@@ -772,6 +864,8 @@ pnorm(z) - pnorm(-z)
 
 
 **Empirical distribution of $D$**
+
+TODO: split chunks and add narration
 
 Generate  $S = 1000$ datasets for each of group 1 and group 2. For each of the  $s = 1 : 1000$  datasets,  compute $d_s =   \bar{x}_{1s} - \bar{x}_{2s}$. Make a histogram for the $1000$ values of  $d$. What is the proportion of values of  $d$  (among the 1000 values of  $d$  generated) that are between 0 and 2?
 
@@ -803,6 +897,7 @@ qqline(differences)
 ### Distribution of a Sample Mean
 
 TODO: Move in front of paired?
+TODO: split chunks and add narration
 
 ```{r}
 set.seed(42)
@@ -834,4 +929,4 @@ x_bar_hist = hist(x_bar, breaks = 50, col = shading,
                   xlab = "Sample Means")
 ```
 
-THIS is an example of a pull-request.
+TODO: spell check
