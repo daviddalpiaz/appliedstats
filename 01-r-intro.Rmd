@@ -33,7 +33,9 @@ RStudio has a large number of useful keyboard shortcuts. A list of these can be 
 
 The RStudio team has developed a number of "cheatsheets" for working with both `R` and RStudio which can be found [here](https://www.rstudio.com/resources/cheatsheets/) or from the help menu inside of RStudio. [This one for Base `R` in particular](http://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf) will summarize many of the concepts in this document.
 
-## Basic Calculations
+## `R` Basics
+
+### Basic Calculations
 
 To get started, we'll use `R` like a simple calculator. Note, in `R` the `#` symbol is used for comments. Lines which begin with two, `##` will indicate output.
 
@@ -79,7 +81,7 @@ sin(pi / 2)
 cos(0)
 ```
 
-## Getting Help
+### Getting Help
 
 In using `R` as a calculator, we have seen a number of functions. `sqrt()`, `exp()`, `log()` and `sin()` are all `R` functions. To get documentation about a function in `R`, simply put a question mark in front of the function name and RStudio will display the documentation, for example: 
 
@@ -90,21 +92,33 @@ In using `R` as a calculator, we have seen a number of functions. `sqrt()`, `exp
 ?lm
 ```
 
-Frequently one of the most difficult things to do when learning `R` is asking for help. First, you need to decide to ask for help, then you need to know how to ask for help. Your very first line of defense should be to Google your error message or a short description of your issue. (The ability to solve problems using this method is quickly becoming an extremely valuable skill.) If that fails, and it eventually will, you should ask for help There are a number of things you should include when emailing an instructor, or posting to a help website such as http://stats.stackexchange.com/.
+Frequently one of the most difficult things to do when learning `R` is asking for help. First, you need to decide to ask for help, then you need to know *how* to ask for help. Your very first line of defense should be to Google your error message or a short description of your issue. (The ability to solve problems using this method is quickly becoming an extremely valuable skill.) If that fails, and it eventually will, you should ask for help. There are a number of things you should include when emailing an instructor, or posting to a help website such as http://stats.stackexchange.com/.
 
 - Describe what you expect the code to do.
 - State the end goal you are trying to achieve. (Sometimes what you expect the code to do, is not what you want to actually do.)
-- The full text of any errors you have received.
+- Provide the full text of any errors you have received.
 - Provide enough code to recreate the error. Often for the purpose of this course, you could simply email your entire `.R` or `.Rmd` file.
 - Sometimes it is also helpful to include a screenshot of your entire RStudio window when the error occurs.
 
-If you follow these steps, you will get your issue resolved much quicker, and possibly learn more in the process.
+If you follow these steps, you will get your issue resolved much quicker, and possibly learn more in the process. Do not be discouraged by running into errors and difficulties when learning `R`. (Or any technicaly skill.) It is simply part of the learning process.
 
-## Installing Packages
+### Installing Packages
 
-TODO: ...
+`R` comes with a number of built-in functions and datasets, but one of the main strengths of `R` as an open-source project is its package system. Packages add additional functions and data. Frequently if you want to do something in `R`, and it isn't availible by default, there is a good chance that there is a package that will fufill your needs.
 
-## Data Types
+To install a package, use the `install.packages()` function.
+
+```{r}
+install.packages("UsingR")
+```
+
+Once a package is install, it must be loaded in your current `R` session before being used.
+
+```{r}
+library(UsingR)
+```
+
+### Data Types
 
 `R` has a number of basic data *types*.
 
@@ -132,7 +146,7 @@ TODO: ...
 
 We will discuss both vectors and matrices in this chapter. Discussion of lists and data frames will be saved for the following chapter when we encounter them during data analysis.
 
-## Vectors
+### Vectors
 
 Many operations in `R` make heavy use of vectors. Vectors in `R` are indexed starting at `1`. That is what the `[1]` in the output is indicating, that the first element of the row being displayed is the first element of the vector. Larger vectors will start additional rows with `[*]` where `*` is the index of the first element of the row.
 
@@ -159,29 +173,7 @@ Frequently you may wish to create a vector based on a sequence of numbers. The q
 
 Here we see `R` labeling the rows after the first since this is a large vector. Also, we see that by putting parentheses around the assignment, `R` both stores the vector in a variable called `y` and automatically outputs `y` to the console.
 
-If we want to create a sequence that isn't limited to integers and increasing by 1 at a time, we can use the `seq()` function.
-
-```{r}
-seq(from = 1.5, to = 4.2, by = 0.1)
-```
-
-TODO: function and arguments, etc. where to put?
-
-```{r}
-seq(1.5, 4.2, 0.1)
-```
-
-TODO: add `rep`
-
-```{r}
-rep(0.5, times = 10)
-```
-
-```{r}
-rep(x, 3)
-```
-
-TODO: Accessing elements
+TODO: Accessing elements, subset, indexed at 1
 
 ```{r}
 x
@@ -206,6 +198,32 @@ We see that when a function like `log()` is called on a vector `x`, a vector is 
 
 TODO: length (no scalar, just a vector of length 1)
 
+### Functions
+
+If we want to create a sequence that isn't limited to integers and increasing by 1 at a time, we can use the `seq()` function.
+
+```{r}
+seq(from = 1.5, to = 4.2, by = 0.1)
+```
+
+TODO: function and arguments, etc. where to put?
+
+```{r}
+seq(1.5, 4.2, 0.1)
+```
+
+TODO: add `rep`
+
+```{r}
+rep(0.5, times = 10)
+```
+
+```{r}
+rep(x, 3)
+```
+
+
+
 TODO: Basic stat functions. Mean. SD. Etc.
 
 ```{r}
@@ -226,7 +244,7 @@ max(y)
 range(y)
 ```
 
-## Matrix Calculations
+### Matrices
 
 `R` can also be used for matrix calculations. Matrices can be created using the `matrix` function. 
 
@@ -300,7 +318,7 @@ diag(1:5)
 diag(5)
 ```
 
-## Distributions
+### Distributions
 
 When working with different statistical distributions, we often want to make probabilistic statements based on the distribution.
 
@@ -400,6 +418,8 @@ a < b
 
 What happened here? `R` still performed the operation, but it also gives us a warning. (To perform the operation automatically made `b` longer by repeating `b` as needed.)
 
+### Control Flow
+
 In `R`, the if/else syntax is:
 
 ```{r, eval = FALSE}
@@ -446,6 +466,8 @@ x = 11:15
 x = x * 2
 x
 ```
+
+### Writing Functions
 
 Lastly, we can write our own functions in `R`. For example,
 
@@ -496,21 +518,21 @@ s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
 
 Suppose $x_{i} \sim \mathrm{N}(\mu,\sigma^{2})$ and we want to test $H_{0}: \mu = \mu_{0}$ versus $H_{1}: \mu \neq \mu_{0}.$
 
-Assuming $\sigma$ is unknown, use the one-sample Student's $t$ test statistic:
+Assuming $\sigma$ is unknown, we use the one-sample Student's $t$ test statistic:
 
 \[
-T=\displaystyle\frac{\bar{x}-\mu_{0}}{s/\sqrt{n}}\sim t_{n-1}
+t = \displaystyle\frac{\bar{x}-\mu_{0}}{s/\sqrt{n}}\sim t_{n-1}
 \]
 
-where $\bar{x}=\displaystyle\frac{\sum_{i=1}^{n}x_{i}}{n}$ and $s=\sqrt{\displaystyle\frac{\sum_{i=1}^{n}(x_{i}-\bar{x})^{2}}{n-1}}$
+where $\bar{x} = \displaystyle\frac{\sum_{i=1}^{n}x_{i}}{n}$ and $s = \sqrt{\displaystyle\frac{\sum_{i=1}^{n}(x_{i}-\bar{x})^{2}}{n-1}}$
 
-A $100(1-\alpha)$\% CI for $\mu$ is given by
+A $100(1 - \alpha)$\% CI for $\mu$ is given by
 
 \[
-\bar{x}\pm t_{n-1}^{(\alpha/2)}\displaystyle\frac{s}{\sqrt{n}}
+\bar{x} \pm t_{n-1}^{(\alpha/2)}\frac{s}{\sqrt{n}}
 \]
 
-where $t_{n-1}^{(\alpha/2)}$ is the critical value such that $P\left(T>t_{n-1}^{(\alpha/2)}\right)=\alpha/2$ for $n-1$ degrees of freedom.
+where $t_{n-1}^{(\alpha/2)}$ is the critical value such that $P\left(t>t_{n-1}^{(\alpha/2)}\right)=\alpha/2$ for $n-1$ degrees of freedom.
 
 ### One Sample t-Test: Example
 
@@ -520,8 +542,7 @@ where $t_{n-1}^{(\alpha/2)}$ is the critical value such that $P\left(T>t_{n-1}^{
 # make this run on a data frame?
 ```
 
-A store sells ``16-ounce'' boxes of *Captain Crisp* cereal. A random sample of 9 boxes
-was taken and weighed. The results were
+A store sells "16 ounce" boxes of *Captain Crisp* cereal. A random sample of 9 boxes was taken and weighed. The results were
 
 \[
 15.5 \quad 16.2  \quad 16.1  \quad 15.8  \quad 15.6  \quad 16.0  \quad 15.8  \quad 15.9  \quad 16.2
@@ -565,8 +586,7 @@ t.test(x, alternative = c("two.sided"), conf.level = 0.95)
 Or if we only wanted to display the interval:
 
 ```{r}
-tt = t.test(x, alternative = c("two.sided"), conf.level = 0.95)
-tt$conf.int
+t.test(x, alternative = c("two.sided"), conf.level = 0.95)$conf.int
 ```
 
 Or, we could calculate it "by hand" in `R`.
@@ -695,7 +715,7 @@ test_stat
 1 - pt(test_stat, 6 + 8 - 2)
 ```
 
-## Simulation in `R`
+## Simulation
 
 ### Paired Differences
 
