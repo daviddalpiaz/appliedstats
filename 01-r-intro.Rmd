@@ -29,13 +29,17 @@
 
 RStudio has a large number of useful keyboard shortcuts. A list of these can be found using a keyboard shortcut, the keyboard shortcut to rule them all:
 
-- On Windows: `Option` + `Shift` + `K`
-- On Mac:  `Alt` + `Shift` + `K`
+- On Windows: `Alt` + `Shift` + `K`
+- On Mac:  `Option` + `Shift` + `K`
 
 The RStudio team has developed a number of "cheatsheets" for working with both `R` and RStudio which can be found [here](https://www.rstudio.com/resources/cheatsheets/) or from the help menu inside of RStudio. [This one for Base `R` in particular](http://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf) will summarize many of the concepts in this document.
 
-http://adv-r.had.co.nz/Style.html
-https://google.github.io/styleguide/Rguide.xml
+When programing, it is often a good practice to follow a style guide. (Where do spaces go? Tabs of spaces? Underscores of CamelCase when naming variables?) No style guide is "correct" but it helps to be aware of what some others do. The more import thing is to be consistent with yourself.
+
+- [Hadley Wickham Style Guide](http://adv-r.had.co.nz/Style.html) from [Advanced `R`](http://adv-r.had.co.nz/)
+- [Google Style Guide](https://google.github.io/styleguide/Rguide.xml)
+
+For this course, our main deviation from these two guides is the use of `=` in place of `<-`. (More on that later.)
 
 ## `R` Basics
 
@@ -89,14 +93,14 @@ cos(0)
 
 In using `R` as a calculator, we have seen a number of functions. `sqrt()`, `exp()`, `log()` and `sin()` are all `R` functions. To get documentation about a function in `R`, simply put a question mark in front of the function name and RStudio will display the documentation, for example: 
 
-```{r, eval = F}
+```{r, eval = FALSE}
 ?log
 ?sin
 ?paste
 ?lm
 ```
 
-Frequently one of the most difficult things to do when learning `R` is asking for help. First, you need to decide to ask for help, then you need to know *how* to ask for help. Your very first line of defense should be to Google your error message or a short description of your issue. (The ability to solve problems using this method is quickly becoming an extremely valuable skill.) If that fails, and it eventually will, you should ask for help. There are a number of things you should include when emailing an instructor, or posting to a help website such as http://stats.stackexchange.com/.
+Frequently one of the most difficult things to do when learning `R` is asking for help. First, you need to decide to ask for help, then you need to know *how* to ask for help. Your very first line of defense should be to Google your error message or a short description of your issue. (The ability to solve problems using this method is quickly becoming an extremely valuable skill.) If that fails, and it eventually will, you should ask for help. There are a number of things you should include when emailing an instructor, or posting to a help website such as <http://stats.stackexchange.com/>.
 
 - Describe what you expect the code to do.
 - State the end goal you are trying to achieve. (Sometimes what you expect the code to do, is not what you want to actually do.)
@@ -104,22 +108,22 @@ Frequently one of the most difficult things to do when learning `R` is asking fo
 - Provide enough code to recreate the error. Often for the purpose of this course, you could simply email your entire `.R` or `.Rmd` file.
 - Sometimes it is also helpful to include a screenshot of your entire RStudio window when the error occurs.
 
-If you follow these steps, you will get your issue resolved much quicker, and possibly learn more in the process. Do not be discouraged by running into errors and difficulties when learning `R`. (Or any technicaly skill.) It is simply part of the learning process.
+If you follow these steps, you will get your issue resolved much quicker, and possibly learn more in the process. Do not be discouraged by running into errors and difficulties when learning `R`. (Or any technical skill.) It is simply part of the learning process.
 
 ### Installing Packages
 
-`R` comes with a number of built-in functions and datasets, but one of the main strengths of `R` as an open-source project is its package system. Packages add additional functions and data. Frequently if you want to do something in `R`, and it isn't availible by default, there is a good chance that there is a package that will fufill your needs.
+`R` comes with a number of built-in functions and datasets, but one of the main strengths of `R` as an open-source project is its package system. Packages add additional functions and data. Frequently if you want to do something in `R`, and it isn't available by default, there is a good chance that there is a package that will fulfill your needs.
 
 To install a package, use the `install.packages()` function.
 
 ```{r, eval = FALSE}
-install.packages("UsingR")
+install.packages("ggplot2")
 ```
 
 Once a package is install, it must be loaded in your current `R` session before being used.
 
 ```{r, eval = FALSE}
-library(UsingR)
+library(ggplot2)
 ```
 
 ### Data Types
@@ -148,11 +152,9 @@ library(UsingR)
 | 2         | Matrix          | Data Frame        |
 | 3+        | Array           |                   |
 
-We will discuss both vectors and matrices in this chapter. Discussion of lists and data frames will be saved for the following chapter when we encounter them during data analysis.
-
 ### Vectors
 
-Many operations in `R` make heavy use of vectors. Vectors in `R` are indexed starting at `1`. That is what the `[1]` in the output is indicating, that the first element of the row being displayed is the first element of the vector. Larger vectors will start additional rows with `[*]` where `*` is the index of the first element of the row.
+Many operations in `R` make heavy use of **vectors**. Vectors in `R` are indexed starting at `1`. That is what the `[1]` in the output is indicating, that the first element of the row being displayed is the first element of the vector. Larger vectors will start additional rows with `[*]` where `*` is the index of the first element of the row.
 
 Possibly the most common way to create a vector in `R` is using the `c()` function, which is short for combine. As the name suggests, it combines a list of numbers separated by commas. 
 
@@ -177,20 +179,36 @@ Frequently you may wish to create a vector based on a sequence of numbers. The q
 
 Here we see `R` labeling the rows after the first since this is a large vector. Also, we see that by putting parentheses around the assignment, `R` both stores the vector in a variable called `y` and automatically outputs `y` to the console.
 
-TODO: Accessing elements, subset, indexed at 1
+To subset a vector, we use square brackets, `[]`. 
 
 ```{r}
 x
+x[1]
 x[3]
-x[1:3]
+```
+
+We see that `x[1]` returns the first element, and `x[3]` returns the third element.
+
+```{r}
 x[-2]
+```
+
+We can also exclude certain indexes, in this case the second element.
+
+```{r}
+x[1:3]
 x[c(1,3,4)]
+```
+
+Lastly we see that we can subset based on a vector of indicies.
+
+```{r}
+x = 1:10
 ```
 
 One of the biggest strengths of `R` is its use of vectorized operations. (Frequently the lack of understanding of this concept leads of a belief that `R` is *slow*. `R` is not the fastest language, but it has a reputation for being slower than it really is.)
 
 ```{r}
-x = 1:10
 x + 1
 2 * x
 2 ^ x
@@ -204,14 +222,14 @@ The length of a vector can be obtained with the `length()` function.
 
 ```{r}
 vec_1 = 1:10
-vec_2 = seq(2, 4, by = 0.01)
+vec_2 = 1:1000
 vec_3 = 42
 length(vec_1)
 length(vec_2)
 length(vec_3)
 ```
 
-Note that there scalars do not exists in `R`. They are simply vectors of lenght `1`.
+Note that scalars do not exists in `R`. They are simply vectors of length `1`.
 
 If we want to create a sequence that isn't limited to integers and increasing by 1 at a time, we can use the `seq()` function.
 
@@ -219,34 +237,53 @@ If we want to create a sequence that isn't limited to integers and increasing by
 seq(from = 1.5, to = 4.2, by = 0.1)
 ```
 
+We will discuss functions later, but note here that `from`, `to` and `by` are optional.
+
 ```{r}
 seq(1.5, 4.2, 0.1)
 ```
 
-TODO: add `rep`
+Another common operation to create a vector is `rep()`, which can repeat a single value a number of times.
 
 ```{r}
 rep(0.5, times = 10)
 ```
 
-```{r}
-rep(x, 3)
-```
+Or, `rep()` can be used to repeat a vector a number of times.
 
 ```{r}
-c(x, rep(seq(1, 9, 2), 3), c(1, 2, 3), 42)
+rep(x, times = 3)
+```
+
+We have now seen four different ways to create vectors:
+
+- `c()`
+- `:`
+- `seq()`
+- `rep()`
+
+So far we have mostly used them in isolation, but they are often used together.
+
+```{r}
+c(x, rep(seq(1, 9, 2), 3), c(1, 2, 3), 42, 2:4)
 ```
 
 ### Summary Statistics
+
+`R` has built in functions for a large number of summary statistics.
 
 ```{r}
 y
 ```
 
+- Central Tendancy
+
 ```{r}
 mean(y)
 median(y)
 ```
+
+- Spread
 
 ```{r}
 var(y)
@@ -268,12 +305,24 @@ By default the `matrix` function reorders a vector into columns, but we can also
 ```{r}
 x = 1:9
 x
+```
+
+```{r}
 X = matrix(x, nrow = 3, ncol = 3)
 X
+```
+
+```{r}
 Y = matrix(x, nrow = 3, ncol = 3, byrow = TRUE)
 Y
+```
+
+```{r}
 Z = matrix(0, 2, 4)
 Z
+```
+
+```{r}
 X
 X[1, 2]
 X[1, ]
@@ -287,7 +336,13 @@ Matrices can also be created by combining vectors as columns, using `cbind` or c
 x = 1:9
 rev(x)
 rep(1, 9)
+```
+
+```{r}
 cbind(x, rev(x), rep(1, 9))
+```
+
+```{r}
 rbind(x, rev(x), rep(1, 9))
 ```
 
@@ -302,8 +357,6 @@ X
 Y
 ```
 
-TODO: byrow
-
 ```{r}
 X + Y
 X - Y
@@ -316,9 +369,15 @@ Note that `X * Y` is not matrix multiplication. It is element by element multipl
 ```{r}
 X %*% Y
 t(X)
+```
+
+```{r}
 Z = matrix(c(9, 2, -3, 2, 4, -2, -3, -2, 16), 3, byrow = T)
 Z
 solve(Z)
+```
+
+```{r}
 X = matrix(1:6, 2, 3)
 X
 dim(X)
@@ -326,6 +385,9 @@ rowSums(X)
 colSums(X)
 rowMeans(X)
 colMeans(X)
+```
+
+```{r}
 diag(Z)
 diag(1:5)
 diag(5)
@@ -333,79 +395,115 @@ diag(5)
 
 ### Data Frames
 
-TODO: get data???
-TODO: basic idea
-TODO: make with R
-TODO: import from .csv
-TODO: from package
+We have previously seen vectors and matrices for storing data as we introduced `R`. We will now introduce a **data frame** which will be the most common way that we store and interact with data in this course.
 
 ```{r}
-pizza = data.frame(students = c(2, 6, 8, 8, 12, 16, 20, 20, 22, 26), 
-                          sales = c(58, 105, 88, 118, 117, 137, 157, 169, 149, 202))
+example_data = data.frame(x = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
+                          y = c(2, 4, 6, 8, 2, 4, 6, 8, 2, 10),
+                          z = c(1, 1, 1, 1, 1, 3, 3, 3, 3, 42))
 ```
-
-We have previously seen vectors and matrices for storing data as we introduced `R`. We will now introduce a **data frame** which will be the most common way that we store and interact with data in this course.
 
 list of vectors
 observations and variables
 order "doesn't matter" (unlike a matrix)
 
 ```{r}
-names(pizza)
+names(example_data)
 ```
 
 ```{r}
-pizza$sales
-pizza$students
+example_data$x
+example_data$z
 ```
 
 ```{r}
-dim(pizza)
-nrow(pizza)
-ncol(pizza)
-```
-
-```{r}
-str(pizza)
+dim(example_data)
+nrow(example_data)
+ncol(example_data)
 ```
 
 ```{r, echo = FALSE}
-write.csv(pizza, "data/pizza.csv", row.names = FALSE)
+write.csv(example_data, "data/example_data.csv", row.names = FALSE)
 ```
 
-[data is csv here](data/pizza.csv)
+[data is csv here](data/example_data.csv)
 
-TODO: import into R/RStudio  
+```{r, eval = FALSE}
+example_data_from_csv = read.csv("data/example_data.csv")
+```
+
+TODO: import into R/RStudio (screenshot of button?)
+
+```{r, eval = FALSE}
+library(ggplot2)
+```
 
 ```{r}
-plot(pizza$students, pizza$sales)
+head(mpg, n = 10)
+```
+
+
+```{r}
+str(mpg)
 ```
 
 ### Plotting
 
-TODO: hist
-TODO: plot (scatter) (y ~ x formula)
-TODO: boxplot
+TODO: look at the data. pictures are your friend.
+
+#### Histograms
 
 ```{r}
-plot(pizza$students, pizza$sales,
-     xlab = "Students (in 1000s)",
-     ylab = "Sales (in $1000s)",
-     main = "Quarterly Sales vs Student Population",
+hist(mpg$cty)
+```
+
+```{r}
+hist(mpg$cty,
+     xlab   = "City Miles Per Gallon",
+     main   = "Histogram of City MPG",
+     breaks = 12,
+     col    = "dodgerblue",
+     border = "darkorange")
+```
+
+#### Boxplots
+
+```{r}
+unique(mpg$drv)
+```
+
+```{r}
+boxplot(hwy ~ drv, data = mpg)
+```
+
+```{r}
+boxplot(hwy ~ drv, data = mpg,
+     xlab = "Drivetrain (f = FWD, r = RWD, 4 = 4WD)",
+     ylab = "Highway Miles Per Gallon",
+     main = "Highway MPG vs Engine Displacement",
+     pch  = 20,
+     cex  = 2,
+     col  = "darkorange",
+     border = "dodgerblue")
+```
+
+#### Scatterplots
+
+```{r}
+plot(mpg$displ, mpg$hwy)
+```
+
+```{r}
+plot(hwy ~ displ, data = mpg,
+     xlab = "Engine Displacement (in Liters)",
+     ylab = "Highway Miles Per Gallon",
+     main = "Highway MPG vs Engine Displacement",
      pch  = 20,
      cex  = 2,
      col  = "dodgerblue")
 ```
 
-```{r}
-plot(sales ~ students, data = pizza,
-     xlab = "Students (in 1000s)",
-     ylab = "Sales (in $1000s)",
-     main = "Quarterly Sales vs Student Population",
-     pch  = 20,
-     cex  = 2,
-     col  = "dodgerblue")
-```
+TODO: Discuss formula.
 
 ### Distributions
 
@@ -515,7 +613,7 @@ What happened here? `R` still performed the operation, but it also gives us a wa
 
 TODO: add comparison to "scalar"
 
-TODO: which.max()
+TODO: which.max(). MAYBE.
 
 ### Control Flow
 
@@ -583,7 +681,9 @@ standardize = function(x) {
   result = (x - m) / std
   result
 }
-  
+```
+
+```{r}
 x = rnorm(10, 2, 25)
 standardize(x)
 ```
@@ -614,6 +714,8 @@ get_sd = function(x, biased = FALSE) {
 TODO: explain 1 * biased
 
 ## Hypothesis Tests in `R`
+
+TODO: make all data data frames
 
 ### One Sample t-Test: Review
 
@@ -818,7 +920,7 @@ test_stat
 
 ## Simulation
 
-TODO: genearl comments on simulations
+TODO: general comments on simulations
 
 ### Paired Differences
 
@@ -889,9 +991,6 @@ for (i in 1:samples) {
 mean(0 < differences & differences < 2)
 
 hist(differences, breaks = 20, main = "Empirical Distribution of Differences")
-
-qqnorm(differences)
-qqline(differences)
 ```
 
 ### Distribution of a Sample Mean
