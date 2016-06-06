@@ -299,26 +299,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p><code>R</code> comes with a number of built-in functions and datasets, but one of the main strengths of <code>R</code> as an open-source project is its package system. Packages add additional functions and data. Frequently if you want to do something in <code>R</code>, and it isn’t availible by default, there is a good chance that there is a package that will fufill your needs.</p>
 <p>To install a package, use the <code>install.packages()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;UsingR&quot;</span>)</code></pre></div>
-<pre><code>## Installing package into &#39;/home/travis/R/Library&#39;
-## (as &#39;lib&#39; is unspecified)</code></pre>
 <p>Once a package is install, it must be loaded in your current <code>R</code> session before being used.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(UsingR)</code></pre></div>
-<pre><code>## Loading required package: MASS</code></pre>
-<pre><code>## Loading required package: HistData</code></pre>
-<pre><code>## Loading required package: Hmisc</code></pre>
-<pre><code>## Loading required package: lattice</code></pre>
-<pre><code>## Loading required package: survival</code></pre>
-<pre><code>## Loading required package: Formula</code></pre>
-<pre><code>## 
-## Attaching package: &#39;Hmisc&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     format.pval, round.POSIXt, trunc.POSIXt, units</code></pre>
-<pre><code>## 
-## Attaching package: &#39;UsingR&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:survival&#39;:
-## 
-##     cancer</code></pre>
 </div>
 <div id="data-types" class="section level3">
 <h3><span class="header-section-number">2.1.4</span> Data Types</h3>
@@ -442,6 +424,9 @@ x +<span class="st"> </span><span class="dv">1</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rep</span>(x, <span class="dv">3</span>)</code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10  1  2  3  4  5  6  7  8  9 10
 ## [21]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(x, <span class="kw">c</span>(x, x), <span class="dv">42</span>, <span class="dv">42</span>, <span class="dv">42</span>)</code></pre></div>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10  1  2  3  4  5  6  7  8  9 10
+## [21]  1  2  3  4  5  6  7  8  9 10 42 42 42</code></pre>
 <p>TODO: Basic stat functions. Mean. SD. Etc.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y</code></pre></div>
 <pre><code>##   [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
@@ -648,8 +633,8 @@ X</code></pre></div>
 <pre><code>## [1] 11.79982</code></pre>
 <p>Lastly, to generate a random sample of size <code>n = 10</code>, use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</code></pre></div>
-<pre><code>##  [1] -4.1362715  2.9901554  5.5123603  0.7225186  5.3737812
-##  [6]  2.4657209  2.5275511  7.3373097  1.0427288 -0.2397438</code></pre>
+<pre><code>##  [1] -4.7325397 -1.3031095  3.7843217 -1.5098816 -0.7039219
+##  [6]  6.7456606  4.2253388 -2.2042964 11.3596755 -3.5841880</code></pre>
 <p>These functions exist for many other distributions, including but not limited to:</p>
 <table>
 <thead>
@@ -695,44 +680,64 @@ X</code></pre></div>
 <tr class="header">
 <th align="left">Operator</th>
 <th align="left">Summary</th>
+<th align="left">Example</th>
+<th align="left">Result</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left"><code>x &lt; y</code></td>
 <td align="left"><code>x</code> less than <code>y</code></td>
+<td align="left"><code>3 &lt; 42</code></td>
+<td align="left">TRUE</td>
 </tr>
 <tr class="even">
 <td align="left"><code>x &gt; y</code></td>
 <td align="left"><code>x</code> greater than <code>y</code></td>
+<td align="left"><code>3 &gt; 42</code></td>
+<td align="left">FALSE</td>
 </tr>
 <tr class="odd">
 <td align="left"><code>x &lt;= y</code></td>
 <td align="left"><code>x</code> less than or equal to <code>y</code></td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 <tr class="even">
 <td align="left"><code>x &gt;= y</code></td>
 <td align="left"><code>x</code> greater than or equal to <code>y</code></td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 <tr class="odd">
 <td align="left"><code>x == y</code></td>
 <td align="left"><code>x</code>equal to <code>y</code></td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 <tr class="even">
 <td align="left"><code>x != y</code></td>
 <td align="left"><code>x</code> not equal to <code>y</code></td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 <tr class="odd">
 <td align="left"><code>!x</code></td>
 <td align="left">not <code>x</code></td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 <tr class="even">
 <td align="left"><code>x | y</code></td>
 <td align="left"><code>x</code> or <code>y</code></td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 <tr class="odd">
 <td align="left"><code>x &amp; y</code></td>
 <td align="left"><code>x</code> and <code>y</code></td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 </tbody>
 </table>
@@ -753,6 +758,7 @@ a &lt;<span class="st"> </span>b</code></pre></div>
 ## shorter object length</code></pre>
 <pre><code>##  [1]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
 <p>What happened here? <code>R</code> still performed the operation, but it also gives us a warning. (To perform the operation automatically made <code>b</code> longer by repeating <code>b</code> as needed.)</p>
+<p>TODO: add comparison to “scalar”</p>
 </div>
 <div id="control-flow" class="section level3">
 <h3><span class="header-section-number">2.2.2</span> Control Flow</h3>
@@ -802,9 +808,18 @@ x</code></pre></div>
   
 x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">2</span>, <span class="dv">25</span>)
 <span class="kw">standardize</span>(x)</code></pre></div>
-<pre><code>##  [1] -1.40307732  0.63459818 -0.72811900  0.75589756 -0.03809855
-##  [6]  1.49540769  0.18358848  0.50515712  0.30057426 -1.70592842</code></pre>
+<pre><code>##  [1]  0.3325062 -0.8745846 -0.8723640 -0.9524615  1.3417232
+##  [6]  0.5992176  0.4274352  1.0139296  0.6260500 -1.6414517</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">standardize =<span class="st"> </span>function(x) {
+  (x -<span class="st"> </span><span class="kw">mean</span>(x)) /<span class="st"> </span><span class="kw">sd</span>(x)
+}</code></pre></div>
 <p>TODO: function with arguments, control flow, if based return, how return works. compare these two?</p>
+<p><span class="math display">\[
+s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
+\]</span></p>
+<p><span class="math display">\[
+\hat{\sigma} = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(x - \bar{x})^2}
+\]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_sd =<span class="st"> </span>function(x, <span class="dt">biased =</span> <span class="ot">FALSE</span>) {
   n =<span class="st"> </span><span class="kw">length</span>(x)
   if (biased) {
@@ -818,12 +833,6 @@ x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</s
   n =<span class="st"> </span><span class="kw">length</span>(x) -<span class="st"> </span><span class="dv">1</span> *<span class="st"> </span>biased
   <span class="kw">sqrt</span>((<span class="dv">1</span> /<span class="st"> </span>n) *<span class="st"> </span><span class="kw">sum</span>((x -<span class="st"> </span><span class="kw">mean</span>(x)) ^<span class="st"> </span><span class="dv">2</span>))
 }</code></pre></div>
-<p><span class="math display">\[
-s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
-\]</span></p>
-<p><span class="math display">\[
-\hat{\sigma} = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(x - \bar{x})^2}
-\]</span></p>
 </div>
 </div>
 <div id="hypothesis-tests-in-r" class="section level2">
@@ -863,7 +872,7 @@ s &amp;= \sqrt{0.0625} = \textbf{0.25}
 <pre><code>## [1] 15.9</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(x)</code></pre></div>
 <pre><code>## [1] 0.25</code></pre>
-<p><strong>b)</strong> Construct a <span class="math inline">\(95\%\)</span> confidence interval for the overall average weight of boxes of  cereal.</p>
+<p><strong>b)</strong> Construct a <span class="math inline">\(95\%\)</span> confidence interval for the overall average weight of boxes of <em>Captain Crisp</em> cereal.</p>
 <p><span class="math inline">\(t_{n-1}^{(\alpha/2)}=t_{8}^{(0.025)}=2.306\)</span>, so the 95% CI for the average weight of a cereal box is:</p>
 <p><span class="math display">\[
 \begin{split}
@@ -1049,10 +1058,10 @@ for (i in <span class="dv">1</span>:samples) {
 <span class="kw">mean</span>(<span class="dv">0</span> &lt;<span class="st"> </span>differences &amp;<span class="st"> </span>differences &lt;<span class="st"> </span><span class="dv">2</span>)</code></pre></div>
 <pre><code>## [1] 0.9222</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(differences, <span class="dt">breaks =</span> <span class="dv">20</span>, <span class="dt">main =</span> <span class="st">&quot;Empirical Distribution of Differences&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(differences)
 <span class="kw">qqline</span>(differences)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-52-2.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-54-2.png" width="672" /></p>
 </div>
 <div id="distribution-of-a-sample-mean" class="section level3">
 <h3><span class="header-section-number">2.4.2</span> Distribution of a Sample Mean</h3>
@@ -1070,7 +1079,7 @@ for(i in <span class="dv">1</span>:samples){
 x_bar_hist =<span class="st"> </span><span class="kw">hist</span>(x_bar, <span class="dt">breaks =</span> <span class="dv">50</span>, 
                   <span class="dt">main =</span> <span class="st">&quot;Histogram of Sample Means&quot;</span>,
                   <span class="dt">xlab =</span> <span class="st">&quot;Sample Means&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">mean</span>(x_bar), mu)</code></pre></div>
 <pre><code>## [1] 10.00009 10.00000</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">sd</span>(x_bar), <span class="kw">sqrt</span>(mu) /<span class="st"> </span><span class="kw">sqrt</span>(sample_size))</code></pre></div>
@@ -1085,7 +1094,7 @@ x_bar_hist =<span class="st"> </span><span class="kw">hist</span>(x_bar, <span c
 x_bar_hist =<span class="st"> </span><span class="kw">hist</span>(x_bar, <span class="dt">breaks =</span> <span class="dv">50</span>, <span class="dt">col =</span> shading,
                   <span class="dt">main =</span> <span class="st">&quot;Histogram of Sample Means, Two Standard Deviations&quot;</span>,
                   <span class="dt">xlab =</span> <span class="st">&quot;Sample Means&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-53-2.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-55-2.png" width="672" /></p>
 <p>THIS is an example of a pull-request.</p>
 
 </div>
