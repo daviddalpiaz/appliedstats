@@ -108,13 +108,13 @@ If you follow these steps, you will get your issue resolved much quicker, and po
 
 To install a package, use the `install.packages()` function.
 
-```{r}
+```{r, eval = FALSE}
 install.packages("UsingR")
 ```
 
 Once a package is install, it must be loaded in your current `R` session before being used.
 
-```{r}
+```{r, eval = FALSE}
 library(UsingR)
 ```
 
@@ -206,6 +206,9 @@ If we want to create a sequence that isn't limited to integers and increasing by
 seq(from = 1.5, to = 4.2, by = 0.1)
 ```
 
+
+
+
 TODO: function and arguments, etc. where to put?
 
 ```{r}
@@ -222,7 +225,9 @@ rep(0.5, times = 10)
 rep(x, 3)
 ```
 
-
+```{r}
+c(x, c(x, x), 42, 42, 42)
+```
 
 TODO: Basic stat functions. Mean. SD. Etc.
 
@@ -386,17 +391,17 @@ pbinom(5, size = 10, prob = 0.75)
 
 ### Logical Operators
 
-| Operator | Summary                          |
-|----------|----------------------------------|
-| `x < y`  | `x` less than `y`                |
-| `x > y`  | `x` greater than `y`             |
-| `x <= y` | `x` less than or equal to `y`    |
-| `x >= y` | `x` greater than or equal to `y` |
-| `x == y` | `x`equal to `y`                  |
-| `x != y` | `x` not equal to `y`             |
-| `!x`     | not `x`                          |
-| `x | y`  | `x` or `y`                       |
-| `x & y`  | `x` and `y`                      |
+| Operator | Summary                          | Example  | Result     |
+|----------|----------------------------------|----------|------------|
+| `x < y`  | `x` less than `y`                | `3 < 42` | `r 3 < 42` |
+| `x > y`  | `x` greater than `y`             | `3 > 42` | `r 3 > 42` |
+| `x <= y` | `x` less than or equal to `y`    |          |            |
+| `x >= y` | `x` greater than or equal to `y` |          |            |
+| `x == y` | `x`equal to `y`                  |          |            |
+| `x != y` | `x` not equal to `y`             |          |            |
+| `!x`     | not `x`                          |          |            |
+| `x | y`  | `x` or `y`                       |          |            |
+| `x & y`  | `x` and `y`                      |          |            |
 
 In `R`, logical operators are vectorized.
 
@@ -417,6 +422,8 @@ a < b
 ```
 
 What happened here? `R` still performed the operation, but it also gives us a warning. (To perform the operation automatically made `b` longer by repeating `b` as needed.)
+
+TODO: add comparison to "scalar"
 
 ### Control Flow
 
@@ -483,7 +490,21 @@ x = rnorm(10, 2, 25)
 standardize(x)
 ```
 
+```{r}
+standardize = function(x) {
+  (x - mean(x)) / sd(x)
+}
+```
+
 TODO: function with arguments, control flow, if based return, how return works. compare these two?
+
+\[
+s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
+\]
+
+\[
+\hat{\sigma} = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(x - \bar{x})^2}
+\]
 
 ```{r}
 get_sd = function(x, biased = FALSE) {
@@ -503,14 +524,6 @@ get_sd = function(x, biased = FALSE) {
   sqrt((1 / n) * sum((x - mean(x)) ^ 2))
 }
 ```
-
-\[
-s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
-\]
-
-\[
-\hat{\sigma} = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(x - \bar{x})^2}
-\]
 
 ## Hypothesis Tests in `R`
 
@@ -567,7 +580,7 @@ mean(x)
 sd(x)
 ```
 
-**b)** Construct a $95\%$ confidence interval for the overall average weight of boxes of \textit{Captain Crisp} cereal.
+**b)** Construct a $95\%$ confidence interval for the overall average weight of boxes of *Captain Crisp* cereal.
 
 $t_{n-1}^{(\alpha/2)}=t_{8}^{(0.025)}=2.306$, so the 95\% CI for the average weight of a cereal box is: 
 
