@@ -121,14 +121,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="2.1.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#installing-packages"><i class="fa fa-check"></i><b>2.1.3</b> Installing Packages</a></li>
 <li class="chapter" data-level="2.1.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-types"><i class="fa fa-check"></i><b>2.1.4</b> Data Types</a></li>
 <li class="chapter" data-level="2.1.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#vectors"><i class="fa fa-check"></i><b>2.1.5</b> Vectors</a></li>
-<li class="chapter" data-level="2.1.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#functions"><i class="fa fa-check"></i><b>2.1.6</b> Functions</a></li>
+<li class="chapter" data-level="2.1.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#summary-statistics"><i class="fa fa-check"></i><b>2.1.6</b> Summary Statistics</a></li>
 <li class="chapter" data-level="2.1.7" data-path="introduction-to-r.html"><a href="introduction-to-r.html#matrices"><i class="fa fa-check"></i><b>2.1.7</b> Matrices</a></li>
-<li class="chapter" data-level="2.1.8" data-path="introduction-to-r.html"><a href="introduction-to-r.html#distributions"><i class="fa fa-check"></i><b>2.1.8</b> Distributions</a></li>
+<li class="chapter" data-level="2.1.8" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-frames"><i class="fa fa-check"></i><b>2.1.8</b> Data Frames</a></li>
+<li class="chapter" data-level="2.1.9" data-path="introduction-to-r.html"><a href="introduction-to-r.html#plotting"><i class="fa fa-check"></i><b>2.1.9</b> Plotting</a></li>
+<li class="chapter" data-level="2.1.10" data-path="introduction-to-r.html"><a href="introduction-to-r.html#distributions"><i class="fa fa-check"></i><b>2.1.10</b> Distributions</a></li>
 </ul></li>
 <li class="chapter" data-level="2.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#programming-basics"><i class="fa fa-check"></i><b>2.2</b> Programming Basics</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#logical-operators"><i class="fa fa-check"></i><b>2.2.1</b> Logical Operators</a></li>
 <li class="chapter" data-level="2.2.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#control-flow"><i class="fa fa-check"></i><b>2.2.2</b> Control Flow</a></li>
-<li class="chapter" data-level="2.2.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#writing-functions"><i class="fa fa-check"></i><b>2.2.3</b> Writing Functions</a></li>
+<li class="chapter" data-level="2.2.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#functions"><i class="fa fa-check"></i><b>2.2.3</b> Functions</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#hypothesis-tests-in-r"><i class="fa fa-check"></i><b>2.3</b> Hypothesis Tests in <code>R</code></a><ul>
 <li class="chapter" data-level="2.3.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#one-sample-t-test-review"><i class="fa fa-check"></i><b>2.3.1</b> One Sample t-Test: Review</a></li>
@@ -174,8 +176,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="introduction-to-r" class="section level1">
 <h1><span class="header-section-number">Chapter 2</span> Introduction to <code>R</code></h1>
 <blockquote>
-<p>“Measuring programming progress by lines of code is like measuring aircraft building progress by weight.”<br />
- - <strong>Bill Gates</strong></p>
+<p>“Measuring programming progress by lines of code is like measuring aircraft building progress by weight.”</p>
+<p>— <strong>Bill Gates</strong></p>
 </blockquote>
 <p><code>R</code> is both a programming language and software environment for statistical computing, which is <em>free</em> and <em>open-source</em>. To get started, you will need to install two pieces of software:</p>
 <ul>
@@ -222,6 +224,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>On Mac: <code>Alt</code> + <code>Shift</code> + <code>K</code></li>
 </ul>
 <p>The RStudio team has developed a number of “cheatsheets” for working with both <code>R</code> and RStudio which can be found <a href="https://www.rstudio.com/resources/cheatsheets/">here</a> or from the help menu inside of RStudio. <a href="http://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf">This one for Base <code>R</code> in particular</a> will summarize many of the concepts in this document.</p>
+<p><a href="http://adv-r.had.co.nz/Style.html" class="uri">http://adv-r.had.co.nz/Style.html</a> <a href="https://google.github.io/styleguide/Rguide.xml" class="uri">https://google.github.io/styleguide/Rguide.xml</a></p>
 <div id="r-basics" class="section level2">
 <h2><span class="header-section-number">2.1</span> <code>R</code> Basics</h2>
 <div id="basic-calculations" class="section level3">
@@ -299,27 +302,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p><code>R</code> comes with a number of built-in functions and datasets, but one of the main strengths of <code>R</code> as an open-source project is its package system. Packages add additional functions and data. Frequently if you want to do something in <code>R</code>, and it isn’t availible by default, there is a good chance that there is a package that will fufill your needs.</p>
 <p>To install a package, use the <code>install.packages()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;UsingR&quot;</span>)</code></pre></div>
-<pre><code>## Installing package into &#39;/home/travis/R/Library&#39;
-## (as &#39;lib&#39; is unspecified)</code></pre>
-<pre><code>## also installing the dependencies &#39;chron&#39;, &#39;Formula&#39;, &#39;latticeExtra&#39;, &#39;acepack&#39;, &#39;data.table&#39;, &#39;HistData&#39;, &#39;Hmisc&#39;</code></pre>
 <p>Once a package is install, it must be loaded in your current <code>R</code> session before being used.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(UsingR)</code></pre></div>
-<pre><code>## Loading required package: MASS</code></pre>
-<pre><code>## Loading required package: HistData</code></pre>
-<pre><code>## Loading required package: Hmisc</code></pre>
-<pre><code>## Loading required package: lattice</code></pre>
-<pre><code>## Loading required package: survival</code></pre>
-<pre><code>## Loading required package: Formula</code></pre>
-<pre><code>## 
-## Attaching package: &#39;Hmisc&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     format.pval, round.POSIXt, trunc.POSIXt, units</code></pre>
-<pre><code>## 
-## Attaching package: &#39;UsingR&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:survival&#39;:
-## 
-##     cancer</code></pre>
 </div>
 <div id="data-types" class="section level3">
 <h3><span class="header-section-number">2.1.4</span> Data Types</h3>
@@ -425,15 +409,21 @@ x +<span class="st"> </span><span class="dv">1</span></code></pre></div>
 <pre><code>##  [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379 1.7917595
 ##  [7] 1.9459101 2.0794415 2.1972246 2.3025851</code></pre>
 <p>We see that when a function like <code>log()</code> is called on a vector <code>x</code>, a vector is returned which has applied the function to each element of the vector <code>x</code>.</p>
-<p>TODO: length (no scalar, just a vector of length 1)</p>
-</div>
-<div id="functions" class="section level3">
-<h3><span class="header-section-number">2.1.6</span> Functions</h3>
+<p>The length of a vector can be obtained with the <code>length()</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vec_1 =<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</span>
+vec_2 =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dt">by =</span> <span class="fl">0.01</span>)
+vec_3 =<span class="st"> </span><span class="dv">42</span>
+<span class="kw">length</span>(vec_1)</code></pre></div>
+<pre><code>## [1] 10</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(vec_2)</code></pre></div>
+<pre><code>## [1] 201</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(vec_3)</code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<p>Note that there scalars do not exists in <code>R</code>. They are simply vectors of lenght <code>1</code>.</p>
 <p>If we want to create a sequence that isn’t limited to integers and increasing by 1 at a time, we can use the <code>seq()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="dt">from =</span> <span class="fl">1.5</span>, <span class="dt">to =</span> <span class="fl">4.2</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)</code></pre></div>
 <pre><code>##  [1] 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9
 ## [16] 3.0 3.1 3.2 3.3 3.4 3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2</code></pre>
-<p>TODO: function and arguments, etc. where to put?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="fl">1.5</span>, <span class="fl">4.2</span>, <span class="fl">0.1</span>)</code></pre></div>
 <pre><code>##  [1] 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9
 ## [16] 3.0 3.1 3.2 3.3 3.4 3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2</code></pre>
@@ -443,7 +433,12 @@ x +<span class="st"> </span><span class="dv">1</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rep</span>(x, <span class="dv">3</span>)</code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10  1  2  3  4  5  6  7  8  9 10
 ## [21]  1  2  3  4  5  6  7  8  9 10</code></pre>
-<p>TODO: Basic stat functions. Mean. SD. Etc.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(x, <span class="kw">rep</span>(<span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">2</span>), <span class="dv">3</span>), <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dv">42</span>)</code></pre></div>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10  1  3  5  7  9  1  3  5  7  9
+## [21]  1  3  5  7  9  1  2  3 42</code></pre>
+</div>
+<div id="summary-statistics" class="section level3">
+<h3><span class="header-section-number">2.1.6</span> Summary Statistics</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y</code></pre></div>
 <pre><code>##   [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
 ##  [16]  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30
@@ -619,8 +614,56 @@ X</code></pre></div>
 ## [4,]    0    0    0    1    0
 ## [5,]    0    0    0    0    1</code></pre>
 </div>
+<div id="data-frames" class="section level3">
+<h3><span class="header-section-number">2.1.8</span> Data Frames</h3>
+<p>TODO: get data??? TODO: basic idea TODO: make with R TODO: import from .csv TODO: from package</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pizza =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">students =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">8</span>, <span class="dv">12</span>, <span class="dv">16</span>, <span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">22</span>, <span class="dv">26</span>), 
+                          <span class="dt">sales =</span> <span class="kw">c</span>(<span class="dv">58</span>, <span class="dv">105</span>, <span class="dv">88</span>, <span class="dv">118</span>, <span class="dv">117</span>, <span class="dv">137</span>, <span class="dv">157</span>, <span class="dv">169</span>, <span class="dv">149</span>, <span class="dv">202</span>))</code></pre></div>
+<p>We have previously seen vectors and matrices for storing data as we introduced <code>R</code>. We will now introduce a <strong>data frame</strong> which will be the most common way that we store and interact with data in this course.</p>
+<p>list of vectors observations and variables order “doesn’t matter” (unlike a matrix)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(pizza)</code></pre></div>
+<pre><code>## [1] &quot;students&quot; &quot;sales&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pizza$sales</code></pre></div>
+<pre><code>##  [1]  58 105  88 118 117 137 157 169 149 202</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pizza$students</code></pre></div>
+<pre><code>##  [1]  2  6  8  8 12 16 20 20 22 26</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(pizza)</code></pre></div>
+<pre><code>## [1] 10  2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(pizza)</code></pre></div>
+<pre><code>## [1] 10</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ncol</span>(pizza)</code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(pizza)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    10 obs. of  2 variables:
+##  $ students: num  2 6 8 8 12 16 20 20 22 26
+##  $ sales   : num  58 105 88 118 117 137 157 169 149 202</code></pre>
+<p><a href="data/pizza.csv">data is csv here</a></p>
+<p>TODO: import into R/RStudio</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(pizza$students, pizza$sales)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+</div>
+<div id="plotting" class="section level3">
+<h3><span class="header-section-number">2.1.9</span> Plotting</h3>
+<p>TODO: hist TODO: plot (scatter) (y ~ x formula) TODO: boxplot</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(pizza$students, pizza$sales,
+     <span class="dt">xlab =</span> <span class="st">&quot;Students (in 1000s)&quot;</span>,
+     <span class="dt">ylab =</span> <span class="st">&quot;Sales (in $1000s)&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Quarterly Sales vs Student Population&quot;</span>,
+     <span class="dt">pch  =</span> <span class="dv">20</span>,
+     <span class="dt">cex  =</span> <span class="dv">2</span>,
+     <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sales ~<span class="st"> </span>students, <span class="dt">data =</span> pizza,
+     <span class="dt">xlab =</span> <span class="st">&quot;Students (in 1000s)&quot;</span>,
+     <span class="dt">ylab =</span> <span class="st">&quot;Sales (in $1000s)&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Quarterly Sales vs Student Population&quot;</span>,
+     <span class="dt">pch  =</span> <span class="dv">20</span>,
+     <span class="dt">cex  =</span> <span class="dv">2</span>,
+     <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+</div>
 <div id="distributions" class="section level3">
-<h3><span class="header-section-number">2.1.8</span> Distributions</h3>
+<h3><span class="header-section-number">2.1.10</span> Distributions</h3>
 <p>When working with different statistical distributions, we often want to make probabilistic statements based on the distribution.</p>
 <p>We typically want to know one of four things:</p>
 <ul>
@@ -634,14 +677,15 @@ X</code></pre></div>
 <ul>
 <li><code>dname</code> calculates density (pdf) value at input <code>x</code>.</li>
 <li><code>pname</code> calculates distribution (cdf) value at input <code>x</code>.</li>
-<li><code>qname</code> calculates quantile <code>x</code> value at input probability.</li>
-<li><code>rname</code> generates a random value from a particular distribution.</li>
+<li><code>qname</code> calculates the quantile <code>x</code> value at input probability.</li>
+<li><code>rname</code> generates a random draw from a particular distribution.</li>
 </ul>
 <p>Note that <code>name</code> represents the name of the given distribution.</p>
-<p>For example, to calculate the value of the pdf for a <span class="math inline">\(N(2, 25)\)</span> for <code>x = 3</code>, use:</p>
+<p>For example, consider a random variable <span class="math inline">\(X\)</span> which is <span class="math inline">\(N(\mu = 2, \sigma = 5)\)</span>. (Note, we are parameterizing using the standard deviation, <span class="math inline">\(\sigma\)</span>, not the variance <span class="math inline">\(\sigma^2\)</span>. This is to stay consistent with <code>R</code>.)</p>
+<p>To calculate the value of the pdf at <code>x = 3</code>, that is, the height of the curve at <code>x = 3</code>, use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dnorm</span>(<span class="dv">3</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</code></pre></div>
 <pre><code>## [1] 0.07820854</code></pre>
-<p>Or, to calculate the value of the cdf for a <span class="math inline">\(N(2, 25)\)</span> for <code>x = 3</code>, use:</p>
+<p>To calculate the value of the cdf at <code>x = 3</code>, that is, <span class="math inline">\(P(X \leq 3)\)</span>, the probability that <span class="math inline">\(X\)</span> is less than or equal to <code>3</code>, use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pnorm</span>(<span class="dv">3</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</code></pre></div>
 <pre><code>## [1] 0.5792597</code></pre>
 <p>Or, to calculate the quantile for probability 0.975, use:</p>
@@ -649,8 +693,8 @@ X</code></pre></div>
 <pre><code>## [1] 11.79982</code></pre>
 <p>Lastly, to generate a random sample of size <code>n = 10</code>, use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</code></pre></div>
-<pre><code>##  [1]  3.769892  2.405649 -4.381007  6.290929 -2.771084  9.030409
-##  [7]  2.261290 -5.642141  9.388079  5.110876</code></pre>
+<pre><code>##  [1]   1.1632943   0.9874696  12.7694184   4.5598108  -1.9207645
+##  [6]  -2.2997181  -6.3896501   4.1222117 -11.0281557   5.8807655</code></pre>
 <p>These functions exist for many other distributions, including but not limited to:</p>
 <table>
 <thead>
@@ -682,58 +726,80 @@ X</code></pre></div>
 </tr>
 </tbody>
 </table>
-<p>Where <code>*</code> can be <code>d</code>, <code>p</code>, <code>q</code>, and <code>r</code>. Each distribution will have its own set of parameters which need to be passed to the functions as arguments. For example, <code>pbinom()</code> would not have arguments for <code>mean</code> and <code>sd</code>, since those are not parameters of the distribution. Instead a binomial distribution is usually parameterized by <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span>, however <code>R</code> chooses to call them something else. To find the names that <code>R</code> uses we would use <code>?pbinom</code> and see that <code>R</code> instead calls the arguments <code>size</code> and <code>prob</code>. For example:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pbinom</span>(<span class="dv">5</span>, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">prob =</span> <span class="fl">0.75</span>)</code></pre></div>
-<pre><code>## [1] 0.07812691</code></pre>
+<p>Where <code>*</code> can be <code>d</code>, <code>p</code>, <code>q</code>, and <code>r</code>. Each distribution will have its own set of parameters which need to be passed to the functions as arguments. For example, <code>dbinom()</code> would not have arguments for <code>mean</code> and <code>sd</code>, since those are not parameters of the distribution. Instead a binomial distribution is usually parameterized by <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span>, however <code>R</code> chooses to call them something else. To find the names that <code>R</code> uses we would use <code>?dbinom</code> and see that <code>R</code> instead calls the arguments <code>size</code> and <code>prob</code>. For example:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dbinom</span>(<span class="dv">6</span>, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">prob =</span> <span class="fl">0.75</span>)</code></pre></div>
+<pre><code>## [1] 0.145998</code></pre>
+<p>Also note that, when using the <code>dname</code> functions with discrete distributions, they are the pmf of the distribution. For example, the above command is <span class="math inline">\(P(Y = 5)\)</span> if <span class="math inline">\(Y \sim b(n = 10, p = 0.75)\)</span>. (The probability of flipping an unfair coin <code>10</code> times and seeing <code>6</code> heads, if the probability of heads is <code>0.75</code>.)</p>
 </div>
 </div>
 <div id="programming-basics" class="section level2">
 <h2><span class="header-section-number">2.2</span> Programming Basics</h2>
 <div id="logical-operators" class="section level3">
 <h3><span class="header-section-number">2.2.1</span> Logical Operators</h3>
+<p>TODO: finish table</p>
 <table>
 <thead>
 <tr class="header">
 <th align="left">Operator</th>
 <th align="left">Summary</th>
+<th align="left">Example</th>
+<th align="left">Result</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left"><code>x &lt; y</code></td>
 <td align="left"><code>x</code> less than <code>y</code></td>
+<td align="left"><code>3 &lt; 42</code></td>
+<td align="left">TRUE</td>
 </tr>
 <tr class="even">
 <td align="left"><code>x &gt; y</code></td>
 <td align="left"><code>x</code> greater than <code>y</code></td>
+<td align="left"><code>3 &gt; 42</code></td>
+<td align="left">FALSE</td>
 </tr>
 <tr class="odd">
 <td align="left"><code>x &lt;= y</code></td>
 <td align="left"><code>x</code> less than or equal to <code>y</code></td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 <tr class="even">
 <td align="left"><code>x &gt;= y</code></td>
 <td align="left"><code>x</code> greater than or equal to <code>y</code></td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 <tr class="odd">
 <td align="left"><code>x == y</code></td>
 <td align="left"><code>x</code>equal to <code>y</code></td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 <tr class="even">
 <td align="left"><code>x != y</code></td>
 <td align="left"><code>x</code> not equal to <code>y</code></td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 <tr class="odd">
 <td align="left"><code>!x</code></td>
 <td align="left">not <code>x</code></td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 <tr class="even">
 <td align="left"><code>x | y</code></td>
 <td align="left"><code>x</code> or <code>y</code></td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 <tr class="odd">
 <td align="left"><code>x &amp; y</code></td>
 <td align="left"><code>x</code> and <code>y</code></td>
+<td align="left"></td>
+<td align="left"></td>
 </tr>
 </tbody>
 </table>
@@ -746,6 +812,7 @@ heights &lt;<span class="st"> </span><span class="dv">121</span></code></pre></d
 <pre><code>## [1]  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">weights[heights &gt;<span class="st"> </span><span class="dv">150</span>]</code></pre></div>
 <pre><code>## [1] 77 70 66</code></pre>
+<p>TODO: explain <code>weights[heights &gt; 150]</code></p>
 <p>Be careful when comparing vectors that you are comparing vectors of the same length.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a =<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</span>
 b =<span class="st"> </span><span class="dv">2</span>:<span class="dv">4</span>
@@ -754,6 +821,8 @@ a &lt;<span class="st"> </span>b</code></pre></div>
 ## shorter object length</code></pre>
 <pre><code>##  [1]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
 <p>What happened here? <code>R</code> still performed the operation, but it also gives us a warning. (To perform the operation automatically made <code>b</code> longer by repeating <code>b</code> as needed.)</p>
+<p>TODO: add comparison to “scalar”</p>
+<p>TODO: which.max()</p>
 </div>
 <div id="control-flow" class="section level3">
 <h3><span class="header-section-number">2.2.2</span> Control Flow</h3>
@@ -776,7 +845,7 @@ if (x &gt;<span class="st"> </span>y) {
 <pre><code>## [1] &quot;x is less than or equal to y&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z</code></pre></div>
 <pre><code>## [1] 16</code></pre>
-<p>TODO: ifelse</p>
+<p>TODO: ifelse, single, vectorized</p>
 <p>Now a <code>for</code> loop example,</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="dv">11</span>:<span class="dv">15</span>
 for (i in <span class="dv">1</span>:<span class="dv">5</span>) {
@@ -791,8 +860,9 @@ x =<span class="st"> </span>x *<span class="st"> </span><span class="dv">2</span
 x</code></pre></div>
 <pre><code>## [1] 22 24 26 28 30</code></pre>
 </div>
-<div id="writing-functions" class="section level3">
-<h3><span class="header-section-number">2.2.3</span> Writing Functions</h3>
+<div id="functions" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Functions</h3>
+<p>TODO: use TODO: write TODO: arguments TODO: defaults (order?) TODO: return (side effects like plotting?)</p>
 <p>Lastly, we can write our own functions in <code>R</code>. For example,</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">standardize =<span class="st"> </span>function(x) {
   m =<span class="st"> </span><span class="kw">mean</span>(x)
@@ -803,28 +873,23 @@ x</code></pre></div>
   
 x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dv">2</span>, <span class="dv">25</span>)
 <span class="kw">standardize</span>(x)</code></pre></div>
-<pre><code>##  [1]  1.1098697 -0.9882115 -0.4402045  0.5990196  1.7867839
-##  [6] -0.7794650 -0.9419444 -1.0745391  0.1079561  0.6207352</code></pre>
+<pre><code>##  [1]  0.7297601  0.3219090  2.2480734 -1.2678833 -0.3692776
+##  [6] -0.5270030 -0.1666102  0.4423609 -0.8914025 -0.5199269</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">standardize =<span class="st"> </span>function(x) {
+  (x -<span class="st"> </span><span class="kw">mean</span>(x)) /<span class="st"> </span><span class="kw">sd</span>(x)
+}</code></pre></div>
 <p>TODO: function with arguments, control flow, if based return, how return works. compare these two?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_sd =<span class="st"> </span>function(x, <span class="dt">biased =</span> <span class="ot">FALSE</span>) {
-  n =<span class="st"> </span><span class="kw">length</span>(x)
-  if (biased) {
-    std =<span class="st"> </span><span class="kw">sqrt</span>((<span class="dv">1</span> /<span class="st"> </span>n) *<span class="st"> </span><span class="kw">sum</span>((x -<span class="st"> </span><span class="kw">mean</span>(x)) ^<span class="st"> </span><span class="dv">2</span>))
-  } else {
-    std =<span class="st"> </span><span class="kw">sqrt</span>((<span class="dv">1</span> /<span class="st"> </span>(n -<span class="st"> </span><span class="dv">1</span>)) *<span class="st"> </span><span class="kw">sum</span>((x -<span class="st"> </span><span class="kw">mean</span>(x)) ^<span class="st"> </span><span class="dv">2</span>))
-  }
-  std
-}</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_sd =<span class="st"> </span>function(x, <span class="dt">biased =</span> <span class="ot">FALSE</span>) {
-  n =<span class="st"> </span><span class="kw">length</span>(x) -<span class="st"> </span><span class="dv">1</span> *<span class="st"> </span>biased
-  <span class="kw">sqrt</span>((<span class="dv">1</span> /<span class="st"> </span>n) *<span class="st"> </span><span class="kw">sum</span>((x -<span class="st"> </span><span class="kw">mean</span>(x)) ^<span class="st"> </span><span class="dv">2</span>))
-}</code></pre></div>
 <p><span class="math display">\[
 s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
 \]</span></p>
 <p><span class="math display">\[
 \hat{\sigma} = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(x - \bar{x})^2}
 \]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_sd =<span class="st"> </span>function(x, <span class="dt">biased =</span> <span class="ot">FALSE</span>) {
+  n =<span class="st"> </span><span class="kw">length</span>(x) -<span class="st"> </span><span class="dv">1</span> *<span class="st"> </span>biased
+  <span class="kw">sqrt</span>((<span class="dv">1</span> /<span class="st"> </span>n) *<span class="st"> </span><span class="kw">sum</span>((x -<span class="st"> </span><span class="kw">mean</span>(x)) ^<span class="st"> </span><span class="dv">2</span>))
+}</code></pre></div>
+<p>TODO: explain 1 * biased</p>
 </div>
 </div>
 <div id="hypothesis-tests-in-r" class="section level2">
@@ -864,7 +929,7 @@ s &amp;= \sqrt{0.0625} = \textbf{0.25}
 <pre><code>## [1] 15.9</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(x)</code></pre></div>
 <pre><code>## [1] 0.25</code></pre>
-<p><strong>b)</strong> Construct a <span class="math inline">\(95\%\)</span> confidence interval for the overall average weight of boxes of  cereal.</p>
+<p><strong>b)</strong> Construct a <span class="math inline">\(95\%\)</span> confidence interval for the overall average weight of boxes of <em>Captain Crisp</em> cereal.</p>
 <p><span class="math inline">\(t_{n-1}^{(\alpha/2)}=t_{8}^{(0.025)}=2.306\)</span>, so the 95% CI for the average weight of a cereal box is:</p>
 <p><span class="math display">\[
 \begin{split}
@@ -1003,8 +1068,10 @@ test_stat</code></pre></div>
 </div>
 <div id="simulation" class="section level2">
 <h2><span class="header-section-number">2.4</span> Simulation</h2>
+<p>TODO: genearl comments on simulations</p>
 <div id="paired-differences" class="section level3">
 <h3><span class="header-section-number">2.4.1</span> Paired Differences</h3>
+<p>TODO: change example splits into narration</p>
 <p>Consider the model:</p>
 <p><span class="math display">\[
 \begin{split}
@@ -1024,12 +1091,13 @@ D \sim N(1, 0.32)
 \]</span></p>
 <p>Thus,</p>
 <p><span class="math display">\[
-P(0 &lt; D &lt; 2) = P (-1.77 &lt; Z &lt; 1.77 )  =  0.9616  - 0.0384  =  0.9232.
+P(0 &lt; D &lt; 2) = P (-1.77 &lt; Z &lt; 1.77)  =  0.9616  - 0.0384  =  0.9232.
 \]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z =<span class="st"> </span><span class="dv">1</span> /<span class="st"> </span><span class="kw">sqrt</span>(<span class="fl">0.32</span>)
 <span class="kw">pnorm</span>(z) -<span class="st"> </span><span class="kw">pnorm</span>(-z)</code></pre></div>
 <pre><code>## [1] 0.9229001</code></pre>
 <p><strong>Empirical distribution of <span class="math inline">\(D\)</span></strong></p>
+<p>TODO: split chunks and add narration</p>
 <p>Generate <span class="math inline">\(S = 1000\)</span> datasets for each of group 1 and group 2. For each of the <span class="math inline">\(s = 1 : 1000\)</span> datasets, compute <span class="math inline">\(d_s = \bar{x}_{1s} - \bar{x}_{2s}\)</span>. Make a histogram for the <span class="math inline">\(1000\)</span> values of <span class="math inline">\(d\)</span>. What is the proportion of values of <span class="math inline">\(d\)</span> (among the 1000 values of <span class="math inline">\(d\)</span> generated) that are between 0 and 2?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
 sample_size =<span class="st"> </span><span class="dv">25</span>
@@ -1050,14 +1118,14 @@ for (i in <span class="dv">1</span>:samples) {
 <span class="kw">mean</span>(<span class="dv">0</span> &lt;<span class="st"> </span>differences &amp;<span class="st"> </span>differences &lt;<span class="st"> </span><span class="dv">2</span>)</code></pre></div>
 <pre><code>## [1] 0.9222</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(differences, <span class="dt">breaks =</span> <span class="dv">20</span>, <span class="dt">main =</span> <span class="st">&quot;Empirical Distribution of Differences&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(differences)
 <span class="kw">qqline</span>(differences)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-52-2.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-62-2.png" width="672" /></p>
 </div>
 <div id="distribution-of-a-sample-mean" class="section level3">
 <h3><span class="header-section-number">2.4.2</span> Distribution of a Sample Mean</h3>
-<p>TODO: Move in front of paired?</p>
+<p>TODO: Move in front of paired? TODO: split chunks and add narration</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
 sample_size =<span class="st"> </span><span class="dv">50</span>
 mu =<span class="st"> </span><span class="dv">10</span>
@@ -1071,7 +1139,7 @@ for(i in <span class="dv">1</span>:samples){
 x_bar_hist =<span class="st"> </span><span class="kw">hist</span>(x_bar, <span class="dt">breaks =</span> <span class="dv">50</span>, 
                   <span class="dt">main =</span> <span class="st">&quot;Histogram of Sample Means&quot;</span>,
                   <span class="dt">xlab =</span> <span class="st">&quot;Sample Means&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">mean</span>(x_bar), mu)</code></pre></div>
 <pre><code>## [1] 10.00009 10.00000</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">sd</span>(x_bar), <span class="kw">sqrt</span>(mu) /<span class="st"> </span><span class="kw">sqrt</span>(sample_size))</code></pre></div>
@@ -1086,7 +1154,8 @@ x_bar_hist =<span class="st"> </span><span class="kw">hist</span>(x_bar, <span c
 x_bar_hist =<span class="st"> </span><span class="kw">hist</span>(x_bar, <span class="dt">breaks =</span> <span class="dv">50</span>, <span class="dt">col =</span> shading,
                   <span class="dt">main =</span> <span class="st">&quot;Histogram of Sample Means, Two Standard Deviations&quot;</span>,
                   <span class="dt">xlab =</span> <span class="st">&quot;Sample Means&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-53-2.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-63-2.png" width="672" /></p>
+<p>TODO: spell check</p>
 
 </div>
 </div>
