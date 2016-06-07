@@ -36,7 +36,7 @@ RStudio has a large number of useful keyboard shortcuts. A list of these can be 
 
 The RStudio team has developed a number of "cheatsheets" for working with both `R` and RStudio which can be found [here](https://www.rstudio.com/resources/cheatsheets/) or from the help menu inside of RStudio. [This one for Base `R` in particular](http://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf) will summarize many of the concepts in this document.
 
-When programming, it is often a good practice to follow a style guide. (Where do spaces go? Tabs of spaces? Underscores of CamelCase when naming variables?) No style guide is "correct" but it helps to be aware of what some others do. The more import thing is to be consistent with yourself.
+When programming, it is often a good practice to follow a style guide. (Where do spaces go? Tabs or spaces? Underscores or CamelCase when naming variables?) No style guide is "correct" but it helps to be aware of what some others do. The more import thing is to be consistent with yourself.
 
 - [Hadley Wickham Style Guide](http://adv-r.had.co.nz/Style.html) from [Advanced `R`](http://adv-r.had.co.nz/)
 - [Google Style Guide](https://google.github.io/styleguide/Rguide.xml)
@@ -102,7 +102,7 @@ In using `R` as a calculator, we have seen a number of functions. `sqrt()`, `exp
 ?lm
 ```
 
-Frequently one of the most difficult things to do when learning `R` is asking for help. First, you need to decide to ask for help, then you need to know *how* to ask for help. Your very first line of defense should be to Google your error message or a short description of your issue. (The ability to solve problems using this method is quickly becoming an extremely valuable skill.) If that fails, and it eventually will, you should ask for help. There are a number of things you should include when emailing an instructor, or posting to a help website such as <http://stats.stackexchange.com/>.
+Frequently one of the most difficult things to do when learning `R` is asking for help. First, you need to decide to ask for help, then you need to know *how* to ask for help. Your very first line of defense should be to Google your error message or a short description of your issue. (The ability to solve problems using this method is quickly becoming an extremely valuable skill.) If that fails, and it eventually will, you should ask for help. There are a number of things you should include when emailing an instructor, or posting to a help website such as [Stack Exchange](http://stats.stackexchange.com/).
 
 - Describe what you expect the code to do.
 - State the end goal you are trying to achieve. (Sometimes what you expect the code to do, is not what you want to actually do.)
@@ -122,7 +122,7 @@ To install a package, use the `install.packages()` function.
 install.packages("ggplot2")
 ```
 
-Once a package is install, it must be loaded in your current `R` session before being used.
+Once a package is installed, it must be loaded into your current `R` session before being used.
 
 ```{r, eval = FALSE}
 library(ggplot2)
@@ -220,12 +220,15 @@ log(x)
 
 We see that when a function like `log()` is called on a vector `x`, a vector is returned which has applied the function to each element of the vector  `x`.
 
-The length of a vector can be obtained with the `length()` function.
-
 ```{r}
 vec_1 = 1:10
 vec_2 = 1:1000
 vec_3 = 42
+```
+
+The length of a vector can be obtained with the `length()` function.
+
+```{r}
 length(vec_1)
 length(vec_2)
 length(vec_3)
@@ -402,7 +405,7 @@ rowMeans(X)
 colMeans(X)
 ```
 
-The `diag()` function can be used in a number of way. We can extract the diagonal of a matrix.
+The `diag()` function can be used in a number of ways. We can extract the diagonal of a matrix.
 
 ```{r}
 diag(Z)
@@ -448,6 +451,8 @@ write.csv(example_data, "data/example_data.csv", row.names = FALSE)
 example_data_from_csv = read.csv("data/example_data.csv")
 ```
 
+TODO: Note about header and sep and wd and folder struct. rproj?
+
 Alternatively, we could use the "Import Dataset" feature in RStudio which can be found in the environment window. This process will automatically generate the code to import a file. The resulting code will be shown in the console window.
 
 ```{r, eval = FALSE}
@@ -486,7 +491,7 @@ To understand more about the data set, we use the `?` operator to pull up the do
 ?mpg
 ```
 
-`R` has a number of functions for quickly working with and extract basic information from data frames. To quickly obtain a vector of the variable names, we use the `names()` function.
+`R` has a number of functions for quickly working with and extracting basic information from data frames. To quickly obtain a vector of the variable names, we use the `names()` function.
 
 ```{r}
 names(mpg)
@@ -506,6 +511,8 @@ dim(mpg)
 nrow(mpg)
 ncol(mpg)
 ```
+
+TODO: subsetting. dpylr?
 
 ### Plotting
 
@@ -529,8 +536,8 @@ The histogram function has a number of parameters which can be changed to make o
 
 ```{r}
 hist(mpg$cty,
-     xlab   = "City Miles Per Gallon",
-     main   = "Histogram of City MPG",
+     xlab   = "Miles Per Gallon (City)",
+     main   = "Histogram of MPG (City)",
      breaks = 12,
      col    = "dodgerblue",
      border = "darkorange")
@@ -557,8 +564,8 @@ The `R` syntax `hwy ~ drv, data = mpg` reads "Plot the `hwy` variable against th
 ```{r}
 boxplot(hwy ~ drv, data = mpg,
      xlab   = "Drivetrain (f = FWD, r = RWD, 4 = 4WD)",
-     ylab   = "Highway Miles Per Gallon",
-     main   = "Highway MPG vs Engine Displacement",
+     ylab   = "Miles Per Gallon (Highway)",
+     main   = "MPG (Highway) vs Drivetrain",
      pch    = 20,
      cex    = 2,
      col    = "darkorange",
@@ -578,8 +585,8 @@ plot(hwy ~ displ, data = mpg)
 ```{r}
 plot(hwy ~ displ, data = mpg,
      xlab = "Engine Displacement (in Liters)",
-     ylab = "Highway Miles Per Gallon",
-     main = "Highway MPG vs Engine Displacement",
+     ylab = "Miles Per Gallon (Highway)",
+     main = "MPG (Highway) vs Engine Displacement",
      pch  = 20,
      cex  = 2,
      col  = "dodgerblue")
@@ -591,18 +598,18 @@ When working with different statistical distributions, we often want to make pro
 
 We typically want to know one of four things:
 
-* The density (pdf) value at a particular value of `x`.
-* The distribution (cdf) value at a particular value of `x`.
-* The quantile `x` value corresponding to a particular probability.
-* A random value from a particular distribution.
+* The density (pdf) at a particular value.
+* The distribution (cdf)at a particular value.
+* The quantile corresponding to a particular probability.
+* A random draw from a particular distribution.
 
-This used to be done with statistical tables printed in the back of textbooks. Now, R has functions for obtaining density, distribution, quantile and random values.
+This used to be done with statistical tables printed in the back of textbooks. Now, `R` has functions for obtaining density, distribution, quantile and random values.
 
-The general naming structure of the relevant R functions is:
+The general naming structure of the relevant `R` functions is:
 
-* `dname` calculates density (pdf) value at input `x`.
-* `pname` calculates distribution (cdf) value at input `x`.
-* `qname` calculates the quantile `x` value at input probability.
+* `dname` calculates density (pdf) at input `x`.
+* `pname` calculates distribution (cdf) at input `x`.
+* `qname` calculates the quantile at an input probability.
 * `rname` generates a random draw from a particular distribution.
 
 Note that `name` represents the name of the given distribution.
@@ -674,14 +681,14 @@ heights = c(110, 120, 115, 136, 205, 156, 175)
 weights = c(64, 67, 62, 60, 77, 70, 66)
 ```
 
-First, using the `<` operator, when can which `heights` are less than `121`. Further, we could also find which `heights` are less than `121` or exactly equal to `156.`
+First, using the `<` operator, when can find which `heights` are less than `121`. Further, we could also find which `heights` are less than `121` or exactly equal to `156.`
 
 ```{r}
 heights < 121
 heights < 121 | heights == 156
 ```
 
-Often, a vector of logical values is useful for subsetting a vector. For example we can find the `heights` that are larger than `150`. We can then use the resulting vector to subset the `heights` vector, thus actually returning the `heights` that are above `150`, instead of a vector of which values are about `150`. Here we also obtain the `weights` corresponding to `heights` above `150`.
+Often, a vector of logical values is useful for subsetting a vector. For example we can find the `heights` that are larger than `150`. We can then use the resulting vector to subset the `heights` vector, thus actually returning the `heights` that are above `150`, instead of a vector of which values are above `150`. Here we also obtain the `weights` corresponding to `heights` above `150`.
 
 ```{r}
 heights > 150
@@ -699,7 +706,7 @@ a < b
 
 What happened here? `R` still performed the operation, but it also gives us a warning. (To perform the operation automatically made `b` longer by repeating `b` as needed.)
 
-The one exception to this behavior is comparing to a vector length `1`. `R` does not warning us in this case, as comparing each value of a vector to a single value is a common operation that is usually reasonable to perform.
+The one exception to this behavior is comparing to a vector of length `1`. `R` does not warn us in this case, as comparing each value of a vector to a single value is a common operation that is usually reasonable to perform.
 
 ```{r}
 a > 5
@@ -711,7 +718,7 @@ Often we will want to convert `TRUE` and `FALSE` values to `1` and `0`. To do th
 1 * (a > 5)
 ```
 
-If we then sum the resulting vector, we have essentially count the number of elements of `a` that are larger than `5.`
+If we then sum the resulting vector, we have essentially counted the number of elements of `a` that are larger than `5.`
 
 ```{r}
 sum(1 * (a > 5))
@@ -782,8 +789,7 @@ x
 So far we have been using functions, but haven't actually discussed some of their details.
 
 TODO: use
-TODO: arguments
-TODO: defaults (order?)
+TODO: arguments, defaults (order?)
 
 Lastly, we can write our own functions in `R`. For example, we often like to "standardize" variables, that is, subtracting the sample mean, and dividing by the sample standard deviation,
 
@@ -792,6 +798,8 @@ Lastly, we can write our own functions in `R`. For example, we often like to "st
 \]
 
 In `R` we would write a function to do this.
+
+TODO: syntax (argument, {}, return)
 
 ```{r}
 standardize = function(x) {
@@ -802,12 +810,23 @@ standardize = function(x) {
 }
 ```
 
+To test our function, we will take a random sample of size `n = 10` from a normal distribution with a mean of `2` and a standard deviation of `5`.
+
+TODO: set.seed()
+
 ```{r}
-(x = rnorm(10, mean = 2, sd = 5))
-standardize(x)
+set.seed(42)
+(test_sample = rnorm(10, mean = 2, sd = 5))
+standardize(x = test_sample)
 ```
 
-This function could be written much more succinctly, simply performing all the operations on one line and immediately return the result, without storing any of the intermediate results.
+```{r}
+result = standardize(x = test_sample)
+mean(result)
+sd(result)
+```
+
+This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.
 
 ```{r}
 standardize = function(x) {
@@ -815,11 +834,15 @@ standardize = function(x) {
 }
 ```
 
-TODO: function with arguments, control flow, if based return, how return works. compare these two?
+To illustrate a function with a default argument, we will write a function that calculates sample standard deviation two ways.
+
+By default is will calculate the unbiased estimate of $\sigma$, which we will call $s$.
 
 \[
 s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
 \]
+
+It will also have the ability to return the biased estimate (base on maximum likilhood) which we will call $\hat{\sigma}$.
 
 \[
 \hat{\sigma} = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(x - \bar{x})^2}
@@ -827,16 +850,19 @@ s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
 
 ```{r}
 get_sd = function(x, biased = FALSE) {
-  n = length(x) - 1 * biased
+  n = length(x) - 1 * !biased
   sqrt((1 / n) * sum((x - mean(x)) ^ 2))
 }
 ```
 
-TODO: explain 1 * biased
+```{r}
+get_sd(test_sample)
+get_sd(test_sample, biased = FALSE)
+sd(test_sample)
+get_sd(test_sample, biased = TRUE)
+```
 
 ## Hypothesis Tests in `R`
-
-TODO: make all data data frames
 
 ### One Sample t-Test: Review
 
@@ -845,12 +871,12 @@ Suppose $x_{i} \sim \mathrm{N}(\mu,\sigma^{2})$ and we want to test $H_{0}: \mu 
 Assuming $\sigma$ is unknown, we use the one-sample Student's $t$ test statistic:
 
 \[
-t = \displaystyle\frac{\bar{x}-\mu_{0}}{s/\sqrt{n}}\sim t_{n-1}
+t = \displaystyle\frac{\bar{x}-\mu_{0}}{s/\sqrt{n}} \sim t_{n-1}
 \]
 
-where $\bar{x} = \displaystyle\frac{\sum_{i=1}^{n}x_{i}}{n}$ and $s = \sqrt{\displaystyle\frac{\sum_{i=1}^{n}(x_{i}-\bar{x})^{2}}{n-1}}$
+where $\bar{x} = \displaystyle\frac{\sum_{i=1}^{n}x_{i}}{n}$ and $s = \sqrt{\displaystyle\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}$
 
-A $100(1 - \alpha)$\% CI for $\mu$ is given by
+A $100(1 - \alpha)$\% confidence interval for $\mu$ is given by
 
 \[
 \bar{x} \pm t_{n-1}^{(\alpha/2)}\frac{s}{\sqrt{n}}
@@ -860,79 +886,98 @@ where $t_{n-1}^{(\alpha/2)}$ is the critical value such that $P\left(t>t_{n-1}^{
 
 ### One Sample t-Test: Example
 
-TODO: change data to a data frame? or at least a vector
-
-A store sells "16 ounce" boxes of *Captain Crisp* cereal. A random sample of 9 boxes was taken and weighed. The results were
-
-\[
-15.5 \quad 16.2  \quad 16.1  \quad 15.8  \quad 15.6  \quad 16.0  \quad 15.8  \quad 15.9  \quad 16.2
-\]
-
-ounces. Assume the weight of cereal in a box is normally distributed.
-
-**a)** Compute the sample mean $\bar{x}$ and the sample standard deviation $s$.
-
-\[
-\begin{split}
-\bar{x} &= \frac{1}{n}\sum_{i=1}^{n}x_{i}=(1/9)(15.5+\cdots+16.2) = (1/9)(143.1)=\textbf{15.9}\\
-s^{2} &=\frac{1}{n-1}\sum_{i=1}^{n}(x_{i}-\bar{x})^{2}=\frac{1}{n-1}\left[\sum_{i=1}^{n}x_{i}^{2} - n \bar{x}^{2}\right]\\
-&= (1/8)\left[2275.79 - 9(15.9^2)\right] = (1/8)(0.5) = 0.0625\\
-s &= \sqrt{0.0625} = \textbf{0.25}
-\end{split}
-\]
+Suppose a store sells "16 ounce" boxes of *Captain Crisp* cereal. A random sample of 9 boxes was taken and weighed. The weight in ounces are stored in the data frame `capt_crisp`.
 
 ```{r}
-x = c(15.5, 16.2, 16.1, 15.8, 15.6, 16.0, 15.8, 15.9, 16.2)
-mean(x)
-sd(x)
+capt_crisp = data.frame(weight = c(15.5, 16.2, 16.1, 15.8, 15.6, 16.0, 15.8, 15.9, 16.2))
 ```
 
-**b)** Construct a $95\%$ confidence interval for the overall average weight of boxes of *Captain Crisp* cereal.
-
-$t_{n-1}^{(\alpha/2)}=t_{8}^{(0.025)}=2.306$, so the 95\% CI for the average weight of a cereal box is: 
-
-\[
-\begin{split}
-15.9 \pm 2.306\sqrt{\frac{0.0625}{9}} & = [15.708, 16.092]
-\end{split}
-\]
-
-Or, in R:
-
-```{r}
-t.test(x, alternative = c("two.sided"), conf.level = 0.95)
-```
-
-Or if we only wanted to display the interval:
-
-```{r}
-t.test(x, alternative = c("two.sided"), conf.level = 0.95)$conf.int
-```
-
-Or, we could calculate it "by hand" in `R`.
-
-```{r}
-qt(0.975, 8)
-c(mean(x) - qt(0.975, 8) * sd(x) / sqrt(9),
-  mean(x) + qt(0.975, 8) * sd(x) / sqrt(9))
-```
-
-**c)** The company that makes *Captain Crisp* cereal claims that the average weight of its box is at least 16 ounces. Use a 0.05 level of significance to test the company's claim. What is the p-value of this test?
+The company that makes *Captain Crisp* cereal claims that the average weight of a box is at least 16 ounces. We will assume the weight of cereal in a box is normally distributed and use a 0.05 level of significance to test the company's claim.
 
 To test $H_{0}: \mu \geq 16$ versus $H_{1}: \mu < 16$, the test statistic is
 
 \[
-\begin{split}
-T=\frac{15.9-16}{\sqrt{0.0625/9}}=-1.2
-\end{split}
+t = \displaystyle\frac{\bar{x}-\mu_{0}}{s/\sqrt{n}}
 \]
 
-We know that $T\sim t_{8}$, so the rejection reject is $T < -t_{n-1}^{(\alpha)}=-t_{8}^{(0.05)}= -1.860.$
-
-Therefore, we **do NOT reject the null hypothesis** at the $\alpha=.05$ level. We could have also bounded the p-value of the test using the $t$ table.
+The sample mean $\bar{x}$ and the sample standard deviation $s$ can be easily computed using `R`. We also create variables for the hypothesized mean and the sample size.
 
 ```{r}
-t.test(x, mu = 16, alternative = c("less"), conf.level = 0.95)
+x_bar = mean(capt_crisp$weight)
+s     = sd(capt_crisp$weight)
+mu_0  = 16
+n     = 9
+```
+
+We can then easily compute the test statistic.
+
+```{r}
+t = (x_bar - mu_0) / (s / sqrt(n))
+t
+```
+
+Under the null hypothesis, the test statistic has a $t$ distribution with n - 1 degrees of freedom, in this case `r n - 1`.
+
+To complete the test, we need to obtain the p-value of the test. Since this is a one-sided test with a less-than alternative, we need to area to the left of `r t` for a $t$ distribution with `r n - 1` degrees of freedom. That is,
+
+\[
+P(t_{`r n - 1`} < `r t`)
+\]
+
+```{r}
+pt(t, df = n - 1)
+```
+
+We now have the p-value of our test, which is greater than our significance level (0.05) so we fail to reject the null hypothesis.
+
+Alternatively, this entire process could have been completed using one line of `R` code.
+
+```{r}
+t.test(capt_crisp$weight, mu = 16, alternative = c("less"), conf.level = 0.95)
+```
+
+We supply `R` with the data, the hyopthesized value of $\mu$, the alternative and the confidence level. `R` then returns a wealth of information including:
+
+- The value of the test statistic.
+- The degrees of freedom of distribution under the null hyopthesis.
+- The p-value of the test.
+- The confidence interval which corresponds to the test.
+- An estimate of $\mu$.
+
+Since the test was one-sided, `R` returned a one-sided confidence interval. If instead we wanted a two-sided interval for the mean weight of boxes of *Captain Crisp* cereal we could modify our code.
+
+```{r}
+capt_test_results = t.test(capt_crisp$weight, mu = 16,
+                           alternative = c("two.sided"), conf.level = 0.95)
+```
+
+This time we have stored the results. By doing so, we can directly access portions of the ouput from `t.test()`. To see what information is availible we use the `names()` function.
+
+```{r}
+names(capt_test_results)
+```
+
+We are insteaded in a confidence interval.
+
+```{r}
+capt_test_results$conf.int
+```
+
+Let's check this interval "by hand." The one piece of information we are missing is the critical value,  $t_{n-1}^{(\alpha/2)} = t_{8}^{(0.025)}$, which can be calculated in `R` using the `qt()` function.
+
+```{r}
+qt(0.975, df = 8)
+```
+
+So, the 95\% CI for the mean weight of a cereal box is calculated by pluggin into the forumula,
+
+\[
+\bar{x} \pm t_{n-1}^{(\alpha/2)}\frac{s}{\sqrt{n}}
+\]
+
+```{r}
+c(mean(capt_crisp$weight) - qt(0.975, df = 8) * sd(capt_crisp$weight) / sqrt(9),
+  mean(capt_crisp$weight) + qt(0.975, df = 8) * sd(capt_crisp$weight) / sqrt(9))
 ```
 
 ### Two Sample t-Test: Review
@@ -944,7 +989,7 @@ Want to test $H_{0}: \mu_{x}-\mu_{y} = \mu_{0}$ versus $H_{1}: \mu_{x}-\mu_{y} \
 Assuming $\sigma$ is unknown, use the two-sample Student's $t$ test statistic:
 
 \[
-T=\frac{(\bar{x}-\bar{y})-\mu_{0}}{s_{p}\sqrt{\frac{1}{n}+\frac{1}{m}}}\sim t_{n+m-2}
+t = \frac{(\bar{x}-\bar{y})-\mu_{0}}{s_{p}\sqrt{\frac{1}{n}+\frac{1}{m}}}\sim t_{n+m-2}
 \]
 
 where $\displaystyle\bar{x}=\frac{\sum_{i=1}^{n}x_{i}}{n}$, $\displaystyle\bar{y}=\frac{\sum_{i=1}^{m}y_{i}}{m}$, and $s_p^2 = \displaystyle\frac{(n-1)s_1^2+(m-1)s_2^2}{n+m-2}$
@@ -961,78 +1006,82 @@ where $t_{n+m-2}^{(\alpha/2)}$ is critical $t_{n+m-2}$ value such that $P\left(T
 
 Assume that the distributions of $X$ and $Y$ are $\mathrm{N}(\mu_{1},\sigma^{2})$ and $\mathrm{N}(\mu_{2},\sigma^{2})$, respectively. Given the $n = 6$ observations of $X$,
 
-\[
-70, \qquad 82, \qquad 78, \qquad 74, \qquad 94, \qquad 82 
-\]
+```{r}
+x = c(70, 82, 78, 74, 94, 82)
+n = length(x)
+```
 
 and the $m = 8$ observations of $Y$,
 
+```{r}
+y = c(64, 72, 60, 76, 72, 80, 84, 68)
+m = length(y)
+```
+
+we will test $H_{0}: \mu_{1} = \mu_{2}$ versus $H_{1}: \mu_{1} > \mu_{2}$.
+
+First, note that we can calculate the sample means and standard deviations.
+
+```{r}
+x_bar = mean(x)
+s_x   = sd(x)
+y_bar = mean(y)
+s_y   = sd(y)
+```
+
+We can then calculate the pooled standard deviation.
+
 \[
-64, \qquad 72, \qquad 60, \qquad 76, \qquad 72, \qquad 80, \qquad 84, \qquad 68
+s_{p}^{2} = \sqrt{\frac{(n-1)s_{x}^{2}+(m-1)s_{y}^{2}}{n+m-2}}
 \]
 
-find the p-value for the test $H_{0}: \mu_{1} = \mu_{2}$ versus $H_{1}: \mu_{1} > \mu_{2}$.
-
-First, note that the sample means and variances are given by
-
-\[
-\begin{split}
-\bar{x} &= (1/6)\textstyle\sum_{i=1}^{6}x_{i}=(1/6)480=80\\
-\bar{y} &= (1/8)\textstyle\sum_{i=1}^{8}y_{i}=(1/8)576=72\\
-s_{x}^{2} &= (1/5)\textstyle\sum_{i=1}^{6}(x_{i}-\bar{x})^{2}=(1/5)344=68.8\\
-s_{y}^{2} &= (1/7)\textstyle\sum_{i=1}^{8}(y_{i}-\bar{y})^{2}=(1/7)448=64\\
-\end{split}
-\]
-
-which implies that the pooled variance estimate is given by
-
-\[
-\begin{split}
-s_{p}^{2} &= \frac{(n-1)s_{x}^{2}+(m-1)s_{y}^{2}}{n+m-2}\\
-&= \frac{344+448}{12}\\
-&=66
-\end{split}
-\]
-
+```{r}
+s_p = sqrt(((n - 1) * s_x ^ 2 + (m - 1) * s_y ^ 2) / (n + m - 2))
+```
 
 Thus, the relevant $t$ test statistic is given by
 
 \[
-\begin{split}
-T &= \frac{(\bar{x}-\bar{y})-\mu_{0}}{s_{p}\sqrt{\frac{1}{n}+\frac{1}{m}}}\\
-&= \frac{(80-72)-0}{\sqrt{66}\sqrt{\frac{1}{6}+\frac{1}{8}}}\\
-&= 1.82337
-\end{split}
+t = \frac{(\bar{x}-\bar{y})-\mu_{0}}{s_{p}\sqrt{\frac{1}{n}+\frac{1}{m}}}
 \]
-
-Note that $T\sim t_{12}$, so 
-
-\[
-0.025 < p-value < 0.05
-\]
-
-since 
-
-\[
-t_{12}^{(0.025)} = 1.782< 1.82337 < t_{12}^{(0.05)} = 2.179.
-\]
-
 
 ```{r}
-x = c(70, 82, 78, 74, 94, 82)
-y = c(64, 72, 60, 76, 72, 80, 84, 68)
+t = ((x_bar - y_bar) - 0) / (s_p * sqrt(1 / n + 1 / m))
+t
+```
+
+Note that $t \sim t_{n + m - 2} = t_{`r n + m - 2`}$, so we can calculate the p-value, which is
+
+\[
+P(t_{`r n + m - 2`} > `r t`)
+\]
+
+```{r}
+1 - pt(t, df = n + m - 2)
+```
+
+But, then again, we could have simply performed this test in one line of `R`.
+
+```{r}
 t.test(x, y, alternative = c("greater"), var.equal = TRUE)
 ```
 
+Recall that a two-sample $t$-test can be done with or without an equal variance assumption. Here `var.equal = TRUE` tells `R` we would like to perform the test under the equal variance assumption.
 
-Or, performing the calculations `by hand' in `R`:
+TODO: store in df and use formula?
+
 ```{r}
-sPooled2 = ((6 - 1) * var(x) + (8 - 1) * var(y)) / (6 + 8 - 2)
-sPooled2
+t_test_data = data.frame(values = c(x, y),
+                         group  = c(rep("A", length(x)), rep("B", length(y))))
+```
 
-test_stat = (mean(x) - mean(y)) / sqrt(sPooled2 * (1 / 6 + 1 / 8))
-test_stat
-1 - pt(test_stat, 6 + 8 - 2)
+```{r}
+t_test_data
+```
+
+```{r}
+t.test(values ~ group, data = t_test_data,
+       alternative = c("greater"), var.equal = TRUE)
 ```
 
 ## Simulation
@@ -1098,31 +1147,24 @@ Which can then be calculated using `R` without a need to first standardize, or u
 pnorm(2, mean = 1, sd = sqrt(0.32)) - pnorm(0, mean = 1, sd = sqrt(0.32))
 ```
 
-An alternative approach, would be to **simulate** observations of $D$ then use the **empirical distribution** to calculate the probability.
+An alternative approach, would be to **simulate** a large number of observations of $D$ then use the **empirical distribution** to calculate the probability.
 
-TODO: split chunks and add narration
 TODO: discuss rname functions. (or earlier?)
 
 Generate $s = 10000$ samples for each of group 1 and group 2. For each of the  $10000$  samples,  compute $d_s = \bar{x}_{1s} - \bar{x}_{2s}$. 
 
-Make a histogram for the $10000$ values of  $d$. 
-
-What is the proportion of values of  $d$  (among the 10000 values of  $d$  generated) that are between 0 and 2?
+What is the proportion of values of $d$ (among the 10000 values of $d$ generated) that are between 0 and 2?
 
 ```{r}
 set.seed(42)
-mu1         = 6
-mu2         = 5
-std         = 2
-sample_size = 25
-samples     = 10000
-differences = rep(0, samples)
+num_samples = 10000
+differences = rep(0, num_samples)
 ```
 
 ```{r}
-for (i in 1:samples) {
-  x1 = rnorm(sample_size, mu1, std)
-  x2 = rnorm(sample_size, mu2, std)
+for (i in 1:num_samples) {
+  x1 = rnorm(25, mean = 6, sd = 2)
+  x2 = rnorm(25, mean = 5, sd = 2)
   differences[i] = mean(x1) - mean(x2)
 }
 ```
@@ -1133,7 +1175,7 @@ mean(0 < differences & differences < 2)
 
 ```{r}
 hist(differences, breaks = 20, 
-     main = "Empirical Distribution of D",
+     main   = "Empirical Distribution of D",
      xlab   = "Simulated Values of D",
      col    = "dodgerblue",
      border = "darkorange")
@@ -1141,9 +1183,7 @@ hist(differences, breaks = 20,
 
 ### Distribution of a Sample Mean
 
-TODO: Move in front of paired?
-TODO: split chunks and add narration
-TODO: set.seed
+For another example of simulation, we will simulate observations from a Poisson distribution, and examine the emperical distribution of these observatoins.
 
 ```{r}
 set.seed(42)
@@ -1175,7 +1215,7 @@ c(sd(x_bars), sqrt(mu) / sqrt(sample_size))
 
 ```{r}
 mean(x_bars > mu - 2 * sqrt(mu) / sqrt(sample_size) &
-       x_bars < mu + 2 * sqrt(mu) / sqrt(sample_size))
+     x_bars < mu + 2 * sqrt(mu) / sqrt(sample_size))
 ```
 
 ```{r}
