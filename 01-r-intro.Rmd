@@ -10,7 +10,7 @@
     - Chose your operating system, and select the most recent version. (As of writing, 3.3.0.)
 - RStudio, an excellent IDE for working with `R`, which can be obtained from <http://www.rstudio.com/> (Note, you must have `R` installed to use RStudio. RStudio is simply a way to interact with `R`.)
 
-`R`'s popularity is on the rise, and everyday it becomes a better tool for statistical analysis. It even generated this book! (A skill you will learn in this coruse.) There are many good resoruces for learning `R`. They are not necessary for this course, but you may find them useful if you would like a deeper understanding of `R`:
+`R`'s popularity is on the rise, and everyday it becomes a better tool for statistical analysis. It even generated this book! (A skill you will learn in this course.) There are many good resources for learning `R`. They are not necessary for this course, but you may find them useful if you would like a deeper understanding of `R`:
 
 - [Try R](http://tryr.codeschool.com/) from Code School.
     - An interactive introduction to the basics of `R`. Could be very useful for getting up to speed on `R`'s syntax.
@@ -34,7 +34,7 @@ RStudio has a large number of useful keyboard shortcuts. A list of these can be 
 
 The RStudio team has developed a number of "cheatsheets" for working with both `R` and RStudio which can be found [here](https://www.rstudio.com/resources/cheatsheets/) or from the help menu inside of RStudio. [This one for Base `R` in particular](http://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf) will summarize many of the concepts in this document.
 
-When programing, it is often a good practice to follow a style guide. (Where do spaces go? Tabs of spaces? Underscores of CamelCase when naming variables?) No style guide is "correct" but it helps to be aware of what some others do. The more import thing is to be consistent with yourself.
+When programming, it is often a good practice to follow a style guide. (Where do spaces go? Tabs of spaces? Underscores of CamelCase when naming variables?) No style guide is "correct" but it helps to be aware of what some others do. The more import thing is to be consistent with yourself.
 
 - [Hadley Wickham Style Guide](http://adv-r.had.co.nz/Style.html) from [Advanced `R`](http://adv-r.had.co.nz/)
 - [Google Style Guide](https://google.github.io/styleguide/Rguide.xml)
@@ -200,7 +200,7 @@ x[1:3]
 x[c(1,3,4)]
 ```
 
-Lastly we see that we can subset based on a vector of indicies.
+Lastly we see that we can subset based on a vector of indices.
 
 ```{r}
 x = 1:10
@@ -276,7 +276,7 @@ c(x, rep(seq(1, 9, 2), 3), c(1, 2, 3), 42, 2:4)
 y
 ```
 
-- Central Tendancy
+- Central Tendency
 
 ```{r}
 mean(y)
@@ -575,31 +575,39 @@ Also note that, when using the `dname` functions with discrete distributions, th
 
 ### Logical Operators
 
-TODO: finish table
+| Operator | Summary               | Example               | Result |
+|----------|-----------------------|-----------------------|--------|
+| `x < y`  | `x` less than `y`                | `3 < 42`               | `r 3 < 42`               |
+| `x > y`  | `x` greater than `y`             | `3 > 42`               | `r 3 > 42`               |
+| `x <= y` | `x` less than or equal to `y`    | `3 <= 42`              | `r 3 <= 42`              |
+| `x >= y` | `x` greater than or equal to `y` | `3 >= 42`              | `r 3 >= 42`              |
+| `x == y` | `x`equal to `y`                  | `3 == 42`              | `r 3 == 42`              |
+| `x != y` | `x` not equal to `y`             | `3 != 42`              | `r 3 != 42`              |
+| `!x`     | not `x`                          | `!(3 > 42)`            | `r !(3 > 42)`            |
+| `x | y`  | `x` or `y`                       | `(3 > 42) | TRUE`      | `r (3 > 42) | TRUE`      |
+| `x & y`  | `x` and `y`                      | `(3 < 4) & ( 42 > 13)` | `r (3 < 4) & ( 42 > 13)` |
 
-| Operator | Summary                          | Example  | Result     |
-|----------|----------------------------------|----------|------------|
-| `x < y`  | `x` less than `y`                | `3 < 42` | `r 3 < 42` |
-| `x > y`  | `x` greater than `y`             | `3 > 42` | `r 3 > 42` |
-| `x <= y` | `x` less than or equal to `y`    |          |            |
-| `x >= y` | `x` greater than or equal to `y` |          |            |
-| `x == y` | `x`equal to `y`                  |          |            |
-| `x != y` | `x` not equal to `y`             |          |            |
-| `!x`     | not `x`                          |          |            |
-| `x | y`  | `x` or `y`                       |          |            |
-| `x & y`  | `x` and `y`                      |          |            |
-
-In `R`, logical operators are vectorized.
+In `R`, logical operators are vectorized. To demonstrate this, we will use the following height and weight data.
 
 ```{r}
 heights = c(110, 120, 115, 136, 205, 156, 175)
 weights = c(64, 67, 62, 60, 77, 70, 66)
-heights < 121
-heights < 121 | heights == 156
-weights[heights > 150]
 ```
 
-TODO: explain `weights[heights > 150]`
+First, using the `<` operator, when can which `heights` are less than `121`. Further, we could also find which `heights` are less than `121` or exactly equal to `156.`
+
+```{r}
+heights < 121
+heights < 121 | heights == 156
+```
+
+Often, a vector of logical values is useful for subsetting a vector. For example we can find the `heights` that are larger than `150`. We can then use the resulting vector to subset the `heights` vector, thus actually returning the `heights` that are above `150`, instead of a vector of which values are about `150`. Here we also obtain the `weights` corresponding to `heights` above `150`.
+
+```{r}
+heights > 150
+heights[heights > 150]
+weights[heights > 150]
+```
 
 Be careful when comparing vectors that you are comparing vectors of the same length.
 
@@ -611,9 +619,23 @@ a < b
 
 What happened here? `R` still performed the operation, but it also gives us a warning. (To perform the operation automatically made `b` longer by repeating `b` as needed.)
 
-TODO: add comparison to "scalar"
+The one exception to this behavior is comparing to a vector length `1`. `R` does not warning us in this case, as comparing each value of a vector to a single value is a common operation that is usually reasonable to perform.
 
-TODO: which.max(). MAYBE.
+```{r}
+a > 5
+```
+
+Often we will want to convert `TRUE` and `FALSE` values to `1` and `0`. To do this, we simply "multiply" by `1.`
+
+```{r}
+1 * (a > 5)
+```
+
+If we then sum the resulting vector, we have essentially count the number of elements of `a` that are larger than `5.`
+
+```{r}
+sum(1 * (a > 5))
+```
 
 ### Control Flow
 
@@ -643,7 +665,16 @@ if (x > y) {
 z
 ```
 
-TODO: ifelse, single, vectorized
+TODO: ifelse, single?, vectorized
+
+```{r}
+ifelse(4 > 3, 1, 0)
+```
+
+```{r}
+fib = c(1, 1, 2, 3, 5, 8, 13, 21)
+ifelse(fib > 6, "Foo", "Bar")
+```
 
 Now a `for` loop example,
 
@@ -684,7 +715,7 @@ standardize = function(x) {
 ```
 
 ```{r}
-x = rnorm(10, 2, 25)
+(x = rnorm(10, mean = 2, sd = 5))
 standardize(x)
 ```
 
@@ -739,11 +770,7 @@ where $t_{n-1}^{(\alpha/2)}$ is the critical value such that $P\left(t>t_{n-1}^{
 
 ### One Sample t-Test: Example
 
-```{r, eval = FALSE, echo = FALSE}
-# this example needs to be cleaned up
-# is currently not very reproducible
-# make this run on a data frame?
-```
+TODO: change data to a data frame? or at least a vector
 
 A store sells "16 ounce" boxes of *Captain Crisp* cereal. A random sample of 9 boxes was taken and weighed. The results were
 
@@ -973,23 +1000,27 @@ Generate  $S = 1000$ datasets for each of group 1 and group 2. For each of the  
 
 ```{r}
 set.seed(42)
+mu1         = 6
+mu2         = 5
+std         = 2
 sample_size = 25
-mu1 = 6
-mu2 = 5
-std = 2
-
-samples = 10000
-count = 0
+samples     = 10000
 differences = rep(0, samples)
+```
 
+```{r}
 for (i in 1:samples) {
   x1 = rnorm(sample_size, mu1, std)
   x2 = rnorm(sample_size, mu2, std)
   differences[i] = mean(x1) - mean(x2)
 }
+```
 
+```{r}
 mean(0 < differences & differences < 2)
+```
 
+```{r}
 hist(differences, breaks = 20, main = "Empirical Distribution of Differences")
 ```
 
@@ -1000,30 +1031,42 @@ TODO: split chunks and add narration
 
 ```{r}
 set.seed(42)
+mu          = 10
 sample_size = 50
-mu = 10
-samples = 100000
-x_bar = rep(0, samples)
+samples     = 100000
+x_bars       = rep(0, samples)
+```
 
+```{r}
 for(i in 1:samples){
-  x_bar[i] = mean(rpois(sample_size, lambda = mu))
+  x_bars[i] = mean(rpois(sample_size, lambda = mu))
 }
+```
 
-x_bar_hist = hist(x_bar, breaks = 50, 
+```{r}
+x_bar_hist = hist(x_bars, breaks = 50, 
                   main = "Histogram of Sample Means",
                   xlab = "Sample Means")
+```
 
-c(mean(x_bar), mu)
-c(sd(x_bar), sqrt(mu) / sqrt(sample_size))
+```{r}
+c(mean(x_bars), mu)
+```
+```{r}
+c(sd(x_bars), sqrt(mu) / sqrt(sample_size))
+```
 
-mean(x_bar > mu - 2 * sqrt(mu) / sqrt(sample_size) &
-       x_bar < mu + 2 * sqrt(mu) / sqrt(sample_size))
+```{r}
+mean(x_bars > mu - 2 * sqrt(mu) / sqrt(sample_size) &
+       x_bars < mu + 2 * sqrt(mu) / sqrt(sample_size))
+```
 
+```{r}
 shading = ifelse(x_bar_hist$breaks > mu - 2 * sqrt(mu) / sqrt(sample_size) & 
                    x_bar_hist$breaks < mu + 2 * sqrt(mu) / sqrt(sample_size),
                   "darkorange", "dodgerblue")
 
-x_bar_hist = hist(x_bar, breaks = 50, col = shading,
+x_bar_hist = hist(x_bars, breaks = 50, col = shading,
                   main = "Histogram of Sample Means, Two Standard Deviations",
                   xlab = "Sample Means")
 ```
