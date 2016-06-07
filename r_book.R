@@ -5,5 +5,5 @@ inst_pkgs = inst_pkgs[!(inst_pkgs %in% installed.packages()[,"Package"])]
 if(length(inst_pkgs)) install.packages(inst_pkgs)
 
 # Dynamically load packages
-pkgs_loaded = lapply(load_pkgs, require, character.only=T)
+pkgs_loaded = lapply(load_pkgs, require, character.only = TRUE)
 

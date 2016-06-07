@@ -22,6 +22,8 @@
     - Gentle introduction to the programming side of `R`. (Whereas we will focus more on the data analysis side.) A free electronic version is available through the Illinois library.
 - [Advanced `R`](http://adv-r.had.co.nz/) by Hadley Wickham.
     - From the author of several extremely popular `R` packages. Good follow-up to The Art of `R` Programming. (And more up-to-date material.)
+- [`R` for Data Science](http://r4ds.had.co.nz/) by Hadley Wickham and Garrett Grolemund
+    - Similar to Advanced `R`, but focuses more on data analysis, while still introducing programming concepts. At the time of writing, currently under development.
 - [The R Inferno](http://www.burns-stat.com/documents/books/the-r-inferno/) by Patrick Burns.
     - Likens learning the tricks of `R` to descending through the levels of hell. Very advanced material, but may be important if `R` becomes a part of your everyday toolkit.
 - [R Markdown](http://rmarkdown.rstudio.com/) from RStudio.
@@ -423,66 +425,107 @@ diag(5)
 We have previously seen vectors and matrices for storing data as we introduced `R`. We will now introduce a **data frame** which will be the most common way that we store and interact with data in this course.
 
 ```{r}
-example_data = data.frame(x = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
-                          y = c(2, 4, 6, 8, 2, 4, 6, 8, 2, 10),
-                          z = c(1, 1, 1, 1, 1, 3, 3, 3, 3, 42))
+example_data = data.frame(x = c(1, 3, 5, 7, 9, 1, 3, 5, 7, 9),
+                          y = rep("Hello", 10),
+                          z = rep(c("TRUE", "FALSE"), 5))
 ```
 
-list of vectors
-observations and variables
-order "doesn't matter" (unlike a matrix)
-change extracting information to mpg data for clarity of demonstration
+Unlike a matrix, which can be thought of as a vector rearranged into rows and columns, a data frame is not required to have the same data type for each element. A data frame is a **list** of vectors. So, each vector must contain the same data type, but the different vectors can store different data types. 
 
 ```{r}
-names(example_data)
+example_data
 ```
 
-```{r}
-example_data$x
-example_data$z
-```
-
-```{r}
-dim(example_data)
-nrow(example_data)
-ncol(example_data)
-```
+The `data.frame()` function above is one way to create a data frame. We can also import data from various file types in into `R`, as well as use data stored in packages.
 
 ```{r, echo = FALSE}
 write.csv(example_data, "data/example_data.csv", row.names = FALSE)
 ```
 
-[data is csv here](data/example_data.csv)
+[The example data above can also be found here as a .csv file.](data/example_data.csv) To read this data into `R`, we would use the `read.csv()` function.
 
 ```{r, eval = FALSE}
 example_data_from_csv = read.csv("data/example_data.csv")
 ```
 
-TODO: import into R/RStudio (screenshot of button?)
+Alternatively, we could use the "Import Dataset" feature in RStudio which can be found in the environment window. This process will automatically generate the code to import a file. The resulting code will be shown in the console window.
 
 ```{r, eval = FALSE}
 library(ggplot2)
 ```
 
+Early we looked at installing packages, in particular the `ggplot2` package. (A package for visualization. While not necessary for this course, it is quickly growing in popularity.) Inside the `ggplot2` package is a dataset called `mpg`.
+
+When using data from inside a package, there are three things we would generally like to do:
+
+- Look at the raw data.
+- Understand the data. (Where did it come from? What are the variables? Etc.)
+- Visualize the data.
+
+To look at the data, we have two useful commands: `head()` and `str()`.
+
 ```{r}
 head(mpg, n = 10)
 ```
 
+`head()` will display the first `n` observations of the data frame.
 
 ```{r}
 str(mpg)
 ```
 
+`str()` will display the "structure" of the data frame. It will display the number of **observations** and **variables**, list the variables, give the type of each variable, and show some elements of each variable.
+
+It is important to note that while matrices have rows and columns, data frames instead have observations and variables. When displayed in the console or viewer, each row is an observation and each column is a variable. However generally speaking, their order does not matter, it is simply a side-effect of how the data was entered or stored.
+
+In this dataset an observation is for a particular model-year of a car, and the variables describe attributes of the car, for example its highway fuel efficiency.
+
+To understand more about the data set, we use the `?` operator to pull up the documentation for the data.
+
+```{r, eval = FALSE}
+?mpg
+```
+
+`R` has a number of functions for quickly working with and extract basic information from data frames. To quickly obtain a vector of the variable names, we use the `names()` function.
+
+```{r}
+names(mpg)
+```
+
+To access one of the variables as a vector, we use the `$` operator.
+
+```{r}
+mpg$year
+mpg$hwy
+```
+
+We can use the `dim()`, `nrow()` and `ncol()` functions to obtain information about the dimension of the data frame.
+
+```{r}
+dim(mpg)
+nrow(mpg)
+ncol(mpg)
+```
+
 ### Plotting
 
-TODO: look at the data. pictures are your friend.
-TODO: narrative
+Now that we have some data to work with, and we have learned about the data at the most basic level, our next tasks is to visualize the data. Often, a proper visualization can illuminate features of the data that can inform further analysis.
+
+We will look at three methods of visualizing data that we will use throughout the course:
+
+- Histograms
+- Boxplots
+- Scatterplots
 
 #### Histograms
+
+When visualizing a single numerical variable, a **histogram** will be our go-to tool, which can be created in `R` using the `hist()` function.
 
 ```{r}
 hist(mpg$cty)
 ```
+
+The histogram function has a number of parameters which can be changed to make our plot look much nicer. Use the `?` operator to read the documentation for the `hist()` to see a full list of these parameters.
 
 ```{r}
 hist(mpg$cty,
@@ -493,7 +536,11 @@ hist(mpg$cty,
      border = "darkorange")
 ```
 
+Importantly, you should always be sure to label your axes and give the plot a title. `breaks` is an argument specific to `hist()` which controls how many bars `R` will use for the histogram. By default `R` will attempt to intelligently guess a good number of `breaks`, but as we can see here, it is sometimes useful to modify this yourself.
+
 #### Boxplots
+
+To visualize the relationship between a numerical and categorical variable we will use a **boxplot**. In the `mpg` dataset, the `drv` variable takes a small, finite number of values. A car can only be front wheel drive, rear wheel drive, or 4 wheel drive. (FWD, RWD, or 4WD.)
 
 ```{r}
 unique(mpg$drv)
@@ -503,21 +550,29 @@ unique(mpg$drv)
 boxplot(hwy ~ drv, data = mpg)
 ```
 
+Here used the `boxplot()` command to create the boxplot. However, since we are now dealing with two variables, the syntax has changed, and we see the use of a `~` and also a `data = ` argument. This will be a syntax that is common to many functions we will use in this course.
+
+The `R` syntax `hwy ~ drv, data = mpg` reads "Plot the `hwy` variable against the `drv` variable using the dataset `mpg`."
+
 ```{r}
 boxplot(hwy ~ drv, data = mpg,
-     xlab = "Drivetrain (f = FWD, r = RWD, 4 = 4WD)",
-     ylab = "Highway Miles Per Gallon",
-     main = "Highway MPG vs Engine Displacement",
-     pch  = 20,
-     cex  = 2,
-     col  = "darkorange",
+     xlab   = "Drivetrain (f = FWD, r = RWD, 4 = 4WD)",
+     ylab   = "Highway Miles Per Gallon",
+     main   = "Highway MPG vs Engine Displacement",
+     pch    = 20,
+     cex    = 2,
+     col    = "darkorange",
      border = "dodgerblue")
 ```
 
+Again, `boxplot()` has a number of additional arguments which have the ability to make our plot more visually appealing.
+
 #### Scatterplots
 
+Lastly, to visualize the relationship between two numerical variables we will use a **scatterplot**. This can be done with the `plot()` function and the `~` syntax we just used with a boxplot. (`plot()` can also be used more generally, see the documentation for details.)
+
 ```{r}
-plot(mpg$displ, mpg$hwy)
+plot(hwy ~ displ, data = mpg)
 ```
 
 ```{r}
@@ -529,8 +584,6 @@ plot(hwy ~ displ, data = mpg,
      cex  = 2,
      col  = "dodgerblue")
 ```
-
-TODO: Discuss formula.
 
 ### Distributions
 
@@ -554,7 +607,7 @@ The general naming structure of the relevant R functions is:
 
 Note that `name` represents the name of the given distribution.
 
-For example, consider a random variable $X$ which is $N(\mu = 2, \sigma = 5)$. (Note, we are parameterizing using the standard deviation, $\sigma$, not the variance $\sigma^2$. This is to stay consistent with `R`.)
+For example, consider a random variable $X$ which is $N(\mu = 2, \sigma^2 = 25)$. (Note, we are parameterizing using the the variance $\sigma^2$. `R` however uses the standard deviation.)
 
 To calculate the value of the pdf at `x = 3`, that is, the height of the curve at `x = 3`, use:
 
@@ -692,12 +745,13 @@ if (x > y) {
 z
 ```
 
-TODO: ifelse, single?, vectorized
-TODO: narrative
+`R` also has a special function `ifelse()` which is very useful. It returns one of two specified values based on a conditional statement.
 
 ```{r}
 ifelse(4 > 3, 1, 0)
 ```
+
+The real power of `ifelse()` comes from its ability to be applied to vectors.
 
 ```{r}
 fib = c(1, 1, 2, 3, 5, 8, 13, 21)
@@ -725,13 +779,19 @@ x
 
 ### Functions
 
+So far we have been using functions, but haven't actually discussed some of their details.
+
 TODO: use
-TODO: write
 TODO: arguments
 TODO: defaults (order?)
-TODO: return (side effects like plotting?)
 
-Lastly, we can write our own functions in `R`. For example,
+Lastly, we can write our own functions in `R`. For example, we often like to "standardize" variables, that is, subtracting the sample mean, and dividing by the sample standard deviation,
+
+\[
+\frac{x - \bar{x}}{s}
+\]
+
+In `R` we would write a function to do this.
 
 ```{r}
 standardize = function(x) {
@@ -746,6 +806,8 @@ standardize = function(x) {
 (x = rnorm(10, mean = 2, sd = 5))
 standardize(x)
 ```
+
+This function could be written much more succinctly, simply performing all the operations on one line and immediately return the result, without storing any of the intermediate results.
 
 ```{r}
 standardize = function(x) {
@@ -975,11 +1037,9 @@ test_stat
 
 ## Simulation
 
-TODO: general comments on simulations
+One of the biggest strengths of `R` its ability to carry out simulations. We'll look at two examples here, but simulation will be a topic we revisit several times thoughout the course.
 
 ### Paired Differences
-
-TODO: change example splits into narration
 
 Consider the model:
 
@@ -992,39 +1052,62 @@ X_{21}, X_{22}, \ldots, X_{2n} \sim N(\mu_2,\sigma^2)
 
 Assume that $\mu_1 = 6$, $\mu_2 = 5$, $\sigma^2 = 4$ and $n = 25$.
 
-Let $\bar{X_1} = \displaystyle\frac{1}{n}\sum_{i=1}^{n}X_{1i}$, $\bar{X_2} = \displaystyle\frac{1}{n}\sum_{i=1}^{n}X_{2i}$ and $D = \bar{X_1} - \bar{X_2}.$
-
-
-
-**Find $P(0 < D < 2)$.**
+Let
 
 \[
-D = \bar{X_1} - \bar{X_2} \sim N\left(\mu_1-\mu_2, \displaystyle\frac{\sigma^2}{n}+\displaystyle\frac{\sigma^2}{n}\right) = N\left(6-5, \displaystyle\frac{4}{25}+\displaystyle\frac{4}{25}\right)
+\begin{aligned}
+\bar{X}_1 &= \displaystyle\frac{1}{n}\sum_{i=1}^{n}X_{1i}\\
+\bar{X}_2 &= \displaystyle\frac{1}{n}\sum_{i=1}^{n}X_{2i}\\
+D &= \bar{X}_1 - \bar{X}_2.
+\end{aligned}
+\]
+
+Suppose we would like to calculate $P(0 < D < 2)$. First we will need to obtain the distribution of $D$.
+
+Recall,
+
+\[
+\bar{X}_1 \sim N\left(\mu_1,\frac{\sigma^2}{n}\right)
+\]
+
+\[
+\bar{X}_2 \sim N\left(\mu_2,\frac{\sigma^2}{n}\right)
+\]
+
+Then, 
+
+\[
+D = \bar{X}_1 - \bar{X}_2 \sim N\left(\mu_1-\mu_2, \frac{\sigma^2}{n} + \frac{\sigma^2}{n}\right) = N\left(6-5, \frac{4}{25} + \frac{4}{25}\right)
 \]
 
 So, 
 
 \[
-D \sim N(1, 0.32)
+D \sim N(\mu = 1, \sigma^2 = 0.32)
 \]
 
 Thus,
 
 \[
-P(0 < D < 2) = P (-1.77 < Z < 1.77)  =  0.9616  - 0.0384  =  0.9232.
+P(0 < D < 2) = P(D < 2) - P(D < 0).
 \]
 
+Which can then be calculated using `R` without a need to first standardize, or use a table.
+
 ```{r}
-z = 1 / sqrt(0.32)
-pnorm(z) - pnorm(-z)
+pnorm(2, mean = 1, sd = sqrt(0.32)) - pnorm(0, mean = 1, sd = sqrt(0.32))
 ```
 
-
-**Empirical distribution of $D$**
+An alternative approach, would be to **simulate** observations of $D$ then use the **empirical distribution** to calculate the probability.
 
 TODO: split chunks and add narration
+TODO: discuss rname functions. (or earlier?)
 
-Generate  $S = 1000$ datasets for each of group 1 and group 2. For each of the  $s = 1 : 1000$  datasets,  compute $d_s =   \bar{x}_{1s} - \bar{x}_{2s}$. Make a histogram for the $1000$ values of  $d$. What is the proportion of values of  $d$  (among the 1000 values of  $d$  generated) that are between 0 and 2?
+Generate $s = 10000$ samples for each of group 1 and group 2. For each of the  $10000$  samples,  compute $d_s = \bar{x}_{1s} - \bar{x}_{2s}$. 
+
+Make a histogram for the $10000$ values of  $d$. 
+
+What is the proportion of values of  $d$  (among the 10000 values of  $d$  generated) that are between 0 and 2?
 
 ```{r}
 set.seed(42)
@@ -1049,13 +1132,18 @@ mean(0 < differences & differences < 2)
 ```
 
 ```{r}
-hist(differences, breaks = 20, main = "Empirical Distribution of Differences")
+hist(differences, breaks = 20, 
+     main = "Empirical Distribution of D",
+     xlab   = "Simulated Values of D",
+     col    = "dodgerblue",
+     border = "darkorange")
 ```
 
 ### Distribution of a Sample Mean
 
 TODO: Move in front of paired?
 TODO: split chunks and add narration
+TODO: set.seed
 
 ```{r}
 set.seed(42)
