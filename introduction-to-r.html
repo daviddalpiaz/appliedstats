@@ -878,8 +878,8 @@ mpg %&gt;%<span class="st"> </span><span class="kw">filter</span>(hwy &gt;<span 
 <pre><code>## [1] 11.79982</code></pre>
 <p>Lastly, to generate a random sample of size <code>n = 10</code>, use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</code></pre></div>
-<pre><code>##  [1] -4.013429  5.836894 -3.879485  6.874687  3.126839  6.458204 12.879834
-##  [8]  4.449120 12.891508  1.181977</code></pre>
+<pre><code>##  [1]  4.3544800 12.1755929 -2.3012549  3.3360965  8.9211901 10.3336299
+##  [7]  7.0520380  0.7377204  3.3032481  1.2130147</code></pre>
 <p>These functions exist for many other distributions, including but not limited to:</p>
 <table>
 <thead>
@@ -1077,7 +1077,7 @@ x</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">function_name</span>(<span class="dt">arg1 =</span> <span class="dv">10</span>, <span class="dt">arg2 =</span> <span class="dv">20</span>)</code></pre></div>
 <p>To use a function, you simply type its name, followed by an open parenthesis, then specify values of its arguments, then finish with a closing parnthesis.</p>
 <p>An <strong>argument</strong> is a variable which is used in the body of the function. Specifyinng the values of the arugments is essentially providing the inputs to the function.</p>
-<p>We can also write our own functions in <code>R</code>. For example, we often like to “standardize” variables, that is, subtracting the sample mean, and dividing by the sample standard deviation,</p>
+<p>We can also write our own functions in <code>R</code>. For example, we often like to “standardize” variables, that is, subtracting the sample mean, and dividing by the sample standard deviation.</p>
 <p><span class="math display">\[
 \frac{x - \bar{x}}{s}
 \]</span></p>
@@ -1096,11 +1096,11 @@ x</code></pre></div>
 <p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the results of the final line of the body is what is returned by the function.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</code></pre></div>
-<pre><code>##  [1] -3.3504135 -5.8168705  9.0199384  5.4252836 -0.4862634 -4.5143421
-##  [7] -7.0447199  2.2752503  3.4338545  3.6581993</code></pre>
+<pre><code>##  [1] -0.66925074  0.76315547  0.02496961  2.10454535 -2.58421990 -2.68219123
+##  [7]  4.92015849  6.47587644  0.03021606  5.20385305</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)</code></pre></div>
-<pre><code>##  [1] -0.6772518 -1.1399179  1.6432199  0.9689226 -0.1399850 -0.8955854
-##  [7] -1.3702420  0.3780289  0.5953637  0.6374470</code></pre>
+<pre><code>##  [1] -0.6271802 -0.1841853 -0.4124813  0.2306613 -1.2194156 -1.2497148
+##  [7]  1.1014355  1.5825666 -0.4108588  1.1891727</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">standardize =<span class="st"> </span>function(x) {
   (x -<span class="st"> </span><span class="kw">mean</span>(x)) /<span class="st"> </span><span class="kw">sd</span>(x)
@@ -1117,10 +1117,10 @@ x</code></pre></div>
 <pre><code>## [1] 100</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">power_of_num</span>(<span class="dt">power =</span> <span class="dv">2</span>, <span class="dt">num =</span> <span class="dv">10</span>)</code></pre></div>
 <pre><code>## [1] 100</code></pre>
-<p>TODO: note about order?</p>
+<p>TODO: note about order? interaction with default arguments</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">power_of_num</span>(<span class="dv">2</span>, <span class="dv">10</span>)</code></pre></div>
 <pre><code>## [1] 1024</code></pre>
-<p>TODO: must supply value when no defauly</p>
+<p>TODO: must supply value when no default</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">power_of_num</span>(<span class="dt">power =</span> <span class="dv">5</span>)</code></pre></div>
 <p>To further illustrate a function with a default argument, we will write a function that calculates sample standard deviation two ways.</p>
 <p>By default is will calculate the unbiased estimate of <span class="math inline">\(\sigma\)</span>, which we will call <span class="math inline">\(s\)</span>.</p>
@@ -1136,13 +1136,13 @@ s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
   <span class="kw">sqrt</span>((<span class="dv">1</span> /<span class="st"> </span>n) *<span class="st"> </span><span class="kw">sum</span>((x -<span class="st"> </span><span class="kw">mean</span>(x)) ^<span class="st"> </span><span class="dv">2</span>))
 }</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 5.330965</code></pre>
+<pre><code>## [1] 3.23346</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample, <span class="dt">biased =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<pre><code>## [1] 5.330965</code></pre>
+<pre><code>## [1] 3.23346</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 5.330965</code></pre>
+<pre><code>## [1] 3.23346</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample, <span class="dt">biased =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## [1] 5.057397</code></pre>
+<pre><code>## [1] 3.067529</code></pre>
 </div>
 </div>
 <div id="hypothesis-tests-in-r" class="section level2">
@@ -1152,7 +1152,7 @@ s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
 <p>Suppose <span class="math inline">\(x_{i} \sim \mathrm{N}(\mu,\sigma^{2})\)</span> and we want to test <span class="math inline">\(H_{0}: \mu = \mu_{0}\)</span> versus <span class="math inline">\(H_{1}: \mu \neq \mu_{0}.\)</span></p>
 <p>Assuming <span class="math inline">\(\sigma\)</span> is unknown, we use the one-sample Student’s <span class="math inline">\(t\)</span> test statistic:</p>
 <p><span class="math display">\[
-t = \displaystyle\frac{\bar{x}-\mu_{0}}{s/\sqrt{n}} \sim t_{n-1}
+t = \frac{\bar{x}-\mu_{0}}{s/\sqrt{n}} \sim t_{n-1}
 \]</span></p>
 <p>where <span class="math inline">\(\bar{x} = \displaystyle\frac{\sum_{i=1}^{n}x_{i}}{n}\)</span> and <span class="math inline">\(s = \sqrt{\displaystyle\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}\)</span></p>
 <p>A <span class="math inline">\(100(1 - \alpha)\)</span>% confidence interval for <span class="math inline">\(\mu\)</span> is given by</p>
@@ -1163,14 +1163,14 @@ t = \displaystyle\frac{\bar{x}-\mu_{0}}{s/\sqrt{n}} \sim t_{n-1}
 </div>
 <div id="one-sample-t-test-example" class="section level3">
 <h3><span class="header-section-number">2.4.2</span> One Sample t-Test: Example</h3>
-<p>Suppose a store sells “16 ounce” boxes of <em>Captain Crisp</em> cereal. A random sample of 9 boxes was taken and weighed. The weight in ounces are stored in the data frame <code>capt_crisp</code>.</p>
+<p>Suppose a grocery store sells “16 ounce” boxes of <em>Captain Crisp</em> cereal. A random sample of 9 boxes was taken and weighed. The weight in ounces are stored in the data frame <code>capt_crisp</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">capt_crisp =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">weight =</span> <span class="kw">c</span>(<span class="fl">15.5</span>, <span class="fl">16.2</span>, <span class="fl">16.1</span>, <span class="fl">15.8</span>, <span class="fl">15.6</span>, <span class="fl">16.0</span>, <span class="fl">15.8</span>, <span class="fl">15.9</span>, <span class="fl">16.2</span>))</code></pre></div>
 <p>The company that makes <em>Captain Crisp</em> cereal claims that the average weight of a box is at least 16 ounces. We will assume the weight of cereal in a box is normally distributed and use a 0.05 level of significance to test the company’s claim.</p>
 <p>To test <span class="math inline">\(H_{0}: \mu \geq 16\)</span> versus <span class="math inline">\(H_{1}: \mu &lt; 16\)</span>, the test statistic is</p>
 <p><span class="math display">\[
-t = \displaystyle\frac{\bar{x}-\mu_{0}}{s/\sqrt{n}}
+t = \frac{\bar{x} - \mu_{0}}{s / \sqrt{n}}
 \]</span></p>
-<p>The sample mean <span class="math inline">\(\bar{x}\)</span> and the sample standard deviation <span class="math inline">\(s\)</span> can be easily computed using <code>R</code>. We also create variables for the hypothesized mean and the sample size.</p>
+<p>The sample mean <span class="math inline">\(\bar{x}\)</span> and the sample standard deviation <span class="math inline">\(s\)</span> can be easily computed using <code>R</code>. We also create variables which store the hypothesized mean and the sample size.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x_bar =<span class="st"> </span><span class="kw">mean</span>(capt_crisp$weight)
 s     =<span class="st"> </span><span class="kw">sd</span>(capt_crisp$weight)
 mu_0  =<span class="st"> </span><span class="dv">16</span>
@@ -1188,7 +1188,7 @@ P(t_{8} &lt; -1.2)
 <pre><code>## [1] 0.1322336</code></pre>
 <p>We now have the p-value of our test, which is greater than our significance level (0.05) so we fail to reject the null hypothesis.</p>
 <p>Alternatively, this entire process could have been completed using one line of <code>R</code> code.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(capt_crisp$weight, <span class="dt">mu =</span> <span class="dv">16</span>, <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;less&quot;</span>), <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(<span class="dt">x =</span> capt_crisp$weight, <span class="dt">mu =</span> <span class="dv">16</span>, <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;less&quot;</span>), <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
 ## 
@@ -1215,7 +1215,7 @@ P(t_{8} &lt; -1.2)
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(capt_test_results)</code></pre></div>
 <pre><code>## [1] &quot;statistic&quot;   &quot;parameter&quot;   &quot;p.value&quot;     &quot;conf.int&quot;    &quot;estimate&quot;   
 ## [6] &quot;null.value&quot;  &quot;alternative&quot; &quot;method&quot;      &quot;data.name&quot;</code></pre>
-<p>We are interested in the confidence interval.</p>
+<p>We are interested in the confidence interval which is stored in <code>conf.int</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">capt_test_results$conf.int</code></pre></div>
 <pre><code>## [1] 15.70783 16.09217
 ## attr(,&quot;conf.level&quot;)
@@ -1233,18 +1233,18 @@ P(t_{8} &lt; -1.2)
 </div>
 <div id="two-sample-t-test-review" class="section level3">
 <h3><span class="header-section-number">2.4.3</span> Two Sample t-Test: Review</h3>
-<p>Suppose <span class="math inline">\(x_{i}\sim\mathrm{N}(\mu_{x},\sigma^{2})\)</span> and <span class="math inline">\(y_{i}\sim\mathrm{N}(\mu_{y},\sigma^{2}).\)</span></p>
-<p>Want to test <span class="math inline">\(H_{0}: \mu_{x}-\mu_{y} = \mu_{0}\)</span> versus <span class="math inline">\(H_{1}: \mu_{x}-\mu_{y} \neq \mu_{0}.\)</span></p>
+<p>Suppose <span class="math inline">\(x_{i} \sim \mathrm{N}(\mu_{x}, \sigma^{2})\)</span> and <span class="math inline">\(y_{i} \sim \mathrm{N}(\mu_{y}, \sigma^{2}).\)</span></p>
+<p>Want to test <span class="math inline">\(H_{0}: \mu_{x} - \mu_{y} = \mu_{0}\)</span> versus <span class="math inline">\(H_{1}: \mu_{x} - \mu_{y} \neq \mu_{0}.\)</span></p>
 <p>Assuming <span class="math inline">\(\sigma\)</span> is unknown, use the two-sample Student’s <span class="math inline">\(t\)</span> test statistic:</p>
 <p><span class="math display">\[
-t = \frac{(\bar{x}-\bar{y})-\mu_{0}}{s_{p}\sqrt{\frac{1}{n}+\frac{1}{m}}}\sim t_{n+m-2}
+t = \frac{(\bar{x} - \bar{y})-\mu_{0}}{s_{p}\sqrt{\frac{1}{n}+\frac{1}{m}}} \sim t_{n+m-2}
 \]</span></p>
 <p>where <span class="math inline">\(\displaystyle\bar{x}=\frac{\sum_{i=1}^{n}x_{i}}{n}\)</span>, <span class="math inline">\(\displaystyle\bar{y}=\frac{\sum_{i=1}^{m}y_{i}}{m}\)</span>, and <span class="math inline">\(s_p^2 = \displaystyle\frac{(n-1)s_1^2+(m-1)s_2^2}{n+m-2}\)</span></p>
 <p>A <span class="math inline">\(100(1-\alpha)\)</span>% CI for <span class="math inline">\(\mu_{x}-\mu_{y}\)</span> is given by</p>
 <p><span class="math display">\[
-(\bar{x}-\bar{y})\pm t_{n+m-2}^{(\alpha/2)}\left(s_{p}\textstyle\sqrt{\frac{1}{n}+\frac{1}{m}}\right)
+(\bar{x} - \bar{y}) \pm t_{n+m-2}^{(\alpha/2)}\left(s_{p}\textstyle\sqrt{\frac{1}{n}+\frac{1}{m}}\right)
 \]</span></p>
-<p>where <span class="math inline">\(t_{n+m-2}^{(\alpha/2)}\)</span> is critical <span class="math inline">\(t_{n+m-2}\)</span> value such that <span class="math inline">\(P\left(T&gt;t_{n+m-2}^{(\alpha/2)}\right)=\alpha/2\)</span>.</p>
+<p>where <span class="math inline">\(t_{n+m-2}^{(\alpha/2)}\)</span> is critical <span class="math inline">\(t_{n+m-2}\)</span> value such that <span class="math inline">\(P\left(t&gt;t_{n+m-2}^{(\alpha/2)}\right)=\alpha/2\)</span>.</p>
 </div>
 <div id="two-sample-t-test-example" class="section level3">
 <h3><span class="header-section-number">2.4.4</span> Two Sample t-Test: Example</h3>
