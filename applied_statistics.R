@@ -418,6 +418,7 @@ power_of_num(10, 2)
 power_of_num(num = 10, power = 2)
 power_of_num(power = 2, num = 10)
 
+
 ## -----------------------------------------------------------------------------
 power_of_num(2, 10)
 
@@ -434,6 +435,8 @@ get_sd = function(x, biased = FALSE) {
 get_sd(test_sample)
 get_sd(test_sample, biased = FALSE)
 sd(test_sample)
+
+## -----------------------------------------------------------------------------
 get_sd(test_sample, biased = TRUE)
 
 ## -----------------------------------------------------------------------------

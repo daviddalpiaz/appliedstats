@@ -463,7 +463,7 @@ write.csv(example_data, "data/example_data.csv", row.names = FALSE)
 example_data_from_csv = read.csv("data/example_data.csv")
 ```
 
-TODO: Note about header and sep and wd and folder struct. rproj? NO ATTACH!
+This particular line of code assumes that the file `example_data.csv` exists in a folder called `data` in your current working directory.
 
 Alternatively, we could use the "Import Dataset" feature in RStudio which can be found in the environment window. This process will automatically generate the code to import a file. The resulting code will be shown in the console window.
 
@@ -526,7 +526,7 @@ nrow(mpg)
 ncol(mpg)
 ```
 
-Subsetting data frames can work much like subsetting matricies using square brackets, `[,]`. Here, we find fuel efficient vehicles and only display `manufacturer`, `model` and `year`.
+Subsetting data frames can work much like subsetting matrices using square brackets, `[,]`. Here, we find fuel efficient vehicles and only display `manufacturer`, `model` and `year`.
 
 ```{r}
 mpg[mpg$hwy > 35, c("manufacturer", "model", "year")]
@@ -538,7 +538,7 @@ An alternative would be to use the `subset()` function, which has a much more re
 subset(mpg, subset = hwy > 35, select = c("manufacturer", "model", "year"))
 ```
 
-Lastly, we could use the `filter` and `select` functions from the `dplyr` package which introduces the `%>%` operator from the `magrittr` package. This is not necessary for this course, however the `dplyr` packge is something you should be aware of as it is becoming a popular tool in the `R` world.
+Lastly, we could use the `filter` and `select` functions from the `dplyr` package which introduces the `%>%` operator from the `magrittr` package. This is not necessary for this course, however the `dplyr` package is something you should be aware of as it is becoming a popular tool in the `R` world.
 
 ```{r, eval = FALSE}
 library(dplyr)
@@ -757,7 +757,7 @@ If we then sum the resulting vector, we have essentially counted the number of e
 sum(1 * (a > 5))
 ```
 
-Moreover, by calling `sum()` on a vector of logicals, it automatically converts them to `0` and `1` and performs the same operation as above. This is an extremely useful feature.
+Moreover, by calling `sum()` on a vector of logical values, it automatically converts them to `0` and `1` and performs the same operation as above. This is an extremely useful feature.
 
 ```{r}
 sum(a > 5)
@@ -831,9 +831,9 @@ So far we have been using functions, but haven't actually discussed some of thei
 function_name(arg1 = 10, arg2 = 20)
 ```
 
-To use a function, you simply type its name, followed by an open parenthesis, then specify values of its arguments, then finish with a closing parnthesis. 
+To use a function, you simply type its name, followed by an open parenthesis, then specify values of its arguments, then finish with a closing parenthesis. 
 
-An **argument** is a variable which is used in the body of the function. Specifyinng the values of the arugments is essentially providing the inputs to the function.
+An **argument** is a variable which is used in the body of the function. Specifying the values of the arguments is essentially providing the inputs to the function.
 
 We can also write our own functions in `R`. For example, we often like to "standardize" variables, that is, subtracting the sample mean, and dividing by the sample standard deviation.
 
@@ -843,7 +843,7 @@ We can also write our own functions in `R`. For example, we often like to "stand
 
 In `R` we would write a function to do this. When writing a function, there are three thing you must do.
 
-- Give the function a name. Preferably something that is short, but describtive.
+- Give the function a name. Preferably something that is short, but descriptive.
 - Specify the arguments using `function()`
 - Write the body of the function within curly braces, `{}`.
 
@@ -873,7 +873,7 @@ standardize = function(x) {
 }
 ```
 
-When specifying arugments, you can provide default arguments.
+When specifying arguments, you can provide default arguments.
 
 ```{r}
 power_of_num = function(num, power = 2) {
@@ -881,20 +881,23 @@ power_of_num = function(num, power = 2) {
 }
 ```
 
+Let's look at a number of ways that we could run this function to perform the operation `10^2` resulting in `100`.
+
 ```{r}
 power_of_num(10)
 power_of_num(10, 2)
 power_of_num(num = 10, power = 2)
 power_of_num(power = 2, num = 10)
+
 ```
 
-TODO: note about order? interaction with default arguments
+Note however that, without using the argument names, the order matters, as the following code will not evaluate to the same output.
 
 ```{r}
 power_of_num(2, 10)
 ```
 
-TODO: must supply value when no default
+Also, the following line of code would produce an error since arguments without a default value must be specified.
 
 ```{r, eval = FALSE}
 power_of_num(power = 5)
@@ -925,6 +928,11 @@ get_sd = function(x, biased = FALSE) {
 get_sd(test_sample)
 get_sd(test_sample, biased = FALSE)
 sd(test_sample)
+```
+
+We see the function is working as expected, and when returning the unbiased estimate it matches `R`'s built in function `sd()`.
+
+```{r}
 get_sd(test_sample, biased = TRUE)
 ```
 
@@ -1038,7 +1046,7 @@ qt(0.975, df = 8)
 So, the 95\% CI for the mean weight of a cereal box is calculated by plugging into the formula,
 
 \[
-\bar{x} \pm t_{n-1}^{(\alpha/2)}\frac{s}{\sqrt{n}}
+\bar{x} \pm t_{n-1}^{(\alpha/2)} \frac{s}{\sqrt{n}}
 \]
 
 ```{r}
@@ -1134,7 +1142,7 @@ t.test(x, y, alternative = c("greater"), var.equal = TRUE)
 
 Recall that a two-sample $t$-test can be done with or without an equal variance assumption. Here `var.equal = TRUE` tells `R` we would like to perform the test under the equal variance assumption.
 
-Above we carried out the anlysis using two vectors `x` and `y`. In general, we will have a preference for using data frames.
+Above we carried out the analysis using two vectors `x` and `y`. In general, we will have a preference for using data frames.
 
 ```{r}
 t_test_data = data.frame(values = c(x, y),
@@ -1233,9 +1241,9 @@ num_samples = 10000
 differences = rep(0, num_samples)
 ```
 
-Before starting our `for` loop to perform the operation, we set a seed for reproducability, create and set a variable, `num_samples` which will define the number of repititions, and lastly create a variables `differences` which will store the simulate values, $d_s$.
+Before starting our `for` loop to perform the operation, we set a seed for reproducibility, create and set a variable `num_samples` which will define the number of repetitions, and lastly create a variables `differences` which will store the simulate values, $d_s$.
 
-TODO: set.seed()
+By using `set.seed()` we can reproduce the random results of `rnorm()` each time starting from that line. 
 
 ```{r}
 for (s in 1:num_samples) {
@@ -1245,11 +1253,15 @@ for (s in 1:num_samples) {
 }
 ```
 
-To estimate $P(0 < D < 2)$ we will find the proportion of values of $d_s$ (among the 10000 values of $d_s$ generated) that are between 0 and 2.
+To estimate $P(0 < D < 2)$ we will find the proportion of values of $d_s$ (among the `r num_samples` values of $d_s$ generated) that are between 0 and 2.
 
 ```{r}
 mean(0 < differences & differences < 2)
 ```
+
+Recall that above we derived the distribution of $D$ to be $N(\mu = 1, \sigma^2 = 0.32)$
+
+If we look at a histogram of the differences, we find that it looks very much like a normal distribution.
 
 ```{r}
 hist(differences, breaks = 20, 
@@ -1259,12 +1271,14 @@ hist(differences, breaks = 20,
      border = "darkorange")
 ```
 
+Also the sample mean and variance are very close to to what we would expect.
+
 ```{r}
 mean(differences)
 var(differences)
 ```
 
-We could have also accomplished this task with a single line of more "idomatic" `R`.
+We could have also accomplished this task with a single line of more "idiomatic" `R`.
 
 ```{r}
 set.seed(42)
@@ -1283,8 +1297,31 @@ We see that by setting the same seed for the randomization, we actually obtain i
 
 For another example of simulation, we will simulate observations from a Poisson distribution, and examine the empirical distribution of the sample mean of these observations.
 
+Recall, if
+
+\[
+X \sim Pois(\mu)
+\]
+
+Then
+
+\[
+\begin{aligned}
+E[X] &= \mu \\
+Var[X] &= \mu
+\end{aligned}
+\]
+
+Also, recall that for a random variable $X$ with finite mean $\mu$ and finite variance $\sigma^2$, the central limit theorem tells us that the mean, $\bar{X}$ of a random sample of size $n$ is approximately normal for *large* values of $n$. Specifically,
+
+\[
+\bar{X} \overset{d}{\to} N\left(\mu, \frac{\sigma^2}{n}\right)
+\]
+
+The following verifies this result for a Poisson distribution with $\mu = 10$ and a sample size of `n = 50`.
+
 ```{r}
-set.seed(42)
+set.seed(1337)
 mu          = 10
 sample_size = 50
 samples     = 100000
@@ -1316,6 +1353,8 @@ mean(x_bars > mu - 2 * sqrt(mu) / sqrt(sample_size) &
      x_bars < mu + 2 * sqrt(mu) / sqrt(sample_size))
 ```
 
+This last histogram uses a bit of a trick to approximately shade the bars that are within two standard deviations of the mean.)
+
 ```{r}
 shading = ifelse(x_bar_hist$breaks > mu - 2 * sqrt(mu) / sqrt(sample_size) & 
                    x_bar_hist$breaks < mu + 2 * sqrt(mu) / sqrt(sample_size),
@@ -1325,6 +1364,3 @@ x_bar_hist = hist(x_bars, breaks = 50, col = shading,
                   main = "Histogram of Sample Means, Two Standard Deviations",
                   xlab = "Sample Means")
 ```
-
-Here we repeated the histogram using a bit of a trick to approximately shade the bars that are within two standard deviations of the mean.
-
