@@ -4,6 +4,16 @@
 >
 > --- **Bill Gates**
 
+After reading this chapter you will be able to...
+
+- interact with `R` using RStudio.
+- use `R` as a calculator.
+- work with data as vectors and data frames.
+- make basic data visualizations.
+- write your own `R` functions.
+- perform hypothesis tests using `R`.
+- perform basic simulations in `R`.
+
 `R` is both a programming language and software environment for statistical computing, which is *free* and *open-source*. To get started, you will need to install two pieces of software:
 
 - `R`, the actual programming language, which can be installed from <http://cran.r-project.org/>
@@ -842,7 +852,7 @@ By default is will calculate the unbiased estimate of $\sigma$, which we will ca
 s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
 \]
 
-It will also have the ability to return the biased estimate (base on maximum likilhood) which we will call $\hat{\sigma}$.
+It will also have the ability to return the biased estimate (based on maximum likelihood) which we will call $\hat{\sigma}$.
 
 \[
 \hat{\sigma} = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(x - \bar{x})^2}
@@ -936,10 +946,10 @@ Alternatively, this entire process could have been completed using one line of `
 t.test(capt_crisp$weight, mu = 16, alternative = c("less"), conf.level = 0.95)
 ```
 
-We supply `R` with the data, the hyopthesized value of $\mu$, the alternative and the confidence level. `R` then returns a wealth of information including:
+We supply `R` with the data, the hypothesized value of $\mu$, the alternative and the confidence level. `R` then returns a wealth of information including:
 
 - The value of the test statistic.
-- The degrees of freedom of distribution under the null hyopthesis.
+- The degrees of freedom of distribution under the null hypothesis.
 - The p-value of the test.
 - The confidence interval which corresponds to the test.
 - An estimate of $\mu$.
@@ -951,13 +961,13 @@ capt_test_results = t.test(capt_crisp$weight, mu = 16,
                            alternative = c("two.sided"), conf.level = 0.95)
 ```
 
-This time we have stored the results. By doing so, we can directly access portions of the ouput from `t.test()`. To see what information is availible we use the `names()` function.
+This time we have stored the results. By doing so, we can directly access portions of the output from `t.test()`. To see what information is available we use the `names()` function.
 
 ```{r}
 names(capt_test_results)
 ```
 
-We are insteaded in a confidence interval.
+We are interested in the confidence interval.
 
 ```{r}
 capt_test_results$conf.int
@@ -969,7 +979,7 @@ Let's check this interval "by hand." The one piece of information we are missing
 qt(0.975, df = 8)
 ```
 
-So, the 95\% CI for the mean weight of a cereal box is calculated by pluggin into the forumula,
+So, the 95\% CI for the mean weight of a cereal box is calculated by plugging into the formula,
 
 \[
 \bar{x} \pm t_{n-1}^{(\alpha/2)}\frac{s}{\sqrt{n}}
@@ -1086,7 +1096,7 @@ t.test(values ~ group, data = t_test_data,
 
 ## Simulation
 
-One of the biggest strengths of `R` its ability to carry out simulations. We'll look at two examples here, but simulation will be a topic we revisit several times thoughout the course.
+One of the biggest strengths of `R` its ability to carry out simulations. We'll look at two examples here, but simulation will be a topic we revisit several times throughout the course.
 
 ### Paired Differences
 
@@ -1183,7 +1193,7 @@ hist(differences, breaks = 20,
 
 ### Distribution of a Sample Mean
 
-For another example of simulation, we will simulate observations from a Poisson distribution, and examine the emperical distribution of these observatoins.
+For another example of simulation, we will simulate observations from a Poisson distribution, and examine the empirical distribution of these observations.
 
 ```{r}
 set.seed(42)
