@@ -14,6 +14,8 @@ After reading this chapter you will be able to...
 - perform hypothesis tests using `R`.
 - perform basic simulations in `R`.
 
+## `R` Resources
+
 `R` is both a programming language and software environment for statistical computing, which is *free* and *open-source*. To get started, you will need to install two pieces of software:
 
 - `R`, the actual programming language, which can be installed from <http://cran.r-project.org/>
@@ -461,9 +463,11 @@ write.csv(example_data, "data/example_data.csv", row.names = FALSE)
 example_data_from_csv = read.csv("data/example_data.csv")
 ```
 
-TODO: Note about header and sep and wd and folder struct. rproj?
+TODO: Note about header and sep and wd and folder struct. rproj? NO ATTACH!
 
 Alternatively, we could use the "Import Dataset" feature in RStudio which can be found in the environment window. This process will automatically generate the code to import a file. The resulting code will be shown in the console window.
+
+![RStudio Import Screen](images/import.png)
 
 ```{r, eval = FALSE}
 library(ggplot2)
@@ -522,7 +526,26 @@ nrow(mpg)
 ncol(mpg)
 ```
 
-TODO: subsetting. dpylr?
+Subsetting data frames can work much like subsetting matricies using square brackets, `[,]`. Here, we find fuel efficient vehicles and only display `manufacturer`, `model` and `year`.
+
+```{r}
+mpg[mpg$hwy > 35, c("manufacturer", "model", "year")]
+```
+
+An alternative would be to use the `subset()` function, which has a much more readable syntax.
+
+```{r, eval = FALSE}
+subset(mpg, subset = hwy > 35, select = c("manufacturer", "model", "year"))
+```
+
+Lastly, we could use the `filter` and `select` functions from the `dplyr` package which introduces the `%>%` operator from the `magrittr` package. This is not necessary for this course, however the `dplyr` packge is something you should be aware of as it is becoming a popular tool in the `R` world.
+
+```{r, eval = FALSE}
+library(dplyr)
+mpg %>% filter(hwy > 35) %>% select(manufacturer, model, year)
+```
+
+All three approaches produce the same results. Which you use will be largely based on a given situation as well as user preference.
 
 ### Plotting
 
@@ -629,25 +652,25 @@ For example, consider a random variable $X$ which is $N(\mu = 2, \sigma^2 = 25)$
 To calculate the value of the pdf at `x = 3`, that is, the height of the curve at `x = 3`, use:
 
 ```{r}
-dnorm(3, mean = 2, sd = 5)
+dnorm(x = 3, mean = 2, sd = 5)
 ```
 
 To calculate the value of the cdf at `x = 3`, that is, $P(X \leq 3)$, the probability that $X$ is less than or equal to `3`, use:
 
 ```{r}
-pnorm(3, mean = 2, sd = 5)
+pnorm(q = 3, mean = 2, sd = 5)
 ```
 
 Or, to calculate the quantile for probability 0.975, use:
 
 ```{r}
-qnorm(0.975, mean = 2, sd = 5)
+qnorm(p = 0.975, mean = 2, sd = 5)
 ```
 
 Lastly, to generate a random sample of size `n = 10`, use:
 
 ```{r}
-rnorm(10, mean = 2, sd = 5)
+rnorm(n = 10, mean = 2, sd = 5)
 ```
 
 These functions exist for many other distributions, including but not limited to:
@@ -663,7 +686,7 @@ These functions exist for many other distributions, including but not limited to
 Where `*` can be `d`, `p`, `q`, and `r`. Each distribution will have its own set of parameters which need to be passed to the functions as arguments. For example, `dbinom()` would not have arguments for `mean` and `sd`, since those are not parameters of the distribution. Instead a binomial distribution is usually parameterized by $n$ and $p$, however `R` chooses to call them something else. To find the names that `R` uses we would use `?dbinom` and see that `R` instead calls the arguments `size` and `prob`. For example:
 
 ```{r}
-dbinom(6, size = 10, prob = 0.75)
+dbinom(x = 6, size = 10, prob = 0.75)
 ```
 
 Also note that, when using the `dname` functions with discrete distributions, they are the pmf of the distribution. For example, the above command is $P(Y = 5)$ if $Y \sim b(n = 10, p = 0.75)$. (The probability of flipping an unfair coin `10` times and seeing `6` heads, if the probability of heads is `0.75`.)
@@ -732,6 +755,12 @@ If we then sum the resulting vector, we have essentially counted the number of e
 
 ```{r}
 sum(1 * (a > 5))
+```
+
+Moreover, by calling `sum()` on a vector of logicals, it automatically converts them to `0` and `1` and performs the same operation as above. This is an extremely useful feature.
+
+```{r}
+sum(a > 5)
 ```
 
 ### Control Flow
@@ -826,7 +855,7 @@ TODO: set.seed()
 
 ```{r}
 set.seed(42)
-(test_sample = rnorm(10, mean = 2, sd = 5))
+(test_sample = rnorm(n = 10, mean = 2, sd = 5))
 standardize(x = test_sample)
 ```
 
@@ -1096,7 +1125,7 @@ t.test(values ~ group, data = t_test_data,
 
 ## Simulation
 
-One of the biggest strengths of `R` its ability to carry out simulations. We'll look at two examples here, but simulation will be a topic we revisit several times throughout the course.
+One of the biggest strengths of `R` is its ability to carry out simulations. We'll look at two examples here, however simulation will be a topic we revisit several times throughout the course.
 
 ### Paired Differences
 
@@ -1159,11 +1188,13 @@ pnorm(2, mean = 1, sd = sqrt(0.32)) - pnorm(0, mean = 1, sd = sqrt(0.32))
 
 An alternative approach, would be to **simulate** a large number of observations of $D$ then use the **empirical distribution** to calculate the probability.
 
-TODO: discuss rname functions. (or earlier?)
+Our strategy will be to repeatedly:
 
-Generate $s = 10000$ samples for each of group 1 and group 2. For each of the  $10000$  samples,  compute $d_s = \bar{x}_{1s} - \bar{x}_{2s}$. 
+- Simulate a sample of 25 observations from $N(\mu_1 = 6,\sigma^2 = 4)$. Call the mean of this sample $\bar{x}_{1s}$.  
+- Simulate a sample of 25 observations from $N(\mu_1 = 5,\sigma^2 = 4)$. Call the mean of this sample $\bar{x}_{2s}$.  
+- Calculate the differences of the means, $d_s = \bar{x}_{1s} - \bar{x}_{2s}$.
 
-What is the proportion of values of $d$ (among the 10000 values of $d$ generated) that are between 0 and 2?
+We will repeat the process a large number of times. Then we ill use the distribution of the simulated observations $d_s$ as an estimate for the true distribution of $D$.
 
 ```{r}
 set.seed(42)
@@ -1171,13 +1202,17 @@ num_samples = 10000
 differences = rep(0, num_samples)
 ```
 
+Before starting our `for` loop to perform the operation, we set a seed for reproducability, create and set a variable, `num_samples` which will define the number of repititions, and lastly create a variables `differences` which will store the simulate values, $d_s$.
+
 ```{r}
-for (i in 1:num_samples) {
-  x1 = rnorm(25, mean = 6, sd = 2)
-  x2 = rnorm(25, mean = 5, sd = 2)
-  differences[i] = mean(x1) - mean(x2)
+for (s in 1:num_samples) {
+  x1 = rnorm(n = 25, mean = 6, sd = 2)
+  x2 = rnorm(n = 25, mean = 5, sd = 2)
+  differences[s] = mean(x1) - mean(x2)
 }
 ```
+
+To estimate $P(0 < D < 2)$ we will find the proportion of values of $d_s$ (among the 10000 values of $d_s$ generated) that are between 0 and 2.
 
 ```{r}
 mean(0 < differences & differences < 2)
@@ -1191,9 +1226,29 @@ hist(differences, breaks = 20,
      border = "darkorange")
 ```
 
+```{r}
+mean(differences)
+var(differences)
+```
+
+We could have also accomplished most of this task with a single line of more "idomatic" `R`.
+
+```{r}
+set.seed(42)
+diffs = replicate(10000, mean(rnorm(25, 6, 2)) - mean(rnorm(25, 5, 2)))
+```
+
+Use `?replicate` to take a look at the documentation for the `replicate` and is if you can understand how this line performs the same operations that our `for` loop above executed.
+
+```{r}
+mean(differences == diffs)
+```
+
+Here we see that by setting the same seed for the randomization, we actually obtain identical results!
+
 ### Distribution of a Sample Mean
 
-For another example of simulation, we will simulate observations from a Poisson distribution, and examine the empirical distribution of these observations.
+For another example of simulation, we will simulate observations from a Poisson distribution, and examine the empirical distribution of the sample mean of these observations.
 
 ```{r}
 set.seed(42)
