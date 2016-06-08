@@ -835,7 +835,7 @@ To use a function, you simply type its name, followed by an open parenthesis, th
 
 An **argument** is a variable which is used in the body of the function. Specifyinng the values of the arugments is essentially providing the inputs to the function.
 
-We can also write our own functions in `R`. For example, we often like to "standardize" variables, that is, subtracting the sample mean, and dividing by the sample standard deviation,
+We can also write our own functions in `R`. For example, we often like to "standardize" variables, that is, subtracting the sample mean, and dividing by the sample standard deviation.
 
 \[
 \frac{x - \bar{x}}{s}
@@ -888,13 +888,13 @@ power_of_num(num = 10, power = 2)
 power_of_num(power = 2, num = 10)
 ```
 
-TODO: note about order?
+TODO: note about order? interaction with default arguments
 
 ```{r}
 power_of_num(2, 10)
 ```
 
-TODO: must supply value when no defauly
+TODO: must supply value when no default
 
 ```{r, eval = FALSE}
 power_of_num(power = 5)
@@ -937,7 +937,7 @@ Suppose $x_{i} \sim \mathrm{N}(\mu,\sigma^{2})$ and we want to test $H_{0}: \mu 
 Assuming $\sigma$ is unknown, we use the one-sample Student's $t$ test statistic:
 
 \[
-t = \displaystyle\frac{\bar{x}-\mu_{0}}{s/\sqrt{n}} \sim t_{n-1}
+t = \frac{\bar{x}-\mu_{0}}{s/\sqrt{n}} \sim t_{n-1}
 \]
 
 where $\bar{x} = \displaystyle\frac{\sum_{i=1}^{n}x_{i}}{n}$ and $s = \sqrt{\displaystyle\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}$
@@ -952,7 +952,7 @@ where $t_{n-1}^{(\alpha/2)}$ is the critical value such that $P\left(t>t_{n-1}^{
 
 ### One Sample t-Test: Example
 
-Suppose a store sells "16 ounce" boxes of *Captain Crisp* cereal. A random sample of 9 boxes was taken and weighed. The weight in ounces are stored in the data frame `capt_crisp`.
+Suppose a grocery store sells "16 ounce" boxes of *Captain Crisp* cereal. A random sample of 9 boxes was taken and weighed. The weight in ounces are stored in the data frame `capt_crisp`.
 
 ```{r}
 capt_crisp = data.frame(weight = c(15.5, 16.2, 16.1, 15.8, 15.6, 16.0, 15.8, 15.9, 16.2))
@@ -963,10 +963,10 @@ The company that makes *Captain Crisp* cereal claims that the average weight of 
 To test $H_{0}: \mu \geq 16$ versus $H_{1}: \mu < 16$, the test statistic is
 
 \[
-t = \displaystyle\frac{\bar{x}-\mu_{0}}{s/\sqrt{n}}
+t = \frac{\bar{x} - \mu_{0}}{s / \sqrt{n}}
 \]
 
-The sample mean $\bar{x}$ and the sample standard deviation $s$ can be easily computed using `R`. We also create variables for the hypothesized mean and the sample size.
+The sample mean $\bar{x}$ and the sample standard deviation $s$ can be easily computed using `R`. We also create variables which store the hypothesized mean and the sample size.
 
 ```{r}
 x_bar = mean(capt_crisp$weight)
@@ -999,7 +999,7 @@ We now have the p-value of our test, which is greater than our significance leve
 Alternatively, this entire process could have been completed using one line of `R` code.
 
 ```{r}
-t.test(capt_crisp$weight, mu = 16, alternative = c("less"), conf.level = 0.95)
+t.test(x = capt_crisp$weight, mu = 16, alternative = c("less"), conf.level = 0.95)
 ```
 
 We supply `R` with the data, the hypothesized value of $\mu$, the alternative and the confidence level. `R` then returns a wealth of information including:
@@ -1023,7 +1023,7 @@ This time we have stored the results. By doing so, we can directly access portio
 names(capt_test_results)
 ```
 
-We are interested in the confidence interval.
+We are interested in the confidence interval which is stored in `conf.int`.
 
 ```{r}
 capt_test_results$conf.int
@@ -1048,14 +1048,14 @@ c(mean(capt_crisp$weight) - qt(0.975, df = 8) * sd(capt_crisp$weight) / sqrt(9),
 
 ### Two Sample t-Test: Review
 
-Suppose $x_{i}\sim\mathrm{N}(\mu_{x},\sigma^{2})$ and $y_{i}\sim\mathrm{N}(\mu_{y},\sigma^{2}).$ 
+Suppose $x_{i} \sim \mathrm{N}(\mu_{x}, \sigma^{2})$ and $y_{i} \sim \mathrm{N}(\mu_{y}, \sigma^{2}).$ 
 
-Want to test $H_{0}: \mu_{x}-\mu_{y} = \mu_{0}$ versus $H_{1}: \mu_{x}-\mu_{y} \neq \mu_{0}.$
+Want to test $H_{0}: \mu_{x} - \mu_{y} = \mu_{0}$ versus $H_{1}: \mu_{x} - \mu_{y} \neq \mu_{0}.$
 
 Assuming $\sigma$ is unknown, use the two-sample Student's $t$ test statistic:
 
 \[
-t = \frac{(\bar{x}-\bar{y})-\mu_{0}}{s_{p}\sqrt{\frac{1}{n}+\frac{1}{m}}}\sim t_{n+m-2}
+t = \frac{(\bar{x} - \bar{y})-\mu_{0}}{s_{p}\sqrt{\frac{1}{n}+\frac{1}{m}}} \sim t_{n+m-2}
 \]
 
 where $\displaystyle\bar{x}=\frac{\sum_{i=1}^{n}x_{i}}{n}$, $\displaystyle\bar{y}=\frac{\sum_{i=1}^{m}y_{i}}{m}$, and $s_p^2 = \displaystyle\frac{(n-1)s_1^2+(m-1)s_2^2}{n+m-2}$
@@ -1063,10 +1063,10 @@ where $\displaystyle\bar{x}=\frac{\sum_{i=1}^{n}x_{i}}{n}$, $\displaystyle\bar{y
 A $100(1-\alpha)$\% CI for $\mu_{x}-\mu_{y}$ is given by
 
 \[
-(\bar{x}-\bar{y})\pm t_{n+m-2}^{(\alpha/2)}\left(s_{p}\textstyle\sqrt{\frac{1}{n}+\frac{1}{m}}\right)
+(\bar{x} - \bar{y}) \pm t_{n+m-2}^{(\alpha/2)}\left(s_{p}\textstyle\sqrt{\frac{1}{n}+\frac{1}{m}}\right)
 \]
 
-where $t_{n+m-2}^{(\alpha/2)}$ is critical $t_{n+m-2}$ value such that $P\left(T>t_{n+m-2}^{(\alpha/2)}\right)=\alpha/2$.
+where $t_{n+m-2}^{(\alpha/2)}$ is critical $t_{n+m-2}$ value such that $P\left(t>t_{n+m-2}^{(\alpha/2)}\right)=\alpha/2$.
 
 ### Two Sample t-Test: Example
 
