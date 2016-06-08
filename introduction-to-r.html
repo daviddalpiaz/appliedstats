@@ -241,7 +241,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>On Mac: <code>Option</code> + <code>Shift</code> + <code>K</code></li>
 </ul>
 <p>The RStudio team has developed a number of “cheatsheets” for working with both <code>R</code> and RStudio which can be found <a href="https://www.rstudio.com/resources/cheatsheets/">here</a> or from the help menu inside of RStudio. <a href="http://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf">This one for Base <code>R</code> in particular</a> will summarize many of the concepts in this document.</p>
-<p>When programming, it is often a good practice to follow a style guide. (Where do spaces go? Tabs or spaces? Underscores or CamelCase when naming variables?) No style guide is “correct” but it helps to be aware of what some others do. The more import thing is to be consistent with yourself.</p>
+<p>When programming, it is often a good practice to follow a style guide. (Where do spaces go? Tabs or spaces? Underscores or CamelCase when naming variables?) No style guide is “correct” but it helps to be aware of what others do. The more import thing is to be consistent with yourself.</p>
 <ul>
 <li><a href="http://adv-r.had.co.nz/Style.html">Hadley Wickham Style Guide</a> from <a href="http://adv-r.had.co.nz/">Advanced <code>R</code></a></li>
 <li><a href="https://google.github.io/styleguide/Rguide.xml">Google Style Guide</a></li>
@@ -692,7 +692,7 @@ X</code></pre></div>
 <p class="caption">RStudio Import Screen</p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)</code></pre></div>
-<p>Early we looked at installing packages, in particular the <code>ggplot2</code> package. (A package for visualization. While not necessary for this course, it is quickly growing in popularity.) Inside the <code>ggplot2</code> package is a dataset called <code>mpg</code>.</p>
+<p>Earlier we looked at installing packages, in particular the <code>ggplot2</code> package. (A package for visualization. While not necessary for this course, it is quickly growing in popularity.) Inside the <code>ggplot2</code> package is a dataset called <code>mpg</code>. By loading the package using the <code>library()</code> function, we can now access <code>mpg</code>.</p>
 <p>When using data from inside a package, there are three things we would generally like to do:</p>
 <ul>
 <li>Look at the raw data.</li>
@@ -878,8 +878,8 @@ mpg %&gt;%<span class="st"> </span><span class="kw">filter</span>(hwy &gt;<span 
 <pre><code>## [1] 11.79982</code></pre>
 <p>Lastly, to generate a random sample of size <code>n = 10</code>, use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</code></pre></div>
-<pre><code>##  [1]  0.49055257  1.69701805  2.67775051  3.63056539 -0.73227354  0.07702195
-##  [7]  2.57913467  3.29203141  7.18536239  0.55564043</code></pre>
+<pre><code>##  [1] -4.013429  5.836894 -3.879485  6.874687  3.126839  6.458204 12.879834
+##  [8]  4.449120 12.891508  1.181977</code></pre>
 <p>These functions exist for many other distributions, including but not limited to:</p>
 <table>
 <thead>
@@ -1074,38 +1074,55 @@ x</code></pre></div>
 <div id="functions" class="section level3">
 <h3><span class="header-section-number">2.3.3</span> Functions</h3>
 <p>So far we have been using functions, but haven’t actually discussed some of their details.</p>
-<p>TODO: use TODO: arguments, defaults (order?)</p>
-<p>Lastly, we can write our own functions in <code>R</code>. For example, we often like to “standardize” variables, that is, subtracting the sample mean, and dividing by the sample standard deviation,</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">function_name</span>(<span class="dt">arg1 =</span> <span class="dv">10</span>, <span class="dt">arg2 =</span> <span class="dv">20</span>)</code></pre></div>
+<p>To use a function, you simply type its name, followed by an open parenthesis, then specify values of its arguments, then finish with a closing parnthesis.</p>
+<p>An <strong>argument</strong> is a variable which is used in the body of the function. Specifyinng the values of the arugments is essentially providing the inputs to the function.</p>
+<p>We can also write our own functions in <code>R</code>. For example, we often like to “standardize” variables, that is, subtracting the sample mean, and dividing by the sample standard deviation,</p>
 <p><span class="math display">\[
 \frac{x - \bar{x}}{s}
 \]</span></p>
-<p>In <code>R</code> we would write a function to do this.</p>
-<p>TODO: syntax (argument, {}, return)</p>
+<p>In <code>R</code> we would write a function to do this. When writing a function, there are three thing you must do.</p>
+<ul>
+<li>Give the function a name. Preferably something that is short, but describtive.</li>
+<li>Specify the arguments using <code>function()</code></li>
+<li>Write the body of the function within curly braces, <code>{}</code>.</li>
+</ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">standardize =<span class="st"> </span>function(x) {
   m =<span class="st"> </span><span class="kw">mean</span>(x)
   std =<span class="st"> </span><span class="kw">sd</span>(x)
   result =<span class="st"> </span>(x -<span class="st"> </span>m) /<span class="st"> </span>std
   result
 }</code></pre></div>
+<p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the results of the final line of the body is what is returned by the function.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
-<p>TODO: set.seed()</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
-(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</code></pre></div>
-<pre><code>##  [1]  8.8547922 -0.8234909  3.8156421  5.1643130  4.0213416  1.4693774
-##  [7]  9.5576100  1.5267048 12.0921186  1.6864295</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</code></pre></div>
+<pre><code>##  [1] -3.3504135 -5.8168705  9.0199384  5.4252836 -0.4862634 -4.5143421
+##  [7] -7.0447199  2.2752503  3.4338545  3.6581993</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)</code></pre></div>
-<pre><code>##  [1]  0.9858912 -1.3310150 -0.2204424  0.1024190 -0.1711995 -0.7821201
-##  [7]  1.1541404 -0.7683963  1.7608822 -0.7301595</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">result =<span class="st"> </span><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)
-<span class="kw">mean</span>(result)</code></pre></div>
-<pre><code>## [1] 3.051487e-17</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(result)</code></pre></div>
-<pre><code>## [1] 1</code></pre>
+<pre><code>##  [1] -0.6772518 -1.1399179  1.6432199  0.9689226 -0.1399850 -0.8955854
+##  [7] -1.3702420  0.3780289  0.5953637  0.6374470</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">standardize =<span class="st"> </span>function(x) {
   (x -<span class="st"> </span><span class="kw">mean</span>(x)) /<span class="st"> </span><span class="kw">sd</span>(x)
 }</code></pre></div>
-<p>To illustrate a function with a default argument, we will write a function that calculates sample standard deviation two ways.</p>
+<p>When specifying arugments, you can provide default arguments.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">power_of_num =<span class="st"> </span>function(num, <span class="dt">power =</span> <span class="dv">2</span>) {
+  num ^<span class="st"> </span>power
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">power_of_num</span>(<span class="dv">10</span>)</code></pre></div>
+<pre><code>## [1] 100</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">power_of_num</span>(<span class="dv">10</span>, <span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] 100</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">power_of_num</span>(<span class="dt">num =</span> <span class="dv">10</span>, <span class="dt">power =</span> <span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] 100</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">power_of_num</span>(<span class="dt">power =</span> <span class="dv">2</span>, <span class="dt">num =</span> <span class="dv">10</span>)</code></pre></div>
+<pre><code>## [1] 100</code></pre>
+<p>TODO: note about order?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">power_of_num</span>(<span class="dv">2</span>, <span class="dv">10</span>)</code></pre></div>
+<pre><code>## [1] 1024</code></pre>
+<p>TODO: must supply value when no defauly</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">power_of_num</span>(<span class="dt">power =</span> <span class="dv">5</span>)</code></pre></div>
+<p>To further illustrate a function with a default argument, we will write a function that calculates sample standard deviation two ways.</p>
 <p>By default is will calculate the unbiased estimate of <span class="math inline">\(\sigma\)</span>, which we will call <span class="math inline">\(s\)</span>.</p>
 <p><span class="math display">\[
 s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
@@ -1119,13 +1136,13 @@ s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
   <span class="kw">sqrt</span>((<span class="dv">1</span> /<span class="st"> </span>n) *<span class="st"> </span><span class="kw">sum</span>((x -<span class="st"> </span><span class="kw">mean</span>(x)) ^<span class="st"> </span><span class="dv">2</span>))
 }</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 4.177244</code></pre>
+<pre><code>## [1] 5.330965</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample, <span class="dt">biased =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<pre><code>## [1] 4.177244</code></pre>
+<pre><code>## [1] 5.330965</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 4.177244</code></pre>
+<pre><code>## [1] 5.330965</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample, <span class="dt">biased =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## [1] 3.962882</code></pre>
+<pre><code>## [1] 5.057397</code></pre>
 </div>
 </div>
 <div id="hypothesis-tests-in-r" class="section level2">
@@ -1275,9 +1292,10 @@ P(t_{12} &gt; 1.8233692)
 ## mean of x mean of y 
 ##        80        72</code></pre>
 <p>Recall that a two-sample <span class="math inline">\(t\)</span>-test can be done with or without an equal variance assumption. Here <code>var.equal = TRUE</code> tells <code>R</code> we would like to perform the test under the equal variance assumption.</p>
-<p>TODO: store in df and use formula?</p>
+<p>Above we carried out the anlysis using two vectors <code>x</code> and <code>y</code>. In general, we will have a preference for using data frames.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">t_test_data =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">values =</span> <span class="kw">c</span>(x, y),
                          <span class="dt">group  =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;A&quot;</span>, <span class="kw">length</span>(x)), <span class="kw">rep</span>(<span class="st">&quot;B&quot;</span>, <span class="kw">length</span>(y))))</code></pre></div>
+<p>We now have the data stored in a single variables <code>values</code> and have created a second variable <code>group</code> which indicates which “sample” the value belongs to.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">t_test_data</code></pre></div>
 <pre><code>##    values group
 ## 1      70     A
@@ -1294,6 +1312,7 @@ P(t_{12} &gt; 1.8233692)
 ## 12     80     B
 ## 13     84     B
 ## 14     68     B</code></pre>
+<p>Now to perform the test, we still use the <code>t.test()</code> function but with the <code>~</code> syntax and a <code>data</code> argument.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(values ~<span class="st"> </span>group, <span class="dt">data =</span> t_test_data,
        <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;greater&quot;</span>), <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## 
@@ -1356,17 +1375,16 @@ P(0 &lt; D &lt; 2) = P(D &lt; 2) - P(D &lt; 0).
 <p>An alternative approach, would be to <strong>simulate</strong> a large number of observations of <span class="math inline">\(D\)</span> then use the <strong>empirical distribution</strong> to calculate the probability.</p>
 <p>Our strategy will be to repeatedly:</p>
 <ul>
-<li>Simulate a sample of 25 observations from <span class="math inline">\(N(\mu_1 = 6,\sigma^2 = 4)\)</span>. Call the mean of this sample <span class="math inline">\(\bar{x}_{1s}\)</span>.<br />
-</li>
-<li>Simulate a sample of 25 observations from <span class="math inline">\(N(\mu_1 = 5,\sigma^2 = 4)\)</span>. Call the mean of this sample <span class="math inline">\(\bar{x}_{2s}\)</span>.<br />
-</li>
+<li>Generate a sample of 25 random observations from <span class="math inline">\(N(\mu_1 = 6,\sigma^2 = 4)\)</span>. Call the mean of this sample <span class="math inline">\(\bar{x}_{1s}\)</span>.</li>
+<li>Generate a sample of 25 random observations from <span class="math inline">\(N(\mu_1 = 5,\sigma^2 = 4)\)</span>. Call the mean of this sample <span class="math inline">\(\bar{x}_{2s}\)</span>.</li>
 <li>Calculate the differences of the means, <span class="math inline">\(d_s = \bar{x}_{1s} - \bar{x}_{2s}\)</span>.</li>
 </ul>
-<p>We will repeat the process a large number of times. Then we ill use the distribution of the simulated observations <span class="math inline">\(d_s\)</span> as an estimate for the true distribution of <span class="math inline">\(D\)</span>.</p>
+<p>We will repeat the process a large number of times. Then we will use the distribution of the simulated observations of <span class="math inline">\(d_s\)</span> as an estimate for the true distribution of <span class="math inline">\(D\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
 num_samples =<span class="st"> </span><span class="dv">10000</span>
 differences =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, num_samples)</code></pre></div>
 <p>Before starting our <code>for</code> loop to perform the operation, we set a seed for reproducability, create and set a variable, <code>num_samples</code> which will define the number of repititions, and lastly create a variables <code>differences</code> which will store the simulate values, <span class="math inline">\(d_s\)</span>.</p>
+<p>TODO: set.seed()</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">for (s in <span class="dv">1</span>:num_samples) {
   x1 =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">25</span>, <span class="dt">mean =</span> <span class="dv">6</span>, <span class="dt">sd =</span> <span class="dv">2</span>)
   x2 =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">25</span>, <span class="dt">mean =</span> <span class="dv">5</span>, <span class="dt">sd =</span> <span class="dv">2</span>)
@@ -1380,18 +1398,18 @@ differences =<span class="st"> </span><span class="kw">rep</span>(<span class="d
      <span class="dt">xlab   =</span> <span class="st">&quot;Simulated Values of D&quot;</span>,
      <span class="dt">col    =</span> <span class="st">&quot;dodgerblue&quot;</span>,
      <span class="dt">border =</span> <span class="st">&quot;darkorange&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-116-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-120-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(differences)</code></pre></div>
 <pre><code>## [1] 1.001423</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(differences)</code></pre></div>
 <pre><code>## [1] 0.3230183</code></pre>
-<p>We could have also accomplished most of this task with a single line of more “idomatic” <code>R</code>.</p>
+<p>We could have also accomplished this task with a single line of more “idomatic” <code>R</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
 diffs =<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">10000</span>, <span class="kw">mean</span>(<span class="kw">rnorm</span>(<span class="dv">25</span>, <span class="dv">6</span>, <span class="dv">2</span>)) -<span class="st"> </span><span class="kw">mean</span>(<span class="kw">rnorm</span>(<span class="dv">25</span>, <span class="dv">5</span>, <span class="dv">2</span>)))</code></pre></div>
-<p>Use <code>?replicate</code> to take a look at the documentation for the <code>replicate</code> and is if you can understand how this line performs the same operations that our <code>for</code> loop above executed.</p>
+<p>Use <code>?replicate</code> to take a look at the documentation for the <code>replicate</code> function and see if you can understand how this line performs the same operations that our <code>for</code> loop above executed.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(differences ==<span class="st"> </span>diffs)</code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<p>Here we see that by setting the same seed for the randomization, we actually obtain identical results!</p>
+<p>We see that by setting the same seed for the randomization, we actually obtain identical results!</p>
 </div>
 <div id="distribution-of-a-sample-mean" class="section level3">
 <h3><span class="header-section-number">2.5.2</span> Distribution of a Sample Mean</h3>
@@ -1407,7 +1425,7 @@ x_bars      =<span class="st"> </span><span class="kw">rep</span>(<span class="d
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x_bar_hist =<span class="st"> </span><span class="kw">hist</span>(x_bars, <span class="dt">breaks =</span> <span class="dv">50</span>, 
                   <span class="dt">main =</span> <span class="st">&quot;Histogram of Sample Means&quot;</span>,
                   <span class="dt">xlab =</span> <span class="st">&quot;Sample Means&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-122-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-126-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">mean</span>(x_bars), mu)</code></pre></div>
 <pre><code>## [1] 10.00009 10.00000</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">sd</span>(x_bars), <span class="kw">sqrt</span>(mu) /<span class="st"> </span><span class="kw">sqrt</span>(sample_size))</code></pre></div>
@@ -1422,8 +1440,8 @@ x_bars      =<span class="st"> </span><span class="kw">rep</span>(<span class="d
 x_bar_hist =<span class="st"> </span><span class="kw">hist</span>(x_bars, <span class="dt">breaks =</span> <span class="dv">50</span>, <span class="dt">col =</span> shading,
                   <span class="dt">main =</span> <span class="st">&quot;Histogram of Sample Means, Two Standard Deviations&quot;</span>,
                   <span class="dt">xlab =</span> <span class="st">&quot;Sample Means&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-126-1.png" width="672" /></p>
-<p>TODO: spell check</p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-130-1.png" width="672" /></p>
+<p>Here we repeated the histogram using a bit of a trick to approximately shade the bars that are within two standard deviations of the mean.</p>
 
 </div>
 </div>
