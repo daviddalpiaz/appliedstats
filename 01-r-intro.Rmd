@@ -48,7 +48,7 @@ RStudio has a large number of useful keyboard shortcuts. A list of these can be 
 
 The RStudio team has developed a number of "cheatsheets" for working with both `R` and RStudio which can be found [here](https://www.rstudio.com/resources/cheatsheets/) or from the help menu inside of RStudio. [This one for Base `R` in particular](http://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf) will summarize many of the concepts in this document.
 
-When programming, it is often a good practice to follow a style guide. (Where do spaces go? Tabs or spaces? Underscores or CamelCase when naming variables?) No style guide is "correct" but it helps to be aware of what some others do. The more import thing is to be consistent with yourself.
+When programming, it is often a good practice to follow a style guide. (Where do spaces go? Tabs or spaces? Underscores or CamelCase when naming variables?) No style guide is "correct" but it helps to be aware of what others do. The more import thing is to be consistent with yourself.
 
 - [Hadley Wickham Style Guide](http://adv-r.had.co.nz/Style.html) from [Advanced `R`](http://adv-r.had.co.nz/)
 - [Google Style Guide](https://google.github.io/styleguide/Rguide.xml)
@@ -473,7 +473,7 @@ Alternatively, we could use the "Import Dataset" feature in RStudio which can be
 library(ggplot2)
 ```
 
-Early we looked at installing packages, in particular the `ggplot2` package. (A package for visualization. While not necessary for this course, it is quickly growing in popularity.) Inside the `ggplot2` package is a dataset called `mpg`.
+Earlier we looked at installing packages, in particular the `ggplot2` package. (A package for visualization. While not necessary for this course, it is quickly growing in popularity.) Inside the `ggplot2` package is a dataset called `mpg`. By loading the package using the `library()` function, we can now access `mpg`.
 
 When using data from inside a package, there are three things we would generally like to do:
 
@@ -827,18 +827,25 @@ x
 
 So far we have been using functions, but haven't actually discussed some of their details.
 
-TODO: use
-TODO: arguments, defaults (order?)
+```{r, eval = FALSE}
+function_name(arg1 = 10, arg2 = 20)
+```
 
-Lastly, we can write our own functions in `R`. For example, we often like to "standardize" variables, that is, subtracting the sample mean, and dividing by the sample standard deviation,
+To use a function, you simply type its name, followed by an open parenthesis, then specify values of its arguments, then finish with a closing parnthesis. 
+
+An **argument** is a variable which is used in the body of the function. Specifyinng the values of the arugments is essentially providing the inputs to the function.
+
+We can also write our own functions in `R`. For example, we often like to "standardize" variables, that is, subtracting the sample mean, and dividing by the sample standard deviation,
 
 \[
 \frac{x - \bar{x}}{s}
 \]
 
-In `R` we would write a function to do this.
+In `R` we would write a function to do this. When writing a function, there are three thing you must do.
 
-TODO: syntax (argument, {}, return)
+- Give the function a name. Preferably something that is short, but describtive.
+- Specify the arguments using `function()`
+- Write the body of the function within curly braces, `{}`.
 
 ```{r}
 standardize = function(x) {
@@ -849,20 +856,13 @@ standardize = function(x) {
 }
 ```
 
+Here the name of the function is `standardize`, and the function has a single argument `x` which is used in the body of function. Note that the results of the final line of the body is what is returned by the function.
+
 To test our function, we will take a random sample of size `n = 10` from a normal distribution with a mean of `2` and a standard deviation of `5`.
 
-TODO: set.seed()
-
 ```{r}
-set.seed(42)
 (test_sample = rnorm(n = 10, mean = 2, sd = 5))
 standardize(x = test_sample)
-```
-
-```{r}
-result = standardize(x = test_sample)
-mean(result)
-sd(result)
 ```
 
 This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.
@@ -873,7 +873,34 @@ standardize = function(x) {
 }
 ```
 
-To illustrate a function with a default argument, we will write a function that calculates sample standard deviation two ways.
+When specifying arugments, you can provide default arguments.
+
+```{r}
+power_of_num = function(num, power = 2) {
+  num ^ power
+}
+```
+
+```{r}
+power_of_num(10)
+power_of_num(10, 2)
+power_of_num(num = 10, power = 2)
+power_of_num(power = 2, num = 10)
+```
+
+TODO: note about order?
+
+```{r}
+power_of_num(2, 10)
+```
+
+TODO: must supply value when no defauly
+
+```{r, eval = FALSE}
+power_of_num(power = 5)
+```
+
+To further illustrate a function with a default argument, we will write a function that calculates sample standard deviation two ways.
 
 By default is will calculate the unbiased estimate of $\sigma$, which we will call $s$.
 
@@ -1107,16 +1134,20 @@ t.test(x, y, alternative = c("greater"), var.equal = TRUE)
 
 Recall that a two-sample $t$-test can be done with or without an equal variance assumption. Here `var.equal = TRUE` tells `R` we would like to perform the test under the equal variance assumption.
 
-TODO: store in df and use formula?
+Above we carried out the anlysis using two vectors `x` and `y`. In general, we will have a preference for using data frames.
 
 ```{r}
 t_test_data = data.frame(values = c(x, y),
                          group  = c(rep("A", length(x)), rep("B", length(y))))
 ```
 
+We now have the data stored in a single variables `values` and have created a second variable `group` which indicates which "sample" the value belongs to.
+
 ```{r}
 t_test_data
 ```
+
+Now to perform the test, we still use the `t.test()` function but with the `~` syntax and a `data` argument.
 
 ```{r}
 t.test(values ~ group, data = t_test_data,
@@ -1190,11 +1221,11 @@ An alternative approach, would be to **simulate** a large number of observations
 
 Our strategy will be to repeatedly:
 
-- Simulate a sample of 25 observations from $N(\mu_1 = 6,\sigma^2 = 4)$. Call the mean of this sample $\bar{x}_{1s}$.  
-- Simulate a sample of 25 observations from $N(\mu_1 = 5,\sigma^2 = 4)$. Call the mean of this sample $\bar{x}_{2s}$.  
+- Generate a sample of 25 random observations from $N(\mu_1 = 6,\sigma^2 = 4)$. Call the mean of this sample $\bar{x}_{1s}$.
+- Generate a sample of 25 random observations from $N(\mu_1 = 5,\sigma^2 = 4)$. Call the mean of this sample $\bar{x}_{2s}$.
 - Calculate the differences of the means, $d_s = \bar{x}_{1s} - \bar{x}_{2s}$.
 
-We will repeat the process a large number of times. Then we ill use the distribution of the simulated observations $d_s$ as an estimate for the true distribution of $D$.
+We will repeat the process a large number of times. Then we will use the distribution of the simulated observations of $d_s$ as an estimate for the true distribution of $D$.
 
 ```{r}
 set.seed(42)
@@ -1203,6 +1234,8 @@ differences = rep(0, num_samples)
 ```
 
 Before starting our `for` loop to perform the operation, we set a seed for reproducability, create and set a variable, `num_samples` which will define the number of repititions, and lastly create a variables `differences` which will store the simulate values, $d_s$.
+
+TODO: set.seed()
 
 ```{r}
 for (s in 1:num_samples) {
@@ -1231,20 +1264,20 @@ mean(differences)
 var(differences)
 ```
 
-We could have also accomplished most of this task with a single line of more "idomatic" `R`.
+We could have also accomplished this task with a single line of more "idomatic" `R`.
 
 ```{r}
 set.seed(42)
 diffs = replicate(10000, mean(rnorm(25, 6, 2)) - mean(rnorm(25, 5, 2)))
 ```
 
-Use `?replicate` to take a look at the documentation for the `replicate` and is if you can understand how this line performs the same operations that our `for` loop above executed.
+Use `?replicate` to take a look at the documentation for the `replicate` function and see if you can understand how this line performs the same operations that our `for` loop above executed.
 
 ```{r}
 mean(differences == diffs)
 ```
 
-Here we see that by setting the same seed for the randomization, we actually obtain identical results!
+We see that by setting the same seed for the randomization, we actually obtain identical results!
 
 ### Distribution of a Sample Mean
 
@@ -1293,4 +1326,5 @@ x_bar_hist = hist(x_bars, breaks = 50, col = shading,
                   xlab = "Sample Means")
 ```
 
-TODO: spell check
+Here we repeated the histogram using a bit of a trick to approximately shade the bars that are within two standard deviations of the mean.
+
