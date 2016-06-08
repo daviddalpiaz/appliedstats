@@ -179,6 +179,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>“Measuring programming progress by lines of code is like measuring aircraft building progress by weight.”</p>
 <p>— <strong>Bill Gates</strong></p>
 </blockquote>
+<p>After reading this chapter you will be able to…</p>
+<ul>
+<li>interact with <code>R</code> using RStudio.</li>
+<li>use <code>R</code> as a calculator.</li>
+<li>work with data as vectors and data frames.</li>
+<li>make basic data visualizations.</li>
+<li>write your own <code>R</code> functions.</li>
+<li>perform hypothesis tests using <code>R</code>.</li>
+<li>perform basic simulations in <code>R</code>.</li>
+</ul>
 <p><code>R</code> is both a programming language and software environment for statistical computing, which is <em>free</em> and <em>open-source</em>. To get started, you will need to install two pieces of software:</p>
 <ul>
 <li><code>R</code>, the actual programming language, which can be installed from <a href="http://cran.r-project.org/" class="uri">http://cran.r-project.org/</a>
@@ -846,8 +856,8 @@ X</code></pre></div>
 <pre><code>## [1] 11.79982</code></pre>
 <p>Lastly, to generate a random sample of size <code>n = 10</code>, use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</code></pre></div>
-<pre><code>##  [1]   6.6841913  -0.7530774 -12.7972884   0.4047574  -1.5267093  -1.7140538
-##  [7]  -6.0590240  -2.3233195   4.2971937  11.1341164</code></pre>
+<pre><code>##  [1]  5.29761085 -5.14504322 -1.72253988 -0.08885468 -2.73147292  7.11878650
+##  [7]  0.34547766 -7.19136640 -4.39548144 10.53487687</code></pre>
 <p>These functions exist for many other distributions, including but not limited to:</p>
 <table>
 <thead>
@@ -1075,7 +1085,7 @@ x</code></pre></div>
 <p><span class="math display">\[
 s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
 \]</span></p>
-<p>It will also have the ability to return the biased estimate (base on maximum likilhood) which we will call <span class="math inline">\(\hat{\sigma}\)</span>.</p>
+<p>It will also have the ability to return the biased estimate (based on maximum likelihood) which we will call <span class="math inline">\(\hat{\sigma}\)</span>.</p>
 <p><span class="math display">\[
 \hat{\sigma} = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(x - \bar{x})^2}
 \]</span></p>
@@ -1148,10 +1158,10 @@ P(t_{8} &lt; -1.2)
 ## sample estimates:
 ## mean of x 
 ##      15.9</code></pre>
-<p>We supply <code>R</code> with the data, the hyopthesized value of <span class="math inline">\(\mu\)</span>, the alternative and the confidence level. <code>R</code> then returns a wealth of information including:</p>
+<p>We supply <code>R</code> with the data, the hypothesized value of <span class="math inline">\(\mu\)</span>, the alternative and the confidence level. <code>R</code> then returns a wealth of information including:</p>
 <ul>
 <li>The value of the test statistic.</li>
-<li>The degrees of freedom of distribution under the null hyopthesis.</li>
+<li>The degrees of freedom of distribution under the null hypothesis.</li>
 <li>The p-value of the test.</li>
 <li>The confidence interval which corresponds to the test.</li>
 <li>An estimate of <span class="math inline">\(\mu\)</span>.</li>
@@ -1159,11 +1169,11 @@ P(t_{8} &lt; -1.2)
 <p>Since the test was one-sided, <code>R</code> returned a one-sided confidence interval. If instead we wanted a two-sided interval for the mean weight of boxes of <em>Captain Crisp</em> cereal we could modify our code.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">capt_test_results =<span class="st"> </span><span class="kw">t.test</span>(capt_crisp$weight, <span class="dt">mu =</span> <span class="dv">16</span>,
                            <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;two.sided&quot;</span>), <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</code></pre></div>
-<p>This time we have stored the results. By doing so, we can directly access portions of the ouput from <code>t.test()</code>. To see what information is availible we use the <code>names()</code> function.</p>
+<p>This time we have stored the results. By doing so, we can directly access portions of the output from <code>t.test()</code>. To see what information is available we use the <code>names()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(capt_test_results)</code></pre></div>
 <pre><code>## [1] &quot;statistic&quot;   &quot;parameter&quot;   &quot;p.value&quot;     &quot;conf.int&quot;    &quot;estimate&quot;   
 ## [6] &quot;null.value&quot;  &quot;alternative&quot; &quot;method&quot;      &quot;data.name&quot;</code></pre>
-<p>We are insteaded in a confidence interval.</p>
+<p>We are interested in the confidence interval.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">capt_test_results$conf.int</code></pre></div>
 <pre><code>## [1] 15.70783 16.09217
 ## attr(,&quot;conf.level&quot;)
@@ -1171,7 +1181,7 @@ P(t_{8} &lt; -1.2)
 <p>Let’s check this interval “by hand.” The one piece of information we are missing is the critical value, <span class="math inline">\(t_{n-1}^{(\alpha/2)} = t_{8}^{(0.025)}\)</span>, which can be calculated in <code>R</code> using the <code>qt()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dt">df =</span> <span class="dv">8</span>)</code></pre></div>
 <pre><code>## [1] 2.306004</code></pre>
-<p>So, the 95% CI for the mean weight of a cereal box is calculated by pluggin into the forumula,</p>
+<p>So, the 95% CI for the mean weight of a cereal box is calculated by plugging into the formula,</p>
 <p><span class="math display">\[
 \bar{x} \pm t_{n-1}^{(\alpha/2)}\frac{s}{\sqrt{n}}
 \]</span></p>
@@ -1276,7 +1286,7 @@ P(t_{12} &gt; 1.8233692)
 </div>
 <div id="simulation" class="section level2">
 <h2><span class="header-section-number">2.4</span> Simulation</h2>
-<p>One of the biggest strengths of <code>R</code> its ability to carry out simulations. We’ll look at two examples here, but simulation will be a topic we revisit several times thoughout the course.</p>
+<p>One of the biggest strengths of <code>R</code> its ability to carry out simulations. We’ll look at two examples here, but simulation will be a topic we revisit several times throughout the course.</p>
 <div id="paired-differences" class="section level3">
 <h3><span class="header-section-number">2.4.1</span> Paired Differences</h3>
 <p>Consider the model:</p>
@@ -1341,7 +1351,7 @@ differences =<span class="st"> </span><span class="kw">rep</span>(<span class="d
 </div>
 <div id="distribution-of-a-sample-mean" class="section level3">
 <h3><span class="header-section-number">2.4.2</span> Distribution of a Sample Mean</h3>
-<p>For another example of simulation, we will simulate observations from a Poisson distribution, and examine the emperical distribution of these observatoins.</p>
+<p>For another example of simulation, we will simulate observations from a Poisson distribution, and examine the empirical distribution of these observations.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
 mu          =<span class="st"> </span><span class="dv">10</span>
 sample_size =<span class="st"> </span><span class="dv">50</span>
