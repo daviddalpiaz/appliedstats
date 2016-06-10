@@ -1313,7 +1313,7 @@ Var[X] &= \mu
 \end{aligned}
 \]
 
-Also, recall that for a random variable $X$ with finite mean $\mu$ and finite variance $\sigma^2$, the central limit theorem tells us that the mean, $\bar{X}$ of a random sample of size $n$ is approximately normal for *large* values of $n$. Specifically,
+Also, recall that for a random variable $X$ with finite mean $\mu$ and finite variance $\sigma^2$, the central limit theorem tells us that the mean, $\bar{X}$ of a random sample of size $n$ is approximately normal for *large* values of $n$. Specifically, as $n \to \infty$,
 
 \[
 \bar{X} \overset{d}{\to} N\left(\mu, \frac{\sigma^2}{n}\right)
@@ -1343,6 +1343,10 @@ x_bar_hist = hist(x_bars, breaks = 50,
 
 ```{r}
 c(mean(x_bars), mu)
+```
+
+```{r}
+c(var(x_bars), mu / sample_size)
 ```
 
 ```{r}
