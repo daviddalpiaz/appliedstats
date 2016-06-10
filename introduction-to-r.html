@@ -872,8 +872,8 @@ mpg %&gt;%<span class="st"> </span><span class="kw">filter</span>(hwy &gt;<span 
 <pre><code>## [1] 11.79982</code></pre>
 <p>Lastly, to generate a random sample of size <code>n = 10</code>, use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</code></pre></div>
-<pre><code>##  [1]   7.375645   6.142195   5.927056   3.070709   6.921122   5.832358
-##  [7]   8.572317 -11.264584   8.894753  -2.694560</code></pre>
+<pre><code>##  [1] -0.5816558  4.8777420 -1.1418433  4.9135038  2.8532192 -0.9577425
+##  [7] 11.3929315 -4.2134445  2.9256857 -1.0687983</code></pre>
 <p>These functions exist for many other distributions, including but not limited to:</p>
 <table>
 <thead>
@@ -1090,11 +1090,11 @@ x</code></pre></div>
 <p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the results of the final line of the body is what is returned by the function.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</code></pre></div>
-<pre><code>##  [1] -0.6565591 -2.9115584 12.2841557 -0.2064369 -2.4179706  9.4579004
-##  [7]  0.1606630  4.1424173  2.5266901  1.2546848</code></pre>
+<pre><code>##  [1]  7.088768  6.818816  6.672957 -1.377729 -1.812493  7.386596  5.157256
+##  [8] 13.294045  1.238597  5.694451</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)</code></pre></div>
-<pre><code>##  [1] -0.60474848 -1.05631357  1.98663803 -0.51461123 -0.95747229  1.42067857
-##  [7] -0.44109924  0.35624964  0.03269923 -0.22202066</code></pre>
+<pre><code>##  [1]  0.4550711  0.3958003  0.3637753 -1.4038407 -1.4992981  0.5204624
+##  [7]  0.0309866  1.8175074 -0.8293979  0.1489336</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">standardize =<span class="st"> </span>function(x) {
   (x -<span class="st"> </span><span class="kw">mean</span>(x)) /<span class="st"> </span><span class="kw">sd</span>(x)
@@ -1131,14 +1131,14 @@ s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
   <span class="kw">sqrt</span>((<span class="dv">1</span> /<span class="st"> </span>n) *<span class="st"> </span><span class="kw">sum</span>((x -<span class="st"> </span><span class="kw">mean</span>(x)) ^<span class="st"> </span><span class="dv">2</span>))
 }</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 4.993742</code></pre>
+<pre><code>## [1] 4.554545</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample, <span class="dt">biased =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<pre><code>## [1] 4.993742</code></pre>
+<pre><code>## [1] 4.554545</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 4.993742</code></pre>
+<pre><code>## [1] 4.554545</code></pre>
 <p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built in function <code>sd()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample, <span class="dt">biased =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## [1] 4.737479</code></pre>
+<pre><code>## [1] 4.32082</code></pre>
 </div>
 </div>
 <div id="hypothesis-tests-in-r" class="section level2">
@@ -1424,7 +1424,7 @@ E[X] &amp;= \mu \\
 Var[X] &amp;= \mu
 \end{aligned}
 \]</span></p>
-<p>Also, recall that for a random variable <span class="math inline">\(X\)</span> with finite mean <span class="math inline">\(\mu\)</span> and finite variance <span class="math inline">\(\sigma^2\)</span>, the central limit theorem tells us that the mean, <span class="math inline">\(\bar{X}\)</span> of a random sample of size <span class="math inline">\(n\)</span> is approximately normal for <em>large</em> values of <span class="math inline">\(n\)</span>. Specifically,</p>
+<p>Also, recall that for a random variable <span class="math inline">\(X\)</span> with finite mean <span class="math inline">\(\mu\)</span> and finite variance <span class="math inline">\(\sigma^2\)</span>, the central limit theorem tells us that the mean, <span class="math inline">\(\bar{X}\)</span> of a random sample of size <span class="math inline">\(n\)</span> is approximately normal for <em>large</em> values of <span class="math inline">\(n\)</span>. Specifically, as <span class="math inline">\(n \to \infty\)</span>,</p>
 <p><span class="math display">\[
 \bar{X} \overset{d}{\to} N\left(\mu, \frac{\sigma^2}{n}\right)
 \]</span></p>
@@ -1443,6 +1443,8 @@ x_bars      =<span class="st"> </span><span class="kw">rep</span>(<span class="d
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-127-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">mean</span>(x_bars), mu)</code></pre></div>
 <pre><code>## [1] 10.00008 10.00000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">var</span>(x_bars), mu /<span class="st"> </span>sample_size)</code></pre></div>
+<pre><code>## [1] 0.1989732 0.2000000</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">sd</span>(x_bars), <span class="kw">sqrt</span>(mu) /<span class="st"> </span><span class="kw">sqrt</span>(sample_size))</code></pre></div>
 <pre><code>## [1] 0.4460641 0.4472136</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(x_bars &gt;<span class="st"> </span>mu -<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span><span class="kw">sqrt</span>(mu) /<span class="st"> </span><span class="kw">sqrt</span>(sample_size) &amp;
@@ -1456,7 +1458,7 @@ x_bars      =<span class="st"> </span><span class="kw">rep</span>(<span class="d
 x_bar_hist =<span class="st"> </span><span class="kw">hist</span>(x_bars, <span class="dt">breaks =</span> <span class="dv">50</span>, <span class="dt">col =</span> shading,
                   <span class="dt">main =</span> <span class="st">&quot;Histogram of Sample Means, Two Standard Deviations&quot;</span>,
                   <span class="dt">xlab =</span> <span class="st">&quot;Sample Means&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-131-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-132-1.png" width="672" /></p>
 
 <div id="refs" class="references">
 
