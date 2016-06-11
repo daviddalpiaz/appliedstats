@@ -880,8 +880,8 @@ mpg %&gt;%<span class="st"> </span><span class="kw">filter</span>(hwy &gt;<span 
 <pre><code>## [1] 11.79982</code></pre>
 <p>Lastly, to generate a random sample of size <code>n = 10</code>, use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</code></pre></div>
-<pre><code>##  [1] 10.4546839  2.0221974  1.4495145  7.4516675  6.1016081 -1.8670031
-##  [7]  6.7755161  0.6028177 -8.8557892  7.9166816</code></pre>
+<pre><code>##  [1]  3.8485336 -0.1799404 10.8069179  0.3497424  1.8491782  9.2807577
+##  [7]  4.4284207  0.8776218  6.3555394  2.7433268</code></pre>
 <p>These functions exist for many other distributions, including but not limited to:</p>
 <table>
 <thead>
@@ -1003,33 +1003,31 @@ weights =<span class="st"> </span><span class="kw">c</span>(<span class="dv">64<
 <pre><code>## [1]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">heights &lt;<span class="st"> </span><span class="dv">121</span> |<span class="st"> </span>heights ==<span class="st"> </span><span class="dv">156</span></code></pre></div>
 <pre><code>## [1]  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE</code></pre>
-<p>Often, a vector of logical values is useful for subsetting a vector. For example we can find the <code>heights</code> that are larger than <code>150</code>. We can then use the resulting vector to subset the <code>heights</code> vector, thus actually returning the <code>heights</code> that are above <code>150</code>, instead of a vector of which values are above <code>150</code>. Here we also obtain the <code>weights</code> corresponding to <code>heights</code> above <code>150</code>.</p>
+<p>Often, a vector of logical values is useful for subsetting a vector. For example, we can find the <code>heights</code> that are larger than <code>150</code>. We can then use the resulting vector to subset the <code>heights</code> vector, thus actually returning the <code>heights</code> that are above <code>150</code>, instead of a vector of which values are above <code>150</code>. Here we also obtain the <code>weights</code> corresponding to <code>heights</code> above <code>150</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">heights &gt;<span class="st"> </span><span class="dv">150</span></code></pre></div>
 <pre><code>## [1] FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">heights[heights &gt;<span class="st"> </span><span class="dv">150</span>]</code></pre></div>
 <pre><code>## [1] 205 156 175</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">weights[heights &gt;<span class="st"> </span><span class="dv">150</span>]</code></pre></div>
 <pre><code>## [1] 77 70 66</code></pre>
-<p>Be careful when comparing vectors that you are comparing vectors of the same length.</p>
+<p>When comparing vectors, be sure you are comparing vectors of the same length.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a =<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</span>
 b =<span class="st"> </span><span class="dv">2</span>:<span class="dv">4</span>
 a &lt;<span class="st"> </span>b</code></pre></div>
 <pre><code>## Warning in a &lt; b: longer object length is not a multiple of shorter object
 ## length</code></pre>
 <pre><code>##  [1]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
-<p>What happened here? <code>R</code> still performed the operation, but it also gives us a warning. (To perform the operation automatically made <code>b</code> longer by repeating <code>b</code> as needed.)</p>
+<p>What happened here? <code>R</code> still performed the operation, but it also gives us a warning. (To perform the operation, <code>R</code> automatically made <code>b</code> longer by repeating <code>b</code> as needed.)</p>
 <p>The one exception to this behavior is comparing to a vector of length <code>1</code>. <code>R</code> does not warn us in this case, as comparing each value of a vector to a single value is a common operation that is usually reasonable to perform.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a &gt;<span class="st"> </span><span class="dv">5</span></code></pre></div>
 <pre><code>##  [1] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE</code></pre>
-<p>Often we will want to convert <code>TRUE</code> and <code>FALSE</code> values to <code>1</code> and <code>0</code>. To do this, we simply “multiply” by <code>1.</code></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> *<span class="st"> </span>(a &gt;<span class="st"> </span><span class="dv">5</span>)</code></pre></div>
-<pre><code>##  [1] 0 0 0 0 0 1 1 1 1 1</code></pre>
-<p>If we then sum the resulting vector, we have essentially counted the number of elements of <code>a</code> that are larger than <code>5.</code></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(<span class="dv">1</span> *<span class="st"> </span>(a &gt;<span class="st"> </span><span class="dv">5</span>))</code></pre></div>
-<pre><code>## [1] 5</code></pre>
-<p>Moreover, by calling <code>sum()</code> on a vector of logical values, it automatically converts them to <code>0</code> and <code>1</code> and performs the same operation as above. This is an extremely useful feature.</p>
+<p>Often we will want to convert <code>TRUE</code> and <code>FALSE</code> values to <code>1</code> and <code>0</code>. When performing mathematical operations on <code>TRUE</code> and <code>FALSE</code>, this is done automatically through type coercion.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">5</span> +<span class="st"> </span>(a &gt;<span class="st"> </span><span class="dv">5</span>)</code></pre></div>
+<pre><code>##  [1] 5 5 5 5 5 6 6 6 6 6</code></pre>
+<p>By calling <code>sum()</code> on a vector of logical values, we can essentially count the number of <code>TRUE</code> values.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(a &gt;<span class="st"> </span><span class="dv">5</span>)</code></pre></div>
 <pre><code>## [1] 5</code></pre>
+<p>Here we count the elements of <code>a</code> that are larger than <code>5.</code> This is an extremely useful feature.</p>
 </div>
 <div id="control-flow" class="section level3">
 <h3><span class="header-section-number">2.3.2</span> Control Flow</h3>
@@ -1067,7 +1065,7 @@ for (i in <span class="dv">1</span>:<span class="dv">5</span>) {
 
 x</code></pre></div>
 <pre><code>## [1] 22 24 26 28 30</code></pre>
-<p>Note that this <code>for</code> loop is very normal in many programming languages, but not in <code>R</code>. In <code>R</code> we would not use a loop, instead we would simply use a vectorized operation:</p>
+<p>Note that this <code>for</code> loop is very normal in many programming languages, but not in <code>R</code>. In <code>R</code> we would not use a loop, instead we would simply use a vectorized operation.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="dv">11</span>:<span class="dv">15</span>
 x =<span class="st"> </span>x *<span class="st"> </span><span class="dv">2</span>
 x</code></pre></div>
@@ -1095,14 +1093,14 @@ x</code></pre></div>
   result =<span class="st"> </span>(x -<span class="st"> </span>m) /<span class="st"> </span>std
   result
 }</code></pre></div>
-<p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the results of the final line of the body is what is returned by the function.</p>
+<p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the output of the final line of the body is what is returned by the function. In this case the function returns the vector stored in the variable <code>results</code>.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</code></pre></div>
-<pre><code>##  [1]  1.313754 -5.094333 -5.470977  1.916151 -1.667945  3.043740 -3.423819
-##  [8]  9.626092 -1.873065  8.203200</code></pre>
+<pre><code>##  [1]  6.1003301  0.8008051 -4.8115999 -1.8351867  1.2370387 -0.8835901
+##  [7] -1.7652923 -5.4135431 -1.7722522  7.0412095</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)</code></pre></div>
-<pre><code>##  [1]  0.1260296 -1.1041920 -1.1765000  0.2416775 -0.4463956  0.4581516
-##  [7] -0.7834874  1.7218284 -0.4857745  1.4486622</code></pre>
+<pre><code>##  [1]  1.5177967  0.2268004 -1.1404153 -0.4153431  0.3330696 -0.1835284
+##  [7] -0.3983164 -1.2870523 -0.4000118  1.7470006</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">standardize =<span class="st"> </span>function(x) {
   (x -<span class="st"> </span><span class="kw">mean</span>(x)) /<span class="st"> </span><span class="kw">sd</span>(x)
@@ -1120,13 +1118,13 @@ x</code></pre></div>
 <pre><code>## [1] 100</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">power_of_num</span>(<span class="dt">power =</span> <span class="dv">2</span>, <span class="dt">num =</span> <span class="dv">10</span>)</code></pre></div>
 <pre><code>## [1] 100</code></pre>
-<p>Note however that, without using the argument names, the order matters, as the following code will not evaluate to the same output.</p>
+<p>Note that without using the argument names, the order matters. The following code will not evaluate to the same output as the previous example.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">power_of_num</span>(<span class="dv">2</span>, <span class="dv">10</span>)</code></pre></div>
 <pre><code>## [1] 1024</code></pre>
 <p>Also, the following line of code would produce an error since arguments without a default value must be specified.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">power_of_num</span>(<span class="dt">power =</span> <span class="dv">5</span>)</code></pre></div>
 <p>To further illustrate a function with a default argument, we will write a function that calculates sample standard deviation two ways.</p>
-<p>By default is will calculate the unbiased estimate of <span class="math inline">\(\sigma\)</span>, which we will call <span class="math inline">\(s\)</span>.</p>
+<p>By default, is will calculate the unbiased estimate of <span class="math inline">\(\sigma\)</span>, which we will call <span class="math inline">\(s\)</span>.</p>
 <p><span class="math display">\[
 s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
 \]</span></p>
@@ -1139,14 +1137,14 @@ s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
   <span class="kw">sqrt</span>((<span class="dv">1</span> /<span class="st"> </span>n) *<span class="st"> </span><span class="kw">sum</span>((x -<span class="st"> </span><span class="kw">mean</span>(x)) ^<span class="st"> </span><span class="dv">2</span>))
 }</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 5.208889</code></pre>
+<pre><code>## [1] 4.104989</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample, <span class="dt">biased =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<pre><code>## [1] 5.208889</code></pre>
+<pre><code>## [1] 4.104989</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 5.208889</code></pre>
-<p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built in function <code>sd()</code>.</p>
+<pre><code>## [1] 4.104989</code></pre>
+<p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built in function <code>sd()</code>. Finally, let’s examine the biased estimate of <span class="math inline">\(\sigma\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample, <span class="dt">biased =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## [1] 4.941586</code></pre>
+<pre><code>## [1] 3.894334</code></pre>
 </div>
 </div>
 <div id="hypothesis-tests-in-r" class="section level2">
@@ -1156,14 +1154,14 @@ s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
 <p>Suppose <span class="math inline">\(x_{i} \sim \mathrm{N}(\mu,\sigma^{2})\)</span> and we want to test <span class="math inline">\(H_{0}: \mu = \mu_{0}\)</span> versus <span class="math inline">\(H_{1}: \mu \neq \mu_{0}.\)</span></p>
 <p>Assuming <span class="math inline">\(\sigma\)</span> is unknown, we use the one-sample Student’s <span class="math inline">\(t\)</span> test statistic:</p>
 <p><span class="math display">\[
-t = \frac{\bar{x}-\mu_{0}}{s/\sqrt{n}} \sim t_{n-1}
+t = \frac{\bar{x}-\mu_{0}}{s/\sqrt{n}} \sim t_{n-1},
 \]</span></p>
-<p>where <span class="math inline">\(\bar{x} = \displaystyle\frac{\sum_{i=1}^{n}x_{i}}{n}\)</span> and <span class="math inline">\(s = \sqrt{\displaystyle\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}\)</span></p>
-<p>A <span class="math inline">\(100(1 - \alpha)\)</span>% confidence interval for <span class="math inline">\(\mu\)</span> is given by</p>
+<p>where <span class="math inline">\(\bar{x} = \displaystyle\frac{\sum_{i=1}^{n}x_{i}}{n}\)</span> and <span class="math inline">\(s = \sqrt{\displaystyle\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}\)</span>.</p>
+<p>A <span class="math inline">\(100(1 - \alpha)\)</span>% confidence interval for <span class="math inline">\(\mu\)</span> is given by,</p>
 <p><span class="math display">\[
-\bar{x} \pm t_{n-1}^{(\alpha/2)}\frac{s}{\sqrt{n}}
+\bar{x} \pm t_{n-1}(\alpha/2)\frac{s}{\sqrt{n}}
 \]</span></p>
-<p>where <span class="math inline">\(t_{n-1}^{(\alpha/2)}\)</span> is the critical value such that <span class="math inline">\(P\left(t&gt;t_{n-1}^{(\alpha/2)}\right)=\alpha/2\)</span> for <span class="math inline">\(n-1\)</span> degrees of freedom.</p>
+<p>where <span class="math inline">\(t_{n-1}(\alpha/2)\)</span> is the critical value such that <span class="math inline">\(P\left(t&gt;t_{n-1}(\alpha/2)\right) = \alpha/2\)</span> for <span class="math inline">\(n-1\)</span> degrees of freedom.</p>
 </div>
 <div id="one-sample-t-test-example" class="section level3">
 <h3><span class="header-section-number">2.4.2</span> One Sample t-Test: Example</h3>
@@ -1183,14 +1181,14 @@ n     =<span class="st"> </span><span class="dv">9</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">t =<span class="st"> </span>(x_bar -<span class="st"> </span>mu_0) /<span class="st"> </span>(s /<span class="st"> </span><span class="kw">sqrt</span>(n))
 t</code></pre></div>
 <pre><code>## [1] -1.2</code></pre>
-<p>Under the null hypothesis, the test statistic has a <span class="math inline">\(t\)</span> distribution with n - 1 degrees of freedom, in this case 8.</p>
+<p>Under the null hypothesis, the test statistic has a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n - 1\)</span> degrees of freedom, in this case 8.</p>
 <p>To complete the test, we need to obtain the p-value of the test. Since this is a one-sided test with a less-than alternative, we need to area to the left of -1.2 for a <span class="math inline">\(t\)</span> distribution with 8 degrees of freedom. That is,</p>
 <p><span class="math display">\[
 P(t_{8} &lt; -1.2)
 \]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pt</span>(t, <span class="dt">df =</span> n -<span class="st"> </span><span class="dv">1</span>)</code></pre></div>
 <pre><code>## [1] 0.1322336</code></pre>
-<p>We now have the p-value of our test, which is greater than our significance level (0.05) so we fail to reject the null hypothesis.</p>
+<p>We now have the p-value of our test, which is greater than our significance level (0.05), so we fail to reject the null hypothesis.</p>
 <p>Alternatively, this entire process could have been completed using one line of <code>R</code> code.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t.test</span>(<span class="dt">x =</span> capt_crisp$weight, <span class="dt">mu =</span> <span class="dv">16</span>, <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;less&quot;</span>), <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</code></pre></div>
 <pre><code>## 
@@ -1204,10 +1202,10 @@ P(t_{8} &lt; -1.2)
 ## sample estimates:
 ## mean of x 
 ##      15.9</code></pre>
-<p>We supply <code>R</code> with the data, the hypothesized value of <span class="math inline">\(\mu\)</span>, the alternative and the confidence level. <code>R</code> then returns a wealth of information including:</p>
+<p>We supply <code>R</code> with the data, the hypothesized value of <span class="math inline">\(\mu\)</span>, the alternative, and the confidence level. <code>R</code> then returns a wealth of information including:</p>
 <ul>
 <li>The value of the test statistic.</li>
-<li>The degrees of freedom of distribution under the null hypothesis.</li>
+<li>The degrees of freedom of the distribution under the null hypothesis.</li>
 <li>The p-value of the test.</li>
 <li>The confidence interval which corresponds to the test.</li>
 <li>An estimate of <span class="math inline">\(\mu\)</span>.</li>
@@ -1224,12 +1222,12 @@ P(t_{8} &lt; -1.2)
 <pre><code>## [1] 15.70783 16.09217
 ## attr(,&quot;conf.level&quot;)
 ## [1] 0.95</code></pre>
-<p>Let’s check this interval “by hand.” The one piece of information we are missing is the critical value, <span class="math inline">\(t_{n-1}^{(\alpha/2)} = t_{8}^{(0.025)}\)</span>, which can be calculated in <code>R</code> using the <code>qt()</code> function.</p>
+<p>Let’s check this interval “by hand.” The one piece of information we are missing is the critical value, <span class="math inline">\(t_{n-1}(\alpha/2) = t_{8}(0.025)\)</span>, which can be calculated in <code>R</code> using the <code>qt()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dt">df =</span> <span class="dv">8</span>)</code></pre></div>
 <pre><code>## [1] 2.306004</code></pre>
 <p>So, the 95% CI for the mean weight of a cereal box is calculated by plugging into the formula,</p>
 <p><span class="math display">\[
-\bar{x} \pm t_{n-1}^{(\alpha/2)} \frac{s}{\sqrt{n}}
+\bar{x} \pm t_{n-1}(\alpha/2) \frac{s}{\sqrt{n}}
 \]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">mean</span>(capt_crisp$weight) -<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dt">df =</span> <span class="dv">8</span>) *<span class="st"> </span><span class="kw">sd</span>(capt_crisp$weight) /<span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">9</span>),
   <span class="kw">mean</span>(capt_crisp$weight) +<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dt">df =</span> <span class="dv">8</span>) *<span class="st"> </span><span class="kw">sd</span>(capt_crisp$weight) /<span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">9</span>))</code></pre></div>
@@ -1241,14 +1239,14 @@ P(t_{8} &lt; -1.2)
 <p>Want to test <span class="math inline">\(H_{0}: \mu_{x} - \mu_{y} = \mu_{0}\)</span> versus <span class="math inline">\(H_{1}: \mu_{x} - \mu_{y} \neq \mu_{0}.\)</span></p>
 <p>Assuming <span class="math inline">\(\sigma\)</span> is unknown, use the two-sample Student’s <span class="math inline">\(t\)</span> test statistic:</p>
 <p><span class="math display">\[
-t = \frac{(\bar{x} - \bar{y})-\mu_{0}}{s_{p}\sqrt{\frac{1}{n}+\frac{1}{m}}} \sim t_{n+m-2}
+t = \frac{(\bar{x} - \bar{y})-\mu_{0}}{s_{p}\sqrt{\frac{1}{n}+\frac{1}{m}}} \sim t_{n+m-2},
 \]</span></p>
-<p>where <span class="math inline">\(\displaystyle\bar{x}=\frac{\sum_{i=1}^{n}x_{i}}{n}\)</span>, <span class="math inline">\(\displaystyle\bar{y}=\frac{\sum_{i=1}^{m}y_{i}}{m}\)</span>, and <span class="math inline">\(s_p^2 = \displaystyle\frac{(n-1)s_1^2+(m-1)s_2^2}{n+m-2}\)</span></p>
+<p>where <span class="math inline">\(\displaystyle\bar{x}=\frac{\sum_{i=1}^{n}x_{i}}{n}\)</span>, <span class="math inline">\(\displaystyle\bar{y}=\frac{\sum_{i=1}^{m}y_{i}}{m}\)</span>, and <span class="math inline">\(s_p^2 = \displaystyle\frac{(n-1)s_1^2+(m-1)s_2^2}{n+m-2}\)</span>.</p>
 <p>A <span class="math inline">\(100(1-\alpha)\)</span>% CI for <span class="math inline">\(\mu_{x}-\mu_{y}\)</span> is given by</p>
 <p><span class="math display">\[
-(\bar{x} - \bar{y}) \pm t_{n+m-2}^{(\alpha/2)}\left(s_{p}\textstyle\sqrt{\frac{1}{n}+\frac{1}{m}}\right)
+(\bar{x} - \bar{y}) \pm t_{n+m-2}(\alpha/2) \left(s_{p}\textstyle\sqrt{\frac{1}{n}+\frac{1}{m}}\right),
 \]</span></p>
-<p>where <span class="math inline">\(t_{n+m-2}^{(\alpha/2)}\)</span> is critical <span class="math inline">\(t_{n+m-2}\)</span> value such that <span class="math inline">\(P\left(t&gt;t_{n+m-2}^{(\alpha/2)}\right)=\alpha/2\)</span>.</p>
+<p>where <span class="math inline">\(t_{n+m-2}(\alpha/2)\)</span> is the critical value such that <span class="math inline">\(P\left(t&gt;t_{n+m-2}(\alpha/2)\right)=\alpha/2\)</span>.</p>
 </div>
 <div id="two-sample-t-test-example" class="section level3">
 <h3><span class="header-section-number">2.4.4</span> Two Sample t-Test: Example</h3>
@@ -1271,14 +1269,14 @@ s_{p}^{2} = \sqrt{\frac{(n-1)s_{x}^{2}+(m-1)s_{y}^{2}}{n+m-2}}
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s_p =<span class="st"> </span><span class="kw">sqrt</span>(((n -<span class="st"> </span><span class="dv">1</span>) *<span class="st"> </span>s_x ^<span class="st"> </span><span class="dv">2</span> +<span class="st"> </span>(m -<span class="st"> </span><span class="dv">1</span>) *<span class="st"> </span>s_y ^<span class="st"> </span><span class="dv">2</span>) /<span class="st"> </span>(n +<span class="st"> </span>m -<span class="st"> </span><span class="dv">2</span>))</code></pre></div>
 <p>Thus, the relevant <span class="math inline">\(t\)</span> test statistic is given by</p>
 <p><span class="math display">\[
-t = \frac{(\bar{x}-\bar{y})-\mu_{0}}{s_{p}\sqrt{\frac{1}{n}+\frac{1}{m}}}
+t = \frac{(\bar{x}-\bar{y})-\mu_{0}}{s_{p}\sqrt{\frac{1}{n}+\frac{1}{m}}}.
 \]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">t =<span class="st"> </span>((x_bar -<span class="st"> </span>y_bar) -<span class="st"> </span><span class="dv">0</span>) /<span class="st"> </span>(s_p *<span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">1</span> /<span class="st"> </span>n +<span class="st"> </span><span class="dv">1</span> /<span class="st"> </span>m))
 t</code></pre></div>
 <pre><code>## [1] 1.823369</code></pre>
 <p>Note that <span class="math inline">\(t \sim t_{n + m - 2} = t_{12}\)</span>, so we can calculate the p-value, which is</p>
 <p><span class="math display">\[
-P(t_{12} &gt; 1.8233692)
+P(t_{12} &gt; 1.8233692).
 \]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> -<span class="st"> </span><span class="kw">pt</span>(t, <span class="dt">df =</span> n +<span class="st"> </span>m -<span class="st"> </span><span class="dv">2</span>)</code></pre></div>
 <pre><code>## [1] 0.04661961</code></pre>
@@ -1299,7 +1297,7 @@ P(t_{12} &gt; 1.8233692)
 <p>Above we carried out the analysis using two vectors <code>x</code> and <code>y</code>. In general, we will have a preference for using data frames.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">t_test_data =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">values =</span> <span class="kw">c</span>(x, y),
                          <span class="dt">group  =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;A&quot;</span>, <span class="kw">length</span>(x)), <span class="kw">rep</span>(<span class="st">&quot;B&quot;</span>, <span class="kw">length</span>(y))))</code></pre></div>
-<p>We now have the data stored in a single variables <code>values</code> and have created a second variable <code>group</code> which indicates which “sample” the value belongs to.</p>
+<p>We now have the data stored in a single variables (<code>values</code>) and have created a second variable (<code>group</code>) which indicates which “sample” the value belongs to.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">t_test_data</code></pre></div>
 <pre><code>##    values group
 ## 1      70     A
@@ -1358,22 +1356,23 @@ D &amp;= \bar{X}_1 - \bar{X}_2.
 <p><span class="math display">\[
 \bar{X}_1 \sim N\left(\mu_1,\frac{\sigma^2}{n}\right)
 \]</span></p>
+<p>and</p>
 <p><span class="math display">\[
-\bar{X}_2 \sim N\left(\mu_2,\frac{\sigma^2}{n}\right)
+\bar{X}_2 \sim N\left(\mu_2,\frac{\sigma^2}{n}\right).
 \]</span></p>
 <p>Then,</p>
 <p><span class="math display">\[
-D = \bar{X}_1 - \bar{X}_2 \sim N\left(\mu_1-\mu_2, \frac{\sigma^2}{n} + \frac{\sigma^2}{n}\right) = N\left(6-5, \frac{4}{25} + \frac{4}{25}\right)
+D = \bar{X}_1 - \bar{X}_2 \sim N\left(\mu_1-\mu_2, \frac{\sigma^2}{n} + \frac{\sigma^2}{n}\right) = N\left(6-5, \frac{4}{25} + \frac{4}{25}\right).
 \]</span></p>
 <p>So,</p>
 <p><span class="math display">\[
-D \sim N(\mu = 1, \sigma^2 = 0.32)
+D \sim N(\mu = 1, \sigma^2 = 0.32).
 \]</span></p>
 <p>Thus,</p>
 <p><span class="math display">\[
 P(0 &lt; D &lt; 2) = P(D &lt; 2) - P(D &lt; 0).
 \]</span></p>
-<p>Which can then be calculated using <code>R</code> without a need to first standardize, or use a table.</p>
+<p>This can then be calculated using <code>R</code> without a need to first standardize, or use a table.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pnorm</span>(<span class="dv">2</span>, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="kw">sqrt</span>(<span class="fl">0.32</span>)) -<span class="st"> </span><span class="kw">pnorm</span>(<span class="dv">0</span>, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="kw">sqrt</span>(<span class="fl">0.32</span>))</code></pre></div>
 <pre><code>## [1] 0.9229001</code></pre>
 <p>An alternative approach, would be to <strong>simulate</strong> a large number of observations of <span class="math inline">\(D\)</span> then use the <strong>empirical distribution</strong> to calculate the probability.</p>
@@ -1404,7 +1403,7 @@ differences =<span class="st"> </span><span class="kw">rep</span>(<span class="d
      <span class="dt">xlab   =</span> <span class="st">&quot;Simulated Values of D&quot;</span>,
      <span class="dt">col    =</span> <span class="st">&quot;dodgerblue&quot;</span>,
      <span class="dt">border =</span> <span class="st">&quot;darkorange&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-121-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-120-1.png" width="672" /></p>
 <p>Also the sample mean and variance are very close to to what we would expect.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(differences)</code></pre></div>
 <pre><code>## [1] 1.001423</code></pre>
@@ -1425,18 +1424,19 @@ diffs =<span class="st"> </span><span class="kw">replicate</span>(<span class="d
 <p><span class="math display">\[
 X \sim Pois(\mu)
 \]</span></p>
-<p>Then</p>
+<p>then</p>
 <p><span class="math display">\[
-\begin{aligned}
-E[X] &amp;= \mu \\
-Var[X] &amp;= \mu
-\end{aligned}
+E[X] = \mu
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+Var[X] = \mu.
 \]</span></p>
 <p>Also, recall that for a random variable <span class="math inline">\(X\)</span> with finite mean <span class="math inline">\(\mu\)</span> and finite variance <span class="math inline">\(\sigma^2\)</span>, the central limit theorem tells us that the mean, <span class="math inline">\(\bar{X}\)</span> of a random sample of size <span class="math inline">\(n\)</span> is approximately normal for <em>large</em> values of <span class="math inline">\(n\)</span>. Specifically, as <span class="math inline">\(n \to \infty\)</span>,</p>
 <p><span class="math display">\[
-\bar{X} \overset{d}{\to} N\left(\mu, \frac{\sigma^2}{n}\right)
+\bar{X} \overset{d}{\to} N\left(\mu, \frac{\sigma^2}{n}\right).
 \]</span></p>
-<p>The following verifies this result for a Poisson distribution with <span class="math inline">\(\mu = 10\)</span> and a sample size of <code>n = 50</code>.</p>
+<p>The following verifies this result for a Poisson distribution with <span class="math inline">\(\mu = 10\)</span> and a sample size of <span class="math inline">\(n = 50\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1337</span>)
 mu          =<span class="st"> </span><span class="dv">10</span>
 sample_size =<span class="st"> </span><span class="dv">50</span>
@@ -1448,13 +1448,15 @@ x_bars      =<span class="st"> </span><span class="kw">rep</span>(<span class="d
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x_bar_hist =<span class="st"> </span><span class="kw">hist</span>(x_bars, <span class="dt">breaks =</span> <span class="dv">50</span>, 
                   <span class="dt">main =</span> <span class="st">&quot;Histogram of Sample Means&quot;</span>,
                   <span class="dt">xlab =</span> <span class="st">&quot;Sample Means&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-127-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-126-1.png" width="672" /></p>
+<p>Now we will compare sample statistics from the empirical distribution with their known values based on the parent distribution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">mean</span>(x_bars), mu)</code></pre></div>
 <pre><code>## [1] 10.00008 10.00000</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">var</span>(x_bars), mu /<span class="st"> </span>sample_size)</code></pre></div>
 <pre><code>## [1] 0.1989732 0.2000000</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">sd</span>(x_bars), <span class="kw">sqrt</span>(mu) /<span class="st"> </span><span class="kw">sqrt</span>(sample_size))</code></pre></div>
 <pre><code>## [1] 0.4460641 0.4472136</code></pre>
+<p>And here, we will calculate the proportion of sample means that are within 2 standard deviations of the population mean.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(x_bars &gt;<span class="st"> </span>mu -<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span><span class="kw">sqrt</span>(mu) /<span class="st"> </span><span class="kw">sqrt</span>(sample_size) &amp;
 <span class="st">     </span>x_bars &lt;<span class="st"> </span>mu +<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span><span class="kw">sqrt</span>(mu) /<span class="st"> </span><span class="kw">sqrt</span>(sample_size))</code></pre></div>
 <pre><code>## [1] 0.95429</code></pre>
@@ -1466,7 +1468,7 @@ x_bars      =<span class="st"> </span><span class="kw">rep</span>(<span class="d
 x_bar_hist =<span class="st"> </span><span class="kw">hist</span>(x_bars, <span class="dt">breaks =</span> <span class="dv">50</span>, <span class="dt">col =</span> shading,
                   <span class="dt">main =</span> <span class="st">&quot;Histogram of Sample Means, Two Standard Deviations&quot;</span>,
                   <span class="dt">xlab =</span> <span class="st">&quot;Sample Means&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-132-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-131-1.png" width="672" /></p>
 
 <div id="refs" class="references">
 
