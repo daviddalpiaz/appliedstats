@@ -129,17 +129,20 @@ If you follow these steps, you will get your issue resolved much quicker, and po
 
 `R` comes with a number of built-in functions and datasets, but one of the main strengths of `R` as an open-source project is its package system. Packages add additional functions and data. Frequently if you want to do something in `R`, and it isn't available by default, there is a good chance that there is a package that will fulfill your needs.
 
-To install a package, use the `install.packages()` function.
+To install a package, use the `install.packages()` function. Think of this as buying a recipe book from the store, bringing it home, and putting it on your shelf.
 
 ```{r, eval = FALSE}
 install.packages("ggplot2")
 ```
 
-Once a package is installed, it must be loaded into your current `R` session before being used.
+Once a package is installed, it must be loaded into your current `R` session before being used. Think of this as taking the book off of the shelf and opening it up to read.
 
 ```{r, eval = FALSE}
 library(ggplot2)
 ```
+
+Once you close `R`, all the packages are closed and put back on the imaginary shelf. The next time you open `R`, you do not have to install the package again, but you do have to load any packages you intend to use by invoking `library()`.
+
 
 ### Data Types
 
@@ -147,19 +150,19 @@ library(ggplot2)
 
 - Numeric
     - Also known as Double. The default type when dealing with numbers.
-    - Examples: `1`, `1.0`, `42.5`.
+    - Examples: `1`, `1.0`, `42.5`
 - Integer
-    - Examples: `1`, `2`, `42`
+    - Examples: `1L`, `2L`, `42L`
 - Complex
     - Example: `4 + 2i`
 - Logical
-    - Two possible values: `TRUE` and `FALSE`.
+    - Two possible values: `TRUE` and `FALSE`
     - You can also use `T` and `F`, but this is *not* recommended.
     - `NA` is also considered logical.
 - Character
     - Examples: `"a"`, `"Statistics"`, `"1 plus 2."`
 
-`R` also has a number of basic data *structures*. Data structures can be either homogeneous (contain only a single data type) or heterogeneous. (Contain more than one data type.)
+`R` also has a number of basic data *structures*. A data structure is either homogeneous (all elements are of the same data type) or heterogeneous (elements can be of more than one data type).
 
 | Dimension | **Homogeneous** | **Heterogeneous** |
 |-----------|-----------------|-------------------|
@@ -171,7 +174,7 @@ library(ggplot2)
 
 Many operations in `R` make heavy use of **vectors**. Vectors in `R` are indexed starting at `1`. That is what the `[1]` in the output is indicating, that the first element of the row being displayed is the first element of the vector. Larger vectors will start additional rows with `[*]` where `*` is the index of the first element of the row.
 
-Possibly the most common way to create a vector in `R` is using the `c()` function, which is short for combine. As the name suggests, it combines a list of numbers separated by commas. 
+Possibly the most common way to create a vector in `R` is using the `c()` function, which is short for "combine."" As the name suggests, it combines a list of numbers separated by commas. 
 
 ```{r}
 c(1, 3, 5, 7, 8, 9)
@@ -217,13 +220,10 @@ x[c(1,3,4)]
 
 Lastly we see that we can subset based on a vector of indices.
 
-```{r}
-x = 1:10
-```
-
 One of the biggest strengths of `R` is its use of vectorized operations. (Frequently the lack of understanding of this concept leads of a belief that `R` is *slow*. `R` is not the fastest language, but it has a reputation for being slower than it really is.)
 
 ```{r}
+x = 1:10
 x + 1
 2 * x
 2 ^ x
@@ -255,7 +255,7 @@ If we want to create a sequence that isn't limited to integers and increasing by
 seq(from = 1.5, to = 4.2, by = 0.1)
 ```
 
-We will discuss functions later, but note here that `from`, `to` and `by` are optional.
+We will discuss functions in detail later, but note here that the input labels `from`, `to`, and `by` are optional.
 
 ```{r}
 seq(1.5, 4.2, 0.1)
@@ -264,7 +264,7 @@ seq(1.5, 4.2, 0.1)
 Another common operation to create a vector is `rep()`, which can repeat a single value a number of times.
 
 ```{r}
-rep(0.5, times = 10)
+rep("A", times = 10)
 ```
 
 Or, `rep()` can be used to repeat a vector a number of times.
@@ -294,14 +294,14 @@ c(x, rep(seq(1, 9, 2), 3), c(1, 2, 3), 42, 2:4)
 y
 ```
 
-- Central Tendency
+#### Central Tendency {-}
 
 ```{r}
 mean(y)
 median(y)
 ```
 
-- Spread
+#### Spread {-}
 
 ```{r}
 var(y)
@@ -314,7 +314,7 @@ range(y)
 
 ### Matrices
 
-`R` can also be used for **matrix** calculations. Matrices have rows and columns containing a single data type. (And unlike a data frame, which we will see later, the order is important.)
+`R` can also be used for **matrix** calculations. Matrices have rows and columns containing a single data type. In a matrix, the order of rows and columns is important. (This is not true of *data frames*, which we will see later.)
 
 Matrices can be created using the `matrix` function. 
 
@@ -324,6 +324,8 @@ x
 X = matrix(x, nrow = 3, ncol = 3)
 X
 ```
+
+Note here that we are using two different variables: lower case `x`, which stores a vector and capital `X`, which stores a matrix. (Following the usual mathematical convention.) We can do this because `R` is case sensitive.
 
 By default the `matrix` function reorders a vector into columns, but we can also tell `R` to use rows instead.
 
@@ -359,7 +361,7 @@ We can also use vectors to subset more than one row or column at a time. Here we
 X[2, c(1, 3)]
 ```
 
-Matrices can also be created by combining vectors as columns, using `cbind` or combining vectors as rows using `rbind`.
+Matrices can also be created by combining vectors as columns, using `cbind`, or combining vectors as rows, using `rbind`.
 
 ```{r}
 x = 1:9
@@ -393,7 +395,7 @@ X * Y
 X / Y
 ```
 
-Note that `X * Y` is not matrix multiplication. It is element by element multiplication. (Same for `X / Y`). Instead, matrix multiplication uses `%*%`. `t()` gives the transpose of a matrix, and `solve()` returns the inverse of a matrix.
+Note that `X * Y` is not matrix multiplication. It is element by element multiplication. (Same for `X / Y`). Instead, matrix multiplication uses `%*%`. Other matrix functions include `t()` which gives the transpose of a matrix and `solve()` which returns the inverse of a square matrix if it is invertible.
 
 ```{r}
 X %*% Y
@@ -466,15 +468,19 @@ example_data_from_csv = read.csv("data/example_data.csv")
 
 This particular line of code assumes that the file `example_data.csv` exists in a folder called `data` in your current working directory.
 
-Alternatively, we could use the "Import Dataset" feature in RStudio which can be found in the environment window. This process will automatically generate the code to import a file. The resulting code will be shown in the console window.
+Alternatively, we could use the "Import Dataset" feature in RStudio which can be found in the environment window. (By default, the top-right pane of RStudio.) 
 
 ![RStudio Import Screen](images/import.png)
+
+Once completed, this process will automatically generate the code to import a file. The resulting code will be shown in the console window.
+
+Earlier we looked at installing packages, in particular the `ggplot2` package. (A package for visualization. While not necessary for this course, it is quickly growing in popularity.) 
 
 ```{r, eval = FALSE}
 library(ggplot2)
 ```
 
-Earlier we looked at installing packages, in particular the `ggplot2` package. (A package for visualization. While not necessary for this course, it is quickly growing in popularity.) Inside the `ggplot2` package is a dataset called `mpg`. By loading the package using the `library()` function, we can now access `mpg`.
+Inside the `ggplot2` package is a dataset called `mpg`. By loading the package using the `library()` function, we can now access `mpg`.
 
 When using data from inside a package, there are three things we would generally like to do:
 
@@ -488,13 +494,13 @@ To look at the data, we have two useful commands: `head()` and `str()`.
 head(mpg, n = 10)
 ```
 
-`head()` will display the first `n` observations of the data frame.
+The function `head()` will display the first `n` observations of the data frame.
 
 ```{r}
 str(mpg)
 ```
 
-`str()` will display the "structure" of the data frame. It will display the number of **observations** and **variables**, list the variables, give the type of each variable, and show some elements of each variable.
+The function `str()` will display the "structure" of the data frame. It will display the number of **observations** and **variables**, list the variables, give the type of each variable, and show some elements of each variable.
 
 It is important to note that while matrices have rows and columns, data frames instead have observations and variables. When displayed in the console or viewer, each row is an observation and each column is a variable. However generally speaking, their order does not matter, it is simply a side-effect of how the data was entered or stored.
 
@@ -527,7 +533,9 @@ nrow(mpg)
 ncol(mpg)
 ```
 
-Subsetting data frames can work much like subsetting matrices using square brackets, `[,]`. Here, we find fuel efficient vehicles and only display `manufacturer`, `model` and `year`.
+Here `nrow()` is also the number of observations, which in most cases is the *sample size*.
+
+Subsetting data frames can work much like subsetting matrices using square brackets, `[,]`. Here, we find fuel efficient vehicles earning over 35 miles per gallon and only display `manufacturer`, `model` and `year`.
 
 ```{r}
 mpg[mpg$hwy > 35, c("manufacturer", "model", "year")]
@@ -577,23 +585,29 @@ hist(mpg$cty,
      border = "darkorange")
 ```
 
-Importantly, you should always be sure to label your axes and give the plot a title. `breaks` is an argument specific to `hist()` which controls how many bars `R` will use for the histogram. By default `R` will attempt to intelligently guess a good number of `breaks`, but as we can see here, it is sometimes useful to modify this yourself.
+Importantly, you should always be sure to label your axes and give the plot a title. The argument `breaks` is specific to `hist()`. Entering an integer will give a suggestion to `R` for how many bars to use for the histogram. By default `R` will attempt to intelligently guess a good number of `breaks`, but as we can see here, it is sometimes useful to modify this yourself.
 
 #### Boxplots
 
-To visualize the relationship between a numerical and categorical variable we will use a **boxplot**. In the `mpg` dataset, the `drv` variable takes a small, finite number of values. A car can only be front wheel drive, rear wheel drive, or 4 wheel drive. (FWD, RWD, or 4WD.)
+To visualize the relationship between a numerical and categorical variable, we will use a **boxplot**. In the `mpg` dataset, the `drv` variable takes a small, finite number of values. A car can only be front wheel drive, 4 wheel drive, or rear wheel drive.
 
 ```{r}
 unique(mpg$drv)
 ```
 
+First note that we can use a single boxplot as an alternative to a histogram for visualizing a single numerical variable. To do so in `R`, we use the `boxplot()` function.
+
+```{r}
+boxplot(mpg$hwy)
+```
+
+However, more often we will use boxplots to compare a numerical variable for different values of a categorical variable.
+
 ```{r}
 boxplot(hwy ~ drv, data = mpg)
 ```
 
-Here used the `boxplot()` command to create the boxplot. However, since we are now dealing with two variables, the syntax has changed, and we see the use of a `~` and also a `data = ` argument. This will be a syntax that is common to many functions we will use in this course.
-
-The `R` syntax `hwy ~ drv, data = mpg` reads "Plot the `hwy` variable against the `drv` variable using the dataset `mpg`."
+Here used the `boxplot()` command to create side-by-side boxplots. However, since we are now dealing with two variables, the syntax has changed. The `R` syntax `hwy ~ drv, data = mpg` reads "Plot the `hwy` variable against the `drv` variable using the dataset `mpg`." We see the use of a `~` (which specifies a formula) and also a `data = ` argument. This will be a syntax that is common to many functions we will use in this course. 
 
 ```{r}
 boxplot(hwy ~ drv, data = mpg,
@@ -610,7 +624,7 @@ Again, `boxplot()` has a number of additional arguments which have the ability t
 
 #### Scatterplots
 
-Lastly, to visualize the relationship between two numerical variables we will use a **scatterplot**. This can be done with the `plot()` function and the `~` syntax we just used with a boxplot. (`plot()` can also be used more generally, see the documentation for details.)
+Lastly, to visualize the relationship between two numeric variables we will use a **scatterplot**. This can be done with the `plot()` function and the `~` syntax we just used with a boxplot. (The function `plot()` can also be used more generally; see the documentation for details.)
 
 ```{r}
 plot(hwy ~ displ, data = mpg)
@@ -633,9 +647,9 @@ When working with different statistical distributions, we often want to make pro
 We typically want to know one of four things:
 
 * The density (pdf) at a particular value.
-* The distribution (cdf)at a particular value.
-* The quantile corresponding to a particular probability.
-* A random draw from a particular distribution.
+* The distribution (cdf) at a particular value.
+* The quantile value corresponding to a particular probability.
+* A random draw of values from a particular distribution.
 
 This used to be done with statistical tables printed in the back of textbooks. Now, `R` has functions for obtaining density, distribution, quantile and random values.
 
@@ -648,7 +662,7 @@ The general naming structure of the relevant `R` functions is:
 
 Note that `name` represents the name of the given distribution.
 
-For example, consider a random variable $X$ which is $N(\mu = 2, \sigma^2 = 25)$. (Note, we are parameterizing using the the variance $\sigma^2$. `R` however uses the standard deviation.)
+For example, consider a random variable $X$ which is $N(\mu = 2, \sigma^2 = 25)$. (Note, we are parameterizing using the variance $\sigma^2$. `R` however uses the standard deviation.)
 
 To calculate the value of the pdf at `x = 3`, that is, the height of the curve at `x = 3`, use:
 
@@ -690,7 +704,7 @@ Where `*` can be `d`, `p`, `q`, and `r`. Each distribution will have its own set
 dbinom(x = 6, size = 10, prob = 0.75)
 ```
 
-Also note that, when using the `dname` functions with discrete distributions, they are the pmf of the distribution. For example, the above command is $P(Y = 5)$ if $Y \sim b(n = 10, p = 0.75)$. (The probability of flipping an unfair coin `10` times and seeing `6` heads, if the probability of heads is `0.75`.)
+Also note that, when using the `dname` functions with discrete distributions, they are the pmf of the distribution. For example, the above command is $P(Y = 6)$ if $Y \sim b(n = 10, p = 0.75)$. (The probability of flipping an unfair coin `10` times and seeing `6` heads, if the probability of heads is `0.75`.)
 
 ## Programming Basics
 
