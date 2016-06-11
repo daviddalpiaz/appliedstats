@@ -25,7 +25,7 @@
 
 <meta name="author" content="David Dalpiaz">
 
-<meta name="date" content="2016-06-10">
+<meta name="date" content="2016-06-11">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -317,10 +317,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="installing-packages" class="section level3">
 <h3><span class="header-section-number">2.2.3</span> Installing Packages</h3>
 <p><code>R</code> comes with a number of built-in functions and datasets, but one of the main strengths of <code>R</code> as an open-source project is its package system. Packages add additional functions and data. Frequently if you want to do something in <code>R</code>, and it isn’t available by default, there is a good chance that there is a package that will fulfill your needs.</p>
-<p>To install a package, use the <code>install.packages()</code> function.</p>
+<p>To install a package, use the <code>install.packages()</code> function. Think of this as buying a recipe book from the store, bringing it home, and putting it on your shelf.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</code></pre></div>
-<p>Once a package is installed, it must be loaded into your current <code>R</code> session before being used.</p>
+<p>Once a package is installed, it must be loaded into your current <code>R</code> session before being used. Think of this as taking the book off of the shelf and opening it up to read.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)</code></pre></div>
+<p>Once you close <code>R</code>, all the packages are closed and put back on the imaginary shelf. The next time you open <code>R</code>, you do not have to install the package again, but you do have to load any packages you intend to use by invoking <code>library()</code>.</p>
 </div>
 <div id="data-types" class="section level3">
 <h3><span class="header-section-number">2.2.4</span> Data Types</h3>
@@ -329,11 +330,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>Numeric
 <ul>
 <li>Also known as Double. The default type when dealing with numbers.</li>
-<li>Examples: <code>1</code>, <code>1.0</code>, <code>42.5</code>.</li>
+<li>Examples: <code>1</code>, <code>1.0</code>, <code>42.5</code></li>
 </ul></li>
 <li>Integer
 <ul>
-<li>Examples: <code>1</code>, <code>2</code>, <code>42</code></li>
+<li>Examples: <code>1L</code>, <code>2L</code>, <code>42L</code></li>
 </ul></li>
 <li>Complex
 <ul>
@@ -341,7 +342,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 <li>Logical
 <ul>
-<li>Two possible values: <code>TRUE</code> and <code>FALSE</code>.</li>
+<li>Two possible values: <code>TRUE</code> and <code>FALSE</code></li>
 <li>You can also use <code>T</code> and <code>F</code>, but this is <em>not</em> recommended.</li>
 <li><code>NA</code> is also considered logical.</li>
 </ul></li>
@@ -350,7 +351,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>Examples: <code>&quot;a&quot;</code>, <code>&quot;Statistics&quot;</code>, <code>&quot;1 plus 2.&quot;</code></li>
 </ul></li>
 </ul>
-<p><code>R</code> also has a number of basic data <em>structures</em>. Data structures can be either homogeneous (contain only a single data type) or heterogeneous. (Contain more than one data type.)</p>
+<p><code>R</code> also has a number of basic data <em>structures</em>. A data structure is either homogeneous (all elements are of the same data type) or heterogeneous (elements can be of more than one data type).</p>
 <table>
 <thead>
 <tr class="header">
@@ -381,7 +382,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="vectors" class="section level3">
 <h3><span class="header-section-number">2.2.5</span> Vectors</h3>
 <p>Many operations in <code>R</code> make heavy use of <strong>vectors</strong>. Vectors in <code>R</code> are indexed starting at <code>1</code>. That is what the <code>[1]</code> in the output is indicating, that the first element of the row being displayed is the first element of the vector. Larger vectors will start additional rows with <code>[*]</code> where <code>*</code> is the index of the first element of the row.</p>
-<p>Possibly the most common way to create a vector in <code>R</code> is using the <code>c()</code> function, which is short for combine. As the name suggests, it combines a list of numbers separated by commas.</p>
+<p>Possibly the most common way to create a vector in <code>R</code> is using the <code>c()</code> function, which is short for “combine.”&quot; As the name suggests, it combines a list of numbers separated by commas.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>)</code></pre></div>
 <pre><code>## [1] 1 3 5 7 8 9</code></pre>
 <p>Here <code>R</code> simply outputs this vector. If we would like to store this vector in a <strong>variable</strong> we can do so with the <strong>assignment</strong> operator <code>=</code>. In this case the variable <code>x</code> now holds the vector we just created, and we can access the vector by typing <code>x</code>.</p>
@@ -414,9 +415,9 @@ x</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x[<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>)]</code></pre></div>
 <pre><code>## [1] 1 5 7</code></pre>
 <p>Lastly we see that we can subset based on a vector of indices.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</span></code></pre></div>
 <p>One of the biggest strengths of <code>R</code> is its use of vectorized operations. (Frequently the lack of understanding of this concept leads of a belief that <code>R</code> is <em>slow</em>. <code>R</code> is not the fastest language, but it has a reputation for being slower than it really is.)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x +<span class="st"> </span><span class="dv">1</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="dv">1</span>:<span class="dv">10</span>
+x +<span class="st"> </span><span class="dv">1</span></code></pre></div>
 <pre><code>##  [1]  2  3  4  5  6  7  8  9 10 11</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span> *<span class="st"> </span>x</code></pre></div>
 <pre><code>##  [1]  2  4  6  8 10 12 14 16 18 20</code></pre>
@@ -444,13 +445,13 @@ vec_3 =<span class="st"> </span><span class="dv">42</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="dt">from =</span> <span class="fl">1.5</span>, <span class="dt">to =</span> <span class="fl">4.2</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)</code></pre></div>
 <pre><code>##  [1] 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 3.0 3.1 3.2 3.3
 ## [20] 3.4 3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2</code></pre>
-<p>We will discuss functions later, but note here that <code>from</code>, <code>to</code> and <code>by</code> are optional.</p>
+<p>We will discuss functions in detail later, but note here that the input labels <code>from</code>, <code>to</code>, and <code>by</code> are optional.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">seq</span>(<span class="fl">1.5</span>, <span class="fl">4.2</span>, <span class="fl">0.1</span>)</code></pre></div>
 <pre><code>##  [1] 1.5 1.6 1.7 1.8 1.9 2.0 2.1 2.2 2.3 2.4 2.5 2.6 2.7 2.8 2.9 3.0 3.1 3.2 3.3
 ## [20] 3.4 3.5 3.6 3.7 3.8 3.9 4.0 4.1 4.2</code></pre>
 <p>Another common operation to create a vector is <code>rep()</code>, which can repeat a single value a number of times.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rep</span>(<span class="fl">0.5</span>, <span class="dt">times =</span> <span class="dv">10</span>)</code></pre></div>
-<pre><code>##  [1] 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rep</span>(<span class="st">&quot;A&quot;</span>, <span class="dt">times =</span> <span class="dv">10</span>)</code></pre></div>
+<pre><code>##  [1] &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot;</code></pre>
 <p>Or, <code>rep()</code> can be used to repeat a vector a number of times.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rep</span>(x, <span class="dt">times =</span> <span class="dv">3</span>)</code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10  1  2  3  4  5  6  7  8  9 10  1  2  3  4  5
@@ -477,16 +478,15 @@ vec_3 =<span class="st"> </span><span class="dv">42</span></code></pre></div>
 ##  [55]  55  56  57  58  59  60  61  62  63  64  65  66  67  68  69  70  71  72
 ##  [73]  73  74  75  76  77  78  79  80  81  82  83  84  85  86  87  88  89  90
 ##  [91]  91  92  93  94  95  96  97  98  99 100</code></pre>
-<ul>
-<li>Central Tendency</li>
-</ul>
+<div id="central-tendency" class="section level4 unnumbered">
+<h4>Central Tendency</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(y)</code></pre></div>
 <pre><code>## [1] 50.5</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">median</span>(y)</code></pre></div>
 <pre><code>## [1] 50.5</code></pre>
-<ul>
-<li>Spread</li>
-</ul>
+</div>
+<div id="spread" class="section level4 unnumbered">
+<h4>Spread</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(y)</code></pre></div>
 <pre><code>## [1] 841.6667</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(y)</code></pre></div>
@@ -500,9 +500,10 @@ vec_3 =<span class="st"> </span><span class="dv">42</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">range</span>(y)</code></pre></div>
 <pre><code>## [1]   1 100</code></pre>
 </div>
+</div>
 <div id="matrices" class="section level3">
 <h3><span class="header-section-number">2.2.7</span> Matrices</h3>
-<p><code>R</code> can also be used for <strong>matrix</strong> calculations. Matrices have rows and columns containing a single data type. (And unlike a data frame, which we will see later, the order is important.)</p>
+<p><code>R</code> can also be used for <strong>matrix</strong> calculations. Matrices have rows and columns containing a single data type. In a matrix, the order of rows and columns is important. (This is not true of <em>data frames</em>, which we will see later.)</p>
 <p>Matrices can be created using the <code>matrix</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="dv">1</span>:<span class="dv">9</span>
 x</code></pre></div>
@@ -513,6 +514,7 @@ X</code></pre></div>
 ## [1,]    1    4    7
 ## [2,]    2    5    8
 ## [3,]    3    6    9</code></pre>
+<p>Note here that we are using two different variables: lower case <code>x</code>, which stores a vector and capital <code>X</code>, which stores a matrix. (Following the usual mathematical convention.) We can do this because <code>R</code> is case sensitive.</p>
 <p>By default the <code>matrix</code> function reorders a vector into columns, but we can also tell <code>R</code> to use rows instead.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Y =<span class="st"> </span><span class="kw">matrix</span>(x, <span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
 Y</code></pre></div>
@@ -542,7 +544,7 @@ Z</code></pre></div>
 <p>We can also use vectors to subset more than one row or column at a time. Here we subset to the first and third column of the second row.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X[<span class="dv">2</span>, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</code></pre></div>
 <pre><code>## [1] 2 8</code></pre>
-<p>Matrices can also be created by combining vectors as columns, using <code>cbind</code> or combining vectors as rows using <code>rbind</code>.</p>
+<p>Matrices can also be created by combining vectors as columns, using <code>cbind</code>, or combining vectors as rows, using <code>rbind</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="dv">1</span>:<span class="dv">9</span>
 <span class="kw">rev</span>(x)</code></pre></div>
 <pre><code>## [1] 9 8 7 6 5 4 3 2 1</code></pre>
@@ -599,7 +601,7 @@ X</code></pre></div>
 ## [1,] 0.1111111 0.6666667 2.333333
 ## [2,] 0.2500000 1.0000000 4.000000
 ## [3,] 0.4285714 1.5000000 9.000000</code></pre>
-<p>Note that <code>X * Y</code> is not matrix multiplication. It is element by element multiplication. (Same for <code>X / Y</code>). Instead, matrix multiplication uses <code>%*%</code>. <code>t()</code> gives the transpose of a matrix, and <code>solve()</code> returns the inverse of a matrix.</p>
+<p>Note that <code>X * Y</code> is not matrix multiplication. It is element by element multiplication. (Same for <code>X / Y</code>). Instead, matrix multiplication uses <code>%*%</code>. Other matrix functions include <code>t()</code> which gives the transpose of a matrix and <code>solve()</code> which returns the inverse of a square matrix if it is invertible.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">X %*%<span class="st"> </span>Y</code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]   90   54   18
@@ -680,13 +682,15 @@ X</code></pre></div>
 <p><a href="data/example_data.csv">The example data above can also be found here as a .csv file.</a> To read this data into <code>R</code>, we would use the <code>read.csv()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">example_data_from_csv =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/example_data.csv&quot;</span>)</code></pre></div>
 <p>This particular line of code assumes that the file <code>example_data.csv</code> exists in a folder called <code>data</code> in your current working directory.</p>
-<p>Alternatively, we could use the “Import Dataset” feature in RStudio which can be found in the environment window. This process will automatically generate the code to import a file. The resulting code will be shown in the console window.</p>
+<p>Alternatively, we could use the “Import Dataset” feature in RStudio which can be found in the environment window. (By default, the top-right pane of RStudio.)</p>
 <div class="figure">
 <img src="images/import.png" alt="RStudio Import Screen" />
 <p class="caption">RStudio Import Screen</p>
 </div>
+<p>Once completed, this process will automatically generate the code to import a file. The resulting code will be shown in the console window.</p>
+<p>Earlier we looked at installing packages, in particular the <code>ggplot2</code> package. (A package for visualization. While not necessary for this course, it is quickly growing in popularity.)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)</code></pre></div>
-<p>Earlier we looked at installing packages, in particular the <code>ggplot2</code> package. (A package for visualization. While not necessary for this course, it is quickly growing in popularity.) Inside the <code>ggplot2</code> package is a dataset called <code>mpg</code>. By loading the package using the <code>library()</code> function, we can now access <code>mpg</code>.</p>
+<p>Inside the <code>ggplot2</code> package is a dataset called <code>mpg</code>. By loading the package using the <code>library()</code> function, we can now access <code>mpg</code>.</p>
 <p>When using data from inside a package, there are three things we would generally like to do:</p>
 <ul>
 <li>Look at the raw data.</li>
@@ -706,7 +710,7 @@ X</code></pre></div>
 ## 8          audi a4 quattro   1.8 1999   4 manual(m5)   4  18  26  p compact
 ## 9          audi a4 quattro   1.8 1999   4   auto(l5)   4  16  25  p compact
 ## 10         audi a4 quattro   2.0 2008   4 manual(m6)   4  20  28  p compact</code></pre>
-<p><code>head()</code> will display the first <code>n</code> observations of the data frame.</p>
+<p>The function <code>head()</code> will display the first <code>n</code> observations of the data frame.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(mpg)</code></pre></div>
 <pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    234 obs. of  11 variables:
 ##  $ manufacturer: chr  &quot;audi&quot; &quot;audi&quot; &quot;audi&quot; &quot;audi&quot; ...
@@ -720,7 +724,7 @@ X</code></pre></div>
 ##  $ hwy         : int  29 29 31 30 26 26 27 26 25 28 ...
 ##  $ fl          : chr  &quot;p&quot; &quot;p&quot; &quot;p&quot; &quot;p&quot; ...
 ##  $ class       : chr  &quot;compact&quot; &quot;compact&quot; &quot;compact&quot; &quot;compact&quot; ...</code></pre>
-<p><code>str()</code> will display the “structure” of the data frame. It will display the number of <strong>observations</strong> and <strong>variables</strong>, list the variables, give the type of each variable, and show some elements of each variable.</p>
+<p>The function <code>str()</code> will display the “structure” of the data frame. It will display the number of <strong>observations</strong> and <strong>variables</strong>, list the variables, give the type of each variable, and show some elements of each variable.</p>
 <p>It is important to note that while matrices have rows and columns, data frames instead have observations and variables. When displayed in the console or viewer, each row is an observation and each column is a variable. However generally speaking, their order does not matter, it is simply a side-effect of how the data was entered or stored.</p>
 <p>In this dataset an observation is for a particular model-year of a car, and the variables describe attributes of the car, for example its highway fuel efficiency.</p>
 <p>To understand more about the data set, we use the <code>?</code> operator to pull up the documentation for the data.</p>
@@ -766,7 +770,8 @@ X</code></pre></div>
 <pre><code>## [1] 234</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ncol</span>(mpg)</code></pre></div>
 <pre><code>## [1] 11</code></pre>
-<p>Subsetting data frames can work much like subsetting matrices using square brackets, <code>[,]</code>. Here, we find fuel efficient vehicles and only display <code>manufacturer</code>, <code>model</code> and <code>year</code>.</p>
+<p>Here <code>nrow()</code> is also the number of observations, which in most cases is the <em>sample size</em>.</p>
+<p>Subsetting data frames can work much like subsetting matrices using square brackets, <code>[,]</code>. Here, we find fuel efficient vehicles earning over 35 miles per gallon and only display <code>manufacturer</code>, <code>model</code> and <code>year</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg[mpg$hwy &gt;<span class="st"> </span><span class="dv">35</span>, <span class="kw">c</span>(<span class="st">&quot;manufacturer&quot;</span>, <span class="st">&quot;model&quot;</span>, <span class="st">&quot;year&quot;</span>)]</code></pre></div>
 <pre><code>##     manufacturer      model year
 ## 106        honda      civic 2008
@@ -795,7 +800,7 @@ mpg %&gt;%<span class="st"> </span><span class="kw">filter</span>(hwy &gt;<span 
 <h4><span class="header-section-number">2.2.9.1</span> Histograms</h4>
 <p>When visualizing a single numerical variable, a <strong>histogram</strong> will be our go-to tool, which can be created in <code>R</code> using the <code>hist()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(mpg$cty)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-59-1.png" width="672" /></p>
 <p>The histogram function has a number of parameters which can be changed to make our plot look much nicer. Use the <code>?</code> operator to read the documentation for the <code>hist()</code> to see a full list of these parameters.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(mpg$cty,
      <span class="dt">xlab   =</span> <span class="st">&quot;Miles Per Gallon (City)&quot;</span>,
@@ -803,18 +808,21 @@ mpg %&gt;%<span class="st"> </span><span class="kw">filter</span>(hwy &gt;<span 
      <span class="dt">breaks =</span> <span class="dv">12</span>,
      <span class="dt">col    =</span> <span class="st">&quot;dodgerblue&quot;</span>,
      <span class="dt">border =</span> <span class="st">&quot;darkorange&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
-<p>Importantly, you should always be sure to label your axes and give the plot a title. <code>breaks</code> is an argument specific to <code>hist()</code> which controls how many bars <code>R</code> will use for the histogram. By default <code>R</code> will attempt to intelligently guess a good number of <code>breaks</code>, but as we can see here, it is sometimes useful to modify this yourself.</p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
+<p>Importantly, you should always be sure to label your axes and give the plot a title. The argument <code>breaks</code> is specific to <code>hist()</code>. Entering an integer will give a suggestion to <code>R</code> for how many bars to use for the histogram. By default <code>R</code> will attempt to intelligently guess a good number of <code>breaks</code>, but as we can see here, it is sometimes useful to modify this yourself.</p>
 </div>
 <div id="boxplots" class="section level4">
 <h4><span class="header-section-number">2.2.9.2</span> Boxplots</h4>
-<p>To visualize the relationship between a numerical and categorical variable we will use a <strong>boxplot</strong>. In the <code>mpg</code> dataset, the <code>drv</code> variable takes a small, finite number of values. A car can only be front wheel drive, rear wheel drive, or 4 wheel drive. (FWD, RWD, or 4WD.)</p>
+<p>To visualize the relationship between a numerical and categorical variable, we will use a <strong>boxplot</strong>. In the <code>mpg</code> dataset, the <code>drv</code> variable takes a small, finite number of values. A car can only be front wheel drive, 4 wheel drive, or rear wheel drive.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unique</span>(mpg$drv)</code></pre></div>
 <pre><code>## [1] &quot;f&quot; &quot;4&quot; &quot;r&quot;</code></pre>
+<p>First note that we can use a single boxplot as an alternative to a histogram for visualizing a single numerical variable. To do so in <code>R</code>, we use the <code>boxplot()</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(mpg$hwy)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
+<p>However, more often we will use boxplots to compare a numerical variable for different values of a categorical variable.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(hwy ~<span class="st"> </span>drv, <span class="dt">data =</span> mpg)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
-<p>Here used the <code>boxplot()</code> command to create the boxplot. However, since we are now dealing with two variables, the syntax has changed, and we see the use of a <code>~</code> and also a <code>data =</code> argument. This will be a syntax that is common to many functions we will use in this course.</p>
-<p>The <code>R</code> syntax <code>hwy ~ drv, data = mpg</code> reads “Plot the <code>hwy</code> variable against the <code>drv</code> variable using the dataset <code>mpg</code>.”</p>
+<p>Here used the <code>boxplot()</code> command to create side-by-side boxplots. However, since we are now dealing with two variables, the syntax has changed. The <code>R</code> syntax <code>hwy ~ drv, data = mpg</code> reads “Plot the <code>hwy</code> variable against the <code>drv</code> variable using the dataset <code>mpg</code>.” We see the use of a <code>~</code> (which specifies a formula) and also a <code>data =</code> argument. This will be a syntax that is common to many functions we will use in this course.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(hwy ~<span class="st"> </span>drv, <span class="dt">data =</span> mpg,
      <span class="dt">xlab   =</span> <span class="st">&quot;Drivetrain (f = FWD, r = RWD, 4 = 4WD)&quot;</span>,
      <span class="dt">ylab   =</span> <span class="st">&quot;Miles Per Gallon (Highway)&quot;</span>,
@@ -828,7 +836,7 @@ mpg %&gt;%<span class="st"> </span><span class="kw">filter</span>(hwy &gt;<span 
 </div>
 <div id="scatterplots" class="section level4">
 <h4><span class="header-section-number">2.2.9.3</span> Scatterplots</h4>
-<p>Lastly, to visualize the relationship between two numerical variables we will use a <strong>scatterplot</strong>. This can be done with the <code>plot()</code> function and the <code>~</code> syntax we just used with a boxplot. (<code>plot()</code> can also be used more generally, see the documentation for details.)</p>
+<p>Lastly, to visualize the relationship between two numeric variables we will use a <strong>scatterplot</strong>. This can be done with the <code>plot()</code> function and the <code>~</code> syntax we just used with a boxplot. (The function <code>plot()</code> can also be used more generally; see the documentation for details.)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(hwy ~<span class="st"> </span>displ, <span class="dt">data =</span> mpg)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(hwy ~<span class="st"> </span>displ, <span class="dt">data =</span> mpg,
@@ -847,9 +855,9 @@ mpg %&gt;%<span class="st"> </span><span class="kw">filter</span>(hwy &gt;<span 
 <p>We typically want to know one of four things:</p>
 <ul>
 <li>The density (pdf) at a particular value.</li>
-<li>The distribution (cdf)at a particular value.</li>
-<li>The quantile corresponding to a particular probability.</li>
-<li>A random draw from a particular distribution.</li>
+<li>The distribution (cdf) at a particular value.</li>
+<li>The quantile value corresponding to a particular probability.</li>
+<li>A random draw of values from a particular distribution.</li>
 </ul>
 <p>This used to be done with statistical tables printed in the back of textbooks. Now, <code>R</code> has functions for obtaining density, distribution, quantile and random values.</p>
 <p>The general naming structure of the relevant <code>R</code> functions is:</p>
@@ -860,7 +868,7 @@ mpg %&gt;%<span class="st"> </span><span class="kw">filter</span>(hwy &gt;<span 
 <li><code>rname</code> generates a random draw from a particular distribution.</li>
 </ul>
 <p>Note that <code>name</code> represents the name of the given distribution.</p>
-<p>For example, consider a random variable <span class="math inline">\(X\)</span> which is <span class="math inline">\(N(\mu = 2, \sigma^2 = 25)\)</span>. (Note, we are parameterizing using the the variance <span class="math inline">\(\sigma^2\)</span>. <code>R</code> however uses the standard deviation.)</p>
+<p>For example, consider a random variable <span class="math inline">\(X\)</span> which is <span class="math inline">\(N(\mu = 2, \sigma^2 = 25)\)</span>. (Note, we are parameterizing using the variance <span class="math inline">\(\sigma^2\)</span>. <code>R</code> however uses the standard deviation.)</p>
 <p>To calculate the value of the pdf at <code>x = 3</code>, that is, the height of the curve at <code>x = 3</code>, use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dnorm</span>(<span class="dt">x =</span> <span class="dv">3</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</code></pre></div>
 <pre><code>## [1] 0.07820854</code></pre>
@@ -872,8 +880,8 @@ mpg %&gt;%<span class="st"> </span><span class="kw">filter</span>(hwy &gt;<span 
 <pre><code>## [1] 11.79982</code></pre>
 <p>Lastly, to generate a random sample of size <code>n = 10</code>, use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</code></pre></div>
-<pre><code>##  [1] -4.3630383  3.0766313  0.3361174  2.5026193  7.3893418 -1.3829190
-##  [7]  7.6312560 -1.3086104 -3.8756259 -9.6637407</code></pre>
+<pre><code>##  [1] 10.4546839  2.0221974  1.4495145  7.4516675  6.1016081 -1.8670031
+##  [7]  6.7755161  0.6028177 -8.8557892  7.9166816</code></pre>
 <p>These functions exist for many other distributions, including but not limited to:</p>
 <table>
 <thead>
@@ -908,7 +916,7 @@ mpg %&gt;%<span class="st"> </span><span class="kw">filter</span>(hwy &gt;<span 
 <p>Where <code>*</code> can be <code>d</code>, <code>p</code>, <code>q</code>, and <code>r</code>. Each distribution will have its own set of parameters which need to be passed to the functions as arguments. For example, <code>dbinom()</code> would not have arguments for <code>mean</code> and <code>sd</code>, since those are not parameters of the distribution. Instead a binomial distribution is usually parameterized by <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span>, however <code>R</code> chooses to call them something else. To find the names that <code>R</code> uses we would use <code>?dbinom</code> and see that <code>R</code> instead calls the arguments <code>size</code> and <code>prob</code>. For example:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dbinom</span>(<span class="dt">x =</span> <span class="dv">6</span>, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">prob =</span> <span class="fl">0.75</span>)</code></pre></div>
 <pre><code>## [1] 0.145998</code></pre>
-<p>Also note that, when using the <code>dname</code> functions with discrete distributions, they are the pmf of the distribution. For example, the above command is <span class="math inline">\(P(Y = 5)\)</span> if <span class="math inline">\(Y \sim b(n = 10, p = 0.75)\)</span>. (The probability of flipping an unfair coin <code>10</code> times and seeing <code>6</code> heads, if the probability of heads is <code>0.75</code>.)</p>
+<p>Also note that, when using the <code>dname</code> functions with discrete distributions, they are the pmf of the distribution. For example, the above command is <span class="math inline">\(P(Y = 6)\)</span> if <span class="math inline">\(Y \sim b(n = 10, p = 0.75)\)</span>. (The probability of flipping an unfair coin <code>10</code> times and seeing <code>6</code> heads, if the probability of heads is <code>0.75</code>.)</p>
 </div>
 </div>
 <div id="programming-basics" class="section level2">
@@ -1090,11 +1098,11 @@ x</code></pre></div>
 <p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the results of the final line of the body is what is returned by the function.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</code></pre></div>
-<pre><code>##  [1] -7.2147258  2.1224407 -0.2857609  2.3898048  5.2758048  0.2516666
-##  [7] 11.2639941 -0.3920190  5.6918402  2.2250328</code></pre>
+<pre><code>##  [1]  1.313754 -5.094333 -5.470977  1.916151 -1.667945  3.043740 -3.423819
+##  [8]  9.626092 -1.873065  8.203200</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)</code></pre></div>
-<pre><code>##  [1] -1.939108728 -0.002150627 -0.501722472  0.053313002  0.652002249
-##  [6] -0.390235288  1.894228327 -0.523765296  0.738307136  0.019131695</code></pre>
+<pre><code>##  [1]  0.1260296 -1.1041920 -1.1765000  0.2416775 -0.4463956  0.4581516
+##  [7] -0.7834874  1.7218284 -0.4857745  1.4486622</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">standardize =<span class="st"> </span>function(x) {
   (x -<span class="st"> </span><span class="kw">mean</span>(x)) /<span class="st"> </span><span class="kw">sd</span>(x)
@@ -1131,14 +1139,14 @@ s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
   <span class="kw">sqrt</span>((<span class="dv">1</span> /<span class="st"> </span>n) *<span class="st"> </span><span class="kw">sum</span>((x -<span class="st"> </span><span class="kw">mean</span>(x)) ^<span class="st"> </span><span class="dv">2</span>))
 }</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 4.820531</code></pre>
+<pre><code>## [1] 5.208889</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample, <span class="dt">biased =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<pre><code>## [1] 4.820531</code></pre>
+<pre><code>## [1] 5.208889</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 4.820531</code></pre>
+<pre><code>## [1] 5.208889</code></pre>
 <p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built in function <code>sd()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample, <span class="dt">biased =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## [1] 4.573157</code></pre>
+<pre><code>## [1] 4.941586</code></pre>
 </div>
 </div>
 <div id="hypothesis-tests-in-r" class="section level2">
