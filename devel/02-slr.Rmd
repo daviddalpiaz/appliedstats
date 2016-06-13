@@ -4,6 +4,96 @@
 >
 > --- **George E. P. Box**
 
+Suppose you are a car manufacturer.
+
+```{r, eval = FALSE}
+?cars
+```
+
+```{r}
+names(cars)
+```
+
+```{r}
+str(cars)
+```
+
+```{r}
+dim(cars)
+nrow(cars)
+ncol(cars)
+```
+
+```{r}
+stop_dist_model = lm(dist ~ speed, data = cars)
+```
+
+```{r}
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 3,
+     col  = "dodgerblue")
+abline(stop_dist_model, lwd = 3, col = "darkorange")
+```
+
+```{r}
+stop_dist_model
+names(stop_dist_model)
+```
+
+```{r}
+stop_dist_model$residuals
+```
+
+```{r}
+coef(stop_dist_model)
+resid(stop_dist_model)
+fitted(stop_dist_model)
+```
+
+```{r}
+summary(stop_dist_model)
+names(summary(stop_dist_model))
+```
+
+```{r}
+summary(stop_dist_model)$sigma
+summary(stop_dist_model)$r.squared
+summary(stop_dist_model)$coefficients
+```
+
+```{r}
+sum(stop_dist_model$residuals ^ 2)
+sum((cars$dist - fitted(stop_dist_model)) ^ 2)
+sqrt(sum(stop_dist_model$residuals ^ 2) / (length(stop_dist_model$residuals) - 2))
+```
+
+
+## Prediction
+
+```{r}
+predict(stop_dist_model, data.frame(speed = 10))
+```
+
+```{r}
+as.numeric(coef(stop_dist_model)[1] + coef(stop_dist_model)[2] * 10)
+```
+
+```{r}
+predict(stop_dist_model, data.frame(speed = c(10, 20, 30, 40)))
+```
+
+```{r}
+predict(stop_dist_model, data.frame(speed = cars$speed))
+predict(stop_dist_model)
+fitted(stop_dist_model)
+```
+
+
+
 Suppose you are the owner of the *Momma Leona's Pizza*, a restaurant chain located near several college campuses. You currently own 10 stores and have data on the size of the student population as well as quarterly sales for each. Your data is summarized in the table below.
 
 | Restaurant | Student Population | Quarterly Sales |
@@ -36,47 +126,8 @@ list of vectors
 observations and variables
 order "doesn't matter" (unlike a matrix)
 
-```{r}
-names(momma_leona)
-```
-
-```{r}
-momma_leona$sales
-momma_leona$students
-```
-
-```{r}
-dim(momma_leona)
-nrow(momma_leona)
-ncol(momma_leona)
-```
-
-```{r}
-str(momma_leona)
-```
-
-```{r, echo = FALSE}
-#write.csv(momma_leona, "data/momma_leona.csv", row.names = FALSE)
-```
-
-[data is csv here](data/momma_leona.csv)
-
-TODO: import into R/RStudio  
-
-```{r}
-plot(momma_leona$students, momma_leona$sales)
-```
 
 
-```{r}
-plot(momma_leona$students, momma_leona$sales,
-     xlab = "Students (in 1000s)",
-     ylab = "Sales (in $1000s)",
-     main = "Quarterly Sales vs Student Population",
-     pch  = 20,
-     cex  = 2,
-     col  = "dodgerblue")
-```
 
 response, outcome
 predictor, explanatory
@@ -92,9 +143,21 @@ How can you use this data to:
 
 One tool will do both, LINEAR REGRESSION
 
+
+EXPLAIN: You are a car manufacturer and want to know what factors influence stopping distance.
+PREDICT: You own a car. If you drive a certain speed, how long will it take you to stop?
+
+CORR vs CAUSE: car insurance
+
 ##  History
 
+
+
 ##  Model
+
+![Simple Linear Regression Model  [UC David Stat Wiki](http://statwiki.ucdavis.edu/Textbook_Maps/General_Statistics/Map%3A_Introductory_Statistics_(Shafer_and_Zhang)/10%3A_Correlation_and_Regression/10.3_Modelling_Linear_Relationships_with_Randomness_Present)  ](../images/model.jpg)
+
+TODO: use Y when it is random?
 
 \[
 y = f(x) + \epsilon
@@ -119,11 +182,47 @@ Unexplained:
 
 
 
-Goldilocks
+Goldilocks:
 
 - Underfitting (Just using y_bar)
 - Just right (SLR)
-- Overfitting (Connect the dots)
+- Overfitting (Connect the dots as much as possible.)
+
+```{r}
+#par(mfrow = c(1, 3))
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 3,
+     col  = "dodgerblue")
+abline(stop_dist_model, lwd = 3, col = "darkorange")
+
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 3,
+     col  = "dodgerblue")
+underfit_model = lm(dist ~ 1, data = cars)
+abline(underfit_model, lwd = 3, col = "darkorange")
+
+
+overfit_model = lm(dist ~ poly(speed, 18), data = cars)
+x = seq(0, 25, length.out = 200)
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 3,
+     col  = "dodgerblue")
+lines(x, predict(overfit_model, data.frame(speed = x)), lwd = 2, col = "darkorange")
+# add a wild prediction here?
+```
+
 
 TODO: picture with lines. one for overall mean. one for LS?
 
@@ -143,11 +242,13 @@ historical, easy math
 
 ##  Least Squares Approach
 
-Function to minimize.
+We want to find values of $\beta_0$ and $\beta_1$ which minimimize
 
 \[
-f(\beta_0, \beta_1) = \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2 = \sum_{i = 1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2
+f(\beta_0, \beta_1) = \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2 = \sum_{i = 1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2.
 \]
+
+We will call these values $\hat{\beta}_0$ and $\hat{\beta}_1$.
 
 Take derivatives.
 
@@ -198,20 +299,9 @@ SYY &= \sum_{i = 1}^{n} y_i^2 - \frac{(\sum_{i = 1}^{n} y_i)^2}{n}  = \sum_{i = 
 TODO: Fitted line.
 TODO: variance estimate
 
-```{r}
-momma_leona_model = lm(sales ~ students, data = momma_leona)
-```
 
-```{r}
-plot(momma_leona$students, momma_leona$sales,
-     xlab = "Students (in 1000s)",
-     ylab = "Sales (in $1000s)",
-     main = "Quarterly Sales vs Student Population",
-     pch  = 20,
-     cex  = 2,
-     col  = "dodgerblue")
-abline(momma_leona_model, lwd = 2, col = "darkorange")
-```
+
+
 
 ```{r}
 plot(sales ~ students, data = momma_leona,
@@ -221,7 +311,6 @@ plot(sales ~ students, data = momma_leona,
      pch  = 20,
      cex  = 2,
      col  = "dodgerblue")
-abline(momma_leona_model, lwd = 2, col = "darkorange")
 ```
 
 TODO: fit in R
@@ -247,3 +336,49 @@ Decomposing variation.
 \[
 L(\beta_0, \beta_1, \sigma^2) = \prod_{i = 1}^{n} \frac{1}{\sqrt{2\pi\sigma^2}} \exp{\left[-\frac{1}{2}\left(\frac{Y_i - \beta_0 - \beta_1 x_i}{\sigma}\right)^2\right]}
 \]
+
+## Basic Simulation? (Save for inference chapter?)
+
+TODO: tie this into the model section? w.r.t. b0 + b1x + e
+
+```{r}
+n       = 20
+beta_0  = 5
+beta_1  = 2
+sigma   = 1
+epsilon = rnorm(n, mean = 0, sd = sigma)
+
+x = runif(n, 0, 10)
+y = beta_0 + beta_1 * x + epsilon
+
+sim_data = data.frame(x, y)
+plot(y ~ x, data = sim_data)
+
+sim_fit = lm(y ~ x, data = sim_data)
+coef(sim_fit)
+```
+
+```{r}
+sim_slr = function(n, beta_0 = 10, beta_1 = 5, sigma = 1) {
+  epsilon = rnorm(n, mean = 0, sd = sigma)
+  x = runif(n, 0, 10)
+  y = beta_0 + beta_1 * x + epsilon
+  data.frame(x, y)
+}
+sim_data = sim_slr(n = 50, beta_0 = 5, beta_1 = 2, sigma = 3)
+plot(y ~ x, data = sim_data)
+
+sim_fit = lm(y ~ x, data = sim_data)
+coef(sim_fit)
+```
+
+
+TODO: simulate distribution of betas in inference chapter??
+
+
+
+
+
+
+
+
