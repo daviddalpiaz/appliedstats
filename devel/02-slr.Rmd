@@ -11,6 +11,10 @@ Suppose you are a car manufacturer.
 ```
 
 ```{r}
+cars
+```
+
+```{r}
 names(cars)
 ```
 
@@ -71,7 +75,6 @@ sum((cars$dist - fitted(stop_dist_model)) ^ 2)
 sqrt(sum(stop_dist_model$residuals ^ 2) / (length(stop_dist_model$residuals) - 2))
 ```
 
-
 ## Prediction
 
 ```{r}
@@ -91,8 +94,6 @@ predict(stop_dist_model, data.frame(speed = cars$speed))
 predict(stop_dist_model)
 fitted(stop_dist_model)
 ```
-
-
 
 Suppose you are the owner of the *Momma Leona's Pizza*, a restaurant chain located near several college campuses. You currently own 10 stores and have data on the size of the student population as well as quarterly sales for each. Your data is summarized in the table below.
 
@@ -115,18 +116,12 @@ Here,
 - Student Population, $x_i$, in 1000s
 - Quarterly Sales, $y_i$, in $1000s
 
+TODO: define "data" as pairs of points $(x_i, y_i)$.
+
 ```{r}
 momma_leona = data.frame(students = c(2, 6, 8, 8, 12, 16, 20, 20, 22, 26), 
                           sales = c(58, 105, 88, 118, 117, 137, 157, 169, 149, 202))
 ```
-
-We have previously seen vectors and matrices for storing data as we introduced `R`. We will now introduce a **data frame** which will be the most common way that we store and interact with data in this course.
-
-list of vectors
-observations and variables
-order "doesn't matter" (unlike a matrix)
-
-
 
 
 response, outcome
@@ -158,6 +153,8 @@ CORR vs CAUSE: car insurance
 ![Simple Linear Regression Model  [UC David Stat Wiki](http://statwiki.ucdavis.edu/Textbook_Maps/General_Statistics/Map%3A_Introductory_Statistics_(Shafer_and_Zhang)/10%3A_Correlation_and_Regression/10.3_Modelling_Linear_Relationships_with_Randomness_Present)  ](../images/model.jpg)
 
 TODO: use Y when it is random?
+TODO: make a note that $y_i$ is a data point. $Y_i$ is a random variable.
+TODO: $x_i$ are fixed, known constants. (Technically and assumption.)
 
 \[
 y = f(x) + \epsilon
@@ -178,9 +175,15 @@ Unexplained:
 - missing variables
 - measurement error
 
+ASSUMPTIONS: **LINE**
+
+- **L**inear
+- **I**ndepedent
+- **N**ormal
+- **E**qual Variance
+
+
 ##  What is the Best Line?
-
-
 
 Goldilocks:
 
@@ -361,8 +364,8 @@ coef(sim_fit)
 ```{r}
 sim_slr = function(n, beta_0 = 10, beta_1 = 5, sigma = 1) {
   epsilon = rnorm(n, mean = 0, sd = sigma)
-  x = runif(n, 0, 10)
-  y = beta_0 + beta_1 * x + epsilon
+  x       = runif(n, 0, 10)
+  y       = beta_0 + beta_1 * x + epsilon
   data.frame(x, y)
 }
 sim_data = sim_slr(n = 50, beta_0 = 5, beta_1 = 2, sigma = 3)
@@ -373,7 +376,6 @@ coef(sim_fit)
 ```
 
 
-TODO: simulate distribution of betas in inference chapter??
 
 
 
