@@ -4,23 +4,31 @@
 >
 > --- **George E. P. Box**
 
-Suppose you are a car manufacturer.
+After reading this chapter you will be able to:
+
+- ... . 
+- ... .
+- ... .
+- ... .
+- ... .
+
+## Modeling
+
+Let's consider a simple example of how the speed a car is traveling affects stopping distance. To examine this relationship, we will use the `cars` dataset which is a deafult `R` dataset.
+
+To get a first look at the data you can use the `View()` function inside RStudio.
 
 ```{r, eval = FALSE}
-?cars
+View(cars)
 ```
 
-```{r}
-cars
-```
-
-```{r}
-names(cars)
-```
+We could also take a look at the variables names, the dimension of the data frame, and some sample observations with `str().`
 
 ```{r}
 str(cars)
 ```
+
+As we have seen before with data frames, there are a number of additional functions to access some of this information directly.
 
 ```{r}
 dim(cars)
@@ -28,11 +36,385 @@ nrow(cars)
 ncol(cars)
 ```
 
-```{r}
-stop_dist_model = lm(dist ~ speed, data = cars)
+Other than the two variable names and the number of observations, this data is still just a bunch of numbers, so we should probably obtain some context.
+
+```{r, eval = FALSE}
+?cars
 ```
 
+Reading the documentation we learn that this is data gathered during the 1920s about the speed of cars, and the resulting distance it takes for the car to come to a stop. The interesting task here is to determine how far a car travels before stopping when traveling at a certain speed, so we will first plot the stopping distance against the speed.
+
 ```{r}
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 3,
+     col  = "dodgerblue")
+```
+
+Terminology:
+
+Data: $(x_i, y_i)$ $i = 1, 2, \ldots n$.
+
+- Index, $i$
+- Explanatory (predictor) variable, $x_i$, in this case...
+- Response (outcome) variable, $y_i$
+
+note about "independent" and "depend". Used, but confusing.
+
+\[
+Y = f(X) + \epsilon
+\]
+
+- yDATA = PREDICTION + ERRORS
+- yDATA = SIGNAL + NOISE
+- yDATA = MODEL + ERROR
+
+Unexplained sources:
+
+- missing variables
+- measurement error
+
+What sort of function should we use for $f(X)$ for the `cars` data?
+
+We could try to model the data with a horizontal line. That is, the the model for $y$ does not depend on the value of $x$. (Some function $f(X) = c$.) Here, we see this doesn't seem to do a very good job. Many of the data points are very far from the line. This is an example of **underfitting**. The obvious fix is to use make the function $f(X)$ actually depend on $x$.
+
+```{r underfit_plot, echo = FALSE}
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 3,
+     col  = "dodgerblue")
+underfit_model = lm(dist ~ 1, data = cars)
+abline(underfit_model, lwd = 3, col = "darkorange")
+```
+
+We could also try to model the data with a very "wiggly" function that tries to go through as many of the data points as possible. This also doesn't seem to work very well. The stopping distance for a speed of 5 mph shouldn't be off the chart! (Even in 1920.) This is an example of **overfitting**. (Note that in this example no function will go through every point, since there are some $x$ values that have several possible $y$ values in the data.)
+
+```{r overfit_plot, echo = FALSE}
+overfit_model = lm(dist ~ poly(speed, 18), data = cars)
+x = seq(-10, 50, length.out = 200)
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 3,
+     col  = "dodgerblue")
+lines(x, predict(overfit_model, data.frame(speed = x)), lwd = 2, col = "darkorange")
+```
+
+Lastly, we could try to model the data with a well chosen line. This line seems to summarize the relationship between stopping distance and speed quite well. As speed increases, the distance required to come to a stop increases. There is still some variation about this line, but it seems to cpature the overall trend.
+
+```{r goodfit_plot, echo = FALSE}
+stop_dist_model = lm(dist ~ speed, data = cars)
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 3,
+     col  = "dodgerblue")
+abline(stop_dist_model, lwd = 3, col = "darkorange")
+```
+
+With this in mind, we would like to restrict our choice of $f(X)$ to linear function of $X$. We will use $\beta_1$ for the slope, and $\beta_0$ for the intercept.
+
+\[
+Y = \beta_0 + \beta_1 X + \epsilon
+\]
+
+### Simple Linear Regression Model
+
+We now define what we will call the simple linear regression model,
+
+\[
+Y_i = \beta_0 + \beta_1 x_i + \epsilon
+\]
+
+where $e_i \sim N(0, \sigma^2)$. That is, the $\epsilon_i$ are *independent and identically distributed* (iid) normal random variables with mean $0$ and variance $\sigma^2$.
+
+The $x_i$ are considered fixed, known constants. The model then has three parameters to be estimated: $\beta_0$, $\beta_1$, and $\sigma^2$.
+
+TODO: add something about conditional distribution to Y here? mean and variance?
+
+![Simple Linear Regression Model [UC David Stat Wiki](http://statwiki.ucdavis.edu/Textbook_Maps/General_Statistics/Map%3A_Introductory_Statistics_(Shafer_and_Zhang)/10%3A_Correlation_and_Regression/10.3_Modelling_Linear_Relationships_with_Randomness_Present)](../images/model.jpg)
+
+TODO: use Y when it is random?
+TODO: make a note that $y_i$ is a data point. $Y_i$ is a random variable.
+TODO: $x_i$ are fixed, known constants. (Technically and assumption.)
+
+PARAMETERS
+
+ASSUMPTIONS: **LINE**
+
+- **L**inear
+- **I**ndepedent
+- **N**ormal
+- **E**qual Variance
+
+- SIMPLE: single explanatory
+- LINEAR: yes it is a line in this case, but that's confusing and we'll clarify later
+- REGRESSION: relationship between two variables
+
+
+TODO: merge these next two sentences.
+
+How to find line? Find one with "small errors." How should we define errors?
+
+The questions now becomes, how do we find such a line? There are many approaches we could take.
+
+We could find the line that has the smallest maximum distance from and of the points to the line. That is,
+
+\[
+\underset{\beta_0, \beta_1}{\mathrm{argmin}} \max|y_i - (\beta_0 + \beta_1 x_i)|.
+\]
+
+We could find the line that minimizes the sum of all the distances from the points to the line. That is,
+
+\[
+\underset{\beta_0, \beta_1}{\mathrm{argmin}} \sum_{i = 1}^{n}|y_i - (\beta_0 + \beta_1 x_i)|.
+\]
+
+We could find the line that minimizes the sum of all the squared distances from the points to the line. That is,
+
+\[
+\underset{\beta_0, \beta_1}{\mathrm{argmin}} \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2.
+\]
+
+This last option is called the method of **least squares**. It is essentially the de-facto method for fitting a line to data. (You may have even seen it before in a linear algebra course.) Its popularity is largely due to the fact that it is mathematically "easy." (Which was important historically, as computers are a modern contraption.)
+
+##  Least Squares Approach
+
+We want to find values of $\beta_0$ and $\beta_1$ which minimimize
+
+\[
+f(\beta_0, \beta_1) = \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2 = \sum_{i = 1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2.
+\]
+
+We will call these values $\hat{\beta}_0$ and $\hat{\beta}_1$.
+
+First, we take a partial derivative with respect to both $\beta_0$ and $\beta_1$.
+
+\[
+\begin{aligned}
+\frac{\partial f}{\partial \beta_0} &= -2 \sum_{i = 1}^{n}(y_i - \beta_0 - \beta_1 x_i) \\
+\frac{\partial f}{\partial \beta_1} &= -2 \sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i)
+\end{aligned}
+\]
+
+We then set each of the partial derivates equal to zero and solving the resulting system of equations.
+
+\[
+\begin{aligned}
+\sum_{i = 1}^{n}(y_i - \beta_0 - \beta_1 x_i) &= 0 \\
+\sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i) &= 0 
+\end{aligned}
+\]
+
+While solving the system of equations, one common algebraic rearrangement results in the **normal equations**.
+
+\[
+\begin{aligned}
+\sum_{i = 1}^{n} y_i &= n \beta_0 + \beta_1 \sum_{i = 1}^{n} x_i \\
+\sum_{i = 1}^{n} x_i y_i &= \beta_0 \sum_{i = 1}^{n} x_i + \beta_1 \sum_{i = 1}^{n} x_i^2
+\end{aligned}
+\]
+
+Finally, we finish solving the system of equations.
+
+\[
+\begin{aligned}
+\hat{\beta}_1 &= \frac{\sum_{i = 1}^{n} x_i y_i - \frac{(\sum_{i = 1}^{n} x_i)(\sum_{i = 1}^{n} y_i)}{n}}{\sum_{i = 1}^{n} x_i^2 - \frac{(\sum_{i = 1}^{n} x_i)^2}{n}} = \frac{S_{xy}}{S_{xx}}\\
+\hat{\beta}_0 &= \bar{y} - \hat{\beta}_1 \bar{x}
+\end{aligned}
+\]
+
+Here, we have defined some notation for the expression we've obtained. Note that they have alternative forms which are much easier to work with. (We won't do it here, but you can try to prove the equalities below on your own, for fun.)
+
+TODO: define notation. S_xy = sum of squares.... link to james' page?
+
+\[
+\begin{aligned}
+S_{xy} &= \sum_{i = 1}^{n} x_i y_i - \frac{(\sum_{i = 1}^{n} x_i)(\sum_{i = 1}^{n} y_i)}{n}  = \sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y})\\
+S_{xx} &= \sum_{i = 1}^{n} x_i^2 - \frac{(\sum_{i = 1}^{n} x_i)^2}{n}  = \sum_{i = 1}^{n}(x_i - \bar{x})^2\\
+S_{yy} &= \sum_{i = 1}^{n} y_i^2 - \frac{(\sum_{i = 1}^{n} y_i)^2}{n}  = \sum_{i = 1}^{n}(y_i - \bar{y})^2
+\end{aligned}
+\]
+
+By using the above alternative expression, we arrive at a more useful expression for $\hat{\beta}_1$.
+
+\[
+\hat{\beta}_1 = \frac{S_{xy}}{S_{xx}} = \frac{\sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i = 1}^{n}(x_i - \bar{x})^2}
+\]
+
+Traditionally we would now calculate $\hat{\beta}_0$ and $\hat{\beta}_1$ by hand for the `cars` dataset. However because we are living in the 21st century and are intellegent (or lazy or efficient, depending on your perspective) we will utilize `R` to do the number crunching for us.
+
+To keep some notation consistent with above, we will store the response variable as `y` and the predictor variable as `x`.
+
+```{r}
+x = cars$speed
+y = cars$dist
+```
+
+We then calculate the three sums of squares defined above.
+
+```{r}
+Sxy = sum((x - mean(x)) * (y - mean(y)))
+Sxx = sum((x - mean(x)) ^ 2)
+Syy = sum((y - mean(y)) ^ 2)
+c(Sxy, Sxx, Syy)
+```
+
+Then finally calculate $\hat{\beta}_0$ and $\hat{\beta}_1$.
+
+```{r}
+beta_1_hat = Sxy / Sxx
+beta_0_hat = mean(y) - beta_1_hat * mean(x)
+c(beta_0_hat, beta_1_hat)
+```
+
+TODO: model is unkown true line.
+TODO: Fitted line.
+
+\[
+\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x
+\]
+
+\[
+e_i = y_i - \hat{y}_i
+\]
+
+residual = actual - predicted
+
+TODO: variance estimate
+
+\[
+\begin{aligned}
+s_e^2 &= \frac{1}{n - 2} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2 \\
+      &= \frac{1}{n - 2} \sum_{i = 1}^{n}e_i^2
+\end{aligned}
+\]
+
+Why n-2?
+
+TODO: fit in R
+TODO: extrapolation
+TODO: interpretation
+
+##  Decomposition of Variation
+
+\[
+y_i - \bar{y} = (y_i - \hat{y}_i) + (\hat{y}_i - \bar{y})
+\]
+
+- $y_i - \bar{y}$ Total Deviation
+- $y_i - \hat{y}_i$ Deivation of fitted regression line about mean
+- $\hat{y}_i - \bar{y}$ deviation about fitted regression line (error)
+
+\[
+\sum_{i=1}^{n}(y_i - \bar{y})^2 = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2.
+\]
+
+TODO: Residuals
+
+###  Coefficient of Determination
+
+The **coefficient of determination**, $R^2$, is defined as
+
+\[
+R^2 = \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} = 
+1 - \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} = 
+1 - \frac{\sum_{i = 1}^{n}e_i^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2}
+\]
+
+TODO: define and use SSE, SSR, SST (RSS?)
+
+The coefficient of determination is interpreted as the proportion of observed variation in $y$ that can be explained by the simple linear regression model.
+
+TODO: Note, some people have issue with this.
+
+Decomposing variation.
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+## TODO: this code and be made much better
+# show for different R^2 values?
+#
+
+set.seed(42)
+generate_data <- function(int = 1,
+                          slope = 2,
+                          sigma = 5,
+                          n_obs = 15,
+                          x_min = 0,
+                          x_max = 10) {
+  x <- seq(x_min, x_max, length.out = n_obs)
+  y <- int + slope * x + rnorm(n_obs, 0, sigma)
+  fit <- lm(y ~ x)
+  y_hat <- fitted(fit)
+  y_bar <- rep(mean(y), n_obs)
+  data.frame(x, y, y_hat, y_bar)
+}
+
+plot_total_dev <- function(reg_data) {
+  plot(reg_data$x, reg_data$y, main = "SST (Sum of Squares Total)", 
+       xlab = "x", ylab = "y", pch = 20, cex = 3, col = "grey")
+  arrows(reg_data$x, reg_data$y_bar,
+         reg_data$x, reg_data$y_hat,
+         col = 'darkorange', lwd = 1, length = 0.2, angle = 20)
+  arrows(reg_data$x, reg_data$y_hat,
+         reg_data$x, reg_data$y,
+         col = 'dodgerblue', lwd = 2, lty = 2, length = 0.2, angle = 20)
+  abline(h = mean(reg_data$y), lwd = 2,col = "grey")
+  abline(lm(y ~ x, data = reg_data), lwd = 2, col = "grey")
+}
+
+plot_unexp_dev <- function(reg_data) {
+  plot(reg_data$x, reg_data$y, main = "SSE (Sum of Squares Error)",
+       xlab = "x", ylab = "y", pch = 20, cex = 3, col = "grey")
+  arrows(reg_data$x, reg_data$y_hat,
+         reg_data$x, reg_data$y,
+         col = 'dodgerblue', lwd = 1, length = 0.2, angle = 20)
+  abline(lm(y ~ x, data = reg_data), lwd = 2, col = "grey")
+}
+
+plot_exp_dev <- function(reg_data) {
+  plot(reg_data$x, reg_data$y, main = "SSR (Sum of Squares Regression)", 
+  xlab = "x", ylab = "y", pch = 20, cex = 3, col = "grey")
+  arrows(reg_data$x, reg_data$y_bar,
+         reg_data$x, reg_data$y_hat,
+         col = 'darkorange', lwd = 1, length = 0.2, angle = 20)
+  abline(lm(y ~ x, data = reg_data), lwd = 2, col = "grey")
+  abline(h = mean(reg_data$y), col = "grey")
+}
+```
+
+Note: equal spacing is by choice.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+plot_data <- generate_data(sigma = 2)
+summary(lm(y ~ x, data = plot_data))$r.sq
+#plot_exp_dev(plot_data)
+#plot_unexp_dev(plot_data)
+plot_total_dev(plot_data)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+plot_data <- generate_data(sigma = 6)
+summary(lm(y ~ x, data = plot_data))$r.sq
+#plot_exp_dev(plot_data)
+#plot_unexp_dev(plot_data)
+plot_total_dev(plot_data)
+```
+
+## The `lm` Function
+
+```{r}
+stop_dist_model = lm(dist ~ speed, data = cars)
 plot(dist ~ speed, data = cars,
      xlab = "Speed (in Miles Per Hour)",
      ylab = "Stopping Distance (in Feet)",
@@ -75,8 +457,6 @@ sum((cars$dist - fitted(stop_dist_model)) ^ 2)
 sqrt(sum(stop_dist_model$residuals ^ 2) / (length(stop_dist_model$residuals) - 2))
 ```
 
-## Prediction
-
 ```{r}
 predict(stop_dist_model, data.frame(speed = 10))
 ```
@@ -95,39 +475,186 @@ predict(stop_dist_model)
 fitted(stop_dist_model)
 ```
 
-Suppose you are the owner of the *Momma Leona's Pizza*, a restaurant chain located near several college campuses. You currently own 10 stores and have data on the size of the student population as well as quarterly sales for each. Your data is summarized in the table below.
+## MLE Approach
 
-| Restaurant | Student Population | Quarterly Sales |
-|------------|--------------------|-----------------|
-| 1          | 2                  | 58              |
-| 2          | 6                  | 105             |
-| 3          | 8                  | 88              |
-| 4          | 8                  | 118             |
-| 5          | 12                 | 117             |
-| 6          | 16                 | 137             |
-| 7          | 20                 | 157             |
-| 8          | 20                 | 169             |
-| 9          | 22                 | 149             |
-| 10         | 26                 | 202             |
+Recall the model,
 
-Here,
+\[
+Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
+\]
 
-- Restaurant, $i$
-- Student Population, $x_i$, in 1000s
-- Quarterly Sales, $y_i$, in $1000s
+where $e_i \sim N(0, \sigma^2)$.
 
-TODO: define "data" as pairs of points $(x_i, y_i)$.
+Then we can find the mean and variance of each $Y_i$.
+
+\[
+E[Y_i] = \beta_0 + \beta_1 x_i
+\]
+
+and
+
+\[
+Var[Y_i] = \sigma^2.
+\]
+
+TODO: define conditional distribution? $E[Y | X = x]$ ...
+
+Recall that the pdf of a random variable $X \sim N(\mu, \sigma^2)$ is given by
+
+\[
+f_{X}(x; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp{\left[-\frac{1}{2}\left(\frac{x - \mu}{\sigma}\right)^2\right]}.
+\]
+
+TODO: define $f_{X}(x; \mu, \sigma^2)$ notation. Function of $x$, where $\mu$ and $\sigma^2$ are considered fixed and known.
+
+Then we can write the  pdf of each of the $Y_i$ is given as
+
+\[
+f_{Y_i}(y_i; x_i, \beta_0, \beta_1, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp{\left[-\frac{1}{2}\left(\frac{y_i - (\beta_0 + \beta_1 x_i)}{\sigma}\right)^2\right]}.
+\]
+
+Given $n$ data points $(x_i, y_i)$ we can write the likelihood, which is a function of the three parameters $\beta_0$, $\beta_1$, and $\sigma^2$. (Since the data have been observed, we use lower case $y_i$ do note that these values are no longer random.)
+
+\[
+L(\beta_0, \beta_1, \sigma^2) = \prod_{i = 1}^{n} \frac{1}{\sqrt{2\pi\sigma^2}} \exp{\left[-\frac{1}{2}\left(\frac{y_i - \beta_0 - \beta_1 x_i}{\sigma}\right)^2\right]}
+\]
+
+Our goal is to find values of $\beta_0$, $\beta_1$, and $\sigma^2$ which maximize this function, which is a straightforward multivariate calculus problem.
+
+We'll start by doing a bit of rearranging to make our task easier.
+
+\[
+L(\beta_0, \beta_1, \sigma^2) = \left(\frac{1}{\sqrt{2 \pi \sigma^2}}\right)^n \exp{\left[-\frac{1}{2 \sigma^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2\right]}
+\]
+
+Then, as is often the case with finding MLEs, for mathematical convenience we will take the natural logarithm. of the likelihood function, then proceed to maximum the log-likelihood. (The resulting estimates will be the same since log is a monotonically increasing function.)
+
+\[
+\log L(\beta_0, \beta_1, \sigma^2) = -\frac{n}{2}\log(2 \pi) - \frac{n}{2}\log(\sigma^2) - \frac{1}{2 \sigma^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2
+\]
+
+Note that we use $\log$ to mean the natural logarithm. We now take a partial derivative with respect to each of the parameters.
+
+\[
+\begin{aligned}
+\frac{\partial \log L(\beta_0, \beta_1, \sigma^2)}{\partial \beta_0} &= -\frac{2}{\sigma^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)\\
+\frac{\partial \log L(\beta_0, \beta_1, \sigma^2)}{\partial \beta_1} &= -\frac{2}{\sigma^2} \sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i) \\
+\frac{\partial \log L(\beta_0, \beta_1, \sigma^2)}{\partial \sigma^2} &= -\frac{n}{2 \sigma^2} + \frac{1}{2(\sigma^2)^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2
+\end{aligned}
+\]
+
+We then set each of the partial derivates equal to zero and solving the resulting system of equations.
+
+\[
+\begin{aligned}
+\sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i) &= 0\\
+\sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i) &= 0\\
+-\frac{n}{2 \sigma^2} + \frac{1}{2(\sigma^2)^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2 &= 0
+\end{aligned}
+\]
+
+You may notice that the first two equations also appears in the least squares approrach. Then, skipping the issue of actually checking if we have found a maximum, we then arrive at our estimates.
+
+\[
+\begin{aligned}
+\hat{\beta}_1 &= \frac{\sum_{i = 1}^{n} x_i y_i - \frac{(\sum_{i = 1}^{n} x_i)(\sum_{i = 1}^{n} y_i)}{n}}{\sum_{i = 1}^{n} x_i^2 - \frac{(\sum_{i = 1}^{n} x_i)^2}{n}} = \frac{S_{xy}}{S_{xx}}\\
+\hat{\beta}_0 &= \bar{y} - \hat{\beta}_1 \bar{x}\\
+\hat{\sigma}^2 &= \frac{1}{n} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2
+\end{aligned}
+\]
+
+Note that $\hat{\beta}_0$ and $\hat{\beta}_1$ are the same as the least squares estimates. However we now have a new estimate of $\sigma^2$, that is $\hat{\sigma}^2$. So we now have two different estimates of $\sigma^2$.
+
+\[
+\begin{aligned}
+s_e^2 &= \frac{1}{n - 2} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2 = \frac{1}{n - 2} \sum_{i = 1}^{n}e_i^2 & \text{Least Squares}\\
+\hat{\sigma}^2 &= \frac{1}{n} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2 = \frac{1}{n} \sum_{i = 1}^{n}e_i^2 & \text{MLE}
+\end{aligned}
+\]
+
+In the next chapter, we will discuss in detail the difference between these two estimates, which involves biasedness.
+
+## Simulating SLR
+
+TODO: again, simualtion is useful, and R makes it easy
+
+TODO: this is an "ok" way to do the simulation:
 
 ```{r}
-momma_leona = data.frame(students = c(2, 6, 8, 8, 12, 16, 20, 20, 22, 26), 
-                          sales = c(58, 105, 88, 118, 117, 137, 157, 169, 149, 202))
+n       = 20
+beta_0  = 5
+beta_1  = 2
+sigma   = 1
+epsilon = rnorm(n, mean = 0, sd = sigma)
 ```
 
+```{r}
+x = runif(n, 0, 10)
+y = beta_0 + beta_1 * x + epsilon
+```
 
-response, outcome
-predictor, explanatory
+TODO: explain uniform
+TOOD: explain relationship to model, especially WRT how eps is simulated.
 
-note about "independent"
+```{r}
+sim_fit = lm(y ~ x)
+coef(sim_fit)
+```
+
+Note: cheating, being lazy, not making a data.frame. (easy in short term, bad idea in longterm)
+
+```{r}
+plot(y ~ x)
+abline(sim_fit)
+```
+
+TODO: this is a better way to do the simulation
+
+```{r}
+sim_slr = function(n, beta_0 = 10, beta_1 = 5, sigma = 1, xmin = 0, xmax = 10) {
+  epsilon = rnorm(n, mean = 0, sd = sigma)
+  x       = runif(n, xmin, xmax)
+  y       = beta_0 + beta_1 * x + epsilon
+  data.frame(predictor = x, response = y)
+}
+```
+
+```{r}
+sim_data = sim_slr(n = 50, beta_0 = 5, beta_1 = 2, sigma = 3)
+```
+
+```{r}
+head(sim_data)
+```
+
+```{r}
+sim_fit = lm(response ~ predictor, data = sim_data)
+coef(sim_fit)
+```
+
+```{r}
+plot(response ~ predictor, data = sim_data,
+     xlab = "Simulated Predictor Variable",
+     ylab = "Simulated Response Variable",
+     main = "Simulated Regression Data",
+     pch  = 20,
+     cex  = 2,
+     col  = "dodgerblue")
+abline(sim_fit, lwd = 3, col = "darkorange")
+```
+
+### Explanation versus Prediction
+
+Suppose you are a car manufacturer. You are an engineer tasked with something about braking. **Explanation.** Currently just linear.
+
+- Causation
+- Association (Correlation)
+
+Suppose you own a car. How long does it take you to stop when you're driving a certain speed. **Prediction**
+
+- Don't need to make the distinction.
+
+One tool will do both: linear regression.
 
 How can you use this data to:
 
@@ -138,249 +665,15 @@ How can you use this data to:
 
 One tool will do both, LINEAR REGRESSION
 
-
 EXPLAIN: You are a car manufacturer and want to know what factors influence stopping distance.
 PREDICT: You own a car. If you drive a certain speed, how long will it take you to stop?
 
-CORR vs CAUSE: car insurance
+TODO: note about $(\bar{x}, \bar{y})$
+
+TODO: note about $\sum_{i = 1}^{n} e_i = 0$. Other helpful expressions? Next time?
+
+TODO: interpret $\hat{\beta}_0$ and $\hat{\beta}_1$, without hats?
 
 ##  History
 
-
-
-##  Model
-
-![Simple Linear Regression Model  [UC David Stat Wiki](http://statwiki.ucdavis.edu/Textbook_Maps/General_Statistics/Map%3A_Introductory_Statistics_(Shafer_and_Zhang)/10%3A_Correlation_and_Regression/10.3_Modelling_Linear_Relationships_with_Randomness_Present)  ](../images/model.jpg)
-
-TODO: use Y when it is random?
-TODO: make a note that $y_i$ is a data point. $Y_i$ is a random variable.
-TODO: $x_i$ are fixed, known constants. (Technically and assumption.)
-
-\[
-y = f(x) + \epsilon
-\]
-
-\[
-y = \beta_0 + \beta_1 x + \epsilon
-\]
-
-PARAMETERS
-
-DATA = PREDICTION + ERRORS
-     = SIGNAL + NOISE
-     = MODEL + ERROR
-
-Unexplained:
-
-- missing variables
-- measurement error
-
-ASSUMPTIONS: **LINE**
-
-- **L**inear
-- **I**ndepedent
-- **N**ormal
-- **E**qual Variance
-
-
-##  What is the Best Line?
-
-Goldilocks:
-
-- Underfitting (Just using y_bar)
-- Just right (SLR)
-- Overfitting (Connect the dots as much as possible.)
-
-```{r}
-#par(mfrow = c(1, 3))
-plot(dist ~ speed, data = cars,
-     xlab = "Speed (in Miles Per Hour)",
-     ylab = "Stopping Distance (in Feet)",
-     main = "Stopping Distance vs Speed",
-     pch  = 20,
-     cex  = 3,
-     col  = "dodgerblue")
-abline(stop_dist_model, lwd = 3, col = "darkorange")
-
-plot(dist ~ speed, data = cars,
-     xlab = "Speed (in Miles Per Hour)",
-     ylab = "Stopping Distance (in Feet)",
-     main = "Stopping Distance vs Speed",
-     pch  = 20,
-     cex  = 3,
-     col  = "dodgerblue")
-underfit_model = lm(dist ~ 1, data = cars)
-abline(underfit_model, lwd = 3, col = "darkorange")
-
-
-overfit_model = lm(dist ~ poly(speed, 18), data = cars)
-x = seq(0, 25, length.out = 200)
-plot(dist ~ speed, data = cars,
-     xlab = "Speed (in Miles Per Hour)",
-     ylab = "Stopping Distance (in Feet)",
-     main = "Stopping Distance vs Speed",
-     pch  = 20,
-     cex  = 3,
-     col  = "dodgerblue")
-lines(x, predict(overfit_model, data.frame(speed = x)), lwd = 2, col = "darkorange")
-# add a wild prediction here?
-```
-
-
-TODO: picture with lines. one for overall mean. one for LS?
-
-\[
-\underset{\beta_0, \beta_1}{\mathrm{argmin}} \max|y_i - (\beta_0 + \beta_1 x_i)|
-\]
-
-\[
-\underset{\beta_0, \beta_1}{\mathrm{argmin}} \sum_{i = 1}^{n}|y_i - (\beta_0 + \beta_1 x_i)|
-\]
-
-\[
-\underset{\beta_0, \beta_1}{\mathrm{argmin}} \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2
-\]
-
-historical, easy math
-
-##  Least Squares Approach
-
-We want to find values of $\beta_0$ and $\beta_1$ which minimimize
-
-\[
-f(\beta_0, \beta_1) = \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2 = \sum_{i = 1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2.
-\]
-
-We will call these values $\hat{\beta}_0$ and $\hat{\beta}_1$.
-
-Take derivatives.
-
-\[
-\begin{aligned}
-\frac{df}{d\beta_0} &= -2 \sum_{i = 1}^{n}(y_i - \beta_0 - \beta_1 x_i) \\
-\frac{df}{d\beta_1} &= -2 \sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i)
-\end{aligned}
-\]
-
-Set equal to zero.
-
-\[
-\begin{aligned}
-\sum_{i = 1}^{n}(y_i - \beta_0 - \beta_1 x_i) &= 0 \\
-\sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i) &= 0 
-\end{aligned}
-\]
-
-Rearrange, **normal equations**.
-
-\[
-\begin{aligned}
-\sum_{i = 1}^{n} y_i &= n \beta_0 + \beta_1 \sum_{i = 1}^{n} x_i \\
-\sum_{i = 1}^{n} x_i y_i &= \beta_0 \sum_{i = 1}^{n} x_i + \beta_1 \sum_{i = 1}^{n} x_i^2
-\end{aligned}
-\]
-
-\[
-\begin{aligned}
-\hat{\beta}_1 &= \frac{\sum_{i = 1}^{n} x_i y_i - \frac{(\sum_{i = 1}^{n} x_i)(\sum_{i = 1}^{n} y_i)}{n}}{\sum_{i = 1}^{n} x_i^2 - \frac{(\sum_{i = 1}^{n} x_i)^2}{n}} = \frac{SXY}{SXX}\\
-\hat{\beta}_0 &= \bar{y} - \hat{\beta}_1 \bar{x}
-\end{aligned}
-\]
-
-\[
-\begin{aligned}
-SXY &= \sum_{i = 1}^{n} x_i y_i - \frac{(\sum_{i = 1}^{n} x_i)(\sum_{i = 1}^{n} y_i)}{n}  = \sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y})\\
-SXX &= \sum_{i = 1}^{n} x_i^2 - \frac{(\sum_{i = 1}^{n} x_i)^2}{n}  = \sum_{i = 1}^{n}(x_i - \bar{x})^2\\
-SYY &= \sum_{i = 1}^{n} y_i^2 - \frac{(\sum_{i = 1}^{n} y_i)^2}{n}  = \sum_{i = 1}^{n}(y_i - \bar{y})^2
-\end{aligned}
-\]
-
-\[
-\hat{\beta}_1 = \frac{SXY}{SXX} = \frac{\sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i = 1}^{n}(x_i - \bar{x})^2}
-\]
-
-TODO: Fitted line.
-TODO: variance estimate
-
-
-
-
-
-```{r}
-plot(sales ~ students, data = momma_leona,
-     xlab = "Students (in 1000s)",
-     ylab = "Sales (in $1000s)",
-     main = "Quarterly Sales vs Student Population",
-     pch  = 20,
-     cex  = 2,
-     col  = "dodgerblue")
-```
-
-TODO: fit in R
-TODO: extrapolation
-TODO: interpretation
-
-##  Decomposition of Variation
-
-TODO: Residuals
-
-##  Coefficient of Determination
-
-$R^2$
-
-\[
-\sum_{i=1}^{n}(y_i - \bar{y})^2 = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2
-\]
-
-Decomposing variation.
-
-##  MLE Approach
-
-\[
-L(\beta_0, \beta_1, \sigma^2) = \prod_{i = 1}^{n} \frac{1}{\sqrt{2\pi\sigma^2}} \exp{\left[-\frac{1}{2}\left(\frac{Y_i - \beta_0 - \beta_1 x_i}{\sigma}\right)^2\right]}
-\]
-
-## Basic Simulation? (Save for inference chapter?)
-
-TODO: tie this into the model section? w.r.t. b0 + b1x + e
-
-```{r}
-n       = 20
-beta_0  = 5
-beta_1  = 2
-sigma   = 1
-epsilon = rnorm(n, mean = 0, sd = sigma)
-
-x = runif(n, 0, 10)
-y = beta_0 + beta_1 * x + epsilon
-
-sim_data = data.frame(x, y)
-plot(y ~ x, data = sim_data)
-
-sim_fit = lm(y ~ x, data = sim_data)
-coef(sim_fit)
-```
-
-```{r}
-sim_slr = function(n, beta_0 = 10, beta_1 = 5, sigma = 1) {
-  epsilon = rnorm(n, mean = 0, sd = sigma)
-  x       = runif(n, 0, 10)
-  y       = beta_0 + beta_1 * x + epsilon
-  data.frame(x, y)
-}
-sim_data = sim_slr(n = 50, beta_0 = 5, beta_1 = 2, sigma = 3)
-plot(y ~ x, data = sim_data)
-
-sim_fit = lm(y ~ x, data = sim_data)
-coef(sim_fit)
-```
-
-
-
-
-
-
-
-
-
-
+TODO: Note about CORR vs CAUSE: car insurance (if not done above.)
