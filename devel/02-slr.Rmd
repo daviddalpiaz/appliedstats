@@ -14,7 +14,7 @@ After reading this chapter you will be able to:
 
 ## Modeling
 
-Let's consider a simple example of how the speed a car is traveling affects stopping distance. To examine this relationship, we will use the `cars` dataset which is a deafult `R` dataset.
+Let's consider a simple example of how the speed a car is traveling affects its stopping distance. (How far it travels before it comes to a stop.) To examine this relationship, we will use the `cars` dataset which is a deafult `R` dataset.
 
 To get a first look at the data you can use the `View()` function inside RStudio.
 
@@ -42,7 +42,7 @@ Other than the two variable names and the number of observations, this data is s
 ?cars
 ```
 
-Reading the documentation we learn that this is data gathered during the 1920s about the speed of cars, and the resulting distance it takes for the car to come to a stop. The interesting task here is to determine how far a car travels before stopping when traveling at a certain speed, so we will first plot the stopping distance against the speed.
+Reading the documentation we learn that this is data gathered during the 1920s about the speed of cars, and the resulting distance it takes for the car to come to a stop. The interesting task here is to determine how far a car travels before stopping, when traveling at a certain speed. So, we will first plot the stopping distance against the speed.
 
 ```{r}
 plot(dist ~ speed, data = cars,
@@ -54,23 +54,29 @@ plot(dist ~ speed, data = cars,
      col  = "dodgerblue")
 ```
 
-Terminology:
+Let's now define some terminology. We have pairs of data, $(x_i, y_i)$, for $i = 1, 2, \ldots n$, where $n$ is the sample size of the dataset.
 
-Data: $(x_i, y_i)$ $i = 1, 2, \ldots n$.
+We use $i$ as an index, simply for notation. We use $x_i$ as the **predictor** (explanatory) variable. The predictor variable is used to help *predict* the **response** (target, outcome) variable, $y_i$. 
 
-- Index, $i$
-- Explanatory (predictor) variable, $x_i$, in this case...
-- Response (outcome) variable, $y_i$
+In the `cars` explain, we are interested in using the predictor variable `speed` to understand and predict the response variable `dist`.
 
-note about "independent" and "depend". Used, but confusing.
+TODO: delete next line?
+
+Sometimes you will see "independent variable" used in place of predictor variable. Also "dependent variable" in place of the response variable. While these are not incorrect, independence is a already a strictly defined concept in probability, so we prefer to stay away from this nomenclature.
+
+Broadly speaking, we would like to model the relationship between $X$ and $Y$ using the form
 
 \[
-Y = f(X) + \epsilon
+Y = f(X) + \epsilon.
 \]
 
-- yDATA = PREDICTION + ERRORS
-- yDATA = SIGNAL + NOISE
-- yDATA = MODEL + ERROR
+The function $f$ describes the functional relationship between the two variables, and the $\epsilon$ term is used as an error term. You could think of this a number of ways:
+
+- Response = Prediction + Error
+- Response = Signal + Noise
+- Response = Model + Unexplained
+
+TODO: move unexplained to explaination vs prediction?
 
 Unexplained sources:
 
@@ -122,7 +128,7 @@ plot(dist ~ speed, data = cars,
 abline(stop_dist_model, lwd = 3, col = "darkorange")
 ```
 
-With this in mind, we would like to restrict our choice of $f(X)$ to linear function of $X$. We will use $\beta_1$ for the slope, and $\beta_0$ for the intercept.
+With this in mind, we would like to restrict our choice of $f(X)$ to *linear* functions of $X$. We will write our model using $\beta_1$ for the slope, and $\beta_0$ for the intercept.
 
 \[
 Y = \beta_0 + \beta_1 X + \epsilon
@@ -136,14 +142,26 @@ We now define what we will call the simple linear regression model,
 Y_i = \beta_0 + \beta_1 x_i + \epsilon
 \]
 
-where $e_i \sim N(0, \sigma^2)$. That is, the $\epsilon_i$ are *independent and identically distributed* (iid) normal random variables with mean $0$ and variance $\sigma^2$.
+where $\epsilon_i \sim N(0, \sigma^2)$. That is, the $\epsilon_i$ are *independent and identically distributed* (iid) normal random variables with mean $0$ and variance $\sigma^2$.
 
 The $x_i$ are considered fixed, known constants. The model then has three parameters to be estimated: $\beta_0$, $\beta_1$, and $\sigma^2$.
 
 TODO: add something about conditional distribution to Y here? mean and variance?
+TODO: or remove the following?
+
+\[
+E[Y_i] = \beta_0 + \beta_1 x_i
+\]
+
+and
+
+\[
+Var[Y_i] = \sigma^2.
+\]
 
 ![Simple Linear Regression Model [UC David Stat Wiki](http://statwiki.ucdavis.edu/Textbook_Maps/General_Statistics/Map%3A_Introductory_Statistics_(Shafer_and_Zhang)/10%3A_Correlation_and_Regression/10.3_Modelling_Linear_Relationships_with_Randomness_Present)](../images/model.jpg)
 
+TODO: mean of Y is different for different values of x.
 TODO: use Y when it is random?
 TODO: make a note that $y_i$ is a data point. $Y_i$ is a random variable.
 TODO: $x_i$ are fixed, known constants. (Technically and assumption.)
@@ -168,7 +186,7 @@ How to find line? Find one with "small errors." How should we define errors?
 
 The questions now becomes, how do we find such a line? There are many approaches we could take.
 
-We could find the line that has the smallest maximum distance from and of the points to the line. That is,
+We could find the line that has the smallest maximum distance from any of the points to the line. That is,
 
 \[
 \underset{\beta_0, \beta_1}{\mathrm{argmin}} \max|y_i - (\beta_0 + \beta_1 x_i)|.
@@ -186,7 +204,7 @@ We could find the line that minimizes the sum of all the squared distances from 
 \underset{\beta_0, \beta_1}{\mathrm{argmin}} \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2.
 \]
 
-This last option is called the method of **least squares**. It is essentially the de-facto method for fitting a line to data. (You may have even seen it before in a linear algebra course.) Its popularity is largely due to the fact that it is mathematically "easy." (Which was important historically, as computers are a modern contraption.)
+This last option is called the method of **least squares**. It is essentially the de-facto method for fitting a line to data. (You may have even seen it before in a linear algebra course.) Its popularity is largely due to the fact that it is mathematically "easy." (Which was important historically, as computers are a modern contraption.) It is also very popular because many relationships are well approximated by a linear function.
 
 ##  Least Squares Approach
 
@@ -246,7 +264,7 @@ S_{yy} &= \sum_{i = 1}^{n} y_i^2 - \frac{(\sum_{i = 1}^{n} y_i)^2}{n}  = \sum_{i
 \end{aligned}
 \]
 
-By using the above alternative expression, we arrive at a more useful expression for $\hat{\beta}_1$.
+By using the above alternative expression, we arrive at a cleaner, more useful expression for $\hat{\beta}_1$.
 
 \[
 \hat{\beta}_1 = \frac{S_{xy}}{S_{xx}} = \frac{\sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i = 1}^{n}(x_i - \bar{x})^2}
@@ -285,6 +303,40 @@ TODO: Fitted line.
 \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x
 \]
 
+In this case,
+
+\[
+\hat{y} = `r round(beta_0_hat, 3)` + `r round(beta_1_hat, 3)` x
+\]
+
+TODO: use line to make predictions
+
+TODO: interpretation
+
+```{r}
+beta_0_hat + beta_1_hat * 10
+```
+
+```{r}
+beta_0_hat + beta_1_hat * 15
+```
+
+TODO: extrapolation
+
+```{r}
+beta_0_hat + beta_1_hat * 50
+```
+
+```{r}
+range(x)
+```
+
+DATA = PREDICTION + ERROR
+
+\[
+y = \hat{y} + e
+\]
+
 \[
 e_i = y_i - \hat{y}_i
 \]
@@ -302,10 +354,6 @@ s_e^2 &= \frac{1}{n - 2} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2 \\
 
 Why n-2?
 
-TODO: fit in R
-TODO: extrapolation
-TODO: interpretation
-
 ##  Decomposition of Variation
 
 \[
@@ -320,7 +368,7 @@ y_i - \bar{y} = (y_i - \hat{y}_i) + (\hat{y}_i - \bar{y})
 \sum_{i=1}^{n}(y_i - \bar{y})^2 = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2.
 \]
 
-TODO: Residuals
+TODO: define and use SSE, SSR, SST (RSS?)
 
 ###  Coefficient of Determination
 
@@ -332,13 +380,9 @@ R^2 = \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} 
 1 - \frac{\sum_{i = 1}^{n}e_i^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2}
 \]
 
-TODO: define and use SSE, SSR, SST (RSS?)
-
 The coefficient of determination is interpreted as the proportion of observed variation in $y$ that can be explained by the simple linear regression model.
 
-TODO: Note, some people have issue with this.
-
-Decomposing variation.
+TODO: extra formulas: SSReg = BHAT * SXX, RSS = SYY - SSReg
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
 ## TODO: this code and be made much better
@@ -383,7 +427,7 @@ plot_unexp_dev <- function(reg_data) {
 }
 
 plot_exp_dev <- function(reg_data) {
-  plot(reg_data$x, reg_data$y, main = "SSR (Sum of Squares Regression)", 
+  plot(reg_data$x, reg_data$y, main = "SSReg (Sum of Squares Regression)", 
   xlab = "x", ylab = "y", pch = 20, cex = 3, col = "grey")
   arrows(reg_data$x, reg_data$y_bar,
          reg_data$x, reg_data$y_hat,
@@ -398,16 +442,16 @@ Note: equal spacing is by choice.
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 plot_data <- generate_data(sigma = 2)
 summary(lm(y ~ x, data = plot_data))$r.sq
-#plot_exp_dev(plot_data)
-#plot_unexp_dev(plot_data)
+plot_exp_dev(plot_data)
+plot_unexp_dev(plot_data)
 plot_total_dev(plot_data)
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 plot_data <- generate_data(sigma = 6)
 summary(lm(y ~ x, data = plot_data))$r.sq
-#plot_exp_dev(plot_data)
-#plot_unexp_dev(plot_data)
+plot_exp_dev(plot_data)
+plot_unexp_dev(plot_data)
 plot_total_dev(plot_data)
 ```
 
@@ -415,6 +459,9 @@ plot_total_dev(plot_data)
 
 ```{r}
 stop_dist_model = lm(dist ~ speed, data = cars)
+```
+
+```{r}
 plot(dist ~ speed, data = cars,
      xlab = "Speed (in Miles Per Hour)",
      ylab = "Stopping Distance (in Feet)",
@@ -672,7 +719,7 @@ TODO: note about $(\bar{x}, \bar{y})$
 
 TODO: note about $\sum_{i = 1}^{n} e_i = 0$. Other helpful expressions? Next time?
 
-TODO: interpret $\hat{\beta}_0$ and $\hat{\beta}_1$, without hats?
+TODO: interpret $\hat{\beta}_0$ and $\hat{\beta}_1$, without hats? talk about with interpolating?
 
 ##  History
 
