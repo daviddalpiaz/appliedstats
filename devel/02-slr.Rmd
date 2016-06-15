@@ -14,7 +14,7 @@ After reading this chapter you will be able to:
 
 ## Modeling
 
-Let's consider a simple example of how the speed a car is traveling affects its stopping distance. (How far it travels before it comes to a stop.) To examine this relationship, we will use the `cars` dataset which is a deafult `R` dataset.
+Let's consider a simple example of how the speed a car is traveling affects its stopping distance. (How far it travels before it comes to a stop.) To examine this relationship, we will use the `cars` dataset which, is a deafult `R` dataset.
 
 To get a first look at the data you can use the `View()` function inside RStudio.
 
@@ -56,9 +56,9 @@ plot(dist ~ speed, data = cars,
 
 Let's now define some terminology. We have pairs of data, $(x_i, y_i)$, for $i = 1, 2, \ldots n$, where $n$ is the sample size of the dataset.
 
-We use $i$ as an index, simply for notation. We use $x_i$ as the **predictor** (explanatory) variable. The predictor variable is used to help *predict* the **response** (target, outcome) variable, $y_i$. 
+We use $i$ as an index, simply for notation. We use $x_i$ as the **predictor** (explanatory) variable. The predictor variable is used to help *predict* or explain the **response** (target, outcome) variable, $y_i$. 
 
-In the `cars` explain, we are interested in using the predictor variable `speed` to understand and predict the response variable `dist`.
+In the `cars` explain, we are interested in using the predictor variable `speed` to predict and explain the response variable `dist`.
 
 TODO: delete next line?
 
@@ -69,6 +69,8 @@ Broadly speaking, we would like to model the relationship between $X$ and $Y$ us
 \[
 Y = f(X) + \epsilon.
 \]
+
+TODO: note Y and X random, $(x_i, y_i)$ are observed data.
 
 The function $f$ describes the functional relationship between the two variables, and the $\epsilon$ term is used as an error term. You could think of this a number of ways:
 
@@ -144,10 +146,12 @@ Y_i = \beta_0 + \beta_1 x_i + \epsilon
 
 where $\epsilon_i \sim N(0, \sigma^2)$. That is, the $\epsilon_i$ are *independent and identically distributed* (iid) normal random variables with mean $0$ and variance $\sigma^2$.
 
+TODO: this is where we should discuss the difference between random and not. Y vs Y_i
+
 The $x_i$ are considered fixed, known constants. The model then has three parameters to be estimated: $\beta_0$, $\beta_1$, and $\sigma^2$.
 
 TODO: add something about conditional distribution to Y here? mean and variance?
-TODO: or remove the following?
+TODO: or remove/change the following?
 
 \[
 E[Y_i] = \beta_0 + \beta_1 x_i
@@ -252,9 +256,9 @@ Finally, we finish solving the system of equations.
 \end{aligned}
 \]
 
-Here, we have defined some notation for the expression we've obtained. Note that they have alternative forms which are much easier to work with. (We won't do it here, but you can try to prove the equalities below on your own, for fun.)
+Here, we have defined some notation for the expression we've obtained. Note that they have alternative forms which are much easier to work with. (We won't do it here, but you can try to prove the equalities below on your own, for "fun.")
 
-TODO: define notation. S_xy = sum of squares.... link to james' page?
+TODO: define notation further. S_xy = sum of squares.... link to james' page?
 
 \[
 \begin{aligned}
@@ -272,7 +276,7 @@ By using the above alternative expression, we arrive at a cleaner, more useful e
 
 Traditionally we would now calculate $\hat{\beta}_0$ and $\hat{\beta}_1$ by hand for the `cars` dataset. However because we are living in the 21st century and are intellegent (or lazy or efficient, depending on your perspective) we will utilize `R` to do the number crunching for us.
 
-To keep some notation consistent with above, we will store the response variable as `y` and the predictor variable as `x`.
+To keep some notation consistent with above mathematics, we will store the response variable as `y` and the predictor variable as `x`.
 
 ```{r}
 x = cars$speed
@@ -296,7 +300,7 @@ beta_0_hat = mean(y) - beta_1_hat * mean(x)
 c(beta_0_hat, beta_1_hat)
 ```
 
-TODO: model is unkown true line.
+TODO: model is unknown true line.
 TODO: Fitted line.
 
 \[
@@ -309,19 +313,40 @@ In this case,
 \hat{y} = `r round(beta_0_hat, 3)` + `r round(beta_1_hat, 3)` x
 \]
 
-TODO: use line to make predictions
-
-TODO: interpretation
+We can now use this line to make predictions.
 
 ```{r}
-beta_0_hat + beta_1_hat * 10
+unique(cars$speed)
 ```
 
+
+TODO: interpretation of params and estimates.
+
+TODO: fitted value
+
+\[
+\hat{y} = `r round(beta_0_hat, 3)` + `r round(beta_1_hat, 3)` \times 8 = `r round(beta_0_hat + beta_1_hat * 8, 3)`
+\]
+
 ```{r}
-beta_0_hat + beta_1_hat * 15
+beta_0_hat + beta_1_hat * 8 #this one is in data set and only has one y value, useful later.
+```
+
+TODO: interpolate
+
+\[
+\hat{y} = `r round(beta_0_hat, 3)` + `r round(beta_1_hat, 3)` \times 21 = `r round(beta_0_hat + beta_1_hat * 21, 3)`
+\]
+
+```{r}
+beta_0_hat + beta_1_hat * 21
 ```
 
 TODO: extrapolation
+
+\[
+\hat{y} = `r round(beta_0_hat, 3)` + `r round(beta_1_hat, 3)` \times 50 = `r round(beta_0_hat + beta_1_hat * 50, 3)`
+\]
 
 ```{r}
 beta_0_hat + beta_1_hat * 50
@@ -331,11 +356,13 @@ beta_0_hat + beta_1_hat * 50
 range(x)
 ```
 
-DATA = PREDICTION + ERROR
+Response = Prediction + Error
 
 \[
 y = \hat{y} + e
 \]
+
+We then define a **residual** to be the observed value minus the predicted value.
 
 \[
 e_i = y_i - \hat{y}_i
@@ -343,16 +370,53 @@ e_i = y_i - \hat{y}_i
 
 residual = actual - predicted
 
-TODO: variance estimate
+TODO: residual at 10
+
+
+```{r}
+which(cars$speed == 8)
+cars[5, ]
+cars[which(cars$speed == 8), ]
+```
+
+\[
+e = 16 - `r round(beta_0_hat + beta_1_hat * 8, 3)` = `r round(16 - (beta_0_hat + beta_1_hat * 8), 3)`
+\]
+
+```{r}
+16 - (beta_0_hat + beta_1_hat * 8)
+```
+
+Recall that,
+
+\[
+E[Y_i] = \beta_0 + \beta_1 x_i.
+\]
+
+So,
+
+\[
+\hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_i
+\]
+
+is a natural estimate for the mean of $Y_i$ for a given value of $x_i$
+
+Recall that when we specified out model, we had three unknown parameters; $\beta_0$, $\beta_1$, and $\sigma^2$. The method of least squares gave us estimates for $\beta_0$ and $\beta_1$, however, we have yet to see an estimate for $\sigma^2$. We will now define $s_e^2$ which will be an estimate for $\sigma^2$.
 
 \[
 \begin{aligned}
 s_e^2 &= \frac{1}{n - 2} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2 \\
-      &= \frac{1}{n - 2} \sum_{i = 1}^{n}e_i^2
+      &= \frac{1}{n - 2} \sum_{i = 1}^{n} e_i^2
 \end{aligned}
 \]
 
-Why n-2?
+This probably seems like a natural estimate, aside from the use of $n - 2$, which we will put of until next chapter. (We will also define another estimate later in this chapter that uses $n$ instead.) It should actually look rather familiar.
+
+\[
+s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x_i - \bar{x})^2
+\]
+
+
 
 ##  Decomposition of Variation
 
@@ -368,7 +432,18 @@ y_i - \bar{y} = (y_i - \hat{y}_i) + (\hat{y}_i - \bar{y})
 \sum_{i=1}^{n}(y_i - \bar{y})^2 = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2.
 \]
 
-TODO: define and use SSE, SSR, SST (RSS?)
+
+\[
+SST = \sum_{i=1}^{n}(y_i - \bar{y})^2
+\]
+
+\[
+SSReg = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2
+\]
+
+\[
+SSE = RSS = \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2
+\]
 
 ###  Coefficient of Determination
 
@@ -381,8 +456,6 @@ R^2 = \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} 
 \]
 
 The coefficient of determination is interpreted as the proportion of observed variation in $y$ that can be explained by the simple linear regression model.
-
-TODO: extra formulas: SSReg = BHAT * SXX, RSS = SYY - SSReg
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
 ## TODO: this code and be made much better
@@ -437,7 +510,7 @@ plot_exp_dev <- function(reg_data) {
 }
 ```
 
-Note: equal spacing is by choice.
+TODO: equal spacing is by choice.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 plot_data <- generate_data(sigma = 2)
@@ -553,7 +626,7 @@ and
 Var[Y_i] = \sigma^2.
 \]
 
-TODO: define conditional distribution? $E[Y | X = x]$ ...
+TODO: define conditional distribution? $E[Y | X = x]$ ... Probably not.
 
 Recall that the pdf of a random variable $X \sim N(\mu, \sigma^2)$ is given by
 
@@ -563,7 +636,7 @@ f_{X}(x; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp{\left[-\frac{1}{2}\
 
 TODO: define $f_{X}(x; \mu, \sigma^2)$ notation. Function of $x$, where $\mu$ and $\sigma^2$ are considered fixed and known.
 
-Then we can write the  pdf of each of the $Y_i$ is given as
+Then we can write the pdf of each of the $Y_i$ is given as
 
 \[
 f_{Y_i}(y_i; x_i, \beta_0, \beta_1, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp{\left[-\frac{1}{2}\left(\frac{y_i - (\beta_0 + \beta_1 x_i)}{\sigma}\right)^2\right]}.
@@ -723,6 +796,8 @@ One tool will do both, LINEAR REGRESSION
 
 EXPLAIN: You are a car manufacturer and want to know what factors influence stopping distance.
 PREDICT: You own a car. If you drive a certain speed, how long will it take you to stop?
+
+TODO: car insurance explaination (shifting perspectives, also do this for braking)
 
 TODO: note about $(\bar{x}, \bar{y})$
 
