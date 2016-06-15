@@ -60,7 +60,7 @@ We use $i$ as an index, simply for notation. We use $x_i$ as the **predictor** (
 
 In the `cars` explain, we are interested in using the predictor variable `speed` to predict and explain the response variable `dist`.
 
-TODO: delete next line?
+TODO: delete next line?, save for video
 
 Sometimes you will see "independent variable" used in place of predictor variable. Also "dependent variable" in place of the response variable. While these are not incorrect, independence is a already a strictly defined concept in probability, so we prefer to stay away from this nomenclature.
 
@@ -70,15 +70,13 @@ Broadly speaking, we would like to model the relationship between $X$ and $Y$ us
 Y = f(X) + \epsilon.
 \]
 
-TODO: note Y and X random, $(x_i, y_i)$ are observed data.
-
 The function $f$ describes the functional relationship between the two variables, and the $\epsilon$ term is used as an error term. You could think of this a number of ways:
 
 - Response = Prediction + Error
 - Response = Signal + Noise
 - Response = Model + Unexplained
 
-TODO: move unexplained to explaination vs prediction?
+TODO: move unexplained source to explaination vs prediction?
 
 Unexplained sources:
 
@@ -116,7 +114,7 @@ plot(dist ~ speed, data = cars,
 lines(x, predict(overfit_model, data.frame(speed = x)), lwd = 2, col = "darkorange")
 ```
 
-Lastly, we could try to model the data with a well chosen line. This line seems to summarize the relationship between stopping distance and speed quite well. As speed increases, the distance required to come to a stop increases. There is still some variation about this line, but it seems to cpature the overall trend.
+Lastly, we could try to model the data with a well chosen line. This line seems to summarize the relationship between stopping distance and speed quite well. As speed increases, the distance required to come to a stop increases. There is still some variation about this line, but it seems to capture the overall trend.
 
 ```{r goodfit_plot, echo = FALSE}
 stop_dist_model = lm(dist ~ speed, data = cars)
@@ -130,10 +128,10 @@ plot(dist ~ speed, data = cars,
 abline(stop_dist_model, lwd = 3, col = "darkorange")
 ```
 
-With this in mind, we would like to restrict our choice of $f(X)$ to *linear* functions of $X$. We will write our model using $\beta_1$ for the slope, and $\beta_0$ for the intercept.
+With this in mind, we would like to restrict our choice of $f(X)$ to *linear* functions of $X$. We will write our model using $\beta_1$ for the slope, and $\beta_0$ for the intercept,
 
 \[
-Y = \beta_0 + \beta_1 X + \epsilon
+Y = \beta_0 + \beta_1 X + \epsilon.
 \]
 
 ### Simple Linear Regression Model
@@ -146,7 +144,7 @@ Y_i = \beta_0 + \beta_1 x_i + \epsilon
 
 where $\epsilon_i \sim N(0, \sigma^2)$. That is, the $\epsilon_i$ are *independent and identically distributed* (iid) normal random variables with mean $0$ and variance $\sigma^2$.
 
-TODO: this is where we should discuss the difference between random and not. Y vs Y_i
+TODO: this is where we should discuss the difference between random and not. Y vs Y_i, note Y and X random, $(x_i, y_i)$ are observed data.
 
 The $x_i$ are considered fixed, known constants. The model then has three parameters to be estimated: $\beta_0$, $\beta_1$, and $\sigma^2$.
 
@@ -319,7 +317,6 @@ We can now use this line to make predictions.
 unique(cars$speed)
 ```
 
-
 TODO: interpretation of params and estimates.
 
 TODO: fitted value
@@ -370,9 +367,6 @@ e_i = y_i - \hat{y}_i
 
 residual = actual - predicted
 
-TODO: residual at 10
-
-
 ```{r}
 which(cars$speed == 8)
 cars[5, ]
@@ -399,7 +393,7 @@ So,
 \hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_i
 \]
 
-is a natural estimate for the mean of $Y_i$ for a given value of $x_i$
+is a natural estimate for the mean of $Y_i$ for a given value of $x_i$.
 
 Recall that when we specified out model, we had three unknown parameters; $\beta_0$, $\beta_1$, and $\sigma^2$. The method of least squares gave us estimates for $\beta_0$ and $\beta_1$, however, we have yet to see an estimate for $\sigma^2$. We will now define $s_e^2$ which will be an estimate for $\sigma^2$.
 
@@ -410,13 +404,23 @@ s_e^2 &= \frac{1}{n - 2} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2 \\
 \end{aligned}
 \]
 
-This probably seems like a natural estimate, aside from the use of $n - 2$, which we will put of until next chapter. (We will also define another estimate later in this chapter that uses $n$ instead.) It should actually look rather familiar.
+This probably seems like a natural estimate, aside from the use of $n - 2$, which we will put off until next chapter. (We will also define another estimate later in this chapter that uses $n$ instead.) It should actually look rather familiar.
 
 \[
 s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x_i - \bar{x})^2
 \]
 
+Here $s^2$, which we have seen before, is the estiamte of $\sigma^2$ when we have a single random variable $X$. In this case $\bar{x}$ is an estimate of $\mu$ which is assumed to be the same for each $x$.
 
+Now, in the regression case, with $s_e^2$, each $y$ has a different mean because of the realationship with $x$. Thus, for each $y_i$, we use a different estimate of the mean, that is $\hat{y}_i$.
+
+```{r}
+y_hat = beta_0_hat + beta_1_hat * x
+e     = y - y_hat
+n     = length(e)
+s2_e  = sum(e^2) / (n - 2)
+s2_e
+```
 
 ##  Decomposition of Variation
 
@@ -431,7 +435,6 @@ y_i - \bar{y} = (y_i - \hat{y}_i) + (\hat{y}_i - \bar{y})
 \[
 \sum_{i=1}^{n}(y_i - \bar{y})^2 = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2.
 \]
-
 
 \[
 SST = \sum_{i=1}^{n}(y_i - \bar{y})^2
@@ -511,6 +514,7 @@ plot_exp_dev <- function(reg_data) {
 ```
 
 TODO: equal spacing is by choice.
+TODO: the following are for a low/medium and high R2 example
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 plot_data <- generate_data(sigma = 2)
@@ -530,9 +534,31 @@ plot_total_dev(plot_data)
 
 ## The `lm` Function
 
+So far we have done regression by deriving the least squares estimates, then writing simple `R` commands to perform the necessary calculations. Since this is such a common task, this is functionality that is built directly into `R` via the `lm()` command.
+
+The `lm()` command is used to fit **linear models** which accounts for a broader class of models than simple linear regression, but we will use SLR as our first demonstration of `lm()`. The `lm()` function will be one of our most recently used tools, so you may want to take a look at the documentation by using `?lm`. You'll notice there is a lot of information there, but we will start with just the very basics.
+
+We'll continue using the `cars` data, and essentially use the `lm()` function to check the work we had previously done.
+
 ```{r}
 stop_dist_model = lm(dist ~ speed, data = cars)
 ```
+
+This line of code fits our very first linear model. The syntax should look somewhat familiar. We use the `dist ~ speed` syntax to tell `R` we would like to model the response variable `dist` as a linear function of the predictor variable `speed`. In general you should thik of the syntax as `response ~ predictor`. The `data = cars` arguement then tells `R` that that `dist` and `speed` variables are from the dataset `cars`. We then store this result in a variable `stop_dist_model`.
+
+The variable `stop_dist_model` now contains a wealth of informaiton and we will now see how to extract and use that informaiton. The first thing we will do is simply output whatever is stored immediately in the variable `stop_dist_model`.
+
+```{r}
+stop_dist_model
+```
+
+We see that it tells us the formula we input into `R`, that is `lm(formula = dist ~ speed, data = cars)`. We also see the coefficients of the model. We can check that these are what we had calculated previously. (Minus some rounding `R` is doing to display the results.)
+
+```{r}
+c(beta_0_hat, beta_1_hat)
+```
+
+Next, it would be nice to add the fitted line to the scatterplot. To do so we will use the `abline()` function.
 
 ```{r}
 plot(dist ~ speed, data = cars,
@@ -545,8 +571,9 @@ plot(dist ~ speed, data = cars,
 abline(stop_dist_model, lwd = 3, col = "darkorange")
 ```
 
+The `abline()` function is used to add lines of the form $a + bx$ to a plot. (Hence **`ab`**`line`.) When we give it `stop_dist_model` as an arguement, it automatically extracts the regression coefficients and uses them as the slope and intercept of the line. Here we also use `lwd` to modify the width of the line, as well as `col` to modify the color of the line.
+
 ```{r}
-stop_dist_model
 names(stop_dist_model)
 ```
 
@@ -574,7 +601,7 @@ summary(stop_dist_model)$coefficients
 summary(stop_dist_model)$sigma
 ```
 
-Residual Standard Error
+TODO: Residual Standard Error, what `R` calls $s_e$, is stored in `summary(model)$sigma`.
 
 \[
 RSE = s_e = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
@@ -774,6 +801,9 @@ abline(sim_fit, lwd = 3, col = "darkorange")
 
 ### Explanation versus Prediction
 
+TODO: move this earlier for motivation
+TODO: just show earlier in video for motivation?
+
 Suppose you are a car manufacturer. You are an engineer tasked with something about braking. **Explanation.** Currently just linear.
 
 - Causation
@@ -798,6 +828,7 @@ EXPLAIN: You are a car manufacturer and want to know what factors influence stop
 PREDICT: You own a car. If you drive a certain speed, how long will it take you to stop?
 
 TODO: car insurance explaination (shifting perspectives, also do this for braking)
+TODO: Note about CORR vs CAUSE: car insurance (if not done above.)
 
 TODO: note about $(\bar{x}, \bar{y})$
 
@@ -805,6 +836,6 @@ TODO: note about $\sum_{i = 1}^{n} e_i = 0$. Other helpful expressions? Next tim
 
 TODO: interpret $\hat{\beta}_0$ and $\hat{\beta}_1$, without hats? talk about with interpolating?
 
-##  History
+TODO: History, only if time.
 
-TODO: Note about CORR vs CAUSE: car insurance (if not done above.)
+
