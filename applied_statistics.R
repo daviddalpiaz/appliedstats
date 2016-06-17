@@ -586,3 +586,309 @@ x_bar_hist = hist(x_bars, breaks = 50, col = shading,
                   main = "Histogram of Sample Means, Two Standard Deviations",
                   xlab = "Sample Means")
 
+## ---- eval = FALSE------------------------------------------------------------
+#  View(cars)
+
+## -----------------------------------------------------------------------------
+str(cars)
+
+## -----------------------------------------------------------------------------
+dim(cars)
+nrow(cars)
+ncol(cars)
+
+## ---- eval = FALSE------------------------------------------------------------
+#  ?cars
+
+## -----------------------------------------------------------------------------
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 3,
+     col  = "dodgerblue")
+
+## ----underfit_plot, echo = FALSE----------------------------------------------
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 3,
+     col  = "dodgerblue")
+underfit_model = lm(dist ~ 1, data = cars)
+abline(underfit_model, lwd = 3, col = "darkorange")
+
+## ----overfit_plot, echo = FALSE-----------------------------------------------
+overfit_model = lm(dist ~ poly(speed, 18), data = cars)
+x = seq(-10, 50, length.out = 200)
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 3,
+     col  = "dodgerblue")
+lines(x, predict(overfit_model, data.frame(speed = x)), lwd = 2, col = "darkorange")
+
+## ----goodfit_plot, echo = FALSE-----------------------------------------------
+stop_dist_model = lm(dist ~ speed, data = cars)
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 3,
+     col  = "dodgerblue")
+abline(stop_dist_model, lwd = 3, col = "darkorange")
+
+## -----------------------------------------------------------------------------
+x = cars$speed
+y = cars$dist
+
+## -----------------------------------------------------------------------------
+Sxy = sum((x - mean(x)) * (y - mean(y)))
+Sxx = sum((x - mean(x)) ^ 2)
+Syy = sum((y - mean(y)) ^ 2)
+c(Sxy, Sxx, Syy)
+
+## -----------------------------------------------------------------------------
+beta_1_hat = Sxy / Sxx
+beta_0_hat = mean(y) - beta_1_hat * mean(x)
+c(beta_0_hat, beta_1_hat)
+
+## -----------------------------------------------------------------------------
+unique(cars$speed)
+
+## -----------------------------------------------------------------------------
+beta_0_hat + beta_1_hat * 8
+
+## -----------------------------------------------------------------------------
+8 %in% unique(cars$speed)
+21 %in% unique(cars$speed)
+
+## -----------------------------------------------------------------------------
+min(cars$speed) < 21 & 21 < max(cars$speed)
+
+## -----------------------------------------------------------------------------
+beta_0_hat + beta_1_hat * 21
+
+## -----------------------------------------------------------------------------
+range(cars$speed)
+range(cars$speed)[1] < 50 & 50 < range(cars$speed)[2] 
+
+## -----------------------------------------------------------------------------
+beta_0_hat + beta_1_hat * 50
+
+## -----------------------------------------------------------------------------
+which(cars$speed == 8)
+cars[5, ]
+cars[which(cars$speed == 8), ]
+
+## -----------------------------------------------------------------------------
+16 - (beta_0_hat + beta_1_hat * 8)
+
+## -----------------------------------------------------------------------------
+y_hat = beta_0_hat + beta_1_hat * x
+e     = y - y_hat
+n     = length(e)
+s2_e  = sum(e^2) / (n - 2)
+s2_e
+
+## -----------------------------------------------------------------------------
+s_e = sqrt(s2_e)
+s_e
+
+## -----------------------------------------------------------------------------
+SST   = sum((y - mean(y)) ^ 2)
+SSReg = sum((y_hat - mean(y)) ^ 2)
+SSE   = sum((y - y_hat) ^ 2)
+c(SST = SST, SSReg = SSReg, SSE = SSE)
+
+## -----------------------------------------------------------------------------
+SSE / (n - 2)
+
+## -----------------------------------------------------------------------------
+s2_e == SSE / (n - 2)
+
+## -----------------------------------------------------------------------------
+R2 = SSReg / SST
+R2
+
+## ---- echo = FALSE, message = FALSE, warning = FALSE--------------------------
+## TODO: this code and be made much better
+# show for different R^2 values?
+#
+
+set.seed(42)
+generate_data <- function(int = 1,
+                          slope = 2,
+                          sigma = 5,
+                          n_obs = 15,
+                          x_min = 0,
+                          x_max = 10) {
+  x <- seq(x_min, x_max, length.out = n_obs)
+  y <- int + slope * x + rnorm(n_obs, 0, sigma)
+  fit <- lm(y ~ x)
+  y_hat <- fitted(fit)
+  y_bar <- rep(mean(y), n_obs)
+  data.frame(x, y, y_hat, y_bar)
+}
+
+plot_total_dev <- function(reg_data) {
+  plot(reg_data$x, reg_data$y, main = "SST (Sum of Squares Total)", 
+       xlab = "x", ylab = "y", pch = 20, cex = 3, col = "grey")
+  arrows(reg_data$x, reg_data$y_bar,
+         reg_data$x, reg_data$y_hat,
+         col = 'darkorange', lwd = 1, length = 0.2, angle = 20)
+  arrows(reg_data$x, reg_data$y_hat,
+         reg_data$x, reg_data$y,
+         col = 'dodgerblue', lwd = 2, lty = 2, length = 0.2, angle = 20)
+  abline(h = mean(reg_data$y), lwd = 2,col = "grey")
+  abline(lm(y ~ x, data = reg_data), lwd = 2, col = "grey")
+}
+
+plot_unexp_dev <- function(reg_data) {
+  plot(reg_data$x, reg_data$y, main = "SSE (Sum of Squares Error)",
+       xlab = "x", ylab = "y", pch = 20, cex = 3, col = "grey")
+  arrows(reg_data$x, reg_data$y_hat,
+         reg_data$x, reg_data$y,
+         col = 'dodgerblue', lwd = 1, length = 0.2, angle = 20)
+  abline(lm(y ~ x, data = reg_data), lwd = 2, col = "grey")
+}
+
+plot_exp_dev <- function(reg_data) {
+  plot(reg_data$x, reg_data$y, main = "SSReg (Sum of Squares Regression)", 
+  xlab = "x", ylab = "y", pch = 20, cex = 3, col = "grey")
+  arrows(reg_data$x, reg_data$y_bar,
+         reg_data$x, reg_data$y_hat,
+         col = 'darkorange', lwd = 1, length = 0.2, angle = 20)
+  abline(lm(y ~ x, data = reg_data), lwd = 2, col = "grey")
+  abline(h = mean(reg_data$y), col = "grey")
+}
+
+## ---- echo=FALSE, message=FALSE, warning=FALSE--------------------------------
+plot_data <- generate_data(sigma = 2)
+
+## ---- echo=FALSE, message=FALSE, warning=FALSE--------------------------------
+plot_exp_dev(plot_data)
+plot_unexp_dev(plot_data)
+plot_total_dev(plot_data)
+
+## ---- echo=FALSE, message=FALSE, warning=FALSE--------------------------------
+plot_data <- generate_data(sigma = 6)
+
+## ---- echo=FALSE, message=FALSE, warning=FALSE--------------------------------
+plot_exp_dev(plot_data)
+plot_unexp_dev(plot_data)
+plot_total_dev(plot_data)
+
+## -----------------------------------------------------------------------------
+stop_dist_model = lm(dist ~ speed, data = cars)
+
+## -----------------------------------------------------------------------------
+stop_dist_model
+
+## -----------------------------------------------------------------------------
+c(beta_0_hat, beta_1_hat)
+
+## -----------------------------------------------------------------------------
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 3,
+     col  = "dodgerblue")
+abline(stop_dist_model, lwd = 3, col = "darkorange")
+
+## -----------------------------------------------------------------------------
+names(stop_dist_model)
+
+## -----------------------------------------------------------------------------
+stop_dist_model$residuals
+
+## -----------------------------------------------------------------------------
+coef(stop_dist_model)
+resid(stop_dist_model)
+fitted(stop_dist_model)
+
+## -----------------------------------------------------------------------------
+summary(stop_dist_model)
+
+## -----------------------------------------------------------------------------
+names(summary(stop_dist_model))
+
+## -----------------------------------------------------------------------------
+summary(stop_dist_model)$r.squared
+
+## -----------------------------------------------------------------------------
+summary(stop_dist_model)$sigma
+
+## -----------------------------------------------------------------------------
+predict(stop_dist_model, data.frame(speed = 8))
+
+## -----------------------------------------------------------------------------
+predict(stop_dist_model, data.frame(speed = c(8, 21, 50)))
+
+## -----------------------------------------------------------------------------
+predict(stop_dist_model, data.frame(speed = cars$speed))
+
+## -----------------------------------------------------------------------------
+predict(stop_dist_model)
+
+## -----------------------------------------------------------------------------
+fitted(stop_dist_model)
+
+## -----------------------------------------------------------------------------
+n       = 20
+beta_0  = 5
+beta_1  = 2
+sigma   = 1
+
+## -----------------------------------------------------------------------------
+epsilon = rnorm(n, mean = 0, sd = sigma)
+
+## -----------------------------------------------------------------------------
+x = runif(n, 0, 10)
+
+## -----------------------------------------------------------------------------
+y = beta_0 + beta_1 * x + epsilon
+
+## -----------------------------------------------------------------------------
+sim_fit = lm(y ~ x)
+coef(sim_fit)
+
+## -----------------------------------------------------------------------------
+plot(y ~ x)
+abline(sim_fit)
+
+## -----------------------------------------------------------------------------
+sim_slr = function(n, beta_0 = 10, beta_1 = 5, sigma = 1, xmin = 0, xmax = 10) {
+  epsilon = rnorm(n, mean = 0, sd = sigma)
+  x       = runif(n, xmin, xmax)
+  y       = beta_0 + beta_1 * x + epsilon
+  data.frame(predictor = x, response = y)
+}
+
+## -----------------------------------------------------------------------------
+sim_data = sim_slr(n = 20, beta_0 = 5, beta_1 = 2, sigma = 1)
+
+## -----------------------------------------------------------------------------
+head(sim_data)
+
+## -----------------------------------------------------------------------------
+sim_fit = lm(response ~ predictor, data = sim_data)
+coef(sim_fit)
+
+## -----------------------------------------------------------------------------
+plot(response ~ predictor, data = sim_data,
+     xlab = "Simulated Predictor Variable",
+     ylab = "Simulated Response Variable",
+     main = "Simulated Regression Data",
+     pch  = 20,
+     cex  = 2,
+     col  = "dodgerblue")
+abline(sim_fit, lwd = 3, col = "darkorange")
+

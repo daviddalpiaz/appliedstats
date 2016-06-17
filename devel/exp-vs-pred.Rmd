@@ -1,0 +1,29 @@
+
+## Explanation versus Prediction
+
+So far, we have mostly discussed simple linear regression in the context of summarizing the relationship between two variables as a line. We'll now discuss two broader goals of regression analysis in more detail.
+
+### Explanation
+
+Suppose you are employed by a car manufacturer. You are an engineer tasked with designing the brake system of a car. Suppose you have a dataset similar to the one we've used in this chapter that includes stopping distance and speed. From your perspective, you would like to create a model which can *explain* the relationship between stopping distance and speed. If speed increases, what happens to stopping distance? If speed decreases, what happens to stopping distance?
+
+In this chapter, we used simple linear regression for this task. So we modeled this relationship using a straight line, which then explains the relationship between the two variables, up to a point, as there is some left over error. If we think of the model as "Response = Explainable + Unexplainable," what is the source of this unexplainable variation? There are usually two possible sources: missing predictor variables (that are unmeasured) and measurement error.
+
+In the future, we will look at incorporating more than one predictor variable into a model. In this case, suppose we also had additional information about the cars such as: weight, engine displacement, year, model, drivetrain, etc. We could attempt to use this to explain some of the unexplained. We will also learn to determine which predictor variables among a large group of variables are actually useful for explaining the response.
+
+### Prediction
+
+Now, instead of working on making cars, suppose you own a car. How long does it take you to stop when you're driving a certain speed? Your goal here is to simply *predict* your stopping distance based on your current speed. We have seen above how a model can be used to accomplish this task.
+
+If we were using a larger model which took into account additional information such as weight, model, and year, you would not care about their relationship with stopping distance. You are only interested in the stopping distance at a certain speed for a car with the attributes of your car, not how those attributes relate to the response.
+
+#### Correlation and Causation
+
+A word of caution when using a model to *explain* a relationship. There are two terms often used to describe a relationship between two variables: causation and correlation. Correlation is often also referred to as association.
+
+- [Correlation does not imply causation](Correlation does not imply causation)
+- [Correlation](https://xkcd.com/552/)
+
+TODO: car insurance explanation (shifting perspectives, also do this for braking, prediction vs explain) tie cause/corr to exp/pred
+
+- Don't need to make the distinction between corr and cause with pred
