@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Applied Statistics with R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="Applied Statistics with <code>R</code>">
+  <meta name="generator" content="bookdown 0.0.73 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Applied Statistics with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://daviddalpiaz.github.io/appliedstats/" />
+  
+  
+  <meta name="github-repo" content="daviddalpiaz/appliedstats" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Applied Statistics with R" />
+  
+  
+  
+
+<meta name="author" content="David Dalpiaz">
+
+<meta name="date" content="2016-06-17">
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="introduction-to-r.html">
+
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applied Statistics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i><b>1.1</b> About This Book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#conventions"><i class="fa fa-check"></i><b>1.2</b> Conventions</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i><b>1.4</b> License</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>2</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-resources"><i class="fa fa-check"></i><b>2.1</b> <code>R</code> Resources</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-basics"><i class="fa fa-check"></i><b>2.2</b> <code>R</code> Basics</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#basic-calculations"><i class="fa fa-check"></i><b>2.2.1</b> Basic Calculations</a></li>
+<li class="chapter" data-level="2.2.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#getting-help"><i class="fa fa-check"></i><b>2.2.2</b> Getting Help</a></li>
+<li class="chapter" data-level="2.2.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#installing-packages"><i class="fa fa-check"></i><b>2.2.3</b> Installing Packages</a></li>
+<li class="chapter" data-level="2.2.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-types"><i class="fa fa-check"></i><b>2.2.4</b> Data Types</a></li>
+<li class="chapter" data-level="2.2.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#vectors"><i class="fa fa-check"></i><b>2.2.5</b> Vectors</a></li>
+<li class="chapter" data-level="2.2.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#summary-statistics"><i class="fa fa-check"></i><b>2.2.6</b> Summary Statistics</a></li>
+<li class="chapter" data-level="2.2.7" data-path="introduction-to-r.html"><a href="introduction-to-r.html#matrices"><i class="fa fa-check"></i><b>2.2.7</b> Matrices</a></li>
+<li class="chapter" data-level="2.2.8" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-frames"><i class="fa fa-check"></i><b>2.2.8</b> Data Frames</a></li>
+<li class="chapter" data-level="2.2.9" data-path="introduction-to-r.html"><a href="introduction-to-r.html#plotting"><i class="fa fa-check"></i><b>2.2.9</b> Plotting</a></li>
+<li class="chapter" data-level="2.2.10" data-path="introduction-to-r.html"><a href="introduction-to-r.html#distributions"><i class="fa fa-check"></i><b>2.2.10</b> Distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#programming-basics"><i class="fa fa-check"></i><b>2.3</b> Programming Basics</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#logical-operators"><i class="fa fa-check"></i><b>2.3.1</b> Logical Operators</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#control-flow"><i class="fa fa-check"></i><b>2.3.2</b> Control Flow</a></li>
+<li class="chapter" data-level="2.3.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#functions"><i class="fa fa-check"></i><b>2.3.3</b> Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#hypothesis-tests-in-r"><i class="fa fa-check"></i><b>2.4</b> Hypothesis Tests in <code>R</code></a><ul>
+<li class="chapter" data-level="2.4.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#one-sample-t-test-review"><i class="fa fa-check"></i><b>2.4.1</b> One Sample t-Test: Review</a></li>
+<li class="chapter" data-level="2.4.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#one-sample-t-test-example"><i class="fa fa-check"></i><b>2.4.2</b> One Sample t-Test: Example</a></li>
+<li class="chapter" data-level="2.4.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#two-sample-t-test-review"><i class="fa fa-check"></i><b>2.4.3</b> Two Sample t-Test: Review</a></li>
+<li class="chapter" data-level="2.4.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#two-sample-t-test-example"><i class="fa fa-check"></i><b>2.4.4</b> Two Sample t-Test: Example</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#simulation"><i class="fa fa-check"></i><b>2.5</b> Simulation</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#paired-differences"><i class="fa fa-check"></i><b>2.5.1</b> Paired Differences</a></li>
+<li class="chapter" data-level="2.5.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#distribution-of-a-sample-mean"><i class="fa fa-check"></i><b>2.5.2</b> Distribution of a Sample Mean</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html"><i class="fa fa-check"></i><b>3</b> Simple Linear Regression</a><ul>
+<li class="chapter" data-level="3.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#modeling"><i class="fa fa-check"></i><b>3.1</b> Modeling</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#simple-linear-regression-model"><i class="fa fa-check"></i><b>3.1.1</b> Simple Linear Regression Model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#least-squares-approach"><i class="fa fa-check"></i><b>3.2</b> Least Squares Approach</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#making-predictions"><i class="fa fa-check"></i><b>3.2.1</b> Making Predictions</a></li>
+<li class="chapter" data-level="3.2.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#residuals"><i class="fa fa-check"></i><b>3.2.2</b> Residuals</a></li>
+<li class="chapter" data-level="3.2.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#variance-estimation"><i class="fa fa-check"></i><b>3.2.3</b> Variance Estimation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#decomposition-of-variation"><i class="fa fa-check"></i><b>3.3</b> Decomposition of Variation</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#coefficient-of-determination"><i class="fa fa-check"></i><b>3.3.1</b> Coefficient of Determination</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#the-lm-function"><i class="fa fa-check"></i><b>3.4</b> The <code>lm</code> Function</a></li>
+<li class="chapter" data-level="3.5" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#maximum-likelihood-estimation-mle-approach"><i class="fa fa-check"></i><b>3.5</b> Maximum Likelihood Estimation (MLE) Approach</a></li>
+<li class="chapter" data-level="3.6" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#simulating-slr"><i class="fa fa-check"></i><b>3.6</b> Simulating SLR</a></li>
+<li class="chapter" data-level="3.7" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#history"><i class="fa fa-check"></i><b>3.7</b> History</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/daviddalpiaz/appliedstats" target="blank">&copy; 2016 David Dalpiaz</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied Statistics with <code>R</code></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="simple-linear-regression" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Simple Linear Regression</h1>
+<blockquote>
+<p>“All models are wrong, but some are useful.”</p>
+<p>— <strong>George E. P. Box</strong></p>
+</blockquote>
+<p>After reading this chapter you will be able to:</p>
+<ul>
+<li>Understand the concept of a model.</li>
+<li>Describe two ways in which regression coefficients are derived.</li>
+<li>Estimate and visualize a regression model using <code>R</code>.</li>
+<li>Interpret regression coefficients and statistics in the context of real-world problems.</li>
+<li>Use a regression model to make predictions.</li>
+</ul>
+<div id="modeling" class="section level2">
+<h2><span class="header-section-number">3.1</span> Modeling</h2>
+<p>Let’s consider a simple example of how the speed of a car affects its stopping distance, that is, how far it travels before it comes to a stop. To examine this relationship, we will use the <code>cars</code> dataset which, is a default <code>R</code> dataset. Thus, we don’t need to load a package first; it is immediately available.</p>
+<p>To get a first look at the data you can use the <code>View()</code> function inside RStudio.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">View</span>(cars)</code></pre></div>
+<p>We could also take a look at the variable names, the dimension of the data frame, and some sample observations with <code>str()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(cars)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    50 obs. of  2 variables:
+##  $ speed: num  4 4 7 7 8 9 10 10 10 11 ...
+##  $ dist : num  2 10 4 22 16 10 18 26 34 17 ...</code></pre>
+<p>As we have seen before with data frames, there are a number of additional functions to access some of this information directly.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(cars)</code></pre></div>
+<pre><code>## [1] 50  2</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(cars)</code></pre></div>
+<pre><code>## [1] 50</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ncol</span>(cars)</code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<p>Other than the two variable names and the number of observations, this data is still just a bunch of numbers, so we should probably obtain some context.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?cars</code></pre></div>
+<p>Reading the documentation we learn that this is data gathered during the 1920s about the speed of cars and the resulting distance it takes for the car to come to a stop. The interesting task here is to determine how far a car travels before stopping, when traveling at a certain speed. So, we will first plot the stopping distance against the speed.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(dist ~<span class="st"> </span>speed, <span class="dt">data =</span> cars,
+     <span class="dt">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,
+     <span class="dt">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,
+     <span class="dt">pch  =</span> <span class="dv">20</span>,
+     <span class="dt">cex  =</span> <span class="dv">3</span>,
+     <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-136-1.png" width="672" /></p>
+<p>Let’s now define some terminology. We have pairs of data, <span class="math inline">\((x_i, y_i)\)</span>, for <span class="math inline">\(i = 1, 2, \ldots n\)</span>, where <span class="math inline">\(n\)</span> is the sample size of the dataset.</p>
+<p>We use <span class="math inline">\(i\)</span> as an index, simply for notation. We use <span class="math inline">\(x_i\)</span> as the <strong>predictor</strong> (explanatory) variable. The predictor variable is used to help <em>predict</em> or explain the <strong>response</strong> (target, outcome) variable, <span class="math inline">\(y_i\)</span>.</p>
+<p>Other texts may use the term independent variable instead of predictor and dependent variable in place of response. However, those monikers imply mathematical characteristics that might not be true. While these others terms are not incorrect, independence is already a strictly defined concept in probability. For example, when trying to predict a person’s weight given their height, would it be accurate to say that height is independent of weight? Certainly not, but that is an unintended implication of saying “independent variable.” We prefer to stay away from this nomenclature.</p>
+<p>In the <code>cars</code> example, we are interested in using the predictor variable <code>speed</code> to predict and explain the response variable <code>dist</code>.</p>
+<p>Broadly speaking, we would like to model the relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> using the form</p>
+<p><span class="math display">\[
+Y = f(X) + \epsilon.
+\]</span></p>
+<p>The function <span class="math inline">\(f\)</span> describes the functional relationship between the two variables, and the <span class="math inline">\(\epsilon\)</span> term is used to account for error. This indicates that if we plug in a given value of <span class="math inline">\(X\)</span> as input, our output is a value of <span class="math inline">\(Y\)</span>, within a certain range of error. You could think of this a number of ways:</p>
+<ul>
+<li>Response = Prediction + Error</li>
+<li>Response = Signal + Noise</li>
+<li>Response = Model + Unexplained</li>
+<li>Response = Explainable + Unexplainable</li>
+</ul>
+<p>What sort of function should we use for <span class="math inline">\(f(X)\)</span> for the <code>cars</code> data?</p>
+<p>We could try to model the data with a horizontal line. That is, the model for <span class="math inline">\(y\)</span> does not depend on the value of <span class="math inline">\(x\)</span>. (Some function <span class="math inline">\(f(X) = c\)</span>.) In the plot below, we see this doesn’t seem to do a very good job. Many of the data points are very far from the orange line representing <span class="math inline">\(c\)</span>. This is an example of <strong>underfitting</strong>. The obvious fix is to use make the function <span class="math inline">\(f(X)\)</span> actually depend on <span class="math inline">\(x\)</span>.</p>
+<p><img src="applied_statistics_files/figure-html/underfit_plot-1.png" width="672" /></p>
+<p>We could also try to model the data with a very “wiggly” function that tries to go through as many of the data points as possible. This also doesn’t seem to work very well. The stopping distance for a speed of 5 mph shouldn’t be off the chart! (Even in 1920.) This is an example of <strong>overfitting</strong>. (Note that in this example no function will go through every point, since there are some <span class="math inline">\(x\)</span> values that have several possible <span class="math inline">\(y\)</span> values in the data.)</p>
+<p><img src="applied_statistics_files/figure-html/overfit_plot-1.png" width="672" /></p>
+<p>Lastly, we could try to model the data with a well chosen line rather than one of the two extremes previously attempted. The line on the plot below seems to summarize the relationship between stopping distance and speed quite well. As speed increases, the distance required to come to a stop increases. There is still some variation about this line, but it seems to capture the overall trend.</p>
+<p><img src="applied_statistics_files/figure-html/goodfit_plot-1.png" width="672" /></p>
+<p>With this in mind, we would like to restrict our choice of <span class="math inline">\(f(X)\)</span> to <em>linear</em> functions of <span class="math inline">\(X\)</span>. We will write our model using <span class="math inline">\(\beta_1\)</span> for the slope, and <span class="math inline">\(\beta_0\)</span> for the intercept,</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 X + \epsilon.
+\]</span></p>
+<div id="simple-linear-regression-model" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> Simple Linear Regression Model</h3>
+<p>We now define what we will call the simple linear regression model,</p>
+<p><span class="math display">\[
+Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
+\]</span></p>
+<p>where <span class="math inline">\(\epsilon_i \sim N(0, \sigma^2)\)</span>. That is, the <span class="math inline">\(\epsilon_i\)</span> are <em>independent and identically distributed</em> (iid) normal random variables with mean <span class="math inline">\(0\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. This model has three parameters to be estimated: <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>, and <span class="math inline">\(\sigma^2\)</span>, which are fixed, but unknown constants.</p>
+<p>We have slightly modified our notation here. We are now using <span class="math inline">\(Y_i\)</span> and <span class="math inline">\(x_i\)</span>, since we will be fitting this model to a set of <span class="math inline">\(n\)</span> data points, for <span class="math inline">\(i = 1, 2, \ldots n\)</span>.</p>
+<p>Recall that we use capital <span class="math inline">\(Y\)</span> to indicate a random variable, and lower case <span class="math inline">\(y\)</span> to denote a potential value of the random variable. Since we will have <span class="math inline">\(n\)</span> observations, we have <span class="math inline">\(n\)</span> random variables <span class="math inline">\(Y_i\)</span> and their possible values <span class="math inline">\(y_i\)</span>.</p>
+<p>In the simple linear regression model, the <span class="math inline">\(x_i\)</span> are assumed to be fixed, known constants, and are thus notated with a lower case variable. The response <span class="math inline">\(Y_i\)</span> remains a random variable because of the random behavior of the error variable, <span class="math inline">\(\epsilon_i\)</span>. That is, each response <span class="math inline">\(Y_i\)</span> is tied to an observable <span class="math inline">\(x_i\)</span> and a random, unobservable, <span class="math inline">\(\epsilon_i\)</span>.</p>
+<p>The random <span class="math inline">\(Y_i\)</span> are a function of <span class="math inline">\(x_i\)</span>, thus we can write its mean as a function of <span class="math inline">\(x_i\)</span>,</p>
+<p><span class="math display">\[
+E[Y_i] = \beta_0 + \beta_1 x_i.
+\]</span></p>
+<p>However, its variance remains constant for each <span class="math inline">\(x_i\)</span>,</p>
+<p><span class="math display">\[
+Var[Y_i] = \sigma^2.
+\]</span></p>
+<p>This is visually displayed in the image below. We see that for any value <span class="math inline">\(x\)</span>, the expected value of <span class="math inline">\(Y\)</span> is <span class="math inline">\(\beta_0 + \beta_1 x\)</span>. At each value of <span class="math inline">\(x\)</span>, <span class="math inline">\(Y\)</span> has the same variance <span class="math inline">\(\sigma^2\)</span>.</p>
+<div class="figure">
+<img src="images/model.jpg" alt="Simple Linear Regression Model UC David Stat Wiki" />
+<p class="caption">Simple Linear Regression Model <a href="http://statwiki.ucdavis.edu/Textbook_Maps/General_Statistics/Map%3A_Introductory_Statistics_(Shafer_and_Zhang)/10%3A_Correlation_and_Regression/10.3_Modelling_Linear_Relationships_with_Randomness_Present">UC David Stat Wiki</a></p>
+</div>
+<p>Often, we directly talk about the assumptions that this model makes. They can be cleverly shortened to <strong>LINE</strong>.</p>
+<ul>
+<li><strong>L</strong>inear. The relationship between <span class="math inline">\(Y\)</span> and <span class="math inline">\(x\)</span> is linear, of the form <span class="math inline">\(\beta_0 + \beta_1 x\)</span>.</li>
+<li><strong>I</strong>ndepedent. The errors <span class="math inline">\(\epsilon\)</span> are independent.</li>
+<li><strong>N</strong>ormal. The errors, <span class="math inline">\(\epsilon\)</span> are normally distributed. That is the “error” around the line follows a normal distribution.</li>
+<li><strong>E</strong>qual Variance. At each value of <span class="math inline">\(x\)</span>, the variance of <span class="math inline">\(Y\)</span> is the same, <span class="math inline">\(\sigma^2\)</span>.</li>
+</ul>
+<p>As a side note, we will often refer to simple linear regression as <strong>SLR</strong>. Some explanation of the name SLR:</p>
+<ul>
+<li><strong>Simple</strong> refers to the fact that we are using a single predictor variable. Later we will use multiple predictor variables.</li>
+<li><strong>Linear</strong> tells us that our model for <span class="math inline">\(Y\)</span> is a linear combination of the predictors <span class="math inline">\(X\)</span>. (In this case just the one.) Right now, this always results in a model that is a line, but later we will see how this is not always the case.</li>
+<li><strong>Regression</strong> simply means that we are attempting to measure the relationship between a response variable and (one or more) predictor variables.</li>
+</ul>
+<p>So SLR models <span class="math inline">\(Y\)</span> as a linear function of <span class="math inline">\(X\)</span>, but how do we actually define a good line? There are an infinite number of lines we could use, so we will attempt to find one with “small errors.” That is a line with as many points as close to it as possible. The questions now becomes, how do we find such a line? There are many approaches we could take.</p>
+<p>We could find the line that has the smallest maximum distance from any of the points to the line. That is,</p>
+<p><span class="math display">\[
+\underset{\beta_0, \beta_1}{\mathrm{argmin}} \max|y_i - (\beta_0 + \beta_1 x_i)|.
+\]</span></p>
+<p>We could find the line that minimizes the sum of all the distances from the points to the line. That is,</p>
+<p><span class="math display">\[
+\underset{\beta_0, \beta_1}{\mathrm{argmin}} \sum_{i = 1}^{n}|y_i - (\beta_0 + \beta_1 x_i)|.
+\]</span></p>
+<p>We could find the line that minimizes the sum of all the squared distances from the points to the line. That is,</p>
+<p><span class="math display">\[
+\underset{\beta_0, \beta_1}{\mathrm{argmin}} \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2.
+\]</span></p>
+<p>This last option is called the method of <strong>least squares</strong>. It is essentially the de-facto method for fitting a line to data. (You may have even seen it before in a linear algebra course.) Its popularity is largely due to the fact that it is mathematically “easy.” (Which was important historically, as computers are a modern contraption.) It is also very popular because many relationships are well approximated by a linear function.</p>
+</div>
+</div>
+<div id="least-squares-approach" class="section level2">
+<h2><span class="header-section-number">3.2</span> Least Squares Approach</h2>
+<p>Given observations <span class="math inline">\((x_i, y_i)\)</span>, for <span class="math inline">\(i = 1, 2, \ldots n\)</span>, we want to find values of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> which minimize</p>
+<p><span class="math display">\[
+f(\beta_0, \beta_1) = \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2 = \sum_{i = 1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2.
+\]</span></p>
+<p>We will call these values <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>.</p>
+<p>First, we take a partial derivative with respect to both <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{\partial f}{\partial \beta_0} &amp;= -2 \sum_{i = 1}^{n}(y_i - \beta_0 - \beta_1 x_i) \\
+\frac{\partial f}{\partial \beta_1} &amp;= -2 \sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i)
+\end{aligned}
+\]</span></p>
+<p>We then set each of the partial derivatives equal to zero and solving the resulting system of equations.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sum_{i = 1}^{n}(y_i - \beta_0 - \beta_1 x_i) &amp;= 0 \\
+\sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i) &amp;= 0 
+\end{aligned}
+\]</span></p>
+<p>While solving the system of equations, one common algebraic rearrangement results in the <strong>normal equations</strong>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sum_{i = 1}^{n} y_i &amp;= n \beta_0 + \beta_1 \sum_{i = 1}^{n} x_i \\
+\sum_{i = 1}^{n} x_i y_i &amp;= \beta_0 \sum_{i = 1}^{n} x_i + \beta_1 \sum_{i = 1}^{n} x_i^2
+\end{aligned}
+\]</span></p>
+<p>Finally, we finish solving the system of equations.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\beta}_1 &amp;= \frac{\sum_{i = 1}^{n} x_i y_i - \frac{(\sum_{i = 1}^{n} x_i)(\sum_{i = 1}^{n} y_i)}{n}}{\sum_{i = 1}^{n} x_i^2 - \frac{(\sum_{i = 1}^{n} x_i)^2}{n}} = \frac{S_{xy}}{S_{xx}}\\
+\hat{\beta}_0 &amp;= \bar{y} - \hat{\beta}_1 \bar{x}
+\end{aligned}
+\]</span></p>
+<p>Here, we have defined some notation for the expression we’ve obtained. Note that they have alternative forms which are much easier to work with. (We won’t do it here, but you can try to prove the equalities below on your own, for “fun.”) We use the capital letter <span class="math inline">\(S\)</span> to denote “summation” which replaces the capital letter <span class="math inline">\(\Sigma\)</span> when we calculate these values based on observed data, <span class="math inline">\((x_i ,y_i)\)</span>. The subscripts such as <span class="math inline">\(xy\)</span> denote over which variables the function <span class="math inline">\((z - \bar{z})\)</span> is applied.</p>
+<p><span class="math display">\[
+\begin{aligned}
+S_{xy} &amp;= \sum_{i = 1}^{n} x_i y_i - \frac{(\sum_{i = 1}^{n} x_i)(\sum_{i = 1}^{n} y_i)}{n}  = \sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y})\\
+S_{xx} &amp;= \sum_{i = 1}^{n} x_i^2 - \frac{(\sum_{i = 1}^{n} x_i)^2}{n}  = \sum_{i = 1}^{n}(x_i - \bar{x})^2\\
+S_{yy} &amp;= \sum_{i = 1}^{n} y_i^2 - \frac{(\sum_{i = 1}^{n} y_i)^2}{n}  = \sum_{i = 1}^{n}(y_i - \bar{y})^2
+\end{aligned}
+\]</span></p>
+<p>Note that these summations <span class="math inline">\(S\)</span> are not to be confused with sample standard deviation <span class="math inline">\(s\)</span>.</p>
+<p>By using the above alternative expressions for <span class="math inline">\(S_{xy}\)</span> and <span class="math inline">\(S_{xx}\)</span>, we arrive at a cleaner, more useful expression for <span class="math inline">\(\hat{\beta}_1\)</span>.</p>
+<p><span class="math display">\[
+\hat{\beta}_1 = \frac{S_{xy}}{S_{xx}} = \frac{\sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i = 1}^{n}(x_i - \bar{x})^2}
+\]</span></p>
+<p>Traditionally we would now calculate <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> by hand for the <code>cars</code> dataset. However because we are living in the 21st century and are intelligent (or lazy or efficient, depending on your perspective), we will utilize <code>R</code> to do the number crunching for us.</p>
+<p>To keep some notation consistent with above mathematics, we will store the response variable as <code>y</code> and the predictor variable as <code>x</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span>cars$speed
+y =<span class="st"> </span>cars$dist</code></pre></div>
+<p>We then calculate the three sums of squares defined above.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">Sxy =<span class="st"> </span><span class="kw">sum</span>((x -<span class="st"> </span><span class="kw">mean</span>(x)) *<span class="st"> </span>(y -<span class="st"> </span><span class="kw">mean</span>(y)))
+Sxx =<span class="st"> </span><span class="kw">sum</span>((x -<span class="st"> </span><span class="kw">mean</span>(x)) ^<span class="st"> </span><span class="dv">2</span>)
+Syy =<span class="st"> </span><span class="kw">sum</span>((y -<span class="st"> </span><span class="kw">mean</span>(y)) ^<span class="st"> </span><span class="dv">2</span>)
+<span class="kw">c</span>(Sxy, Sxx, Syy)</code></pre></div>
+<pre><code>## [1]  5387.40  1370.00 32538.98</code></pre>
+<p>Then finally calculate <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beta_1_hat =<span class="st"> </span>Sxy /<span class="st"> </span>Sxx
+beta_0_hat =<span class="st"> </span><span class="kw">mean</span>(y) -<span class="st"> </span>beta_1_hat *<span class="st"> </span><span class="kw">mean</span>(x)
+<span class="kw">c</span>(beta_0_hat, beta_1_hat)</code></pre></div>
+<pre><code>## [1] -17.579095   3.932409</code></pre>
+<p>What do these values tell us about our dataset?</p>
+<p>The slope <em>parameter</em> <span class="math inline">\(\beta_1\)</span> tells us that for an increase in speed of one mile per hour, the <strong>mean</strong> stopping distance increases by <span class="math inline">\(\beta_1\)</span>. It is important to specify that we are talking about the mean. Recall that <span class="math inline">\(\beta_0 + \beta_1 x\)</span> is the estimated mean of <span class="math inline">\(Y\)</span>, in this case stopping distance, for a particular value of <span class="math inline">\(x\)</span>. (In this case speed.) So <span class="math inline">\(\beta_1\)</span> tells us how the mean of <span class="math inline">\(Y\)</span> is affected by a change in <span class="math inline">\(x\)</span>.</p>
+<p>Similarly, the <em>estimate</em> <span class="math inline">\(\hat{\beta}_1 = 3.932\)</span> tells us that for an increase in speed of one mile per hour, the <strong>estimated</strong> <em>mean</em> stopping distance increases by <span class="math inline">\(3.932\)</span> feet. Here we should be sure to specify we are discussing an estimated quantity. Recall that <span class="math inline">\(\hat{y}\)</span> is the estimated mean of <span class="math inline">\(Y\)</span>, so <span class="math inline">\(\hat{\beta}_1\)</span> tells us how the estimated mean of <span class="math inline">\(Y\)</span> is affected by changing <span class="math inline">\(x\)</span>.</p>
+<p>The intercept <em>parameter</em> <span class="math inline">\(\beta_0\)</span> tells us the <strong>mean</strong> stopping distance for a car traveling zero miles per hour. (Not moving.) The <em>estimate</em> <span class="math inline">\(\hat{\beta}_0 = -17.579\)</span> tells us that the <strong>estimated</strong> mean stopping distance for a car traveling zero miles per hour is <span class="math inline">\(-17.579\)</span> feet. So when you apply the brakes to a car that is not moving, it moves backwards? This doesn’t seem right. (Extrapolation, which we will see later, is the issue here.)</p>
+<div id="making-predictions" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> Making Predictions</h3>
+<p>We can now write the <strong>fitted</strong> or estimated line,</p>
+<p><span class="math display">\[
+\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x.
+\]</span></p>
+<p>In this case,</p>
+<p><span class="math display">\[
+\hat{y} = -17.579 + 3.932 x.
+\]</span></p>
+<p>We can now use this line to make predictions. First, let’s see the possible <span class="math inline">\(x\)</span> values in the <code>cars</code> dataset. Since some <span class="math inline">\(x\)</span> values may appear more than once, we use the <code>unique()</code> to return each unique value only once.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unique</span>(cars$speed)</code></pre></div>
+<pre><code>##  [1]  4  7  8  9 10 11 12 13 14 15 16 17 18 19 20 22 23 24 25</code></pre>
+<p>Let’s make a prediction for the stopping distance of a car traveling at 8 miles per hour.</p>
+<p><span class="math display">\[
+\hat{y} = -17.579 + 3.932 \times 8 = 13.88
+\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beta_0_hat +<span class="st"> </span>beta_1_hat *<span class="st"> </span><span class="dv">8</span></code></pre></div>
+<pre><code>## [1] 13.88018</code></pre>
+<p>This tells us that the estimated mean stopping distance of a car traveling at 8 miles per hour is 13.88.</p>
+<p>Now let’s make a prediction for the stopping distance of a car traveling at 21 miles per hour. This is considered <strong>interpolation</strong> as 21 is not an observed value of <span class="math inline">\(x\)</span>. (But is in the data range.) We can use the special <code>%in%</code> operator to quickly verify this in <code>R</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">8</span> %in%<span class="st"> </span><span class="kw">unique</span>(cars$speed)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">21</span> %in%<span class="st"> </span><span class="kw">unique</span>(cars$speed)</code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">min</span>(cars$speed) &lt;<span class="st"> </span><span class="dv">21</span> &amp;<span class="st"> </span><span class="dv">21</span> &lt;<span class="st"> </span><span class="kw">max</span>(cars$speed)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p><span class="math display">\[
+\hat{y} = -17.579 + 3.932 \times 21 = 65.001
+\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beta_0_hat +<span class="st"> </span>beta_1_hat *<span class="st"> </span><span class="dv">21</span></code></pre></div>
+<pre><code>## [1] 65.00149</code></pre>
+<p>Lastly, we can make a prediction for the stopping distance of a car traveling at 50 miles per hour. This is considered <a href="https://xkcd.com/605/"><strong>extrapolation</strong></a> as 50 is not an observed value of <span class="math inline">\(x\)</span> and is outside data range. We should be less confident in predictions of this type.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">range</span>(cars$speed)</code></pre></div>
+<pre><code>## [1]  4 25</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">range</span>(cars$speed)[<span class="dv">1</span>] &lt;<span class="st"> </span><span class="dv">50</span> &amp;<span class="st"> </span><span class="dv">50</span> &lt;<span class="st"> </span><span class="kw">range</span>(cars$speed)[<span class="dv">2</span>] </code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p><span class="math display">\[
+\hat{y} = -17.579 + 3.932 \times 50 = 179.041
+\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beta_0_hat +<span class="st"> </span>beta_1_hat *<span class="st"> </span><span class="dv">50</span></code></pre></div>
+<pre><code>## [1] 179.0413</code></pre>
+<p>Cars travel 50 miles per hour rather easily today, but not in the 1920s!</p>
+<p>This is also an issue we saw when interpreting <span class="math inline">\(\hat{\beta}_0 = -17.579\)</span>, which is equivalent to making a prediction at <span class="math inline">\(x = 0\)</span>. We should not be confident in the estimated linear relationship outside of the range of data we have observed.</p>
+</div>
+<div id="residuals" class="section level3">
+<h3><span class="header-section-number">3.2.2</span> Residuals</h3>
+<p>If we think of our model as “Response = Prediction + Error,” we can then write it as</p>
+<p><span class="math display">\[
+y = \hat{y} + e.
+\]</span></p>
+<p>We then define a <strong>residual</strong> to be the observed value minus the predicted value.</p>
+<p><span class="math display">\[
+e_i = y_i - \hat{y}_i
+\]</span></p>
+<p>Let’s calculate the residual for the prediction we made for a car traveling 8 miles per hour. First, we need to obtain the observed value of <span class="math inline">\(y\)</span> for this <span class="math inline">\(x\)</span> value.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">which</span>(cars$speed ==<span class="st"> </span><span class="dv">8</span>)</code></pre></div>
+<pre><code>## [1] 5</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cars[<span class="dv">5</span>, ]</code></pre></div>
+<pre><code>##   speed dist
+## 5     8   16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cars[<span class="kw">which</span>(cars$speed ==<span class="st"> </span><span class="dv">8</span>), ]</code></pre></div>
+<pre><code>##   speed dist
+## 5     8   16</code></pre>
+<p>We can then calculate the residual.</p>
+<p><span class="math display">\[
+e = 16 - 13.88 = 2.12
+\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">16</span> -<span class="st"> </span>(beta_0_hat +<span class="st"> </span>beta_1_hat *<span class="st"> </span><span class="dv">8</span>)</code></pre></div>
+<pre><code>## [1] 2.119825</code></pre>
+<p>The positive residual value indicates that the observed stopping distance is actually 2.12 feet more than what was predicted.</p>
+</div>
+<div id="variance-estimation" class="section level3">
+<h3><span class="header-section-number">3.2.3</span> Variance Estimation</h3>
+<p>We’ll now use the residuals for each of the points to create an estimate for the variance, <span class="math inline">\(\sigma^2\)</span>.</p>
+<p>Recall that,</p>
+<p><span class="math display">\[
+E[Y_i] = \beta_0 + \beta_1 x_i.
+\]</span></p>
+<p>So,</p>
+<p><span class="math display">\[
+\hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_i
+\]</span></p>
+<p>is a natural estimate for the mean of <span class="math inline">\(Y_i\)</span> for a given value of <span class="math inline">\(x_i\)</span>.</p>
+<p>Also, recall that when we specified the model, we had three unknown parameters; <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>, and <span class="math inline">\(\sigma^2\)</span>. The method of least squares gave us estimates for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, however, we have yet to see an estimate for <span class="math inline">\(\sigma^2\)</span>. We will now define <span class="math inline">\(s_e^2\)</span> which will be an estimate for <span class="math inline">\(\sigma^2\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+s_e^2 &amp;= \frac{1}{n - 2} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2 \\
+      &amp;= \frac{1}{n - 2} \sum_{i = 1}^{n} e_i^2
+\end{aligned}
+\]</span></p>
+<p>This probably seems like a natural estimate, aside from the use of <span class="math inline">\(n - 2\)</span>, which we will put off explaining until the next chapter. It should actually look rather similar to something we have seen before.</p>
+<p><span class="math display">\[
+s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x_i - \bar{x})^2
+\]</span></p>
+<p>Here, <span class="math inline">\(s^2\)</span> is the estimate of <span class="math inline">\(\sigma^2\)</span> when we have a single random variable <span class="math inline">\(X\)</span>. In this case <span class="math inline">\(\bar{x}\)</span> is an estimate of <span class="math inline">\(\mu\)</span> which is assumed to be the same for each <span class="math inline">\(x\)</span>.</p>
+<p>Now, in the regression case, with <span class="math inline">\(s_e^2\)</span> each <span class="math inline">\(y\)</span> has a different mean because of the relationship with <span class="math inline">\(x\)</span>. Thus, for each <span class="math inline">\(y_i\)</span>, we use a different estimate of the mean, that is <span class="math inline">\(\hat{y}_i\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y_hat =<span class="st"> </span>beta_0_hat +<span class="st"> </span>beta_1_hat *<span class="st"> </span>x
+e     =<span class="st"> </span>y -<span class="st"> </span>y_hat
+n     =<span class="st"> </span><span class="kw">length</span>(e)
+s2_e  =<span class="st"> </span><span class="kw">sum</span>(e^<span class="dv">2</span>) /<span class="st"> </span>(n -<span class="st"> </span><span class="dv">2</span>)
+s2_e</code></pre></div>
+<pre><code>## [1] 236.5317</code></pre>
+<p>Just as with the univariate measure of variance, this value of 236.532 doesn’t have a practical interpretation in terms of stopping distance. Taking the square root, however, computes the standard deviation of the residuals, also known as <em>residual standard error</em>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s_e =<span class="st"> </span><span class="kw">sqrt</span>(s2_e)
+s_e</code></pre></div>
+<pre><code>## [1] 15.37959</code></pre>
+<p>This tells us that our estimates of mean stopping distance are “typically” off by 15.38 feet.</p>
+</div>
+</div>
+<div id="decomposition-of-variation" class="section level2">
+<h2><span class="header-section-number">3.3</span> Decomposition of Variation</h2>
+<p>We can re-express <span class="math inline">\(y_i - \bar{y}\)</span>, which measures the deviation of an observation from the sample mean, in the following way,</p>
+<p><span class="math display">\[
+y_i - \bar{y} = (y_i - \hat{y}_i) + (\hat{y}_i - \bar{y}).
+\]</span></p>
+<p>This is the common mathematical trick of “adding zero.” In this case we both added and subtracted <span class="math inline">\(\hat{y}_i\)</span>.</p>
+<p>Here, <span class="math inline">\(y_i - \hat{y}_i\)</span> measures the deviation of an observation from the fitted regression line and <span class="math inline">\(\hat{y}_i - \bar{y}\)</span> measures the deviation of the fitted regression line from the sample mean.</p>
+<p>If we square then sum both sides of the equation above, we can obtain the following,</p>
+<p><span class="math display">\[
+\sum_{i=1}^{n}(y_i - \bar{y})^2 = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2.
+\]</span></p>
+<p>This should be somewhat alarming or amazing. How is this true? For now we will leave this questions unanswered. (Think about this, and maybe try to prove it.) We will now define three of the quantities seen in this equation.</p>
+<div id="sum-of-squares-total" class="section level4">
+<h4><span class="header-section-number">3.3.0.1</span> Sum of Squares Total</h4>
+<p><span class="math display">\[
+SST = \sum_{i=1}^{n}(y_i - \bar{y})^2
+\]</span></p>
+<p>The quantity “Sum of Squares Total,” or <span class="math inline">\(SST\)</span>, represents the <strong>total variation</strong> of the observed <span class="math inline">\(y\)</span> values. This should be a familiar looking expression. Note that,</p>
+<p><span class="math display">\[
+s ^ 2 = \frac{1}{n - 1}\sum_{i=1}^{n}(y_i - \bar{y})^2 = \frac{1}{n - 1} SST.
+\]</span></p>
+</div>
+<div id="sum-of-squares-regression" class="section level4">
+<h4><span class="header-section-number">3.3.0.2</span> Sum of Squares Regression</h4>
+<p><span class="math display">\[
+SSReg = \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2
+\]</span></p>
+<p>The quantity “Sum of Squares Regression,” <span class="math inline">\(SSReg\)</span>, represents the <strong>explained variation</strong> of the observed <span class="math inline">\(y\)</span> values.</p>
+</div>
+<div id="sum-of-squares-error" class="section level4">
+<h4><span class="header-section-number">3.3.0.3</span> Sum of Squares Error</h4>
+<p><span class="math display">\[
+SSE = RSS = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2
+\]</span></p>
+<p>The quantity “Sum of Squares Error,” <span class="math inline">\(SSE\)</span>, represents the <strong>unexplained variation</strong> of the observed <span class="math inline">\(y\)</span> values. You will often see <span class="math inline">\(SSE\)</span> written as <span class="math inline">\(RSS\)</span>, or “Residual Sum of Squares.”</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SST   =<span class="st"> </span><span class="kw">sum</span>((y -<span class="st"> </span><span class="kw">mean</span>(y)) ^<span class="st"> </span><span class="dv">2</span>)
+SSReg =<span class="st"> </span><span class="kw">sum</span>((y_hat -<span class="st"> </span><span class="kw">mean</span>(y)) ^<span class="st"> </span><span class="dv">2</span>)
+SSE   =<span class="st"> </span><span class="kw">sum</span>((y -<span class="st"> </span>y_hat) ^<span class="st"> </span><span class="dv">2</span>)
+<span class="kw">c</span>(<span class="dt">SST =</span> SST, <span class="dt">SSReg =</span> SSReg, <span class="dt">SSE =</span> SSE)</code></pre></div>
+<pre><code>##      SST    SSReg      SSE 
+## 32538.98 21185.46 11353.52</code></pre>
+<p>Note that,</p>
+<p><span class="math display">\[
+s_e^2 = \frac{SSE}{n - 2}.
+\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SSE /<span class="st"> </span>(n -<span class="st"> </span><span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] 236.5317</code></pre>
+<p>We can use <code>R</code> to verify that this matches our previous calculation of <span class="math inline">\(s_e^2\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s2_e ==<span class="st"> </span>SSE /<span class="st"> </span>(n -<span class="st"> </span><span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>These three measures also do not have an important practical interpretation individually. But together, they’re about to reveal a new statistic to help measure the strength of a SLR model.</p>
+</div>
+<div id="coefficient-of-determination" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> Coefficient of Determination</h3>
+<p>The <strong>coefficient of determination</strong>, <span class="math inline">\(R^2\)</span>, is defined as</p>
+<p><span class="math display">\[
+R^2 = \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} =
+\frac{SSReg}{SST} = 
+1 - \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} = 
+1 - \frac{\sum_{i = 1}^{n}e_i^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} = 1 - \frac{SSE}{SST}
+\]</span></p>
+<p>The coefficient of determination is interpreted as the proportion of observed variation in <span class="math inline">\(y\)</span> that can be explained by the simple linear regression model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">R2 =<span class="st"> </span>SSReg /<span class="st"> </span>SST
+R2</code></pre></div>
+<pre><code>## [1] 0.6510794</code></pre>
+<p>For the <code>cars</code> example, we calculate <span class="math inline">\(R^2 = 0.651\)</span>. We then say that <span class="math inline">\(65.1\%\)</span> of the observed variability in stopping distance is explained by the linear relationship with speed.</p>
+<p>The following three plots visually demonstrate the three “sums of squares” for a simulated dataset which has <span class="math inline">\(R^2 = 0.901\)</span> which is a somewhat high value. Notice in the third plot, that the orange arrows account for a larger proportion of the total arrow.</p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-157-1.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-157-2.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-157-3.png" width="672" /></p>
+<p>The next three plots again visually demonstrate the three “sums of squares,” this time for a simulated dataset which has <span class="math inline">\(R^2 = 0.459\)</span>. Notice in the third plot, that now the blue arrows account for a larger proportion of the total arrow.</p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-159-1.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-159-2.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-159-3.png" width="672" /></p>
+</div>
+</div>
+<div id="the-lm-function" class="section level2">
+<h2><span class="header-section-number">3.4</span> The <code>lm</code> Function</h2>
+<p>So far we have done regression by deriving the least squares estimates, then writing simple <code>R</code> commands to perform the necessary calculations. Since this is such a common task, this is functionality that is built directly into <code>R</code> via the <code>lm()</code> command.</p>
+<p>The <code>lm()</code> command is used to fit <strong>linear models</strong> which actually account for a broader class of models than simple linear regression, but we will use SLR as our first demonstration of <code>lm()</code>. The <code>lm()</code> function will be one of our most commonly used tools, so you may want to take a look at the documentation by using <code>?lm</code>. You’ll notice there is a lot of information there, but we will start with just the very basics. This is documentation you will want to return to often.</p>
+<p>We’ll continue using the <code>cars</code> data, and essentially use the <code>lm()</code> function to check the work we had previously done.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stop_dist_model =<span class="st"> </span><span class="kw">lm</span>(dist ~<span class="st"> </span>speed, <span class="dt">data =</span> cars)</code></pre></div>
+<p>This line of code fits our very first linear model. The syntax should look somewhat familiar. We use the <code>dist ~ speed</code> syntax to tell <code>R</code> we would like to model the response variable <code>dist</code> as a linear function of the predictor variable <code>speed</code>. In general, you should think of the syntax as <code>response ~ predictor</code>. The <code>data = cars</code> argument then tells <code>R</code> that that <code>dist</code> and <code>speed</code> variables are from the dataset <code>cars</code>. We then store this result in a variable <code>stop_dist_model</code>.</p>
+<p>The variable <code>stop_dist_model</code> now contains a wealth of information, and we will now see how to extract and use that information. The first thing we will do is simply output whatever is stored immediately in the variable <code>stop_dist_model</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stop_dist_model</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = dist ~ speed, data = cars)
+## 
+## Coefficients:
+## (Intercept)        speed  
+##     -17.579        3.932</code></pre>
+<p>We see that it first tells us the formula we input into <code>R</code>, that is <code>lm(formula = dist ~ speed, data = cars)</code>. We also see the coefficients of the model. We can check that these are what we had calculated previously. (Minus some rounding that <code>R</code> is doing to display the results.)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(beta_0_hat, beta_1_hat)</code></pre></div>
+<pre><code>## [1] -17.579095   3.932409</code></pre>
+<p>Next, it would be nice to add the fitted line to the scatterplot. To do so we will use the <code>abline()</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(dist ~<span class="st"> </span>speed, <span class="dt">data =</span> cars,
+     <span class="dt">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,
+     <span class="dt">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,
+     <span class="dt">pch  =</span> <span class="dv">20</span>,
+     <span class="dt">cex  =</span> <span class="dv">3</span>,
+     <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)
+<span class="kw">abline</span>(stop_dist_model, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-163-1.png" width="672" /></p>
+<p>The <code>abline()</code> function is used to add lines of the form <span class="math inline">\(a + bx\)</span> to a plot. (Hence <strong><code>ab</code></strong><code>line</code>.) When we give it <code>stop_dist_model</code> as an argument, it automatically extracts the regression coefficient estimates (<span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>) and uses them as the slope and intercept of the line. Here we also use <code>lwd</code> to modify the width of the line, as well as <code>col</code> to modify the color of the line.</p>
+<p>The “thing” that is returned by the <code>lm()</code> function is actually an object of class <code>lm</code> which is a list. The exact details of this are unimportant unless you are seriously interested in the inner-workings of <code>R</code>, but know that we can determine the names of the elements of the list using the <code>names()</code> command.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(stop_dist_model)</code></pre></div>
+<pre><code>##  [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;       &quot;rank&quot;         
+##  [5] &quot;fitted.values&quot; &quot;assign&quot;        &quot;qr&quot;            &quot;df.residual&quot;  
+##  [9] &quot;xlevels&quot;       &quot;call&quot;          &quot;terms&quot;         &quot;model&quot;</code></pre>
+<p>When can then use this information to, for example, access the residuals using the <code>$</code> operator.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stop_dist_model$residuals</code></pre></div>
+<pre><code>##          1          2          3          4          5          6          7 
+##   3.849460  11.849460  -5.947766  12.052234   2.119825  -7.812584  -3.744993 
+##          8          9         10         11         12         13         14 
+##   4.255007  12.255007  -8.677401   2.322599 -15.609810  -9.609810  -5.609810 
+##         15         16         17         18         19         20         21 
+##  -1.609810  -7.542219   0.457781   0.457781  12.457781 -11.474628  -1.474628 
+##         22         23         24         25         26         27         28 
+##  22.525372  42.525372 -21.407036 -15.407036  12.592964 -13.339445  -5.339445 
+##         29         30         31         32         33         34         35 
+## -17.271854  -9.271854   0.728146 -11.204263   2.795737  22.795737  30.795737 
+##         36         37         38         39         40         41         42 
+## -21.136672 -11.136672  10.863328 -29.069080 -13.069080  -9.069080  -5.069080 
+##         43         44         45         46         47         48         49 
+##   2.930920  -2.933898 -18.866307  -6.798715  15.201285  16.201285  43.201285 
+##         50 
+##   4.268876</code></pre>
+<p>Another way to access stored information in <code>stop_dist_model</code> are the <code>coef()</code>, <code>resid()</code>, and <code>fitted()</code> functions. These return the coefficients, residuals, and fitted values, respectively.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(stop_dist_model)</code></pre></div>
+<pre><code>## (Intercept)       speed 
+##  -17.579095    3.932409</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">resid</span>(stop_dist_model)</code></pre></div>
+<pre><code>##          1          2          3          4          5          6          7 
+##   3.849460  11.849460  -5.947766  12.052234   2.119825  -7.812584  -3.744993 
+##          8          9         10         11         12         13         14 
+##   4.255007  12.255007  -8.677401   2.322599 -15.609810  -9.609810  -5.609810 
+##         15         16         17         18         19         20         21 
+##  -1.609810  -7.542219   0.457781   0.457781  12.457781 -11.474628  -1.474628 
+##         22         23         24         25         26         27         28 
+##  22.525372  42.525372 -21.407036 -15.407036  12.592964 -13.339445  -5.339445 
+##         29         30         31         32         33         34         35 
+## -17.271854  -9.271854   0.728146 -11.204263   2.795737  22.795737  30.795737 
+##         36         37         38         39         40         41         42 
+## -21.136672 -11.136672  10.863328 -29.069080 -13.069080  -9.069080  -5.069080 
+##         43         44         45         46         47         48         49 
+##   2.930920  -2.933898 -18.866307  -6.798715  15.201285  16.201285  43.201285 
+##         50 
+##   4.268876</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fitted</span>(stop_dist_model)</code></pre></div>
+<pre><code>##         1         2         3         4         5         6         7         8 
+## -1.849460 -1.849460  9.947766  9.947766 13.880175 17.812584 21.744993 21.744993 
+##         9        10        11        12        13        14        15        16 
+## 21.744993 25.677401 25.677401 29.609810 29.609810 29.609810 29.609810 33.542219 
+##        17        18        19        20        21        22        23        24 
+## 33.542219 33.542219 33.542219 37.474628 37.474628 37.474628 37.474628 41.407036 
+##        25        26        27        28        29        30        31        32 
+## 41.407036 41.407036 45.339445 45.339445 49.271854 49.271854 49.271854 53.204263 
+##        33        34        35        36        37        38        39        40 
+## 53.204263 53.204263 53.204263 57.136672 57.136672 57.136672 61.069080 61.069080 
+##        41        42        43        44        45        46        47        48 
+## 61.069080 61.069080 61.069080 68.933898 72.866307 76.798715 76.798715 76.798715 
+##        49        50 
+## 76.798715 80.731124</code></pre>
+<p>An <code>R</code> function that is useful in many situations is <code>summary()</code>. We see that when it is called on our model, it returns a good deal of information. By the end of the course, you will know what every value here is used for. For now, you should immediately notice the coefficient estimates, and you may recognize the <span class="math inline">\(R^2\)</span> value we saw earlier.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(stop_dist_model)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = dist ~ speed, data = cars)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -29.069  -9.525  -2.272   9.215  43.201 
+## 
+## Coefficients:
+##             Estimate Std. Error t value         Pr(&gt;|t|)    
+## (Intercept) -17.5791     6.7584  -2.601           0.0123 *  
+## speed         3.9324     0.4155   9.464 0.00000000000149 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 15.38 on 48 degrees of freedom
+## Multiple R-squared:  0.6511, Adjusted R-squared:  0.6438 
+## F-statistic: 89.57 on 1 and 48 DF,  p-value: 0.00000000000149</code></pre>
+<p>The <code>summary()</code> command also returns a list, and we can again use <code>names()</code> to learn what about the elements of this list.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(<span class="kw">summary</span>(stop_dist_model))</code></pre></div>
+<pre><code>##  [1] &quot;call&quot;          &quot;terms&quot;         &quot;residuals&quot;     &quot;coefficients&quot; 
+##  [5] &quot;aliased&quot;       &quot;sigma&quot;         &quot;df&quot;            &quot;r.squared&quot;    
+##  [9] &quot;adj.r.squared&quot; &quot;fstatistic&quot;    &quot;cov.unscaled&quot;</code></pre>
+<p>So, for example, if we wanted to directly access the value of <span class="math inline">\(R^2\)</span>, instead of copy and pasting it out of the printed statement from <code>summary()</code>, we could do so.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(stop_dist_model)$r.squared</code></pre></div>
+<pre><code>## [1] 0.6510794</code></pre>
+<p>Another value we may want to access is <span class="math inline">\(s_e\)</span>, which <code>R</code> calls <code>sigma</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(stop_dist_model)$sigma</code></pre></div>
+<pre><code>## [1] 15.37959</code></pre>
+<p>Note that this is the same result seen earlier as <code>s_e</code>. You may also notice that this value was display above as a result of the <code>summary()</code> command, which <code>R</code> labeled the “Residual Standard Error.”</p>
+<p><span class="math display">\[
+s_e = RSE = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
+\]</span></p>
+<p>Often it is useful to talk about <span class="math inline">\(s_e\)</span> (or RSE) instead of <span class="math inline">\(s_e^2\)</span> because of their units. The units of <span class="math inline">\(s_e\)</span> in the <code>cars</code> example is feet, while the units of <span class="math inline">\(s_e^2\)</span> is feet-squared.</p>
+<p>Another useful function, which we will use almost as often as <code>lm()</code> is the <code>predict()</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(stop_dist_model, <span class="kw">data.frame</span>(<span class="dt">speed =</span> <span class="dv">8</span>))</code></pre></div>
+<pre><code>##        1 
+## 13.88018</code></pre>
+<p>The above code reads “predict the stopping distance of a car traveling 8 miles per hour using the <code>stop_dist_model</code>.” Importantly, the second argument to <code>predict()</code> is a data frame that we make in place. We do this so that we can specify that <code>8</code> is a value of <code>speed</code>, so that predict knows how to use it with the model stored in <code>stop_dist_model</code>. We see that this result is what we had calculated “by hand” previously.</p>
+<p>We could also predict multiple values at once.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(stop_dist_model, <span class="kw">data.frame</span>(<span class="dt">speed =</span> <span class="kw">c</span>(<span class="dv">8</span>, <span class="dv">21</span>, <span class="dv">50</span>)))</code></pre></div>
+<pre><code>##         1         2         3 
+##  13.88018  65.00149 179.04134</code></pre>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{y} &amp;= -17.579 + 3.932 \times 8 = 13.88 \\
+\hat{y} &amp;= -17.579 + 3.932 \times 21 = 65.001 \\
+\hat{y} &amp;= -17.579 + 3.932 \times 50 = 179.041
+\end{aligned}
+\]</span></p>
+<p>Or we could calculate the fitted value for each of the original data points.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(stop_dist_model, <span class="kw">data.frame</span>(<span class="dt">speed =</span> cars$speed))</code></pre></div>
+<pre><code>##         1         2         3         4         5         6         7         8 
+## -1.849460 -1.849460  9.947766  9.947766 13.880175 17.812584 21.744993 21.744993 
+##         9        10        11        12        13        14        15        16 
+## 21.744993 25.677401 25.677401 29.609810 29.609810 29.609810 29.609810 33.542219 
+##        17        18        19        20        21        22        23        24 
+## 33.542219 33.542219 33.542219 37.474628 37.474628 37.474628 37.474628 41.407036 
+##        25        26        27        28        29        30        31        32 
+## 41.407036 41.407036 45.339445 45.339445 49.271854 49.271854 49.271854 53.204263 
+##        33        34        35        36        37        38        39        40 
+## 53.204263 53.204263 53.204263 57.136672 57.136672 57.136672 61.069080 61.069080 
+##        41        42        43        44        45        46        47        48 
+## 61.069080 61.069080 61.069080 68.933898 72.866307 76.798715 76.798715 76.798715 
+##        49        50 
+## 76.798715 80.731124</code></pre>
+<p>This is actually equivalent to simply calling <code>predict()</code> on <code>stop_dist_model</code> without a second argument.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(stop_dist_model)</code></pre></div>
+<pre><code>##         1         2         3         4         5         6         7         8 
+## -1.849460 -1.849460  9.947766  9.947766 13.880175 17.812584 21.744993 21.744993 
+##         9        10        11        12        13        14        15        16 
+## 21.744993 25.677401 25.677401 29.609810 29.609810 29.609810 29.609810 33.542219 
+##        17        18        19        20        21        22        23        24 
+## 33.542219 33.542219 33.542219 37.474628 37.474628 37.474628 37.474628 41.407036 
+##        25        26        27        28        29        30        31        32 
+## 41.407036 41.407036 45.339445 45.339445 49.271854 49.271854 49.271854 53.204263 
+##        33        34        35        36        37        38        39        40 
+## 53.204263 53.204263 53.204263 57.136672 57.136672 57.136672 61.069080 61.069080 
+##        41        42        43        44        45        46        47        48 
+## 61.069080 61.069080 61.069080 68.933898 72.866307 76.798715 76.798715 76.798715 
+##        49        50 
+## 76.798715 80.731124</code></pre>
+<p>Note that then in this case, this is the same as using <code>fitted()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fitted</span>(stop_dist_model)</code></pre></div>
+<pre><code>##         1         2         3         4         5         6         7         8 
+## -1.849460 -1.849460  9.947766  9.947766 13.880175 17.812584 21.744993 21.744993 
+##         9        10        11        12        13        14        15        16 
+## 21.744993 25.677401 25.677401 29.609810 29.609810 29.609810 29.609810 33.542219 
+##        17        18        19        20        21        22        23        24 
+## 33.542219 33.542219 33.542219 37.474628 37.474628 37.474628 37.474628 41.407036 
+##        25        26        27        28        29        30        31        32 
+## 41.407036 41.407036 45.339445 45.339445 49.271854 49.271854 49.271854 53.204263 
+##        33        34        35        36        37        38        39        40 
+## 53.204263 53.204263 53.204263 57.136672 57.136672 57.136672 61.069080 61.069080 
+##        41        42        43        44        45        46        47        48 
+## 61.069080 61.069080 61.069080 68.933898 72.866307 76.798715 76.798715 76.798715 
+##        49        50 
+## 76.798715 80.731124</code></pre>
+</div>
+<div id="maximum-likelihood-estimation-mle-approach" class="section level2">
+<h2><span class="header-section-number">3.5</span> Maximum Likelihood Estimation (MLE) Approach</h2>
+<p>Recall the model,</p>
+<p><span class="math display">\[
+Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
+\]</span></p>
+<p>where <span class="math inline">\(e_i \sim N(0, \sigma^2)\)</span>.</p>
+<p>Then we can find the mean and variance of each <span class="math inline">\(Y_i\)</span>.</p>
+<p><span class="math display">\[
+E[Y_i] = \beta_0 + \beta_1 x_i
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+Var[Y_i] = \sigma^2.
+\]</span></p>
+<p>Recall that the pdf of a random variable <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span> is given by</p>
+<p><span class="math display">\[
+f_{X}(x; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp{\left[-\frac{1}{2}\left(\frac{x - \mu}{\sigma}\right)^2\right]}.
+\]</span></p>
+<p>Then we can write the pdf of each of the <span class="math inline">\(Y_i\)</span> as</p>
+<p><span class="math display">\[
+f_{Y_i}(y_i; x_i, \beta_0, \beta_1, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp{\left[-\frac{1}{2}\left(\frac{y_i - (\beta_0 + \beta_1 x_i)}{\sigma}\right)^2\right]}.
+\]</span></p>
+<p>Given <span class="math inline">\(n\)</span> data points <span class="math inline">\((x_i, y_i)\)</span> we can write the likelihood, which is a function of the three parameters <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>, and <span class="math inline">\(\sigma^2\)</span>. Since the data have been observed, we use lower case <span class="math inline">\(y_i\)</span> to denote that these values are no longer random.</p>
+<p><span class="math display">\[
+L(\beta_0, \beta_1, \sigma^2) = \prod_{i = 1}^{n} \frac{1}{\sqrt{2\pi\sigma^2}} \exp{\left[-\frac{1}{2}\left(\frac{y_i - \beta_0 - \beta_1 x_i}{\sigma}\right)^2\right]}
+\]</span></p>
+<p>Our goal is to find values of <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>, and <span class="math inline">\(\sigma^2\)</span> which maximize this function, which is a straightforward multivariate calculus problem.</p>
+<p>We’ll start by doing a bit of rearranging to make our task easier.</p>
+<p><span class="math display">\[
+L(\beta_0, \beta_1, \sigma^2) = \left(\frac{1}{\sqrt{2 \pi \sigma^2}}\right)^n \exp{\left[-\frac{1}{2 \sigma^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2\right]}
+\]</span></p>
+<p>Then, as is often the case when finding MLEs, for mathematical convenience we will take the natural logarithm of the likelihood function since log is a monotonically increasing function. Then we will proceed to maximize the log-likelihood, and the resulting estimates will be the same as if we had not taken the log.</p>
+<p><span class="math display">\[
+\log L(\beta_0, \beta_1, \sigma^2) = -\frac{n}{2}\log(2 \pi) - \frac{n}{2}\log(\sigma^2) - \frac{1}{2 \sigma^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2
+\]</span></p>
+<p>Note that we use <span class="math inline">\(\log\)</span> to mean the natural logarithm. We now take a partial derivative with respect to each of the parameters.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{\partial \log L(\beta_0, \beta_1, \sigma^2)}{\partial \beta_0} &amp;= -\frac{2}{\sigma^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)\\
+\frac{\partial \log L(\beta_0, \beta_1, \sigma^2)}{\partial \beta_1} &amp;= -\frac{2}{\sigma^2} \sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i) \\
+\frac{\partial \log L(\beta_0, \beta_1, \sigma^2)}{\partial \sigma^2} &amp;= -\frac{n}{2 \sigma^2} + \frac{1}{2(\sigma^2)^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2
+\end{aligned}
+\]</span></p>
+<p>We then set each of the partial derivatives equal to zero and solve the resulting system of equations.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i) &amp;= 0\\
+\sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i) &amp;= 0\\
+-\frac{n}{2 \sigma^2} + \frac{1}{2(\sigma^2)^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2 &amp;= 0
+\end{aligned}
+\]</span></p>
+<p>You may notice that the first two equations also appear in the least squares approach. Then, skipping the issue of actually checking if we have found a maximum, we then arrive at our estimates. We call these estimates the maximum likelihood estimates.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\beta}_1 &amp;= \frac{\sum_{i = 1}^{n} x_i y_i - \frac{(\sum_{i = 1}^{n} x_i)(\sum_{i = 1}^{n} y_i)}{n}}{\sum_{i = 1}^{n} x_i^2 - \frac{(\sum_{i = 1}^{n} x_i)^2}{n}} = \frac{S_{xy}}{S_{xx}}\\
+\hat{\beta}_0 &amp;= \bar{y} - \hat{\beta}_1 \bar{x}\\
+\hat{\sigma}^2 &amp;= \frac{1}{n} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2
+\end{aligned}
+\]</span></p>
+<p>Note that <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are the same as the least squares estimates. However we now have a new estimate of <span class="math inline">\(\sigma^2\)</span>, that is <span class="math inline">\(\hat{\sigma}^2\)</span>. So we now have two different estimates of <span class="math inline">\(\sigma^2\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+s_e^2 &amp;= \frac{1}{n - 2} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2 = \frac{1}{n - 2} \sum_{i = 1}^{n}e_i^2 &amp; \text{Least Squares}\\
+\hat{\sigma}^2 &amp;= \frac{1}{n} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2 = \frac{1}{n} \sum_{i = 1}^{n}e_i^2 &amp; \text{MLE}
+\end{aligned}
+\]</span></p>
+<p>In the next chapter, we will discuss in detail the difference between these two estimates, which involves biasedness.</p>
+</div>
+<div id="simulating-slr" class="section level2">
+<h2><span class="header-section-number">3.6</span> Simulating SLR</h2>
+<p>We return again to more examples of simulation. This will be a common theme!</p>
+<p>In practice you will almost never have a true model, and you will use data to attempt to recover information about the unknown true model. With simulation, we decide the true model and simulate data from the it. Then we apply a method to the data, in this case least squares. Now, since we know the true model, we can asses how well it did.</p>
+<p>For this example, we will simulate <code>n = 20</code> observations from the model</p>
+<p><span class="math display">\[
+y_i = 5 + 2 x + \epsilon_i.
+\]</span></p>
+<p>That is <span class="math inline">\(\beta_0 = 5\)</span>, <span class="math inline">\(\beta_1 = 2\)</span>, and let <span class="math inline">\(\epsilon_i \sim N(\mu = 0, \sigma^2 = 1)\)</span>.</p>
+<p>We first set the parameters of the simulation.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n       =<span class="st"> </span><span class="dv">20</span>
+beta_0  =<span class="st"> </span><span class="dv">5</span>
+beta_1  =<span class="st"> </span><span class="dv">2</span>
+sigma   =<span class="st"> </span><span class="dv">1</span></code></pre></div>
+<p>Next, we obtain simulated values of <span class="math inline">\(\epsilon_i\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">epsilon =<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> sigma)</code></pre></div>
+<p>Now, since the <span class="math inline">\(x_i\)</span> values in SLR are considered fixed and known, we simply generate them from a uniform distribution. Know, that this is an arbitrary, but common practice.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">runif</span>(n, <span class="dv">0</span>, <span class="dv">10</span>)</code></pre></div>
+<p>We then generate the <span class="math inline">\(y\)</span> values according the specified functional relationship.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y =<span class="st"> </span>beta_0 +<span class="st"> </span>beta_1 *<span class="st"> </span>x +<span class="st"> </span>epsilon</code></pre></div>
+<p>Now to check how well the method of least squares works, we use <code>lm()</code> to fit the model to our data, then take a look at the estimated coefficients.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_fit =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x)
+<span class="kw">coef</span>(sim_fit)</code></pre></div>
+<pre><code>## (Intercept)           x 
+##    5.098490    1.946622</code></pre>
+<p>And look at that, they aren’t too far from the parameters we specified!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y ~<span class="st"> </span>x)
+<span class="kw">abline</span>(sim_fit)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-181-1.png" width="672" /></p>
+<p>We should say here, that we’re being sort of lazy, and not the good kinda of lazy that could be considered efficient. Any time you simulate data, you should consider doing two things: writing a function, and storing the data in a data frame.</p>
+<p>The function below, <code>sim_slr()</code> can be used for the same task as above, but is much more flexible.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_slr =<span class="st"> </span>function(n, <span class="dt">beta_0 =</span> <span class="dv">10</span>, <span class="dt">beta_1 =</span> <span class="dv">5</span>, <span class="dt">sigma =</span> <span class="dv">1</span>, <span class="dt">xmin =</span> <span class="dv">0</span>, <span class="dt">xmax =</span> <span class="dv">10</span>) {
+  epsilon =<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> sigma)
+  x       =<span class="st"> </span><span class="kw">runif</span>(n, xmin, xmax)
+  y       =<span class="st"> </span>beta_0 +<span class="st"> </span>beta_1 *<span class="st"> </span>x +<span class="st"> </span>epsilon
+  <span class="kw">data.frame</span>(<span class="dt">predictor =</span> x, <span class="dt">response =</span> y)
+}</code></pre></div>
+<p>Here, we use the function to repeat the analysis above.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_data =<span class="st"> </span><span class="kw">sim_slr</span>(<span class="dt">n =</span> <span class="dv">20</span>, <span class="dt">beta_0 =</span> <span class="dv">5</span>, <span class="dt">beta_1 =</span> <span class="dv">2</span>, <span class="dt">sigma =</span> <span class="dv">1</span>)</code></pre></div>
+<p>This time, the simulated observations are stored in a data frame.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(sim_data)</code></pre></div>
+<pre><code>##   predictor  response
+## 1  9.348230 23.329224
+## 2  5.504941 16.195112
+## 3  6.017662 17.617148
+## 4  1.969945 10.339627
+## 5  5.352366 14.977440
+## 6  1.795557  9.893657</code></pre>
+<p>Now when we fit the model with <code>lm()</code> we can use a <code>data</code> argument, a very good practice.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_fit =<span class="st"> </span><span class="kw">lm</span>(response ~<span class="st"> </span>predictor, <span class="dt">data =</span> sim_data)
+<span class="kw">coef</span>(sim_fit)</code></pre></div>
+<pre><code>## (Intercept)   predictor 
+##    6.162023    1.792461</code></pre>
+<p>And this time, we’ll make the plot look a lot nicer.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(response ~<span class="st"> </span>predictor, <span class="dt">data =</span> sim_data,
+     <span class="dt">xlab =</span> <span class="st">&quot;Simulated Predictor Variable&quot;</span>,
+     <span class="dt">ylab =</span> <span class="st">&quot;Simulated Response Variable&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Simulated Regression Data&quot;</span>,
+     <span class="dt">pch  =</span> <span class="dv">20</span>,
+     <span class="dt">cex  =</span> <span class="dv">2</span>,
+     <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)
+<span class="kw">abline</span>(sim_fit, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
+</div>
+<div id="history" class="section level2">
+<h2><span class="header-section-number">3.7</span> History</h2>
+<p>For some brief background on the history of linear regression, see <a href="http://www.amstat.org/publications/jse/v9n3/stanton.html">“Galton, Pearson, and the Peas: A Brief History of Linear Regression for Statistics Instructors”</a> from the <a href="http://www.amstat.org/publications/jse/">Journal of Statistics Education</a> as well as the <a href="https://en.wikipedia.org/wiki/Regression_analysis#History">Wikipedia page on the history of regression analysis</a> and lastly the article for <a href="https://en.wikipedia.org/wiki/Regression_toward_the_mean">regression to the mean</a> which details the origins of the term “regression.”</p>
+
+<div id="refs" class="references">
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction-to-r.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/daviddalpiaz/appliedstats/edit/master/02-slr.Rmd",
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
