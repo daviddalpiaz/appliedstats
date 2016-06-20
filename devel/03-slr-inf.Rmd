@@ -4,15 +4,102 @@
 >
 > --- **Benjamin Disraeli**
 
-TODO: simulate distribution of betas
+After reading this chapter you will be able to:
 
-TODO: note about $(\bar{x}, \bar{y})$
+- ...
+- ...
+- ...
+
+
+## Sampling Distributions
+
+"notation abuse"
+
+- $\hat{\beta_0}$ is a **statistic** with data, random variable without
+- $\hat{\beta_1}$ is a **statistic** with data, random variable without
+
+- last time we got estimates
+    - what we have (point) estimated, how we have estimated it
+- are they any good?
+- state gauss markov
+- show beta_1 is lc of Y values
+- unbiased and min var good
+    - save for mathstat class to show
+    - we will use simualtion
+- distributional results
+- show with simulation
+     - see below
+- SD vs SE
+
+```{r}
+# note, this is not the "best" way to do this, but shows it well
+# note, need to "fix" x
+set.seed(42)
+num_samples = 100 # make this larger
+sample_size = 20 # this is n
+beta_0      = 10
+beta_1      = 2
+sigma       = 3
+x = runif(sample_size, 0, 10)
+Sxx = sum((x - mean(x)) ^ 2)
+
+beta_0_hat = rep(0, num_samples)
+beta_1_hat = rep(0, num_samples)
+
+for(i in 1:num_samples) {
+  y = beta_0 + beta_1 * x + rnorm(sample_size, mean = 0, sd = sigma)
+  sim_model = lm(y ~ x)
+  
+  beta_0_hat[i] = coef(sim_model)[1]
+  beta_1_hat[i] = coef(sim_model)[2]
+}
+
+
+
+mean(beta_1_hat)
+beta_1
+sd(beta_1_hat)
+sigma / sqrt(Sxx)
+hist(beta_1_hat, prob = TRUE, breaks = 25, xlab = expression(hat(beta)[1]), main = "")
+curve(dnorm(x, mean = beta_1, sd = sigma / sqrt(Sxx)), col = 2, add = TRUE)
+
+hist(beta_0_hat)
+mean(beta_0_hat)
+beta_0
+sd(beta_0_hat)
+sigma * sqrt(1 / sample_size + mean(x) ^ 2 / Sxx)
+
+```
+
+
+## Confidence Intervals
+
+- for each of the estimates
+    - or leave out sigma
+
+## Hypothesis Test
+
+- hand waive derivation of test stat dist for both reg coefs
+    - Z / sqrt(X^2 / d)
+- setup testing as (EST - HYP) / SE, define SE in all case?
+- [https://xkcd.com/892/](https://xkcd.com/892/)
+
+## CIs and PIs
+
+- note about $(\bar{x}, \bar{y})$
+    - also, this is where bands are smallest
+
+## F Test
+
+recap R^2
+
+
+
+
 
 TODO: note about $\sum_{i = 1}^{n} e_i = 0$. Other helpful expressions?
 
-TODO: (EST - HYP) / SE, define SE in all case?
 
-[https://xkcd.com/892/](https://www.google.com/#q=892%3A+Null+Hypothesis)
 
 \[
 Y_i \sim N(\beta_0 + \beta_1, \sigma^2)
@@ -36,20 +123,36 @@ More succinctly...
 More often, more succinctly....
 
 
-TODO: note notation abuse
+TODO: note notation abuse, switching between $Y_i$ and $y_i$ at liberty.
 
-TODO: derivations, unbiasedness
-TODO: decide how much to show?
-
-
-
-
-
+!TODO: derivations, unbiasedness
+!TODO: decide how much to show?
 
 \[
-t = \frac{\hat{\beta_1}-\beta_{10}}{s_e / \sqrt{S_{xx}}}
+Var[\hat{\beta_1}] = \frac{\sigma^2}{S_{xx}}
 \]
 
+\[
+SD[\hat{\beta_1}] = \frac{\sigma}{\sqrt{S_{xx}}}
+\]
+
+\[
+SE[\hat{\beta_1}] = \frac{s_e}{\sqrt{S_{xx}}}
+\]
+
+\[
+t = \frac{\hat{\beta_1}-\beta_{10}}{SE[\hat{\beta_1}]} = \frac{\hat{\beta_1}-\beta_{10}}{s_e / \sqrt{S_{xx}}}
+\]
+
+\[
+\hat{\beta_1} \pm t_{n - 2}(\alpha/2) SE[\hat{\beta_1}] 
+\]
+
+???
+
+\[
+\hat{\beta_1} \pm t_{n - 2, \alpha/2} SE[\hat{\beta_1}] 
+\]
 
 \[
 \hat{\beta_1} \pm t_{n - 2}(\alpha/2) \frac{s_e}{\sqrt{S_{xx}}}
@@ -108,3 +211,19 @@ Be explicit about "nested models" with F test. Comparing the two models above. P
 \[
 F = 
 \]
+
+
+stat significance vs practical significance, effect size
+
+significance of LINEAR relationship. show line failing for quadratic plot.
+
+CI is EST pm CRIT * SE
+TEST is (EST - HYP) / SE
+
+check if HYP is in CI = test
+
+SE SE SE SE SE
+
+no CI for sigma
+
+all else equal, use the simpler model. (~1 is nested hierarchically inside ~ x)
