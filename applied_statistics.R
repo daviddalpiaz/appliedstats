@@ -1,7 +1,7 @@
 ## ----setup, echo = FALSE, message = FALSE, warning = FALSE--------------------
 require(knitr)
 read_chunk('r_book.R')
-options(scipen = 8, width = 80)
+options(scipen = 8, digits = 4, width = 80)
 knit_hooks$set(purl = hook_purl)
 opts_template$set(nopurl = list(purl = FALSE))
 opts_template$set(dopurl = list(purl = TRUE))
