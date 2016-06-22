@@ -5,19 +5,15 @@
 > --- **Benjamin Disraeli**
 
 
-
 ```{r}
-library(rtable)
-data(tli)
-fm1 <- aov(tlimth ~ sex * ethnicty, data=tli)
-fm1.table <- xtable(fm1)
-
-xtable_output = as.FlexTable( x = fm1.table )
-xtable_output
+library(xtable)
+fm1       = aov(tlimth ~ sex * ethnicty, data = tli)
+fm1_table = xtable(fm1)
+knitr::kable(fm1_table)
+# figure out how to omit NAs in output
 ```
 
 A/B Testing Example.
-
 
 plot for pairwise comparisons, call plot on results of TukeyHSD()
 link to FDR, etc.
