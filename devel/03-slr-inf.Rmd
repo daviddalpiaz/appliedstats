@@ -29,13 +29,12 @@ After reading this chapter you will be able to:
 - distributional results
 - show with simulation
      - see below
-- SD vs SE
 
 ```{r}
 # note, this is not the "best" way to do this, but shows it well
 # note, need to "fix" x
 set.seed(42)
-num_samples = 100 # make this larger
+num_samples = 1000 # make this larger
 sample_size = 20 # this is n
 beta_0      = 10
 beta_1      = 2
@@ -61,7 +60,9 @@ beta_1
 sd(beta_1_hat)
 sigma / sqrt(Sxx)
 hist(beta_1_hat, prob = TRUE, breaks = 25, xlab = expression(hat(beta)[1]), main = "")
-curve(dnorm(x, mean = beta_1, sd = sigma / sqrt(Sxx)), col = 2, add = TRUE)
+ex_beta_1 = beta_1
+sd_beta_1 = sigma / sqrt(Sxx)
+curve(dnorm(x, mean = ex_beta_1, sd = sd_beta_1), col = 2, add = TRUE)
 
 hist(beta_0_hat)
 mean(beta_0_hat)
@@ -74,13 +75,16 @@ sigma * sqrt(1 / sample_size + mean(x) ^ 2 / Sxx)
 
 ## Confidence Intervals
 
+- SD vs SE
+- (EST - TRUE) / SD = NORMAL
+- (EST - TRUE) / SE = t
+- hand waive derivation of test stat dist for both reg coefs
+    - Z / sqrt(X^2 / d)
 - for each of the estimates
-    - or leave out sigma
+    - no CI for sigma
 
 ## Hypothesis Test
 
-- hand waive derivation of test stat dist for both reg coefs
-    - Z / sqrt(X^2 / d)
 - setup testing as (EST - HYP) / SE, define SE in all case?
 - [https://xkcd.com/892/](https://xkcd.com/892/)
 
@@ -243,3 +247,6 @@ SE SE SE SE SE
 no CI for sigma
 
 all else equal, use the simpler model. (~1 is nested hierarchically inside ~ x)
+
+
+"We may speak of this hypothesis as the 'null hypothesis', and it should be noted that the null hypothesis is never proved or established, but is possibly disproved, in the course of experimentation." - RA Fisher
