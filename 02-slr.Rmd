@@ -810,8 +810,8 @@ Note that we use $\log$ to mean the natural logarithm. We now take a partial der
 
 \[
 \begin{aligned}
-\frac{\partial \log L(\beta_0, \beta_1, \sigma^2)}{\partial \beta_0} &= -\frac{2}{\sigma^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)\\
-\frac{\partial \log L(\beta_0, \beta_1, \sigma^2)}{\partial \beta_1} &= -\frac{2}{\sigma^2} \sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i) \\
+\frac{\partial \log L(\beta_0, \beta_1, \sigma^2)}{\partial \beta_0} &= \frac{1}{\sigma^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)\\
+\frac{\partial \log L(\beta_0, \beta_1, \sigma^2)}{\partial \beta_1} &= \frac{1}{\sigma^2} \sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i) \\
 \frac{\partial \log L(\beta_0, \beta_1, \sigma^2)}{\partial \sigma^2} &= -\frac{n}{2 \sigma^2} + \frac{1}{2(\sigma^2)^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2
 \end{aligned}
 \]
@@ -856,7 +856,7 @@ In practice you will almost never have a true model, and you will use data to at
 For this example, we will simulate `n = 20` observations from the model
 
 \[
-y_i = 5 + 2 x + \epsilon_i.
+y_i = 5 + 2 x_i + \epsilon_i.
 \]
 
 That is $\beta_0 = 5$, $\beta_1 = 2$, and let $\epsilon_i \sim N(\mu = 0, \sigma^2 = 1)$.
