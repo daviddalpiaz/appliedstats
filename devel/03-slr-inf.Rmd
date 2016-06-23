@@ -10,8 +10,6 @@ After reading this chapter you will be able to:
 - ... 
 - ...
 
-## Sampling Distributions
-
 Last chapter we defined the simple linear regression model,
 
 \[
@@ -41,7 +39,27 @@ s_e = RSE = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 
 which we also called RSE, for "Residual Standard Error."
 
-Note that there is another equivalent expression for $S_{xy}$ which we did not see last chapter,
+When applied to the `cars` data, we obtained the following results:
+
+```{r}
+stop_dist_model = lm(dist ~ speed, data = cars)
+summary(stop_dist_model)
+```
+
+Last chapter, we only discussed the `Estimate` and `Residual standard error` values. In this chapter, we will discuss all of the information under `Coefficients` as well as `F-statistic`.
+
+```{r}
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 2,
+     col  = "dodgerblue")
+abline(stop_dist_model, lwd = 5, col = "darkorange")
+```
+
+To get started, we'll note that there is another equivalent expression for $S_{xy}$ which we did not see last chapter,
 
 \[
 S_{xy}= \sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y}) = \sum_{i = 1}^{n}(x_i - \bar{x}) y_i.
@@ -49,11 +67,9 @@ S_{xy}= \sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y}) = \sum_{i = 1}^{n}(x_i - 
 
 This may be a surprising equivalence. (Maybe try to prove it.) However, it will be useful for illustrating concepts in this chapter.
 
-
-
 Note that, $\hat{\beta}_1$ is a **statistic** when calculated with observed data as written above, as is $\hat{\beta}_0$.   
 
-However, this chapter it will often be convenient to use both $\hat{\beta}_1$ and $\hat{\beta}_0$ as random variables, that is, we have not yet observed the values for each $Y_i$. When this is the case, we will use a slightly different notation, substituting in capital $Y_i$ for lower case $y_i$.
+However, in this chapter it will often be convenient to use both $\hat{\beta}_1$ and $\hat{\beta}_0$ as random variables, that is, we have not yet observed the values for each $Y_i$. When this is the case, we will use a slightly different notation, substituting in capital $Y_i$ for lower case $y_i$.
 
 \[
 \begin{aligned}
@@ -62,48 +78,200 @@ However, this chapter it will often be convenient to use both $\hat{\beta}_1$ an
 \end{aligned}
 \]
 
-Last chapter we argued that these estimates of unknown model parameters $\beta_0$ and $\beta_1$ were good because we obtained them by minimizing errors. We will now discuss the **Gauss–Markov theorem** which takes this idea further, showing that these estimates are actually the "best" estimates.
+Last chapter we argued that these estimates of unknown model parameters $\beta_0$ and $\beta_1$ were good because we obtained them by minimizing errors. We will now discuss the Gauss–Markov theorem which takes this idea further, showing that these estimates are actually the "best" estimates, from a certain point of view.
 
-ests are BLUE
+### Gauss–Markov Theorem
 
-- LINEAR
-    - show beta_1 is lc of Y values
+The **Gauss–Markov theorem** tells us that when estimating the parameters of the simple linear regression model $\beta_0$ and $\beta_1$, the $\hat{\beta}_0$ and $\hat{\beta}_1$ which we derived are the **best linear unbiased estiamtes**, or *BLUE* for short. (The actual conditions for the Gauss–Markov theorem are more relaxed than the SLR model.)
 
-- UNBIASED
-    - but as we saw via simulation, not always exact
+We will now discuss *linear*, *unbiased*, and *best* as is relates to these estimates.
 
+#### Linear {-}
 
-- BEST (smallest variance)
-    - what is the variance?
-    - by how much are we wrong? variability
+Recall, in the SLR setup that the $x_i$ values are considered fixed and known quantities. Then a **linear** estimate is one which can be written as a linear combination of the $Y_i$. In the case of $\hat{\beta}_1$ we see
 
+\[
+\hat{\beta}_1 = \frac{\sum_{i = 1}^{n}(x_i - \bar{x}) Y_i}{\sum_{i = 1}^{n}(x_i - \bar{x})^2} = \sum_{i = 1}^n k_i Y_i = k_1 Y_1 + k_2 Y_2 + \cdots k_n Y_n
+\]
 
-- unbiased and min var good
-    - save for mathstat class to show
-    - we will use simualtion
-    
-- distributional results
+where $k_i = \displaystyle\frac{(x_i - \bar{x})}{\sum_{i = 1}^{n}(x_i - \bar{x})^2}$.
 
-- show with simulation
-     - see below
-     - split and add narrative
+In a similar fashion, we could show that $\hat{\beta}_0$ can be written as a linear combination of the $Y_i$. Thus both $\hat{\beta}_0$ and $\hat{\beta}_1$ are linear estimators.
+
+#### Unbiased {-}
+
+Now that we know our estimates are *linear*, how good are these estimates? One measure of the "goodness" of an estimate is its **bias**. Specifically, we prefer estimates that are **unbiased**, meaning their expected value is the parameter being estimated.
+
+In the case of the regression estimates, we have,
+
+\[
+\begin{aligned}
+E[\hat{\beta}_0] &= \beta_0 \\
+E[\hat{\beta}_1] &= \beta_1.
+\end{aligned}
+\]
+
+This tells us that, when the conditions of the SLR model are met, on average our estimates will be correct. However, as we saw last chapter when simulating from the SLR model, that does not mean that each individual estimate will be correct. Only that, if we repeated the process an infinite number of times, on average the estimate would be correct.
+
+#### Best {-}
+
+Now, if we restrict ourselves to both *linear* and *unbiased* estimates, how do we define the *best* estimate? The estimate with the **minimum varaince**.
+
+First note that it is very easy to create an estimate for $\beta_1$ that has very low variance, but is not unbiased. For example, define:
+
+\[
+\hat{\theta}_{BAD} = 5.
+\]
+
+Then, since $\hat{\theta}_{BAD}$ is a constant value,
+
+\[
+Var[\hat{\theta}_{BAD}] = 0.
+\]
+
+However since,
+
+\[
+E[\hat{\theta}_{BAD}] = 5
+\]
+
+we say that $\hat{\theta}_{BAD}$ is a biased estimator unless $\beta_1 = 5$, which we would not know ahead of time. For this reason, it is a terrible estimate unless by chance $\beta_1 = 5$, even though it has the smallest possible variance. This is part of the reason we restrict ourselves to *unbiased* estimates. What good is an estimate, if it estimates the wrong quantity?
+
+So now, the natural question is, what are the variances of $\hat{\beta}_0$ and $\hat{\beta}_1$? They are,
+
+\[
+\begin{aligned}
+Var[\hat{\beta}_0] &= \sigma^2 \left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right) \\
+Var[\hat{\beta}_1] &= \frac{\sigma^2}{S_{xx}}.
+\end{aligned}
+\]
+
+These quantify the variability of the estimates due to random chance during sampling.
+
+## Sampling Distributions
+
+Now that we have "redefined" the estimates for $\hat{\beta}_0$ and $\hat{\beta}_1$ as random variables, we can discuss their **sampling distribution**, which is the distribution when a statistic is considered a random variable.
+
+Since both $\hat{\beta}_0$ and $\hat{\beta}_1$ are a linear combination of the $Y_i$ and each $Y_i$ is normally distributed, then both $\hat{\beta}_0$ and $\hat{\beta}_1$ also follow a normal distribution.
+
+Then, putting all of the above together, we arrive at the distributions of $\hat{\beta}_0$ and $\hat{\beta}_1$.
+
+For $\hat{\beta}_1$ we say,
+
+\[
+\hat{\beta}_1 = \frac{S_{xy}}{S_{xx}} 
+= \frac{\sum_{i = 1}^{n}(x_i - \bar{x}) Y_i}{\sum_{i = 1}^{n}(x_i - \bar{x})^2}
+\sim N\left(  \beta_1, \frac{\sigma^2}{\sum_{i = 1}^{n}(x_i - \bar{x})^2} \right).
+\]
+
+Or more succinctly,
+
+\[
+\hat{\beta}_1 = N\left(  \beta_1, \frac{\sigma^2}{S_{xx}} \right).
+\]
+
+And for $\hat{\beta}_0$,
+
+\[
+\hat{\beta}_0 = \bar{Y} - \hat{\beta}_1 \bar{x} 
+\sim N\left(  \beta_0, \frac{\sigma^2 \sum_{i = 1}^{n}x_i^2}{n \sum_{i = 1}^{n}(x_i - \bar{x})^2} \right).
+\]
+
+Or more succinctly,
+
+\[
+\hat{\beta}_0 \sim N\left(  \beta_0, \sigma^2 \left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right) \right)
+\]
+
+At this point we have neglected to prove a number of these results. Instead of working through the tedious derivations of these sampling distributions, we will instead justify these results to ourselves using simulation.
+
+A note to current readers: These derivations and proofs may be added to an appendix at a later time. You can also find these results in nearly any standard linear regression textbook. At UIUC, these results will likely be presented in both STAT 424 and STAT 425. However, since you will not be asked to perform derivations of this type in this course, they are for now omitted.
+
+### Simulating Sampling Distributions
+
+To verify the above results, we will simulate samples of size $n = 100$ from the model
+
+\[
+Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
+\]
+
+where $\epsilon_i \sim N(0, \sigma^2).$ In this case, the parameters are known to be:
+
+- $\beta_0 = 3$
+- $\beta_1 = 6$
+- $\sigma^2 = 4$
+
+Then, based on the above, we should find that
+
+\[
+\hat{\beta}_1 \sim N\left(  \beta_1, \frac{\sigma^2}{S_{xx}} \right)
+\]
+
+and
+
+\[
+\hat{\beta}_0 \sim N\left(  \beta_0, \sigma^2 \left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right) \right).
+\]
+
+First we need to decide ahead of time what our $x$ values will be for this simulation, since the $x$ values in SLR are also considered known quantities. The choice of $x$ values is arbitrary. Here we also set a seed for randomization, and calculate $S_{xx}$ which we will need going forward.
 
 ```{r}
-# note, this is not the "best" way to do this, but shows it well
-# go back and use sim_slr?
-# note, need to "fix" x
 set.seed(112358)
-num_samples = 1000 # make this larger
-sample_size = 20   # this is n
-beta_0      = 10
-beta_1      = 2
-sigma       = 3
-
-x   = seq(0, 10, length = sample_size)
+sample_size = 100 # this is n
+x = seq(-1, 1, length = sample_size)
 Sxx = sum((x - mean(x)) ^ 2)
+```
 
-beta_0_hat = rep(0, num_samples)
-beta_1_hat = rep(0, num_samples)
+We also fix our parameter values.
+
+```{r}
+beta_0 = 3
+beta_1 = 6
+sigma  = 2
+```
+
+With this information, we know the sampling distributions should be:
+
+```{r}
+(var_beta_1_hat = sigma ^ 2 / Sxx)
+(var_beta_0_hat = sigma ^ 2 * (1 / sample_size + mean(x) ^ 2 / Sxx))
+```
+
+\[
+\hat{\beta}_1 \sim N(  `r beta_1`, `r var_beta_1_hat`)
+\]
+
+and
+
+\[
+\hat{\beta}_0 \sim N(  `r beta_0`, `r var_beta_0_hat`).
+\]
+
+That is,
+
+\[
+\begin{aligned}
+E[\hat{\beta}_1] &= `r beta_1` \\
+Var[\hat{\beta}_1] &= `r var_beta_1_hat`
+\end{aligned}
+\]
+
+and
+
+\[
+\begin{aligned}
+E[\hat{\beta}_0] &= `r beta_0` \\
+Var[\hat{\beta}_0] &= `r var_beta_0_hat`.
+\end{aligned}
+\]
+
+
+We now simulate this model 10,000 times. Note this may not be the most `R` way of doing the simulation. We perform the simulation in this manner in an attempt at clarify.
+
+```{r}
+num_samples = 10000
+beta_0_hats = rep(0, num_samples)
+beta_1_hats = rep(0, num_samples)
 
 for(i in 1:num_samples) {
   eps = rnorm(sample_size, mean = 0, sd = sigma)
@@ -111,68 +279,316 @@ for(i in 1:num_samples) {
   
   sim_model = lm(y ~ x)
   
-  beta_0_hat[i] = coef(sim_model)[1]
-  beta_1_hat[i] = coef(sim_model)[2]
+  beta_0_hats[i] = coef(sim_model)[1]
+  beta_1_hats[i] = coef(sim_model)[2]
 }
-
-
-
-mean(beta_1_hat)
-(ex_beta_1 = beta_1)
-sd(beta_1_hat)
-(sd_beta_1 = sigma / sqrt(Sxx))
-
-hist(beta_1_hat, prob = TRUE, breaks = 20, 
-     xlab = expression(hat(beta)[1]), main = "")
-curve(dnorm(x, mean = ex_beta_1, sd = sd_beta_1), col = 2, add = TRUE, lwd = 3)
-
-
-mean(beta_0_hat)
-(ex_beta_0 = beta_0)
-sd(beta_1_hat)
-(sd_beta_0 = sigma * sqrt(1 / sample_size + mean(x) ^ 2 / Sxx))
-
-hist(beta_0_hat, prob = TRUE, breaks = 20, 
-     xlab = expression(hat(beta)[0]), main = "")
-curve(dnorm(x, mean = ex_beta_0, sd = sd_beta_0), col = 2, add = TRUE, lwd = 3)
-
-# note need to use prob = TRUE
 ```
 
+The variables `beta_0_hats` and `beta_1_hats` now store 10,000 simulated values of $\hat{\beta}_0$ and $\hat{\beta}_1$ respectively.
+
+We first verify the distribution of $\hat{\beta}_1$.
+
+```{r}
+mean(beta_1_hats) # empirical mean
+beta_1            # true mean
+var(beta_1_hats)  # variance mean
+var_beta_1_hat    # true mean
+```
+
+We see that the empirical and true means and variances are *very* similar. We also verify that the empirical distribution is normal. We plot a histogram of the `beta_1_hats`, and add the curve for the true distribution of $\beta_1$. We use `prob = TRUE` to put the histogram on the same scale as the normal curve.
+
+```{r}
+# note need to use prob = TRUE
+hist(beta_1_hats, prob = TRUE, breaks = 20, 
+     xlab = expression(hat(beta)[1]), main = "", border = "dodgerblue")
+curve(dnorm(x, mean = beta_1, sd = sqrt(var_beta_1_hat)), 
+      col = "darkorange", add = TRUE, lwd = 3)
+```
+
+We then repeat the process for $\hat{\beta}_0$.
+
+```{r}
+mean(beta_0_hats) # empirical mean
+beta_0            # true mean
+var(beta_0_hats)  # variance mean
+var_beta_0_hat    # true mean
+```
+
+```{r}
+hist(beta_0_hats, prob = TRUE, breaks = 20, 
+     xlab = expression(hat(beta)[0]), main = "", border = "dodgerblue")
+curve(dnorm(x, mean = beta_0, sd = sqrt(var_beta_0_hat)),
+      col = "darkorange", add = TRUE, lwd = 3)
+```
+
+In this simulation study, we have only simulated a finite number of samples. To truly verify the distributional results, we would need to observe an infinite number of samples. However, the following plot should make it clear that if we continued simulating, the empirical results would get closer and closer to what we should expect.
+
+```{r}
+par(mar = c(5, 5, 1, 1)) # adjusted plot margins, otherwise the "hat" does not display
+plot(cumsum(beta_0_hats) / (1:length(beta_0_hats)), type = "l", ylim = c(2.95, 3.05),
+     xlab = "Number of Simulations",
+     ylab = expression("Empirical Mean of " ~ hat(beta)[0]),
+     col  = "dodgerblue")
+abline(h = 3, col = "darkorange", lwd = 2)
+```
+
+## Standard Errors
+
+So now we believe the two distributional results,
+
+\[
+\begin{aligned}
+\hat{\beta}_0 &\sim N\left(  \beta_0, \sigma^2 \left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right) \right) \\
+\hat{\beta}_1 &\sim N\left(  \beta_1, \frac{\sigma^2}{S_{xx}} \right).
+\end{aligned}
+\]
+
+Then by standardizing these results we find that
+
+\[
+\frac{\hat{\beta}_0 - \beta_0}{SD[\hat{\beta}_0]} \sim N(0, 1)
+\]
+
+and
+
+\[
+\frac{\hat{\beta}_1 - \beta_1}{SD[\hat{\beta}_1]} \sim N(0, 1)
+\]
+
+where
+
+\[
+SD[\hat{\beta}_0] = \sigma\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}
+\]
+
+and
+
+\[
+SD[\hat{\beta}_1] = \frac{\sigma}{\sqrt{S_{xx}}}.
+\]
+
+Since we don't know $\sigma$ in practice, we will have to estimate it using $s_e$, which we plug into our existing expression for the standard deviations of our estimates.
+
+These two new expression are called **standard errors** which are the *estimated* standard deviations of the sampling distributions.
+
+\[
+SE[\hat{\beta}_0] = s_e\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}
+\]
+
+\[
+SE[\hat{\beta}_1] = \frac{s_e}{\sqrt{S_{xx}}}
+\]
+
+Now if we divide by the standard error, instead of the standard deviation, we obtain the following results which will allow us to make confidence interval and perform hypothesis testing.
+
+\[
+\frac{\hat{\beta}_1 - \beta_1}{SE[\hat{\beta}_0]} \sim t_{n-2}
+\]
+
+\[
+\frac{\hat{\beta}_1 - \beta_1}{SE[\hat{\beta}_1]} \sim t_{n-2}
+\]
+
+
+TODO: better narrate this derivation:
+
+\[
+\frac{RSS}{\sigma^2} = \frac{(n-2)s_e^2}{\sigma^2} \sim \chi_{n-2}^2
+\]
+
+
+
+
+\[
+\frac{\hat{\beta}_1 - \beta_1}{SE[\hat{\beta}_1]} = \frac{\hat{\beta}_1 - \beta_1}{s_e / S_{xx}}
+= \frac{\hat{\beta}_1 - \beta_1}{s_e / S_{xx}} \cdot \frac{\sigma / S_{xx}}{\sigma / S_{xx}}
+= \frac{\hat{\beta}_1 - \beta_1}{\sigma / S_{xx}} \cdot \frac{\sigma / S_{xx}}{s_e / S_{xx}}
+= \frac{\hat{\beta}_1 - \beta_1}{\sigma / S_{xx}} \bigg/ \sqrt{\frac{s_e^2}{\sigma^2}}
+\sim \frac{Z}{\sqrt{\frac{\chi_{n-2}^2}{n-2}}}
+\sim t_{n-2}
+\]
+
+Where $Z \sim N(0,1)$
+
+Recall that a random variable $T$ defined as,
+
+\[
+T = \frac{Z}{\sqrt{\frac{\chi_{d}^2}{d}}}
+\]
+
+follows a $t$ distribution with $d$ degrees of freedom, where $\chi_{d}^2$ is a $\chi^2$ random variable with $d$ degrees of freedom.
+
+That is,
+
+\[
+T \sim t_d
+\]
 
 ## Confidence Intervals
 
+
+
+Recall that confidence intervals for means often take the form:
+
+\[
+EST \pm CRIT \cdot SE
+\]
+
+or
+
+\[
+EST \pm MARGIN
+\]
+
+where $MARGIN = CRIT \cdot SE$.
+
+    
+Then, for $\hat{\beta}_0$ and $\hat{\beta}_1$ we have:
+
+\[
+\hat{\beta}_0 \pm t_{\alpha/2, n - 2} \cdot SE[\hat{\beta}_0] \quad \quad \hat{\beta}_0 \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}}
+\]
+
+\[
+\hat{\beta}_1 \pm t_{\alpha/2, n - 2} \cdot SE[\hat{\beta}_1]  \quad \quad \hat{\beta}_1 \pm t_{\alpha/2, n - 2} \cdot \frac{s_e}{\sqrt{S_{xx}}}
+\]
+
+
+## Hypothesis Tests
+
+> "We may speak of this hypothesis as the 'null hypothesis', and it should be noted that the null hypothesis is never proved or established, but is possibly disproved, in the course of experimentation."
+>
+> --- **Ronald Aylmer Fisher**
+
 for $\hat{\beta}_0$ and $\hat{\beta}_1$
 
-- SD vs SE
-    - SD is estimated by SE
-- (EST - TRUE) / SD = NORMAL
-- (EST - TRUE) / SE = t
-- hand waive derivation of test stat dist for both reg coefs
-    - Z / sqrt(X^2 / d)
-- for each of the estimates
-    - no CI for sigma
-
-## Hypothesis Test
-
-for $\hat{\beta}_0$ and $\hat{\beta}_1$
-
-
-- setup testing as (EST - HYP) / SE, define SE in all case?
 - [https://xkcd.com/892/](https://xkcd.com/892/)
 
+\[
+TS = \frac{EST - HYP}{SE}
+\]
+
+\[
+t = \frac{\hat{\beta}_0 - \beta_{0}}{SE[\hat{\beta}_0]} = \frac{\hat{\beta}_0-\beta_{0}}{s_e\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}} \sim t_{n-2}
+\]
+
+\[
+t = \frac{\hat{\beta}_1-\beta_{1}}{SE[\hat{\beta}_1]} = \frac{\hat{\beta}_1-\beta_{1}}{s_e / \sqrt{S_{xx}}} \sim t_{n-2}
+\]
+
 ## CIs and PIs
+
+TODO: move after car example?
 
 for $\hat{y}$ and $\hat{y}_{new}$
 
 - note about $(\bar{x}, \bar{y})$
     - also, this is where bands are smallest
 
+\[
+\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x
+\]
+
+\[
+E[\hat{y}] = \beta_0 + \beta_1 x
+\]
+
+\[
+Var[\hat{y}] = \sigma^2 \left(\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right)
+\]
+
+\[
+\hat{y} \sim N \left(\beta_0 + \beta_1 x, \sigma^2 \left(\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right) \right)
+\]
+
+\[
+SE[\hat{y}] = s_e \sqrt{\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}
+\]
+
+CI:
+
+\[
+\hat{y} \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}
+\]
+
+
+\[
+\hat{y}_{new} = \hat{\beta}_0 + \hat{\beta}_1 x
+\]
+
+\[
+E[\hat{y}_{new}] = \beta_0 + \beta_1 x
+\]
+
+\[
+Var[\hat{y}_{new}] = \sigma^2 \left(1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right)
+\]
+
+\[
+\hat{y}_{new} \sim N \left(\beta_0 + \beta_1 x, \sigma^2 \left(1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right) \right)
+\]
+
+\[
+SE[\hat{y}_{new}] = s_e \sqrt{1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}
+\]
+
+
+
+PI:
+
+\[
+\hat{y} \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}
+\]
+
+
 ## F Test
 
 recap R^2
 
+Y does **not* depend on x... (This, we will assume.)
+
+\[
+H_0: \beta_1 = 0 \quad \quad Y_i = \beta_0 + \epsilon_i
+\]
+
+Y does depend on x...
+
+\[
+H_1: \beta_1 \neq 0 \quad \quad Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
+\]
+
+
+\[
+\sum_{i=1}^{n}(y_i - \bar{y})^2 = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2.
+\]
+
+\[
+SST = SSReg + SSE
+\]
+
+
+
+
+
+| Source     | Sum of Squares  | Degrees of Freedom | Mean Square     | $F$         |
+|------------|-----------------|--------------------|-----------------|-------------|
+| Regression | $\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2$ | $1$                | $SSReg / 1$     | $MSReg / MSE$ |
+| Error      | $\sum_{i=1}^{n}(y_i - \hat{y}_i)^2$ | $n - 2$            | $SSE / (n - 2)$ |             |
+| Total      | $\sum_{i=1}^{n}(y_i - \bar{y})^2$       | $n - 1$            |                 |             |
+
+\[
+F = \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2 / 1}{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2 / (n - 2)} \sim F_{1, n - 2}
+\]
+
+it may seem odd that we are dividing by 1...
+
+think about when SSReg and SSE are large/small... R^2...what this means...
+
+Note that $\hat{y} = \bar{y}$ when $Y_i = \beta_0 + \epsilon_i$
+
 ## `cars` Example
+
+Returning to the `cars` example...
 
 ```{r}
 stop_dist_model = lm(dist ~ speed, data = cars)
@@ -219,10 +635,11 @@ plot(dist ~ speed, data = cars,
      col  = "dodgerblue")
 abline(stop_dist_model, lwd = 5, col = "darkorange")
 
-lines(speed_grid, dist_ci_band[,2], col = "red", lwd = 3)
-lines(speed_grid, dist_ci_band[,3], col = "red", lwd = 3)
-lines(speed_grid, dist_pi_band[,2], col = "green", lwd = 3)
-lines(speed_grid, dist_pi_band[,3], col = "green", lwd = 3)
+lines(speed_grid, dist_ci_band[,"lwr"], col = "red", lwd = 3, lty = 2)
+lines(speed_grid, dist_ci_band[,"upr"], col = "red", lwd = 3, lty = 2)
+lines(speed_grid, dist_pi_band[,"lwr"], col = "green", lwd = 3, lty = 3)
+lines(speed_grid, dist_pi_band[,"upr"], col = "green", lwd = 3, lty = 3)
+points(mean(cars$speed), mean(cars$dist), pch = "+", cex = 3)
 ```
 
 
@@ -233,97 +650,7 @@ lines(speed_grid, dist_pi_band[,3], col = "green", lwd = 3)
 
 
 TODO: note about $\sum_{i = 1}^{n} e_i = 0$. Other helpful expressions?
-
-
-
-\[
-S_{xy} = \sum_{i = 1}^{n} x_i y_i - \frac{(\sum_{i = 1}^{n} x_i)(\sum_{i = 1}^{n} y_i)}{n}  = \sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y})
-= \sum_{i = 1}^{n}(x_i - \bar{x}) y_i
-\]
-
-\[
-\hat{\beta}_1 = \frac{S_{xy}}{S_{xx}} 
-= \frac{\sum_{i = 1}^{n}(x_i - \bar{x}) Y_i}{\sum_{i = 1}^{n}(x_i - \bar{x})^2} 
-\sim N\left(  \beta_1, \frac{\sigma^2}{\sum_{i = 1}^{n}(x_i - \bar{x})^2} \right)
-= N\left(  \beta_1, \frac{\sigma^2}{S_{xx}} \right)
-\]
-
-More succinctly...
-
-\[
-\hat{\beta_0} = \bar{Y} - \hat{\beta}_1 \bar{x} 
-\sim N\left(  \beta_0, \frac{\sigma^2 \sum_{i = 1}^{n}x_i^2}{n \sum_{i = 1}^{n}(x_i - \bar{x})^2} \right)
-\]
-
-More often, more succinctly....
-
-
-TODO: note notation abuse, switching between $Y_i$ and $y_i$ at liberty.
-
-!TODO: derivations, unbiasedness
-!TODO: decide how much to show?
-
-\[
-E[\hat{\beta_1}] = \beta_1
-\]
-
-\[
-Var[\hat{\beta_1}] = \frac{\sigma^2}{S_{xx}}
-\]
-
-\[
-SD[\hat{\beta_1}] = \frac{\sigma}{\sqrt{S_{xx}}}
-\]
-
-\[
-SE[\hat{\beta_1}] = \frac{s_e}{\sqrt{S_{xx}}}
-\]
-
-\[
-t = \frac{\hat{\beta_1}-\beta_{10}}{SE[\hat{\beta_1}]} = \frac{\hat{\beta_1}-\beta_{10}}{s_e / \sqrt{S_{xx}}}
-\]
-
-\[
-\hat{\beta_1} \pm t_{\alpha/2, n - 2} \cdot SE[\hat{\beta_1}] 
-\]
-
-
-\[
-t = \frac{\hat{\beta_0}-\beta_{00}}{s_e\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}}
-\]
-
-\[
-\hat{\beta_0} \pm t_{n - 2}(\alpha/2) s_e\sqrt{\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}}
-\]
-
-CI:
-
-\[
-\hat{y} \pm t_{n - 2}(\alpha/2)  s_e\sqrt{\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}
-\]
-
-PI:
-
-\[
-\hat{y} \pm t_{n - 2}(\alpha/2) \cdot s_e\sqrt{1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}
-\]
-
-
-
-Y does **not* depend on x... (This, we will assume.)
-
-\[
-H_0: \beta_1 = 0 \quad \quad Y_i = \beta_0 + \epsilon_i
-\]
-
-Y does depend on x...
-
-\[
-H_1: \beta_1 \neq 0 \quad \quad Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
-\]
-
 Use the phrase "due to chance" (There is a picture to make here.)
-
 VERY small p-value with `cars`, will see this in practice.
 
 Then test a specific,
@@ -332,32 +659,20 @@ Then test a specific,
 H_0: \beta_1 = 10
 \]
 
-
 Be explicit about "nested models" with F test. Comparing the two models above. Projection picture? (Save for matrix approach?)
-
 
 \[
 F = 
 \]
 
-
 stat significance vs practical significance, effect size
 
 significance of LINEAR relationship. show line failing for quadratic plot.
 
-CI is EST pm CRIT * SE
-TEST is (EST - HYP) / SE
-
 check if HYP is in CI = test
 
-SE SE SE SE SE
 
-no CI for sigma
-
-all else equal, use the simpler model. (~1 is nested hierarchically inside ~ x)
-
-
-"We may speak of this hypothesis as the 'null hypothesis', and it should be noted that the null hypothesis is never proved or established, but is possibly disproved, in the course of experimentation." - RA Fisher
 
 anova(model)
 = anova(lm(y ~ x), lm(y ~ 1))
+all else equal, use the simpler model. (~1 is nested hierarchically inside ~ x)
