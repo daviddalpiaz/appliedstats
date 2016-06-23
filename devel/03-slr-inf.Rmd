@@ -7,46 +7,108 @@
 After reading this chapter you will be able to:
 
 - ...
+- ... 
 - ...
-- ...
-
 
 ## Sampling Distributions
 
-"notation abuse"
+Last chapter we defined the simple linear regression model,
 
-- $\hat{\beta_0}$ is a **statistic** with data, random variable without
-- $\hat{\beta_1}$ is a **statistic** with data, random variable without
+\[
+Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
+\]
 
-- last time we got estimates
-    - what we have (point) estimated, how we have estimated it
-- are they any good?
-- state gauss markov
-- show beta_1 is lc of Y values
+where $\epsilon_i \sim N(0, \sigma^2)$. We then used observations $(x_i, y_i)$, for $i = 1, 2, \ldots n$, to find values of $\beta_0$ and $\beta_1$ which minimized
+
+\[
+f(\beta_0, \beta_1) = \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2.
+\]
+
+We called these values $\hat{\beta}_0$ and $\hat{\beta}_1$, which we found to be
+
+\[
+\begin{aligned}
+\hat{\beta}_1 &= \frac{S_{xy}}{S_{xx}} = \frac{\sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i = 1}^{n}(x_i - \bar{x})^2}\\
+\hat{\beta}_0 &= \bar{y} - \hat{\beta}_1 \bar{x}.
+\end{aligned}
+\]
+
+We also estimated $\sigma ^2$ using $s_e^2$. In other words, we found that $s_e$ is an estimate of $\sigma$, where;
+
+\[
+s_e = RSE = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
+\]
+
+which we also called RSE, for "Residual Standard Error."
+
+Note that there is another equivalent expression for $S_{xy}$ which we did not see last chapter,
+
+\[
+S_{xy}= \sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y}) = \sum_{i = 1}^{n}(x_i - \bar{x}) y_i.
+\]
+
+This may be a surprising equivalence. (Maybe try to prove it.) However, it will be useful for illustrating concepts in this chapter.
+
+
+
+Note that, $\hat{\beta}_1$ is a **statistic** when calculated with observed data as written above, as is $\hat{\beta}_0$.   
+
+However, this chapter it will often be convenient to use both $\hat{\beta}_1$ and $\hat{\beta}_0$ as random variables, that is, we have not yet observed the values for each $Y_i$. When this is the case, we will use a slightly different notation, substituting in capital $Y_i$ for lower case $y_i$.
+
+\[
+\begin{aligned}
+\hat{\beta}_1 &= \frac{\sum_{i = 1}^{n}(x_i - \bar{x}) Y_i}{\sum_{i = 1}^{n}(x_i - \bar{x})^2} \\
+\hat{\beta}_0 &= \bar{Y} - \hat{\beta}_1 \bar{x}
+\end{aligned}
+\]
+
+Last chapter we argued that these estimates of unknown model parameters $\beta_0$ and $\beta_1$ were good because we obtained them by minimizing errors. We will now discuss the **Gauss–Markov theorem** which takes this idea further, showing that these estimates are actually the "best" estimates.
+
+ests are BLUE
+
+- LINEAR
+    - show beta_1 is lc of Y values
+
+- UNBIASED
+    - but as we saw via simulation, not always exact
+
+
+- BEST (smallest variance)
+    - what is the variance?
+    - by how much are we wrong? variability
+
+
 - unbiased and min var good
     - save for mathstat class to show
     - we will use simualtion
+    
 - distributional results
+
 - show with simulation
      - see below
+     - split and add narrative
 
 ```{r}
 # note, this is not the "best" way to do this, but shows it well
+# go back and use sim_slr?
 # note, need to "fix" x
-set.seed(42)
+set.seed(112358)
 num_samples = 1000 # make this larger
-sample_size = 20 # this is n
+sample_size = 20   # this is n
 beta_0      = 10
 beta_1      = 2
 sigma       = 3
-x = runif(sample_size, 0, 10)
+
+x   = seq(0, 10, length = sample_size)
 Sxx = sum((x - mean(x)) ^ 2)
 
 beta_0_hat = rep(0, num_samples)
 beta_1_hat = rep(0, num_samples)
 
 for(i in 1:num_samples) {
-  y = beta_0 + beta_1 * x + rnorm(sample_size, mean = 0, sd = sigma)
+  eps = rnorm(sample_size, mean = 0, sd = sigma)
+  y   = beta_0 + beta_1 * x + eps
+  
   sim_model = lm(y ~ x)
   
   beta_0_hat[i] = coef(sim_model)[1]
@@ -56,26 +118,34 @@ for(i in 1:num_samples) {
 
 
 mean(beta_1_hat)
-beta_1
+(ex_beta_1 = beta_1)
 sd(beta_1_hat)
-sigma / sqrt(Sxx)
-hist(beta_1_hat, prob = TRUE, breaks = 25, xlab = expression(hat(beta)[1]), main = "")
-ex_beta_1 = beta_1
-sd_beta_1 = sigma / sqrt(Sxx)
-curve(dnorm(x, mean = ex_beta_1, sd = sd_beta_1), col = 2, add = TRUE)
+(sd_beta_1 = sigma / sqrt(Sxx))
 
-hist(beta_0_hat)
+hist(beta_1_hat, prob = TRUE, breaks = 20, 
+     xlab = expression(hat(beta)[1]), main = "")
+curve(dnorm(x, mean = ex_beta_1, sd = sd_beta_1), col = 2, add = TRUE, lwd = 3)
+
+
 mean(beta_0_hat)
-beta_0
-sd(beta_0_hat)
-sigma * sqrt(1 / sample_size + mean(x) ^ 2 / Sxx)
+(ex_beta_0 = beta_0)
+sd(beta_1_hat)
+(sd_beta_0 = sigma * sqrt(1 / sample_size + mean(x) ^ 2 / Sxx))
 
+hist(beta_0_hat, prob = TRUE, breaks = 20, 
+     xlab = expression(hat(beta)[0]), main = "")
+curve(dnorm(x, mean = ex_beta_0, sd = sd_beta_0), col = 2, add = TRUE, lwd = 3)
+
+# note need to use prob = TRUE
 ```
 
 
 ## Confidence Intervals
 
+for $\hat{\beta}_0$ and $\hat{\beta}_1$
+
 - SD vs SE
+    - SD is estimated by SE
 - (EST - TRUE) / SD = NORMAL
 - (EST - TRUE) / SE = t
 - hand waive derivation of test stat dist for both reg coefs
@@ -85,10 +155,15 @@ sigma * sqrt(1 / sample_size + mean(x) ^ 2 / Sxx)
 
 ## Hypothesis Test
 
+for $\hat{\beta}_0$ and $\hat{\beta}_1$
+
+
 - setup testing as (EST - HYP) / SE, define SE in all case?
 - [https://xkcd.com/892/](https://xkcd.com/892/)
 
 ## CIs and PIs
+
+for $\hat{y}$ and $\hat{y}_{new}$
 
 - note about $(\bar{x}, \bar{y})$
     - also, this is where bands are smallest
@@ -97,8 +172,64 @@ sigma * sqrt(1 / sample_size + mean(x) ^ 2 / Sxx)
 
 recap R^2
 
+## `cars` Example
+
+```{r}
+stop_dist_model = lm(dist ~ speed, data = cars)
+summary(stop_dist_model)
+names(summary(stop_dist_model))
+summary(stop_dist_model)$coefficients[1,]
+summary(stop_dist_model)$coefficients[2,]
+
+summary(stop_dist_model)$coefficients[2, 3] #test statistic
+summary(stop_dist_model)$coefficients[2, 4] #p-value
+
+confint(stop_dist_model, level = 0.95)
+confint(stop_dist_model, level = 0.95)[2,]
+confint(stop_dist_model, "speed", level = 0.95)
+confint(stop_dist_model, "(Intercept)", level = 0.95)
 
 
+new_speeds = data.frame(speed = c(5, 21))
+predict(stop_dist_model, new_speeds, interval = c("confidence"), level = 0.95)
+predict(stop_dist_model, new_speeds, interval = c("prediction"), level = 0.95)
+
+
+anova(stop_dist_model)
+anova(lm(dist ~ 1, data = cars), lm(dist ~ speed, data = cars))
+```
+
+
+
+```{r}
+speed_grid = seq(min(cars$speed), max(cars$speed), by = 0.01)
+dist_ci_band = predict(stop_dist_model, 
+                           newdata = data.frame(speed = speed_grid), 
+                           interval = "confidence")
+dist_pi_band = predict(stop_dist_model, 
+                           newdata = data.frame(speed = speed_grid), 
+                           interval = "prediction") 
+
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 2,
+     col  = "dodgerblue")
+abline(stop_dist_model, lwd = 5, col = "darkorange")
+
+lines(speed_grid, dist_ci_band[,2], col = "red", lwd = 3)
+lines(speed_grid, dist_ci_band[,3], col = "red", lwd = 3)
+lines(speed_grid, dist_pi_band[,2], col = "green", lwd = 3)
+lines(speed_grid, dist_pi_band[,3], col = "green", lwd = 3)
+```
+
+
+
+
+
+## Below here notes to add to above outline.
 
 
 TODO: note about $\sum_{i = 1}^{n} e_i = 0$. Other helpful expressions?
@@ -106,22 +237,22 @@ TODO: note about $\sum_{i = 1}^{n} e_i = 0$. Other helpful expressions?
 
 
 \[
-Y_i \sim N(\beta_0 + \beta_1, \sigma^2)
-\]
-
-\[
 S_{xy} = \sum_{i = 1}^{n} x_i y_i - \frac{(\sum_{i = 1}^{n} x_i)(\sum_{i = 1}^{n} y_i)}{n}  = \sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y})
-= \sum_{i = 1}^{n}(x_i - \bar{x})(y_i)
+= \sum_{i = 1}^{n}(x_i - \bar{x}) y_i
 \]
 
 \[
-\hat{\beta_1} = \frac{S_{xy}}{S_xx} = \frac{\sum_{i = 1}^{n}(x_i - \bar{x})(Y_i)}{\sum_{i = 1}^{n}(x_i - \bar{x})^2} \sim N\left(  \beta_1, \frac{\sigma^2}{\sum_{i = 1}^{n}(x_i - \bar{x})^2} \right)
+\hat{\beta}_1 = \frac{S_{xy}}{S_{xx}} 
+= \frac{\sum_{i = 1}^{n}(x_i - \bar{x}) Y_i}{\sum_{i = 1}^{n}(x_i - \bar{x})^2} 
+\sim N\left(  \beta_1, \frac{\sigma^2}{\sum_{i = 1}^{n}(x_i - \bar{x})^2} \right)
+= N\left(  \beta_1, \frac{\sigma^2}{S_{xx}} \right)
 \]
 
 More succinctly...
 
 \[
-\hat{\beta_0} = \bar{Y} - \hat{\beta_1}\bar{x} \sim N\left(  \beta_0, \frac{\sigma^2 \sum_{i = 1}^{n}x_i^2}{n \sum_{i = 1}^{n}(x_i - \bar{x})^2} \right)
+\hat{\beta_0} = \bar{Y} - \hat{\beta}_1 \bar{x} 
+\sim N\left(  \beta_0, \frac{\sigma^2 \sum_{i = 1}^{n}x_i^2}{n \sum_{i = 1}^{n}(x_i - \bar{x})^2} \right)
 \]
 
 More often, more succinctly....
@@ -131,6 +262,10 @@ TODO: note notation abuse, switching between $Y_i$ and $y_i$ at liberty.
 
 !TODO: derivations, unbiasedness
 !TODO: decide how much to show?
+
+\[
+E[\hat{\beta_1}] = \beta_1
+\]
 
 \[
 Var[\hat{\beta_1}] = \frac{\sigma^2}{S_{xx}}
@@ -149,35 +284,8 @@ t = \frac{\hat{\beta_1}-\beta_{10}}{SE[\hat{\beta_1}]} = \frac{\hat{\beta_1}-\be
 \]
 
 \[
-\hat{\beta_1} \pm t_{n - 2}(\alpha/2) SE[\hat{\beta_1}] 
-\]
-
-
-???
-
-\[
-\hat{\beta_1} \pm t_{n - 2, \alpha/2} \cdot SE[\hat{\beta_1}] 
-\]
-
-Possible winner:
-(may need to edit previous)
-
-\[
 \hat{\beta_1} \pm t_{\alpha/2, n - 2} \cdot SE[\hat{\beta_1}] 
 \]
-
-\[
-\hat{\beta_1} \pm t_{n - 2}^{\alpha/2} \cdot SE[\hat{\beta_1}] 
-\]
-
-\[
-\hat{\beta_1} \pm t_{n - 2, \frac{\alpha}{2}} SE[\hat{\beta_1}] 
-\]
-
-\[
-\hat{\beta_1} \pm t_{n - 2}(\alpha/2) \frac{s_e}{\sqrt{S_{xx}}}
-\]
-
 
 
 \[
@@ -225,7 +333,7 @@ H_0: \beta_1 = 10
 \]
 
 
-Be explicit about "nested models" with F test. Comparing the two models above. Projection picture.
+Be explicit about "nested models" with F test. Comparing the two models above. Projection picture? (Save for matrix approach?)
 
 
 \[
@@ -250,3 +358,6 @@ all else equal, use the simpler model. (~1 is nested hierarchically inside ~ x)
 
 
 "We may speak of this hypothesis as the 'null hypothesis', and it should be noted that the null hypothesis is never proved or established, but is possibly disproved, in the course of experimentation." - RA Fisher
+
+anova(model)
+= anova(lm(y ~ x), lm(y ~ 1))
