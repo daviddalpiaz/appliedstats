@@ -781,8 +781,8 @@ L(\beta_0, \beta_1, \sigma^2) = \left(\frac{1}{\sqrt{2 \pi \sigma^2}}\right)^n \
 <p>Note that we use <span class="math inline">\(\log\)</span> to mean the natural logarithm. We now take a partial derivative with respect to each of the parameters.</p>
 <p><span class="math display">\[
 \begin{aligned}
-\frac{\partial \log L(\beta_0, \beta_1, \sigma^2)}{\partial \beta_0} &amp;= -\frac{2}{\sigma^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)\\
-\frac{\partial \log L(\beta_0, \beta_1, \sigma^2)}{\partial \beta_1} &amp;= -\frac{2}{\sigma^2} \sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i) \\
+\frac{\partial \log L(\beta_0, \beta_1, \sigma^2)}{\partial \beta_0} &amp;= \frac{1}{\sigma^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)\\
+\frac{\partial \log L(\beta_0, \beta_1, \sigma^2)}{\partial \beta_1} &amp;= \frac{1}{\sigma^2} \sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i) \\
 \frac{\partial \log L(\beta_0, \beta_1, \sigma^2)}{\partial \sigma^2} &amp;= -\frac{n}{2 \sigma^2} + \frac{1}{2(\sigma^2)^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2
 \end{aligned}
 \]</span></p>
@@ -817,7 +817,7 @@ s_e^2 &amp;= \frac{1}{n - 2} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2 = \frac{1}{n - 
 <p>In practice you will almost never have a true model, and you will use data to attempt to recover information about the unknown true model. With simulation, we decide the true model and simulate data from the it. Then we apply a method to the data, in this case least squares. Now, since we know the true model, we can assess how well it did.</p>
 <p>For this example, we will simulate <code>n = 20</code> observations from the model</p>
 <p><span class="math display">\[
-y_i = 5 + 2 x + \epsilon_i.
+y_i = 5 + 2 x_i + \epsilon_i.
 \]</span></p>
 <p>That is <span class="math inline">\(\beta_0 = 5\)</span>, <span class="math inline">\(\beta_1 = 2\)</span>, and let <span class="math inline">\(\epsilon_i \sim N(\mu = 0, \sigma^2 = 1)\)</span>.</p>
 <p>We first set the parameters of the simulation.</p>
