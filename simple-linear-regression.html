@@ -25,7 +25,7 @@
 
 <meta name="author" content="David Dalpiaz">
 
-<meta name="date" content="2016-06-24">
+<meta name="date" content="2016-06-25">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -39,7 +39,7 @@ MathJax.Hub.Config({
   
   
 <link rel="prev" href="introduction-to-r.html">
-
+<link rel="next" href="inference-for-simple-linear-regression.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -161,6 +161,24 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="3.5" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#maximum-likelihood-estimation-mle-approach"><i class="fa fa-check"></i><b>3.5</b> Maximum Likelihood Estimation (MLE) Approach</a></li>
 <li class="chapter" data-level="3.6" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#simulating-slr"><i class="fa fa-check"></i><b>3.6</b> Simulating SLR</a></li>
 <li class="chapter" data-level="3.7" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#history"><i class="fa fa-check"></i><b>3.7</b> History</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html"><i class="fa fa-check"></i><b>4</b> Inference for Simple Linear Regression</a><ul>
+<li class="chapter" data-level="4.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#gaussmarkov-theorem"><i class="fa fa-check"></i><b>4.1</b> Gauss–Markov Theorem</a></li>
+<li class="chapter" data-level="4.2" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#sampling-distributions"><i class="fa fa-check"></i><b>4.2</b> Sampling Distributions</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#simulating-sampling-distributions"><i class="fa fa-check"></i><b>4.2.1</b> Simulating Sampling Distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#standard-errors"><i class="fa fa-check"></i><b>4.3</b> Standard Errors</a></li>
+<li class="chapter" data-level="4.4" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-intervals-for-slope-and-intercept"><i class="fa fa-check"></i><b>4.4</b> Confidence Intervals for Slope and Intercept</a></li>
+<li class="chapter" data-level="4.5" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#hypothesis-tests"><i class="fa fa-check"></i><b>4.5</b> Hypothesis Tests</a></li>
+<li class="chapter" data-level="4.6" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#cars-example"><i class="fa fa-check"></i><b>4.6</b> <code>cars</code> Example</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#tests-in-r"><i class="fa fa-check"></i><b>4.6.1</b> Tests in <code>R</code></a></li>
+<li class="chapter" data-level="4.6.2" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#significance-of-regression-t-test"><i class="fa fa-check"></i><b>4.6.2</b> Significance of Regression, t-Test</a></li>
+<li class="chapter" data-level="4.6.3" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-intervals-in-r"><i class="fa fa-check"></i><b>4.6.3</b> Confidence Intervals in <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-interval-for-mean-response"><i class="fa fa-check"></i><b>4.7</b> Confidence Interval for Mean Response</a></li>
+<li class="chapter" data-level="4.8" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#prediction-interval-for-new-observations"><i class="fa fa-check"></i><b>4.8</b> Prediction Interval for New Observations</a></li>
+<li class="chapter" data-level="4.9" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-and-prediction-bands"><i class="fa fa-check"></i><b>4.9</b> Confidence and Prediction Bands</a></li>
+<li class="chapter" data-level="4.10" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#significance-of-regression-f-test"><i class="fa fa-check"></i><b>4.10</b> Significance of Regression, F-Test</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/daviddalpiaz/appliedstats" target="blank">&copy; 2016 David Dalpiaz</a></li>
@@ -879,9 +897,6 @@ sigma   =<span class="st"> </span><span class="dv">1</span></code></pre></div>
 <h2><span class="header-section-number">3.7</span> History</h2>
 <p>For some brief background on the history of linear regression, see <a href="http://www.amstat.org/publications/jse/v9n3/stanton.html">“Galton, Pearson, and the Peas: A Brief History of Linear Regression for Statistics Instructors”</a> from the <a href="http://www.amstat.org/publications/jse/">Journal of Statistics Education</a> as well as the <a href="https://en.wikipedia.org/wiki/Regression_analysis#History">Wikipedia page on the history of regression analysis</a> and lastly the article for <a href="https://en.wikipedia.org/wiki/Regression_toward_the_mean">regression to the mean</a> which details the origins of the term “regression.”</p>
 
-<div id="refs" class="references">
-
-</div>
 </div>
 </div>
             </section>
@@ -889,8 +904,8 @@ sigma   =<span class="st"> </span><span class="dv">1</span></code></pre></div>
           </div>
         </div>
       </div>
-<a href="introduction-to-r.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="introduction-to-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="inference-for-simple-linear-regression.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>

@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Applied Statistics with R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="Applied Statistics with <code>R</code>">
+  <meta name="generator" content="bookdown 0.0.73 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Applied Statistics with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://daviddalpiaz.github.io/appliedstats/" />
+  
+  
+  <meta name="github-repo" content="daviddalpiaz/appliedstats" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Applied Statistics with R" />
+  
+  
+  
+
+<meta name="author" content="David Dalpiaz">
+
+<meta name="date" content="2016-06-25">
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="simple-linear-regression.html">
+
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applied Statistics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i><b>1.1</b> About This Book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#conventions"><i class="fa fa-check"></i><b>1.2</b> Conventions</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i><b>1.4</b> License</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>2</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-resources"><i class="fa fa-check"></i><b>2.1</b> <code>R</code> Resources</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-basics"><i class="fa fa-check"></i><b>2.2</b> <code>R</code> Basics</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#basic-calculations"><i class="fa fa-check"></i><b>2.2.1</b> Basic Calculations</a></li>
+<li class="chapter" data-level="2.2.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#getting-help"><i class="fa fa-check"></i><b>2.2.2</b> Getting Help</a></li>
+<li class="chapter" data-level="2.2.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#installing-packages"><i class="fa fa-check"></i><b>2.2.3</b> Installing Packages</a></li>
+<li class="chapter" data-level="2.2.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-types"><i class="fa fa-check"></i><b>2.2.4</b> Data Types</a></li>
+<li class="chapter" data-level="2.2.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#vectors"><i class="fa fa-check"></i><b>2.2.5</b> Vectors</a></li>
+<li class="chapter" data-level="2.2.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#summary-statistics"><i class="fa fa-check"></i><b>2.2.6</b> Summary Statistics</a></li>
+<li class="chapter" data-level="2.2.7" data-path="introduction-to-r.html"><a href="introduction-to-r.html#matrices"><i class="fa fa-check"></i><b>2.2.7</b> Matrices</a></li>
+<li class="chapter" data-level="2.2.8" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-frames"><i class="fa fa-check"></i><b>2.2.8</b> Data Frames</a></li>
+<li class="chapter" data-level="2.2.9" data-path="introduction-to-r.html"><a href="introduction-to-r.html#plotting"><i class="fa fa-check"></i><b>2.2.9</b> Plotting</a></li>
+<li class="chapter" data-level="2.2.10" data-path="introduction-to-r.html"><a href="introduction-to-r.html#distributions"><i class="fa fa-check"></i><b>2.2.10</b> Distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#programming-basics"><i class="fa fa-check"></i><b>2.3</b> Programming Basics</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#logical-operators"><i class="fa fa-check"></i><b>2.3.1</b> Logical Operators</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#control-flow"><i class="fa fa-check"></i><b>2.3.2</b> Control Flow</a></li>
+<li class="chapter" data-level="2.3.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#functions"><i class="fa fa-check"></i><b>2.3.3</b> Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#hypothesis-tests-in-r"><i class="fa fa-check"></i><b>2.4</b> Hypothesis Tests in <code>R</code></a><ul>
+<li class="chapter" data-level="2.4.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#one-sample-t-test-review"><i class="fa fa-check"></i><b>2.4.1</b> One Sample t-Test: Review</a></li>
+<li class="chapter" data-level="2.4.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#one-sample-t-test-example"><i class="fa fa-check"></i><b>2.4.2</b> One Sample t-Test: Example</a></li>
+<li class="chapter" data-level="2.4.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#two-sample-t-test-review"><i class="fa fa-check"></i><b>2.4.3</b> Two Sample t-Test: Review</a></li>
+<li class="chapter" data-level="2.4.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#two-sample-t-test-example"><i class="fa fa-check"></i><b>2.4.4</b> Two Sample t-Test: Example</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#simulation"><i class="fa fa-check"></i><b>2.5</b> Simulation</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#paired-differences"><i class="fa fa-check"></i><b>2.5.1</b> Paired Differences</a></li>
+<li class="chapter" data-level="2.5.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#distribution-of-a-sample-mean"><i class="fa fa-check"></i><b>2.5.2</b> Distribution of a Sample Mean</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html"><i class="fa fa-check"></i><b>3</b> Simple Linear Regression</a><ul>
+<li class="chapter" data-level="3.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#modeling"><i class="fa fa-check"></i><b>3.1</b> Modeling</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#simple-linear-regression-model"><i class="fa fa-check"></i><b>3.1.1</b> Simple Linear Regression Model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#least-squares-approach"><i class="fa fa-check"></i><b>3.2</b> Least Squares Approach</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#making-predictions"><i class="fa fa-check"></i><b>3.2.1</b> Making Predictions</a></li>
+<li class="chapter" data-level="3.2.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#residuals"><i class="fa fa-check"></i><b>3.2.2</b> Residuals</a></li>
+<li class="chapter" data-level="3.2.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#variance-estimation"><i class="fa fa-check"></i><b>3.2.3</b> Variance Estimation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#decomposition-of-variation"><i class="fa fa-check"></i><b>3.3</b> Decomposition of Variation</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#coefficient-of-determination"><i class="fa fa-check"></i><b>3.3.1</b> Coefficient of Determination</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#the-lm-function"><i class="fa fa-check"></i><b>3.4</b> The <code>lm</code> Function</a></li>
+<li class="chapter" data-level="3.5" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#maximum-likelihood-estimation-mle-approach"><i class="fa fa-check"></i><b>3.5</b> Maximum Likelihood Estimation (MLE) Approach</a></li>
+<li class="chapter" data-level="3.6" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#simulating-slr"><i class="fa fa-check"></i><b>3.6</b> Simulating SLR</a></li>
+<li class="chapter" data-level="3.7" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#history"><i class="fa fa-check"></i><b>3.7</b> History</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html"><i class="fa fa-check"></i><b>4</b> Inference for Simple Linear Regression</a><ul>
+<li class="chapter" data-level="4.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#gaussmarkov-theorem"><i class="fa fa-check"></i><b>4.1</b> Gauss–Markov Theorem</a></li>
+<li class="chapter" data-level="4.2" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#sampling-distributions"><i class="fa fa-check"></i><b>4.2</b> Sampling Distributions</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#simulating-sampling-distributions"><i class="fa fa-check"></i><b>4.2.1</b> Simulating Sampling Distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#standard-errors"><i class="fa fa-check"></i><b>4.3</b> Standard Errors</a></li>
+<li class="chapter" data-level="4.4" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-intervals-for-slope-and-intercept"><i class="fa fa-check"></i><b>4.4</b> Confidence Intervals for Slope and Intercept</a></li>
+<li class="chapter" data-level="4.5" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#hypothesis-tests"><i class="fa fa-check"></i><b>4.5</b> Hypothesis Tests</a></li>
+<li class="chapter" data-level="4.6" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#cars-example"><i class="fa fa-check"></i><b>4.6</b> <code>cars</code> Example</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#tests-in-r"><i class="fa fa-check"></i><b>4.6.1</b> Tests in <code>R</code></a></li>
+<li class="chapter" data-level="4.6.2" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#significance-of-regression-t-test"><i class="fa fa-check"></i><b>4.6.2</b> Significance of Regression, t-Test</a></li>
+<li class="chapter" data-level="4.6.3" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-intervals-in-r"><i class="fa fa-check"></i><b>4.6.3</b> Confidence Intervals in <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-interval-for-mean-response"><i class="fa fa-check"></i><b>4.7</b> Confidence Interval for Mean Response</a></li>
+<li class="chapter" data-level="4.8" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#prediction-interval-for-new-observations"><i class="fa fa-check"></i><b>4.8</b> Prediction Interval for New Observations</a></li>
+<li class="chapter" data-level="4.9" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-and-prediction-bands"><i class="fa fa-check"></i><b>4.9</b> Confidence and Prediction Bands</a></li>
+<li class="chapter" data-level="4.10" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#significance-of-regression-f-test"><i class="fa fa-check"></i><b>4.10</b> Significance of Regression, F-Test</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/daviddalpiaz/appliedstats" target="blank">&copy; 2016 David Dalpiaz</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied Statistics with <code>R</code></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="inference-for-simple-linear-regression" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Inference for Simple Linear Regression</h1>
+<blockquote>
+<p>“There are three types of lies: lies, damn lies, and statistics.”</p>
+<p>— <strong>Benjamin Disraeli</strong></p>
+</blockquote>
+<p>After reading this chapter you will be able to:</p>
+<ul>
+<li>Understand the distributions of regression estimates.</li>
+<li>Create interval estimates for regression parameters.</li>
+<li>Test for significance of regression.</li>
+</ul>
+<p>Last chapter we defined the simple linear regression model,</p>
+<p><span class="math display">\[
+Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
+\]</span></p>
+<p>where <span class="math inline">\(\epsilon_i \sim N(0, \sigma^2)\)</span>. We then used observations <span class="math inline">\((x_i, y_i)\)</span>, for <span class="math inline">\(i = 1, 2, \ldots n\)</span>, to find values of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> which minimized</p>
+<p><span class="math display">\[
+f(\beta_0, \beta_1) = \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2.
+\]</span></p>
+<p>We called these values <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>, which we found to be</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\beta}_1 &amp;= \frac{S_{xy}}{S_{xx}} = \frac{\sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i = 1}^{n}(x_i - \bar{x})^2}\\
+\hat{\beta}_0 &amp;= \bar{y} - \hat{\beta}_1 \bar{x}.
+\end{aligned}
+\]</span></p>
+<p>We also estimated <span class="math inline">\(\sigma ^2\)</span> using <span class="math inline">\(s_e^2\)</span>. In other words, we found that <span class="math inline">\(s_e\)</span> is an estimate of <span class="math inline">\(\sigma\)</span>, where;</p>
+<p><span class="math display">\[
+s_e = RSE = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
+\]</span></p>
+<p>which we also called RSE, for “Residual Standard Error.”</p>
+<p>When applied to the <code>cars</code> data, we obtained the following results:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stop_dist_model =<span class="st"> </span><span class="kw">lm</span>(dist ~<span class="st"> </span>speed, <span class="dt">data =</span> cars)
+<span class="kw">summary</span>(stop_dist_model)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = dist ~ speed, data = cars)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -29.069  -9.525  -2.272   9.215  43.201 
+## 
+## Coefficients:
+##             Estimate Std. Error t value         Pr(&gt;|t|)    
+## (Intercept) -17.5791     6.7584  -2.601           0.0123 *  
+## speed         3.9324     0.4155   9.464 0.00000000000149 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 15.38 on 48 degrees of freedom
+## Multiple R-squared:  0.6511, Adjusted R-squared:  0.6438 
+## F-statistic: 89.57 on 1 and 48 DF,  p-value: 0.00000000000149</code></pre>
+<p>Last chapter, we only discussed the <code>Estimate</code>, <code>Residual standard error</code>, and <code>Multiple R-squared</code> values. In this chapter, we will discuss all of the information under <code>Coefficients</code> as well as <code>F-statistic</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(dist ~<span class="st"> </span>speed, <span class="dt">data =</span> cars,
+     <span class="dt">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,
+     <span class="dt">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,
+     <span class="dt">pch  =</span> <span class="dv">20</span>,
+     <span class="dt">cex  =</span> <span class="dv">2</span>,
+     <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)
+<span class="kw">abline</span>(stop_dist_model, <span class="dt">lwd =</span> <span class="dv">5</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-188-1.png" width="672" /></p>
+<p>To get started, we’ll note that there is another equivalent expression for <span class="math inline">\(S_{xy}\)</span> which we did not see last chapter,</p>
+<p><span class="math display">\[
+S_{xy}= \sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y}) = \sum_{i = 1}^{n}(x_i - \bar{x}) y_i.
+\]</span></p>
+<p>This may be a surprising equivalence. (Maybe try to prove it.) However, it will be useful for illustrating concepts in this chapter.</p>
+<p>Note that, <span class="math inline">\(\hat{\beta}_1\)</span> is a <strong>statistic</strong> when calculated with observed data as written above, as is <span class="math inline">\(\hat{\beta}_0\)</span>.</p>
+<p>However, in this chapter it will often be convenient to use both <span class="math inline">\(\hat{\beta}_1\)</span> and <span class="math inline">\(\hat{\beta}_0\)</span> as <strong>random variables</strong>, that is, we have not yet observed the values for each <span class="math inline">\(Y_i\)</span>. When this is the case, we will use a slightly different notation, substituting in capital <span class="math inline">\(Y_i\)</span> for lower case <span class="math inline">\(y_i\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\beta}_1 &amp;= \frac{\sum_{i = 1}^{n}(x_i - \bar{x}) Y_i}{\sum_{i = 1}^{n}(x_i - \bar{x})^2} \\
+\hat{\beta}_0 &amp;= \bar{Y} - \hat{\beta}_1 \bar{x}
+\end{aligned}
+\]</span></p>
+<p>Last chapter we argued that these estimates of unknown model parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> were good because we obtained them by minimizing errors. We will now discuss the Gauss–Markov theorem which takes this idea further, showing that these estimates are actually the “best” estimates, from a certain point of view.</p>
+<div id="gaussmarkov-theorem" class="section level2">
+<h2><span class="header-section-number">4.1</span> Gauss–Markov Theorem</h2>
+<p>The <strong>Gauss–Markov theorem</strong> tells us that when estimating the parameters of the simple linear regression model <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, the <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> which we derived are the <strong>best linear unbiased estiamtes</strong>, or <em>BLUE</em> for short. (The actual conditions for the Gauss–Markov theorem are more relaxed than the SLR model.)</p>
+<p>We will now discuss <em>linear</em>, <em>unbiased</em>, and <em>best</em> as is relates to these estimates.</p>
+<div id="linear" class="section level4 unnumbered">
+<h4>Linear</h4>
+<p>Recall, in the SLR setup that the <span class="math inline">\(x_i\)</span> values are considered fixed and known quantities. Then a <strong>linear</strong> estimate is one which can be written as a linear combination of the <span class="math inline">\(Y_i\)</span>. In the case of <span class="math inline">\(\hat{\beta}_1\)</span> we see</p>
+<p><span class="math display">\[
+\hat{\beta}_1 = \frac{\sum_{i = 1}^{n}(x_i - \bar{x}) Y_i}{\sum_{i = 1}^{n}(x_i - \bar{x})^2} = \sum_{i = 1}^n k_i Y_i = k_1 Y_1 + k_2 Y_2 + \cdots k_n Y_n
+\]</span></p>
+<p>where <span class="math inline">\(k_i = \displaystyle\frac{(x_i - \bar{x})}{\sum_{i = 1}^{n}(x_i - \bar{x})^2}\)</span>.</p>
+<p>In a similar fashion, we could show that <span class="math inline">\(\hat{\beta}_0\)</span> can be written as a linear combination of the <span class="math inline">\(Y_i\)</span>. Thus both <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are linear estimators.</p>
+</div>
+<div id="unbiased" class="section level4 unnumbered">
+<h4>Unbiased</h4>
+<p>Now that we know our estimates are <em>linear</em>, how good are these estimates? One measure of the “goodness” of an estimate is its <strong>bias</strong>. Specifically, we prefer estimates that are <strong>unbiased</strong>, meaning their expected value is the parameter being estimated.</p>
+<p>In the case of the regression estimates, we have,</p>
+<p><span class="math display">\[
+\begin{aligned}
+E[\hat{\beta}_0] &amp;= \beta_0 \\
+E[\hat{\beta}_1] &amp;= \beta_1.
+\end{aligned}
+\]</span></p>
+<p>This tells us that, when the conditions of the SLR model are met, on average our estimates will be correct. However, as we saw last chapter when simulating from the SLR model, that does not mean that each individual estimate will be correct. Only that, if we repeated the process an infinite number of times, on average the estimate would be correct.</p>
+</div>
+<div id="best" class="section level4 unnumbered">
+<h4>Best</h4>
+<p>Now, if we restrict ourselves to both <em>linear</em> and <em>unbiased</em> estimates, how do we define the <em>best</em> estimate? The estimate with the <strong>minimum varaince</strong>.</p>
+<p>First note that it is very easy to create an estimate for <span class="math inline">\(\beta_1\)</span> that has very low variance, but is not unbiased. For example, define:</p>
+<p><span class="math display">\[
+\hat{\theta}_{BAD} = 5.
+\]</span></p>
+<p>Then, since <span class="math inline">\(\hat{\theta}_{BAD}\)</span> is a constant value,</p>
+<p><span class="math display">\[
+Var[\hat{\theta}_{BAD}] = 0.
+\]</span></p>
+<p>However since,</p>
+<p><span class="math display">\[
+E[\hat{\theta}_{BAD}] = 5
+\]</span></p>
+<p>we say that <span class="math inline">\(\hat{\theta}_{BAD}\)</span> is a biased estimator unless <span class="math inline">\(\beta_1 = 5\)</span>, which we would not know ahead of time. For this reason, it is a terrible estimate (unless by chance <span class="math inline">\(\beta_1 = 5\)</span>) even though it has the smallest possible variance. This is part of the reason we restrict ourselves to <em>unbiased</em> estimates. What good is an estimate, if it estimates the wrong quantity?</p>
+<p>So now, the natural question is, what are the variances of <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>? They are,</p>
+<p><span class="math display">\[
+\begin{aligned}
+Var[\hat{\beta}_0] &amp;= \sigma^2 \left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right) \\
+Var[\hat{\beta}_1] &amp;= \frac{\sigma^2}{S_{xx}}.
+\end{aligned}
+\]</span></p>
+<p>These quantify the variability of the estimates due to random chance during sampling. Are these “the best”? Are these variances as small as we can possibility get? You’ll just have to take our word for it that they are because showing that this is true is beyond the score of this course.</p>
+</div>
+</div>
+<div id="sampling-distributions" class="section level2">
+<h2><span class="header-section-number">4.2</span> Sampling Distributions</h2>
+<p>Now that we have “redefined” the estimates for <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> as random variables, we can discuss their <strong>sampling distribution</strong>, which is the distribution when a statistic is considered a random variable.</p>
+<p>Since both <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are a linear combination of the <span class="math inline">\(Y_i\)</span> and each <span class="math inline">\(Y_i\)</span> is normally distributed, then both <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> also follow a normal distribution.</p>
+<p>Then, putting all of the above together, we arrive at the distributions of <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>.</p>
+<p>For <span class="math inline">\(\hat{\beta}_1\)</span> we say,</p>
+<p><span class="math display">\[
+\hat{\beta}_1 = \frac{S_{xy}}{S_{xx}} 
+= \frac{\sum_{i = 1}^{n}(x_i - \bar{x}) Y_i}{\sum_{i = 1}^{n}(x_i - \bar{x})^2}
+\sim N\left(  \beta_1, \frac{\sigma^2}{\sum_{i = 1}^{n}(x_i - \bar{x})^2} \right).
+\]</span></p>
+<p>Or more succinctly,</p>
+<p><span class="math display">\[
+\hat{\beta}_1 \sim N\left(  \beta_1, \frac{\sigma^2}{S_{xx}} \right).
+\]</span></p>
+<p>And for <span class="math inline">\(\hat{\beta}_0\)</span>,</p>
+<p><span class="math display">\[
+\hat{\beta}_0 = \bar{Y} - \hat{\beta}_1 \bar{x} 
+\sim N\left(  \beta_0, \frac{\sigma^2 \sum_{i = 1}^{n}x_i^2}{n \sum_{i = 1}^{n}(x_i - \bar{x})^2} \right).
+\]</span></p>
+<p>Or more succinctly,</p>
+<p><span class="math display">\[
+\hat{\beta}_0 \sim N\left(  \beta_0, \sigma^2 \left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right) \right)
+\]</span></p>
+<p>At this point we have neglected to prove a number of these results. Instead of working through the tedious derivations of these sampling distributions, we will instead justify these results to ourselves using simulation.</p>
+<p>A note to current readers: These derivations and proofs may be added to an appendix at a later time. You can also find these results in nearly any standard linear regression textbook. At UIUC, these results will likely be presented in both STAT 424 and STAT 425. However, since you will not be asked to perform derivations of this type in this course, they are for now omitted.</p>
+<div id="simulating-sampling-distributions" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Simulating Sampling Distributions</h3>
+<p>To verify the above results, we will simulate samples of size <span class="math inline">\(n = 100\)</span> from the model</p>
+<p><span class="math display">\[
+Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
+\]</span></p>
+<p>where <span class="math inline">\(\epsilon_i \sim N(0, \sigma^2).\)</span> In this case, the parameters are known to be:</p>
+<ul>
+<li><span class="math inline">\(\beta_0 = 3\)</span></li>
+<li><span class="math inline">\(\beta_1 = 6\)</span></li>
+<li><span class="math inline">\(\sigma^2 = 4\)</span></li>
+</ul>
+<p>Then, based on the above, we should find that</p>
+<p><span class="math display">\[
+\hat{\beta}_1 \sim N\left(  \beta_1, \frac{\sigma^2}{S_{xx}} \right)
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\hat{\beta}_0 \sim N\left(  \beta_0, \sigma^2 \left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right) \right).
+\]</span></p>
+<p>First we need to decide ahead of time what our <span class="math inline">\(x\)</span> values will be for this simulation, since the <span class="math inline">\(x\)</span> values in SLR are also considered known quantities. The choice of <span class="math inline">\(x\)</span> values is arbitrary. Here we also set a seed for randomization, and calculate <span class="math inline">\(S_{xx}\)</span> which we will need going forward.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
+sample_size =<span class="st"> </span><span class="dv">100</span> <span class="co"># this is n</span>
+x =<span class="st"> </span><span class="kw">seq</span>(-<span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">length =</span> sample_size)
+Sxx =<span class="st"> </span><span class="kw">sum</span>((x -<span class="st"> </span><span class="kw">mean</span>(x)) ^<span class="st"> </span><span class="dv">2</span>)</code></pre></div>
+<p>We also fix our parameter values.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beta_0 =<span class="st"> </span><span class="dv">3</span>
+beta_1 =<span class="st"> </span><span class="dv">6</span>
+sigma  =<span class="st"> </span><span class="dv">2</span></code></pre></div>
+<p>With this information, we know the sampling distributions should be:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">var_beta_1_hat =</span> sigma ^<span class="st"> </span><span class="dv">2</span> /<span class="st"> </span>Sxx)</code></pre></div>
+<pre><code>## [1] 0.1176238</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">var_beta_0_hat =</span> sigma ^<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span>(<span class="dv">1</span> /<span class="st"> </span>sample_size +<span class="st"> </span><span class="kw">mean</span>(x) ^<span class="st"> </span><span class="dv">2</span> /<span class="st"> </span>Sxx))</code></pre></div>
+<pre><code>## [1] 0.04</code></pre>
+<p><span class="math display">\[
+\hat{\beta}_1 \sim N(  6, 0.1176238)
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\hat{\beta}_0 \sim N(  3, 0.04).
+\]</span></p>
+<p>That is,</p>
+<p><span class="math display">\[
+\begin{aligned}
+E[\hat{\beta}_1] &amp;= 6 \\
+Var[\hat{\beta}_1] &amp;= 0.1176238
+\end{aligned}
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\begin{aligned}
+E[\hat{\beta}_0] &amp;= 3 \\
+Var[\hat{\beta}_0] &amp;= 0.04.
+\end{aligned}
+\]</span></p>
+<p>We now simulate this model 10,000 times. Note this may not be the most <code>R</code> way of doing the simulation. We perform the simulation in this manner in an attempt at clarity.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">num_samples =<span class="st"> </span><span class="dv">10000</span>
+beta_0_hats =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, num_samples)
+beta_1_hats =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, num_samples)
+
+for(i in <span class="dv">1</span>:num_samples) {
+  eps =<span class="st"> </span><span class="kw">rnorm</span>(sample_size, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> sigma)
+  y   =<span class="st"> </span>beta_0 +<span class="st"> </span>beta_1 *<span class="st"> </span>x +<span class="st"> </span>eps
+  
+  sim_model =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x)
+  
+  beta_0_hats[i] =<span class="st"> </span><span class="kw">coef</span>(sim_model)[<span class="dv">1</span>]
+  beta_1_hats[i] =<span class="st"> </span><span class="kw">coef</span>(sim_model)[<span class="dv">2</span>]
+}</code></pre></div>
+<p>The variables <code>beta_0_hats</code> and <code>beta_1_hats</code> now store 10,000 simulated values of <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> respectively.</p>
+<p>We first verify the distribution of <span class="math inline">\(\hat{\beta}_1\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(beta_1_hats) <span class="co"># empirical mean</span></code></pre></div>
+<pre><code>## [1] 6.001998</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beta_1            <span class="co"># true mean</span></code></pre></div>
+<pre><code>## [1] 6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(beta_1_hats)  <span class="co"># empirical variance</span></code></pre></div>
+<pre><code>## [1] 0.11899</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">var_beta_1_hat    <span class="co"># true variance</span></code></pre></div>
+<pre><code>## [1] 0.1176238</code></pre>
+<p>We see that the empirical and true means and variances are <em>very</em> similar. We also verify that the empirical distribution is normal. We plot a histogram of the <code>beta_1_hats</code>, and add the curve for the true distribution of <span class="math inline">\(\beta_1\)</span>. We use <code>prob = TRUE</code> to put the histogram on the same scale as the normal curve.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># note need to use prob = TRUE</span>
+<span class="kw">hist</span>(beta_1_hats, <span class="dt">prob =</span> <span class="ot">TRUE</span>, <span class="dt">breaks =</span> <span class="dv">20</span>, 
+     <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">1</span>]), <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)
+<span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> beta_1, <span class="dt">sd =</span> <span class="kw">sqrt</span>(var_beta_1_hat)), 
+      <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-194-1.png" width="672" /></p>
+<p>We then repeat the process for <span class="math inline">\(\hat{\beta}_0\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(beta_0_hats) <span class="co"># empirical mean</span></code></pre></div>
+<pre><code>## [1] 3.001147</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beta_0            <span class="co"># true mean</span></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(beta_0_hats)  <span class="co"># empirical variance</span></code></pre></div>
+<pre><code>## [1] 0.04017924</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">var_beta_0_hat    <span class="co"># true variance</span></code></pre></div>
+<pre><code>## [1] 0.04</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(beta_0_hats, <span class="dt">prob =</span> <span class="ot">TRUE</span>, <span class="dt">breaks =</span> <span class="dv">20</span>, 
+     <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">0</span>]), <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)
+<span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> beta_0, <span class="dt">sd =</span> <span class="kw">sqrt</span>(var_beta_0_hat)),
+      <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-196-1.png" width="672" /></p>
+<p>In this simulation study, we have only simulated a finite number of samples. To truly verify the distributional results, we would need to observe an infinite number of samples. However, the following plot should make it clear that if we continued simulating, the empirical results would get closer and closer to what we should expect.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="co"># adjusted plot margins, otherwise the &quot;hat&quot; does not display</span>
+<span class="kw">plot</span>(<span class="kw">cumsum</span>(beta_1_hats) /<span class="st"> </span>(<span class="dv">1</span>:<span class="kw">length</span>(beta_1_hats)), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">5.95</span>, <span class="fl">6.05</span>),
+     <span class="dt">xlab =</span> <span class="st">&quot;Number of Simulations&quot;</span>,
+     <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;Empirical Mean of &quot;</span> ~<span class="st"> </span><span class="kw">hat</span>(beta)[<span class="dv">1</span>]),
+     <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">6</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-197-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="co"># adjusted plot margins, otherwise the &quot;hat&quot; does not display</span>
+<span class="kw">plot</span>(<span class="kw">cumsum</span>(beta_0_hats) /<span class="st"> </span>(<span class="dv">1</span>:<span class="kw">length</span>(beta_0_hats)), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">2.95</span>, <span class="fl">3.05</span>),
+     <span class="dt">xlab =</span> <span class="st">&quot;Number of Simulations&quot;</span>,
+     <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;Empirical Mean of &quot;</span> ~<span class="st"> </span><span class="kw">hat</span>(beta)[<span class="dv">0</span>]),
+     <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-197-2.png" width="672" /></p>
+</div>
+</div>
+<div id="standard-errors" class="section level2">
+<h2><span class="header-section-number">4.3</span> Standard Errors</h2>
+<p>So now we believe the two distributional results,</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\beta}_0 &amp;\sim N\left(  \beta_0, \sigma^2 \left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right) \right) \\
+\hat{\beta}_1 &amp;\sim N\left(  \beta_1, \frac{\sigma^2}{S_{xx}} \right).
+\end{aligned}
+\]</span></p>
+<p>Then by standardizing these results we find that</p>
+<p><span class="math display">\[
+\frac{\hat{\beta}_0 - \beta_0}{SD[\hat{\beta}_0]} \sim N(0, 1)
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\frac{\hat{\beta}_1 - \beta_1}{SD[\hat{\beta}_1]} \sim N(0, 1)
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+SD[\hat{\beta}_0] = \sigma\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+SD[\hat{\beta}_1] = \frac{\sigma}{\sqrt{S_{xx}}}.
+\]</span></p>
+<p>Since we don’t know <span class="math inline">\(\sigma\)</span> in practice, we will have to estimate it using <span class="math inline">\(s_e\)</span>, which we plug into our existing expression for the standard deviations of our estimates. We choose <span class="math inline">\(s_e\)</span> instead of <span class="math inline">\(\hat{\sigma}\)</span> because, as you’ve seen recently, we prize unbiased estimators over biased ones.</p>
+<p>These two new expressions are called <strong>standard errors</strong> which are the <em>estimated</em> standard deviations of the sampling distributions.</p>
+<p><span class="math display">\[
+SE[\hat{\beta}_0] = s_e\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}
+\]</span></p>
+<p><span class="math display">\[
+SE[\hat{\beta}_1] = \frac{s_e}{\sqrt{S_{xx}}}
+\]</span></p>
+<p>Now if we divide by the standard error, instead of the standard deviation, we obtain the following results which will allow us to make confidence intervals and perform hypothesis testing.</p>
+<p><span class="math display">\[
+\frac{\hat{\beta}_1 - \beta_1}{SE[\hat{\beta}_0]} \sim t_{n-2}
+\]</span></p>
+<p><span class="math display">\[
+\frac{\hat{\beta}_1 - \beta_1}{SE[\hat{\beta}_1]} \sim t_{n-2}
+\]</span></p>
+<p>To see this, first note that,</p>
+<p><span class="math display">\[
+\frac{RSS}{\sigma^2} = \frac{(n-2)s_e^2}{\sigma^2} \sim \chi_{n-2}^2.
+\]</span></p>
+<p>Then we use the classic trick of “multiply by 1” and some rearranging to arrive at</p>
+<p><span class="math display">\[
+\frac{\hat{\beta}_1 - \beta_1}{SE[\hat{\beta}_1]} = \frac{\hat{\beta}_1 - \beta_1}{s_e / S_{xx}}
+= \frac{\hat{\beta}_1 - \beta_1}{s_e / S_{xx}} \cdot \frac{\sigma / S_{xx}}{\sigma / S_{xx}}
+= \frac{\hat{\beta}_1 - \beta_1}{\sigma / S_{xx}} \cdot \frac{\sigma / S_{xx}}{s_e / S_{xx}}
+= \frac{\hat{\beta}_1 - \beta_1}{\sigma / S_{xx}} \bigg/ \sqrt{\frac{s_e^2}{\sigma^2}}
+\sim \frac{Z}{\sqrt{\frac{\chi_{n-2}^2}{n-2}}}
+\sim t_{n-2}
+\]</span></p>
+<p>where <span class="math inline">\(Z \sim N(0,1)\)</span>.</p>
+<p>Recall that a random variable <span class="math inline">\(T\)</span> defined as,</p>
+<p><span class="math display">\[
+T = \frac{Z}{\sqrt{\frac{\chi_{d}^2}{d}}}
+\]</span></p>
+<p>follows a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(d\)</span> degrees of freedom, where <span class="math inline">\(\chi_{d}^2\)</span> is a <span class="math inline">\(\chi^2\)</span> random variable with <span class="math inline">\(d\)</span> degrees of freedom.</p>
+<p>That is,</p>
+<p><span class="math display">\[
+T \sim t_d.
+\]</span></p>
+</div>
+<div id="confidence-intervals-for-slope-and-intercept" class="section level2">
+<h2><span class="header-section-number">4.4</span> Confidence Intervals for Slope and Intercept</h2>
+<p>Recall that confidence intervals for means often take the form:</p>
+<p><span class="math display">\[
+EST \pm CRIT \cdot SE
+\]</span></p>
+<p>or</p>
+<p><span class="math display">\[
+EST \pm MARGIN
+\]</span></p>
+<p>where <span class="math inline">\(EST\)</span> is an estimate for the parameter of interest, <span class="math inline">\(SE\)</span> is the standard error of the estimate and <span class="math inline">\(MARGIN = CRIT \cdot SE\)</span>.</p>
+<p>Then, for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> we can create confidence intervals using</p>
+<p><span class="math display">\[
+\hat{\beta}_0 \pm t_{\alpha/2, n - 2} \cdot SE[\hat{\beta}_0] \quad \quad \quad \hat{\beta}_0 \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}}
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\hat{\beta}_1 \pm t_{\alpha/2, n - 2} \cdot SE[\hat{\beta}_1]  \quad \quad \quad \hat{\beta}_1 \pm t_{\alpha/2, n - 2} \cdot \frac{s_e}{\sqrt{S_{xx}}}
+\]</span></p>
+<p>where <span class="math inline">\(t_{\alpha/2, n - 2}\)</span> is the critical value such that <span class="math inline">\(P(t_{n-2} &gt; t_{\alpha/2, n - 2}) = \alpha/2\)</span>.</p>
+</div>
+<div id="hypothesis-tests" class="section level2">
+<h2><span class="header-section-number">4.5</span> Hypothesis Tests</h2>
+<blockquote>
+<p>“We may speak of this hypothesis as the ‘<a href="https://xkcd.com/892/">null hypothesis</a>’, and it should be noted that the null hypothesis is never proved or established, but is possibly disproved, in the course of experimentation.”</p>
+<p>— <strong>Ronald Aylmer Fisher</strong></p>
+</blockquote>
+<p>Recall that a test statistic (<span class="math inline">\(TS\)</span>) for testing means often take the form:</p>
+<p><span class="math display">\[
+TS = \frac{EST - HYP}{SE}
+\]</span></p>
+<p>where <span class="math inline">\(EST\)</span> is an estimate for the parameter of interest, <span class="math inline">\(HYP\)</span> is a hypothesized value of the parameter, and <span class="math inline">\(SE\)</span> is the standard error of the estimate.</p>
+<p>So, to test</p>
+<p><span class="math display">\[
+H_0: \beta_0 = \beta_{00} \quad \text{vs} \quad H_1: \beta_0 \neq \beta_{00}
+\]</span></p>
+<p>we use the test statistic</p>
+<p><span class="math display">\[
+t = \frac{\hat{\beta}_0 - \beta_{00}}{SE[\hat{\beta}_0]} = \frac{\hat{\beta}_0-\beta_{00}}{s_e\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}}
+\]</span></p>
+<p>which, under the null hypothesis, follows a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n - 2\)</span> degrees of freedom. We use <span class="math inline">\(\beta_{00}\)</span> to denote the hypothesized value of <span class="math inline">\(\beta_0\)</span>.</p>
+<p>Similarly, to test</p>
+<p><span class="math display">\[
+H_0: \beta_1 = \beta_{10} \quad \text{vs} \quad H_1: \beta_1 \neq \beta_{10}
+\]</span></p>
+<p>we use the test statistic</p>
+<p><span class="math display">\[
+t = \frac{\hat{\beta}_1-\beta_{10}}{SE[\hat{\beta}_1]} = \frac{\hat{\beta}_1-\beta_{10}}{s_e / \sqrt{S_{xx}}}
+\]</span></p>
+<p>which again, under the null hypothesis, follows a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n - 2\)</span> degrees of freedom. We now use <span class="math inline">\(\beta_{10}\)</span> to denote the hypothesized value of <span class="math inline">\(\beta_1\)</span>.</p>
+</div>
+<div id="cars-example" class="section level2">
+<h2><span class="header-section-number">4.6</span> <code>cars</code> Example</h2>
+<p>We now return to the <code>cars</code> example from last chapter to illustrate these concepts. We first fit the model using <code>lm()</code> then use <code>summary()</code> to view the results in greater detail.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stop_dist_model =<span class="st"> </span><span class="kw">lm</span>(dist ~<span class="st"> </span>speed, <span class="dt">data =</span> cars)
+<span class="kw">summary</span>(stop_dist_model)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = dist ~ speed, data = cars)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -29.069  -9.525  -2.272   9.215  43.201 
+## 
+## Coefficients:
+##             Estimate Std. Error t value         Pr(&gt;|t|)    
+## (Intercept) -17.5791     6.7584  -2.601           0.0123 *  
+## speed         3.9324     0.4155   9.464 0.00000000000149 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 15.38 on 48 degrees of freedom
+## Multiple R-squared:  0.6511, Adjusted R-squared:  0.6438 
+## F-statistic: 89.57 on 1 and 48 DF,  p-value: 0.00000000000149</code></pre>
+<div id="tests-in-r" class="section level3">
+<h3><span class="header-section-number">4.6.1</span> Tests in <code>R</code></h3>
+<p>We will now discuss the results displayed called <code>Coefficients</code>. First recall that we can extract this information directly.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(<span class="kw">summary</span>(stop_dist_model))</code></pre></div>
+<pre><code>##  [1] &quot;call&quot;          &quot;terms&quot;         &quot;residuals&quot;     &quot;coefficients&quot; 
+##  [5] &quot;aliased&quot;       &quot;sigma&quot;         &quot;df&quot;            &quot;r.squared&quot;    
+##  [9] &quot;adj.r.squared&quot; &quot;fstatistic&quot;    &quot;cov.unscaled&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(stop_dist_model)$coefficients</code></pre></div>
+<pre><code>##               Estimate Std. Error   t value             Pr(&gt;|t|)
+## (Intercept) -17.579095  6.7584402 -2.601058 0.012318816153809090
+## speed         3.932409  0.4155128  9.463990 0.000000000001489836</code></pre>
+<p>The <code>names()</code> function tells us what information is available, and then we use the <code>$</code> operator and <code>coefficients</code> to extract the information we are interested in. Two values here should be immediately familiar.</p>
+<p><span class="math display">\[
+\hat{\beta}_0 = -17.5790949
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+\hat{\beta}_1 = 3.9324088
+\]</span></p>
+<p>which are our estimates for the model parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</p>
+<p>Let’s now focus on the second row of output, which is relevant to <span class="math inline">\(\beta_1\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(stop_dist_model)$coefficients[<span class="dv">2</span>,]</code></pre></div>
+<pre><code>##             Estimate           Std. Error              t value 
+## 3.932408759124084607 0.415512776657122163 9.463989990298365740 
+##             Pr(&gt;|t|) 
+## 0.000000000001489836</code></pre>
+<p>Again, the first value, <code>Estimate</code> is</p>
+<p><span class="math display">\[
+\hat{\beta}_1 = 3.9324088.
+\]</span></p>
+<p>The second value, <code>Std. Error</code>, is the standard error of <span class="math inline">\(\hat{\beta}_1\)</span>,</p>
+<p><span class="math display">\[
+SE[\hat{\beta}_1] = \frac{s_e}{\sqrt{S_{xx}}} = 0.4155128.
+\]</span></p>
+<p>The third value, <code>t value</code>, is the value of the test statistics for testing <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs <span class="math inline">\(H_1: \beta_1 \neq 0\)</span>,</p>
+<p><span class="math display">\[
+t = \frac{\hat{\beta}_1-0}{SE[\hat{\beta}_1]} = \frac{\hat{\beta}_1-0}{s_e / \sqrt{S_{xx}}} = 9.46399.
+\]</span></p>
+<p>Lastly, <code>Pr(&gt;|t|)</code>, gives us the p-value of that test.</p>
+<p><span class="math display">\[
+\text{p-value} = 1.4898365\times 10^{-12}
+\]</span></p>
+<p>Note here, we are specifically testing whether or not <span class="math inline">\(\beta_1 = 0\)</span>.</p>
+<p>The first row of output reports the same values, but for <span class="math inline">\(\beta_0\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(stop_dist_model)$coefficients[<span class="dv">1</span>,]</code></pre></div>
+<pre><code>##     Estimate   Std. Error      t value     Pr(&gt;|t|) 
+## -17.57909489   6.75844017  -2.60105800   0.01231882</code></pre>
+<p>In summary, the following code stores the information of <code>summary(stop_dist_model)$coefficients</code> in a new variable <code>stop_dist_model_test_info</code>, then extracts each element into a new variable which describes the information it contains.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stop_dist_model_test_info =<span class="st"> </span><span class="kw">summary</span>(stop_dist_model)$coefficients
+
+beta_0_hat      =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>,<span class="dv">1</span>] <span class="co"># Estimate</span>
+beta_0_hat_se   =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>,<span class="dv">2</span>] <span class="co"># Std. Error</span>
+beta_0_hat_t    =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>,<span class="dv">3</span>] <span class="co"># t value</span>
+beta_0_hat_pval =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>,<span class="dv">4</span>] <span class="co"># Pr(&gt;|t|)</span>
+
+beta_1_hat      =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>,<span class="dv">1</span>] <span class="co"># Estimate</span>
+beta_1_hat_se   =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>,<span class="dv">2</span>] <span class="co"># Std. Error</span>
+beta_1_hat_t    =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>,<span class="dv">3</span>] <span class="co"># t value</span>
+beta_1_hat_pval =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>,<span class="dv">4</span>] <span class="co"># Pr(&gt;|t|)</span></code></pre></div>
+<p>We can then verify some equivalent expressions: the <span class="math inline">\(t\)</span> test statistic for <span class="math inline">\(\hat{\beta}_1\)</span> and the two-sided p-value associated with that test statistic.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(beta_1_hat -<span class="st"> </span><span class="dv">0</span>) /<span class="st"> </span>beta_1_hat_se</code></pre></div>
+<pre><code>## [1] 9.46399</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beta_1_hat_t</code></pre></div>
+<pre><code>## [1] 9.46399</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span> *<span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(beta_1_hat_t), <span class="dt">df =</span> <span class="kw">length</span>(<span class="kw">resid</span>(stop_dist_model)) -<span class="st"> </span><span class="dv">2</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<pre><code>## [1] 0.000000000001489836</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beta_1_hat_pval</code></pre></div>
+<pre><code>## [1] 0.000000000001489836</code></pre>
+</div>
+<div id="significance-of-regression-t-test" class="section level3">
+<h3><span class="header-section-number">4.6.2</span> Significance of Regression, t-Test</h3>
+<p>We pause to discuss the <strong>significance of regression</strong> test. First, note that based on the above distributional results, we could test <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> against any particular value, and perform both one and two-sided tests.</p>
+<p>However, one very specific test,</p>
+<p><span class="math display">\[
+H_0: \beta_1 = 0 \quad \text{vs} \quad H_1: \beta_1 \neq 0
+\]</span></p>
+<p>is used most often. Let’s think about this test in terms of the simple linear regression model,</p>
+<p><span class="math display">\[
+Y_i = \beta_0 + \beta_1 x_i + \epsilon_i.
+\]</span></p>
+<p>If we assume the null hypothesis is true, then <span class="math inline">\(\beta_1 = 0\)</span> and we have the model,</p>
+<p><span class="math display">\[
+Y_i = \beta_0 + \epsilon_i.
+\]</span></p>
+<p>In this model, the response does <strong>not</strong> depend on the predictor. So then we could think of this test in the following way,</p>
+<ul>
+<li>Under <span class="math inline">\(H_0\)</span> there is not a significant linear relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>.</li>
+<li>Under <span class="math inline">\(H_1\)</span> there is a significance <strong>linear</strong> relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>.</li>
+</ul>
+<p>For the <code>cars</code> example,</p>
+<ul>
+<li>Under <span class="math inline">\(H_0\)</span> there is not a significant linear relationship between speed and stopping distance.</li>
+<li>Under <span class="math inline">\(H_1\)</span> there is a significant <strong>linear</strong> relationship between speed and stopping distance.</li>
+</ul>
+<p>Again, that test is seen in the output from <code>summary()</code>,</p>
+<p><span class="math display">\[
+\text{p-value} = 1.4898365\times 10^{-12}.
+\]</span></p>
+<p>With this extremely low p-value, we would reject the null hypothesis at any reasonable <span class="math inline">\(\alpha\)</span> level, say for example <span class="math inline">\(\alpha = 0.01\)</span>. So we say there is a significant <strong>linear</strong> relationship between speed and stopping distance. Notice that we emphasize <strong>linear</strong>.</p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-205-1.png" width="672" /></p>
+<p>In this plot of simulated data, we see a clear relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, however it is not a linear relationship. If we fit a line to this data, it is very flat. The resulting test for <span class="math inline">\(H_0: \beta_1 = 0\)</span>  <span class="math inline">\(H_1: \beta_1 \neq 0\)</span> gives a large p-value, in this case <span class="math inline">\(0.7564548\)</span>, so we would fail to reject and say that there is no significant linear relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. We will see later how to fit a curve to this data using a “linear” model, but for now, realize that testing <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs <span class="math inline">\(H_1: \beta_1 \neq 0\)</span> can only detect straight line relationships.</p>
+</div>
+<div id="confidence-intervals-in-r" class="section level3">
+<h3><span class="header-section-number">4.6.3</span> Confidence Intervals in <code>R</code></h3>
+<p>Using <code>R</code> we can very easily obtain the confidence intervals for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)</code></pre></div>
+<pre><code>##                  0.5 %    99.5 %
+## (Intercept) -35.706610 0.5484205
+## speed         2.817919 5.0468988</code></pre>
+<p>This automatically calculates 99% confidence intervals for both <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, the first row for <span class="math inline">\(\beta_0\)</span>, the second row for <span class="math inline">\(\beta_1\)</span>.</p>
+<p>For the <code>cars</code> example when interpreting these intervals, we say, we are 99% confident that for an increase in speed of 1 mile per hour, the average increase in stopping distance is between 2.8179187 and 5.0468988 feet, which is the interval for <span class="math inline">\(\beta_1\)</span>.</p>
+<p>Note that this 99% confidence interval does <strong>not</strong> contain the hypothesized value of 0. Since it does not contain 0, it is equivalent to rejecting the test of <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs <span class="math inline">\(H_1: \beta_1 \neq 0\)</span> at <span class="math inline">\(\alpha = 0.01\)</span>, which we had seen previously.</p>
+<p>You should be somewhat suspicious of the confidence interval for <span class="math inline">\(\beta_0\)</span>, as it covers negative values, which correspond to negative stopping distances. Technically the interpretation would be that we are 99% confident that the average stopping distance of a car traveling 0 miles per hour is between -35.7066103 and 0.5484205, but we don’t really believe that, since we are actually certain that it would be non-negative.</p>
+<p>Note, we can extract specific values from this output a number of ways. This code is not run, and instead, you should check how it relates to the output of the code above.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">1</span>,]
+<span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">1</span>,<span class="dv">1</span>]
+<span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">1</span>,<span class="dv">2</span>]
+<span class="kw">confint</span>(stop_dist_model, <span class="dt">parm =</span> <span class="st">&quot;(Intercept)&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>)
+<span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">2</span>,]
+<span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">2</span>,<span class="dv">1</span>]
+<span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">2</span>,<span class="dv">2</span>]
+<span class="kw">confint</span>(stop_dist_model, <span class="dt">parm =</span> <span class="st">&quot;speed&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>)</code></pre></div>
+</div>
+</div>
+<div id="confidence-interval-for-mean-response" class="section level2">
+<h2><span class="header-section-number">4.7</span> Confidence Interval for Mean Response</h2>
+<p>In addition to confidence intervals for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> there two other common interval estimates used with regression. The first is called a <strong>confidence interval for the mean response</strong>. Often, we would like an interval estimate for the mean, <span class="math inline">\(E[Y]\)</span> for a particular value of <span class="math inline">\(x\)</span>.</p>
+<p>In this situation we use <span class="math inline">\(\hat{y}\)</span> as our estimate of <span class="math inline">\(E[Y]\)</span>.</p>
+<p><span class="math display">\[
+\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x
+\]</span></p>
+<p>Recall that,</p>
+<p><span class="math display">\[
+E[Y] = \beta_0 + \beta_1 x
+\]</span></p>
+<p>Thus, <span class="math inline">\(\hat{y}\)</span> is a good estimate since it is unbiased:</p>
+<p><span class="math display">\[
+E[\hat{y}] = \beta_0 + \beta_1 x.
+\]</span></p>
+<p>We could then derive,</p>
+<p><span class="math display">\[
+Var[\hat{y}] = \sigma^2 \left(\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right).
+\]</span></p>
+<p>Like the other estimates we have seen, <span class="math inline">\(\hat{y}\)</span> also follows a normal distribution,</p>
+<p><span class="math display">\[
+\hat{y} \sim N \left(\beta_0 + \beta_1 x, \sigma^2 \left(\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right) \right).
+\]</span></p>
+<p>And lastly, since we need to estimate this variance, we arrive at the standard error of our estimate,</p>
+<p><span class="math display">\[
+SE[\hat{y}] = s_e \sqrt{\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}.
+\]</span></p>
+<p>We can then use this to find the confidence interval for the mean response,</p>
+<p><span class="math display">\[
+\hat{y} \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}
+\]</span></p>
+<p>To find confidence intervals for the mean response using <code>R</code>, we use the <code>predict()</code> function. We give the function our fitted model as well as new data, stored as a data frame. (This is important, so that <code>R</code> knows the name of the predictor variable.) Here, we are finding the confidence interval for the mean stopping distance when a car is travelling 5 miles per hour and when a car is travelling 21 miles per hour.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new_speeds =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">speed =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">21</span>))
+<span class="kw">predict</span>(stop_dist_model, <span class="dt">newdata =</span> new_speeds, 
+        <span class="dt">interval =</span> <span class="kw">c</span>(<span class="st">&quot;confidence&quot;</span>), <span class="dt">level =</span> <span class="fl">0.99</span>)</code></pre></div>
+<pre><code>##         fit       lwr      upr
+## 1  2.082949 -10.89309 15.05898
+## 2 65.001489  56.45836 73.54462</code></pre>
+</div>
+<div id="prediction-interval-for-new-observations" class="section level2">
+<h2><span class="header-section-number">4.8</span> Prediction Interval for New Observations</h2>
+<p>Sometimes we would like an interval estimate for a new observation, <span class="math inline">\(Y\)</span> for a particular value of <span class="math inline">\(x\)</span>. This is very similar to an interval for the mean response, <span class="math inline">\(E[Y]\)</span>, but different in one very important way.</p>
+<p>Our best guess for a new observation is still <span class="math inline">\(\hat{y}\)</span>. The estimated mean is still the best prediction we can make. The difference is in the amount of variability, since we know that observations will vary about the true regression line according to a <span class="math inline">\(N(0, \sigma^2)\)</span> distribution. Because of this we add an extra factor of <span class="math inline">\(\sigma^2\)</span> to our estimates variability.</p>
+<p><span class="math display">\[
+Var[\hat{y}] = \sigma^2 \left(1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right)
+\]</span></p>
+<p><span class="math display">\[
+\hat{y} \sim N \left(\beta_0 + \beta_1 x, \sigma^2 \left(1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right) \right)
+\]</span></p>
+<p><span class="math display">\[
+SE[\hat{y}] = s_e \sqrt{1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}
+\]</span></p>
+<p>We can then find a <strong>prediction interval</strong> using,</p>
+<p><span class="math display">\[
+\hat{y} \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}.
+\]</span></p>
+<p>To calculate this for a set of points in <code>R</code> notice there is only a minor change in syntax from finding a confidence interval for the mean response.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(stop_dist_model, <span class="dt">newdata =</span> new_speeds, 
+        <span class="dt">interval =</span> <span class="kw">c</span>(<span class="st">&quot;prediction&quot;</span>), <span class="dt">level =</span> <span class="fl">0.99</span>)</code></pre></div>
+<pre><code>##         fit       lwr       upr
+## 1  2.082949 -41.16099  45.32689
+## 2 65.001489  22.87494 107.12803</code></pre>
+<p>Also notice that these two intervals are wider than the corresponding confidence intervals for the mean response.</p>
+</div>
+<div id="confidence-and-prediction-bands" class="section level2">
+<h2><span class="header-section-number">4.9</span> Confidence and Prediction Bands</h2>
+<p>Often we will like to plot both confidence intervals for the mean response and prediction intervals for all possible values of <span class="math inline">\(x\)</span>. We calls these confidence and prediction bands.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">speed_grid =<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(cars$speed), <span class="kw">max</span>(cars$speed), <span class="dt">by =</span> <span class="fl">0.01</span>)
+dist_ci_band =<span class="st"> </span><span class="kw">predict</span>(stop_dist_model, 
+                           <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">speed =</span> speed_grid), 
+                           <span class="dt">interval =</span> <span class="st">&quot;confidence&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>)
+dist_pi_band =<span class="st"> </span><span class="kw">predict</span>(stop_dist_model, 
+                           <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">speed =</span> speed_grid), 
+                           <span class="dt">interval =</span> <span class="st">&quot;prediction&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>) 
+
+<span class="kw">plot</span>(dist ~<span class="st"> </span>speed, <span class="dt">data =</span> cars,
+     <span class="dt">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,
+     <span class="dt">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,
+     <span class="dt">pch  =</span> <span class="dv">20</span>,
+     <span class="dt">cex  =</span> <span class="dv">2</span>,
+     <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>,
+     <span class="dt">ylim =</span> <span class="kw">c</span>(-<span class="dv">50</span>, <span class="dv">140</span>))
+<span class="kw">abline</span>(stop_dist_model, <span class="dt">lwd =</span> <span class="dv">5</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)
+
+<span class="kw">lines</span>(speed_grid, dist_ci_band[,<span class="st">&quot;lwr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
+<span class="kw">lines</span>(speed_grid, dist_ci_band[,<span class="st">&quot;upr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
+<span class="kw">lines</span>(speed_grid, dist_pi_band[,<span class="st">&quot;lwr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;green&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">3</span>)
+<span class="kw">lines</span>(speed_grid, dist_pi_band[,<span class="st">&quot;upr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;green&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">3</span>)
+<span class="kw">points</span>(<span class="kw">mean</span>(cars$speed), <span class="kw">mean</span>(cars$dist), <span class="dt">pch =</span> <span class="st">&quot;+&quot;</span>, <span class="dt">cex =</span> <span class="dv">3</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-210-1.png" width="672" /></p>
+<p>Some things to notice:</p>
+<ul>
+<li>We use the <code>ylim</code> argument to stretch the <span class="math inline">\(y\)</span>-axis of the plot, since the bands extend further than the points.</li>
+<li>We add a point at the point <span class="math inline">\((\bar{x}, \bar{y})\)</span>.
+<ul>
+<li>This is a point that the regression line will <strong>always</strong> pass through. (Think about why.)</li>
+<li>This is the point where both the confidence and prediction bands are the narrowest. Look at the standard errors of both to understand why.</li>
+</ul></li>
+<li>The prediction bands (green) are less curved than the confidence bands (red). This is a result of the extra factor of <span class="math inline">\(\sigma^2\)</span> added to the variance at any value of <span class="math inline">\(x\)</span>.</li>
+</ul>
+</div>
+<div id="significance-of-regression-f-test" class="section level2">
+<h2><span class="header-section-number">4.10</span> Significance of Regression, F-Test</h2>
+<p>In the case of simple linear regression, the <span class="math inline">\(t\)</span> test for the significance of the regression is equivalent to another test, the <span class="math inline">\(F\)</span> test for the significance of the regression. This equivalence will only be true for simple linear regression, and in the next chapter we will only use the <span class="math inline">\(F\)</span> test for the significance of the regression.</p>
+<p>Recall from last chapter the decomposition of variance we saw before calculating <span class="math inline">\(R^2\)</span>,</p>
+<p><span class="math display">\[
+\sum_{i=1}^{n}(y_i - \bar{y})^2 = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2,
+\]</span></p>
+<p>or, in short,</p>
+<p><span class="math display">\[
+SST = SSReg + SSE.
+\]</span></p>
+<p>To develop the <span class="math inline">\(F\)</span> test, we will arrange this information in an <strong>ANOVA</strong> table,</p>
+<table style="width:117%;">
+<colgroup>
+<col width="18%" />
+<col width="25%" />
+<col width="29%" />
+<col width="25%" />
+<col width="19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Source</th>
+<th align="left">Sum of Squares</th>
+<th align="left">Degrees of Freedom</th>
+<th align="left">Mean Square</th>
+<th align="left"><span class="math inline">\(F\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Regression</td>
+<td align="left"><span class="math inline">\(\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2\)</span></td>
+<td align="left"><span class="math inline">\(1\)</span></td>
+<td align="left"><span class="math inline">\(SSReg / 1\)</span></td>
+<td align="left"><span class="math inline">\(MSReg / MSE\)</span></td>
+</tr>
+<tr class="even">
+<td align="left">Error</td>
+<td align="left"><span class="math inline">\(\sum_{i=1}^{n}(y_i - \hat{y}_i)^2\)</span></td>
+<td align="left"><span class="math inline">\(n - 2\)</span></td>
+<td align="left"><span class="math inline">\(SSE / (n - 2)\)</span></td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Total</td>
+<td align="left"><span class="math inline">\(\sum_{i=1}^{n}(y_i - \bar{y})^2\)</span></td>
+<td align="left"><span class="math inline">\(n - 1\)</span></td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+<p>ANOVA, or Analysis of Variance will be a concept we return to often in this course. For now, we will focus on the results of the table, which is the <span class="math inline">\(F\)</span> statistic,</p>
+<p><span class="math display">\[
+F = \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2 / 1}{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2 / (n - 2)} \sim F_{1, n - 2}
+\]</span></p>
+<p>which follows an <span class="math inline">\(F\)</span> distribution with degrees of freedom <span class="math inline">\(1\)</span> and <span class="math inline">\(n - 2\)</span> under the null hypothesis. An <span class="math inline">\(F\)</span> distribution is a continuous distribution which takes only positive values and has two parameters, which are the two degrees of freedom.</p>
+<p>Recall, in the significance of the regression test, <span class="math inline">\(Y\)</span> does <strong>not</strong> depend on <span class="math inline">\(x\)</span> in the null hypothesis.</p>
+<p><span class="math display">\[
+H_0: \beta_1 = 0 \quad \quad Y_i = \beta_0 + \epsilon_i
+\]</span></p>
+<p>While in the alternative hypothesis <span class="math inline">\(Y\)</span> may depend on <span class="math inline">\(x\)</span>.</p>
+<p><span class="math display">\[
+H_1: \beta_1 \neq 0 \quad \quad Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
+\]</span></p>
+<p>We can use the <span class="math inline">\(F\)</span> statistic to perform this test.</p>
+<p><span class="math display">\[
+F = \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2 / 1}{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2 / (n - 2)}
+\]</span></p>
+<p>In particular, we will reject the null when the <span class="math inline">\(F\)</span> statistic is large, that is, when there is a low probability that the observations could have come from the null model by chance. We will let <code>R</code> calculate the p-value for us.</p>
+<p>To perform the <span class="math inline">\(F\)</span> test in <code>R</code> you can look at the last row of the output from <code>summary()</code> called <code>F-statistic</code> which gives the value of the test statistic, the relevant degrees of freedom, as well as the p-value of the test.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(stop_dist_model)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = dist ~ speed, data = cars)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -29.069  -9.525  -2.272   9.215  43.201 
+## 
+## Coefficients:
+##             Estimate Std. Error t value         Pr(&gt;|t|)    
+## (Intercept) -17.5791     6.7584  -2.601           0.0123 *  
+## speed         3.9324     0.4155   9.464 0.00000000000149 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 15.38 on 48 degrees of freedom
+## Multiple R-squared:  0.6511, Adjusted R-squared:  0.6438 
+## F-statistic: 89.57 on 1 and 48 DF,  p-value: 0.00000000000149</code></pre>
+<p>Additionally, you can use the <code>anova()</code> function to display the information in an ANOVA table.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(stop_dist_model)</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: dist
+##           Df Sum Sq Mean Sq F value           Pr(&gt;F)    
+## speed      1  21186 21185.5  89.567 0.00000000000149 ***
+## Residuals 48  11354   236.5                             
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>This also gives a p-value for the test. You should notice that the p-value from the <span class="math inline">\(t\)</span> test was the same. You might also notice that the value of the test statistic for the <span class="math inline">\(t\)</span> test, <span class="math inline">\(9.46399\)</span>, can be squared to obtain the value of the <span class="math inline">\(F\)</span> statistic, <span class="math inline">\(89.5671065\)</span>.</p>
+<p>Note that there is another equivalent way to do this in <code>R</code>, which we will return to often to compare two models.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(<span class="kw">lm</span>(dist ~<span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> cars), <span class="kw">lm</span>(dist ~<span class="st"> </span>speed, <span class="dt">data =</span> cars))</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: dist ~ 1
+## Model 2: dist ~ speed
+##   Res.Df   RSS Df Sum of Sq      F           Pr(&gt;F)    
+## 1     49 32539                                         
+## 2     48 11354  1     21186 89.567 0.00000000000149 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>The model statement <code>lm(dist ~ 1, data = cars)</code> applies the model <span class="math inline">\(Y_i = \beta_0 + \epsilon_i\)</span> to the cars data. Note that <span class="math inline">\(\hat{y} = \bar{y}\)</span> when <span class="math inline">\(Y_i = \beta_0 + \epsilon_i\)</span>.</p>
+<p>The model statement <code>lm(dist ~ speed, data = cars)</code> applies the model <span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i + \epsilon_i\)</span>.</p>
+<p>We can then think of this usage of <code>anova()</code> as directly comparing the two models. (Notice we get the same p-value again.)</p>
+
+<div id="refs" class="references">
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="simple-linear-regression.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/daviddalpiaz/appliedstats/edit/master/03-slr-inf.Rmd",
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
