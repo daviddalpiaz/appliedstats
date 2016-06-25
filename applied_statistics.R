@@ -1,7 +1,7 @@
 ## ----setup, echo = FALSE, message = FALSE, warning = FALSE--------------------
 require(knitr)
 read_chunk('r_book.R')
-options(scipen = 8, digits = 4, width = 80)
+options(scipen = 8, width = 80)
 knit_hooks$set(purl = hook_purl)
 opts_template$set(nopurl = list(purl = FALSE))
 opts_template$set(dopurl = list(purl = TRUE))
@@ -891,4 +891,187 @@ plot(response ~ predictor, data = sim_data,
      cex  = 2,
      col  = "dodgerblue")
 abline(sim_fit, lwd = 3, col = "darkorange")
+
+## -----------------------------------------------------------------------------
+stop_dist_model = lm(dist ~ speed, data = cars)
+summary(stop_dist_model)
+
+## -----------------------------------------------------------------------------
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 2,
+     col  = "dodgerblue")
+abline(stop_dist_model, lwd = 5, col = "darkorange")
+
+## -----------------------------------------------------------------------------
+set.seed(42)
+sample_size = 100 # this is n
+x = seq(-1, 1, length = sample_size)
+Sxx = sum((x - mean(x)) ^ 2)
+
+## -----------------------------------------------------------------------------
+beta_0 = 3
+beta_1 = 6
+sigma  = 2
+
+## -----------------------------------------------------------------------------
+(var_beta_1_hat = sigma ^ 2 / Sxx)
+(var_beta_0_hat = sigma ^ 2 * (1 / sample_size + mean(x) ^ 2 / Sxx))
+
+## -----------------------------------------------------------------------------
+num_samples = 10000
+beta_0_hats = rep(0, num_samples)
+beta_1_hats = rep(0, num_samples)
+
+for(i in 1:num_samples) {
+  eps = rnorm(sample_size, mean = 0, sd = sigma)
+  y   = beta_0 + beta_1 * x + eps
+  
+  sim_model = lm(y ~ x)
+  
+  beta_0_hats[i] = coef(sim_model)[1]
+  beta_1_hats[i] = coef(sim_model)[2]
+}
+
+## -----------------------------------------------------------------------------
+mean(beta_1_hats) # empirical mean
+beta_1            # true mean
+var(beta_1_hats)  # empirical variance
+var_beta_1_hat    # true variance
+
+## -----------------------------------------------------------------------------
+# note need to use prob = TRUE
+hist(beta_1_hats, prob = TRUE, breaks = 20, 
+     xlab = expression(hat(beta)[1]), main = "", border = "dodgerblue")
+curve(dnorm(x, mean = beta_1, sd = sqrt(var_beta_1_hat)), 
+      col = "darkorange", add = TRUE, lwd = 3)
+
+## -----------------------------------------------------------------------------
+mean(beta_0_hats) # empirical mean
+beta_0            # true mean
+var(beta_0_hats)  # empirical variance
+var_beta_0_hat    # true variance
+
+## -----------------------------------------------------------------------------
+hist(beta_0_hats, prob = TRUE, breaks = 20, 
+     xlab = expression(hat(beta)[0]), main = "", border = "dodgerblue")
+curve(dnorm(x, mean = beta_0, sd = sqrt(var_beta_0_hat)),
+      col = "darkorange", add = TRUE, lwd = 3)
+
+## -----------------------------------------------------------------------------
+par(mar = c(5, 5, 1, 1)) # adjusted plot margins, otherwise the "hat" does not display
+plot(cumsum(beta_1_hats) / (1:length(beta_1_hats)), type = "l", ylim = c(5.95, 6.05),
+     xlab = "Number of Simulations",
+     ylab = expression("Empirical Mean of " ~ hat(beta)[1]),
+     col  = "dodgerblue")
+abline(h = 6, col = "darkorange", lwd = 2)
+
+par(mar = c(5, 5, 1, 1)) # adjusted plot margins, otherwise the "hat" does not display
+plot(cumsum(beta_0_hats) / (1:length(beta_0_hats)), type = "l", ylim = c(2.95, 3.05),
+     xlab = "Number of Simulations",
+     ylab = expression("Empirical Mean of " ~ hat(beta)[0]),
+     col  = "dodgerblue")
+abline(h = 3, col = "darkorange", lwd = 2)
+
+## -----------------------------------------------------------------------------
+stop_dist_model = lm(dist ~ speed, data = cars)
+summary(stop_dist_model)
+
+## -----------------------------------------------------------------------------
+names(summary(stop_dist_model))
+summary(stop_dist_model)$coefficients
+
+## -----------------------------------------------------------------------------
+summary(stop_dist_model)$coefficients[2,]
+
+## -----------------------------------------------------------------------------
+summary(stop_dist_model)$coefficients[1,]
+
+## -----------------------------------------------------------------------------
+stop_dist_model_test_info = summary(stop_dist_model)$coefficients
+
+beta_0_hat      = stop_dist_model_test_info[1,1] # Estimate
+beta_0_hat_se   = stop_dist_model_test_info[1,2] # Std. Error
+beta_0_hat_t    = stop_dist_model_test_info[1,3] # t value
+beta_0_hat_pval = stop_dist_model_test_info[1,4] # Pr(>|t|)
+
+beta_1_hat      = stop_dist_model_test_info[2,1] # Estimate
+beta_1_hat_se   = stop_dist_model_test_info[2,2] # Std. Error
+beta_1_hat_t    = stop_dist_model_test_info[2,3] # t value
+beta_1_hat_pval = stop_dist_model_test_info[2,4] # Pr(>|t|)
+
+## -----------------------------------------------------------------------------
+(beta_1_hat - 0) / beta_1_hat_se
+beta_1_hat_t
+
+## -----------------------------------------------------------------------------
+2 * pt(abs(beta_1_hat_t), df = length(resid(stop_dist_model)) - 2, lower.tail = FALSE)
+beta_1_hat_pval
+
+## ---- echo = FALSE------------------------------------------------------------
+set.seed(42)
+x = seq(-1, 1, 0.01)
+y = 5 + 4 * x ^ 2 + rnorm(length(x), 0, 0.5)
+plot(x, y)
+abline(lm(y ~ x))
+#summary(lm(y ~ x))$coef[2,4]
+
+## -----------------------------------------------------------------------------
+confint(stop_dist_model, level = 0.99)
+
+## ---- eval = FALSE------------------------------------------------------------
+#  confint(stop_dist_model, level = 0.99)[1,]
+#  confint(stop_dist_model, level = 0.99)[1,1]
+#  confint(stop_dist_model, level = 0.99)[1,2]
+#  confint(stop_dist_model, parm = "(Intercept)", level = 0.99)
+#  confint(stop_dist_model, level = 0.99)[2,]
+#  confint(stop_dist_model, level = 0.99)[2,1]
+#  confint(stop_dist_model, level = 0.99)[2,2]
+#  confint(stop_dist_model, parm = "speed", level = 0.99)
+
+## -----------------------------------------------------------------------------
+new_speeds = data.frame(speed = c(5, 21))
+predict(stop_dist_model, newdata = new_speeds, 
+        interval = c("confidence"), level = 0.99)
+
+## -----------------------------------------------------------------------------
+predict(stop_dist_model, newdata = new_speeds, 
+        interval = c("prediction"), level = 0.99)
+
+## -----------------------------------------------------------------------------
+speed_grid = seq(min(cars$speed), max(cars$speed), by = 0.01)
+dist_ci_band = predict(stop_dist_model, 
+                           newdata = data.frame(speed = speed_grid), 
+                           interval = "confidence", level = 0.99)
+dist_pi_band = predict(stop_dist_model, 
+                           newdata = data.frame(speed = speed_grid), 
+                           interval = "prediction", level = 0.99) 
+
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 2,
+     col  = "dodgerblue",
+     ylim = c(-50, 140))
+abline(stop_dist_model, lwd = 5, col = "darkorange")
+
+lines(speed_grid, dist_ci_band[,"lwr"], col = "red", lwd = 3, lty = 2)
+lines(speed_grid, dist_ci_band[,"upr"], col = "red", lwd = 3, lty = 2)
+lines(speed_grid, dist_pi_band[,"lwr"], col = "green", lwd = 3, lty = 3)
+lines(speed_grid, dist_pi_band[,"upr"], col = "green", lwd = 3, lty = 3)
+points(mean(cars$speed), mean(cars$dist), pch = "+", cex = 3)
+
+## -----------------------------------------------------------------------------
+summary(stop_dist_model)
+
+## -----------------------------------------------------------------------------
+anova(stop_dist_model)
+
+## -----------------------------------------------------------------------------
+anova(lm(dist ~ 1, data = cars), lm(dist ~ speed, data = cars))
 
