@@ -377,12 +377,12 @@ y =<span class="st"> </span>cars$dist</code></pre></div>
 Sxx =<span class="st"> </span><span class="kw">sum</span>((x -<span class="st"> </span><span class="kw">mean</span>(x)) ^<span class="st"> </span><span class="dv">2</span>)
 Syy =<span class="st"> </span><span class="kw">sum</span>((y -<span class="st"> </span><span class="kw">mean</span>(y)) ^<span class="st"> </span><span class="dv">2</span>)
 <span class="kw">c</span>(Sxy, Sxx, Syy)</code></pre></div>
-<pre><code>## [1]  5387.40  1370.00 32538.98</code></pre>
+<pre><code>## [1]  5387  1370 32539</code></pre>
 <p>Then finally calculate <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beta_1_hat =<span class="st"> </span>Sxy /<span class="st"> </span>Sxx
 beta_0_hat =<span class="st"> </span><span class="kw">mean</span>(y) -<span class="st"> </span>beta_1_hat *<span class="st"> </span><span class="kw">mean</span>(x)
 <span class="kw">c</span>(beta_0_hat, beta_1_hat)</code></pre></div>
-<pre><code>## [1] -17.579095   3.932409</code></pre>
+<pre><code>## [1] -17.579   3.932</code></pre>
 <p>What do these values tell us about our dataset?</p>
 <p>The slope <em>parameter</em> <span class="math inline">\(\beta_1\)</span> tells us that for an increase in speed of one mile per hour, the <strong>mean</strong> stopping distance increases by <span class="math inline">\(\beta_1\)</span>. It is important to specify that we are talking about the mean. Recall that <span class="math inline">\(\beta_0 + \beta_1 x\)</span> is the estimated mean of <span class="math inline">\(Y\)</span>, in this case stopping distance, for a particular value of <span class="math inline">\(x\)</span>. (In this case speed.) So <span class="math inline">\(\beta_1\)</span> tells us how the mean of <span class="math inline">\(Y\)</span> is affected by a change in <span class="math inline">\(x\)</span>.</p>
 <p>Similarly, the <em>estimate</em> <span class="math inline">\(\hat{\beta}_1 = 3.932\)</span> tells us that for an increase in speed of one mile per hour, the <strong>estimated</strong> <em>mean</em> stopping distance increases by <span class="math inline">\(3.932\)</span> feet. Here we should be sure to specify we are discussing an estimated quantity. Recall that <span class="math inline">\(\hat{y}\)</span> is the estimated mean of <span class="math inline">\(Y\)</span>, so <span class="math inline">\(\hat{\beta}_1\)</span> tells us how the estimated mean of <span class="math inline">\(Y\)</span> is affected by changing <span class="math inline">\(x\)</span>.</p>
@@ -405,7 +405,7 @@ beta_0_hat =<span class="st"> </span><span class="kw">mean</span>(y) -<span clas
 \hat{y} = -17.579 + 3.932 \times 8 = 13.88
 \]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beta_0_hat +<span class="st"> </span>beta_1_hat *<span class="st"> </span><span class="dv">8</span></code></pre></div>
-<pre><code>## [1] 13.88018</code></pre>
+<pre><code>## [1] 13.88</code></pre>
 <p>This tells us that the estimated mean stopping distance of a car traveling at 8 miles per hour is 13.88.</p>
 <p>Now let’s make a prediction for the stopping distance of a car traveling at 21 miles per hour. This is considered <strong>interpolation</strong> as 21 is not an observed value of <span class="math inline">\(x\)</span>. (But is in the data range.) We can use the special <code>%in%</code> operator to quickly verify this in <code>R</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">8</span> %in%<span class="st"> </span><span class="kw">unique</span>(cars$speed)</code></pre></div>
@@ -418,7 +418,7 @@ beta_0_hat =<span class="st"> </span><span class="kw">mean</span>(y) -<span clas
 \hat{y} = -17.579 + 3.932 \times 21 = 65.001
 \]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beta_0_hat +<span class="st"> </span>beta_1_hat *<span class="st"> </span><span class="dv">21</span></code></pre></div>
-<pre><code>## [1] 65.00149</code></pre>
+<pre><code>## [1] 65</code></pre>
 <p>Lastly, we can make a prediction for the stopping distance of a car traveling at 50 miles per hour. This is considered <a href="https://xkcd.com/605/"><strong>extrapolation</strong></a> as 50 is not an observed value of <span class="math inline">\(x\)</span> and is outside data range. We should be less confident in predictions of this type.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">range</span>(cars$speed)</code></pre></div>
 <pre><code>## [1]  4 25</code></pre>
@@ -428,7 +428,7 @@ beta_0_hat =<span class="st"> </span><span class="kw">mean</span>(y) -<span clas
 \hat{y} = -17.579 + 3.932 \times 50 = 179.041
 \]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beta_0_hat +<span class="st"> </span>beta_1_hat *<span class="st"> </span><span class="dv">50</span></code></pre></div>
-<pre><code>## [1] 179.0413</code></pre>
+<pre><code>## [1] 179</code></pre>
 <p>Cars travel 50 miles per hour rather easily today, but not in the 1920s!</p>
 <p>This is also an issue we saw when interpreting <span class="math inline">\(\hat{\beta}_0 = -17.579\)</span>, which is equivalent to making a prediction at <span class="math inline">\(x = 0\)</span>. We should not be confident in the estimated linear relationship outside of the range of data we have observed.</p>
 </div>
@@ -456,7 +456,7 @@ e_i = y_i - \hat{y}_i
 e = 16 - 13.88 = 2.12
 \]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">16</span> -<span class="st"> </span>(beta_0_hat +<span class="st"> </span>beta_1_hat *<span class="st"> </span><span class="dv">8</span>)</code></pre></div>
-<pre><code>## [1] 2.119825</code></pre>
+<pre><code>## [1] 2.12</code></pre>
 <p>The positive residual value indicates that the observed stopping distance is actually 2.12 feet more than what was predicted.</p>
 </div>
 <div id="variance-estimation" class="section level3">
@@ -489,11 +489,11 @@ e     =<span class="st"> </span>y -<span class="st"> </span>y_hat
 n     =<span class="st"> </span><span class="kw">length</span>(e)
 s2_e  =<span class="st"> </span><span class="kw">sum</span>(e^<span class="dv">2</span>) /<span class="st"> </span>(n -<span class="st"> </span><span class="dv">2</span>)
 s2_e</code></pre></div>
-<pre><code>## [1] 236.5317</code></pre>
+<pre><code>## [1] 236.5</code></pre>
 <p>Just as with the univariate measure of variance, this value of 236.532 doesn’t have a practical interpretation in terms of stopping distance. Taking the square root, however, computes the standard deviation of the residuals, also known as <em>residual standard error</em>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s_e =<span class="st"> </span><span class="kw">sqrt</span>(s2_e)
 s_e</code></pre></div>
-<pre><code>## [1] 15.37959</code></pre>
+<pre><code>## [1] 15.38</code></pre>
 <p>This tells us that our estimates of mean stopping distance are “typically” off by 15.38 feet.</p>
 </div>
 </div>
@@ -537,14 +537,14 @@ SSE = RSS = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2
 SSReg =<span class="st"> </span><span class="kw">sum</span>((y_hat -<span class="st"> </span><span class="kw">mean</span>(y)) ^<span class="st"> </span><span class="dv">2</span>)
 SSE   =<span class="st"> </span><span class="kw">sum</span>((y -<span class="st"> </span>y_hat) ^<span class="st"> </span><span class="dv">2</span>)
 <span class="kw">c</span>(<span class="dt">SST =</span> SST, <span class="dt">SSReg =</span> SSReg, <span class="dt">SSE =</span> SSE)</code></pre></div>
-<pre><code>##      SST    SSReg      SSE 
-## 32538.98 21185.46 11353.52</code></pre>
+<pre><code>##   SST SSReg   SSE 
+## 32539 21185 11354</code></pre>
 <p>Note that,</p>
 <p><span class="math display">\[
 s_e^2 = \frac{SSE}{n - 2}.
 \]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SSE /<span class="st"> </span>(n -<span class="st"> </span><span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] 236.5317</code></pre>
+<pre><code>## [1] 236.5</code></pre>
 <p>We can use <code>R</code> to verify that this matches our previous calculation of <span class="math inline">\(s_e^2\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s2_e ==<span class="st"> </span>SSE /<span class="st"> </span>(n -<span class="st"> </span><span class="dv">2</span>)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
@@ -562,7 +562,7 @@ R^2 = \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} 
 <p>The coefficient of determination is interpreted as the proportion of observed variation in <span class="math inline">\(y\)</span> that can be explained by the simple linear regression model.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">R2 =<span class="st"> </span>SSReg /<span class="st"> </span>SST
 R2</code></pre></div>
-<pre><code>## [1] 0.6510794</code></pre>
+<pre><code>## [1] 0.6511</code></pre>
 <p>For the <code>cars</code> example, we calculate <span class="math inline">\(R^2 = 0.651\)</span>. We then say that <span class="math inline">\(65.1\%\)</span> of the observed variability in stopping distance is explained by the linear relationship with speed.</p>
 <p>The following three plots visually demonstrate the three “sums of squares” for a simulated dataset which has <span class="math inline">\(R^2 = 0.901\)</span> which is a somewhat high value. Notice in the third plot, that the orange arrows account for a larger proportion of the total arrow.</p>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-157-1.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-157-2.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-157-3.png" width="672" /></p>
@@ -585,10 +585,10 @@ R2</code></pre></div>
 ## 
 ## Coefficients:
 ## (Intercept)        speed  
-##     -17.579        3.932</code></pre>
+##      -17.58         3.93</code></pre>
 <p>We see that it first tells us the formula we input into <code>R</code>, that is <code>lm(formula = dist ~ speed, data = cars)</code>. We also see the coefficients of the model. We can check that these are what we had calculated previously. (Minus some rounding that <code>R</code> is doing to display the results.)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(beta_0_hat, beta_1_hat)</code></pre></div>
-<pre><code>## [1] -17.579095   3.932409</code></pre>
+<pre><code>## [1] -17.579   3.932</code></pre>
 <p>Next, it would be nice to add the fitted line to the scatterplot. To do so we will use the <code>abline()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(dist ~<span class="st"> </span>speed, <span class="dt">data =</span> cars,
      <span class="dt">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,
@@ -607,58 +607,50 @@ R2</code></pre></div>
 ##  [9] &quot;xlevels&quot;       &quot;call&quot;          &quot;terms&quot;         &quot;model&quot;</code></pre>
 <p>When can then use this information to, for example, access the residuals using the <code>$</code> operator.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stop_dist_model$residuals</code></pre></div>
-<pre><code>##          1          2          3          4          5          6          7 
-##   3.849460  11.849460  -5.947766  12.052234   2.119825  -7.812584  -3.744993 
-##          8          9         10         11         12         13         14 
-##   4.255007  12.255007  -8.677401   2.322599 -15.609810  -9.609810  -5.609810 
-##         15         16         17         18         19         20         21 
-##  -1.609810  -7.542219   0.457781   0.457781  12.457781 -11.474628  -1.474628 
-##         22         23         24         25         26         27         28 
-##  22.525372  42.525372 -21.407036 -15.407036  12.592964 -13.339445  -5.339445 
-##         29         30         31         32         33         34         35 
-## -17.271854  -9.271854   0.728146 -11.204263   2.795737  22.795737  30.795737 
-##         36         37         38         39         40         41         42 
-## -21.136672 -11.136672  10.863328 -29.069080 -13.069080  -9.069080  -5.069080 
-##         43         44         45         46         47         48         49 
-##   2.930920  -2.933898 -18.866307  -6.798715  15.201285  16.201285  43.201285 
-##         50 
-##   4.268876</code></pre>
+<pre><code>##        1        2        3        4        5        6        7        8 
+##   3.8495  11.8495  -5.9478  12.0522   2.1198  -7.8126  -3.7450   4.2550 
+##        9       10       11       12       13       14       15       16 
+##  12.2550  -8.6774   2.3226 -15.6098  -9.6098  -5.6098  -1.6098  -7.5422 
+##       17       18       19       20       21       22       23       24 
+##   0.4578   0.4578  12.4578 -11.4746  -1.4746  22.5254  42.5254 -21.4070 
+##       25       26       27       28       29       30       31       32 
+## -15.4070  12.5930 -13.3394  -5.3394 -17.2719  -9.2719   0.7281 -11.2043 
+##       33       34       35       36       37       38       39       40 
+##   2.7957  22.7957  30.7957 -21.1367 -11.1367  10.8633 -29.0691 -13.0691 
+##       41       42       43       44       45       46       47       48 
+##  -9.0691  -5.0691   2.9309  -2.9339 -18.8663  -6.7987  15.2013  16.2013 
+##       49       50 
+##  43.2013   4.2689</code></pre>
 <p>Another way to access stored information in <code>stop_dist_model</code> are the <code>coef()</code>, <code>resid()</code>, and <code>fitted()</code> functions. These return the coefficients, residuals, and fitted values, respectively.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(stop_dist_model)</code></pre></div>
 <pre><code>## (Intercept)       speed 
-##  -17.579095    3.932409</code></pre>
+##     -17.579       3.932</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">resid</span>(stop_dist_model)</code></pre></div>
-<pre><code>##          1          2          3          4          5          6          7 
-##   3.849460  11.849460  -5.947766  12.052234   2.119825  -7.812584  -3.744993 
-##          8          9         10         11         12         13         14 
-##   4.255007  12.255007  -8.677401   2.322599 -15.609810  -9.609810  -5.609810 
-##         15         16         17         18         19         20         21 
-##  -1.609810  -7.542219   0.457781   0.457781  12.457781 -11.474628  -1.474628 
-##         22         23         24         25         26         27         28 
-##  22.525372  42.525372 -21.407036 -15.407036  12.592964 -13.339445  -5.339445 
-##         29         30         31         32         33         34         35 
-## -17.271854  -9.271854   0.728146 -11.204263   2.795737  22.795737  30.795737 
-##         36         37         38         39         40         41         42 
-## -21.136672 -11.136672  10.863328 -29.069080 -13.069080  -9.069080  -5.069080 
-##         43         44         45         46         47         48         49 
-##   2.930920  -2.933898 -18.866307  -6.798715  15.201285  16.201285  43.201285 
-##         50 
-##   4.268876</code></pre>
+<pre><code>##        1        2        3        4        5        6        7        8 
+##   3.8495  11.8495  -5.9478  12.0522   2.1198  -7.8126  -3.7450   4.2550 
+##        9       10       11       12       13       14       15       16 
+##  12.2550  -8.6774   2.3226 -15.6098  -9.6098  -5.6098  -1.6098  -7.5422 
+##       17       18       19       20       21       22       23       24 
+##   0.4578   0.4578  12.4578 -11.4746  -1.4746  22.5254  42.5254 -21.4070 
+##       25       26       27       28       29       30       31       32 
+## -15.4070  12.5930 -13.3394  -5.3394 -17.2719  -9.2719   0.7281 -11.2043 
+##       33       34       35       36       37       38       39       40 
+##   2.7957  22.7957  30.7957 -21.1367 -11.1367  10.8633 -29.0691 -13.0691 
+##       41       42       43       44       45       46       47       48 
+##  -9.0691  -5.0691   2.9309  -2.9339 -18.8663  -6.7987  15.2013  16.2013 
+##       49       50 
+##  43.2013   4.2689</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fitted</span>(stop_dist_model)</code></pre></div>
-<pre><code>##         1         2         3         4         5         6         7         8 
-## -1.849460 -1.849460  9.947766  9.947766 13.880175 17.812584 21.744993 21.744993 
-##         9        10        11        12        13        14        15        16 
-## 21.744993 25.677401 25.677401 29.609810 29.609810 29.609810 29.609810 33.542219 
-##        17        18        19        20        21        22        23        24 
-## 33.542219 33.542219 33.542219 37.474628 37.474628 37.474628 37.474628 41.407036 
-##        25        26        27        28        29        30        31        32 
-## 41.407036 41.407036 45.339445 45.339445 49.271854 49.271854 49.271854 53.204263 
-##        33        34        35        36        37        38        39        40 
-## 53.204263 53.204263 53.204263 57.136672 57.136672 57.136672 61.069080 61.069080 
-##        41        42        43        44        45        46        47        48 
-## 61.069080 61.069080 61.069080 68.933898 72.866307 76.798715 76.798715 76.798715 
-##        49        50 
-## 76.798715 80.731124</code></pre>
+<pre><code>##      1      2      3      4      5      6      7      8      9     10     11 
+## -1.849 -1.849  9.948  9.948 13.880 17.813 21.745 21.745 21.745 25.677 25.677 
+##     12     13     14     15     16     17     18     19     20     21     22 
+## 29.610 29.610 29.610 29.610 33.542 33.542 33.542 33.542 37.475 37.475 37.475 
+##     23     24     25     26     27     28     29     30     31     32     33 
+## 37.475 41.407 41.407 41.407 45.339 45.339 49.272 49.272 49.272 53.204 53.204 
+##     34     35     36     37     38     39     40     41     42     43     44 
+## 53.204 53.204 57.137 57.137 57.137 61.069 61.069 61.069 61.069 61.069 68.934 
+##     45     46     47     48     49     50 
+## 72.866 76.799 76.799 76.799 76.799 80.731</code></pre>
 <p>An <code>R</code> function that is useful in many situations is <code>summary()</code>. We see that when it is called on our model, it returns a good deal of information. By the end of the course, you will know what every value here is used for. For now, you should immediately notice the coefficient estimates, and you may recognize the <span class="math inline">\(R^2\)</span> value we saw earlier.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(stop_dist_model)</code></pre></div>
 <pre><code>## 
@@ -666,19 +658,19 @@ R2</code></pre></div>
 ## lm(formula = dist ~ speed, data = cars)
 ## 
 ## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -29.069  -9.525  -2.272   9.215  43.201 
+##    Min     1Q Median     3Q    Max 
+## -29.07  -9.53  -2.27   9.21  43.20 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value         Pr(&gt;|t|)    
-## (Intercept) -17.5791     6.7584  -2.601           0.0123 *  
-## speed         3.9324     0.4155   9.464 0.00000000000149 ***
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  -17.579      6.758   -2.60    0.012 *  
+## speed          3.932      0.416    9.46  1.5e-12 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 15.38 on 48 degrees of freedom
-## Multiple R-squared:  0.6511, Adjusted R-squared:  0.6438 
-## F-statistic: 89.57 on 1 and 48 DF,  p-value: 0.00000000000149</code></pre>
+## Residual standard error: 15.4 on 48 degrees of freedom
+## Multiple R-squared:  0.651,  Adjusted R-squared:  0.644 
+## F-statistic: 89.6 on 1 and 48 DF,  p-value: 1.49e-12</code></pre>
 <p>The <code>summary()</code> command also returns a list, and we can again use <code>names()</code> to learn what about the elements of this list.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(<span class="kw">summary</span>(stop_dist_model))</code></pre></div>
 <pre><code>##  [1] &quot;call&quot;          &quot;terms&quot;         &quot;residuals&quot;     &quot;coefficients&quot; 
@@ -686,10 +678,10 @@ R2</code></pre></div>
 ##  [9] &quot;adj.r.squared&quot; &quot;fstatistic&quot;    &quot;cov.unscaled&quot;</code></pre>
 <p>So, for example, if we wanted to directly access the value of <span class="math inline">\(R^2\)</span>, instead of copy and pasting it out of the printed statement from <code>summary()</code>, we could do so.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(stop_dist_model)$r.squared</code></pre></div>
-<pre><code>## [1] 0.6510794</code></pre>
+<pre><code>## [1] 0.6511</code></pre>
 <p>Another value we may want to access is <span class="math inline">\(s_e\)</span>, which <code>R</code> calls <code>sigma</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(stop_dist_model)$sigma</code></pre></div>
-<pre><code>## [1] 15.37959</code></pre>
+<pre><code>## [1] 15.38</code></pre>
 <p>Note that this is the same result seen earlier as <code>s_e</code>. You may also notice that this value was display above as a result of the <code>summary()</code> command, which <code>R</code> labeled the “Residual Standard Error.”</p>
 <p><span class="math display">\[
 s_e = RSE = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
@@ -697,13 +689,13 @@ s_e = RSE = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 <p>Often it is useful to talk about <span class="math inline">\(s_e\)</span> (or RSE) instead of <span class="math inline">\(s_e^2\)</span> because of their units. The units of <span class="math inline">\(s_e\)</span> in the <code>cars</code> example is feet, while the units of <span class="math inline">\(s_e^2\)</span> is feet-squared.</p>
 <p>Another useful function, which we will use almost as often as <code>lm()</code> is the <code>predict()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(stop_dist_model, <span class="kw">data.frame</span>(<span class="dt">speed =</span> <span class="dv">8</span>))</code></pre></div>
-<pre><code>##        1 
-## 13.88018</code></pre>
+<pre><code>##     1 
+## 13.88</code></pre>
 <p>The above code reads “predict the stopping distance of a car traveling 8 miles per hour using the <code>stop_dist_model</code>.” Importantly, the second argument to <code>predict()</code> is a data frame that we make in place. We do this so that we can specify that <code>8</code> is a value of <code>speed</code>, so that predict knows how to use it with the model stored in <code>stop_dist_model</code>. We see that this result is what we had calculated “by hand” previously.</p>
 <p>We could also predict multiple values at once.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(stop_dist_model, <span class="kw">data.frame</span>(<span class="dt">speed =</span> <span class="kw">c</span>(<span class="dv">8</span>, <span class="dv">21</span>, <span class="dv">50</span>)))</code></pre></div>
-<pre><code>##         1         2         3 
-##  13.88018  65.00149 179.04134</code></pre>
+<pre><code>##      1      2      3 
+##  13.88  65.00 179.04</code></pre>
 <p><span class="math display">\[
 \begin{aligned}
 \hat{y} &amp;= -17.579 + 3.932 \times 8 = 13.88 \\
@@ -713,52 +705,40 @@ s_e = RSE = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 \]</span></p>
 <p>Or we could calculate the fitted value for each of the original data points.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(stop_dist_model, <span class="kw">data.frame</span>(<span class="dt">speed =</span> cars$speed))</code></pre></div>
-<pre><code>##         1         2         3         4         5         6         7         8 
-## -1.849460 -1.849460  9.947766  9.947766 13.880175 17.812584 21.744993 21.744993 
-##         9        10        11        12        13        14        15        16 
-## 21.744993 25.677401 25.677401 29.609810 29.609810 29.609810 29.609810 33.542219 
-##        17        18        19        20        21        22        23        24 
-## 33.542219 33.542219 33.542219 37.474628 37.474628 37.474628 37.474628 41.407036 
-##        25        26        27        28        29        30        31        32 
-## 41.407036 41.407036 45.339445 45.339445 49.271854 49.271854 49.271854 53.204263 
-##        33        34        35        36        37        38        39        40 
-## 53.204263 53.204263 53.204263 57.136672 57.136672 57.136672 61.069080 61.069080 
-##        41        42        43        44        45        46        47        48 
-## 61.069080 61.069080 61.069080 68.933898 72.866307 76.798715 76.798715 76.798715 
-##        49        50 
-## 76.798715 80.731124</code></pre>
+<pre><code>##      1      2      3      4      5      6      7      8      9     10     11 
+## -1.849 -1.849  9.948  9.948 13.880 17.813 21.745 21.745 21.745 25.677 25.677 
+##     12     13     14     15     16     17     18     19     20     21     22 
+## 29.610 29.610 29.610 29.610 33.542 33.542 33.542 33.542 37.475 37.475 37.475 
+##     23     24     25     26     27     28     29     30     31     32     33 
+## 37.475 41.407 41.407 41.407 45.339 45.339 49.272 49.272 49.272 53.204 53.204 
+##     34     35     36     37     38     39     40     41     42     43     44 
+## 53.204 53.204 57.137 57.137 57.137 61.069 61.069 61.069 61.069 61.069 68.934 
+##     45     46     47     48     49     50 
+## 72.866 76.799 76.799 76.799 76.799 80.731</code></pre>
 <p>This is actually equivalent to simply calling <code>predict()</code> on <code>stop_dist_model</code> without a second argument.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(stop_dist_model)</code></pre></div>
-<pre><code>##         1         2         3         4         5         6         7         8 
-## -1.849460 -1.849460  9.947766  9.947766 13.880175 17.812584 21.744993 21.744993 
-##         9        10        11        12        13        14        15        16 
-## 21.744993 25.677401 25.677401 29.609810 29.609810 29.609810 29.609810 33.542219 
-##        17        18        19        20        21        22        23        24 
-## 33.542219 33.542219 33.542219 37.474628 37.474628 37.474628 37.474628 41.407036 
-##        25        26        27        28        29        30        31        32 
-## 41.407036 41.407036 45.339445 45.339445 49.271854 49.271854 49.271854 53.204263 
-##        33        34        35        36        37        38        39        40 
-## 53.204263 53.204263 53.204263 57.136672 57.136672 57.136672 61.069080 61.069080 
-##        41        42        43        44        45        46        47        48 
-## 61.069080 61.069080 61.069080 68.933898 72.866307 76.798715 76.798715 76.798715 
-##        49        50 
-## 76.798715 80.731124</code></pre>
+<pre><code>##      1      2      3      4      5      6      7      8      9     10     11 
+## -1.849 -1.849  9.948  9.948 13.880 17.813 21.745 21.745 21.745 25.677 25.677 
+##     12     13     14     15     16     17     18     19     20     21     22 
+## 29.610 29.610 29.610 29.610 33.542 33.542 33.542 33.542 37.475 37.475 37.475 
+##     23     24     25     26     27     28     29     30     31     32     33 
+## 37.475 41.407 41.407 41.407 45.339 45.339 49.272 49.272 49.272 53.204 53.204 
+##     34     35     36     37     38     39     40     41     42     43     44 
+## 53.204 53.204 57.137 57.137 57.137 61.069 61.069 61.069 61.069 61.069 68.934 
+##     45     46     47     48     49     50 
+## 72.866 76.799 76.799 76.799 76.799 80.731</code></pre>
 <p>Note that then in this case, this is the same as using <code>fitted()</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fitted</span>(stop_dist_model)</code></pre></div>
-<pre><code>##         1         2         3         4         5         6         7         8 
-## -1.849460 -1.849460  9.947766  9.947766 13.880175 17.812584 21.744993 21.744993 
-##         9        10        11        12        13        14        15        16 
-## 21.744993 25.677401 25.677401 29.609810 29.609810 29.609810 29.609810 33.542219 
-##        17        18        19        20        21        22        23        24 
-## 33.542219 33.542219 33.542219 37.474628 37.474628 37.474628 37.474628 41.407036 
-##        25        26        27        28        29        30        31        32 
-## 41.407036 41.407036 45.339445 45.339445 49.271854 49.271854 49.271854 53.204263 
-##        33        34        35        36        37        38        39        40 
-## 53.204263 53.204263 53.204263 57.136672 57.136672 57.136672 61.069080 61.069080 
-##        41        42        43        44        45        46        47        48 
-## 61.069080 61.069080 61.069080 68.933898 72.866307 76.798715 76.798715 76.798715 
-##        49        50 
-## 76.798715 80.731124</code></pre>
+<pre><code>##      1      2      3      4      5      6      7      8      9     10     11 
+## -1.849 -1.849  9.948  9.948 13.880 17.813 21.745 21.745 21.745 25.677 25.677 
+##     12     13     14     15     16     17     18     19     20     21     22 
+## 29.610 29.610 29.610 29.610 33.542 33.542 33.542 33.542 37.475 37.475 37.475 
+##     23     24     25     26     27     28     29     30     31     32     33 
+## 37.475 41.407 41.407 41.407 45.339 45.339 49.272 49.272 49.272 53.204 53.204 
+##     34     35     36     37     38     39     40     41     42     43     44 
+## 53.204 53.204 57.137 57.137 57.137 61.069 61.069 61.069 61.069 61.069 68.934 
+##     45     46     47     48     49     50 
+## 72.866 76.799 76.799 76.799 76.799 80.731</code></pre>
 </div>
 <div id="maximum-likelihood-estimation-mle-approach" class="section level2">
 <h2><span class="header-section-number">3.5</span> Maximum Likelihood Estimation (MLE) Approach</h2>
@@ -853,7 +833,7 @@ sigma   =<span class="st"> </span><span class="dv">1</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_fit =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x)
 <span class="kw">coef</span>(sim_fit)</code></pre></div>
 <pre><code>## (Intercept)           x 
-##    5.098490    1.946622</code></pre>
+##       5.098       1.947</code></pre>
 <p>And look at that, they aren’t too far from the parameters we specified!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y ~<span class="st"> </span>x)
 <span class="kw">abline</span>(sim_fit)</code></pre></div>
@@ -870,18 +850,18 @@ sigma   =<span class="st"> </span><span class="dv">1</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_data =<span class="st"> </span><span class="kw">sim_slr</span>(<span class="dt">n =</span> <span class="dv">20</span>, <span class="dt">beta_0 =</span> <span class="dv">5</span>, <span class="dt">beta_1 =</span> <span class="dv">2</span>, <span class="dt">sigma =</span> <span class="dv">1</span>)</code></pre></div>
 <p>This time, the simulated observations are stored in a data frame.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(sim_data)</code></pre></div>
-<pre><code>##   predictor  response
-## 1  9.348230 23.329224
-## 2  5.504941 16.195112
-## 3  6.017662 17.617148
-## 4  1.969945 10.339627
-## 5  5.352366 14.977440
-## 6  1.795557  9.893657</code></pre>
+<pre><code>##   predictor response
+## 1     9.348   23.329
+## 2     5.505   16.195
+## 3     6.018   17.617
+## 4     1.970   10.340
+## 5     5.352   14.977
+## 6     1.796    9.894</code></pre>
 <p>Now when we fit the model with <code>lm()</code> we can use a <code>data</code> argument, a very good practice.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_fit =<span class="st"> </span><span class="kw">lm</span>(response ~<span class="st"> </span>predictor, <span class="dt">data =</span> sim_data)
 <span class="kw">coef</span>(sim_fit)</code></pre></div>
 <pre><code>## (Intercept)   predictor 
-##    6.162023    1.792461</code></pre>
+##       6.162       1.792</code></pre>
 <p>And this time, we’ll make the plot look a lot nicer.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(response ~<span class="st"> </span>predictor, <span class="dt">data =</span> sim_data,
      <span class="dt">xlab =</span> <span class="st">&quot;Simulated Predictor Variable&quot;</span>,
