@@ -46,7 +46,7 @@ stop_dist_model = lm(dist ~ speed, data = cars)
 summary(stop_dist_model)
 ```
 
-Last chapter, we only discussed the `Estimate` and `Residual standard error` values. In this chapter, we will discuss all of the information under `Coefficients` as well as `F-statistic`.
+Last chapter, we only discussed the `Estimate`, `Residual standard error`, and `Multiple R-squared` values. In this chapter, we will discuss all of the information under `Coefficients` as well as `F-statistic`.
 
 ```{r}
 plot(dist ~ speed, data = cars,
@@ -135,7 +135,7 @@ However since,
 E[\hat{\theta}_{BAD}] = 5
 \]
 
-we say that $\hat{\theta}_{BAD}$ is a biased estimator unless $\beta_1 = 5$, which we would not know ahead of time. For this reason, it is a terrible estimate unless by chance $\beta_1 = 5$, even though it has the smallest possible variance. This is part of the reason we restrict ourselves to *unbiased* estimates. What good is an estimate, if it estimates the wrong quantity?
+we say that $\hat{\theta}_{BAD}$ is a biased estimator unless $\beta_1 = 5$, which we would not know ahead of time. For this reason, it is a terrible estimate (unless by chance $\beta_1 = 5$) even though it has the smallest possible variance. This is part of the reason we restrict ourselves to *unbiased* estimates. What good is an estimate, if it estimates the wrong quantity?
 
 So now, the natural question is, what are the variances of $\hat{\beta}_0$ and $\hat{\beta}_1$? They are,
 
@@ -146,7 +146,7 @@ Var[\hat{\beta}_1] &= \frac{\sigma^2}{S_{xx}}.
 \end{aligned}
 \]
 
-These quantify the variability of the estimates due to random chance during sampling.
+These quantify the variability of the estimates due to random chance during sampling. Are these "the best"? Are these variances as small as we can possibility get? You'll just have to take our word for it that they are because showing that this is true is beyond the score of this course.
 
 ## Sampling Distributions
 
@@ -216,7 +216,7 @@ and
 First we need to decide ahead of time what our $x$ values will be for this simulation, since the $x$ values in SLR are also considered known quantities. The choice of $x$ values is arbitrary. Here we also set a seed for randomization, and calculate $S_{xx}$ which we will need going forward.
 
 ```{r}
-set.seed(112358)
+set.seed(42)
 sample_size = 100 # this is n
 x = seq(-1, 1, length = sample_size)
 Sxx = sum((x - mean(x)) ^ 2)
@@ -265,8 +265,7 @@ Var[\hat{\beta}_0] &= `r var_beta_0_hat`.
 \end{aligned}
 \]
 
-
-We now simulate this model 10,000 times. Note this may not be the most `R` way of doing the simulation. We perform the simulation in this manner in an attempt at clarify.
+We now simulate this model 10,000 times. Note this may not be the most `R` way of doing the simulation. We perform the simulation in this manner in an attempt at clarity.
 
 ```{r}
 num_samples = 10000
@@ -325,6 +324,13 @@ In this simulation study, we have only simulated a finite number of samples. To 
 
 ```{r}
 par(mar = c(5, 5, 1, 1)) # adjusted plot margins, otherwise the "hat" does not display
+plot(cumsum(beta_1_hats) / (1:length(beta_1_hats)), type = "l", ylim = c(5.95, 6.05),
+     xlab = "Number of Simulations",
+     ylab = expression("Empirical Mean of " ~ hat(beta)[1]),
+     col  = "dodgerblue")
+abline(h = 6, col = "darkorange", lwd = 2)
+
+par(mar = c(5, 5, 1, 1)) # adjusted plot margins, otherwise the "hat" does not display
 plot(cumsum(beta_0_hats) / (1:length(beta_0_hats)), type = "l", ylim = c(2.95, 3.05),
      xlab = "Number of Simulations",
      ylab = expression("Empirical Mean of " ~ hat(beta)[0]),
@@ -367,7 +373,7 @@ and
 SD[\hat{\beta}_1] = \frac{\sigma}{\sqrt{S_{xx}}}.
 \]
 
-Since we don't know $\sigma$ in practice, we will have to estimate it using $s_e$, which we plug into our existing expression for the standard deviations of our estimates.
+Since we don't know $\sigma$ in practice, we will have to estimate it using $s_e$, which we plug into our existing expression for the standard deviations of our estimates. We choose $s_e$ instead of $\hat{\signa}$ because, as you've seen recently, we prize unbiased estimators over biased ones.
 
 These two new expressions are called **standard errors** which are the *estimated* standard deviations of the sampling distributions.
 
@@ -419,7 +425,7 @@ follows a $t$ distribution with $d$ degrees of freedom, where $\chi_{d}^2$ is a 
 That is,
 
 \[
-T \sim t_d
+T \sim t_d.
 \]
 
 ## Confidence Intervals for Slope and Intercept
@@ -436,19 +442,18 @@ or
 EST \pm MARGIN
 \]
 
-where $MARGIN = CRIT \cdot SE$.
+where $EST$ is an estimate for the parameter of interest, $SE$ is the standard error of the estimate and $MARGIN = CRIT \cdot SE$.
 
-    
 Then, for $\beta_0$ and $\beta_1$ we can create confidence intervals using
 
 \[
-\hat{\beta}_0 \pm t_{\alpha/2, n - 2} \cdot SE[\hat{\beta}_0] \quad \quad \hat{\beta}_0 \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}}
+\hat{\beta}_0 \pm t_{\alpha/2, n - 2} \cdot SE[\hat{\beta}_0] \quad \quad \quad \hat{\beta}_0 \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}}
 \]
 
 and
 
 \[
-\hat{\beta}_1 \pm t_{\alpha/2, n - 2} \cdot SE[\hat{\beta}_1]  \quad \quad \hat{\beta}_1 \pm t_{\alpha/2, n - 2} \cdot \frac{s_e}{\sqrt{S_{xx}}}
+\hat{\beta}_1 \pm t_{\alpha/2, n - 2} \cdot SE[\hat{\beta}_1]  \quad \quad \quad \hat{\beta}_1 \pm t_{\alpha/2, n - 2} \cdot \frac{s_e}{\sqrt{S_{xx}}}
 \]
 
 where $t_{\alpha/2, n - 2}$ is the critical value such that $P(t_{n-2} > t_{\alpha/2, n - 2}) = \alpha/2$.
@@ -459,7 +464,7 @@ where $t_{\alpha/2, n - 2}$ is the critical value such that $P(t_{n-2} > t_{\alp
 >
 > --- **Ronald Aylmer Fisher**
 
-Recall that tests for means often take the form:
+Recall that a test statistic ($TS$) for testing means often take the form:
 
 \[
 TS = \frac{EST - HYP}{SE}
@@ -495,7 +500,6 @@ t = \frac{\hat{\beta}_1-\beta_{10}}{SE[\hat{\beta}_1]} = \frac{\hat{\beta}_1-\be
 
 which again, under the null hypothesis, follows a $t$ distribution with $n - 2$ degrees of freedom. We now use $\beta_{10}$ to denote the hypothesized value of $\beta_1$.
 
-
 ## `cars` Example
 
 We now return to the `cars` example from last chapter to illustrate these concepts. We first fit the model using `lm()` then use `summary()` to view the results in greater detail.
@@ -514,7 +518,7 @@ names(summary(stop_dist_model))
 summary(stop_dist_model)$coefficients
 ```
 
-The `names()` function tells us what information is available, and then we use the `$` operator and `ccoefficients` to extract the information we are interested in. Two values here should be immediately familiar.
+The `names()` function tells us what information is available, and then we use the `$` operator and `coefficients` to extract the information we are interested in. Two values here should be immediately familiar.
 
 \[
 \hat{\beta}_0 = `r summary(stop_dist_model)$coefficients[1,1]`
@@ -566,7 +570,7 @@ The first row of output reports the same values, but for $\beta_0$.
 summary(stop_dist_model)$coefficients[1,]
 ```
 
-In summary, the following code stores the information of `summary(stop_dist_model)$coefficients` in a new variable `stop_dist_model_test_info`, then extracts each element into a new variables which describes the information.
+In summary, the following code stores the information of `summary(stop_dist_model)$coefficients` in a new variable `stop_dist_model_test_info`, then extracts each element into a new variable which describes the information it contains.
 
 ```{r}
 stop_dist_model_test_info = summary(stop_dist_model)$coefficients
@@ -582,7 +586,7 @@ beta_1_hat_t    = stop_dist_model_test_info[2,3] # t value
 beta_1_hat_pval = stop_dist_model_test_info[2,4] # Pr(>|t|)
 ```
 
-We can then verify some equivalent expressions.
+We can then verify some equivalent expressions: the $t$ test statistic for $\hat{\beta}_1$ and the two-sided p-value associated with that test statistic.
 
 ```{r}
 (beta_1_hat - 0) / beta_1_hat_se
@@ -643,7 +647,7 @@ abline(lm(y ~ x))
 #summary(lm(y ~ x))$coef[2,4]
 ```
 
-In this plot of simulated data, we see a clear relationship between $x$ and $y$, however it is not a linear relationship. If we fit a line to this data, it is very flat. The resulting test for $H_0: \beta_1 = 0$ \text{vs} $H_1: \beta_1 \neq 0$ gives a large p-value, in this case $`r summary(lm(y ~ x))$coef[2,4]`$, so we would fail to reject and say that there is no significant linear relationship between $x$ and $y$. We will see later how to fit a "linear" model to this data, but for now, realize that testing $H_0: \beta_1 = 0$ vs $H_1: \beta_1 \neq 0$ can only detect straight line relationships.
+In this plot of simulated data, we see a clear relationship between $x$ and $y$, however it is not a linear relationship. If we fit a line to this data, it is very flat. The resulting test for $H_0: \beta_1 = 0$ \text{vs} $H_1: \beta_1 \neq 0$ gives a large p-value, in this case $`r summary(lm(y ~ x))$coef[2,4]`$, so we would fail to reject and say that there is no significant linear relationship between $x$ and $y$. We will see later how to fit a curve to this data using a "linear" model, but for now, realize that testing $H_0: \beta_1 = 0$ vs $H_1: \beta_1 \neq 0$ can only detect straight line relationships.
 
 ### Confidence Intervals in `R`
 
@@ -655,13 +659,13 @@ confint(stop_dist_model, level = 0.99)
 
 This automatically calculates 99% confidence intervals for both $\beta_0$ and $\beta_1$, the first row for $\beta_0$, the second row for $\beta_1$.
 
-For the `cars` example when interpreting these intervals, we say, we are 99% confident that for an increase in speed of 1 mile per hour, the average increase in stopping distance is between `r confint(stop_dist_model, level = 0.99)[2,1]` and `r confint(stop_dist_model, level = 0.99)[2,2]` feet. (Which is the interval for $\beta_1$.)
+For the `cars` example when interpreting these intervals, we say, we are 99% confident that for an increase in speed of 1 mile per hour, the average increase in stopping distance is between `r confint(stop_dist_model, level = 0.99)[2,1]` and `r confint(stop_dist_model, level = 0.99)[2,2]` feet, which is the interval for $\beta_1$.
 
-Note that this confidence interval does **not** contain the hypothesized value of 0, which is equivalent to rejecting the test of $H_0: \beta_1 = 0$ vs $H_1: \beta_1 \neq 0$.
+Note that this 99% confidence interval does **not** contain the hypothesized value of 0. Since it does not contain 0, it is equivalent to rejecting the test of $H_0: \beta_1 = 0$ vs $H_1: \beta_1 \neq 0$ at $\alpha = 0.01$, which we had seen previously.
 
 You should be somewhat suspicious of the confidence interval for $\beta_0$, as it covers negative values, which correspond to negative stopping distances. Technically the interpretation would be that we are 99% confident that the average stopping distance of a car traveling 0 miles per hour is between `r confint(stop_dist_model, level = 0.99)[1,1]` and `r confint(stop_dist_model, level = 0.99)[1,2]`, but we don't really believe that, since we are actually certain that it would be non-negative.
 
-Note, we can extract specific values from this output a number of ways. This code is not run, instead you should check how it relates to the output of the code above.
+Note, we can extract specific values from this output a number of ways. This code is not run, and instead, you should check how it relates to the output of the code above.
 
 ```{r, eval = FALSE}
 confint(stop_dist_model, level = 0.99)[1,]
@@ -690,7 +694,7 @@ Recall that,
 E[Y] = \beta_0 + \beta_1 x
 \]
 
-Thus, $\hat{y}$ is a good estimate since,
+Thus, $\hat{y}$ is a good estimate since it is unbiased:
 
 \[
 E[\hat{y}] = \beta_0 + \beta_1 x.
@@ -708,7 +712,7 @@ Like the other estimates we have seen, $\hat{y}$ also follows a normal distribut
 \hat{y} \sim N \left(\beta_0 + \beta_1 x, \sigma^2 \left(\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right) \right).
 \]
 
-And the lastly, since we need to estimate this variance, we arrive at the standard error of our estimate,
+And lastly, since we need to estimate this variance, we arrive at the standard error of our estimate,
 
 \[
 SE[\hat{y}] = s_e \sqrt{\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}.
@@ -720,7 +724,7 @@ We can then use this to find the confidence interval for the mean response,
 \hat{y} \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}
 \]
 
-To find confidence intervals for the mean response using `R`, we use the `predict()` function. We give the function our fitted model as well as new data, stored as a data frame. (This is important, so that `R` knows the name of the predictor variable.)
+To find confidence intervals for the mean response using `R`, we use the `predict()` function. We give the function our fitted model as well as new data, stored as a data frame. (This is important, so that `R` knows the name of the predictor variable.) Here, we are finding the confidence interval for the mean stopping distance when a car is travelling 5 miles per hour and when a car is travelling 21 miles per hour.
 
 ```{r}
 new_speeds = data.frame(speed = c(5, 21))
@@ -759,7 +763,7 @@ predict(stop_dist_model, newdata = new_speeds,
         interval = c("prediction"), level = 0.99)
 ```
 
-Also notice that these two intervals are wider than the corresponding intervals for the mean response.
+Also notice that these two intervals are wider than the corresponding confidence intervals for the mean response.
 
 ## Confidence and Prediction Bands
 
@@ -793,15 +797,15 @@ points(mean(cars$speed), mean(cars$dist), pch = "+", cex = 3)
 
 Some things to notice:
 
-- We use the `ylim` argument to stretch the plot, since the bands extend further than the points.
+- We use the `ylim` argument to stretch the $y$-axis of the plot, since the bands extend further than the points.
 - We add a point at the point $(\bar{x}, \bar{y})$.
     - This is a point that the regression line will **always** pass through. (Think about why.)
     - This is the point where both the confidence and prediction bands are the narrowest. Look at the standard errors of both to understand why.
-- The prediction bands are less curved than the confidence bands. This is a result of the extra factor of $\sigma^2$ added to the variance at any value of $x$.
+- The prediction bands (green) are less curved than the confidence bands (red). This is a result of the extra factor of $\sigma^2$ added to the variance at any value of $x$.
 
 ## Significance of Regression, F-Test
 
-In the case of simple linear regression the $t$ test for the significance of the regression is equivalent to another test, the $F$ test for the significance of the regression. This equivalence will only be true for simple linear regression, and in the next chapter we will only use the $F$ test for the significance of the regression.
+In the case of simple linear regression, the $t$ test for the significance of the regression is equivalent to another test, the $F$ test for the significance of the regression. This equivalence will only be true for simple linear regression, and in the next chapter we will only use the $F$ test for the significance of the regression.
 
 Recall from last chapter the decomposition of variance we saw before calculating $R^2$,
 
@@ -829,7 +833,7 @@ ANOVA, or Analysis of Variance will be a concept we return to often in this cour
 F = \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2 / 1}{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2 / (n - 2)} \sim F_{1, n - 2}
 \]
 
-which follows an $F$ distribution with degrees of freedom $1$ and $n - 2$ under the null hypothesis. An $F$ distribution is a continuous distribution which take only positive values and has two parameters, which are the two degrees of freedom.
+which follows an $F$ distribution with degrees of freedom $1$ and $n - 2$ under the null hypothesis. An $F$ distribution is a continuous distribution which takes only positive values and has two parameters, which are the two degrees of freedom.
 
 Recall, in the significance of the regression test, $Y$ does **not** depend on $x$ in the null hypothesis.
 
@@ -875,4 +879,4 @@ The model statement `lm(dist ~ 1, data = cars)` applies the model $Y_i = \beta_0
 
 The model statement `lm(dist ~ speed, data = cars)` applies the model $Y_i = \beta_0 + \beta_1 x_i + \epsilon_i$.
 
-When can then think of this usage of `anova()` as directly comparing the two models. (Notice we get the same p-value again.)
+We can then think of this usage of `anova()` as directly comparing the two models. (Notice we get the same p-value again.)
