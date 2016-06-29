@@ -115,7 +115,7 @@ This tells us that, when the conditions of the SLR model are met, on average our
 
 #### Best {-}
 
-Now, if we restrict ourselves to both *linear* and *unbiased* estimates, how do we define the *best* estimate? The estimate with the **minimum varaince**.
+Now, if we restrict ourselves to both *linear* and *unbiased* estimates, how do we define the *best* estimate? The estimate with the **minimum variance**.
 
 First note that it is very easy to create an estimate for $\beta_1$ that has very low variance, but is not unbiased. For example, define:
 
@@ -404,12 +404,15 @@ To see this, first note that,
 Then we use the classic trick of "multiply by 1" and some rearranging to arrive at
 
 \[
-\frac{\hat{\beta}_1 - \beta_1}{SE[\hat{\beta}_1]} = \frac{\hat{\beta}_1 - \beta_1}{s_e / \sqrt{S_{xx}}}
-= \frac{\hat{\beta}_1 - \beta_1}{s_e / \sqrt{S_{xx}}} \cdot \frac{\sigma / \sqrt{S_{xx}}}{\sigma / \sqrt{S_{xx}}}
-= \frac{\hat{\beta}_1 - \beta_1}{\sigma / \sqrt{S_{xx}}} \cdot \frac{\sigma / \sqrt{S_{xx}}}{s_e / \sqrt{S_{xx}}}
-= \frac{\hat{\beta}_1 - \beta_1}{\sigma / \sqrt{S_{xx}}} \bigg/ \sqrt{\frac{s_e^2}{\sigma^2}}
+\begin{aligned}
+\frac{\hat{\beta}_1 - \beta_1}{SE[\hat{\beta}_1]} 
+&= \frac{\hat{\beta}_1 - \beta_1}{s_e / \sqrt{S_{xx}}} \\
+&= \frac{\hat{\beta}_1 - \beta_1}{s_e / \sqrt{S_{xx}}} \cdot \frac{\sigma / \sqrt{S_{xx}}}{\sigma / \sqrt{S_{xx}}} \\
+&= \frac{\hat{\beta}_1 - \beta_1}{\sigma / \sqrt{S_{xx}}} \cdot \frac{\sigma / \sqrt{S_{xx}}}{s_e / \sqrt{S_{xx}}} \\
+&= \frac{\hat{\beta}_1 - \beta_1}{\sigma / \sqrt{S_{xx}}} \bigg/ \sqrt{\frac{s_e^2}{\sigma^2}}
 \sim \frac{Z}{\sqrt{\frac{\chi_{n-2}^2}{n-2}}}
 \sim t_{n-2}
+\end{aligned}
 \]
 
 where $Z \sim N(0,1)$.

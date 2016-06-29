@@ -8,7 +8,7 @@ opts_template$set(dopurl = list(purl = TRUE))
 
 ## ----load_packages, message = FALSE, echo = FALSE, warning = FALSE------------
 # Any package that is required by the script below is given here:
-inst_pkgs = load_pkgs =  c("ggplot2","devtools","zoo")
+inst_pkgs = load_pkgs =  c("ggplot2","devtools","zoo", "plot3D")
 inst_pkgs = inst_pkgs[!(inst_pkgs %in% installed.packages()[,"Package"])]
 if(length(inst_pkgs)) install.packages(inst_pkgs)
 
