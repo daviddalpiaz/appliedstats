@@ -4,72 +4,285 @@
 >
 > --- **Confucius**
 
+After reading this chapter you will be able to:
+
+- Fit regression models with more than one predictor.
+- Create interval estimates and perform hypothesis tests for (multiple) regression parameters.
+- Compare nested models using an ANOVA $F$-Test.
+
+**Overall flow:**
+
+- Motivate.
+- Do in `R`.
+- Show the math.
+- Check the math with `R`.
+
+**Overall TODO:**
+
+- Update `R` to 3.3.1 to avoid warnings.
+
+The last two chapters we saw how to fit a model that assumed a linear relationship between a response variable and a single predictor varible. Specifically, we defined the simple linear regression model,
+
 \[
-Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \cdots + \beta_p X_{i(p-1)} + \epsilon_i, \qquad i = 1, 2, \ldots, n
+Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 \]
 
-- TODO: note that $p$ is the number of $\beta$s. NOT ALL TEXTS do it this way.
-- TODO: make some notational decisions.
-- TODO: move matrix approach for SLR to SLR or SLR inf chapter?
+where $\epsilon_i \sim N(0, \sigma^2)$.
+
+However, it is rarely the case that a dataset will have a single predictor variable. It is also rarely the case that a response variable will only depend on a single varaible. So this chapter, we will extend our current linear model to allow to a response to depend on multiple predictors.
+
+```{r}
+# read the data from the web
+autompg = read.table(
+  "http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data",
+  quote = "\"",
+  comment.char = "",
+  stringsAsFactors = FALSE)
+# give the dataframe headers
+colnames(autompg) = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin", "name")
+# remove missing data, which is stored as "?"
+autompg = subset(autompg, autompg$hp != "?")
+# remove the plymouth reliant, as it causes some issues
+autompg = subset(autompg, autompg$name != "plymouth reliant")
+# give the dataset row names, based on the engine, year and name
+rownames(autompg) = paste(autompg$cyl, "cylinder", autompg$year, autompg$name)
+# remove the variable for name, as will as origin
+autompg = subset(autompg, select = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year"))
+# change horsepower from character to numeric
+autompg$hp = as.numeric(autompg$hp)
+str(autompg)
+```
+
+For this chapter, we will once again discuss a dataset with information about cars. [This dataset](http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data), which can be found at the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Auto+MPG) contains a response variable `mpg` which stores the city fuel efficient of cars, as well as several predictor variables for the attributes of the vehicles. We load the data, and perform some basic tidying before moving on to analysis.
+
+For now we will focus on using two variables, `wt` and `year`, as predictor variables. That is, we would like to model the fuel efficiency (`mpg`) of a car as a function of its weight (`wt`) and model year (`year`). To do so, we will define the following linear model,
 
 \[
-\mathbf{Y} = \mathbf{X} \beta + \epsilon
+Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \epsilon_i, \qquad i = 1, 2, \ldots, n
 \]
 
+where $\epsilon_i \sim N(0, \sigma^2)$. In this notation we will define:
+
+- $x_{i1}$ as the weight of the $i$th car.
+- $x_{i2}$ as the model year of the $i$th car.
+
+The picture below will visualize what we would like to accomplish. The data points $(x_{i1}, x_{i2}, y_i)$ now exist in 3-dimensional space, so instead of fitting a line to the data, we will fit a plane. (We'll soon move to higher dimension, so this will be the last example that is easy to visualize and think abotu this way.)
+
+```{r, echo = FALSE, fig.height = 10, fig.width = 10}
+library("plot3D")
+
+x = autompg$wt
+y = autompg$year
+z = autompg$mpg
+
+fit <- lm(z ~ x + y)
+
+grid.lines = 25
+x.pred     = seq(min(x), max(x), length.out = grid.lines)
+y.pred     = seq(min(y), max(y), length.out = grid.lines)
+xy         = expand.grid(x = x.pred, y = y.pred)
+
+z.pred = matrix(predict(fit, newdata = xy), 
+                nrow = grid.lines, ncol = grid.lines)
+
+fitpoints = predict(fit)
+
+scatter3D(x, y, z, pch = 19, cex = 2, col = gg.col(1000), lighting = TRUE,
+          theta = 25, phi = 45, ticktype = "detailed",
+          xlab = "wt", ylab = "year", zlab = "mpg", zlim = c(0, 40), clim = c(0, 40),
+          surf = list(x = x.pred, y = y.pred, z = z.pred,  
+                      facets = NA, fit = fitpoints), main = "")
+```
+
+How do we find such a plane? Well, we would like a plane that is as close as possible to the datapoints. That is, we would like it to minimize the errors it is making. How will we define these errors? Squared distance of course!. So, we would like to minimize
 
 \[
-\mathbf{Y} = \begin{bmatrix} Y_1 \\ Y_2 \\ \cdots\\ Y_n \end{bmatrix}
+f(\beta_0, \beta_1, \beta_2) = \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2}))^2.
 \]
 
+with respect to $\beta_0$, $\beta_1$, and $\beta_2$. How do we do so? It is another straightforward multivariate calculs problem. All we have done is add an extra variable since we did this last time. So again, we take a derivative with respect to each of $\beta_0$, $\beta_1$, and $\beta_2$ and set them equal to zero, then solve the resulting system of equaitons. That is,
 
 \[
-\mathbf{\epsilon} = \begin{bmatrix} \epsilon_1 \\ \epsilon_2 \\ \cdots\\ \epsilon_n \end{bmatrix}
+\begin{aligned}
+\frac{\partial f}{\partial \beta_0} &= 0 \\
+\frac{\partial f}{\partial \beta_1} &= 0 \\
+\frac{\partial f}{\partial \beta_2} &= 0
+\end{aligned}
 \]
 
+After doing so, we will once again obtain the **normal equations.**
 
+\[
+\begin{aligned}
+\beta_0 + \beta_1 \sum_{i = 1}^{n} x_{i1} + \beta_2 \sum_{i = 1}^{n} x_{i2} &= \sum_{i = 1}^{n} y_i  \\
+\beta_0 \sum_{i = 1}^{n} x_{i1} + \beta_1 \sum_{i = 1}^{n} x_{i1}^2 + \beta_2 \sum_{i = 1}^{n} x_{i1}x_{i2} &= \sum_{i = 1}^{n} x_{i1}y_i \\
+\beta_0 \sum_{i = 1}^{n} x_{i2} + \beta_1 \sum_{i = 1}^{n} x_{i1}x_{i2} + \beta_2 \sum_{i = 1}^{n} x_{i2}^2 &= \sum_{i = 1}^{n} x_{i2}y_i
+\end{aligned}
+\]
+
+We now have three equations and three variables, which we could solve, or we could simply let `R` solve for us.
+
+```{r}
+mpg_model = lm(mpg ~ wt + year, data = autompg)
+coef(mpg_model)
+```
+
+- TODO: interpret these here.
+
+## Matrix Approach to Regression
+
+- TODO: in general
+
+\[
+Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_p x_{i(p-1)} + \epsilon_i, \qquad i = 1, 2, \ldots, n
+\]
 
 \[
 \begin{bmatrix}
 Y_1   \\
 Y_2   \\
-\cdots\\
+\vdots\\
 Y_n   \\
 \end{bmatrix}
 =
 \begin{bmatrix}
-1      & x_1    \\
-1      & x_2    \\
-\cdots & \cdots \\
-1      & x_n    \\
+1      & x_{11}    & x_{12}    & \cdots & x_{1(p-1)} \\
+1      & x_{21}    & x_{22}    & \cdots & x_{2(p-1)} \\
+\vdots & \vdots    & \vdots    &  & \vdots \\
+1      & x_{n1}    & x_{n2}    & \cdots & x_{n(p-1)} \\
 \end{bmatrix}
 \begin{bmatrix}
 \beta_0 \\
 \beta_1 \\
+\beta_2 \\
+\vdots \\
+\beta_{p-1} \\
 \end{bmatrix}
 +
 \begin{bmatrix}
 \epsilon_1   \\
 \epsilon_2   \\
-\cdots\\
+\vdots\\
 \epsilon_n   \\
 \end{bmatrix}
 \]
 
+
+
 \[
-\mathbf{Y} = \mathbf{X} \mathbf{\beta} + \mathbf{\epsilon}
+Y = X \beta + \epsilon
+\]
+
+\[
+Y = \begin{bmatrix} Y_1 \\ Y_2 \\ \vdots\\ Y_n \end{bmatrix}, \quad
+X = \begin{bmatrix}
+1      & x_{11}    & x_{12}    & \cdots & x_{1(p-1)} \\
+1      & x_{21}    & x_{22}    & \cdots & x_{2(p-1)} \\
+\vdots & \vdots    & \vdots    &  & \vdots \\
+1      & x_{n1}    & x_{n2}    & \cdots & x_{n(p-1)} \\
+\end{bmatrix}, \quad
+\beta = \begin{bmatrix}
+\beta_0 \\
+\beta_1 \\
+\beta_2 \\
+\vdots \\
+\beta_{p-1} \\
+\end{bmatrix}, \quad
+\epsilon = \begin{bmatrix} \epsilon_1 \\ \epsilon_2 \\ \vdots\\ \epsilon_n \end{bmatrix}
+\]
+
+- TODO: normal equations in general
+
+
+
+
+
+
+\[
+y = \begin{bmatrix} y_1 \\ y_2 \\ \vdots\\ y_n \end{bmatrix}
+\]
+
+\[
+X^\top X \beta = X^\top y
+\]
+
+\[
+\hat{\beta} = \left(  X^\top X  \right)^{-1}X^\top Y
+\]
+
+\[
+\hat{y} = X \hat{\beta}
 \]
 
 
 \[
-\hat{\mathbf{\beta}} = \left(  \mathbf{X}^T \mathbf{X}  \right)^{-1}\mathbf{X}^T \mathbf{Y}
+\hat{y} = \begin{bmatrix} \hat{y}_1 \\ \hat{y}_2 \\ \vdots\\ \hat{y}_n \end{bmatrix}
 \]
 
 \[
-E[\mathbf{\hat{\beta}}] = \mathbf{\beta} = \beta
+e 
+= \begin{bmatrix} e_1 \\ e_2 \\ \vdots\\ e_n \end{bmatrix} 
+= \begin{bmatrix} y_1 \\ y_2 \\ \vdots\\ y_n \end{bmatrix} - \begin{bmatrix} \hat{y}_1 \\ \hat{y}_2 \\ \vdots\\ \hat{y}_n \end{bmatrix}
 \]
 
 \[
-Var[\mathbf{\hat{\beta}}] = \sigma^2 \left(  \mathbf{X}^T \mathbf{X}  \right)^{-1}
+s_e = \sqrt{\frac{\sum_{i=1}^n (y_i - \hat{y}_i)^2}{n - p}} = \frac{e^\top e}{n-p}
+\]
+
+in slr, n = 2
+in regular, n = 1 when 
+
+\[
+\hat{\beta} = \left(  X^\top X  \right)^{-1}X^\top y
+\]
+
+
+
+
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+Above here is the narrative.
+Below here are things to be inserted into the narrative.
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+- TODO: note that $p$ is the number of $\beta$s. NOT ALL TEXTS do it this way.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\[
+E[\hat{\beta}] = \beta
+\]
+
+\[
+Var[\hat{\beta}] = \sigma^2 \left(  X^\top X  \right)^{-1}
+\]
+
+\[
+SE[\hat{\beta}] = s_e \sqrt{\left(  X^\top X  \right)^{-1}}
 \]
 
 
@@ -80,7 +293,8 @@ stat significance vs practical significance, effect size
 note about R2 interpretation in multiple setting
 X matrix in R
 
-
+- param interpretation
+- difficulty with multiple, CONDITIONAL
 
 ## Introduction (Delete this Heading)
 
@@ -91,24 +305,308 @@ X matrix in R
 - do LS as matrix!
 
 
+
+
+
+[UCI Machine Learning](http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/)
+
+
+
+```{r}
+# write out model, how did we get params?
+# start with only 2 predictors?
+summary(mpg_model)
+summary(mpg_model)$coef
+confint(mpg_model)
+new_car = data.frame(mpg = 10,
+                   cyl = 8,
+                   disp = 300,
+                   horse = 200,
+                   wt = 5000,
+                   acc = 15,
+                   year = 81)
+# note about extrapolation.
+
+predict(mpg_model, newdata = new_car, interval = "confidence")
+predict(mpg_model, newdata = new_car, interval = "prediction")
+
+
+anova(mpg_model)
+
+
+mpg_full_model = lm(mpg ~ ., data = autompg)
+coef(mpg_full_model)
+
+anova(mpg_model, mpg_full_model)
+```
+
+
+
+
+
 ## Matrix Approach
+
+
+
+TODO: variance estimate
 
 ## Sampling Distribution
 
-### Confidence Intervals
+- TODO: post brief notes on MVN?
+- TODO: change reference when moving to book
 
-### Confidence Intervals for Mean Response
+[mvn](../notes/mvn.pdf)
 
-### Prediction Intervals
+\[
+\hat{\beta} \sim N\left(\beta, \sigma^2 \left(X^\top X\right)^{-1}  \right)
+\]
+
+- TODO: standard errors
+- TODO: C notation
+
+\[
+C = \left(X^\top X\right)^{-1}
+\]
+
+\[
+C = \begin{bmatrix}
+C_{00}     & C_{01}     & C_{02}     & \cdots & C_{0(p-1)} \\
+C_{10}     & C_{11}     & C_{12}     & \cdots & C_{1(p-1)}  \\
+C_{20}     & C_{21}     & C_{22}     & \cdots & C_{2(p-1)}   \\
+\vdots     & \vdots     & \vdots     &        & \vdots        \\
+C_{(p-1)0} & C_{(p-1)1} & C_{(p-1)2} & \cdots & C_{(p-1)(p-1)} \\
+\end{bmatrix}
+\]
+
+The diagonal elements of the 
+
 
 ## Single Parameter Tests
 
+\[
+H_0: \beta_j = 0 \quad \text{vs} \quad H_1: \beta_j \neq 0
+\]
+
+TODO, write model for both. (only in nested case?)
+
+\[
+t = \frac{\hat{\beta}_j - 0}{SE[\hat{\beta}_j]} = \frac{\hat{\beta}_j-0}{s_e\sqrt{C_{jj}}}
+\]
+
+
+### Confidence Intervals
+
+\[
+\hat{\beta}_j
+\]
+
+\[
+E[\hat{\beta}_j] = \beta_j
+\]
+
+
+
+
+\[
+SE[\hat{\beta}_j] = s_e\sqrt{C_{jj}}
+\]
+
+\[
+\hat{\beta}_j \pm t_{\alpha/2, n - p} \cdot s_e\sqrt{C_{jj}}
+\]
+
+### Confidence Intervals for Mean Response
+
+\[
+x_{0} = \begin{bmatrix}
+1 \\
+x_{01} \\
+x_{02} \\
+\vdots \\
+x_{0(p-1)} \\
+\end{bmatrix}
+\]
+
+\[
+\hat{y} = x_{0}^\top\hat{\beta}
+\]
+
+\[
+E[\hat{y}] = x_{0}^\top\beta
+\]
+
+\[
+SE[\hat{y}] = s_e \sqrt{x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
+\]
+
+\[
+\hat{y} \pm t_{\alpha/2, n - p} \cdot s_e \sqrt{x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
+\]
+
+Note about similarity to CI for param
+
+### Prediction Intervals
+
+\[
+\hat{y} = x_{0}^\top\hat{\beta}
+\]
+
+\[
+E[\hat{y}] = x_{0}^\top\beta
+\]
+
+\[
+SE[\hat{y}] = s_e \sqrt{1 + x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
+\]
+
+\[
+\hat{y} \pm t_{\alpha/2, n - p} \cdot s_e \sqrt{1 + x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
+\]
+
+
 ## Signifiance of Regression
+
+\[
+H_0: \beta_1 = \beta_2 = \cdots = \beta_{p - 1} = 0
+\]
+
+- Null Model: $Y_i = \beta_0 + \epsilon_i$
+
+or "model under the null hypothesis, $H_0$"
+
+for notational simplicity, we will denote the residuals of this model as $\hat{y}_{0i}$, which in this case happens to be:
+
+\[
+\hat{y}_{0i} = \bar{y}
+\]
+
+\[
+H_1: \text{At least one of } \beta_j \neq 0, j = 1, 2, \cdots, (p-1)
+\]
+
+- Full Model: $Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_p x_{i(p-1)} + \epsilon_i$
+
+or "model under the alternative hypothesis, $H_1$"
+
+for notational simplicity, we will denote the residuals of this model as $\hat{y}_{1i}$
+
+
+| Source     | Sum of Squares  | Degrees of Freedom | Mean Square | $F$ |
+|------------|-----------------|------------|-----------|-----------|
+| Regression | $\sum_{i=1}^{n}(\hat{y}_{1i} - \bar{y})^2$ | $p - 1$ | $SSReg / (p - 1)$ | $MSReg / MSE$ |
+| Error      | $\sum_{i=1}^{n}(y_i - \hat{y}_{1i})^2$     | $n - p$ | $SSE / (n - p)$ |             |
+| Total      | $\sum_{i=1}^{n}(y_i - \bar{y})^2$       | $n - 1$ |                 |             |
 
 ## Nested Models
 
+Full model: $Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_p x_{i(p-1)} + \epsilon_i$ or "model under the alternative hypothesis, $H_1$"
+
+for notational simplicity, we will denote the residuals of this model as $\hat{y}_{1i}$
+
+
+$q < p$
+
+\[
+H_0: \beta_q = \beta_{q+1} = \cdots = \beta_{p - 1} = 0
+\]
+
+- Null Model: $Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{(q-1)} x_{i(q-1)} + \epsilon_i$
+
+or "model under the null hypothesis, $H_0$"
+
+for notational simplicity, we will denote the residuals of this model as $\hat{y}_{0i}$, which in this case happens to be:
+
+
+
+| Source | Sum of Squares  | Degrees of Freedom | Mean Square | $F$ |
+|--------|-----------------|------------|-----------|-----------|
+| Diff   | $\sum_{i=1}^{n}(\hat{y}_{1i} - \hat{y}_{0i})^2$ | $p - q$ | $SSD   / (p - q)$ | $MSD / MSE$ |
+| Full   | $\sum_{i=1}^{n}(y_i - \hat{y}_{1i})^2$          | $n - p$ | $SSE   / (n - p)$ |             |
+| Null   | $\sum_{i=1}^{n}(y_i - \hat{y}_{0i})^2$          | $n - q$ |                   |             |
+
 ## Simulation
 
+```{r}
+set.seed(42)
+n = 100 # sample size
+p = 3
+
+beta_0 = 5
+beta_1 = -2
+beta_2 = 6
+sigma = 4
+
+x0 = rep(1, n)
+x1 = sample(seq(1, 10, length = n))
+x2 = sample(seq(1, 10, length = n))
+X = cbind(x0, x1, x2)
+
+y  = beta_0 * x0 + beta_1 * x1 + beta_2 * x2 + rnorm(n, mean = 0, sd = sigma)
+```
 
 
-note about extrapolation.
+```{r}
+library("plot3D")
+# z = y
+# x = x1
+# y = x2
+
+
+fit = lm(y ~ x1 + x2)
+
+grid.lines = 25
+x1.pred = seq(min(x1), max(x1), length.out = grid.lines)
+x2.pred = seq(min(x2), max(x2), length.out = grid.lines)
+x1x2 = expand.grid(x1 = x1.pred, x2 = x2.pred)
+
+y.pred = matrix(predict(fit, newdata = x1x2), 
+                 nrow = grid.lines, ncol = grid.lines)
+# fitted points for droplines to surface
+fitpoints = predict(fit)
+
+# scatter plot with regression plane
+scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), lighting = TRUE,
+          theta = 45, phi = 15, ticktype = "detailed", zlim = c(min(y.pred), max(y.pred)), clim = c(min(y.pred), max(y.pred)),
+          xlab = "wt", ylab = "disp", zlab = "mpg",
+          surf = list(x = x1.pred, y = x2.pred, z = y.pred,  
+                      facets = NA, fit = fitpoints), main = "mtcars")
+```
+
+
+
+
+```{r}
+beta_hat = solve(t(X) %*% X) %*% t(X) %*% y
+beta_hat
+c(beta_0, beta_1, beta_2)
+
+y_hat = X %*% beta_hat
+(s_e = sqrt(sum((y - y_hat) ^ 2) / (n - p)))
+
+
+N = 1000 # number of simulations
+beta_hat_2 = rep(0, N)
+for(i in 1:1000) {
+  y  = beta_0 * x0 + beta_1 * x1 + beta_2 * x2 + rnorm(n, mean = 0 , sd = sigma)
+  fit = lm(y ~ x1 + x2)
+  beta_hat_2[i] = coef(fit)[3]
+}
+
+hist(beta_hat_2)
+
+mean(beta_hat_2)
+
+var(beta_hat_2)
+sigma ^ 2 * solve(t(X) %*% X)[2 + 1, 2 + 1]
+
+sd(beta_hat_2)
+sqrt(sigma ^ 2 * solve(t(X) %*% X)[2 + 1, 2 + 1])
+
+```
+
+
+verify a single beta's distribution here, do a different one on hw. make beta bigger on hw
+
+
+
+
