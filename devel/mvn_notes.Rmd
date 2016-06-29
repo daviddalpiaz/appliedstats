@@ -1,0 +1,204 @@
+# Multivariate Notation
+
+$\bf{X}_{n\times 1}$ denotes an $n$ dimensional random vector given as: $$\bf{X} = \left( {\begin{array}{*{20}{c}}
+  {\bf{X}_{1}} \\ 
+  {\bf{X}_{2}} \\ 
+   \vdots  \\ 
+  {{X_n}} 
+\end{array}} \right)_{n \times 1}$$
+
+and $\Sigma$ is the covariance matrix which is symmetric and non-negative definite:
+
+$$\Sigma  = {\left[ {\begin{array}{*{20}{c}}
+  {{\bf{\Sigma}_{11}}}&{{\bf{\Sigma}_{12}}}& \cdots &{{\bf{\Sigma}_{1n}}} \\ 
+  {{\bf{\Sigma}_{21}}}&{{\bf{\Sigma}_{22}}}&{}&{{\bf{\Sigma}_{2n}}} \\ 
+   \vdots &{}& \ddots & \vdots  \\ 
+  {{\bf{\Sigma}_{n1}}}&{{\bf{\Sigma}_{n2}}}& \cdots &{{\bf{\Sigma}_{nn}}} 
+\end{array}} \right]_{n \times n}}$$
+
+The symmetric property means that:
+
+$$\Sigma  = {\left[ {\begin{array}{*{20}{c}}
+  {{\bf{\Sigma}_{11}}}&{{\bf{\Sigma}_{12}}}& \cdots &{{\bf{\Sigma}_{1n}}} \\ 
+  {{\bf{\Sigma}_{21}}}&{{\bf{\Sigma}_{22}}}&{}&{{\bf{\Sigma}_{2n}}} \\ 
+   \vdots &{}& \ddots & \vdots  \\ 
+  {{\bf{\Sigma}_{n1}}}&{{\bf{\Sigma}_{n2}}}& \cdots &{{\bf{\Sigma}_{nn}}} 
+\end{array}} \right]_{n \times n}} = {\left[ {\begin{array}{*{20}{c}}
+  {{\bf{\Sigma}_{11}}}&{{\bf{\Sigma}_{12}}}& \cdots &{{\bf{\Sigma}_{1n}}} \\ 
+  {{\bf{\Sigma}_{12}}}&{{\bf{\Sigma}_{22}}}&{}&{{\bf{\Sigma}_{2n}}} \\ 
+   \vdots &{}& \ddots & \vdots  \\ 
+  {{\bf{\Sigma}_{1n}}}&{{\bf{\Sigma}_{2n}}}& \cdots &{{\bf{\Sigma}_{nn}}} 
+\end{array}} \right]_{n \times n}}$$
+
+where each $\sigma_{ij} = \operatorname{cov} \left({X_i,X_j}\right)$.
+
+Note to take the expectation of $\bf{X}$ we need:
+
+\[E\left[ \bf{X} \right] = \bf{\mu}  = {\left( {\begin{array}{*{20}{c}}
+  {{\mu _1}} \\ 
+  {{\mu _2}} \\ 
+   \vdots  \\ 
+  {{\mu _n}} 
+\end{array}} \right)_{n \times 1}}\]
+
+Therefore, the covariance calculation is given as:
+
+\[\Sigma  = E\left[ {\left( {\bf{X} - \bf{\mu} } \right){{\left( {\bf{X} - \bf{\mu} } \right)}^T}} \right]\]
+
+
+# Multivariate Normal Distribution
+
+Consider the standard Multivariate Normal Distribution given by $Z \sim {N_n}\left( {\bf{0},{\bf{I}_n}} \right)$ where $\bf{I}_n$ represent the identity matrix:
+
+\[{\bf{I}_n} = \left[ {\begin{array}{*{20}{c}}
+  1&0& \cdots &0 \\ 
+  0&1&{}&0 \\ 
+   \vdots &{}& \ddots & \vdots  \\ 
+  0&0& \cdots &1 
+\end{array}} \right]\]
+
+The standard multivariate normal distribution density function is given by:
+
+\[{f_Z}\left( z \right) = \frac{1}{{{{\left( {2\pi } \right)}^{n/2}}}}\exp \left( { - \frac{1}{2}{z^T}z} \right) = \prod\limits_{i = 1}^n {\frac{1}{{\sqrt {2\pi } }}\exp \left( { - \frac{1}{2}z_i^2} \right)} \]
+
+Now, if we let the Multivariate Normal Distribution with mean $\mu \ne 0$ and covariance $\Sigma \ne \bf{I}_n$  we have:
+
+$$\bf{X} \sim N_{n}\left({\bf{\mu}, \Sigma}\right)$$ has a density function of:
+
+\[{f_X}\left( \bf{x} \right) = \frac{1}{{{{\left( {2\pi } \right)}^{n/2}}{{\left| \Sigma  \right|}^{1/2}}}}\exp \left\{ { - \frac{1}{2}{{\left( {\bf{x} - \bf{\mu} } \right)}^T}{\bf{\Sigma}^{ - 1}}\left( {\bf{x} - \bf{\mu} } \right)} \right\}\]
+
+The Moment Generating Function of the standard Multivariate Normal Distribution is then given to be:
+
+\[{M_\bf{X}}\left( \bf{t} \right) = \exp \left( {{\bf{t}^T}\bf{\mu}  + \frac{1}{2}{\bf{t}^T}\Sigma \bf{t}} \right)\]
+
+for \[\bf{t} = \left( {\begin{array}{*{20}{c}}
+  {{t_1}} \\ 
+  {{t_2}} \\ 
+   \vdots  \\ 
+  {{t_n}} 
+\end{array}} \right) \in {\mathbb{R}^n}\]
+
+## Multivariate Distribution under Linear Transformation
+
+If we let $\bf{Y}_{m \times 1} = \bf{A}_{m\times n}\bf{X}_{n\times 1} + \bf{b}_{m\times 1}$, 
+where $\bf{A}$ is a $m \times n$ matrix and $b \in \mathbb{R}^m$, then 
+$Y \sim N_{m}\left(\bf{A}\bf{\mu} + \bf{b}, \bf{A}\bf{\Sigma}\bf{A}^T\right)$.
+
+Therefore, we can view $\bf{X}$ with a mean $\mu \ne 0$ and covariance 
+$\Sigma \ne \bf{I}_n$  as a linear transformation of the Standard Multivariate 
+Normal Distribution with:
+
+$$\bf{X}_{n \times 1} = {\bf{\Sigma}^{\frac{1}{2}}}_{n \times n}\bf{Z}_{n \times 1} + \bf{\mu}_{n \times 1} $$
+
+# Conditional Multivariate Normal Distribution
+
+Given the above discussion, we can derive the Conditional Multivariate Normal Distribution in the following light.
+
+Consider $\bf{X}_1$ is of dimension $m < n$ and $\bf{X}_2$ is of dimension $n-m$. 
+Note that $\bf{X}_1$ in this case acts as the first partition and $\bf{X}_2$ acts as
+the second partition. We can define these components as:
+
+$$\bf{X} = \left( {\begin{array}{*{20}{c}}
+  {\bf{X}_1 } \\ 
+  {\bf{X}_2 } 
+\end{array}} \right)$$
+
+$$\bf{\mu}  = \left( {\begin{array}{*{20}{c}}
+  {\bf{\mu}_1} \\ 
+  {\bf{\mu}_2} 
+\end{array}} \right)$$
+
+$$\Sigma  = \left( {\begin{array}{*{20}{c}}
+  {\bf{\Sigma}_{11}}&{\bf{\Sigma}_{12}} \\ 
+  {\bf{\Sigma}_{21}}&{\bf{\Sigma}_{22}} 
+\end{array}} \right)$$
+
+Now, we define a linear transformation in terms of both components:
+
+$$\bf{Y} = \bf{X}_1 + \bf{A}\bf{X}_2$$
+
+where $\bf{A} = -\bf{\Sigma}_{12}\bf{\Sigma}_{22}^{-1}$.
+
+Therefore, we have shown that since both $\bf{Y}$ and $\bf{X}_2$ are jointly 
+normal by definition and have a $\operatorname{cov}$ that is 0, 
+they are independent.
+
+Next, consider the expectation of the $\bf{Y}$ transformation:
+
+\[\begin{aligned}
+  E\left[ \bf{Y} \right] &= E\left[ { \bf{X}_{1} + \bf{A}\bf{X}_{2} } \right] \\
+   &= E\left[ {\bf{X}_{1} } \right] + \bf{A}E\left[ {\bf{X}_{2} } \right]  \\
+   &= {\bf{\mu}_1} + \bf{A}{\bf{\mu} _2} 
+\end{aligned} \]
+
+If we rearrange the transformation in terms of $X_1$, we get:
+
+$$\begin{aligned}
+  \bf{Y} &= \bf{X}_{1} + \bf{A}\bf{X}_{2} \\
+  \bf{X}_{1} &= \bf{Y} - \bf{A}\bf{X}_{2} \\ 
+\end{aligned}$$
+
+Applying the conditioning logic to obtain a conditional expectation between 
+$\bf{X}_1$ and $\bf{X}_2$ we get:
+
+\[\begin{aligned}
+  E\left[ {\bf{X}_{1}|\bf{X}_{2}} \right] &= E\left[ {\left( {\bf{Y} - 
+  \bf{A}\bf{X}_{2}} \right)|\bf{X}_{2}} \right] \\
+   &= E\left[ {\bf{Y} |\bf{X}_{2}} \right] - 
+   E\left[ {\bf{A}\bf{X}_{2}|\bf{X}_{2}} \right] \\
+   &= E\left[ {\bf{Y} |\bf{X}_{2}} \right] - \bf{A}\bf{X}_{2} \\
+   &= E\left[ \bf{Y} \right] - \bf{A}\bf{X}_{2} \\
+   &= \left( {\bf{\mu}_{1} + \bf{A}{\bf{\mu}_{2}}} \right) - \bf{A}\bf{X}_{2} \\
+   &= \bf{\mu}_{1} + \bf{A}\left( {{\bf{\mu}_{2}} - \bf{X}_{2}} \right) \\
+   &= \bf{\mu}_{1} + {\bf{\Sigma}_{12}}\bf{\Sigma}_{22}^{ - 1}\left( {\bf{X}_{2}
+   - \bf{\mu}_{2}} \right) \\ 
+\end{aligned} \]
+
+We now have the conditional expectation, in order to be able to declare the 
+conditional multivariate normal, we must also have the conditional covariance 
+matrix. 
+
+Before we begin, we aim to prove a short lemma relating the covariance between the 
+transformation and the second partition as:
+
+$$\begin{aligned}
+  \operatorname{cov} \left( {\bf{Y},\bf{X}_{2} } \right) &= \operatorname{cov} 
+  \left( {\bf{X}_{1},\bf{X}_{2} } \right) + \operatorname{cov} 
+  \left( {A\bf{X}_{2},\bf{X}_{2} } \right) \\
+   &= {\bf{\Sigma}_{12}} + A\operatorname{var} \left( {\bf{X}_{2} } \right) \\
+   &= {\bf{\Sigma}_{12}} - {\bf{\Sigma}_{12}}\bf{\Sigma}_{22}^{ - 1}{\bf{\Sigma}_{22}} \\
+   &= 0 \\ 
+\end{aligned}$$
+
+Returning, we proceed to derive the conditional results using the lemma.
+
+$$\begin{aligned}
+  \operatorname{var} \left( {\bf{X}_{1} |\bf{X}_{2} } \right) &= 
+  \operatorname{var} \left( {\left( {Y - \bf{A}\bf{X}_{2} } \right)|\bf{X}_{2} } \right) \\
+   &= \operatorname{var} \left( {Y|\bf{X}_{2} } \right) + 
+   \underbrace {\operatorname{var} \left( {\bf{A}\bf{X}_{2} |\bf{X}_{2} } \right)}_{{\text{Constant}} \Rightarrow {\text{0}}} 
+   - \underbrace {A\operatorname{cov} \left( {Y, - \bf{X}_{2} } \right)}_{ = 0{\text{ by above}}} 
+   - \underbrace {\operatorname{cov} \left( {Y, - \bf{X}_{2} } \right){A^T}}_{ = 0{\text{ by above}}} \\
+   &= \operatorname{var} \left( {Y|\bf{X}_{2} } \right) \\
+   &= \operatorname{var} \left( \bf{Y} \right) \\ 
+\end{aligned}$$
+
+Therefore, the conditional variance is given by the variance of the linear
+transformation $\operatorname{var} \left( \bf{Y} \right)$
+
+$$\begin{aligned}
+  \operatorname{var} \left( {\bf{X}_{1} |\bf{X}_{2} } \right) &= \operatorname{var} \left( \bf{Y} \right) \\
+   &= \operatorname{var} \left( {\bf{X}_{1}  + \bf{A}\bf{X}_{2} } \right) \\
+   &= \operatorname{var} \left( {\bf{X}_{1} } \right) + \operatorname{var} \left( {\bf{A}\bf{X}_{2} } \right) + \operatorname{cov} \left( {\bf{X}_{1} ,\bf{A}\bf{X}_{2} } \right) + \operatorname{cov} \left( {\bf{X}_{2} ,\bf{X}_{1} {A^T}} \right) \\
+   &= \operatorname{var} \left( {\bf{X}_{1} } \right) + \bf{A}\operatorname{var} \left( {\bf{X}_{2} } \right){\bf{A}^T} + A\operatorname{cov} \left( {\bf{X}_{1} ,\bf{X}_{2} } \right) + \operatorname{cov} \left( {\bf{X}_{2} ,\bf{X}_{1} } \right){\bf{A}^T} \\
+   &= {\bf{\Sigma}_{11}} + \bf{A}{\bf{\Sigma}_{22}}{\bf{A}^T} + \bf{A}{\bf{\Sigma}_{21}} + {\bf{\Sigma}_{12}}{A^T} \\
+   &= {\bf{\Sigma}_{11}} + \left( { - {\bf{\Sigma}_{12}}\bf{\Sigma}_{22}^{ - 1}} \right){\bf{\Sigma}_{22}}\left( { - \bf{\Sigma}_{22}^{ - 1}{\bf{\Sigma}_{12}}} \right) + \left( { - {\bf{\Sigma}_{12}}\bf{\Sigma}_{22}^{ - 1}} \right){\bf{\Sigma}_{21}} + {\bf{\Sigma}_{12}}\left( { - \bf{\Sigma}_{22}^{ - 1}{\bf{\Sigma}_{12}}} \right) \\
+   &= {\bf{\Sigma}_{11}} + {\bf{\Sigma}_{12}}\bf{\Sigma}_{22}^{ - 1}{\bf{\Sigma}_{22}}\bf{\Sigma}_{22}^{ - 1}{\bf{\Sigma}_{12}} - {\bf{\Sigma}_{12}}\bf{\Sigma}_{22}^{ - 1}{\bf{\Sigma}_{21}} - {\bf{\Sigma}_{12}}\bf{\Sigma}_{22}^{ - 1}{\bf{\Sigma}_{12}} \\
+   &= {\bf{\Sigma}_{11}} + {\bf{\Sigma}_{12}}\bf{\Sigma}_{22}^{ - 1}{\bf{\Sigma}_{22}}\bf{\Sigma}_{22}^{ - 1}{\bf{\Sigma}_{12}} - 2{\bf{\Sigma}_{12}}\bf{\Sigma}_{22}^{ - 1}{\bf{\Sigma}_{21}} \\
+   &= {\bf{\Sigma}_{11}} + {\bf{\Sigma}_{12}}\bf{\Sigma}_{22}^{ - 1}{\bf{\Sigma}_{12}} - 2{\bf{\Sigma}_{12}}\bf{\Sigma}_{22}^{ - 1}{\bf{\Sigma}_{21}} \\
+   &= {\bf{\Sigma}_{11}} - {\bf{\Sigma}_{12}}\bf{\Sigma}_{22}^{ - 1}{\bf{\Sigma}_{21}} \\ 
+\end{aligned}$$
+
+Therefore, the Conditional Multivariate Normal Distribution is given by:
+
+$$ \bf{X}_{1} | \bf{X}_{2} \sim N_{m} \left( { \bf{\mu}_{1} + {\bf{\Sigma}_{12}}\bf{\Sigma}_{22}^{ - 1}\left( {\bf{X}_{2} - \bf{\mu}_{2}} \right),{\bf{\Sigma}_{11}} - {\bf{\Sigma}_{12}}\bf{\Sigma}_{22}^{ - 1}{\bf{\Sigma}_{21}}} \right) $$
