@@ -542,15 +542,15 @@ x2 = sample(seq(1, 10, length = n))
 X = cbind(x0, x1, x2)
 
 y  = beta_0 * x0 + beta_1 * x1 + beta_2 * x2 + rnorm(n, mean = 0, sd = sigma)
+
+sim_data = data.frame(x1, x2, y)
 ```
 
 
-```{r}
+```{r, echo = FALSE}
 library("plot3D")
-# z = y
-# x = x1
-# y = x2
 
+# make this use data.frame? or, simply hide this?
 
 fit = lm(y ~ x1 + x2)
 
@@ -583,12 +583,17 @@ c(beta_0, beta_1, beta_2)
 y_hat = X %*% beta_hat
 (s_e = sqrt(sum((y - y_hat) ^ 2) / (n - p)))
 
+lm(y ~ x1 + x2, data = sim_data)
 
+```
+
+
+```{r}
 N = 1000 # number of simulations
 beta_hat_2 = rep(0, N)
 for(i in 1:1000) {
-  y  = beta_0 * x0 + beta_1 * x1 + beta_2 * x2 + rnorm(n, mean = 0 , sd = sigma)
-  fit = lm(y ~ x1 + x2)
+  sim_data$y  = beta_0 * x0 + beta_1 * x1 + beta_2 * x2 + rnorm(n, mean = 0 , sd = sigma)
+  fit = lm(y ~ x1 + x2, data = sim_data)
   beta_hat_2[i] = coef(fit)[3]
 }
 
