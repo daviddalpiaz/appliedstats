@@ -304,7 +304,7 @@ E[\hat{\beta}_1] &amp;= \beta_1.
 </div>
 <div id="best" class="section level4 unnumbered">
 <h4>Best</h4>
-<p>Now, if we restrict ourselves to both <em>linear</em> and <em>unbiased</em> estimates, how do we define the <em>best</em> estimate? The estimate with the <strong>minimum varaince</strong>.</p>
+<p>Now, if we restrict ourselves to both <em>linear</em> and <em>unbiased</em> estimates, how do we define the <em>best</em> estimate? The estimate with the <strong>minimum variance</strong>.</p>
 <p>First note that it is very easy to create an estimate for <span class="math inline">\(\beta_1\)</span> that has very low variance, but is not unbiased. For example, define:</p>
 <p><span class="math display">\[
 \hat{\theta}_{BAD} = 5.
@@ -517,12 +517,15 @@ SE[\hat{\beta}_1] = \frac{s_e}{\sqrt{S_{xx}}}
 \]</span></p>
 <p>Then we use the classic trick of “multiply by 1” and some rearranging to arrive at</p>
 <p><span class="math display">\[
-\frac{\hat{\beta}_1 - \beta_1}{SE[\hat{\beta}_1]} = \frac{\hat{\beta}_1 - \beta_1}{s_e / \sqrt{S_{xx}}}
-= \frac{\hat{\beta}_1 - \beta_1}{s_e / \sqrt{S_{xx}}} \cdot \frac{\sigma / \sqrt{S_{xx}}}{\sigma / \sqrt{S_{xx}}}
-= \frac{\hat{\beta}_1 - \beta_1}{\sigma / \sqrt{S_{xx}}} \cdot \frac{\sigma / \sqrt{S_{xx}}}{s_e / \sqrt{S_{xx}}}
-= \frac{\hat{\beta}_1 - \beta_1}{\sigma / \sqrt{S_{xx}}} \bigg/ \sqrt{\frac{s_e^2}{\sigma^2}}
+\begin{aligned}
+\frac{\hat{\beta}_1 - \beta_1}{SE[\hat{\beta}_1]} 
+&amp;= \frac{\hat{\beta}_1 - \beta_1}{s_e / \sqrt{S_{xx}}} \\
+&amp;= \frac{\hat{\beta}_1 - \beta_1}{s_e / \sqrt{S_{xx}}} \cdot \frac{\sigma / \sqrt{S_{xx}}}{\sigma / \sqrt{S_{xx}}} \\
+&amp;= \frac{\hat{\beta}_1 - \beta_1}{\sigma / \sqrt{S_{xx}}} \cdot \frac{\sigma / \sqrt{S_{xx}}}{s_e / \sqrt{S_{xx}}} \\
+&amp;= \frac{\hat{\beta}_1 - \beta_1}{\sigma / \sqrt{S_{xx}}} \bigg/ \sqrt{\frac{s_e^2}{\sigma^2}}
 \sim \frac{Z}{\sqrt{\frac{\chi_{n-2}^2}{n-2}}}
 \sim t_{n-2}
+\end{aligned}
 \]</span></p>
 <p>where <span class="math inline">\(Z \sim N(0,1)\)</span>.</p>
 <p>Recall that a random variable <span class="math inline">\(T\)</span> defined as,</p>
