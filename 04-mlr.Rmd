@@ -482,7 +482,7 @@ Also note in this case, by hypothesizing that $\beta_1 = 0$ the null and alterna
 - $H_0$: $Y = \beta_0 + \beta_2 x_{2} + \epsilon$
 - $H_1$: $Y = \beta_0 + \beta_1 x_{1} + \beta_2 x_{2} + \epsilon$
 
-This is important. We are not simply testing whether or not there is a relationship between weight and fuel efficiency, we are testing if there is a relationship between weight and fuel efficiency, given that a term for year is in the model. (Note, we dropped some indexing here, for readability.)
+This is important. We are not simply testing whether or not there is a relationship between weight and fuel efficiency. We are testing if there is a relationship between weight and fuel efficiency, given that a term for year is in the model. (Note, we dropped some indexing here, for readability.)
 
 ### Confidence Intervals
 
@@ -527,13 +527,19 @@ x_{0(p-1)} \\
 Then our estimate of $E[Y]$ for a set of values $x_0$ is given by
 
 \[
-\hat{y} = x_{0}^\top\hat{\beta} = \hat{\beta}_0 + \hat{\beta}_1 x_{01} + \hat{\beta}_2 x_{02} + \cdots + \hat{\beta}_{p-1} x_{0(p-1)}.
+\begin{aligned}
+\hat{y} &= x_{0}^\top\hat{\beta} \\
+&= \hat{\beta}_0 + \hat{\beta}_1 x_{01} + \hat{\beta}_2 x_{02} + \cdots + \hat{\beta}_{p-1} x_{0(p-1)}.
+\end{aligned}
 \]
 
 As with SLR, this is an unbiased estimate.
 
 \[
-E[\hat{y}] = x_{0}^\top\beta = \beta_0 + \beta_1 x_{01} + \beta_2 x_{02} + \cdots + \beta_{p-1} x_{0(p-1)}
+\begin{aligned}
+E[\hat{y}] &= x_{0}^\top\beta \\
+&= \beta_0 + \beta_1 x_{01} + \beta_2 x_{02} + \cdots + \beta_{p-1} x_{0(p-1)}
+\end{aligned}
 \]
 
 To make an interval estimate, we will also need its standard error.
@@ -548,22 +554,22 @@ Putting it all together, we obtain a confidence interval for the mean response.
 \hat{y} \pm t_{\alpha/2, n - p} \cdot s_e \sqrt{x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
 \]
 
-The math has changed a bit, but the process in `R` remains almost identical. Here we create a data frame for two additional cars. One can that weighs 3500 pounds produced in 1976, as well as a second car that weighs 5000 pounds which was produced in 1981.
+The math has changed a bit, but the process in `R` remains almost identical. Here, we create a data frame for two additional cars. One car that weighs 3500 pounds produced in 1976, as well as a second car that weighs 5000 pounds which was produced in 1981.
 
 ```{r}
 new_cars = data.frame(wt = c(3500, 5000), year = c(76, 81))
 new_cars
 ```
 
-We can then use the `predict()` function with `interval = "confidence"` to obtain intervals for both. Again, it is import to make the data passed to `newdata` a data frame, so that `R` knows which values are for which variables.
+We can then use the `predict()` function with `interval = "confidence"` to obtain intervals for the mean fuel efficiency for both new car. Again, it is important to make the data passed to `newdata` a data frame, so that `R` knows which values are for which variables.
 
 ```{r}
 predict(mpg_model, newdata = new_cars, interval = "confidence", level = 0.99)
 ```
 
-`R` then reports the estimate $\hat{y}$ (`fit`) for each, as well as the lower (`lwr`) and upper (`upr`) bounds for the interval, of a desired level.
+`R` then reports the estimate $\hat{y}$ (`fit`) for each, as well as the lower (`lwr`) and upper (`upr`) bounds for the interval at a desired level (99%).
 
-A word of caution here, one of these estimates is good, while one is suspect.
+A word of caution here: one of these estimates is good while one is suspect.
 
 ```{r}
 new_cars$wt
@@ -577,7 +583,7 @@ new_cars$year
 range(autompg$year)
 ```
 
-As are the year of each of the new cars.
+As are the years of each of the new cars.
 
 ```{r}
 plot(year ~ wt, data = autompg, pch = 20, col = "dodgerblue", cex = 1.5)
@@ -586,7 +592,7 @@ points(new_cars, col = "darkorange", cex = 3, pch = "X")
 
 However, we have to consider weight and year together now. And based on the above plot, one of the new cars is within the "blob" of observed values, while the other, the car from 1981 weighing 5000 pounds, is noticeably outside of the observed values. This is a hidden extrapolation which you should be aware of when using multiple regression.
 
-We do a quick verification of some of the mathematics in `R`.
+Shifting gears back to the new data pair that can be reasonably estimated, we do a quick verification of some of the mathematics in `R`.
 
 ```{r}
 x0 = c(1, 3500, 76)
@@ -635,16 +641,23 @@ With this in mind, confidence intervals for the individual $\hat{\beta}_j$ are a
 
 ### Prediction Intervals
 
-As with SLR, creating prediction intervals involves one slight change to the standard error to account for the factor that we are now considering an observation, instead of a mean.
+As with SLR, creating prediction intervals involves one slight change to the standard error to account for the fact that we are now considering an observation, instead of a mean.
 
 Here we use $\hat{y}_{Pred}$ to estimate $Y_0$, the value of $Y$ for the predictor vector $x_0$
 
 \[
-\hat{y}_{Pred} = x_{0}^\top\hat{\beta} = \hat{\beta}_0 + \hat{\beta}_1 x_{01} + \hat{\beta}_2 x_{02} + \cdots + \hat{\beta}_{p-1}
+\begin{aligned}
+\hat{y}_{Pred} &= x_{0}^\top\hat{\beta} \\
+&= \hat{\beta}_0 + \hat{\beta}_1 x_{01} + \hat{\beta}_2 x_{02} + \cdots + \hat{\beta}_{p-1}
+\end{aligned}
 \]
 
 \[
-E[\hat{y}_{Pred}] = x_{0}^\top\beta = \beta_0 + \beta_1 x_{01} + \beta_2 x_{02} + \cdots + \beta_{p-1} x_{0(p-1)} = Y_0
+\begin{aligned}
+E[\hat{y}_{Pred}] &= Y_0 \\
+&= x_{0}^\top\beta \\
+&= \beta_0 + \beta_1 x_{01} + \beta_2 x_{02} + \cdots + \beta_{p-1} x_{0(p-1)}
+\end{aligned}
 \]
 
 \[
@@ -674,9 +687,9 @@ Which means that, we can still calculate $R^2$ in the same manner as before, whi
 summary(mpg_model)$r.squared
 ```
 
-The interpretation changes slightly, now in this case, we say that $`r round(100*summary(mpg_model)$r.squared, 2)`\%$ for the observed variation in miles per gallon is explained by the linear relationship with the two predictor variables, weight and year.
+The interpretation changes slightly as compared to SLR. In this MLR case, we say that $`r round(100*summary(mpg_model)$r.squared, 2)`\%$ for the observed variation in miles per gallon is explained by the linear relationship with the two predictor variables, weight and year.
 
-We can also create the ANOVA table as before, and perform the significance of regression test. In multiple regression, the significance of regression test is
+We can also create the ANOVA table as before and perform the significance of regression test. In multiple regression, the significance of regression test is
 
 \[
 H_0: \beta_1 = \beta_2 = \cdots = \beta_{p - 1} = 0.
@@ -688,7 +701,7 @@ Here, we see that the null hypothesis sets all of the $\beta_j$ equal to 0, *exc
 Y_i = \beta_0 + \epsilon_i.
 \]
 
-This is a model where the regression is insignificant. None of the predictors have a significant linear relationship with the response. Notationally, we will denote the residuals of this model as $\hat{y}_{0i}$, which in this case happens to be:
+This is a model where the regression is insignificant. None of the predictors have a significant linear relationship with the response. Notationally, we will denote the fitted values of this model as $\hat{y}_{0i}$, which in this case happens to be:
 
 \[
 \hat{y}_{0i} = \bar{y}.
@@ -706,7 +719,7 @@ We could then say that the full model, or "model under the alternative hypothesi
 Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_p x_{i(p-1)} + \epsilon_i
 \]
 
-This is a model where the regression is significant. At least one of the predictors has a significant linear relationship with the response. We will denote the residuals of this model as $\hat{y}_{1i}$. The ANOVA table is then nearly identical to the ANOVA table from SLR, with two exceptions in the degrees of freedom column.
+This is a model where the regression is significant. At least one of the predictors has a significant linear relationship with the response. We will denote the fitted values of this model as $\hat{y}_{1i}$. The ANOVA table is then nearly identical to the ANOVA table from SLR, with two exceptions in the degrees of freedom column.
 
 | Source     | Sum of Squares  | Degrees of Freedom | Mean Square | $F$ |
 |------------|-----------------|------------|-----------|-----------|
@@ -714,10 +727,10 @@ This is a model where the regression is significant. At least one of the predict
 | Error      | $\sum_{i=1}^{n}(y_i - \hat{y}_{1i})^2$     | $n - p$ | $SSE / (n - p)$ |             |
 | Total      | $\sum_{i=1}^{n}(y_i - \bar{y})^2$       | $n - 1$ |                 |             |
 
-In summary, the $F$ statistic is,
+In summary, the $F$ statistic is
 
 \[
-F = \frac{\sum_{i=1}^{n}(\hat{y}_{1i} - \bar{y})^2 / (p - 1)}{\sum_{i=1}^{n}(y_i - \hat{y}_{1i})^2 / (n - p)}
+F = \frac{\sum_{i=1}^{n}(\hat{y}_{1i} - \bar{y})^2 / (p - 1)}{\sum_{i=1}^{n}(y_i - \hat{y}_{1i})^2 / (n - p)},
 \]
 
 and the p-value is calculated as
@@ -728,7 +741,7 @@ P(F_{p-1, n-p} > F)
 
 since we reject for large values of $F$. Here $F_{p-1, n-p}$ represents a random variable which follows an $F$ distribution with $p - 1$ and $n - p$ degrees of freedom.
 
-To perform this test in `R`, we first explicitly specify the two models in `R` and save the results in different variables. We then use `anova()` to compare the two models, giving `anova()` the null first and the alternative (full) second.
+To perform this test in `R`, we first explicitly specify the two models in `R` and save the results in different variables. We then use `anova()` to compare the two models, giving `anova()` the null model first and the alternative (full) model second.
 
 In this case,
 
@@ -743,17 +756,17 @@ full_mpg_model = lm(mpg ~ wt + year, data = autompg)
 anova(null_mpg_model, full_mpg_model)
 ```
 
-First, notice that `R` does not display the results in the same manner as the table above. Importantly, we see that the value of the $F$ statistic is `r anova(null_mpg_model, full_mpg_model)$F[2]`, and the p-value is extremely low, so we reject the null hypothesis at any reasonable $\alpha$ and say that the regression is significant. At least one of `wt` or `year` has a useful linear relationship with `mpg`.
+First, notice that `R` does not display the results in the same manner as the table above. More important than the layout of the table are its contents. We see that the value of the $F$ statistic is `r round(anova(null_mpg_model, full_mpg_model)$F[2], 3)`, and the p-value is extremely low, so we reject the null hypothesis at any reasonable $\alpha$ and say that the regression is significant. At least one of `wt` or `year` has a useful linear relationship with `mpg`.
 
 ```{r}
 summary(mpg_model)
 ```
 
-Notice that the value reported in the row for `F-statistic:` is indeed the $F$ test statistic for the significance of the regression test, and additionally it reports the two relevant degrees of freedom.
+Notice that the value reported in the row for `F-statistic` is indeed the $F$ test statistic for the significance of the regression test, and additionally it reports the two relevant degrees of freedom.
 
-Also, note that, none of the individual $t$-tests are equivalent to the $F$-test as they were in SLR. This equivilence only holds for SLR because the individual test is the same as testing for all non-intercept parameters, since there is only one.
+Also, note that none of the individual $t$-tests are equivalent to the $F$-test as they were in SLR. This equivalence only holds for SLR because the individual test for $\beta_1$ is the same as testing for all non-intercept parameters, since there is only one.
 
-Here, we also verify the sums of squares and degrees of freedom directly in `R`. You should match these to the table from `R`, and use this to match `R`'s output to the written table above. 
+We can also verify the sums of squares and degrees of freedom directly in `R`. You should match these to the table from `R` and use this to match `R`'s output to the written table above. 
 
 ```{r}
 # SSReg
@@ -772,25 +785,25 @@ length(resid(null_mpg_model)) - length(coef(null_mpg_model))
 
 ## Nested Models
 
-The significance of the regression test is actually a special case of testing what we will call **nested models**. More generally we can compare two models, where one model is "nested" inside the other, meaning, one model contains a subset of the predictors from a lager model.
+The significance of the regression test is actually a special case of testing what we will call **nested models**. More generally we can compare two models, where one model is "nested" inside the other, meaning one model contains a subset of the predictors from only the larger model.
 
-Conisder the following the full model,
+Consider the following the full model,
 
 \[
 Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_p x_{i(p-1)} + \epsilon_i
 \]
 
-This model has $p - 1$ predictors, for a total of $p$ $\beta$-parameters. We will denote the residuals of this model as $\hat{y}_{1i}$.
+This model has $p - 1$ predictors, for a total of $p$ $\beta$-parameters. We will denote the fitted values of this model as $\hat{y}_{1i}$.
 
-Let, $q < p$, then define the null model,
+Let the null model be
 
 \[
 Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{(q-1)} x_{i(q-1)} + \epsilon_i
 \]
 
-This model has $q - 1$ predictors, for a total of $q$ $\beta$-parameters. We will denote the residuals of this model as $\hat{y}_{0i}$.
+where $q < p$. This model has $q - 1$ predictors, for a total of $q$ $\beta$-parameters. We will denote the fitted values of this model as $\hat{y}_{0i}$.
 
-The difference between these two models can be codified by the null hpothesis of a test.
+The difference between these two models can be codified by the null hypothesis of a test.
 
 \[
 H_0: \beta_q = \beta_{q+1} = \cdots = \beta_{p - 1} = 0.
@@ -812,13 +825,13 @@ F = \frac{\sum_{i=1}^{n}(\hat{y}_{1i} - \hat{y}_{0i})^2 / (p - 1)}{\sum_{i=1}^{n
 
 Notice that the row for "Diff" compares the sum of the squared differences of the fitted values. The degrees of freedom is then the difference of the number of $\beta$-parameters estimated between the two models.
 
-For example, the `autompg` dataset has a number of additonal varaibles that we have yet to use.
+For example, the `autompg` dataset has a number of additional variables that we have yet to use.
 
 ```{r}
 names(autompg)
 ```
 
-We'll contain to use `mpg` as the response, but now we will consider two different models.
+We'll continue to use `mpg` as the response, but now we will consider two different models.
 
 - Full: `mpg ~ wt + year + cyl + disp + hp + acc`
 - Null: `mpg ~ wt + year`
@@ -826,7 +839,7 @@ We'll contain to use `mpg` as the response, but now we will consider two differe
 Note that these are nested models, as the null model contains a subset of the predictors from the full model, and no additional predictors. Both models have an intercept $\beta_0$ as well as a coefficient in front of each of the predictors. We could then write the null hypothesis for comping these two models as,
 
 \[
-H_0: \beta_{cyl} = \beta_{disp} =\beta_{hp} =\beta_{acc} =0
+H_0: \beta_{cyl} = \beta_{disp} = \beta_{hp} = \beta_{acc} = 0
 \]
 
 The alternative is simply that at least one of the $\beta_{j}$ from the null is not 0.
@@ -840,9 +853,9 @@ full_mpg_model = lm(mpg ~ ., data = autompg)
 anova(null_mpg_model, full_mpg_model)
 ```
 
-Here we have used the formula `mpg ~ .` to define to full model. This is the same as the commented out line. Specifically, this a common shortcut in `R` which read "model `mpg` as the response with each of the remaing variables in the data frame as predictors."
+Here we have used the formula `mpg ~ .` to define to full model. This is the same as the commented out line. Specifically, this a common shortcut in `R` which reads, "model `mpg` as the response with each of the remaining variables in the data frame as predictors."
 
-Here we see that the value of the $F$ statistic is `r anova(null_mpg_model, full_mpg_model)$F[2]`, and the p-value is very large, so we fail to reject the null hypothesis at any reasonable $\alpha$ and say that none of `cyl`, `disp`, `hp`, and `acc` are significant with `wt` and `year` already in the model.
+Here we see that the value of the $F$ statistic is `r round(anova(null_mpg_model, full_mpg_model)$F[2],3)`, and the p-value is very large, so we fail to reject the null hypothesis at any reasonable $\alpha$ and say that none of `cyl`, `disp`, `hp`, and `acc` are significant with `wt` and `year` already in the model.
 
 Again, we verify the sums of squares and degrees of freedom directly in `R`. You should match these to the table from `R`, and use this to match `R`'s output to the written table above. 
 
@@ -882,7 +895,7 @@ beta_2 = 6
 sigma  = 4
 ```
 
-As is the norm with regression, the $x$ values are considered fixed and known quantities, so we will simulate those first, and they remain the same the rest of the simulation study. Also note we create an `x0` which is all `1`, which we need to create our `X` matrix. If you look at the matrix formulation of regression, this is a "predictor" that puts the intercept into the model. We also calculate the `C` matrix for later use.
+As is the norm with regression, the $x$ values are considered fixed and known quantities, so we will simulate those first, and they remain the same for the rest of the simulation study. Also note we create an `x0` which is all `1`, which we need to create our `X` matrix. If you look at the matrix formulation of regression, this unit vector of all `1`s is a "predictor" that puts the intercept into the model. We also calculate the `C` matrix for later use.
 
 ```{r}
 x0 = rep(1, n)
@@ -892,7 +905,7 @@ X = cbind(x0, x1, x2)
 C = solve(t(X) %*% X)
 ```
 
-We then simulate the response according the model specification above. Lastly we place the two predictors and response into a data frame. Note that we do **not** place `x0` in the data frame. This is a result of `R` adding an intercept by default.
+We then simulate the response according the model above. Lastly, we place the two predictors and response into a data frame. Note that we do **not** place `x0` in the data frame. This is a result of `R` adding an intercept by default.
 
 ```{r}
 eps      = rnorm(n, mean = 0, sd = sigma)
@@ -900,7 +913,7 @@ y        = beta_0 + beta_1 * x1 + beta_2 * x2 + eps
 sim_data = data.frame(x1, x2, y)
 ```
 
-Plotting this data, and the fitting regression produces the following plot.
+Plotting this data and fitting the regression produces the following plot.
 
 ```{r, echo=FALSE, fig.height=6, fig.width=6, message=FALSE, warning=FALSE}
 # make this use data.frame? or, simply hide this?
@@ -946,7 +959,7 @@ Also, these values are close to what we would expect.
 c(beta_0, beta_1, beta_2)
 ```
 
-We then calculated the fitted values in order to calculated $s_e$, which we see is the same as `sigma` which is returned by `summary()`.
+We then calculated the fitted values in order to calculate $s_e$, which we see is the same as the `sigma` which is returned by `summary()`.
 
 ```{r}
 y_hat = X %*% beta_hat
@@ -954,7 +967,7 @@ y_hat = X %*% beta_hat
 summary(lm(y ~ x1 + x2, data = sim_data))$sigma
 ```
 
-So far so good, everything checks out. Now we will finally simulate from this model repeatedly in order to obtain an emperical distribution of $\hat{\beta}_2$.
+So far so good. Everything checks out. Now we will finally simulate from this model repeatedly in order to obtain an empirical distribution of $\hat{\beta}_2$.
 
 We expect $\hat{\beta}_2$ to follow a normal distribution,
 
@@ -973,6 +986,8 @@ In this case,
 \]
 
 Note that $C_{22}$ corresponds to the element in the **third** row and **third** column since `R` is indexed starting at `1`, but we index the $C$ matrix starting at `0` to match the diagonal elements to the corresponding $\beta_j$.
+
+Note that $C_{22}$ corresponds to the element in the **third** row and **third** column since $\beta_2$ is the **third** parameter in the model and because `R` is indexed starting at `1`. However, we index the $C$ matrix starting at `0` to match the diagonal elements to the corresponding $\beta_j$.
 
 ```{r}
 C[3, 3]
@@ -1011,7 +1026,7 @@ var(beta_hat_2)
 sigma ^ 2 * C[2 + 1, 2 + 1]
 ```
 
-Which is equivilent to the standard deviations.
+The standard deviations found from the simulated data and the parent population are also very close.
 
 ```{r}
 sd(beta_hat_2)
@@ -1027,4 +1042,15 @@ curve(dnorm(x, mean = beta_2, sd = sqrt(sigma ^ 2 * C[2 + 1, 2 + 1])),
       col = "darkorange", add = TRUE, lwd = 3)
 ```
 
-Looks good! Normal: Check. Center at 6: Check. Spread of about 0.15: Check.
+This looks good! The simulation-based histogram appears to be Normal with mean 6 and spread of about 0.15 as you measure from center to inflection point. That matches really well with the sampling distribution of $\hat{\beta}_2 \sim N\left(\mu = `r beta_2`, \sigma^2 = `r sigma^2 * C[2+1, 2+1]`  \right)$.
+
+One last check, we verify the $68 - 95 - 99.7$ rule.
+
+```{r}
+sd_bh2 = sqrt(sigma ^ 2 * C[2 + 1, 2 + 1])
+# We expect these to be: 0.68, 0.95, 0.997
+mean(beta_2 - 1 * sd_bh2 < beta_hat_2 & beta_hat_2 < beta_2 + 1 * sd_bh2)
+mean(beta_2 - 2 * sd_bh2 < beta_hat_2 & beta_hat_2 < beta_2 + 2 * sd_bh2)
+mean(beta_2 - 3 * sd_bh2 < beta_hat_2 & beta_hat_2 < beta_2 + 3 * sd_bh2)
+```
+
