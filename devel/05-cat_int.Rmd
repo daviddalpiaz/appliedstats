@@ -4,17 +4,170 @@
 >
 > --- **John Tukey**
 
-- What data to use?
-- Ask Alex about data sources.
-    - skin cancer has a data source.
-    - cookies?
+So far in each of our analyses, we have only used numeric variables, both as the response
+So far, only "numeric" variables
 
 - "Chapter about interpretation, the math is still the same." Also, how to input into `R`.
 
 ## Dummy Variables
 
-## Factor Variables
+```{r}
+mtcars
+```
+
+```{r}
+plot(mpg ~ hp, data = mtcars, col = am + 1, pch = am + 1, cex = 2)
+```
+
+```{r}
+mpg_hp_slr = lm(mpg ~ hp, data = mtcars)
+summary(mpg_hp_slr)
+```
+
+```{r}
+plot(mpg ~ hp, data = mtcars, col = am + 1, pch = am + 1, cex = 2)
+abline(mpg_hp_slr, lwd = 2, col = "green")
+```
+
+note there is a pattern. red is above, black is below.
+
+```{r}
+mpg_hp_add = lm(mpg ~ hp + am, data = mtcars)
+```
+
+```{r}
+mpg_hp_add
+```
+
+```{r}
+int_auto = mpg_hp_add$coeff[1]
+int_manu = mpg_hp_add$coeff[1] + mpg_hp_add$coeff[3]
+
+slope_auto = mpg_hp_add$coeff[2]
+slope_manu = mpg_hp_add$coeff[2]
+```
+
+```{r}
+plot(mpg ~ hp, data = mtcars, col = am + 1, pch = am + 1, cex = 2)
+abline(int_auto, slope_auto, col = 1, lty = 1, lwd = 2)
+abline(int_manu, slope_manu, col = 2, lty = 2, lwd = 2)
+```
+
+```{r}
+summary(mpg_hp_add)
+anova(mpg_hp_slr, mpg_hp_add)
+```
 
 ## Interactions
 
-- here is a change.
+```{r}
+# read data frame from the web
+autompg = read.table(
+  "http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data",
+  quote = "\"",
+  comment.char = "",
+  stringsAsFactors = FALSE)
+# give the dataframe headers
+colnames(autompg) = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin", "name")
+# remove missing data, which is stored as "?"
+autompg = subset(autompg, autompg$hp != "?")
+# remove the plymouth reliant, as it causes some issues
+autompg = subset(autompg, autompg$name != "plymouth reliant")
+# give the dataset row names, based on the engine, year and name
+rownames(autompg) = paste(autompg$cyl, "cylinder", autompg$year, autompg$name)
+# remove the variable for name, as will as origin
+autompg = subset(autompg, select = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin"))
+# change horsepower from character to numeric
+autompg$hp = as.numeric(autompg$hp)
+# create a dummary variable for foreign vs domestic cars. domestic = 1.
+autompg$domestic = as.numeric(autompg$origin == 1)
+# remove 3 and 5 cylinder cars (which are very rare.)
+autompg = autompg[autompg$cyl != 5,]
+autompg = autompg[autompg$cyl != 3,]
+# the following line would verify the remaining cylinder possibilities are 4, 6, 8
+#unique(autompg$cyl)
+# change cyl to a factor variable
+autompg$cyl = as.factor(autompg$cyl)
+# change origin to a factor variable
+autompg$origin = as.factor(autompg$origin)
+```
+
+```{r}
+str(autompg)
+```
+
+
+
+```{r}
+mpg_disp_add = lm(mpg ~ disp + domestic, data = autompg)
+
+plot(mpg ~ disp, data = autompg, col = domestic + 1)
+abline(mpg_disp_add$coeff[1], mpg_disp_add$coeff[2], col = 1, lty = 1)
+abline(mpg_disp_add$coeff[1] + mpg_disp_add$coeff[3], mpg_disp_add$coeff[2], col = 2, lty = 2)
+
+
+
+
+mpg_disp_int = lm(mpg ~ disp * domestic, data = autompg)
+
+anova(mpg_disp_add, mpg_disp_int)
+
+
+
+plot(mpg ~ disp, data = autompg, col = domestic + 1)
+abline(mpg_disp_int$coeff[1], mpg_disp_int$coeff[2], col = 1, lty = 1)
+abline(mpg_disp_int$coeff[1] + mpg_disp_int$coeff[3], mpg_disp_int$coeff[2] + mpg_disp_int$coeff[4], col = 2, lty = 2)
+
+```
+
+
+## Factor Variables
+
+
+caution about "factor" variables that are actually numeric 1,2,3 but don't have meaning.
+
+
+- individual intercepts
+- show same as "single" intercept
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+
+
+
+mod_add = lm(mpg ~ disp + cyl, data = autompg)
+mod_int = lm(mpg ~ disp * cyl, data = autompg)
+
+anova(mod_add, mod_int)
+
+plot(mpg ~ disp, data = autompg, col = cyl)
+abline(mod_add$coeff[1], mod_add$coeff[2], col = 1, lty = 1)
+abline(mod_add$coeff[1] + mod_add$coeff[3], mod_add$coeff[2], col = 2, lty = 2)
+abline(mod_add$coeff[1] + mod_add$coeff[4], mod_add$coeff[2], col = 3, lty = 3)
+
+
+plot(mpg ~ disp, data = autompg, col = cyl)
+abline(mod_int$coeff[1], mod_int$coeff[2], col = 1, lty = 1)
+abline(mod_int$coeff[1] + mod_int$coeff[3], mod_int$coeff[2] + mod_int$coeff[5], col = 2, lty = 2)
+abline(mod_int$coeff[1] + mod_int$coeff[4], mod_int$coeff[2] + mod_int$coeff[6], col = 3, lty = 3)
+
+
+# num * num interaction interpretation
+mod_add = lm(mpg ~ disp + hp, data = autompg)
+mod_int = lm(mpg ~ disp * hp, data = autompg)
+anova(mod_add, mod_int)
+
+
+```
+
