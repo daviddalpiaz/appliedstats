@@ -4,61 +4,174 @@
 >
 > --- **John Tukey**
 
-So far in each of our analyses, we have only used numeric variables, both as the response
-So far, only "numeric" variables
+After reading this chapter you will be able to:
 
-- "Chapter about interpretation, the math is still the same." Also, how to input into `R`.
+- dummy ...
+- interaction ...
+- factor ...
+
+So far in each of our analyses, we have only used numeric variables as predictors. We have also only used *additive models*, meaning the effect any predictor had on the response was not dependent on the other predictors. In this chapter, we will remove both of these restrictions. We will fit models with categorical predictors, and use models that allow predictors to *interact*. The mathematics of multiple regression will remain largely unchanging, however, we will pay close attention to interpretation, as well as some difference in `R` usage.
 
 ## Dummy Variables
+
+For this chapter, we will briefly use the built in dataset `mtcars` before returning to our `autompg` dataset that we created in the last chapter. The `mtcars` dataset is somewhat smaller, so we'll quickly take a look at the entire dataset.
 
 ```{r}
 mtcars
 ```
 
+We will be interested in three of the variables: `mpg `, `hp`, and `am`.
+
+- `mpg`: fuel efficiency, in miles per gallon.
+- `hp`: horsepower, in foot-pound-second.
+- `am`: transmission. Automatic or manual.
+
+As we often do, we will start by plotting the data. We are interested in `mpg` as the response variable, and `hp` as a predictor.
+
 ```{r}
 plot(mpg ~ hp, data = mtcars, col = am + 1, pch = am + 1, cex = 2)
 ```
 
+We used a common `R` "trick" when plotting this data. The `am` variable takes two possible values; `0` for automatic transmission, and `1` for manual transmissions. `R` can use numbers to represent colors, however the color for `0` is white. So we take the `am` vector and add `1` to it. Then observations with automatic transmissions are now represented by `1`, which is black in `R`, and manual transmission are represented by `2`, which is red in `R`. (Note, we are only adding `1` inside the call to `plot()`, we are not actually modifying the values stored in `am`.)
+
+We now fit the SLR model
+
+\[
+Y = \beta_0 + \beta_1 x_1 + \epsilon,
+\]
+
+where $Y$ is `mpg` and $x_1$ is `hp`. For notational brevity, we drop the index $i$ for observations.
+
 ```{r}
 mpg_hp_slr = lm(mpg ~ hp, data = mtcars)
-summary(mpg_hp_slr)
 ```
+
+We then re-plot the data and add the fitted line to the plot.
 
 ```{r}
 plot(mpg ~ hp, data = mtcars, col = am + 1, pch = am + 1, cex = 2)
 abline(mpg_hp_slr, lwd = 2, col = "green")
 ```
 
-note there is a pattern. red is above, black is below.
+We should notice a pattern here. The red (manual) observations largely fall above the line, while the black (automatic) observations are mostly below the line. This means our model underestimates the fuel efficiency of manual transmissions, and overestimates the fuel efficiency of automatic transmissions. To correct for this, we will add a predictor to our model, namely, `am` as $x_2$.
+
+Our new model is
+
+\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \epsilon,
+\]
+
+where $x_1$ and $Y$ remain the same, but now
+
+\[
+x_2 =
+  \begin{cases}
+   1 & \text{manual transmission} \\
+   0       & \text{automatic transmission}
+  \end{cases}.
+\]
+
+In this case, we call $x_2$ a **dummy variable**. A dummy variable is somewhat unfortunately named, as it is in no way "dumb". In fact, it is actually somewhat clever. A dummy variable is a numerical variable that is used in a regression analysis to "code" for a binary categorical variable. Let's see how this works.
+
+First, note that `am` is already a dummy variable, since it uses the values `0` and `1` to represent automatic and manual transmissions. Often, a variable like `am` would store the character values `auto` and `man` and we would either have to convert these to `0` and `1`, or, as we will see later, `R` will take care of creating dummy variables for us.
+
+So, to fit the above model, we do so like any other multiple regression model we have seen before.
 
 ```{r}
 mpg_hp_add = lm(mpg ~ hp + am, data = mtcars)
 ```
 
+Briefly checking the output, we see that `R` has estimated the three $\beta$ parameters.
+
 ```{r}
 mpg_hp_add
 ```
 
-```{r}
-int_auto = mpg_hp_add$coeff[1]
-int_manu = mpg_hp_add$coeff[1] + mpg_hp_add$coeff[3]
+Since $x_2$ can only take values `0` and `1`, we can effectively write two different models, one for manual, and one for automatic transmissions.
 
-slope_auto = mpg_hp_add$coeff[2]
-slope_manu = mpg_hp_add$coeff[2]
+For automatic transmissions, that is $x_2 = 0$ we have,
+
+\[
+Y = \beta_0 + \beta_1 x_1 + \epsilon.
+\]
+
+Then for manual transmissions, that is $x_2 = 1$ we have,
+
+\[
+Y = (\beta_0 + \beta_2) + \beta_1 x_1 + \epsilon.
+\]
+
+Notice that these models share the same slope, $\beta_1$, but have different intercepts, differing by $\beta_2$. So the change in `mpg` is the same for both, but on average `mpg` differs by $\beta_2$ between the two transmission types.
+
+We'll now calculate the estimated slope and intercept of these two models so that we can add them to a plot. Note that:
+
+- $\hat{\beta}_0$ = `coef(mpg_hp_add)[1]` = `r coef(mpg_hp_add)[1]`
+- $\hat{\beta}_1$ = `coef(mpg_hp_add)[2]` = `r coef(mpg_hp_add)[2]`
+- $\hat{\beta}_2$ = `coef(mpg_hp_add)[3]` = `r coef(mpg_hp_add)[3]`
+
+We can then combine these to calculate the estimated slope and intercepts.
+
+```{r}
+int_auto = coef(mpg_hp_add)[1]
+int_manu = coef(mpg_hp_add)[1] + coef(mpg_hp_add)[3]
+
+slope_auto = coef(mpg_hp_add)[2]
+slope_manu = coef(mpg_hp_add)[2]
 ```
+
+Re-plotting the data, we use these slopes and intercepts to add the "two" fitted models to the plot.
 
 ```{r}
 plot(mpg ~ hp, data = mtcars, col = am + 1, pch = am + 1, cex = 2)
-abline(int_auto, slope_auto, col = 1, lty = 1, lwd = 2)
-abline(int_manu, slope_manu, col = 2, lty = 2, lwd = 2)
+abline(int_auto, slope_auto, col = 1, lty = 1, lwd = 2) # add line for auto
+abline(int_manu, slope_manu, col = 2, lty = 2, lwd = 2) # add line for manual
 ```
 
+We notice right away that the points are no longer systematically incorrect. The red, manual, observations vary about the red line, in no particular pattern, and the black, automatic, points vary about the black line, without an obvious pattern.
+
+They say a picture is worth a thousand words, but as a statistician, sometimes a picture is worth an entire analysis. The above picture makes it plainly obvious that $\beta_2$ is significant, but let's verify mathematically. Essentially we would like to test:
+
+\[
+H_0: \beta_2 = 0 \quad \text{vs} \quad H_1: \beta_2 \neq 0.
+\]
+
+This is nothing new. Again, the math is the same as the multiple regression analyses we have seen before. We could perform either a $t$ or $F$ test here. The only difference is a slight change in interpretation. We could think of this as testing a model with a single line ($H_0$) against a model that allows two lines ($H_1$).
+
+To obtain the test statistic and p-value for the $t$-test, we would use
+
 ```{r}
-summary(mpg_hp_add)
+summary(mpg_hp_add)$coef[3,]
+```
+
+To do the same for the $F$ test, we would use
+
+```{r}
 anova(mpg_hp_slr, mpg_hp_add)
 ```
 
+Notice that these are indeed testing the same thing, as the p-values are exactly equal. (And the $F$ test statistic is the $t$ test statistic squared.)
+
+Recapping some interpretations:
+
+- $\hat{\beta}_0 = `r coef(mpg_hp_add)[1]`$ is the estimated average `mpg` for a car with an automatic transmission and **0** `hp`.
+- $\hat{\beta}_0 + \hat{\beta}_2 = `r coef(mpg_hp_add)[1] + coef(mpg_hp_add)[3]`$ is the estimated average `mpg` for a car with a manual transmission and **0** `hp`.
+
+- $\hat{\beta}_2 = `r coef(mpg_hp_add)[3]`$ is the estimated **difference** is average `mpg` for cars with manual transmissions, for **any** `hp`.
+- $\hat{\beta}_1 = `r coef(mpg_hp_add)[2]`$ is the estimated change in average `mpg` for an increase in one `hp`, for **both** transmission types.
+
+We should take special notice of those last two. In the model,
+
+\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \epsilon,
+\]
+
+we see $\beta_1$ is the average change in $Y$ for an increase in $x_1$, *no matter* the value of $x_2$. Also, $\beta_2$ is always the difference in the average of $Y$ for *any* value of $x_1$. These are two restrictions we won't always want, so we need a way to specify a more flexible model.
+
+Here we restricted ourselves to a single numerical predictor $x_1$ and one dummy variable $x_2$. However, the concept of a dummy variable can be used with larger multiple regression models. We only use a single numerical predictor here for ease of visualization since we can think of the "two lines" interpretation. But in general, we can think of a dummy variable as creating "two models," one for each category of a binary categorical variable.
+
 ## Interactions
+
+To remove the "same slope" restriction, we will now discuss **interaction**. To illustrate this concept, we will return to the `autompg` dataset we created in the last chapter, with a few more modifications.
 
 ```{r}
 # read data frame from the web
@@ -96,28 +209,102 @@ autompg$origin = as.factor(autompg$origin)
 str(autompg)
 ```
 
+We've removed cars with `3` and `5` cylinders , as well as created a new variable `domestic` which indicates whether or not a car was built in the United States. Removing the `3` and `5` cylinders is simply for ease of demonstration later in the chapter and would not be done in practice. The new variable `domestic` takes the value `1` if the car was built in the United States, and `0` otherwise, which we will refer to as "foreign." (We are arbitrarily using the United States as the reference point here.) We have also made `cyl` and `origin` into factor variables, which we will discuss later.
 
+We'll now be concerned with three variables: `mpg`, `disp`, and `domestic`. We will use `mpg` as the response. We can fit a model,
+
+\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \epsilon,
+\]
+
+where 
+
+- $Y$ is `mpg`, the fuel efficiency in miles per gallon,
+- $x_1$ is `disp`, the displacement in cubic inches,
+- $x_2$ is `domestic` as described above, which is a dummy variable.
+
+We will fit this model, extract the slope and intercept for the "two lines," plot the data and add the lines.
 
 ```{r}
 mpg_disp_add = lm(mpg ~ disp + domestic, data = autompg)
 
-plot(mpg ~ disp, data = autompg, col = domestic + 1)
-abline(mpg_disp_add$coeff[1], mpg_disp_add$coeff[2], col = 1, lty = 1)
-abline(mpg_disp_add$coeff[1] + mpg_disp_add$coeff[3], mpg_disp_add$coeff[2], col = 2, lty = 2)
+int_for = coef(mpg_disp_add)[1]
+int_dom = coef(mpg_disp_add)[1] + coef(mpg_disp_add)[3]
 
+slope_for = coef(mpg_disp_add)[2]
+slope_dom = coef(mpg_disp_add)[2]
 
+plot(mpg ~ disp, data = autompg, col = domestic + 1, pch = domestic + 1)
+abline(int_for, slope_for, col = 1, lty = 1) # add line for foreign cars
+abline(int_dom, slope_dom, col = 2, lty = 2) # add line for domestic cars
+```
 
+This is a model that allows for two *parallel* lines, meaning the `mpg` can be different on average between foreign and domestic cars of the same engine displacement, but the change in average `mpg` for an increase in displacement is the same for both. We can see this model isn't doing very well here. The red line fits the red points fairly well, but the black line isn't doing very well for the black points, it should clearly have a more negative slope. Essentially, we would like a model that allows for two different slopes.
 
+Consider the following model,
+
+\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + \epsilon,
+\]
+
+where $x_1$, $x_2$, and $Y$ are the same as before, but we have added a new **interaction** term $x_1 x_2$ which multiples $x_1$ and $x_2$, so we also have an additional $\beta$ parameter $\beta_3$.
+
+This model essentially creates two slopes and two intercepts, $\beta_2$ being the difference in intercepts, and $\beta_3$ being the difference in slopes. To see this, we will break down the model into the two "sub-models" for foreign and domestic cars.
+
+For foreign cars, that is $x_2 = 0$, we have
+
+\[
+Y = \beta_0 + \beta_1 x_1 + \epsilon.
+\]
+
+For domestic cars, that is $x_2 = 1$, we have
+
+\[
+Y = (\beta_0 + \beta_2) + (\beta_1 + \beta_3) x_1 + \epsilon.
+\]
+
+These two models have both different slopes and intercepts. How do we fit this model in `R`? There are a number of ways.
+
+One method would be to simply create a new variable, then fit a model like any other.
+
+```{r, eval = FALSE}
+autompg$x3 = autompg$disp * autompg$domestic # THIS CODE NOT RUN!
+do_not_do_this = lm(mpg ~ disp + domestic + x3, data = autompg) # THIS CODE NOT RUN!
+```
+
+You should only do this as a last resort. We greatly prefer not to have to modify our data simply to fit a model. Instead, we can tell `R` we would like to use the existing data with an interaction term, which it will create automatically.
+
+```{r}
+mpg_disp_int = lm(mpg ~ disp + domestic + disp:domestic, data = autompg)
+```
+
+```{r}
 mpg_disp_int = lm(mpg ~ disp * domestic, data = autompg)
+```
 
+```{r}
+summary(mpg_disp_int)
+```
+
+
+```{r}
 anova(mpg_disp_add, mpg_disp_int)
+```
+
+```{r}
+int_for = coef(mpg_disp_int)[1]
+int_dom = coef(mpg_disp_int)[1] + coef(mpg_disp_int)[3]
+
+slope_for = coef(mpg_disp_int)[2]
+slope_dom = coef(mpg_disp_int)[2] + coef(mpg_disp_int)[4]
+```
 
 
 
-plot(mpg ~ disp, data = autompg, col = domestic + 1)
-abline(mpg_disp_int$coeff[1], mpg_disp_int$coeff[2], col = 1, lty = 1)
-abline(mpg_disp_int$coeff[1] + mpg_disp_int$coeff[3], mpg_disp_int$coeff[2] + mpg_disp_int$coeff[4], col = 2, lty = 2)
-
+```{r}
+plot(mpg ~ disp, data = autompg, col = domestic + 1, pch = domestic + 1)
+abline(int_for, slope_for, col = 1, lty = 1) # add line for foreign cars
+abline(int_dom, slope_dom, col = 2, lty = 2) # add line for domestic cars
 ```
 
 
@@ -130,16 +317,16 @@ caution about "factor" variables that are actually numeric 1,2,3 but don't have 
 - individual intercepts
 - show same as "single" intercept
 
+- can be "dummy" only a difference in coding.
+
+
+
+1 = v1 + v2 + v3 (why we can't do some stuff)
 
 
 
 
-
-
-
-
-
-
+talk about how the var * dum is really nice here, do "long way" to compare
 
 
 ```{r}
@@ -169,5 +356,100 @@ mod_int = lm(mpg ~ disp * hp, data = autompg)
 anova(mod_add, mod_int)
 
 
+
+all.equal(fitted(lm(mpg ~ disp * cyl, data = autompg)), fitted(lm(mpg ~ 0 + cyl + disp : cyl, data = autompg)))
+identical(fitted(lm(mpg ~ disp * cyl, data = autompg)), fitted(lm(mpg ~ 0 + cyl + disp : cyl, data = autompg)))
+
+lm(mpg ~ 0 + cyl + disp : cyl, data = autompg)
+lm(mpg ~ disp * cyl, data = autompg)
+lm(mpg ~ 0 + disp + cyl + disp : cyl, data = autompg)
+
+
+```
+
+
+\[
+v_1 =
+  \begin{cases}
+   1 & \text{4 cylinder} \\
+   0       & \text{not 4 cylinder}
+  \end{cases}
+\]
+
+\[
+v_1 =
+  \begin{cases}
+   1 & \text{6 cylinder} \\
+   0       & \text{not 6 cylinder}
+  \end{cases}
+\]
+
+\[
+v_1 =
+  \begin{cases}
+   1 & \text{8 cylinder} \\
+   0       & \text{not 8 cylinder}
+  \end{cases}
+\]
+
+
+
+
+
+
+\[
+Y = \beta_0 + \beta_1 x + \beta_2 v_2 + \beta_3 v_3 + \epsilon.
+\]
+
+
+- $Y = \beta_0 + \beta_1 x + \epsilon$
+- $Y = (\beta_0 + \beta_2) + \beta_1 x + \epsilon$
+- $Y = (\beta_0 + \beta_3) + \beta_1 x + \epsilon$
+
+Note:
+
+\[
+\boldsymbol{1} = v_1 + v_2 + v_3
+\]
+
+
+\[
+Y = \mu_1 v_1 + \mu_2 v_2 + \mu_3 v_3 + \beta x +\epsilon.
+\]
+
+- $Y = \mu_1 + \beta x + \epsilon$
+- $Y = \mu_2 + \beta x + \epsilon$
+- $Y = \mu_3 + \beta x + \epsilon$
+
+
+
+\[
+Y = \beta_0 + \beta_1 x + \beta_2 v_2 + \beta_3 v_3 + \gamma_2 x v_2 + \gamma_3 x v_3 + \epsilon
+\]
+
+- $Y = \beta_0 + \beta_1 x + \epsilon$
+- $Y = (\beta_0 + \beta_2) + (\beta_1 + \gamma_2) x + \epsilon$
+- $Y = (\beta_0 + \beta_3) + (\beta_1 + \gamma_3) x + \epsilon$
+
+
+
+\[
+Y = \mu_1 v_1 + \mu_2 v_2 + \mu_3 v_3 + \beta_1 x v_1 + \beta_2 x v_2 + \beta_3 x v_3 +\epsilon
+\]
+
+- $Y = \mu_1 + \beta_1 x + \epsilon$
+- $Y = \mu_2 + \beta_2 x + \epsilon$
+- $Y = \mu_3 + \beta_3 x + \epsilon$
+
+
+hierarchy
+
+fit a "big" model and do some interpretation
+
+multiple-way interaction
+tests about bigger model.
+
+```{r}
+summary(lm(mpg ~ disp * hp * domestic, data = autompg))
 ```
 
