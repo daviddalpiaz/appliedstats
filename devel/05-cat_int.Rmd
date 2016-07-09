@@ -1,9 +1,5 @@
 # Categorical Predictors and Interactions
 
-```{r setup, echo = FALSE, message = FALSE, warning = FALSE}
-options(width = 80, scipen = 4)
-```
-
 > "The greatest value of a picture is when it forces us to notice what we never expected to see."
 >
 > --- **John Tukey**
@@ -206,8 +202,6 @@ autompg = autompg[autompg$cyl != 3,]
 #unique(autompg$cyl)
 # change cyl to a factor variable
 autompg$cyl = as.factor(autompg$cyl)
-# change origin to a factor variable
-autompg$origin = as.factor(autompg$origin)
 ```
 
 ```{r}
@@ -309,7 +303,7 @@ We see that both the variables, and their coefficient estimates are indeed the s
 summary(mpg_disp_int)
 ```
 
-We see that using `summary()` gives the usual output for a multiple regression model. We pay close attention to the line for `disp:domestic` which tests,
+We see that using `summary()` gives the usual output for a multiple regression model. We pay close attention to the row for `disp:domestic` which tests,
 
 \[
 H_0: \beta_3 = 0.
@@ -317,7 +311,7 @@ H_0: \beta_3 = 0.
 
 In this case, testing for $\beta_3 = 0$ is testing for two lines with parallel slopes versus two lines with possibly different slopes. The `disp:domestic` line in the `summary()` output uses a $t$-test to perform the test.
 
-We could also use an ANOVA $F$-test. The additive model, without interaction is our null model, and the interaction is the alternative.
+We could also use an ANOVA $F$-test. The additive model, without interaction is our null model, and the interaction model is the alternative.
 
 ```{r}
 anova(mpg_disp_add, mpg_disp_int)
@@ -365,7 +359,7 @@ Y = \beta_0 + (\beta_1 + \beta_3 x_2) x_1 + \beta_2 x_2 + \epsilon
 
 So, for a one unit increase in $x_1$ (`disp`), the mean of $Y$ (`mpg`) increases $\beta_1 + \beta_3 x_2$, which is a different value depending on the value of $x_2$ (`hp`)! 
 
-Since we're now working in three dimensions, this model can't be easily justified like the previous. Instead, we will have to rely on a test.
+Since we're now working in three dimensions, this model can't be easily justified via visualizations like the previous example. Instead, we will have to rely on a test.
 
 ```{r}
 mpg_disp_add_hp = lm(mpg ~ disp + hp, data = autompg)
@@ -373,7 +367,7 @@ mpg_disp_int_hp = lm(mpg ~ disp * hp, data = autompg)
 summary(mpg_disp_int_hp)
 ```
 
-Using `summary()` we focus on the line for `disp:hp` which tests,
+Using `summary()` we focus on the row for `disp:hp` which tests,
 
 \[
 H_0: \beta_3 = 0.
@@ -394,7 +388,7 @@ coef(mpg_disp_int_hp)
 - $\hat{\beta}_0 = `r coef(mpg_disp_int_hp)[1]`$ is the estimated average `mpg` for a car with 0 `disp` and 0 `hp`.
 - $\hat{\beta}_1 = `r coef(mpg_disp_int_hp)[2]`$ is the estimated change in average `mpg` for an increase in 1 `disp`, **for a car with 0 `hp`**.
 - $\hat{\beta}_2 = `r coef(mpg_disp_int_hp)[3]`$ is the estimated change in average `mpg` for an increase in 1 `hp`, **for a car with 0 `disp`**.
-- $\hat{\beta}_3 = `r coef(mpg_disp_int_hp)[4]`$ is an estimate of the modification to the change in average `mpg` for an increase in `disp`, for a car of a certain `hp`. (Or vice versa.)
+- $\hat{\beta}_3 = `r coef(mpg_disp_int_hp)[4]`$ is an estimate of the modification to the change in average `mpg` for an increase in `disp`, for a car of a certain `hp` (or vice versa).
 
 That last coefficient needs further explanation. Recall the rearrangement we made earlier
 
@@ -416,7 +410,7 @@ So for a car with 50 `hp`, the estimated change in average `mpg` for an increase
 `r coef(mpg_disp_int_hp)[2]` + `r coef(mpg_disp_int_hp)[4]` 50 = `r coef(mpg_disp_int_hp)[2] + coef(mpg_disp_int_hp)[4] * 50`
 \]
 
-So for a car with 350 `hp`, the estimated change in average `mpg` for an increase of one `disp` is
+And for a car with 350 `hp`, the estimated change in average `mpg` for an increase of one `disp` is
 
 \[
 `r coef(mpg_disp_int_hp)[2]` + `r coef(mpg_disp_int_hp)[4]` 350 = `r coef(mpg_disp_int_hp)[2] + coef(mpg_disp_int_hp)[4] * 350`
@@ -426,87 +420,116 @@ Notice the sign changed!
 
 ## Factor Variables
 
-- from binary categorical to 3+ categories
-    - Levels
-- caution about "factor" variables that are actually numeric 1,2,3 but don't have meaning. like `cyl`
+So far we have limited our use of categorical variables to binary categorical variables. Specifically, we have limited ourselves to dummy variables, which take values `0` or `1`, which represent a categorical variable numerically.
+
+We'll now discuss **factor** variables, which is a special way that `R` deals with categorical variables so that a human user can simply think about the categories of a categorical variable, and `R` will take care of the necessary dummy variables.
+
+```{r}
+is.factor(autompg$domestic)
+```
+
+Before when we used the `domestic` variable that was created, it was **not** a factor variable. It was simply a numerical variable that only took two possible values, `1` for domestic, and `0` for foreign. Let's create a new variable `origin` that stores the same information, but in a different way.
+
+```{r}
+autompg$origin[autompg$domestic == 1] = "domestic"
+autompg$origin[autompg$domestic == 0] = "foreign"
+head(autompg$origin)
+```
+
+Now the `origin` variables stores `"domestic"` for domestic cars, and `"foreign"` for foreign cars.
+
+```{r}
+is.factor(autompg$origin)
+```
+
+However, this is simply a vector of characters. We'll want to *coerce* this variable to be a factor.
+
+```{r}
+autompg$origin = as.factor(autompg$origin)
+```
+
+Now when we check the structure of the `autompg` dataset, we see that `origin` is a factor variable.
+
+```{r}
+str(autompg)
+```
+
+Factor variables have **levels** which are the possible values (categories) that the variable may take, in this case foreign or domestic.
+
+```{r}
+levels(autompg$origin)
+```
+
+Recall that previously we have fit the model
+
+\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + \epsilon,
+\]
+
+where 
+
+- $Y$ is `mpg`, the fuel efficiency in miles per gallon,
+- $x_1$ is `disp`, the displacement in cubic inches,
+- $x_2$ is `domestic` a dummy variable where `1` indicates a domestic car.
+
+```{r}
+(mod_dummy = lm(mpg ~ disp * domestic, data = autompg))
+```
+
+So here we see that
+
+\[
+\hat{\beta}_0 + \hat{\beta}_2 = `r coef(mod_dummy)[1]` + `r coef(mod_dummy)[3]` = `r coef(mod_dummy)[1] + coef(mod_dummy)[3]`
+\]
+
+is the estimated average `mpg` for a **domestic** car with 0 `disp`.
+
+Now let's try to do the same, but using our new factor variable.
+
+```{r}
+(mod_factor = lm(mpg ~ disp * origin, data = autompg))
+```
+
+It seems that it doesn't produce the same results. Right away we notice that the intercept is different, as is the the coefficient in front of `disp`. We also notice that the remaining two coefficients are the same magnitude, but with a different sign. Why is this happening?
+
+It turns out, that by using a factor variable, `R` is automatically creating a dummy variable for us, however, it is not the dummy variable that we had originally used ourselves.
+
+`R` is fitting the model
+
+\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + \epsilon,
+\]
+
+where 
+
+- $Y$ is `mpg`, the fuel efficiency in miles per gallon,
+- $x_1$ is `disp`, the displacement in cubic inches,
+- $x_2$ **is a dummy variable create by `R`.** It uses `1` to represent a **foreign car**.
+
+So now,
+
+\[
+\hat{\beta}_0 = `r coef(mod_factor)[1]`
+\]
+
+is the estimated average `mpg` for a **domestic** car with 0 `disp`, which is indeed the same as before.
+
+When `R` created $x_2$, the dummy variable, it used domestic cars as the **reference** level, that is the default value of the factor variable. So when the dummy variable is `0`, the model represents this reference level, which is domestic. (`R` makes this choice because domestic comes before foreign alphabetically.)
+
+So the two models have different estimated coefficients, but due to the different model representations, they are actually the same model.
+
+### Factors with More Than Two Levels
+
+Let's now consider a factor variable with more than two levels. In this dataset, `cyl` is an example.
 
 ```{r}
 is.factor(autompg$cyl)
 levels(autompg$cyl)
 ```
 
-- show an example with "characters"?
+Here the `cyl` variable has three possible levels: `4`, `6`, and `8`. You may wonder, why not simply use `cyl` as a numerical variable? You certainly could. However, that would force the difference between `4` and `6` cylinders to be the same as the difference between `6` and `8` cylinders. For this reason, we will simply consider them to be categories. This is a decision that will often need to be made with ordinal variables. Often, with a large number of categories, the decision to instead use them as numerical variables is appropriate, because, as we are about to see, a number of dummy variables are create to represent these variables.
 
-- binary variables can be factors. difference in coding/display.
-
-```{r}
-is.factor(autompg$domestic)
-```
-
-- coercion?
-    - coerce domestic to be factor, fit, maybe discuss R reordering some things.
-
-- fit additive vs interaction first, talk about `R`'s parameterization first.
-
-- compare to other paramterizations.
-- individual intercepts
-- show same as "single" intercept
-- 1 = v1 + v2 + v3 (why we can't do some stuff)
-
-- talk about how the var * dum is really nice with multiple level factors, do "long way" to compare
-
-- talk about REFERENCE level
-
-
-```{r}
-mpg_disp_add_cyl = lm(mpg ~ disp + cyl, data = autompg)
-mpg_disp_int_cyl = lm(mpg ~ disp * cyl, data = autompg)
-
-anova(mpg_disp_add_cyl, mpg_disp_int_cyl)
-
-int_4cyl = coef(mpg_disp_add_cyl)[1]
-int_6cyl = coef(mpg_disp_add_cyl)[1] + coef(mpg_disp_add_cyl)[3]
-int_8cyl = coef(mpg_disp_add_cyl)[1] + coef(mpg_disp_add_cyl)[4]
-
-slope_all_cyl = coef(mpg_disp_add_cyl)[2]
-
-plot(mpg ~ disp, data = autompg, col = cyl)
-abline(int_4cyl, slope_all_cyl, col = 1, lty = 1, lwd = 2)
-abline(int_6cyl, slope_all_cyl, col = 2, lty = 2, lwd = 2)
-abline(int_8cyl, slope_all_cyl, col = 3, lty = 3, lwd = 2)
-
-
-# note 8 is in the middle!
-
-
-int_4cyl = coef(mpg_disp_int_cyl)[1]
-int_6cyl = coef(mpg_disp_int_cyl)[1] + coef(mpg_disp_int_cyl)[3]
-int_8cyl = coef(mpg_disp_int_cyl)[1] + coef(mpg_disp_int_cyl)[4]
-
-slope_4cyl = coef(mpg_disp_int_cyl)[2]
-slope_6cyl = coef(mpg_disp_int_cyl)[2] + coef(mpg_disp_int_cyl)[5]
-slope_8cyl = coef(mpg_disp_int_cyl)[2] + coef(mpg_disp_int_cyl)[6]
-
-plot(mpg ~ disp, data = autompg, col = cyl)
-abline(int_4cyl, slope_4cyl, col = 1, lty = 1, lwd = 2)
-abline(int_6cyl, slope_6cyl, col = 2, lty = 2, lwd = 2)
-abline(int_8cyl, slope_8cyl, col = 3, lty = 3, lwd = 2)
-
-# note: now order is better, in the right ranges!
-```
-
-
-```{r}
-all.equal(fitted(lm(mpg ~ disp * cyl, data = autompg)), fitted(lm(mpg ~ 0 + cyl + disp : cyl, data = autompg)))
-identical(fitted(lm(mpg ~ disp * cyl, data = autompg)), fitted(lm(mpg ~ 0 + cyl + disp : cyl, data = autompg)))
-```
-
-```{r}
-lm(mpg ~ 0 + cyl + disp : cyl, data = autompg)
-lm(mpg ~ disp * cyl, data = autompg)
-lm(mpg ~ 0 + disp + cyl + disp : cyl, data = autompg)
-```
-
+Let's define three dummy variables related to the `cyl` factor variable.
 
 \[
 v_1 =
@@ -532,79 +555,360 @@ v_3 =
   \end{cases}
 \]
 
+Now, let's fit an additive model in `R`, using `mpg` as the response, and `disp` and `cyl` as predictors. This should be a model that uses "three lines" to model `mpg`, one for each of the possible `cyl` levels. They will all have the same slope (since it is an additive model) but each will have its own intercept.
 
+```{r}
+(mpg_disp_add_cyl = lm(mpg ~ disp + cyl, data = autompg))
+```
 
-
-
-
-\[
-Y = \beta_0 + \beta_1 x + \beta_2 v_2 + \beta_3 v_3 + \epsilon.
-\]
-
-
-- $Y = \beta_0 + \beta_1 x + \epsilon$
-- $Y = (\beta_0 + \beta_2) + \beta_1 x + \epsilon$
-- $Y = (\beta_0 + \beta_3) + \beta_1 x + \epsilon$
-
-Note:
+The question is, what is the model that `R` has fit here? It has chosen to use the model
 
 \[
-\boldsymbol{1} = v_1 + v_2 + v_3
+Y = \beta_0 + \beta_1 x + \beta_2 v_2 + \beta_3 v_3 + \epsilon,
 \]
 
+where
 
-\[
-Y = \mu_1 v_1 + \mu_2 v_2 + \mu_3 v_3 + \beta x +\epsilon.
-\]
+- $Y$ is `mpg`, the fuel efficiency in miles per gallon,
+- $x$ is `disp`, the displacement in cubic inches,
+- $v_2$ and $v_3$ are the dummy variables define above.
 
-- $Y = \mu_1 + \beta x + \epsilon$
-- $Y = \mu_2 + \beta x + \epsilon$
-- $Y = \mu_3 + \beta x + \epsilon$
+Why doesn't `R` use $v_1$? Essentially because it doesn't need to. To create three lines, it only needs two dummy variables since it is using a reference level, which in this case is a 4 cylinder car. The three "sub models" are then:
 
+- 4 Cylinder: $Y = \beta_0 + \beta_1 x + \epsilon$
+- 6 Cylinder: $Y = (\beta_0 + \beta_2) + \beta_1 x + \epsilon$
+- 8 Cylinder: $Y = (\beta_0 + \beta_3) + \beta_1 x + \epsilon$
 
+Notice that they all have the same slope. However, using the two dummy variables, we achieve the three intercepts.
+
+- $\beta_0$ is the average `mpg` for a 4 cylinder car with 0 `disp`.
+- $\beta_0 + \beta_2$ is the average `mpg` for a 6 cylinder car with 0 `disp`.
+- $\beta_0 + \beta_3$ is the average `mpg` for a 8 cylinder car with 0 `disp`.
+
+So because 4 cylinder is the reference level, $\beta_0$ is specific to 4 cylinders, but $\beta_2$ and $\beta_3$ are used to represent quantities relative to 4 cylinders.
+
+As we have done before, we can extract these intercepts and slopes for the three lines, and plot them accordingly.
+
+```{r}
+int_4cyl = coef(mpg_disp_add_cyl)[1]
+int_6cyl = coef(mpg_disp_add_cyl)[1] + coef(mpg_disp_add_cyl)[3]
+int_8cyl = coef(mpg_disp_add_cyl)[1] + coef(mpg_disp_add_cyl)[4]
+
+slope_all_cyl = coef(mpg_disp_add_cyl)[2]
+
+plot(mpg ~ disp, data = autompg, col = cyl)
+abline(int_4cyl, slope_all_cyl, col = 1, lty = 1, lwd = 2)
+abline(int_6cyl, slope_all_cyl, col = 2, lty = 2, lwd = 2)
+abline(int_8cyl, slope_all_cyl, col = 3, lty = 3, lwd = 2)
+```
+
+On this plot, we have
+
+- 4 Cylinder: black dots, solid black line.
+- 6 Cylinder: red dots, dashed red line.
+- 8 Cylinder: green dots, dotted green line.
+
+The odd result here is that we're estimating that 8 cylinder cars have better fuel efficiency than 6 cylinder cars at **any** displacement! That doesn't seem right. Maybe for very large displacement engines that could be true, but that seems wrong for medium to low displacement.
+
+To attempt to fix this, we will try using an interaction model, that is, instead of simply three intercepts and one slope, we will allow for three slopes. Again, we'll let `R` take the wheel, (no pun intended) then figure out what model it has applied.
+
+```{r}
+(mpg_disp_int_cyl = lm(mpg ~ disp * cyl, data = autompg))
+# could also use mpg ~ disp + cyl + disp:cyl
+```
+
+`R` has again chosen to use 4 cylinder cars as the reference level, but this also now has an effect on the interaction terms. `R` has fit the model.
 
 \[
 Y = \beta_0 + \beta_1 x + \beta_2 v_2 + \beta_3 v_3 + \gamma_2 x v_2 + \gamma_3 x v_3 + \epsilon
 \]
 
-- $Y = \beta_0 + \beta_1 x + \epsilon$
-- $Y = (\beta_0 + \beta_2) + (\beta_1 + \gamma_2) x + \epsilon$
-- $Y = (\beta_0 + \beta_3) + (\beta_1 + \gamma_3) x + \epsilon$
+We're using $\gamma$ like a $\beta$ parameter for simplicity, so that, for example $\beta_2$ and $\gamma_2$ are both associated with $v_2$.
 
+Now, the three "sub models" are:
 
+- 4 Cylinder: $Y = \beta_0 + \beta_1 x + \epsilon$.
+- 6 Cylinder: $Y = (\beta_0 + \beta_2) + (\beta_1 + \gamma_2) x + \epsilon$.
+- 8 Cylinder: $Y = (\beta_0 + \beta_3) + (\beta_1 + \gamma_3) x + \epsilon$.
+
+Interpreting some parameters and coefficients then:
+
+- $(\beta_0 + \beta_2)$ is the average `mpg` of a 6 cylinder car with 0 `disp`
+- $(\hat{\beta}_1 + \hat{\gamma}_3) = `r coef(mpg_disp_int_cyl)[2]` + `r coef(mpg_disp_int_cyl)[6]` = `r coef(mpg_disp_int_cyl)[2] + coef(mpg_disp_int_cyl)[6]`$ is the estimated change in average `mpg` for an increase of one `disp`, for an 8 cylinder car.
+
+So, as we have seen before $\beta_2$ and $\beta_3$ change the intercepts for 6 and 8 cylinder cars relative to the reference level of $\beta_0$ for 4 cylinder cars.
+
+Now, similarly $\gamma_2$ and $\gamma_3$ change the slopes for 6 and 8 cylinder cars relative to the reference level of $\beta_1$ for 4 cylinder cars.
+
+Once again, we extract the coefficients and plot the results.
+
+```{r}
+int_4cyl = coef(mpg_disp_int_cyl)[1]
+int_6cyl = coef(mpg_disp_int_cyl)[1] + coef(mpg_disp_int_cyl)[3]
+int_8cyl = coef(mpg_disp_int_cyl)[1] + coef(mpg_disp_int_cyl)[4]
+
+slope_4cyl = coef(mpg_disp_int_cyl)[2]
+slope_6cyl = coef(mpg_disp_int_cyl)[2] + coef(mpg_disp_int_cyl)[5]
+slope_8cyl = coef(mpg_disp_int_cyl)[2] + coef(mpg_disp_int_cyl)[6]
+
+plot(mpg ~ disp, data = autompg, col = cyl)
+abline(int_4cyl, slope_4cyl, col = 1, lty = 1, lwd = 2)
+abline(int_6cyl, slope_6cyl, col = 2, lty = 2, lwd = 2)
+abline(int_8cyl, slope_8cyl, col = 3, lty = 3, lwd = 2)
+```
+
+This looks much better! We can see that for medium displacement cars, 6 cylinder cars now perform better than 8 cylinder cars, which seems much more reasonable than before.
+
+To completely justify the interaction model (slope for each `cyl` level), compared to the additive model (single slope), we can perform an $F$-test. Notice first, that there is no $t$-test that will be able to do this since the difference between the two models is not a single parameter.
+
+We will test,
+
+\[
+H_0: \gamma_2 = \gamma_3 = 0
+\]
+
+which is the parallel regression lines we saw before,
+
+\[
+Y = \beta_0 + \beta_1 x + \beta_2 v_2 + \beta_3 v_3 + \epsilon.
+\]
+
+Again, this is a difference of two parameters, thus no $t$-test will be useful.
+
+```{r}
+anova(mpg_disp_add_cyl, mpg_disp_int_cyl)
+```
+
+As expected, we see a very low p-value, thus reject the null, and we prefer the interaction model over the additive model.
+
+Recapping a bit:
+
+- Null Model: $Y = \beta_0 + \beta_1 x + \beta_2 v_2 + \beta_3 v_3 + \epsilon$
+    - Number of parameters: $q = 4$
+- Full Model: $Y = \beta_0 + \beta_1 x + \beta_2 v_2 + \beta_3 v_3 + \gamma_2 x v_2 + \gamma_3 x v_3 + \epsilon$
+    - Number of parameters: $p = 6$
+    
+    
+```{r}
+length(coef(mpg_disp_int_cyl)) - length(coef(mpg_disp_add_cyl))
+```
+
+We see there is a difference of two parameters, which is also displayed in the resulting ANOVA table from `R`. Also notice that the following two values also appear on the ANOVA table.
+
+```{r}
+nrow(autompg) - length(coef(mpg_disp_int_cyl))
+nrow(autompg) - length(coef(mpg_disp_add_cyl))
+```
+
+## Parameterization
+
+So far we have been simply letting `R` decide how to create the dummy variables, and thus `R` has been deciding the parameterization of the models. To illustrate the ability to use alternative parameterizations, we will recreate the data, but directly creating the dummy variables ourselves.
+
+```{r}
+new_param_data = data.frame(
+  y = autompg$mpg,
+  x = autompg$disp,
+  v1 = 1 * as.numeric(autompg$cyl == 4),
+  v2 = 1 * as.numeric(autompg$cyl == 6),
+  v3 = 1 * as.numeric(autompg$cyl == 8))
+
+head(new_param_data, 20)
+```
+
+Now,
+
+- `y` is `mpg`
+- `x` is `disp`, the displacement in cubic inches,
+- `v1`, `v2`, and `v3` are dummy variables as defined above.
+
+First let's try to fit an additive model using `x` as well as the three dummy variables.
+
+```{r}
+lm(y ~ x + v1 + v2 + v3, data = new_param_data)
+```
+
+What is happening here? Notice that `R` is essentially ignoring `v3`, but why? Well, because `R` uses an intercept, it cannot also use `v3`. This is because
+
+\[
+\boldsymbol{1} = v_1 + v_2 + v_3
+\]
+
+which means that $\boldsymbol{1}$, $v_1$, $v_2$, and $v_3$ are linearly dependent. This would make the $X^\top X$ matrix singular, but we need to be able to invert it to solve the normal equations and obtain $\hat{\beta}.$ With the intercept, `v1`, and `v2`, `R` can make the necessary "three intercepts". So, in this case `v3` is the reference level.
+
+If we remove the intercept, then we can directly obtain all "three intercepts" without a reference level.
+
+```{r}
+lm(y ~ 0 + x + v1 + v2 + v3, data = new_param_data)
+```
+
+Here, we are fitting the model
+
+\[
+Y = \mu_1 v_1 + \mu_2 v_2 + \mu_3 v_3 + \beta x +\epsilon.
+\]
+
+Thus we have:
+
+- 4 Cylinder: $Y = \mu_1 + \beta x + \epsilon$
+- 6 Cylinder: $Y = \mu_2 + \beta x + \epsilon$
+- 8 Cylinder: $Y = \mu_3 + \beta x + \epsilon$
+
+We could also do something similar with the interaction model, and give each line an intercept and slope, without the need for a reference level.
+
+```{r}
+lm(y ~ 0 + v1 + v2 + v3 + x:v1 + x:v2 + x:v3, data = new_param_data)
+```
 
 \[
 Y = \mu_1 v_1 + \mu_2 v_2 + \mu_3 v_3 + \beta_1 x v_1 + \beta_2 x v_2 + \beta_3 x v_3 +\epsilon
 \]
 
-- $Y = \mu_1 + \beta_1 x + \epsilon$
-- $Y = \mu_2 + \beta_2 x + \epsilon$
-- $Y = \mu_3 + \beta_3 x + \epsilon$
+- 4 Cylinder: $Y = \mu_1 + \beta_1 x + \epsilon$
+- 6 Cylinder: $Y = \mu_2 + \beta_2 x + \epsilon$
+- 8 Cylinder: $Y = \mu_3 + \beta_3 x + \epsilon$
 
+Using the original data, we have (at least) three equivalent ways to specify the interaction model with `R`.
 
+```{r}
+lm(mpg ~ disp * cyl, data = autompg)
+lm(mpg ~ 0 + cyl + disp : cyl, data = autompg)
+lm(mpg ~ 0 + disp + cyl + disp : cyl, data = autompg)
+```
 
+They all fit the same model, importantly each using six parameters, but the coefficients mean slightly different things in each. However, once they are interpreted as slopes and intercepts for the "three lines" they will have the same result.
 
+Use `?all.equal` to learn about the `all.equal()` function, and think about how the following code verifies that the residuals of the two models are the same.
 
-
-
+```{r}
+all.equal(fitted(lm(mpg ~ disp * cyl, data = autompg)), 
+          fitted(lm(mpg ~ 0 + cyl + disp : cyl, data = autompg)))
+```
 
 ## Building Larger Models
 
-fit a "big" model and do some interpretation
+Now that we have seen how to incorporate categorical predictors as well as interaction terms, we can start to build much larger, much more flexible models which can potentially fit data better.
 
-multiple-way interaction
-tests about bigger model.
+Let's define a "big" model,
 
-hierarchy
+\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \beta_4 x_1 x_2 + \beta_5 x_1 x_3 + \beta_6 x_2 x_3 + \beta_7 x_1 x_2 x_3 + \epsilon.
+\]
+
+Here,
+
+- $Y$ is `mpg`.
+- $x_1$ is `disp`.
+- $x_2$ is `hp`.
+- $x_3$ is `domestic`, which is a dummy variable we defined, where `1` is a domestic vehicle.
+
+First thing to note here, we have included a new term $x_1 x_2 x_3$ which is a three-way interaction. Interaction terms can be larger and larger, up to the number of predictors in the model. 
+
+Since we are using the three-way interaction term, we also use all possible two-way interactions, as well as each of the first order (**main effect**) terms. This is the concept of a **hierarchy**. Any time a "higher-order" term is in a model, the related "lower-order" terms should also be included. Mathematically their inclusion or exclusion is sometimes irrelevant, but from an interpretation standpoint, it is best to follow the hierarchy rules.
+
+Let's do some rearrangement to obtain a "coefficient" in front of $x_1$.
+
+\[
+Y = \beta_0 + \beta_2 x_2 + \beta_3 x_3 + \beta_6 x_2 x_3 + (\beta_1 + \beta_4 x_2 + \beta_5 x_3 + \beta_7 x_2 x_3)x_1 + \epsilon.
+\]
+
+Specifically, the "coefficient" in front of $x_1$ is
+
+\[
+(\beta_1 + \beta_4 x_2 + \beta_5 x_3 + \beta_7 x_2 x_3).
+\]
+
+Let's discuss this "coefficient" to help us understand the idea of the *flexibility* of a model. Recall that,
+
+- $\beta_1$ is the coefficient for a first order term,
+- $\beta_4$ and $\beta_5$ are coefficients for two-way interactions,
+- $\beta_7$ is the coefficient for the three-way interaction.
+
+If the two and three way interactions were not in the model, the whole "coefficient" would simply be 
+
+\[
+\beta_1. 
+\]
+
+Thus, no matter the values of $x_2$ and $x_3$, $\beta_1$ would determine the relationship between $x_1$ (`disp`) and $Y$ (`mpg`).
+
+With the addition of the two-way interactions, now the "coefficient" would be
+
+\[
+(\beta_1 + \beta_4 x_2 + \beta_5 x_3).
+\]
+
+Now, changing $x_1$ (`disp`) has a different effect on $Y$ (`mpg`), depending on the values of $x_2$ and $x_3$.
+
+Lastly, adding the three-way interaction gives the whole "coefficient"
+
+\[
+(\beta_1 + \beta_4 x_2 + \beta_5 x_3 + \beta_7 x_2 x_3)
+\]
+
+which is even more flexible. Now changing $x_1$ (`disp`) has a different effect on $Y$ (`mpg`), depending on the values of $x_2$ and $x_3$, but in a more flexible way which we can see with some more rearrangement. Now the "coefficient" in front of $x_3$ in this "coefficient" is dependent on $x_2$. 
+
+\[
+(\beta_1 + \beta_4 x_2 + (\beta_5 + \beta_7 x_2) x_3)
+\]
+
+It is so flexible, it is becoming hard to interpret!
+
+Let's fit this three-way interaction model in `R`.
 
 ```{r}
-summary(lm(mpg ~ disp * hp * domestic, data = autompg))
+big_model = lm(mpg ~ disp * hp * domestic, data = autompg)
+summary(big_model)
 ```
 
+Do we actually need this large of a model? Let's first test for the necessity of the three-way interaction term. That is,
 
-- test 3 way interaction, vs not
-- test all other interactions, vs not
+\[
+H_0: \beta_7 = 0.
+\]
 
-## REMOVE THIS SECTION
+So,
 
-TODO: remove setup
+- Full Model: $Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \beta_4 x_1 x_2 + \beta_5 x_1 x_3 + \beta_6 x_2 x_3 + \beta_7 x_1 x_2 x_3 + \epsilon$
+- Null Model: $Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \beta_4 x_1 x_2 + \beta_5 x_1 x_3 + \beta_6 x_2 x_3 + \epsilon$
+
+We fit the null model in `R` as `two_way_int_mod`, then use `anova()` to perform an $F$-test as usual.
+
+```{r}
+two_way_int_mod = lm(mpg ~ disp * hp + disp * domestic + hp * domestic, data = autompg)
+anova(two_way_int_mod, big_model)
+```
+
+We see the p-value is somewhat large, so we would fail to reject. We prefer the smaller, less flexible, null model, without the three-way interaction.
+
+A quick note here: the full model does still "fit better.". Notice that it has a smaller RMSE, it makes smaller squared errors on average.
+
+```{r}
+mean(resid(big_model) ^ 2)
+mean(resid(two_way_int_mod) ^ 2)
+```
+
+However, it is not much smaller. We could even say that, the difference is insignificant. This is an idea we will return to later in greater deatil.
+
+Now that we have chosen the model without the three-way interaction, can we go further? Do we need the two-way interactions? Let's test
+
+\[
+H_0: \beta_4 = \beta_5 = \beta_6 = 0.
+\]
+
+Remember we already chose $\beta_7 = 0$, so,
+
+- Full Model: $Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \beta_4 x_1 x_2 + \beta_5 x_1 x_3 + \beta_6 x_2 x_3 + \epsilon$
+- Null Model: $Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \epsilon$
+
+We fit the null model in `R` as `additive_mod`, then use `anova()` to perform an $F$-test as usual.
+
+```{r}
+additive_mod = lm(mpg ~ disp + hp + domestic, data = autompg)
+anova(additive_mod, two_way_int_mod)
+```
+
+Here the p-value is small, so we reject the null, and we prefer the full (alternative) model. Of the models we have considered, our final preference is for
+
+\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \beta_4 x_1 x_2 + \beta_5 x_1 x_3 + \beta_6 x_2 x_3 + \epsilon.
+\]
