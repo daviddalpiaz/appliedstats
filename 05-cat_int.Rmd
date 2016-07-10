@@ -420,15 +420,15 @@ Notice the sign changed!
 
 ## Factor Variables
 
-So far we have limited our use of categorical variables to binary categorical variables. Specifically, we have limited ourselves to dummy variables, which take values `0` or `1`, which represent a categorical variable numerically.
+So far in this chapter, we have limited our use of categorical variables to binary categorical variables. Specifically, we have limited ourselves to dummy variables which take a value of `0` or `1` and represent a categorical variable numerically.
 
-We'll now discuss **factor** variables, which is a special way that `R` deals with categorical variables so that a human user can simply think about the categories of a categorical variable, and `R` will take care of the necessary dummy variables.
+We will now discuss **factor** variables, which is a special way that `R` deals with categorical variables. With factor variables, a human user can simply think about the categories of a variable, and `R` will take care of the necessary dummy variables without any 0/1 assignment being done by the user.
 
 ```{r}
 is.factor(autompg$domestic)
 ```
 
-Before when we used the `domestic` variable that was created, it was **not** a factor variable. It was simply a numerical variable that only took two possible values, `1` for domestic, and `0` for foreign. Let's create a new variable `origin` that stores the same information, but in a different way.
+Earlier when we used the `domestic` variable, it was **not** a factor variable. It was simply a numerical variable that only took two possible values, `1` for domestic, and `0` for foreign. Let's create a new variable `origin` that stores the same information, but in a different way.
 
 ```{r}
 autompg$origin[autompg$domestic == 1] = "domestic"
@@ -436,13 +436,13 @@ autompg$origin[autompg$domestic == 0] = "foreign"
 head(autompg$origin)
 ```
 
-Now the `origin` variables stores `"domestic"` for domestic cars, and `"foreign"` for foreign cars.
+Now the `origin` variable stores `"domestic"` for domestic cars and `"foreign"` for foreign cars.
 
 ```{r}
 is.factor(autompg$origin)
 ```
 
-However, this is simply a vector of characters. We'll want to *coerce* this variable to be a factor.
+However, this is simply a vector of character values. A vector of car models is a character variable in `R`. A vector of Vehicle Identification Numbers (VINs) is a character variable as well. But those don't represent a short list of levels that might influence a response variable. We will want to **coerce** this origin variable to be something more: a factor variable.
 
 ```{r}
 autompg$origin = as.factor(autompg$origin)
@@ -490,9 +490,9 @@ Now let's try to do the same, but using our new factor variable.
 (mod_factor = lm(mpg ~ disp * origin, data = autompg))
 ```
 
-It seems that it doesn't produce the same results. Right away we notice that the intercept is different, as is the the coefficient in front of `disp`. We also notice that the remaining two coefficients are the same magnitude, but with a different sign. Why is this happening?
+It seems that it doesn't produce the same results. Right away we notice that the intercept is different, as is the the coefficient in front of `disp`. We also notice that the remaining two coefficients are of the same magnitude as their respective counterparts using the domestic variable, but with a different sign. Why is this happening?
 
-It turns out, that by using a factor variable, `R` is automatically creating a dummy variable for us, however, it is not the dummy variable that we had originally used ourselves.
+It turns out, that by using a factor variable, `R` is automatically creating a dummy variable for us. However, it is not the dummy variable that we had originally used ourselves.
 
 `R` is fitting the model
 
@@ -527,7 +527,9 @@ is.factor(autompg$cyl)
 levels(autompg$cyl)
 ```
 
-Here the `cyl` variable has three possible levels: `4`, `6`, and `8`. You may wonder, why not simply use `cyl` as a numerical variable? You certainly could. However, that would force the difference between `4` and `6` cylinders to be the same as the difference between `6` and `8` cylinders. For this reason, we will simply consider them to be categories. This is a decision that will often need to be made with ordinal variables. Often, with a large number of categories, the decision to instead use them as numerical variables is appropriate, because, as we are about to see, a number of dummy variables are create to represent these variables.
+Here the `cyl` variable has three possible levels: `4`, `6`, and `8`. You may wonder, why not simply use `cyl` as a numerical variable? You certainly could. 
+
+However, that would force the difference in average `mpg` between `4` and `6` cylinders to be the same as the difference in average mpg between `6` and `8` cylinders. That usually make senses for a continuous variable, but not for a discrete variable with so few possible values. In the case of this variable, there is no such thing as a 7-cylinder engine or a 6.23-cylinder engine in personal vehicles. For these reasons, we will simply consider `cyl` to be categorical. This is a decision that will commonly need to be made with ordinal variables. Often, with a large number of categories, the decision to treat them as numerical variables is appropriate because a large number of dummy variables are then needed to represent these variables.
 
 Let's define three dummy variables related to the `cyl` factor variable.
 
@@ -555,7 +557,7 @@ v_3 =
   \end{cases}
 \]
 
-Now, let's fit an additive model in `R`, using `mpg` as the response, and `disp` and `cyl` as predictors. This should be a model that uses "three lines" to model `mpg`, one for each of the possible `cyl` levels. They will all have the same slope (since it is an additive model) but each will have its own intercept.
+Now, let's fit an additive model in `R`, using `mpg` as the response, and `disp` and `cyl` as predictors. This should be a model that uses "three regression lines" to model `mpg`, one for each of the possible `cyl` levels. They will all have the same slope (since it is an additive model), but each will have its own intercept.
 
 ```{r}
 (mpg_disp_add_cyl = lm(mpg ~ disp + cyl, data = autompg))
@@ -608,7 +610,7 @@ On this plot, we have
 - 6 Cylinder: red dots, dashed red line.
 - 8 Cylinder: green dots, dotted green line.
 
-The odd result here is that we're estimating that 8 cylinder cars have better fuel efficiency than 6 cylinder cars at **any** displacement! That doesn't seem right. Maybe for very large displacement engines that could be true, but that seems wrong for medium to low displacement.
+The odd result here is that we're estimating that 8 cylinder cars have better fuel efficiency than 6 cylinder cars at **any** displacement! The dotted green line is always above the dashed red line. That doesn't seem right. Maybe for very large displacement engines that could be true, but that seems wrong for medium to low displacement.
 
 To attempt to fix this, we will try using an interaction model, that is, instead of simply three intercepts and one slope, we will allow for three slopes. Again, we'll let `R` take the wheel, (no pun intended) then figure out what model it has applied.
 
@@ -659,7 +661,7 @@ abline(int_8cyl, slope_8cyl, col = 3, lty = 3, lwd = 2)
 
 This looks much better! We can see that for medium displacement cars, 6 cylinder cars now perform better than 8 cylinder cars, which seems much more reasonable than before.
 
-To completely justify the interaction model (slope for each `cyl` level), compared to the additive model (single slope), we can perform an $F$-test. Notice first, that there is no $t$-test that will be able to do this since the difference between the two models is not a single parameter.
+To completely justify the interaction model (i.e., a unique slope for each `cyl` level) compared to the additive model (single slope), we can perform an $F$-test. Notice first, that there is no $t$-test that will be able to do this since the difference between the two models is not a single parameter.
 
 We will test,
 
@@ -667,7 +669,7 @@ We will test,
 H_0: \gamma_2 = \gamma_3 = 0
 \]
 
-which is the parallel regression lines we saw before,
+which represents the parallel regression lines we saw before,
 
 \[
 Y = \beta_0 + \beta_1 x + \beta_2 v_2 + \beta_3 v_3 + \epsilon.
@@ -679,7 +681,7 @@ Again, this is a difference of two parameters, thus no $t$-test will be useful.
 anova(mpg_disp_add_cyl, mpg_disp_int_cyl)
 ```
 
-As expected, we see a very low p-value, thus reject the null, and we prefer the interaction model over the additive model.
+As expected, we see a very low p-value, and thus reject the null. We prefer the interaction model over the additive model.
 
 Recapping a bit:
 
@@ -693,7 +695,7 @@ Recapping a bit:
 length(coef(mpg_disp_int_cyl)) - length(coef(mpg_disp_add_cyl))
 ```
 
-We see there is a difference of two parameters, which is also displayed in the resulting ANOVA table from `R`. Also notice that the following two values also appear on the ANOVA table.
+We see there is a difference of two parameters, which is also displayed in the resulting ANOVA table from `R`. Notice that the following two values also appear on the ANOVA table.
 
 ```{r}
 nrow(autompg) - length(coef(mpg_disp_int_cyl))
@@ -880,14 +882,14 @@ anova(two_way_int_mod, big_model)
 
 We see the p-value is somewhat large, so we would fail to reject. We prefer the smaller, less flexible, null model, without the three-way interaction.
 
-A quick note here: the full model does still "fit better.". Notice that it has a smaller RMSE, it makes smaller squared errors on average.
+A quick note here: the full model does still "fit better." Notice that it has a smaller RMSE than the null model, which means the full model makes smaller (squared) errors on average.
 
 ```{r}
 mean(resid(big_model) ^ 2)
 mean(resid(two_way_int_mod) ^ 2)
 ```
 
-However, it is not much smaller. We could even say that, the difference is insignificant. This is an idea we will return to later in greater deatil.
+However, it is not much smaller. We could even say that, the difference is insignificant. This is an idea we will return to later in greater detail.
 
 Now that we have chosen the model without the three-way interaction, can we go further? Do we need the two-way interactions? Let's test
 

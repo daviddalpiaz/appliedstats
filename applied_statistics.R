@@ -1,7 +1,7 @@
 ## ----setup, echo = FALSE, message = FALSE, warning = FALSE--------------------
 require(knitr)
 read_chunk('r_book.R')
-options(width = 80)
+options(width = 80, scipen = 4)
 knit_hooks$set(purl = hook_purl)
 opts_template$set(nopurl = list(purl = FALSE))
 opts_template$set(dopurl = list(purl = TRUE))
@@ -1074,4 +1074,500 @@ anova(stop_dist_model)
 
 ## -----------------------------------------------------------------------------
 anova(lm(dist ~ 1, data = cars), lm(dist ~ speed, data = cars))
+
+## -----------------------------------------------------------------------------
+# read the data from the web
+autompg = read.table(
+  "http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data",
+  quote = "\"",
+  comment.char = "",
+  stringsAsFactors = FALSE)
+# give the dataframe headers
+colnames(autompg) = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin", "name")
+# remove missing data, which is stored as "?"
+autompg = subset(autompg, autompg$hp != "?")
+# remove the plymouth reliant, as it causes some issues
+autompg = subset(autompg, autompg$name != "plymouth reliant")
+# give the dataset row names, based on the engine, year and name
+rownames(autompg) = paste(autompg$cyl, "cylinder", autompg$year, autompg$name)
+# remove the variable for name, as will as origin
+autompg = subset(autompg, select = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year"))
+# change horsepower from character to numeric
+autompg$hp = as.numeric(autompg$hp)
+str(autompg)
+
+## ---- echo=FALSE, fig.height=6, fig.width=6, message=FALSE, warning=FALSE-----
+library("plot3D")
+
+x = autompg$wt
+y = autompg$year
+z = autompg$mpg
+
+fit <- lm(z ~ x + y)
+
+grid.lines = 25
+x.pred     = seq(min(x), max(x), length.out = grid.lines)
+y.pred     = seq(min(y), max(y), length.out = grid.lines)
+xy         = expand.grid(x = x.pred, y = y.pred)
+
+z.pred = matrix(predict(fit, newdata = xy), 
+                nrow = grid.lines, ncol = grid.lines)
+
+fitpoints = predict(fit)
+
+scatter3D(x, y, z, pch = 19, cex = 2, col = gg.col(1000), lighting = TRUE,
+          theta = 25, phi = 45, ticktype = "detailed",
+          xlab = "wt", ylab = "year", zlab = "mpg", zlim = c(0, 40), clim = c(0, 40),
+          surf = list(x = x.pred, y = y.pred, z = z.pred,  
+                      facets = NA, fit = fitpoints), main = "")
+
+## -----------------------------------------------------------------------------
+mpg_model = lm(mpg ~ wt + year, data = autompg)
+coef(mpg_model)
+
+## -----------------------------------------------------------------------------
+n = nrow(autompg)
+p = length(coef(mpg_model))
+X = cbind(rep(1, n), autompg$wt, autompg$year)
+y = autompg$mpg
+
+(beta_hat = solve(t(X) %*% X) %*% t(X) %*% y)
+coef(mpg_model)
+
+## -----------------------------------------------------------------------------
+summary(mpg_model)$sigma
+
+## -----------------------------------------------------------------------------
+y_hat = X %*% solve(t(X) %*% X) %*% t(X) %*% y
+e     = y - y_hat
+sqrt(t(e) %*% e / (n - p))
+sqrt(sum((y - y_hat) ^ 2) / (n - p))
+
+## -----------------------------------------------------------------------------
+summary(mpg_model)
+
+## -----------------------------------------------------------------------------
+summary(mpg_model)$coef
+
+## -----------------------------------------------------------------------------
+confint(mpg_model, level = 0.99)
+
+## -----------------------------------------------------------------------------
+new_cars = data.frame(wt = c(3500, 5000), year = c(76, 81))
+new_cars
+
+## -----------------------------------------------------------------------------
+predict(mpg_model, newdata = new_cars, interval = "confidence", level = 0.99)
+
+## -----------------------------------------------------------------------------
+new_cars$wt
+range(autompg$wt)
+
+## -----------------------------------------------------------------------------
+new_cars$year
+range(autompg$year)
+
+## -----------------------------------------------------------------------------
+plot(year ~ wt, data = autompg, pch = 20, col = "dodgerblue", cex = 1.5)
+points(new_cars, col = "darkorange", cex = 3, pch = "X")
+
+## -----------------------------------------------------------------------------
+x0 = c(1, 3500, 76)
+x0 %*% beta_hat
+
+## -----------------------------------------------------------------------------
+x0 = c(0, 0, 1)
+x0 %*% beta_hat
+beta_hat
+
+## -----------------------------------------------------------------------------
+new_cars
+predict(mpg_model, newdata = new_cars, interval = "prediction", level = 0.99)
+
+## -----------------------------------------------------------------------------
+summary(mpg_model)$r.squared
+
+## -----------------------------------------------------------------------------
+null_mpg_model = lm(mpg ~ 1, data = autompg)
+full_mpg_model = lm(mpg ~ wt + year, data = autompg)
+anova(null_mpg_model, full_mpg_model)
+
+## -----------------------------------------------------------------------------
+summary(mpg_model)
+
+## -----------------------------------------------------------------------------
+# SSReg
+sum((fitted(full_mpg_model) - fitted(null_mpg_model)) ^ 2)
+# SSE
+sum(resid(full_mpg_model) ^ 2)
+# SST
+sum(resid(null_mpg_model) ^ 2)
+# Degrees of Freedom: Regression
+length(coef(full_mpg_model)) - length(coef(null_mpg_model))
+# Degrees of Freedom: Error
+length(resid(full_mpg_model)) - length(coef(full_mpg_model))
+# Degrees of Freedom: Total
+length(resid(null_mpg_model)) - length(coef(null_mpg_model))
+
+## -----------------------------------------------------------------------------
+names(autompg)
+
+## -----------------------------------------------------------------------------
+null_mpg_model = lm(mpg ~ wt + year, data = autompg)
+#full_mpg_model = lm(mpg ~ wt + year + cyl + disp + hp + acc, data = autompg)
+full_mpg_model = lm(mpg ~ ., data = autompg)
+anova(null_mpg_model, full_mpg_model)
+
+## -----------------------------------------------------------------------------
+# SSDiff
+sum((fitted(full_mpg_model) - fitted(null_mpg_model)) ^ 2)
+# SSE (For Full)
+sum(resid(full_mpg_model) ^ 2)
+# SST (For Null)
+sum(resid(null_mpg_model) ^ 2)
+# Degrees of Freedom: Diff
+length(coef(full_mpg_model)) - length(coef(null_mpg_model))
+# Degrees of Freedom: Full
+length(resid(full_mpg_model)) - length(coef(full_mpg_model))
+# Degrees of Freedom: Null
+length(resid(null_mpg_model)) - length(coef(null_mpg_model))
+
+## -----------------------------------------------------------------------------
+set.seed(1337)
+n = 100 # sample size
+p = 3
+
+beta_0 = 5
+beta_1 = -2
+beta_2 = 6
+sigma  = 4
+
+## -----------------------------------------------------------------------------
+x0 = rep(1, n)
+x1 = sample(seq(1, 10, length = n))
+x2 = sample(seq(1, 10, length = n))
+X = cbind(x0, x1, x2)
+C = solve(t(X) %*% X)
+
+## -----------------------------------------------------------------------------
+eps      = rnorm(n, mean = 0, sd = sigma)
+y        = beta_0 + beta_1 * x1 + beta_2 * x2 + eps
+sim_data = data.frame(x1, x2, y)
+
+## ---- echo=FALSE, fig.height=6, fig.width=6, message=FALSE, warning=FALSE-----
+# make this use data.frame? or, simply hide this?
+fit = lm(y ~ x1 + x2)
+
+grid.lines = 25
+x1.pred = seq(min(x1), max(x1), length.out = grid.lines)
+x2.pred = seq(min(x2), max(x2), length.out = grid.lines)
+x1x2 = expand.grid(x1 = x1.pred, x2 = x2.pred)
+
+y.pred = matrix(predict(fit, newdata = x1x2), 
+                 nrow = grid.lines, ncol = grid.lines)
+# fitted points for droplines to surface
+fitpoints = predict(fit)
+
+# scatter plot with regression plane
+scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), lighting = TRUE,
+          theta = 45, phi = 15, ticktype = "detailed", zlim = c(min(y.pred), max(y.pred)), clim = c(min(y.pred), max(y.pred)),
+          xlab = "x1", ylab = "x2", zlab = "y",
+          surf = list(x = x1.pred, y = x2.pred, z = y.pred,  
+                      facets = NA, fit = fitpoints), main = "")
+
+## -----------------------------------------------------------------------------
+(beta_hat = C %*% t(X) %*% y)
+
+## -----------------------------------------------------------------------------
+coef(lm(y ~ x1 + x2, data = sim_data))
+
+## -----------------------------------------------------------------------------
+c(beta_0, beta_1, beta_2)
+
+## -----------------------------------------------------------------------------
+y_hat = X %*% beta_hat
+(s_e = sqrt(sum((y - y_hat) ^ 2) / (n - p)))
+summary(lm(y ~ x1 + x2, data = sim_data))$sigma
+
+## -----------------------------------------------------------------------------
+C[3, 3]
+C[2 + 1, 2 + 1]
+sigma ^ 2 * C[2 + 1, 2 + 1]
+
+## -----------------------------------------------------------------------------
+num_sims = 10000
+beta_hat_2 = rep(0, num_sims)
+for(i in 1:num_sims) {
+  eps           = rnorm(n, mean = 0 , sd = sigma)
+  sim_data$y    = beta_0 * x0 + beta_1 * x1 + beta_2 * x2 + eps
+  fit           = lm(y ~ x1 + x2, data = sim_data)
+  beta_hat_2[i] = coef(fit)[3]
+}
+
+## -----------------------------------------------------------------------------
+mean(beta_hat_2)
+beta_2
+
+## -----------------------------------------------------------------------------
+var(beta_hat_2)
+sigma ^ 2 * C[2 + 1, 2 + 1]
+
+## -----------------------------------------------------------------------------
+sd(beta_hat_2)
+sqrt(sigma ^ 2 * C[2 + 1, 2 + 1])
+
+## -----------------------------------------------------------------------------
+hist(beta_hat_2, prob = TRUE, breaks = 20, 
+     xlab = expression(hat(beta)[2]), main = "", border = "dodgerblue")
+curve(dnorm(x, mean = beta_2, sd = sqrt(sigma ^ 2 * C[2 + 1, 2 + 1])), 
+      col = "darkorange", add = TRUE, lwd = 3)
+
+## -----------------------------------------------------------------------------
+sd_bh2 = sqrt(sigma ^ 2 * C[2 + 1, 2 + 1])
+# We expect these to be: 0.68, 0.95, 0.997
+mean(beta_2 - 1 * sd_bh2 < beta_hat_2 & beta_hat_2 < beta_2 + 1 * sd_bh2)
+mean(beta_2 - 2 * sd_bh2 < beta_hat_2 & beta_hat_2 < beta_2 + 2 * sd_bh2)
+mean(beta_2 - 3 * sd_bh2 < beta_hat_2 & beta_hat_2 < beta_2 + 3 * sd_bh2)
+
+## -----------------------------------------------------------------------------
+mtcars
+
+## -----------------------------------------------------------------------------
+plot(mpg ~ hp, data = mtcars, col = am + 1, pch = am + 1, cex = 2)
+
+## -----------------------------------------------------------------------------
+mpg_hp_slr = lm(mpg ~ hp, data = mtcars)
+
+## -----------------------------------------------------------------------------
+plot(mpg ~ hp, data = mtcars, col = am + 1, pch = am + 1, cex = 2)
+abline(mpg_hp_slr, lwd = 2, col = "green")
+
+## -----------------------------------------------------------------------------
+mpg_hp_add = lm(mpg ~ hp + am, data = mtcars)
+
+## -----------------------------------------------------------------------------
+mpg_hp_add
+
+## -----------------------------------------------------------------------------
+int_auto = coef(mpg_hp_add)[1]
+int_manu = coef(mpg_hp_add)[1] + coef(mpg_hp_add)[3]
+
+slope_auto = coef(mpg_hp_add)[2]
+slope_manu = coef(mpg_hp_add)[2]
+
+## -----------------------------------------------------------------------------
+plot(mpg ~ hp, data = mtcars, col = am + 1, pch = am + 1, cex = 2)
+abline(int_auto, slope_auto, col = 1, lty = 1, lwd = 2) # add line for auto
+abline(int_manu, slope_manu, col = 2, lty = 2, lwd = 2) # add line for manual
+
+## -----------------------------------------------------------------------------
+summary(mpg_hp_add)$coef[3,]
+
+## -----------------------------------------------------------------------------
+anova(mpg_hp_slr, mpg_hp_add)
+
+## -----------------------------------------------------------------------------
+# read data frame from the web
+autompg = read.table(
+  "http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data",
+  quote = "\"",
+  comment.char = "",
+  stringsAsFactors = FALSE)
+# give the dataframe headers
+colnames(autompg) = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin", "name")
+# remove missing data, which is stored as "?"
+autompg = subset(autompg, autompg$hp != "?")
+# remove the plymouth reliant, as it causes some issues
+autompg = subset(autompg, autompg$name != "plymouth reliant")
+# give the dataset row names, based on the engine, year and name
+rownames(autompg) = paste(autompg$cyl, "cylinder", autompg$year, autompg$name)
+# remove the variable for name, as will as origin
+autompg = subset(autompg, select = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin"))
+# change horsepower from character to numeric
+autompg$hp = as.numeric(autompg$hp)
+# create a dummary variable for foreign vs domestic cars. domestic = 1.
+autompg$domestic = as.numeric(autompg$origin == 1)
+# remove 3 and 5 cylinder cars (which are very rare.)
+autompg = autompg[autompg$cyl != 5,]
+autompg = autompg[autompg$cyl != 3,]
+# the following line would verify the remaining cylinder possibilities are 4, 6, 8
+#unique(autompg$cyl)
+# change cyl to a factor variable
+autompg$cyl = as.factor(autompg$cyl)
+
+## -----------------------------------------------------------------------------
+str(autompg)
+
+## -----------------------------------------------------------------------------
+mpg_disp_add = lm(mpg ~ disp + domestic, data = autompg)
+
+int_for = coef(mpg_disp_add)[1]
+int_dom = coef(mpg_disp_add)[1] + coef(mpg_disp_add)[3]
+
+slope_for = coef(mpg_disp_add)[2]
+slope_dom = coef(mpg_disp_add)[2]
+
+plot(mpg ~ disp, data = autompg, col = domestic + 1, pch = domestic + 1)
+abline(int_for, slope_for, col = 1, lty = 1, lwd = 2) # add line for foreign cars
+abline(int_dom, slope_dom, col = 2, lty = 2, lwd = 2) # add line for domestic cars
+
+## ---- eval = FALSE------------------------------------------------------------
+#  autompg$x3 = autompg$disp * autompg$domestic # THIS CODE NOT RUN!
+#  do_not_do_this = lm(mpg ~ disp + domestic + x3, data = autompg) # THIS CODE NOT RUN!
+
+## -----------------------------------------------------------------------------
+mpg_disp_int = lm(mpg ~ disp + domestic + disp:domestic, data = autompg)
+
+## -----------------------------------------------------------------------------
+mpg_disp_int2 = lm(mpg ~ disp * domestic, data = autompg)
+
+## -----------------------------------------------------------------------------
+coef(mpg_disp_int)
+coef(mpg_disp_int2)
+
+## -----------------------------------------------------------------------------
+summary(mpg_disp_int)
+
+## -----------------------------------------------------------------------------
+anova(mpg_disp_add, mpg_disp_int)
+
+## -----------------------------------------------------------------------------
+int_for = coef(mpg_disp_int)[1]
+int_dom = coef(mpg_disp_int)[1] + coef(mpg_disp_int)[3]
+
+slope_for = coef(mpg_disp_int)[2]
+slope_dom = coef(mpg_disp_int)[2] + coef(mpg_disp_int)[4]
+
+## -----------------------------------------------------------------------------
+plot(mpg ~ disp, data = autompg, col = domestic + 1, pch = domestic + 1)
+abline(int_for, slope_for, col = 1, lty = 1, lwd = 2) # add line for foreign cars
+abline(int_dom, slope_dom, col = 2, lty = 2, lwd = 2) # add line for domestic cars
+
+## -----------------------------------------------------------------------------
+mpg_disp_add_hp = lm(mpg ~ disp + hp, data = autompg)
+mpg_disp_int_hp = lm(mpg ~ disp * hp, data = autompg)
+summary(mpg_disp_int_hp)
+
+## -----------------------------------------------------------------------------
+anova(mpg_disp_add_hp, mpg_disp_int_hp)
+
+## -----------------------------------------------------------------------------
+coef(mpg_disp_int_hp)
+
+## -----------------------------------------------------------------------------
+is.factor(autompg$domestic)
+
+## -----------------------------------------------------------------------------
+autompg$origin[autompg$domestic == 1] = "domestic"
+autompg$origin[autompg$domestic == 0] = "foreign"
+head(autompg$origin)
+
+## -----------------------------------------------------------------------------
+is.factor(autompg$origin)
+
+## -----------------------------------------------------------------------------
+autompg$origin = as.factor(autompg$origin)
+
+## -----------------------------------------------------------------------------
+str(autompg)
+
+## -----------------------------------------------------------------------------
+levels(autompg$origin)
+
+## -----------------------------------------------------------------------------
+(mod_dummy = lm(mpg ~ disp * domestic, data = autompg))
+
+## -----------------------------------------------------------------------------
+(mod_factor = lm(mpg ~ disp * origin, data = autompg))
+
+## -----------------------------------------------------------------------------
+is.factor(autompg$cyl)
+levels(autompg$cyl)
+
+## -----------------------------------------------------------------------------
+(mpg_disp_add_cyl = lm(mpg ~ disp + cyl, data = autompg))
+
+## -----------------------------------------------------------------------------
+int_4cyl = coef(mpg_disp_add_cyl)[1]
+int_6cyl = coef(mpg_disp_add_cyl)[1] + coef(mpg_disp_add_cyl)[3]
+int_8cyl = coef(mpg_disp_add_cyl)[1] + coef(mpg_disp_add_cyl)[4]
+
+slope_all_cyl = coef(mpg_disp_add_cyl)[2]
+
+plot(mpg ~ disp, data = autompg, col = cyl)
+abline(int_4cyl, slope_all_cyl, col = 1, lty = 1, lwd = 2)
+abline(int_6cyl, slope_all_cyl, col = 2, lty = 2, lwd = 2)
+abline(int_8cyl, slope_all_cyl, col = 3, lty = 3, lwd = 2)
+
+## -----------------------------------------------------------------------------
+(mpg_disp_int_cyl = lm(mpg ~ disp * cyl, data = autompg))
+# could also use mpg ~ disp + cyl + disp:cyl
+
+## -----------------------------------------------------------------------------
+int_4cyl = coef(mpg_disp_int_cyl)[1]
+int_6cyl = coef(mpg_disp_int_cyl)[1] + coef(mpg_disp_int_cyl)[3]
+int_8cyl = coef(mpg_disp_int_cyl)[1] + coef(mpg_disp_int_cyl)[4]
+
+slope_4cyl = coef(mpg_disp_int_cyl)[2]
+slope_6cyl = coef(mpg_disp_int_cyl)[2] + coef(mpg_disp_int_cyl)[5]
+slope_8cyl = coef(mpg_disp_int_cyl)[2] + coef(mpg_disp_int_cyl)[6]
+
+plot(mpg ~ disp, data = autompg, col = cyl)
+abline(int_4cyl, slope_4cyl, col = 1, lty = 1, lwd = 2)
+abline(int_6cyl, slope_6cyl, col = 2, lty = 2, lwd = 2)
+abline(int_8cyl, slope_8cyl, col = 3, lty = 3, lwd = 2)
+
+## -----------------------------------------------------------------------------
+anova(mpg_disp_add_cyl, mpg_disp_int_cyl)
+
+## -----------------------------------------------------------------------------
+length(coef(mpg_disp_int_cyl)) - length(coef(mpg_disp_add_cyl))
+
+## -----------------------------------------------------------------------------
+nrow(autompg) - length(coef(mpg_disp_int_cyl))
+nrow(autompg) - length(coef(mpg_disp_add_cyl))
+
+## -----------------------------------------------------------------------------
+new_param_data = data.frame(
+  y = autompg$mpg,
+  x = autompg$disp,
+  v1 = 1 * as.numeric(autompg$cyl == 4),
+  v2 = 1 * as.numeric(autompg$cyl == 6),
+  v3 = 1 * as.numeric(autompg$cyl == 8))
+
+head(new_param_data, 20)
+
+## -----------------------------------------------------------------------------
+lm(y ~ x + v1 + v2 + v3, data = new_param_data)
+
+## -----------------------------------------------------------------------------
+lm(y ~ 0 + x + v1 + v2 + v3, data = new_param_data)
+
+## -----------------------------------------------------------------------------
+lm(y ~ 0 + v1 + v2 + v3 + x:v1 + x:v2 + x:v3, data = new_param_data)
+
+## -----------------------------------------------------------------------------
+lm(mpg ~ disp * cyl, data = autompg)
+lm(mpg ~ 0 + cyl + disp : cyl, data = autompg)
+lm(mpg ~ 0 + disp + cyl + disp : cyl, data = autompg)
+
+## -----------------------------------------------------------------------------
+all.equal(fitted(lm(mpg ~ disp * cyl, data = autompg)), 
+          fitted(lm(mpg ~ 0 + cyl + disp : cyl, data = autompg)))
+
+## -----------------------------------------------------------------------------
+big_model = lm(mpg ~ disp * hp * domestic, data = autompg)
+summary(big_model)
+
+## -----------------------------------------------------------------------------
+two_way_int_mod = lm(mpg ~ disp * hp + disp * domestic + hp * domestic, data = autompg)
+anova(two_way_int_mod, big_model)
+
+## -----------------------------------------------------------------------------
+mean(resid(big_model) ^ 2)
+mean(resid(two_way_int_mod) ^ 2)
+
+## -----------------------------------------------------------------------------
+additive_mod = lm(mpg ~ disp + hp + domestic, data = autompg)
+anova(additive_mod, two_way_int_mod)
 
