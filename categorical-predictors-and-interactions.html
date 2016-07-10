@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Applied Statistics with R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="Applied Statistics with <code>R</code>">
+  <meta name="generator" content="bookdown 0.0.77 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Applied Statistics with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://daviddalpiaz.github.io/appliedstats/" />
+  
+  
+  <meta name="github-repo" content="daviddalpiaz/appliedstats" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Applied Statistics with R" />
+  
+  
+  
+
+<meta name="author" content="David Dalpiaz">
+
+<meta name="date" content="2016-07-10">
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="multiple-linear-regression.html">
+
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applied Statistics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i><b>1.1</b> About This Book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#conventions"><i class="fa fa-check"></i><b>1.2</b> Conventions</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i><b>1.4</b> License</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>2</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-resources"><i class="fa fa-check"></i><b>2.1</b> <code>R</code> Resources</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-basics"><i class="fa fa-check"></i><b>2.2</b> <code>R</code> Basics</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#basic-calculations"><i class="fa fa-check"></i><b>2.2.1</b> Basic Calculations</a></li>
+<li class="chapter" data-level="2.2.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#getting-help"><i class="fa fa-check"></i><b>2.2.2</b> Getting Help</a></li>
+<li class="chapter" data-level="2.2.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#installing-packages"><i class="fa fa-check"></i><b>2.2.3</b> Installing Packages</a></li>
+<li class="chapter" data-level="2.2.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-types"><i class="fa fa-check"></i><b>2.2.4</b> Data Types</a></li>
+<li class="chapter" data-level="2.2.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#vectors"><i class="fa fa-check"></i><b>2.2.5</b> Vectors</a></li>
+<li class="chapter" data-level="2.2.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#summary-statistics"><i class="fa fa-check"></i><b>2.2.6</b> Summary Statistics</a></li>
+<li class="chapter" data-level="2.2.7" data-path="introduction-to-r.html"><a href="introduction-to-r.html#matrices"><i class="fa fa-check"></i><b>2.2.7</b> Matrices</a></li>
+<li class="chapter" data-level="2.2.8" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-frames"><i class="fa fa-check"></i><b>2.2.8</b> Data Frames</a></li>
+<li class="chapter" data-level="2.2.9" data-path="introduction-to-r.html"><a href="introduction-to-r.html#plotting"><i class="fa fa-check"></i><b>2.2.9</b> Plotting</a></li>
+<li class="chapter" data-level="2.2.10" data-path="introduction-to-r.html"><a href="introduction-to-r.html#distributions"><i class="fa fa-check"></i><b>2.2.10</b> Distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#programming-basics"><i class="fa fa-check"></i><b>2.3</b> Programming Basics</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#logical-operators"><i class="fa fa-check"></i><b>2.3.1</b> Logical Operators</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#control-flow"><i class="fa fa-check"></i><b>2.3.2</b> Control Flow</a></li>
+<li class="chapter" data-level="2.3.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#functions"><i class="fa fa-check"></i><b>2.3.3</b> Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#hypothesis-tests-in-r"><i class="fa fa-check"></i><b>2.4</b> Hypothesis Tests in <code>R</code></a><ul>
+<li class="chapter" data-level="2.4.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#one-sample-t-test-review"><i class="fa fa-check"></i><b>2.4.1</b> One Sample t-Test: Review</a></li>
+<li class="chapter" data-level="2.4.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#one-sample-t-test-example"><i class="fa fa-check"></i><b>2.4.2</b> One Sample t-Test: Example</a></li>
+<li class="chapter" data-level="2.4.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#two-sample-t-test-review"><i class="fa fa-check"></i><b>2.4.3</b> Two Sample t-Test: Review</a></li>
+<li class="chapter" data-level="2.4.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#two-sample-t-test-example"><i class="fa fa-check"></i><b>2.4.4</b> Two Sample t-Test: Example</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#simulation"><i class="fa fa-check"></i><b>2.5</b> Simulation</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#paired-differences"><i class="fa fa-check"></i><b>2.5.1</b> Paired Differences</a></li>
+<li class="chapter" data-level="2.5.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#distribution-of-a-sample-mean"><i class="fa fa-check"></i><b>2.5.2</b> Distribution of a Sample Mean</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html"><i class="fa fa-check"></i><b>3</b> Simple Linear Regression</a><ul>
+<li class="chapter" data-level="3.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#modeling"><i class="fa fa-check"></i><b>3.1</b> Modeling</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#simple-linear-regression-model"><i class="fa fa-check"></i><b>3.1.1</b> Simple Linear Regression Model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#least-squares-approach"><i class="fa fa-check"></i><b>3.2</b> Least Squares Approach</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#making-predictions"><i class="fa fa-check"></i><b>3.2.1</b> Making Predictions</a></li>
+<li class="chapter" data-level="3.2.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#residuals"><i class="fa fa-check"></i><b>3.2.2</b> Residuals</a></li>
+<li class="chapter" data-level="3.2.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#variance-estimation"><i class="fa fa-check"></i><b>3.2.3</b> Variance Estimation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#decomposition-of-variation"><i class="fa fa-check"></i><b>3.3</b> Decomposition of Variation</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#coefficient-of-determination"><i class="fa fa-check"></i><b>3.3.1</b> Coefficient of Determination</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#the-lm-function"><i class="fa fa-check"></i><b>3.4</b> The <code>lm</code> Function</a></li>
+<li class="chapter" data-level="3.5" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#maximum-likelihood-estimation-mle-approach"><i class="fa fa-check"></i><b>3.5</b> Maximum Likelihood Estimation (MLE) Approach</a></li>
+<li class="chapter" data-level="3.6" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#simulating-slr"><i class="fa fa-check"></i><b>3.6</b> Simulating SLR</a></li>
+<li class="chapter" data-level="3.7" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#history"><i class="fa fa-check"></i><b>3.7</b> History</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html"><i class="fa fa-check"></i><b>4</b> Inference for Simple Linear Regression</a><ul>
+<li class="chapter" data-level="4.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#gaussmarkov-theorem"><i class="fa fa-check"></i><b>4.1</b> Gauss–Markov Theorem</a></li>
+<li class="chapter" data-level="4.2" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#sampling-distributions"><i class="fa fa-check"></i><b>4.2</b> Sampling Distributions</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#simulating-sampling-distributions"><i class="fa fa-check"></i><b>4.2.1</b> Simulating Sampling Distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#standard-errors"><i class="fa fa-check"></i><b>4.3</b> Standard Errors</a></li>
+<li class="chapter" data-level="4.4" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-intervals-for-slope-and-intercept"><i class="fa fa-check"></i><b>4.4</b> Confidence Intervals for Slope and Intercept</a></li>
+<li class="chapter" data-level="4.5" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#hypothesis-tests"><i class="fa fa-check"></i><b>4.5</b> Hypothesis Tests</a></li>
+<li class="chapter" data-level="4.6" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#cars-example"><i class="fa fa-check"></i><b>4.6</b> <code>cars</code> Example</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#tests-in-r"><i class="fa fa-check"></i><b>4.6.1</b> Tests in <code>R</code></a></li>
+<li class="chapter" data-level="4.6.2" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#significance-of-regression-t-test"><i class="fa fa-check"></i><b>4.6.2</b> Significance of Regression, t-Test</a></li>
+<li class="chapter" data-level="4.6.3" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-intervals-in-r"><i class="fa fa-check"></i><b>4.6.3</b> Confidence Intervals in <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-interval-for-mean-response"><i class="fa fa-check"></i><b>4.7</b> Confidence Interval for Mean Response</a></li>
+<li class="chapter" data-level="4.8" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#prediction-interval-for-new-observations"><i class="fa fa-check"></i><b>4.8</b> Prediction Interval for New Observations</a></li>
+<li class="chapter" data-level="4.9" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-and-prediction-bands"><i class="fa fa-check"></i><b>4.9</b> Confidence and Prediction Bands</a></li>
+<li class="chapter" data-level="4.10" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#significance-of-regression-f-test"><i class="fa fa-check"></i><b>4.10</b> Significance of Regression, F-Test</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html"><i class="fa fa-check"></i><b>5</b> Multiple Linear Regression</a><ul>
+<li class="chapter" data-level="5.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#matrix-approach-to-regression"><i class="fa fa-check"></i><b>5.1</b> Matrix Approach to Regression</a></li>
+<li class="chapter" data-level="5.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#sampling-distribution"><i class="fa fa-check"></i><b>5.2</b> Sampling Distribution</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#single-parameter-tests"><i class="fa fa-check"></i><b>5.2.1</b> Single Parameter Tests</a></li>
+<li class="chapter" data-level="5.2.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#confidence-intervals"><i class="fa fa-check"></i><b>5.2.2</b> Confidence Intervals</a></li>
+<li class="chapter" data-level="5.2.3" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#confidence-intervals-for-mean-response"><i class="fa fa-check"></i><b>5.2.3</b> Confidence Intervals for Mean Response</a></li>
+<li class="chapter" data-level="5.2.4" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#prediction-intervals"><i class="fa fa-check"></i><b>5.2.4</b> Prediction Intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#signifiance-of-regression"><i class="fa fa-check"></i><b>5.3</b> Signifiance of Regression</a></li>
+<li class="chapter" data-level="5.4" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#nested-models"><i class="fa fa-check"></i><b>5.4</b> Nested Models</a></li>
+<li class="chapter" data-level="5.5" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#simulation-1"><i class="fa fa-check"></i><b>5.5</b> Simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html"><i class="fa fa-check"></i><b>6</b> Categorical Predictors and Interactions</a><ul>
+<li class="chapter" data-level="6.1" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#dummy-variables"><i class="fa fa-check"></i><b>6.1</b> Dummy Variables</a></li>
+<li class="chapter" data-level="6.2" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#interactions"><i class="fa fa-check"></i><b>6.2</b> Interactions</a></li>
+<li class="chapter" data-level="6.3" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#factor-variables"><i class="fa fa-check"></i><b>6.3</b> Factor Variables</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#factors-with-more-than-two-levels"><i class="fa fa-check"></i><b>6.3.1</b> Factors with More Than Two Levels</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#parameterization"><i class="fa fa-check"></i><b>6.4</b> Parameterization</a></li>
+<li class="chapter" data-level="6.5" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#building-larger-models"><i class="fa fa-check"></i><b>6.5</b> Building Larger Models</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/daviddalpiaz/appliedstats" target="blank">&copy; 2016 David Dalpiaz</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied Statistics with <code>R</code></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="categorical-predictors-and-interactions" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Categorical Predictors and Interactions</h1>
+<blockquote>
+<p>“The greatest value of a picture is when it forces us to notice what we never expected to see.”</p>
+<p>— <strong>John Tukey</strong></p>
+</blockquote>
+<p>After reading this chapter you will be able to:</p>
+<ul>
+<li>Include and interpret categorical variables in a linear regression model by way of dummy variables.</li>
+<li>Understand the implications of using a model with a categorical variable in two ways: levels serving as unique predictors versus levels serving as a comparison to a baseline.</li>
+<li>Construct and interpret linear regression models with interaction terms.</li>
+<li>Identify categorical variables in a data set and convert them into factor variables, if necessary, using R.</li>
+</ul>
+<p>So far in each of our analyses, we have only used numeric variables as predictors. We have also only used <em>additive models</em>, meaning the effect any predictor had on the response was not dependent on the other predictors. In this chapter, we will remove both of these restrictions. We will fit models with categorical predictors, and use models that allow predictors to <em>interact</em>. The mathematics of multiple regression will remain largely unchanging, however, we will pay close attention to interpretation, as well as some difference in <code>R</code> usage.</p>
+<div id="dummy-variables" class="section level2">
+<h2><span class="header-section-number">6.1</span> Dummy Variables</h2>
+<p>For this chapter, we will briefly use the built in dataset <code>mtcars</code> before returning to our <code>autompg</code> dataset that we created in the last chapter. The <code>mtcars</code> dataset is somewhat smaller, so we’ll quickly take a look at the entire dataset.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mtcars</code></pre></div>
+<pre><code>##                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+## Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+## Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+## Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+## Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+## Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+## Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+## Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+## Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
+## Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+## Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+## Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+## Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+## Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+## Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+## Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+## Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
+## Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+## AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
+## Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+## Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+## Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+## Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+## Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+## Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+## Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+## Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
+## Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</code></pre>
+<p>We will be interested in three of the variables: <code>mpg</code>, <code>hp</code>, and <code>am</code>.</p>
+<ul>
+<li><code>mpg</code>: fuel efficiency, in miles per gallon.</li>
+<li><code>hp</code>: horsepower, in foot-pounds per second.</li>
+<li><code>am</code>: transmission. Automatic or manual.</li>
+</ul>
+<p>As we often do, we will start by plotting the data. We are interested in <code>mpg</code> as the response variable, and <code>hp</code> as a predictor.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(mpg ~<span class="st"> </span>hp, <span class="dt">data =</span> mtcars, <span class="dt">col =</span> am +<span class="st"> </span><span class="dv">1</span>, <span class="dt">pch =</span> am +<span class="st"> </span><span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-254-1.png" width="672" /></p>
+<p>We used a common <code>R</code> “trick” when plotting this data. The <code>am</code> variable takes two possible values; <code>0</code> for automatic transmission, and <code>1</code> for manual transmissions. <code>R</code> can use numbers to represent colors, however the color for <code>0</code> is white. So we take the <code>am</code> vector and add <code>1</code> to it. Then observations with automatic transmissions are now represented by <code>1</code>, which is black in <code>R</code>, and manual transmission are represented by <code>2</code>, which is red in <code>R</code>. (Note, we are only adding <code>1</code> inside the call to <code>plot()</code>, we are not actually modifying the values stored in <code>am</code>.)</p>
+<p>We now fit the SLR model</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 x_1 + \epsilon,
+\]</span></p>
+<p>where <span class="math inline">\(Y\)</span> is <code>mpg</code> and <span class="math inline">\(x_1\)</span> is <code>hp</code>. For notational brevity, we drop the index <span class="math inline">\(i\)</span> for observations.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg_hp_slr =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>hp, <span class="dt">data =</span> mtcars)</code></pre></div>
+<p>We then re-plot the data and add the fitted line to the plot.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(mpg ~<span class="st"> </span>hp, <span class="dt">data =</span> mtcars, <span class="dt">col =</span> am +<span class="st"> </span><span class="dv">1</span>, <span class="dt">pch =</span> am +<span class="st"> </span><span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">2</span>)
+<span class="kw">abline</span>(mpg_hp_slr, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;green&quot;</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-256-1.png" width="672" /></p>
+<p>We should notice a pattern here. The red, manual observations largely fall above the line, while the black, automatic observations are mostly below the line. This means our model underestimates the fuel efficiency of manual transmissions, and overestimates the fuel efficiency of automatic transmissions. To correct for this, we will add a predictor to our model, namely, <code>am</code> as <span class="math inline">\(x_2\)</span>.</p>
+<p>Our new model is</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \epsilon,
+\]</span></p>
+<p>where <span class="math inline">\(x_1\)</span> and <span class="math inline">\(Y\)</span> remain the same, but now</p>
+<p><span class="math display">\[
+x_2 =
+  \begin{cases}
+   1 &amp; \text{manual transmission} \\
+   0       &amp; \text{automatic transmission}
+  \end{cases}.
+\]</span></p>
+<p>In this case, we call <span class="math inline">\(x_2\)</span> a <strong>dummy variable</strong>. A dummy variable is somewhat unfortunately named, as it is in no way “dumb”. In fact, it is actually somewhat clever. A dummy variable is a numerical variable that is used in a regression analysis to “code” for a binary categorical variable. Let’s see how this works.</p>
+<p>First, note that <code>am</code> is already a dummy variable, since it uses the values <code>0</code> and <code>1</code> to represent automatic and manual transmissions. Often, a variable like <code>am</code> would store the character values <code>auto</code> and <code>man</code> and we would either have to convert these to <code>0</code> and <code>1</code>, or, as we will see later, <code>R</code> will take care of creating dummy variables for us.</p>
+<p>So, to fit the above model, we do so like any other multiple regression model we have seen before.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg_hp_add =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>hp +<span class="st"> </span>am, <span class="dt">data =</span> mtcars)</code></pre></div>
+<p>Briefly checking the output, we see that <code>R</code> has estimated the three <span class="math inline">\(\beta\)</span> parameters.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg_hp_add</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ hp + am, data = mtcars)
+## 
+## Coefficients:
+## (Intercept)           hp           am  
+##    26.58491     -0.05889      5.27709</code></pre>
+<p>Since <span class="math inline">\(x_2\)</span> can only take values <code>0</code> and <code>1</code>, we can effectively write two different models, one for manual and one for automatic transmissions.</p>
+<p>For automatic transmissions, that is <span class="math inline">\(x_2 = 0\)</span>, we have,</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 x_1 + \epsilon.
+\]</span></p>
+<p>Then for manual transmissions, that is <span class="math inline">\(x_2 = 1\)</span>, we have,</p>
+<p><span class="math display">\[
+Y = (\beta_0 + \beta_2) + \beta_1 x_1 + \epsilon.
+\]</span></p>
+<p>Notice that these models share the same slope, <span class="math inline">\(\beta_1\)</span>, but have different intercepts, differing by <span class="math inline">\(\beta_2\)</span>. So the change in <code>mpg</code> is the same for both models, but on average <code>mpg</code> differs by <span class="math inline">\(\beta_2\)</span> between the two transmission types.</p>
+<p>We’ll now calculate the estimated slope and intercept of these two models so that we can add them to a plot. Note that:</p>
+<ul>
+<li><span class="math inline">\(\hat{\beta}_0\)</span> = <code>coef(mpg_hp_add)[1]</code> = 26.5849137</li>
+<li><span class="math inline">\(\hat{\beta}_1\)</span> = <code>coef(mpg_hp_add)[2]</code> = -0.0588878</li>
+<li><span class="math inline">\(\hat{\beta}_2\)</span> = <code>coef(mpg_hp_add)[3]</code> = 5.2770853</li>
+</ul>
+<p>We can then combine these to calculate the estimated slope and intercepts.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">int_auto =<span class="st"> </span><span class="kw">coef</span>(mpg_hp_add)[<span class="dv">1</span>]
+int_manu =<span class="st"> </span><span class="kw">coef</span>(mpg_hp_add)[<span class="dv">1</span>] +<span class="st"> </span><span class="kw">coef</span>(mpg_hp_add)[<span class="dv">3</span>]
+
+slope_auto =<span class="st"> </span><span class="kw">coef</span>(mpg_hp_add)[<span class="dv">2</span>]
+slope_manu =<span class="st"> </span><span class="kw">coef</span>(mpg_hp_add)[<span class="dv">2</span>]</code></pre></div>
+<p>Re-plotting the data, we use these slopes and intercepts to add the “two” fitted models to the plot.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(mpg ~<span class="st"> </span>hp, <span class="dt">data =</span> mtcars, <span class="dt">col =</span> am +<span class="st"> </span><span class="dv">1</span>, <span class="dt">pch =</span> am +<span class="st"> </span><span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">2</span>)
+<span class="kw">abline</span>(int_auto, slope_auto, <span class="dt">col =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="co"># add line for auto</span>
+<span class="kw">abline</span>(int_manu, slope_manu, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="co"># add line for manual</span></code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-260-1.png" width="672" /></p>
+<p>We notice right away that the points are no longer systematically incorrect. The red, manual observations vary about the red line in no particular pattern without underestimating the observations as before. The black, automatic points vary about the black line, also without an obvious pattern.</p>
+<p>They say a picture is worth a thousand words, but as a statistician, sometimes a picture is worth an entire analysis. The above picture makes it plainly obvious that <span class="math inline">\(\beta_2\)</span> is significant, but let’s verify mathematically. Essentially we would like to test:</p>
+<p><span class="math display">\[
+H_0: \beta_2 = 0 \quad \text{vs} \quad H_1: \beta_2 \neq 0.
+\]</span></p>
+<p>This is nothing new. Again, the math is the same as the multiple regression analyses we have seen before. We could perform either a <span class="math inline">\(t\)</span> or <span class="math inline">\(F\)</span> test here. The only difference is a slight change in interpretation. We could think of this as testing a model with a single line (<span class="math inline">\(H_0\)</span>) against a model that allows two lines (<span class="math inline">\(H_1\)</span>).</p>
+<p>To obtain the test statistic and p-value for the <span class="math inline">\(t\)</span>-test, we would use</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(mpg_hp_add)$coef[<span class="dv">3</span>,]</code></pre></div>
+<pre><code>##      Estimate    Std. Error       t value      Pr(&gt;|t|) 
+## 5.27708530818 1.07954057578 4.88826953480 0.00003460318</code></pre>
+<p>To do the same for the <span class="math inline">\(F\)</span> test, we would use</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(mpg_hp_slr, mpg_hp_add)</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: mpg ~ hp
+## Model 2: mpg ~ hp + am
+##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+## 1     30 447.67                                  
+## 2     29 245.44  1    202.24 23.895 0.0000346 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Notice that these are indeed testing the same thing, as the p-values are exactly equal. (And the <span class="math inline">\(F\)</span> test statistic is the <span class="math inline">\(t\)</span> test statistic squared.)</p>
+<p>Recapping some interpretations:</p>
+<ul>
+<li><span class="math inline">\(\hat{\beta}_0 = 26.5849137\)</span> is the estimated average <code>mpg</code> for a car with an automatic transmission and <strong>0</strong> <code>hp</code>.</li>
+<li><p><span class="math inline">\(\hat{\beta}_0 + \hat{\beta}_2 = 31.8619991\)</span> is the estimated average <code>mpg</code> for a car with a manual transmission and <strong>0</strong> <code>hp</code>.</p></li>
+<li><span class="math inline">\(\hat{\beta}_2 = 5.2770853\)</span> is the estimated <strong>difference</strong> in average <code>mpg</code> for cars with manual transmissions as compared to those with automatic transmission, for <strong>any</strong> <code>hp</code>.</li>
+<li><p><span class="math inline">\(\hat{\beta}_1 = -0.0588878\)</span> is the estimated change in average <code>mpg</code> for an increase in one <code>hp</code>, for <strong>either</strong> transmission types.</p></li>
+</ul>
+<p>We should take special notice of those last two. In the model,</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \epsilon,
+\]</span></p>
+<p>we see <span class="math inline">\(\beta_1\)</span> is the average change in <span class="math inline">\(Y\)</span> for an increase in <span class="math inline">\(x_1\)</span>, <em>no matter</em> the value of <span class="math inline">\(x_2\)</span>. Also, <span class="math inline">\(\beta_2\)</span> is always the difference in the average of <span class="math inline">\(Y\)</span> for <em>any</em> value of <span class="math inline">\(x_1\)</span>. These are two restrictions we won’t always want, so we need a way to specify a more flexible model.</p>
+<p>Here we restricted ourselves to a single numerical predictor <span class="math inline">\(x_1\)</span> and one dummy variable <span class="math inline">\(x_2\)</span>. However, the concept of a dummy variable can be used with larger multiple regression models. We only use a single numerical predictor here for ease of visualization since we can think of the “two lines” interpretation. But in general, we can think of a dummy variable as creating “two models,” one for each category of a binary categorical variable.</p>
+</div>
+<div id="interactions" class="section level2">
+<h2><span class="header-section-number">6.2</span> Interactions</h2>
+<p>To remove the “same slope” restriction, we will now discuss <strong>interaction</strong>. To illustrate this concept, we will return to the <code>autompg</code> dataset we created in the last chapter, with a few more modifications.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># read data frame from the web</span>
+autompg =<span class="st"> </span><span class="kw">read.table</span>(
+  <span class="st">&quot;http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data&quot;</span>,
+  <span class="dt">quote =</span> <span class="st">&quot;</span><span class="ch">\&quot;</span><span class="st">&quot;</span>,
+  <span class="dt">comment.char =</span> <span class="st">&quot;&quot;</span>,
+  <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
+<span class="co"># give the dataframe headers</span>
+<span class="kw">colnames</span>(autompg) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;mpg&quot;</span>, <span class="st">&quot;cyl&quot;</span>, <span class="st">&quot;disp&quot;</span>, <span class="st">&quot;hp&quot;</span>, <span class="st">&quot;wt&quot;</span>, <span class="st">&quot;acc&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;origin&quot;</span>, <span class="st">&quot;name&quot;</span>)
+<span class="co"># remove missing data, which is stored as &quot;?&quot;</span>
+autompg =<span class="st"> </span><span class="kw">subset</span>(autompg, autompg$hp !=<span class="st"> &quot;?&quot;</span>)
+<span class="co"># remove the plymouth reliant, as it causes some issues</span>
+autompg =<span class="st"> </span><span class="kw">subset</span>(autompg, autompg$name !=<span class="st"> &quot;plymouth reliant&quot;</span>)
+<span class="co"># give the dataset row names, based on the engine, year and name</span>
+<span class="kw">rownames</span>(autompg) =<span class="st"> </span><span class="kw">paste</span>(autompg$cyl, <span class="st">&quot;cylinder&quot;</span>, autompg$year, autompg$name)
+<span class="co"># remove the variable for name, as will as origin</span>
+autompg =<span class="st"> </span><span class="kw">subset</span>(autompg, <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot;mpg&quot;</span>, <span class="st">&quot;cyl&quot;</span>, <span class="st">&quot;disp&quot;</span>, <span class="st">&quot;hp&quot;</span>, <span class="st">&quot;wt&quot;</span>, <span class="st">&quot;acc&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;origin&quot;</span>))
+<span class="co"># change horsepower from character to numeric</span>
+autompg$hp =<span class="st"> </span><span class="kw">as.numeric</span>(autompg$hp)
+<span class="co"># create a dummary variable for foreign vs domestic cars. domestic = 1.</span>
+autompg$domestic =<span class="st"> </span><span class="kw">as.numeric</span>(autompg$origin ==<span class="st"> </span><span class="dv">1</span>)
+<span class="co"># remove 3 and 5 cylinder cars (which are very rare.)</span>
+autompg =<span class="st"> </span>autompg[autompg$cyl !=<span class="st"> </span><span class="dv">5</span>,]
+autompg =<span class="st"> </span>autompg[autompg$cyl !=<span class="st"> </span><span class="dv">3</span>,]
+<span class="co"># the following line would verify the remaining cylinder possibilities are 4, 6, 8</span>
+<span class="co">#unique(autompg$cyl)</span>
+<span class="co"># change cyl to a factor variable</span>
+autompg$cyl =<span class="st"> </span><span class="kw">as.factor</span>(autompg$cyl)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(autompg)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    383 obs. of  9 variables:
+##  $ mpg     : num  18 15 18 16 17 15 14 14 14 15 ...
+##  $ cyl     : Factor w/ 3 levels &quot;4&quot;,&quot;6&quot;,&quot;8&quot;: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ disp    : num  307 350 318 304 302 429 454 440 455 390 ...
+##  $ hp      : num  130 165 150 150 140 198 220 215 225 190 ...
+##  $ wt      : num  3504 3693 3436 3433 3449 ...
+##  $ acc     : num  12 11.5 11 12 10.5 10 9 8.5 10 8.5 ...
+##  $ year    : int  70 70 70 70 70 70 70 70 70 70 ...
+##  $ origin  : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ domestic: num  1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<p>We’ve removed cars with <code>3</code> and <code>5</code> cylinders , as well as created a new variable <code>domestic</code> which indicates whether or not a car was built in the United States. Removing the <code>3</code> and <code>5</code> cylinders is simply for ease of demonstration later in the chapter and would not be done in practice. The new variable <code>domestic</code> takes the value <code>1</code> if the car was built in the United States, and <code>0</code> otherwise, which we will refer to as “foreign.” (We are arbitrarily using the United States as the reference point here.) We have also made <code>cyl</code> and <code>origin</code> into factor variables, which we will discuss later.</p>
+<p>We’ll now be concerned with three variables: <code>mpg</code>, <code>disp</code>, and <code>domestic</code>. We will use <code>mpg</code> as the response. We can fit a model,</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \epsilon,
+\]</span></p>
+<p>where</p>
+<ul>
+<li><span class="math inline">\(Y\)</span> is <code>mpg</code>, the fuel efficiency in miles per gallon,</li>
+<li><span class="math inline">\(x_1\)</span> is <code>disp</code>, the displacement in cubic inches,</li>
+<li><span class="math inline">\(x_2\)</span> is <code>domestic</code> as described above, which is a dummy variable.</li>
+</ul>
+<p>We will fit this model, extract the slope and intercept for the “two lines,” plot the data and add the lines.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg_disp_add =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>disp +<span class="st"> </span>domestic, <span class="dt">data =</span> autompg)
+
+int_for =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_add)[<span class="dv">1</span>]
+int_dom =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_add)[<span class="dv">1</span>] +<span class="st"> </span><span class="kw">coef</span>(mpg_disp_add)[<span class="dv">3</span>]
+
+slope_for =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_add)[<span class="dv">2</span>]
+slope_dom =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_add)[<span class="dv">2</span>]
+
+<span class="kw">plot</span>(mpg ~<span class="st"> </span>disp, <span class="dt">data =</span> autompg, <span class="dt">col =</span> domestic +<span class="st"> </span><span class="dv">1</span>, <span class="dt">pch =</span> domestic +<span class="st"> </span><span class="dv">1</span>)
+<span class="kw">abline</span>(int_for, slope_for, <span class="dt">col =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="co"># add line for foreign cars</span>
+<span class="kw">abline</span>(int_dom, slope_dom, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="co"># add line for domestic cars</span></code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-265-1.png" width="672" /></p>
+<p>This is a model that allows for two <em>parallel</em> lines, meaning the <code>mpg</code> can be different on average between foreign and domestic cars of the same engine displacement, but the change in average <code>mpg</code> for an increase in displacement is the same for both. We can see this model isn’t doing very well here. The red line fits the red points fairly well, but the black line isn’t doing very well for the black points, it should clearly have a more negative slope. Essentially, we would like a model that allows for two different slopes.</p>
+<p>Consider the following model,</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + \epsilon,
+\]</span></p>
+<p>where <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, and <span class="math inline">\(Y\)</span> are the same as before, but we have added a new <strong>interaction</strong> term <span class="math inline">\(x_1 x_2\)</span> which multiplies <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>, so we also have an additional <span class="math inline">\(\beta\)</span> parameter <span class="math inline">\(\beta_3\)</span>.</p>
+<p>This model essentially creates two slopes and two intercepts, <span class="math inline">\(\beta_2\)</span> being the difference in intercepts and <span class="math inline">\(\beta_3\)</span> being the difference in slopes. To see this, we will break down the model into the two “sub-models” for foreign and domestic cars.</p>
+<p>For foreign cars, that is <span class="math inline">\(x_2 = 0\)</span>, we have</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 x_1 + \epsilon.
+\]</span></p>
+<p>For domestic cars, that is <span class="math inline">\(x_2 = 1\)</span>, we have</p>
+<p><span class="math display">\[
+Y = (\beta_0 + \beta_2) + (\beta_1 + \beta_3) x_1 + \epsilon.
+\]</span></p>
+<p>These two models have both different slopes and intercepts.</p>
+<ul>
+<li><span class="math inline">\(\beta_0\)</span> is the average <code>mpg</code> for a foreign car with <strong>0</strong> <code>disp</code>.</li>
+<li><span class="math inline">\(\beta_1\)</span> is the change in average <code>mpg</code> for an increase of one <code>disp</code>, for <strong>foreign</strong> cars.</li>
+<li><span class="math inline">\(\beta_0 + \beta_2\)</span> is the average <code>mpg</code> for a domestic car with <strong>0</strong> <code>disp</code>.</li>
+<li><span class="math inline">\(\beta_1 + \beta_3\)</span> is the change in average <code>mpg</code> for an increase of one <code>disp</code>, for <strong>domestic</strong> cars.</li>
+</ul>
+<p>How do we fit this model in <code>R</code>? There are a number of ways.</p>
+<p>One method would be to simply create a new variable, then fit a model like any other.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">autompg$x3 =<span class="st"> </span>autompg$disp *<span class="st"> </span>autompg$domestic <span class="co"># THIS CODE NOT RUN!</span>
+do_not_do_this =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>disp +<span class="st"> </span>domestic +<span class="st"> </span>x3, <span class="dt">data =</span> autompg) <span class="co"># THIS CODE NOT RUN!</span></code></pre></div>
+<p>You should only do this as a last resort. We greatly prefer not to have to modify our data simply to fit a model. Instead, we can tell <code>R</code> we would like to use the existing data with an interaction term, which it will create automatically when we use the <code>:</code> operator.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg_disp_int =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>disp +<span class="st"> </span>domestic +<span class="st"> </span>disp:domestic, <span class="dt">data =</span> autompg)</code></pre></div>
+<p>An alternative method, which will fit the exact same model as above would be to use the <code>*</code> operator. This method automatically creates the interaction term, as well as any “lower order terms,” which in this case are the first order terms for <code>disp</code> and <code>domestic</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg_disp_int2 =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>disp *<span class="st"> </span>domestic, <span class="dt">data =</span> autompg)</code></pre></div>
+<p>We can quickly verify that these are the doing the same thing.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(mpg_disp_int)</code></pre></div>
+<pre><code>##   (Intercept)          disp      domestic disp:domestic 
+##    46.0548423    -0.1569239   -12.5754714     0.1025184</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(mpg_disp_int2)</code></pre></div>
+<pre><code>##   (Intercept)          disp      domestic disp:domestic 
+##    46.0548423    -0.1569239   -12.5754714     0.1025184</code></pre>
+<p>We see that both the variables, and their coefficient estimates are indeed the same for both models.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(mpg_disp_int)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ disp + domestic + disp:domestic, data = autompg)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -10.8332  -2.8956  -0.8332   2.2828  18.7749 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)    46.05484    1.80582  25.504  &lt; 2e-16 ***
+## disp           -0.15692    0.01668  -9.407  &lt; 2e-16 ***
+## domestic      -12.57547    1.95644  -6.428 3.90e-10 ***
+## disp:domestic   0.10252    0.01692   6.060 3.29e-09 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 4.308 on 379 degrees of freedom
+## Multiple R-squared:  0.7011, Adjusted R-squared:  0.6987 
+## F-statistic: 296.3 on 3 and 379 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>We see that using <code>summary()</code> gives the usual output for a multiple regression model. We pay close attention to the row for <code>disp:domestic</code> which tests,</p>
+<p><span class="math display">\[
+H_0: \beta_3 = 0.
+\]</span></p>
+<p>In this case, testing for <span class="math inline">\(\beta_3 = 0\)</span> is testing for two lines with parallel slopes versus two lines with possibly different slopes. The <code>disp:domestic</code> line in the <code>summary()</code> output uses a <span class="math inline">\(t\)</span>-test to perform the test.</p>
+<p>We could also use an ANOVA <span class="math inline">\(F\)</span>-test. The additive model, without interaction is our null model, and the interaction model is the alternative.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(mpg_disp_add, mpg_disp_int)</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: mpg ~ disp + domestic
+## Model 2: mpg ~ disp + domestic + disp:domestic
+##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+## 1    380 7714.0                                  
+## 2    379 7032.6  1    681.36 36.719 3.294e-09 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Again we see this test has the same p-value as the <span class="math inline">\(t\)</span>-test. Also the p-value is extremely low, so between the two, we choose the interaction model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">int_for =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_int)[<span class="dv">1</span>]
+int_dom =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_int)[<span class="dv">1</span>] +<span class="st"> </span><span class="kw">coef</span>(mpg_disp_int)[<span class="dv">3</span>]
+
+slope_for =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_int)[<span class="dv">2</span>]
+slope_dom =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_int)[<span class="dv">2</span>] +<span class="st"> </span><span class="kw">coef</span>(mpg_disp_int)[<span class="dv">4</span>]</code></pre></div>
+<p>Here we again calculate the slope and intercepts for the two lines for use in plotting.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(mpg ~<span class="st"> </span>disp, <span class="dt">data =</span> autompg, <span class="dt">col =</span> domestic +<span class="st"> </span><span class="dv">1</span>, <span class="dt">pch =</span> domestic +<span class="st"> </span><span class="dv">1</span>)
+<span class="kw">abline</span>(int_for, slope_for, <span class="dt">col =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="co"># add line for foreign cars</span>
+<span class="kw">abline</span>(int_dom, slope_dom, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="co"># add line for domestic cars</span></code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-273-1.png" width="672" /></p>
+<p>We see that these lines fit the data much better, which matches the result of our tests.</p>
+<p>So far we have only seen interaction between a categorical variable (<code>domestic</code>) and a numerical variable (<code>disp</code>). While this is easy to visualize, since it allows for different slopes for two lines, it is not the only type of interaction we can use in a model. We can also consider interactions between two numerical variables.</p>
+<p>Consider the model,</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + \epsilon,
+\]</span></p>
+<p>where</p>
+<ul>
+<li><span class="math inline">\(Y\)</span> is <code>mpg</code>, the fuel efficiency in miles per gallon,</li>
+<li><span class="math inline">\(x_1\)</span> is <code>disp</code>, the displacement in cubic inches,</li>
+<li><span class="math inline">\(x_2\)</span> is <code>hp</code>, the horsepower, in foot-pounds per second.</li>
+</ul>
+<p>How does <code>mpg</code> change based on <code>disp</code> in this model? We can rearrange some terms to see how.</p>
+<p><span class="math display">\[
+Y = \beta_0 + (\beta_1 + \beta_3 x_2) x_1 + \beta_2 x_2 + \epsilon
+\]</span></p>
+<p>So, for a one unit increase in <span class="math inline">\(x_1\)</span> (<code>disp</code>), the mean of <span class="math inline">\(Y\)</span> (<code>mpg</code>) increases <span class="math inline">\(\beta_1 + \beta_3 x_2\)</span>, which is a different value depending on the value of <span class="math inline">\(x_2\)</span> (<code>hp</code>)!</p>
+<p>Since we’re now working in three dimensions, this model can’t be easily justified via visualizations like the previous example. Instead, we will have to rely on a test.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg_disp_add_hp =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>disp +<span class="st"> </span>hp, <span class="dt">data =</span> autompg)
+mpg_disp_int_hp =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>disp *<span class="st"> </span>hp, <span class="dt">data =</span> autompg)
+<span class="kw">summary</span>(mpg_disp_int_hp)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ disp * hp, data = autompg)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -10.7849  -2.3104  -0.5699   2.1453  17.9211 
+## 
+## Coefficients:
+##                Estimate  Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 52.40819978  1.52272673   34.42   &lt;2e-16 ***
+## disp        -0.10017377  0.00663825  -15.09   &lt;2e-16 ***
+## hp          -0.21981997  0.01986944  -11.06   &lt;2e-16 ***
+## disp:hp      0.00056583  0.00005165   10.96   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.896 on 379 degrees of freedom
+## Multiple R-squared:  0.7554, Adjusted R-squared:  0.7535 
+## F-statistic: 390.2 on 3 and 379 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Using <code>summary()</code> we focus on the row for <code>disp:hp</code> which tests,</p>
+<p><span class="math display">\[
+H_0: \beta_3 = 0.
+\]</span></p>
+<p>Again, we see a very low p-value so we reject the null (additive model) in favor of the interaction model. Again, there is an equivalent <span class="math inline">\(F\)</span>-test.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(mpg_disp_add_hp, mpg_disp_int_hp)</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: mpg ~ disp + hp
+## Model 2: mpg ~ disp * hp
+##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+## 1    380 7576.6                                  
+## 2    379 5754.2  1    1822.3 120.03 &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>We can take a closer look at the coefficients of our fitted interaction model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(mpg_disp_int_hp)</code></pre></div>
+<pre><code>##   (Intercept)          disp            hp       disp:hp 
+## 52.4081997848 -0.1001737655 -0.2198199720  0.0005658269</code></pre>
+<ul>
+<li><span class="math inline">\(\hat{\beta}_0 = 52.4081998\)</span> is the estimated average <code>mpg</code> for a car with 0 <code>disp</code> and 0 <code>hp</code>.</li>
+<li><span class="math inline">\(\hat{\beta}_1 = -0.1001738\)</span> is the estimated change in average <code>mpg</code> for an increase in 1 <code>disp</code>, <strong>for a car with 0 <code>hp</code></strong>.</li>
+<li><span class="math inline">\(\hat{\beta}_2 = -0.21982\)</span> is the estimated change in average <code>mpg</code> for an increase in 1 <code>hp</code>, <strong>for a car with 0 <code>disp</code></strong>.</li>
+<li><span class="math inline">\(\hat{\beta}_3 = 0.0005658\)</span> is an estimate of the modification to the change in average <code>mpg</code> for an increase in <code>disp</code>, for a car of a certain <code>hp</code> (or vice versa).</li>
+</ul>
+<p>That last coefficient needs further explanation. Recall the rearrangement we made earlier</p>
+<p><span class="math display">\[
+Y = \beta_0 + (\beta_1 + \beta_3 x_2) x_1 + \beta_2 x_2 + \epsilon.
+\]</span></p>
+<p>So, our estimate for <span class="math inline">\(\beta_1 + \beta_3 x_2\)</span>, is <span class="math inline">\(\hat{\beta}_1 + \hat{\beta}_3 x_2\)</span>, which in this case is</p>
+<p><span class="math display">\[
+-0.1001738 + 0.0005658 x_2.
+\]</span></p>
+<p>This says that, for an increase of one <code>disp</code> we see an estimated change in average <code>mpg</code> of <span class="math inline">\(-0.1001738 + 0.0005658 x_2\)</span>. So how <code>disp</code> and <code>mpg</code> are related, depends on the <code>hp</code> of the car.</p>
+<p>So for a car with 50 <code>hp</code>, the estimated change in average <code>mpg</code> for an increase of one <code>disp</code> is</p>
+<p><span class="math display">\[
+-0.1001738 + 0.0005658 50 = -0.0718824
+\]</span></p>
+<p>And for a car with 350 <code>hp</code>, the estimated change in average <code>mpg</code> for an increase of one <code>disp</code> is</p>
+<p><span class="math display">\[
+-0.1001738 + 0.0005658 350 = 0.0978657
+\]</span></p>
+<p>Notice the sign changed!</p>
+</div>
+<div id="factor-variables" class="section level2">
+<h2><span class="header-section-number">6.3</span> Factor Variables</h2>
+<p>So far in this chapter, we have limited our use of categorical variables to binary categorical variables. Specifically, we have limited ourselves to dummy variables which take a value of <code>0</code> or <code>1</code> and represent a categorical variable numerically.</p>
+<p>We will now discuss <strong>factor</strong> variables, which is a special way that <code>R</code> deals with categorical variables. With factor variables, a human user can simply think about the categories of a variable, and <code>R</code> will take care of the necessary dummy variables without any 0/1 assignment being done by the user.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is.factor</span>(autompg$domestic)</code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>Earlier when we used the <code>domestic</code> variable, it was <strong>not</strong> a factor variable. It was simply a numerical variable that only took two possible values, <code>1</code> for domestic, and <code>0</code> for foreign. Let’s create a new variable <code>origin</code> that stores the same information, but in a different way.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">autompg$origin[autompg$domestic ==<span class="st"> </span><span class="dv">1</span>] =<span class="st"> &quot;domestic&quot;</span>
+autompg$origin[autompg$domestic ==<span class="st"> </span><span class="dv">0</span>] =<span class="st"> &quot;foreign&quot;</span>
+<span class="kw">head</span>(autompg$origin)</code></pre></div>
+<pre><code>## [1] &quot;domestic&quot; &quot;domestic&quot; &quot;domestic&quot; &quot;domestic&quot; &quot;domestic&quot; &quot;domestic&quot;</code></pre>
+<p>Now the <code>origin</code> variable stores <code>&quot;domestic&quot;</code> for domestic cars and <code>&quot;foreign&quot;</code> for foreign cars.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is.factor</span>(autompg$origin)</code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>However, this is simply a vector of character values. A vector of car models is a character variable in <code>R</code>. A vector of Vehicle Identification Numbers (VINs) is a character variable as well. But those don’t represent a short list of levels that might influence a response variable. We will want to <strong>coerce</strong> this origin variable to be something more: a factor variable.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">autompg$origin =<span class="st"> </span><span class="kw">as.factor</span>(autompg$origin)</code></pre></div>
+<p>Now when we check the structure of the <code>autompg</code> dataset, we see that <code>origin</code> is a factor variable.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(autompg)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    383 obs. of  9 variables:
+##  $ mpg     : num  18 15 18 16 17 15 14 14 14 15 ...
+##  $ cyl     : Factor w/ 3 levels &quot;4&quot;,&quot;6&quot;,&quot;8&quot;: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ disp    : num  307 350 318 304 302 429 454 440 455 390 ...
+##  $ hp      : num  130 165 150 150 140 198 220 215 225 190 ...
+##  $ wt      : num  3504 3693 3436 3433 3449 ...
+##  $ acc     : num  12 11.5 11 12 10.5 10 9 8.5 10 8.5 ...
+##  $ year    : int  70 70 70 70 70 70 70 70 70 70 ...
+##  $ origin  : Factor w/ 2 levels &quot;domestic&quot;,&quot;foreign&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ domestic: num  1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<p>Factor variables have <strong>levels</strong> which are the possible values (categories) that the variable may take, in this case foreign or domestic.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">levels</span>(autompg$origin)</code></pre></div>
+<pre><code>## [1] &quot;domestic&quot; &quot;foreign&quot;</code></pre>
+<p>Recall that previously we have fit the model</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + \epsilon,
+\]</span></p>
+<p>where</p>
+<ul>
+<li><span class="math inline">\(Y\)</span> is <code>mpg</code>, the fuel efficiency in miles per gallon,</li>
+<li><span class="math inline">\(x_1\)</span> is <code>disp</code>, the displacement in cubic inches,</li>
+<li><span class="math inline">\(x_2\)</span> is <code>domestic</code> a dummy variable where <code>1</code> indicates a domestic car.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">mod_dummy =</span> <span class="kw">lm</span>(mpg ~<span class="st"> </span>disp *<span class="st"> </span>domestic, <span class="dt">data =</span> autompg))</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ disp * domestic, data = autompg)
+## 
+## Coefficients:
+##   (Intercept)           disp       domestic  disp:domestic  
+##       46.0548        -0.1569       -12.5755         0.1025</code></pre>
+<p>So here we see that</p>
+<p><span class="math display">\[
+\hat{\beta}_0 + \hat{\beta}_2 = 46.0548423 + -12.5754714 = 33.4793709
+\]</span></p>
+<p>is the estimated average <code>mpg</code> for a <strong>domestic</strong> car with 0 <code>disp</code>.</p>
+<p>Now let’s try to do the same, but using our new factor variable.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">mod_factor =</span> <span class="kw">lm</span>(mpg ~<span class="st"> </span>disp *<span class="st"> </span>origin, <span class="dt">data =</span> autompg))</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ disp * origin, data = autompg)
+## 
+## Coefficients:
+##        (Intercept)                disp       originforeign  disp:originforeign  
+##           33.47937            -0.05441            12.57547            -0.10252</code></pre>
+<p>It seems that it doesn’t produce the same results. Right away we notice that the intercept is different, as is the the coefficient in front of <code>disp</code>. We also notice that the remaining two coefficients are of the same magnitude as their respective counterparts using the domestic variable, but with a different sign. Why is this happening?</p>
+<p>It turns out, that by using a factor variable, <code>R</code> is automatically creating a dummy variable for us. However, it is not the dummy variable that we had originally used ourselves.</p>
+<p><code>R</code> is fitting the model</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + \epsilon,
+\]</span></p>
+<p>where</p>
+<ul>
+<li><span class="math inline">\(Y\)</span> is <code>mpg</code>, the fuel efficiency in miles per gallon,</li>
+<li><span class="math inline">\(x_1\)</span> is <code>disp</code>, the displacement in cubic inches,</li>
+<li><span class="math inline">\(x_2\)</span> <strong>is a dummy variable create by <code>R</code>.</strong> It uses <code>1</code> to represent a <strong>foreign car</strong>.</li>
+</ul>
+<p>So now,</p>
+<p><span class="math display">\[
+\hat{\beta}_0 = 33.4793709
+\]</span></p>
+<p>is the estimated average <code>mpg</code> for a <strong>domestic</strong> car with 0 <code>disp</code>, which is indeed the same as before.</p>
+<p>When <code>R</code> created <span class="math inline">\(x_2\)</span>, the dummy variable, it used domestic cars as the <strong>reference</strong> level, that is the default value of the factor variable. So when the dummy variable is <code>0</code>, the model represents this reference level, which is domestic. (<code>R</code> makes this choice because domestic comes before foreign alphabetically.)</p>
+<p>So the two models have different estimated coefficients, but due to the different model representations, they are actually the same model.</p>
+<div id="factors-with-more-than-two-levels" class="section level3">
+<h3><span class="header-section-number">6.3.1</span> Factors with More Than Two Levels</h3>
+<p>Let’s now consider a factor variable with more than two levels. In this dataset, <code>cyl</code> is an example.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is.factor</span>(autompg$cyl)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">levels</span>(autompg$cyl)</code></pre></div>
+<pre><code>## [1] &quot;4&quot; &quot;6&quot; &quot;8&quot;</code></pre>
+<p>Here the <code>cyl</code> variable has three possible levels: <code>4</code>, <code>6</code>, and <code>8</code>. You may wonder, why not simply use <code>cyl</code> as a numerical variable? You certainly could.</p>
+<p>However, that would force the difference in average <code>mpg</code> between <code>4</code> and <code>6</code> cylinders to be the same as the difference in average mpg between <code>6</code> and <code>8</code> cylinders. That usually make senses for a continuous variable, but not for a discrete variable with so few possible values. In the case of this variable, there is no such thing as a 7-cylinder engine or a 6.23-cylinder engine in personal vehicles. For these reasons, we will simply consider <code>cyl</code> to be categorical. This is a decision that will commonly need to be made with ordinal variables. Often, with a large number of categories, the decision to treat them as numerical variables is appropriate because a large number of dummy variables are then needed to represent these variables.</p>
+<p>Let’s define three dummy variables related to the <code>cyl</code> factor variable.</p>
+<p><span class="math display">\[
+v_1 =
+  \begin{cases}
+   1 &amp; \text{4 cylinder} \\
+   0       &amp; \text{not 4 cylinder}
+  \end{cases}
+\]</span></p>
+<p><span class="math display">\[
+v_2 =
+  \begin{cases}
+   1 &amp; \text{6 cylinder} \\
+   0       &amp; \text{not 6 cylinder}
+  \end{cases}
+\]</span></p>
+<p><span class="math display">\[
+v_3 =
+  \begin{cases}
+   1 &amp; \text{8 cylinder} \\
+   0       &amp; \text{not 8 cylinder}
+  \end{cases}
+\]</span></p>
+<p>Now, let’s fit an additive model in <code>R</code>, using <code>mpg</code> as the response, and <code>disp</code> and <code>cyl</code> as predictors. This should be a model that uses “three regression lines” to model <code>mpg</code>, one for each of the possible <code>cyl</code> levels. They will all have the same slope (since it is an additive model), but each will have its own intercept.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">mpg_disp_add_cyl =</span> <span class="kw">lm</span>(mpg ~<span class="st"> </span>disp +<span class="st"> </span>cyl, <span class="dt">data =</span> autompg))</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ disp + cyl, data = autompg)
+## 
+## Coefficients:
+## (Intercept)         disp         cyl6         cyl8  
+##    34.99929     -0.05217     -3.63325     -2.03603</code></pre>
+<p>The question is, what is the model that <code>R</code> has fit here? It has chosen to use the model</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 x + \beta_2 v_2 + \beta_3 v_3 + \epsilon,
+\]</span></p>
+<p>where</p>
+<ul>
+<li><span class="math inline">\(Y\)</span> is <code>mpg</code>, the fuel efficiency in miles per gallon,</li>
+<li><span class="math inline">\(x\)</span> is <code>disp</code>, the displacement in cubic inches,</li>
+<li><span class="math inline">\(v_2\)</span> and <span class="math inline">\(v_3\)</span> are the dummy variables define above.</li>
+</ul>
+<p>Why doesn’t <code>R</code> use <span class="math inline">\(v_1\)</span>? Essentially because it doesn’t need to. To create three lines, it only needs two dummy variables since it is using a reference level, which in this case is a 4 cylinder car. The three “sub models” are then:</p>
+<ul>
+<li>4 Cylinder: <span class="math inline">\(Y = \beta_0 + \beta_1 x + \epsilon\)</span></li>
+<li>6 Cylinder: <span class="math inline">\(Y = (\beta_0 + \beta_2) + \beta_1 x + \epsilon\)</span></li>
+<li>8 Cylinder: <span class="math inline">\(Y = (\beta_0 + \beta_3) + \beta_1 x + \epsilon\)</span></li>
+</ul>
+<p>Notice that they all have the same slope. However, using the two dummy variables, we achieve the three intercepts.</p>
+<ul>
+<li><span class="math inline">\(\beta_0\)</span> is the average <code>mpg</code> for a 4 cylinder car with 0 <code>disp</code>.</li>
+<li><span class="math inline">\(\beta_0 + \beta_2\)</span> is the average <code>mpg</code> for a 6 cylinder car with 0 <code>disp</code>.</li>
+<li><span class="math inline">\(\beta_0 + \beta_3\)</span> is the average <code>mpg</code> for a 8 cylinder car with 0 <code>disp</code>.</li>
+</ul>
+<p>So because 4 cylinder is the reference level, <span class="math inline">\(\beta_0\)</span> is specific to 4 cylinders, but <span class="math inline">\(\beta_2\)</span> and <span class="math inline">\(\beta_3\)</span> are used to represent quantities relative to 4 cylinders.</p>
+<p>As we have done before, we can extract these intercepts and slopes for the three lines, and plot them accordingly.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">int_4cyl =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_add_cyl)[<span class="dv">1</span>]
+int_6cyl =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_add_cyl)[<span class="dv">1</span>] +<span class="st"> </span><span class="kw">coef</span>(mpg_disp_add_cyl)[<span class="dv">3</span>]
+int_8cyl =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_add_cyl)[<span class="dv">1</span>] +<span class="st"> </span><span class="kw">coef</span>(mpg_disp_add_cyl)[<span class="dv">4</span>]
+
+slope_all_cyl =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_add_cyl)[<span class="dv">2</span>]
+
+<span class="kw">plot</span>(mpg ~<span class="st"> </span>disp, <span class="dt">data =</span> autompg, <span class="dt">col =</span> cyl)
+<span class="kw">abline</span>(int_4cyl, slope_all_cyl, <span class="dt">col =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="kw">abline</span>(int_6cyl, slope_all_cyl, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="kw">abline</span>(int_8cyl, slope_all_cyl, <span class="dt">col =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-287-1.png" width="672" /></p>
+<p>On this plot, we have</p>
+<ul>
+<li>4 Cylinder: black dots, solid black line.</li>
+<li>6 Cylinder: red dots, dashed red line.</li>
+<li>8 Cylinder: green dots, dotted green line.</li>
+</ul>
+<p>The odd result here is that we’re estimating that 8 cylinder cars have better fuel efficiency than 6 cylinder cars at <strong>any</strong> displacement! The dotted green line is always above the dashed red line. That doesn’t seem right. Maybe for very large displacement engines that could be true, but that seems wrong for medium to low displacement.</p>
+<p>To attempt to fix this, we will try using an interaction model, that is, instead of simply three intercepts and one slope, we will allow for three slopes. Again, we’ll let <code>R</code> take the wheel, (no pun intended) then figure out what model it has applied.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">mpg_disp_int_cyl =</span> <span class="kw">lm</span>(mpg ~<span class="st"> </span>disp *<span class="st"> </span>cyl, <span class="dt">data =</span> autompg))</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ disp * cyl, data = autompg)
+## 
+## Coefficients:
+## (Intercept)         disp         cyl6         cyl8    disp:cyl6    disp:cyl8  
+##    43.59052     -0.13069    -13.20026    -20.85706      0.08299      0.10817</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># could also use mpg ~ disp + cyl + disp:cyl</span></code></pre></div>
+<p><code>R</code> has again chosen to use 4 cylinder cars as the reference level, but this also now has an effect on the interaction terms. <code>R</code> has fit the model.</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 x + \beta_2 v_2 + \beta_3 v_3 + \gamma_2 x v_2 + \gamma_3 x v_3 + \epsilon
+\]</span></p>
+<p>We’re using <span class="math inline">\(\gamma\)</span> like a <span class="math inline">\(\beta\)</span> parameter for simplicity, so that, for example <span class="math inline">\(\beta_2\)</span> and <span class="math inline">\(\gamma_2\)</span> are both associated with <span class="math inline">\(v_2\)</span>.</p>
+<p>Now, the three “sub models” are:</p>
+<ul>
+<li>4 Cylinder: <span class="math inline">\(Y = \beta_0 + \beta_1 x + \epsilon\)</span>.</li>
+<li>6 Cylinder: <span class="math inline">\(Y = (\beta_0 + \beta_2) + (\beta_1 + \gamma_2) x + \epsilon\)</span>.</li>
+<li>8 Cylinder: <span class="math inline">\(Y = (\beta_0 + \beta_3) + (\beta_1 + \gamma_3) x + \epsilon\)</span>.</li>
+</ul>
+<p>Interpreting some parameters and coefficients then:</p>
+<ul>
+<li><span class="math inline">\((\beta_0 + \beta_2)\)</span> is the average <code>mpg</code> of a 6 cylinder car with 0 <code>disp</code></li>
+<li><span class="math inline">\((\hat{\beta}_1 + \hat{\gamma}_3) = -0.1306935 + 0.1081714 = -0.0225221\)</span> is the estimated change in average <code>mpg</code> for an increase of one <code>disp</code>, for an 8 cylinder car.</li>
+</ul>
+<p>So, as we have seen before <span class="math inline">\(\beta_2\)</span> and <span class="math inline">\(\beta_3\)</span> change the intercepts for 6 and 8 cylinder cars relative to the reference level of <span class="math inline">\(\beta_0\)</span> for 4 cylinder cars.</p>
+<p>Now, similarly <span class="math inline">\(\gamma_2\)</span> and <span class="math inline">\(\gamma_3\)</span> change the slopes for 6 and 8 cylinder cars relative to the reference level of <span class="math inline">\(\beta_1\)</span> for 4 cylinder cars.</p>
+<p>Once again, we extract the coefficients and plot the results.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">int_4cyl =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_int_cyl)[<span class="dv">1</span>]
+int_6cyl =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_int_cyl)[<span class="dv">1</span>] +<span class="st"> </span><span class="kw">coef</span>(mpg_disp_int_cyl)[<span class="dv">3</span>]
+int_8cyl =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_int_cyl)[<span class="dv">1</span>] +<span class="st"> </span><span class="kw">coef</span>(mpg_disp_int_cyl)[<span class="dv">4</span>]
+
+slope_4cyl =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_int_cyl)[<span class="dv">2</span>]
+slope_6cyl =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_int_cyl)[<span class="dv">2</span>] +<span class="st"> </span><span class="kw">coef</span>(mpg_disp_int_cyl)[<span class="dv">5</span>]
+slope_8cyl =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_int_cyl)[<span class="dv">2</span>] +<span class="st"> </span><span class="kw">coef</span>(mpg_disp_int_cyl)[<span class="dv">6</span>]
+
+<span class="kw">plot</span>(mpg ~<span class="st"> </span>disp, <span class="dt">data =</span> autompg, <span class="dt">col =</span> cyl)
+<span class="kw">abline</span>(int_4cyl, slope_4cyl, <span class="dt">col =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="kw">abline</span>(int_6cyl, slope_6cyl, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="kw">abline</span>(int_8cyl, slope_8cyl, <span class="dt">col =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-289-1.png" width="672" /></p>
+<p>This looks much better! We can see that for medium displacement cars, 6 cylinder cars now perform better than 8 cylinder cars, which seems much more reasonable than before.</p>
+<p>To completely justify the interaction model (i.e., a unique slope for each <code>cyl</code> level) compared to the additive model (single slope), we can perform an <span class="math inline">\(F\)</span>-test. Notice first, that there is no <span class="math inline">\(t\)</span>-test that will be able to do this since the difference between the two models is not a single parameter.</p>
+<p>We will test,</p>
+<p><span class="math display">\[
+H_0: \gamma_2 = \gamma_3 = 0
+\]</span></p>
+<p>which represents the parallel regression lines we saw before,</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 x + \beta_2 v_2 + \beta_3 v_3 + \epsilon.
+\]</span></p>
+<p>Again, this is a difference of two parameters, thus no <span class="math inline">\(t\)</span>-test will be useful.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(mpg_disp_add_cyl, mpg_disp_int_cyl)</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: mpg ~ disp + cyl
+## Model 2: mpg ~ disp * cyl
+##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+## 1    379 7299.5                                  
+## 2    377 6551.7  2    747.79 21.515 1.419e-09 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>As expected, we see a very low p-value, and thus reject the null. We prefer the interaction model over the additive model.</p>
+<p>Recapping a bit:</p>
+<ul>
+<li>Null Model: <span class="math inline">\(Y = \beta_0 + \beta_1 x + \beta_2 v_2 + \beta_3 v_3 + \epsilon\)</span>
+<ul>
+<li>Number of parameters: <span class="math inline">\(q = 4\)</span></li>
+</ul></li>
+<li>Full Model: <span class="math inline">\(Y = \beta_0 + \beta_1 x + \beta_2 v_2 + \beta_3 v_3 + \gamma_2 x v_2 + \gamma_3 x v_3 + \epsilon\)</span>
+<ul>
+<li>Number of parameters: <span class="math inline">\(p = 6\)</span></li>
+</ul></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw">coef</span>(mpg_disp_int_cyl)) -<span class="st"> </span><span class="kw">length</span>(<span class="kw">coef</span>(mpg_disp_add_cyl))</code></pre></div>
+<pre><code>## [1] 2</code></pre>
+<p>We see there is a difference of two parameters, which is also displayed in the resulting ANOVA table from <code>R</code>. Notice that the following two values also appear on the ANOVA table.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(autompg) -<span class="st"> </span><span class="kw">length</span>(<span class="kw">coef</span>(mpg_disp_int_cyl))</code></pre></div>
+<pre><code>## [1] 377</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(autompg) -<span class="st"> </span><span class="kw">length</span>(<span class="kw">coef</span>(mpg_disp_add_cyl))</code></pre></div>
+<pre><code>## [1] 379</code></pre>
+</div>
+</div>
+<div id="parameterization" class="section level2">
+<h2><span class="header-section-number">6.4</span> Parameterization</h2>
+<p>So far we have been simply letting <code>R</code> decide how to create the dummy variables, and thus <code>R</code> has been deciding the parameterization of the models. To illustrate the ability to use alternative parameterizations, we will recreate the data, but directly creating the dummy variables ourselves.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new_param_data =<span class="st"> </span><span class="kw">data.frame</span>(
+  <span class="dt">y =</span> autompg$mpg,
+  <span class="dt">x =</span> autompg$disp,
+  <span class="dt">v1 =</span> <span class="dv">1</span> *<span class="st"> </span><span class="kw">as.numeric</span>(autompg$cyl ==<span class="st"> </span><span class="dv">4</span>),
+  <span class="dt">v2 =</span> <span class="dv">1</span> *<span class="st"> </span><span class="kw">as.numeric</span>(autompg$cyl ==<span class="st"> </span><span class="dv">6</span>),
+  <span class="dt">v3 =</span> <span class="dv">1</span> *<span class="st"> </span><span class="kw">as.numeric</span>(autompg$cyl ==<span class="st"> </span><span class="dv">8</span>))
+
+<span class="kw">head</span>(new_param_data, <span class="dv">20</span>)</code></pre></div>
+<pre><code>##     y   x v1 v2 v3
+## 1  18 307  0  0  1
+## 2  15 350  0  0  1
+## 3  18 318  0  0  1
+## 4  16 304  0  0  1
+## 5  17 302  0  0  1
+## 6  15 429  0  0  1
+## 7  14 454  0  0  1
+## 8  14 440  0  0  1
+## 9  14 455  0  0  1
+## 10 15 390  0  0  1
+## 11 15 383  0  0  1
+## 12 14 340  0  0  1
+## 13 15 400  0  0  1
+## 14 14 455  0  0  1
+## 15 24 113  1  0  0
+## 16 22 198  0  1  0
+## 17 18 199  0  1  0
+## 18 21 200  0  1  0
+## 19 27  97  1  0  0
+## 20 26  97  1  0  0</code></pre>
+<p>Now,</p>
+<ul>
+<li><code>y</code> is <code>mpg</code></li>
+<li><code>x</code> is <code>disp</code>, the displacement in cubic inches,</li>
+<li><code>v1</code>, <code>v2</code>, and <code>v3</code> are dummy variables as defined above.</li>
+</ul>
+<p>First let’s try to fit an additive model using <code>x</code> as well as the three dummy variables.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(y ~<span class="st"> </span>x +<span class="st"> </span>v1 +<span class="st"> </span>v2 +<span class="st"> </span>v3, <span class="dt">data =</span> new_param_data)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x + v1 + v2 + v3, data = new_param_data)
+## 
+## Coefficients:
+## (Intercept)            x           v1           v2           v3  
+##    32.96326     -0.05217      2.03603     -1.59722           NA</code></pre>
+<p>What is happening here? Notice that <code>R</code> is essentially ignoring <code>v3</code>, but why? Well, because <code>R</code> uses an intercept, it cannot also use <code>v3</code>. This is because</p>
+<p><span class="math display">\[
+\boldsymbol{1} = v_1 + v_2 + v_3
+\]</span></p>
+<p>which means that <span class="math inline">\(\boldsymbol{1}\)</span>, <span class="math inline">\(v_1\)</span>, <span class="math inline">\(v_2\)</span>, and <span class="math inline">\(v_3\)</span> are linearly dependent. This would make the <span class="math inline">\(X^\top X\)</span> matrix singular, but we need to be able to invert it to solve the normal equations and obtain <span class="math inline">\(\hat{\beta}.\)</span> With the intercept, <code>v1</code>, and <code>v2</code>, <code>R</code> can make the necessary “three intercepts”. So, in this case <code>v3</code> is the reference level.</p>
+<p>If we remove the intercept, then we can directly obtain all “three intercepts” without a reference level.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(y ~<span class="st"> </span><span class="dv">0</span> +<span class="st"> </span>x +<span class="st"> </span>v1 +<span class="st"> </span>v2 +<span class="st"> </span>v3, <span class="dt">data =</span> new_param_data)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ 0 + x + v1 + v2 + v3, data = new_param_data)
+## 
+## Coefficients:
+##        x        v1        v2        v3  
+## -0.05217  34.99929  31.36604  32.96326</code></pre>
+<p>Here, we are fitting the model</p>
+<p><span class="math display">\[
+Y = \mu_1 v_1 + \mu_2 v_2 + \mu_3 v_3 + \beta x +\epsilon.
+\]</span></p>
+<p>Thus we have:</p>
+<ul>
+<li>4 Cylinder: <span class="math inline">\(Y = \mu_1 + \beta x + \epsilon\)</span></li>
+<li>6 Cylinder: <span class="math inline">\(Y = \mu_2 + \beta x + \epsilon\)</span></li>
+<li>8 Cylinder: <span class="math inline">\(Y = \mu_3 + \beta x + \epsilon\)</span></li>
+</ul>
+<p>We could also do something similar with the interaction model, and give each line an intercept and slope, without the need for a reference level.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(y ~<span class="st"> </span><span class="dv">0</span> +<span class="st"> </span>v1 +<span class="st"> </span>v2 +<span class="st"> </span>v3 +<span class="st"> </span>x:v1 +<span class="st"> </span>x:v2 +<span class="st"> </span>x:v3, <span class="dt">data =</span> new_param_data)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ 0 + v1 + v2 + v3 + x:v1 + x:v2 + x:v3, data = new_param_data)
+## 
+## Coefficients:
+##       v1        v2        v3      v1:x      v2:x      v3:x  
+## 43.59052  30.39026  22.73346  -0.13069  -0.04770  -0.02252</code></pre>
+<p><span class="math display">\[
+Y = \mu_1 v_1 + \mu_2 v_2 + \mu_3 v_3 + \beta_1 x v_1 + \beta_2 x v_2 + \beta_3 x v_3 +\epsilon
+\]</span></p>
+<ul>
+<li>4 Cylinder: <span class="math inline">\(Y = \mu_1 + \beta_1 x + \epsilon\)</span></li>
+<li>6 Cylinder: <span class="math inline">\(Y = \mu_2 + \beta_2 x + \epsilon\)</span></li>
+<li>8 Cylinder: <span class="math inline">\(Y = \mu_3 + \beta_3 x + \epsilon\)</span></li>
+</ul>
+<p>Using the original data, we have (at least) three equivalent ways to specify the interaction model with <code>R</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span>disp *<span class="st"> </span>cyl, <span class="dt">data =</span> autompg)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ disp * cyl, data = autompg)
+## 
+## Coefficients:
+## (Intercept)         disp         cyl6         cyl8    disp:cyl6    disp:cyl8  
+##    43.59052     -0.13069    -13.20026    -20.85706      0.08299      0.10817</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span><span class="dv">0</span> +<span class="st"> </span>cyl +<span class="st"> </span>disp :<span class="st"> </span>cyl, <span class="dt">data =</span> autompg)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ 0 + cyl + disp:cyl, data = autompg)
+## 
+## Coefficients:
+##      cyl4       cyl6       cyl8  cyl4:disp  cyl6:disp  cyl8:disp  
+##  43.59052   30.39026   22.73346   -0.13069   -0.04770   -0.02252</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg ~<span class="st"> </span><span class="dv">0</span> +<span class="st"> </span>disp +<span class="st"> </span>cyl +<span class="st"> </span>disp :<span class="st"> </span>cyl, <span class="dt">data =</span> autompg)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ 0 + disp + cyl + disp:cyl, data = autompg)
+## 
+## Coefficients:
+##      disp       cyl4       cyl6       cyl8  disp:cyl6  disp:cyl8  
+##  -0.13069   43.59052   30.39026   22.73346    0.08299    0.10817</code></pre>
+<p>They all fit the same model, importantly each using six parameters, but the coefficients mean slightly different things in each. However, once they are interpreted as slopes and intercepts for the “three lines” they will have the same result.</p>
+<p>Use <code>?all.equal</code> to learn about the <code>all.equal()</code> function, and think about how the following code verifies that the residuals of the two models are the same.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(<span class="kw">fitted</span>(<span class="kw">lm</span>(mpg ~<span class="st"> </span>disp *<span class="st"> </span>cyl, <span class="dt">data =</span> autompg)), 
+          <span class="kw">fitted</span>(<span class="kw">lm</span>(mpg ~<span class="st"> </span><span class="dv">0</span> +<span class="st"> </span>cyl +<span class="st"> </span>disp :<span class="st"> </span>cyl, <span class="dt">data =</span> autompg)))</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="building-larger-models" class="section level2">
+<h2><span class="header-section-number">6.5</span> Building Larger Models</h2>
+<p>Now that we have seen how to incorporate categorical predictors as well as interaction terms, we can start to build much larger, much more flexible models which can potentially fit data better.</p>
+<p>Let’s define a “big” model,</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \beta_4 x_1 x_2 + \beta_5 x_1 x_3 + \beta_6 x_2 x_3 + \beta_7 x_1 x_2 x_3 + \epsilon.
+\]</span></p>
+<p>Here,</p>
+<ul>
+<li><span class="math inline">\(Y\)</span> is <code>mpg</code>.</li>
+<li><span class="math inline">\(x_1\)</span> is <code>disp</code>.</li>
+<li><span class="math inline">\(x_2\)</span> is <code>hp</code>.</li>
+<li><span class="math inline">\(x_3\)</span> is <code>domestic</code>, which is a dummy variable we defined, where <code>1</code> is a domestic vehicle.</li>
+</ul>
+<p>First thing to note here, we have included a new term <span class="math inline">\(x_1 x_2 x_3\)</span> which is a three-way interaction. Interaction terms can be larger and larger, up to the number of predictors in the model.</p>
+<p>Since we are using the three-way interaction term, we also use all possible two-way interactions, as well as each of the first order (<strong>main effect</strong>) terms. This is the concept of a <strong>hierarchy</strong>. Any time a “higher-order” term is in a model, the related “lower-order” terms should also be included. Mathematically their inclusion or exclusion is sometimes irrelevant, but from an interpretation standpoint, it is best to follow the hierarchy rules.</p>
+<p>Let’s do some rearrangement to obtain a “coefficient” in front of <span class="math inline">\(x_1\)</span>.</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_2 x_2 + \beta_3 x_3 + \beta_6 x_2 x_3 + (\beta_1 + \beta_4 x_2 + \beta_5 x_3 + \beta_7 x_2 x_3)x_1 + \epsilon.
+\]</span></p>
+<p>Specifically, the “coefficient” in front of <span class="math inline">\(x_1\)</span> is</p>
+<p><span class="math display">\[
+(\beta_1 + \beta_4 x_2 + \beta_5 x_3 + \beta_7 x_2 x_3).
+\]</span></p>
+<p>Let’s discuss this “coefficient” to help us understand the idea of the <em>flexibility</em> of a model. Recall that,</p>
+<ul>
+<li><span class="math inline">\(\beta_1\)</span> is the coefficient for a first order term,</li>
+<li><span class="math inline">\(\beta_4\)</span> and <span class="math inline">\(\beta_5\)</span> are coefficients for two-way interactions,</li>
+<li><span class="math inline">\(\beta_7\)</span> is the coefficient for the three-way interaction.</li>
+</ul>
+<p>If the two and three way interactions were not in the model, the whole “coefficient” would simply be</p>
+<p><span class="math display">\[
+\beta_1. 
+\]</span></p>
+<p>Thus, no matter the values of <span class="math inline">\(x_2\)</span> and <span class="math inline">\(x_3\)</span>, <span class="math inline">\(\beta_1\)</span> would determine the relationship between <span class="math inline">\(x_1\)</span> (<code>disp</code>) and <span class="math inline">\(Y\)</span> (<code>mpg</code>).</p>
+<p>With the addition of the two-way interactions, now the “coefficient” would be</p>
+<p><span class="math display">\[
+(\beta_1 + \beta_4 x_2 + \beta_5 x_3).
+\]</span></p>
+<p>Now, changing <span class="math inline">\(x_1\)</span> (<code>disp</code>) has a different effect on <span class="math inline">\(Y\)</span> (<code>mpg</code>), depending on the values of <span class="math inline">\(x_2\)</span> and <span class="math inline">\(x_3\)</span>.</p>
+<p>Lastly, adding the three-way interaction gives the whole “coefficient”</p>
+<p><span class="math display">\[
+(\beta_1 + \beta_4 x_2 + \beta_5 x_3 + \beta_7 x_2 x_3)
+\]</span></p>
+<p>which is even more flexible. Now changing <span class="math inline">\(x_1\)</span> (<code>disp</code>) has a different effect on <span class="math inline">\(Y\)</span> (<code>mpg</code>), depending on the values of <span class="math inline">\(x_2\)</span> and <span class="math inline">\(x_3\)</span>, but in a more flexible way which we can see with some more rearrangement. Now the “coefficient” in front of <span class="math inline">\(x_3\)</span> in this “coefficient” is dependent on <span class="math inline">\(x_2\)</span>.</p>
+<p><span class="math display">\[
+(\beta_1 + \beta_4 x_2 + (\beta_5 + \beta_7 x_2) x_3)
+\]</span></p>
+<p>It is so flexible, it is becoming hard to interpret!</p>
+<p>Let’s fit this three-way interaction model in <code>R</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">big_model =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>disp *<span class="st"> </span>hp *<span class="st"> </span>domestic, <span class="dt">data =</span> autompg)
+<span class="kw">summary</span>(big_model)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ disp * hp * domestic, data = autompg)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -11.9410  -2.2147  -0.4008   1.9430  18.4094 
+## 
+## Coefficients:
+##                     Estimate  Std. Error t value  Pr(&gt;|t|)    
+## (Intercept)       60.6457838   6.6000851   9.189   &lt; 2e-16 ***
+## disp              -0.1415870   0.0634395  -2.232    0.0262 *  
+## hp                -0.3544717   0.0812261  -4.364 0.0000165 ***
+## domestic         -12.5718884   7.0643505  -1.780    0.0759 .  
+## disp:hp            0.0013690   0.0006727   2.035    0.0426 *  
+## disp:domestic      0.0493298   0.0640046   0.771    0.4414    
+## hp:domestic        0.1851530   0.0870881   2.126    0.0342 *  
+## disp:hp:domestic  -0.0009163   0.0006768  -1.354    0.1766    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.88 on 375 degrees of freedom
+## Multiple R-squared:   0.76,  Adjusted R-squared:  0.7556 
+## F-statistic: 169.7 on 7 and 375 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Do we actually need this large of a model? Let’s first test for the necessity of the three-way interaction term. That is,</p>
+<p><span class="math display">\[
+H_0: \beta_7 = 0.
+\]</span></p>
+<p>So,</p>
+<ul>
+<li>Full Model: <span class="math inline">\(Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \beta_4 x_1 x_2 + \beta_5 x_1 x_3 + \beta_6 x_2 x_3 + \beta_7 x_1 x_2 x_3 + \epsilon\)</span></li>
+<li>Null Model: <span class="math inline">\(Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \beta_4 x_1 x_2 + \beta_5 x_1 x_3 + \beta_6 x_2 x_3 + \epsilon\)</span></li>
+</ul>
+<p>We fit the null model in <code>R</code> as <code>two_way_int_mod</code>, then use <code>anova()</code> to perform an <span class="math inline">\(F\)</span>-test as usual.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">two_way_int_mod =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>disp *<span class="st"> </span>hp +<span class="st"> </span>disp *<span class="st"> </span>domestic +<span class="st"> </span>hp *<span class="st"> </span>domestic, <span class="dt">data =</span> autompg)
+<span class="kw">anova</span>(two_way_int_mod, big_model)</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: mpg ~ disp * hp + disp * domestic + hp * domestic
+## Model 2: mpg ~ disp * hp * domestic
+##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+## 1    376 5673.2                           
+## 2    375 5645.6  1    27.599 1.8332 0.1766</code></pre>
+<p>We see the p-value is somewhat large, so we would fail to reject. We prefer the smaller, less flexible, null model, without the three-way interaction.</p>
+<p>A quick note here: the full model does still “fit better.” Notice that it has a smaller RMSE than the null model, which means the full model makes smaller (squared) errors on average.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(<span class="kw">resid</span>(big_model) ^<span class="st"> </span><span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] 14.74053</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(<span class="kw">resid</span>(two_way_int_mod) ^<span class="st"> </span><span class="dv">2</span>)</code></pre></div>
+<pre><code>## [1] 14.81259</code></pre>
+<p>However, it is not much smaller. We could even say that, the difference is insignificant. This is an idea we will return to later in greater detail.</p>
+<p>Now that we have chosen the model without the three-way interaction, can we go further? Do we need the two-way interactions? Let’s test</p>
+<p><span class="math display">\[
+H_0: \beta_4 = \beta_5 = \beta_6 = 0.
+\]</span></p>
+<p>Remember we already chose <span class="math inline">\(\beta_7 = 0\)</span>, so,</p>
+<ul>
+<li>Full Model: <span class="math inline">\(Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \beta_4 x_1 x_2 + \beta_5 x_1 x_3 + \beta_6 x_2 x_3 + \epsilon\)</span></li>
+<li>Null Model: <span class="math inline">\(Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \epsilon\)</span></li>
+</ul>
+<p>We fit the null model in <code>R</code> as <code>additive_mod</code>, then use <code>anova()</code> to perform an <span class="math inline">\(F\)</span>-test as usual.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">additive_mod =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>disp +<span class="st"> </span>hp +<span class="st"> </span>domestic, <span class="dt">data =</span> autompg)
+<span class="kw">anova</span>(additive_mod, two_way_int_mod)</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: mpg ~ disp + hp + domestic
+## Model 2: mpg ~ disp * hp + disp * domestic + hp * domestic
+##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+## 1    379 7369.7                                  
+## 2    376 5673.2  3    1696.5 37.478 &lt; 2.2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Here the p-value is small, so we reject the null, and we prefer the full (alternative) model. Of the models we have considered, our final preference is for</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \beta_4 x_1 x_2 + \beta_5 x_1 x_3 + \beta_6 x_2 x_3 + \epsilon.
+\]</span></p>
+
+<div id="refs" class="references">
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="multiple-linear-regression.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/daviddalpiaz/appliedstats/edit/master/05-cat_int.Rmd",
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
