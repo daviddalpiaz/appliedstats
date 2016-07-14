@@ -1,0 +1,304 @@
+# Model Diagnostics
+
+> "Your assumptions are your windows on the world. Scrub them off every once in a while, or the light won't come in."
+>
+> --- **Isaac Asimov**
+
+## Model Assumptions
+
+Recall the multiple linear regression model that we have defined.
+
+\[
+Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)} + \epsilon_i, \qquad i = 1, 2, \ldots, n.
+\]
+
+Using matrix notation, this model can be written much more sucicinctly.
+
+\[
+Y = X \beta + \epsilon
+\]
+
+We found the estimates for the $\beta$ parameters using,
+
+\[
+\hat{\beta} = \left(  X^\top X  \right)^{-1}X^\top y.
+\]
+
+We than noted that these estimates had mean
+
+\[
+E[\hat{\beta}] = \beta,
+\]
+
+and variance
+
+\[
+Var[\hat{\beta}] = \sigma^2 \left(  X^\top X  \right)^{-1}.
+\]
+
+In particular, an individual parameter, say $\hat{\beta}_j$ had a normal distribution
+
+\[
+\hat{\beta}_j \sim N\left(\beta_j, \sigma^2 C_{jj}  \right)
+\]
+
+where $C$ was the matrix defined as
+
+\[
+C = \left(X^\top X\right)^{-1}.
+\]
+
+We then used this fact to define the following
+
+\[
+\frac{\hat{\beta}_j - \beta_j}{s_e \sqrt{C_{jj}}} \sim t_{n-p},
+\]
+
+which we used to perform hypothesis testing.
+
+
+- SO far looked at RMSE, RSE, R2 to asses how well model doing
+    - only really checks how close points are to line
+    - could be off in systematic way
+    - could most be very close, a few very far
+    - ok in predictive sense
+    - bad in inferential sense
+
+- State model and distributional results
+
+- As Model
+    - AS LINE
+- GIGO
+
+## Checking Assumptions
+
+### Fitted versus Residuals Plot
+### BP Test
+### Histogram
+### QQ
+### SW
+
+(say what each is helping check)
+
+
+```{r}
+set.seed(42)
+x = rt(100, df = 5)
+hist(x) # add line
+
+qqnorm(x)
+qqline(x)
+shapiro.test(x)
+```
+
+
+
+
+```{r}
+par(mfrow = c(1, 3))
+set.seed(420)
+x = rnorm(10)
+qqnorm(x)
+qqline(x)
+
+x = rnorm(25)
+qqnorm(x)
+qqline(x)
+
+x = rnorm(100)
+qqnorm(x)
+qqline(x)
+```
+
+
+
+```{r}
+par(mfrow = c(1, 3))
+set.seed(420)
+x = rt(10, df = 4)
+qqnorm(x)
+qqline(x)
+
+x = rt(25, df = 4)
+qqnorm(x)
+qqline(x)
+
+x = rt(100, df = 4)
+qqnorm(x)
+qqline(x)
+```
+
+
+
+
+```{r}
+par(mfrow = c(1, 3))
+set.seed(420)
+x = rexp(10)
+qqnorm(x)
+qqline(x)
+
+x = rexp(250)
+qqnorm(x)
+qqline(x)
+
+x = rexp(100)
+qqnorm(x)
+qqline(x)
+```
+
+
+
+
+
+
+```{r}
+qq_plot = function(w) {
+
+  n = length(w)
+  normal_quantiles = qnorm(((1:n) / (n + 1)))
+
+  # plot theoretical verus observed quantiles
+  plot(normal_quantiles, sort(w),
+       xlab = c("Theoretical Quantiles"),
+       ylab = c("Sample Quantiles"),
+       col = "dodgerblue")
+  title("Normal Q-Q Plot")
+
+  ## calculate line through the first and third quartiles  
+  slope     = (quantile(w, 0.75) - quantile(w, 0.25)) / (qnorm(0.75) - qnorm(0.25))
+  intercept = quantile(w, 0.25) - slope * qnorm(0.25)
+
+  # add to existing plot
+  abline(intercept, slope, lty = 2, lwd = 2, col = "darkorange")
+}
+```
+
+```{r}
+set.seed(420)
+x = rnorm(100, mean = 0 , sd = 1)
+par(mfrow = c(1, 2))
+qqnorm(x, col = "dodgerblue")
+qqline(x, lty = 2, lwd = 2, col = "darkorange")
+qq_plot(x)
+```
+
+
+
+## Unusual Observations
+
+```{r}
+# plots which appear on page 87 of the book
+# cite inspiration
+# hide code in book?
+par(mfrow = c(1, 3))
+set.seed(42)
+ex_data  = data.frame(x = 1:10, y = 10:1 + rnorm(10))
+ex_model = lm(y ~ x, data = ex_data)
+
+# low leverage, big outlier, low influence
+point1 = c(5.4, 11)
+model1 = lm(y ~ x, data = rbind(ex_data, point1))
+plot(y ~ x, data = rbind(ex_data, point1), cex = 1.5)
+points(x = point1[1], y = point1[2], pch = 4, cex = 5, col = "firebrick", lwd = 2)
+abline(ex_model, col = "dodgerblue", lwd = 2)
+abline(model1, lty = 2, col = "darkorange", lwd = 2)
+
+# high leverage, small outlier, low influence
+point2 = c(15, -4.1)
+model2 = lm(y ~ x, data = rbind(ex_data, point2))
+plot(y ~ x, data = rbind(ex_data, point2), cex = 1.5)
+points(x = point2[1], y = point2[2], pch = 4, cex = 5, col = "firebrick", lwd = 2)
+abline(ex_model, col = "dodgerblue", lwd = 2)
+abline(model2, lty = 2, col = "darkorange", lwd = 2)
+
+# high leverage, big outlier, large influence
+point3 = c(15, 5.1)
+model3 = lm(y ~ x, data = rbind(ex_data, point3))
+plot(y ~ x, data = rbind(ex_data, point3), cex = 1.5)
+points(x = point3[1], y = point3[2], pch = 4, cex = 5, col = "firebrick", lwd = 2)
+abline(ex_model, col = "dodgerblue", lwd = 2)
+abline(model3, lty = 2, col = "darkorange", lwd = 2)
+
+```
+
+
+
+```{r}
+coef(ex_model)[2]
+coef(model1)[2]
+coef(model2)[2]
+coef(model3)[2]
+```
+
+
+
+```{r}
+cooks.distance(model1) > 4 / 11
+cooks.distance(model2) > 4 / 11
+cooks.distance(model3) > 4 / 11
+```
+
+
+
+### Leverage
+
+```{r}
+hatvalues(model1)
+hatvalues(model2)
+hatvalues(model3)
+```
+
+### Outliers
+
+```{r}
+resid(model1)
+rstandard(model1)
+rstandard(model1)[abs(rstandard(model1)) > 2]
+```
+
+```{r}
+resid(model2)
+rstandard(model2)
+rstandard(model2)[abs(rstandard(model2)) > 2]
+```
+
+```{r}
+resid(model3)
+rstandard(model3)
+rstandard(model3)[abs(rstandard(model3)) > 2]
+```
+
+### Influence
+
+## Maybe a complete example, or two
+
+### Good
+
+- `mpg_hp_add`
+
+### Suspect
+
+- `big_model`
+
+```{r}
+# plot(big_model)
+# big_model = lm(mpg ~ disp * hp * domestic, data = autompg)
+# big_mod_cd = cooks.distance(big_model)
+# 
+# 
+# big_model_fix = lm(mpg ~ disp * hp * domestic, data = autompg, subset = big_mod_cd < 4 / length(big_mod_cd))
+# 
+# plot(big_model_fix)
+# 
+# bptest(big_model_fix)
+# shapiro.test(resid(big_model))
+# shapiro.test(resid(big_model_fix))
+
+```
+
+- "robust"
+
+- WHAT DO WE DO NOW!
+
+- here we modified the data to make the model better, next chapter we'll modify the model to make the model better.
