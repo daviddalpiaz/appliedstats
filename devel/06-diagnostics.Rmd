@@ -8,7 +8,7 @@ After reading this chapter you will be able to:
 
 - Understand the assumptions of a regression model.
 - Assess regression model assumptions using visualizations and tests.
-- Understand leverage, outliers and influential points.
+- Understand leverage, outliers, and influential points.
 - Be able to identify unusual observations in regression models.
 
 ## Model Assumptions
@@ -19,13 +19,13 @@ Recall the multiple linear regression model that we have defined.
 Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)} + \epsilon_i, \qquad i = 1, 2, \ldots, n.
 \]
 
-Using matrix notation, this model can be written much more succinctly.
+Using matrix notation, this model can be written much more succinctly as
 
 \[
-Y = X \beta + \epsilon
+Y = X \beta + \epsilon.
 \]
 
-We found the estimates for the $\beta$ parameters using,
+Given data, we found the estimates for the $\beta$ parameters using
 
 \[
 \hat{\beta} = \left(  X^\top X  \right)^{-1}X^\top y.
@@ -55,7 +55,7 @@ where $C$ was the matrix defined as
 C = \left(X^\top X\right)^{-1}.
 \]
 
-We then used this fact to define the following
+We then used this fact to define
 
 \[
 \frac{\hat{\beta}_j - \beta_j}{s_e \sqrt{C_{jj}}} \sim t_{n-p},
@@ -66,7 +66,7 @@ which we used to perform hypothesis testing.
 So far we have looked at various metrics such as RMSE, RSE and $R^2$ to determine how well our model fit our data. Each of these in some way considers the expression
 
 \[
-\sum (y_i - \hat{y}_i)^2.
+\sum_{i = 1}^n (y_i - \hat{y}_i)^2.
 \]
 
 So, essentially each of these looks at how close the data points are to the model. However is that all we care about?
@@ -106,7 +106,7 @@ while the remaining three, are all encoded in
 
 since the $\epsilon_i$ are $iid$ normal random variables with constant variance.
 
-If these assumptions are met, great! We can perform inference, **and it is valid**. If these assumptions are *not* met, we can still perform a $t$-test using `R`, but the results are **not valid**. The distributions of the parameter estimates will not be what we expect. Hypothesis tests will then accept or reject incorrectly. Essentially, **garbage in, garbage out.**
+If these assumptions are met, great! We can perform inference, **and it is valid**. If these assumptions are *not* met, we can still "perform" a $t$-test using `R`, but the results are **not valid**. The distributions of the parameter estimates will not be what we expect. Hypothesis tests will then accept or reject incorrectly. Essentially, **garbage in, garbage out.**
 
 ## Checking Assumptions
 
@@ -166,14 +166,14 @@ plot(y ~ x, data = sim_data2, col = "dodgerblue")
 abline(fit2, col = "darkorange", lwd = 3)
 ```
 
-This actually is rather easy to see by added the fitting line to a scatterplot in this case. This is because we are only performing simple linear regression. With multiple regression, a fitted versus residuals plot is a necessity, since adding a fitted regression to a scatterplot isn't exactly possible.
+This actually is rather easy to see here by added the fitted line to a scatterplot. This is because we are only performing simple linear regression. With multiple regression, a fitted versus residuals plot is a necessity, since adding a fitted regression to a scatterplot isn't exactly possible.
 
 ```{r}
 plot(fitted(fit2), resid(fit2), col = "dodgerblue", xlab = "Fitted", ylab = "Residual")
 abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
-On the fitted versus residuals plot, we see two things very clearly. For any fitted values, the residuals seem roughly centered at 0. This is good! The linearity assumption is not violated. However, we also see very clearly, that for larger fitted values, the spread of the residuals is larger. This is bad! The constant variance assumption is violated here.
+On the fitted versus residuals plot, we see two things very clearly. For any fitted value, the residuals seem roughly centered at 0. This is good! The linearity assumption is not violated. However, we also see very clearly, that for larger fitted values, the spread of the residuals is larger. This is bad! The constant variance assumption is violated here.
 
 Now we will demonstrate a model which does not meet the linearity assumption.
 
@@ -192,13 +192,13 @@ plot(fitted(fit3), resid(fit3), col = "dodgerblue", xlab = "Fitted", ylab = "Res
 abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
-This time on the fitted versus residuals plot, for any fitted value, the spread of the residuals is about the same. However, they are not even close to centered at zero! So the constant variance assumption is met, but the linearity assumption is violated. Our model is simply wrong. (We're trying to fit a line to a curve!)
+This time on the fitted versus residuals plot, for any fitted value, the spread of the residuals is about the same. However, they are not even close to centered at zero! At small and large fitted values the model is underestimating, while at medium fitted values, the model is overestimating. These are systematic errors, not random noise. So the constant variance assumption is met, but the linearity assumption is violated. Our model is simply wrong. We're trying to fit a line to a curve!
 
 ### Breusch-Pagan Test
 
 Constant variance is often called **homoscedasticity**. Conversely, non-constant variance is called **heteroscedasticity**. We've seen how we can use a fitted versus residuals plot to look for these attributes.
 
-While a fitted versus residuals plot can give us an idea about homoscedasticity, sometimes we would prefer a more formal test. There are many test for constant variance, but here we will present one, the [**Breusch-Pagan Test**](https://en.wikipedia.org/wiki/Breusch%E2%80%93Pagan_test). The exact details of the test will omitted here, but importantly the null and alternative can be considered to be,
+While a fitted versus residuals plot can give us an idea about homoscedasticity, sometimes we would prefer a more formal test. There are many tests for constant variance, but here we will present one, the [**Breusch-Pagan Test**](https://en.wikipedia.org/wiki/Breusch%E2%80%93Pagan_test). The exact details of the test will omitted here, but importantly the null and alternative can be considered to be,
 
 - $H_0$: Homoscedasticity. The errors have constant variance about the true model.
 - $H_1$: Heteroscedasticity.  The errors have non-constant variance about the true model.
@@ -212,7 +212,7 @@ The Breusch-Pagan Test can not be performed by default in `R`, however the funct
 library(lmtest)
 ```
 
-Let's try it on the three model we fit above. Recall,
+Let's try it on the three models we fit above. Recall,
 
 - `fit1` had no violation of assumptions,
 - `fit2` violated the constant variance assumption, but not linearity,
@@ -236,7 +236,7 @@ bptest(fit3)
 
 Lastly, for `fit3` we again see a large p-value, so we do not reject the null of homoscedasticity, which matches our findings with a fitted versus residuals plot.
 
-### Histogram
+### Histograms
 
 We have a number of tools for assessing the normality assumption. The most obvious would be to make a histogram of the residuals. If it appears roughly normal, then we'll believe the errors could truly be normal.
 
@@ -263,9 +263,9 @@ Above are histograms for each of the three regression we have been considering. 
 
 ### Q-Q Plots
 
-Another visual method for assessing the normality of errors, which is more powerful than a histogram, is a normal quantile-quantile Plot, or **Q-Q plot** for short.
+Another visual method for assessing the normality of errors, which is more powerful than a histogram, is a normal quantile-quantile plot, or **Q-Q plot** for short.
 
-In `R` these are very easy to make. The `qqnorm()` function plots the points, and the `qqline()` function adds the necessary line. We create a Q-Q plot for the residuals of `fit1` to check if the errors could truly be normal.
+In `R` these are very easy to make. The `qqnorm()` function plots the points, and the `qqline()` function adds the necessary line. We create a Q-Q plot for the residuals of `fit1` to check if the errors could truly be normally distributed.
 
 ```{r}
 qqnorm(resid(fit1), main = "Normal Q-Q Plot, fit1", col = "dodgerblue")
@@ -276,7 +276,7 @@ In short, if the points of the plot do not closely follow a straight line, this 
 
 The calculations required to create the plot vary depending on the implementation, but essentially the $y$-axis is the sorted data (observed, or sample quantiles), and the $x$-axis is the values we would expect if the data did come from a normal distribution (theoretical quantiles).
 
-The Wikipedia page for Normal probability plots gives details on how this is implemented in `R` if you are interested. [Wikipedia: Normal probability plot](http://en.wikipedia.org/wiki/Normal_probability_plot)
+The [Wikipedia page for Normal probability plots](http://en.wikipedia.org/wiki/Normal_probability_plot) gives details on how this is implemented in `R` if you are interested.
 
 Also, to get a better idea of how Q-Q plots work, here is a quick function which creates a Q-Q plot:
 
@@ -325,7 +325,7 @@ qq_plot(rnorm(25))
 qq_plot(rnorm(100))
 ```
 
-Since this data **is** sampled from a normal distribution, these are all, by definition, good Q-Q plots. The points are "close to the line" and we would conclude that this data could have been sampled from a normal distribution. Notice in the first plot, one point is *somewhat* far from the line, but just one point, in combination with the small sample size, is not enough to make use worried. We see with the large sample size, all of the points are rather close to the line.
+Since this data **is** sampled from a normal distribution, these are all, by definition, good Q-Q plots. The points are "close to the line" and we would conclude that this data could have been sampled from a normal distribution. Notice in the first plot, one point is *somewhat* far from the line, but just one point, in combination with the small sample size, is not enough to make us worried. We see with the large sample size, all of the points are rather close to the line.
 
 Next, we simulate data from a $t$ distribution with a small degrees of freedom, for different sample sizes.
 
@@ -337,7 +337,7 @@ qq_plot(rt(25, df = 4))
 qq_plot(rt(100, df = 4))
 ```
 
-Recall, that as the degrees of freedom for a $t$ distribution become larger, the distribution becomes more and more similar to a normal. Here, using 4 degrees of freedom, we have a distribution that is somewhat normal, it symmetrical and roughly bell-shaped, however it has "fat tails." This presents itself clearly in the third panel. While many of the points are close to the line, at the edges, there are large discrepancies. This indicates that the values or to small (negative) or too large (positive) compared to what we would expect for a normal distribution. Some for the sample size of `100`, we would conclude that that normality assumption is violated. (If these were residuals of a model.) For sample sizes of `10` and `25` we may be suspicious, but not entirely confident. Reading Q-Q plots, is a bit of an art, not completely a science.
+Recall, that as the degrees of freedom for a $t$ distribution become larger, the distribution becomes more and more similar to a normal. Here, using 4 degrees of freedom, we have a distribution that is somewhat normal, it is symmetrical and roughly bell-shaped, however it has "fat tails." This presents itself clearly in the third panel. While many of the points are close to the line, at the edges, there are large discrepancies. This indicates that the values are to small (negative) or too large (positive) compared to what we would expect for a normal distribution. So for the sample size of `100`, we would conclude that that normality assumption is violated. (If these were residuals of a model.) For sample sizes of `10` and `25` we may be suspicious, but not entirely confident. Reading Q-Q plots, is a bit of an art, not completely a science.
 
 Next, we simulate data from an exponential distribution.
 
@@ -353,7 +353,7 @@ This is a distribution that is not very similar to a normal, so in all three cas
 
 For a better understanding of which Q-Q plots are "good," repeat the simulations above a number of times (without setting the seed) and pay attention to the differences between those that are simulated from normal, and those that are not. Also consider different samples sizes and distribution parameters.
 
-Returning to our three regression, recall,
+Returning to our three regressions, recall,
 
 - `fit1` had no violation of assumptions,
 - `fit2` violated the constant variance assumption, but not linearity,
@@ -395,10 +395,9 @@ shapiro.test(rexp(25))
 
 This gives us the value of the test statistic and its p-value. The null hypothesis assumes the data follow a normal distribution, thus a small p-value indicates we believe there is only a small probability the data follow a normal distribution.
 
-For details, see: 
-[Wikipedia: Shapiro–Wilk test](https://en.wikipedia.org/wiki/Shapiro-Wilk_test)
+For details, see: [Wikipedia: Shapiro–Wilk test.](https://en.wikipedia.org/wiki/Shapiro-Wilk_test)
 
-In the above examples, we see we fail to reject for the data samples from normal, and reject on the non-normal data.
+In the above examples, we see we fail to reject for the data sampled from normal, and reject on the non-normal data.
 
 Returning again to `fit1`, `fit2` and `fit3`, we see the result of running `shapiro.test()` on the residuals of each, returns a result for each that matches for decisions based on the Q-Q plots.
 
@@ -416,7 +415,7 @@ shapiro.test(resid(fit3))
 
 ## Unusual Observations
 
-In addition to checking the assumptions of regression, we often also look for an "unusual observations" in the data. Sometimes certain data points can have an extremely large influence on a regression, so much so that...
+In addition to checking the assumptions of regression, we also look for any "unusual observations" in the data. Often a small number of data points can have an extremely large influence on a regression, sometimes so much so that the regression assumptions are violated as a result of these points.
 
 The following three plots are inspired by an example from [Linear Models with R](http://www.maths.bath.ac.uk/~jjf23/LMR/).
 
@@ -426,7 +425,7 @@ set.seed(42)
 ex_data  = data.frame(x = 1:10, y = 10:1 + rnorm(10))
 ex_model = lm(y ~ x, data = ex_data)
 
-# low leverage, big outlier, small influence
+# low leverage, yes outlier, small influence
 point1 = c(5.4, 11)
 model1 = lm(y ~ x, data = rbind(ex_data, point1))
 plot(y ~ x, data = rbind(ex_data, point1), cex = 1.5)
@@ -434,7 +433,7 @@ points(x = point1[1], y = point1[2], pch = 4, cex = 5, col = "firebrick", lwd = 
 abline(ex_model, col = "dodgerblue", lwd = 2)
 abline(model1, lty = 2, col = "darkorange", lwd = 2)
 
-# high leverage, small outlier, low influence
+# high leverage, not outlier, low influence
 point2 = c(15, -4.1)
 model2 = lm(y ~ x, data = rbind(ex_data, point2))
 plot(y ~ x, data = rbind(ex_data, point2), cex = 1.5)
@@ -442,7 +441,7 @@ points(x = point2[1], y = point2[2], pch = 4, cex = 5, col = "firebrick", lwd = 
 abline(ex_model, col = "dodgerblue", lwd = 2)
 abline(model2, lty = 2, col = "darkorange", lwd = 2)
 
-# high leverage, big outlier, large influence
+# high leverage, yes outlier, large influence
 point3 = c(15, 5.1)
 model3 = lm(y ~ x, data = rbind(ex_data, point3))
 plot(y ~ x, data = rbind(ex_data, point3), cex = 1.5)
@@ -451,22 +450,43 @@ abline(ex_model, col = "dodgerblue", lwd = 2)
 abline(model3, lty = 2, col = "darkorange", lwd = 2)
 ```
 
+The blue solid line in each plot is the regression fitted to the 10 original data points stored in `ex_data`. The dashed orange line in each plot is the result of adding a single point to the original data in `ex_data`. This additional point is indicated by the large red "X" in each plot.
 
+The slope of the regression for the original ten points, the solid blue line, is given by:
 
 ```{r}
 coef(ex_model)[2]
+```
+
+The added point in the first plot has a *small* effect on the slope, which becomes:
+
+```{r}
 coef(model1)[2]
+```
+
+We will say that this point has low leverage, is an outlier due to its large residual, but has small influence.
+
+The added point in the second plot also has a *small* effect on the slope, which is:
+
+```{r}
 coef(model2)[2]
+```
+
+We will say that this point has high leverage, is not an outlier due to its small residual, and has small influence.
+
+Lastly, the added point in the third plot has a *large* effect on the slope, which is now:
+
+```{r}
 coef(model3)[2]
 ```
 
+This added point is influential. It both has high leverage, and is an outlier due to its large residual.
 
-
-
-
-
+We've now mentioned three new concepts: leverage, outliers, and influential points, each of which we will discuss in detail.
 
 ### Leverage
+
+A data point with high **leverage**, is a data point that *could* have a large influence when fitting the model.
 
 Recall that,
 
@@ -477,7 +497,7 @@ Recall that,
 Thus,
 
 \[
-\hat{y}= X \hat{\beta}   = X \left(X^\top X \right)^{-1} X^\top y
+\hat{y} = X \hat{\beta}   = X \left(X^\top X \right)^{-1} X^\top y
 \]
 
 Now we define,
@@ -486,31 +506,49 @@ Now we define,
 H = X \left(X^\top X\right)^{-1} X^\top
 \]
 
-Which we will refer to as the hat matrix. The hat matrix is used to project onto the subspace spanned by the columns of $\boldsymbol{X}$. (And is otherwise know as a projection matrix.)
+which we will refer to as the *hat matrix*. The hat matrix is used to project onto the subspace spanned by the columns of $X$. It is also simply known as a projection matrix.
 
-The diagonal elements of this matrix are called the leverages.
+The hat matrix, is a matrix that takes the original $y$ values, and adds a hat!
 
 \[
-H_{ii} = h_i
+\hat{y} = H y
 \]
+
+The diagonal elements of this matrix are called the **leverages**
+
+\[
+H_{ii} = h_i,
+\]
+
+where $h_i$ is the leverage for the $i$th observation.
 
 Large values of $h_i$ indicate extreme values in $X$, which may influence regression. Note that leverages only depend on $X$.
 
-\[
-\sum h_i = p
-\]
-
-Here, $p$ is the number of $\beta$s. (Also the trace (and rank) of the hat matrix.)
-
-A common check for a large leverage is to compare to $2*\frac{p}{n} = 2\bar{h}$, two times the average leverage. A leverage larger than this is considered an observation to be aware of.
-
-For simple linear regression, we have,
+Here, $p$ the number of $\beta$s  is also the trace (and rank) of the hat matrix.
 
 \[
-h_i = \frac{1}{n} + \frac{(x_i - \bar{x})^2}{S_{xx}}
+\sum_{i = 1}^n h_i = p
 \]
 
-which suggests that the large leverages occur when $x$ values are far from their mean. (Recall that the regression goes through the point $(\bar{x},\bar{y})$.)
+What is a value of $h_i$ that would be considered large? There is no exact answer to this question. A common heuristic would be to compare each leverage to two times the average leverage. A leverage larger than this is considered an observation to be aware of. That is, if
+
+\[
+h_i > 2 \bar{h}
+\]
+
+we say that observation $i$ has large leverage. Here, 
+
+\[
+\bar{h} = \frac{\sum_{i = 1}^n h_i}{n} = \frac{p}{n}.
+\]
+
+For simple linear regression, the leverage for each point is given by
+
+\[
+h_i = \frac{1}{n} + \frac{(x_i - \bar{x})^2}{S_{xx}}.
+\]
+
+This expression should be familiar. (Think back to inference for SLR.) It suggests that the large leverages occur when $x$ values are far from their mean. Recall that the regression goes through the point $(\bar{x},\bar{y})$.
 
 There are multiple ways to find leverages in `R`.
 
@@ -522,51 +560,97 @@ lev_ex = data.frame(
 
 plot(x2 ~ x1, data = lev_ex, cex = 2)
 points(7, 3, pch = 20, col = "red", cex = 2)
+```
 
+Here we've created some multivariate data. Notice that we have plotted the $x$ values, not the $y$ values. The red point is $(7, 3)$ which is the mean of `x1` and the mean of `x2` respectively.
+
+We could calculate the leverages using the expressions defined above. We first create the $X$ matrix, then calculate $H$ as defined, and extract the diagonal elements.
+
+```{r}
 X = cbind(rep(1, 8), lev_ex$x1, lev_ex$x2)
 H = X %*% solve(t(X) %*% X) %*% t(X)
 diag(H)
-sum(diag(H))
+```
 
+Notice here, we have two predictors, so the regression would have 3 $\beta$ parameters, so the sum of the diagonal elements is 3.
+
+```{r}
+sum(diag(H))
+```
+
+Alternatively, the method we will use more often, is to simply fit a regression, then use the `hatvalues()` function, which returns the leverages.
+
+```{r}
 lev_fit = lm(y ~ ., data = lev_ex)
-coef(lev_fit)
 hatvalues(lev_fit)
 ```
 
+Again, note that here we have "used" the $y$ values to fit the regression, but `R` still ignores them when calculating the leverages, as leverages only depend on the $x$ values.
+
+```{r}
+coef(lev_fit)
+```
+
+
+Let's see what happens to these coefficients when we modify the `y` value of the point with the highest leverage.
+
 ```{r}
 which.max(hatvalues(lev_fit))
+lev_ex[which.max(hatvalues(lev_fit)),]
+```
 
+We see that the original `y` value is `r lev_ex[which.max(hatvalues(lev_fit)),3]`. We'll create a copy of the data, and modify this point to have a `y` value of `20`.
+
+```{r}
 lev_ex_1 = lev_ex
 lev_ex_1$y[1] = 20
-
 lm(y ~ ., data = lev_ex_1)
+```
 
-# note, leverages wouldn't change, we haven't changed X
+Notice the **large** changes in the coefficients. Also notice that each of the coefficients has changed in some way. Note that the leverages of the points would not have changed, as we have not modified any of the $x$ values.
 
+Now let's see what happens to these coefficients when we modify the `y` value of the point with the lowest leverage.
+
+```{r}
 which.min(hatvalues(lev_fit))
+lev_ex[which.min(hatvalues(lev_fit)),]
+```
 
+We see that the original `y` value is `r lev_ex[which.min(hatvalues(lev_fit)),3]`. We'll again create a copy of the data, and modify this point to have a `y` value of `30`.
+
+```{r}
 lev_ex_2 = lev_ex
 lev_ex_2$y[4] = 30
-
 lm(y ~ ., data = lev_ex_2)
+```
 
+This time despite a large change in the `y` value, there is only small change in the coefficients. Also, only the intercept has changed!
+
+```{r}
 mean(lev_ex$x1)
 mean(lev_ex$x2)
 lev_ex[4,]
 ```
 
+Notice that this point was the mean of both of the predictors.
 
-
-
+Returning to our three plots, each with an added point, we can calculate the leverages for each. Note that the 11th data point each time is the added data point.
 
 ```{r}
 hatvalues(model1)
 hatvalues(model2)
 hatvalues(model3)
+```
+
+Are any of these large?
+
+```{r}
 hatvalues(model1) > 2 * mean(hatvalues(model1))
 hatvalues(model2) > 2 * mean(hatvalues(model2))
 hatvalues(model3) > 2 * mean(hatvalues(model3))
 ```
+
+We see that in the second and third plots, the added point is a point of high leverage. Recall that only in the third plot did that have an influence on the regression. To understand why, we'll need to discuss outliers.
 
 ### Outliers
 
@@ -575,13 +659,13 @@ Outliers are points which do not fit the model well. They may or may not have a 
 Note,
 
 \[
-\boldsymbol{e} = \boldsymbol{Y} - \boldsymbol{\hat{Y}} = (\boldsymbol{I}-\boldsymbol{H})\boldsymbol{Y}
+e = y - \hat{y} = Iy - Hy = (I - H) y
 \]
 
 Then, under the assumptions of linear regression,
 
 \[
-Var(e_i) = (1-h_i) \sigma^2
+Var(e_i) = (1 - h_i) \sigma^2
 \]
 
 and thus estimating $\sigma^2$ with $s_e^2$ gives
@@ -598,11 +682,17 @@ r_i = \frac{e_i}{s_e\sqrt{1 - h_i}} \overset{approx}{\sim} N(\mu = 0, \sigma^ 2 
 
 when $n$ is large.
 
+We can use this fact to identify "large" residuals. For example, standardized residuals greater than 2 in magnitude should only happen approximately 5 percent of the time.
+
+Returning again to our three plots, each with an added point, we can calculate the residuals and standardized residuals for each. Standardized residuals can be obtained in `R` by using `rstandard()` where we would normally use `resid()`.
+
 ```{r}
 resid(model1)
 rstandard(model1)
 rstandard(model1)[abs(rstandard(model1)) > 2]
 ```
+
+In the first plot, we see that the 11th point, the added point, is a large standardized residual.
 
 ```{r}
 resid(model2)
@@ -610,55 +700,167 @@ rstandard(model2)
 rstandard(model2)[abs(rstandard(model2)) > 2]
 ```
 
+In the second plot, we see that there are no points with large standardized residuals.
+
 ```{r}
 resid(model3)
 rstandard(model3)
 rstandard(model3)[abs(rstandard(model3)) > 2]
 ```
 
+In the last plot, we see that the 11th point, the added point, is a large standardized residual.
+
+Recall that the added point in plots two and three were both high leverage, but now only the point in plot three has a large residual. We will now combine this information and discuss influence.
+
 ### Influence
 
-As we have seen in the plots from the book, some outliers only change the regression a small amount (plot 1) and some outliers have a large effect on the regression. (plot 3) Observations that fall into the later category we will call **influential**.
+As we have now seen in the three plots, some outliers only change the regression a small amount (plot one) and some outliers have a large effect on the regression (plot three). Observations that fall into the later category, points of *high leverage* **and** *large residual*, we will call **influential**.
 
-A common measure of influence is **Cook's Distance**,
+A common measure of influence is **Cook's Distance**, which is defined as
 
 \[
-  D_i = \frac{1}{p}r_i^2\frac{h_i}{1-{h_i}}
+  D_i = \frac{1}{p}r_i^2\frac{h_i}{1-{h_i}}.
 \]
 
-which is a function of both leverage and standardized residuals. A Cook's Distance is considered large if $D_i > 4/n$, and an observation with a large Cook's Distance is called influential.
+Notice that this is a function of both *leverage* and *standardized residuals*. 
 
-```{r}
-cooks.distance(model1) > 4 / length(cooks.distance(model1))
-cooks.distance(model2) > 4 / length(cooks.distance(model2))
-cooks.distance(model3) > 4 / length(cooks.distance(model3))
+A Cook's Distance is considered large if 
+
+\[
+D_i > \frac{4}{n}
+\]
+
+and an observation with a large Cook's Distance is called influential. This is again simply a heuristic, and not an exact rule.
+
+The Cook's distance for each point of a regression can be calculated using `cooks.distance()` which is a default function in `R`. Let's look for influential points in the three plots we had been considering.
+
+```{r, echo = FALSE}
+par(mfrow = c(1, 3))
+set.seed(42)
+ex_data  = data.frame(x = 1:10, y = 10:1 + rnorm(10))
+ex_model = lm(y ~ x, data = ex_data)
+
+# low leverage, yes outlier, small influence
+point1 = c(5.4, 11)
+model1 = lm(y ~ x, data = rbind(ex_data, point1))
+plot(y ~ x, data = rbind(ex_data, point1), cex = 1.5)
+points(x = point1[1], y = point1[2], pch = 4, cex = 5, col = "firebrick", lwd = 2)
+abline(ex_model, col = "dodgerblue", lwd = 2)
+abline(model1, lty = 2, col = "darkorange", lwd = 2)
+
+# high leverage, not outlier, low influence
+point2 = c(15, -4.1)
+model2 = lm(y ~ x, data = rbind(ex_data, point2))
+plot(y ~ x, data = rbind(ex_data, point2), cex = 1.5)
+points(x = point2[1], y = point2[2], pch = 4, cex = 5, col = "firebrick", lwd = 2)
+abline(ex_model, col = "dodgerblue", lwd = 2)
+abline(model2, lty = 2, col = "darkorange", lwd = 2)
+
+# high leverage, yes outlier, large influence
+point3 = c(15, 5.1)
+model3 = lm(y ~ x, data = rbind(ex_data, point3))
+plot(y ~ x, data = rbind(ex_data, point3), cex = 1.5)
+points(x = point3[1], y = point3[2], pch = 4, cex = 5, col = "firebrick", lwd = 2)
+abline(ex_model, col = "dodgerblue", lwd = 2)
+abline(model3, lty = 2, col = "darkorange", lwd = 2)
 ```
 
-## Maybe a complete example, or two
+Recall that the added points (large red "X") in each plot have different characteristics:
 
-### Good
+- Plot One: low leverage, large residual.
+- Plot Two: high leverage, small residual.
+- Plot Three: high leverage, large residual.
+
+We'll now directly check if each of these is influential.
+
+```{r}
+cooks.distance(model1)[11] > 4 / length(cooks.distance(model1))
+cooks.distance(model2)[11] > 4 / length(cooks.distance(model2))
+cooks.distance(model3)[11] > 4 / length(cooks.distance(model3))
+```
+
+And, as expected, the added point in the third plot, with high leverage and a large residual is considered influential!
+
+## Data Analysis Examples
+
+### Good Diagnostics
+
+Last chapter we fit an additive regression to the `mtcars` data with `mpg` as the response and `hp` and `am` as predictors. Let's perform some diagnostics on this model.
+
+First, fit the model as we did last chapter.
 
 ```{r}
 mpg_hp_add = lm(mpg ~ hp + am, data = mtcars)
+```
 
+```{r}
 plot(fitted(mpg_hp_add), resid(mpg_hp_add), col = "dodgerblue", xlab = "Fitted", ylab = "Residual")
 abline(h = 0, col = "darkorange", lwd = 2)
+```
 
+The fitted versus residuals plot looks good. We don't see any obvious pattern, and the variance looks roughly constant. (Maybe a little larger for large fitted values, but not enough to worry about.)
+
+```{r}
+bptest(mpg_hp_add)
+```
+
+The Breusch-Pagan test verifies this, at least for a small $\alpha$ value.
+
+```{r}
 qqnorm(resid(mpg_hp_add), col = "dodgerblue")
 qqline(resid(mpg_hp_add), col = "darkorange", lwd = 2)
-
-bptest(mpg_hp_add)
-shapiro.test(resid(mpg_hp_add))
-
-sum(cooks.distance(mpg_hp_add) > 4 / length(cooks.distance(mpg_hp_add)))
 ```
+
+The Q-Q plot looks extremely good and the Shapiro-Wilk test agrees.
+
+```{r}
+shapiro.test(resid(mpg_hp_add))
+```
+
+```{r}
+sum(hatvalues(mpg_hp_add) > 2 * mean(hatvalues(mpg_hp_add)))
+```
+
+We see that there are two points of large leverage.
+
+```{r}
+sum(abs(rstandard(mpg_hp_add)) > 2)
+```
+
+There is also one point with a large residual. Do these result in any points that are considered influential?
+
+```{r}
+cd_mpg_hp_add = cooks.distance(mpg_hp_add)
+sum(cd_mpg_hp_add > 4 / length(cd_mpg_hp_add))
+large_cd_mpg = cd_mpg_hp_add > 4 / length(cd_mpg_hp_add)
+cd_mpg_hp_add[large_cd_mpg]
+```
+
+We find two influential points. Interestingly, they are **very** different cars.
+
+```{r}
+coef(mpg_hp_add)
+```
+
+Since the diagnostics looked good, there isn't much need to worry about these two points, but let's see how much the coefficients change if we remove them.
+
+```{r}
+mpg_hp_add_fix = lm(mpg ~ hp + am, data = mtcars, subset = cd_mpg_hp_add <= 4 / length(cd_mpg_hp_add))
+coef(mpg_hp_add_fix)
+```
+
+It seems there isn't much of a change in the coefficients as a results of removing the supposed influential points. Notice we did not create a new dataset to accomplish this. We instead used the `subset` argument to `lm()`. Think about what the code `cd_mpg_hp_add <= 4 / length(cd_mpg_hp_add)` does here.
 
 ```{r, fig.height = 8, fig.width = 8}
 par(mfrow = c(2, 2))
 plot(mpg_hp_add)
 ```
 
-### Suspect
+Notice that, calling `plot()` on a variable which stores an object created by `lm()` outputs four diagnostic plots by default. Use `?plot.lm` to learn more. The first two should already be familiar.
+
+### Suspect Diagnostics
+
+Let's consider the model `big_model` from last chapter which was fit to the `autompg` dataset. It used `mpg` as the response, and considered many interaction terms between the predictors `disp`, `hp`, and `domestic`.
 
 ```{r, echo = FALSE}
 # read data frame from the web
@@ -696,20 +898,30 @@ str(autompg)
 
 ```{r}
 big_model = lm(mpg ~ disp * hp * domestic, data = autompg)
+```
+
+```{r}
 qqnorm(resid(big_model), col = "dodgerblue")
 qqline(resid(big_model), col = "darkorange", lwd = 2)
 shapiro.test(resid(big_model))
+```
 
+Here both the Q-Q plot, and the Shapiro-Wilk test suggests that the normality assumption is violated.
+
+```{r}
 big_mod_cd = cooks.distance(big_model)
+sum(big_mod_cd > 4 / length(big_mod_cd))
+```
 
+Here, we find `r sum(big_mod_cd > 4 / length(big_mod_cd))`, so perhaps removing them will help!
+
+```{r}
 big_model_fix = lm(mpg ~ disp * hp * domestic, data = autompg, subset = big_mod_cd < 4 / length(big_mod_cd))
 qqnorm(resid(big_model_fix), col = "dodgerblue")
 qqline(resid(big_model_fix), col = "darkorange", lwd = 2)
 shapiro.test(resid(big_model_fix))
 ```
 
-- "robust"
+Removing these points results in a much better Q-Q plot, and now Shapiro-Wilk fails to reject for a low $\alpha$.
 
-- WHAT DO WE DO NOW!
-
-- here we modified the data to make the model better, next chapter we'll modify the model to make the model better.
+We've now seen that sometimes modifying the data can fix issues with regression. However, next chapter, instead of modifying the data, we will modify the model via *transformations*.
