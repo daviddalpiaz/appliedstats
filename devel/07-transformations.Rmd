@@ -6,9 +6,84 @@
 
 ## Response
 
-### Variance Stabilizaing Transformation
+### Variance Stabilizaing Transformations
+
 ### Box-Cox Transformations
 
 ## Predictors
 
 ### Polynomials
+
+- don't change units to log units
+
+```{r, echo = FALSE}
+# read data frame from the web
+autompg = read.table(
+  "http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data",
+  quote = "\"",
+  comment.char = "",
+  stringsAsFactors = FALSE)
+# give the dataframe headers
+colnames(autompg) = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin", "name")
+# remove missing data, which is stored as "?"
+autompg = subset(autompg, autompg$hp != "?")
+# remove the plymouth reliant, as it causes some issues
+autompg = subset(autompg, autompg$name != "plymouth reliant")
+# give the dataset row names, based on the engine, year and name
+rownames(autompg) = paste(autompg$cyl, "cylinder", autompg$year, autompg$name)
+# remove the variable for name
+autompg = subset(autompg, select = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin"))
+# change horsepower from character to numeric
+autompg$hp = as.numeric(autompg$hp)
+# create a dummary variable for foreign vs domestic cars. domestic = 1.
+autompg$domestic = as.numeric(autompg$origin == 1)
+# remove 3 and 5 cylinder cars (which are very rare.)
+autompg = autompg[autompg$cyl != 5,]
+autompg = autompg[autompg$cyl != 3,]
+# the following line would verify the remaining cylinder possibilities are 4, 6, 8
+#unique(autompg$cyl)
+# change cyl to a factor variable
+autompg$cyl = as.factor(autompg$cyl)
+```
+
+
+```{r}
+plot(log(mpg) ~ log(hp), data = autompg)
+
+mpg_poly1 = lm(log(mpg) ~ log(hp), data = autompg)
+summary(mpg_poly1)
+plot(mpg_poly1)
+
+
+mpg_poly2 = lm(log(mpg) ~ poly(hp, 2) * cyl * domestic, data = autompg)
+summary(mpg_poly2)
+plot(mpg_poly2)
+
+mpg_poly3 = lm(mpg ~ poly(hp, 10), data = autompg)
+summary(mpg_poly3)
+plot(mpg_poly3)
+```
+
+
+
+
+```{r}
+plot(mpg ~ wt, data = autompg)
+mpg_poly2 = lm(mpg ~ poly(wt, 2) + cyl * domestic, data = autompg)
+summary(mpg_poly2)
+plot(mpg_poly2)
+
+
+
+plot(acc ~ hp, data = autompg)
+acc_poly2 = lm(acc ~ poly(hp, 2), data = autompg)
+summary(acc_poly2)
+plot(acc_poly2)
+
+bptest(acc_poly2)
+shapiro.test(resid(acc_poly2))
+```
+
+
+
+
