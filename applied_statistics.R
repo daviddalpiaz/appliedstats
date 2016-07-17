@@ -1381,7 +1381,7 @@ autompg = subset(autompg, autompg$hp != "?")
 autompg = subset(autompg, autompg$name != "plymouth reliant")
 # give the dataset row names, based on the engine, year and name
 rownames(autompg) = paste(autompg$cyl, "cylinder", autompg$year, autompg$name)
-# remove the variable for name, as will as origin
+# remove the variable for name
 autompg = subset(autompg, select = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin"))
 # change horsepower from character to numeric
 autompg$hp = as.numeric(autompg$hp)
@@ -1570,4 +1570,392 @@ mean(resid(two_way_int_mod) ^ 2)
 ## -----------------------------------------------------------------------------
 additive_mod = lm(mpg ~ disp + hp + domestic, data = autompg)
 anova(additive_mod, two_way_int_mod)
+
+## -----------------------------------------------------------------------------
+n = 500
+set.seed(42)
+sim_data = data.frame(x = runif(n) * 5, y = rep(0, n))
+sim_data$y = 3 + 5 * sim_data$x + rnorm(n, 0, 1)
+head(sim_data)
+
+## -----------------------------------------------------------------------------
+plot(y ~ x, data = sim_data, col = "dodgerblue")
+fit1 = lm(y ~ x, data = sim_data)
+abline(fit1, col = "darkorange", lwd = 3)
+
+## -----------------------------------------------------------------------------
+plot(fitted(fit1), resid(fit1), col = "dodgerblue", xlab = "Fitted", ylab = "Residual")
+abline(h = 0, col = "darkorange", lwd = 2)
+
+## -----------------------------------------------------------------------------
+sim_data2 = sim_data
+sim_data2$y = 3 + 5 * sim_data2$x + rnorm(n, 0, sim_data2$x)
+fit2 = lm(y ~ x, data = sim_data2)
+plot(y ~ x, data = sim_data2, col = "dodgerblue")
+abline(fit2, col = "darkorange", lwd = 3)
+
+## -----------------------------------------------------------------------------
+plot(fitted(fit2), resid(fit2), col = "dodgerblue", xlab = "Fitted", ylab = "Residual")
+abline(h = 0, col = "darkorange", lwd = 2)
+
+## -----------------------------------------------------------------------------
+sim_data3 = sim_data
+sim_data3$y = 3 + 5 * sim_data3$x ^ 2 + rnorm(n, 0, 5)
+fit3 = lm(y ~ x, data = sim_data3)
+plot(y ~ x, data = sim_data3, col = "dodgerblue")
+abline(fit3, col = "darkorange", lwd = 3)
+
+## -----------------------------------------------------------------------------
+plot(fitted(fit3), resid(fit3), col = "dodgerblue", xlab = "Fitted", ylab = "Residual")
+abline(h = 0, col = "darkorange", lwd = 2)
+
+## ---- message = FALSE, warning = FALSE----------------------------------------
+#install.packages("lmtest")
+library(lmtest)
+
+## -----------------------------------------------------------------------------
+bptest(fit1)
+
+## -----------------------------------------------------------------------------
+bptest(fit2)
+
+## -----------------------------------------------------------------------------
+bptest(fit3)
+
+## -----------------------------------------------------------------------------
+par(mfrow = c(1, 3))
+hist(resid(fit1),
+     xlab   = "Residuals",
+     main   = "Histogram of Residuals, fit1",
+     col    = "darkorange",
+     border = "dodgerblue")
+hist(resid(fit2),
+     xlab   = "Residuals",
+     main   = "Histogram of Residuals, fit2",
+     col    = "darkorange",
+     border = "dodgerblue")
+hist(resid(fit3),
+     xlab   = "Residuals",
+     main   = "Histogram of Residuals, fit3",
+     col    = "darkorange",
+     border = "dodgerblue")
+
+## -----------------------------------------------------------------------------
+qqnorm(resid(fit1), main = "Normal Q-Q Plot, fit1", col = "dodgerblue")
+qqline(resid(fit1), col = "darkorange", lwd = 2)
+
+## -----------------------------------------------------------------------------
+qq_plot = function(w) {
+
+  n = length(w)
+  normal_quantiles = qnorm(((1:n) / (n + 1)))
+
+  # plot theoretical verus observed quantiles
+  plot(normal_quantiles, sort(w),
+       xlab = c("Theoretical Quantiles"),
+       ylab = c("Sample Quantiles"),
+       col = "dodgerblue")
+  title("Normal Q-Q Plot")
+
+  ## calculate line through the first and third quartiles  
+  slope     = (quantile(w, 0.75) - quantile(w, 0.25)) / (qnorm(0.75) - qnorm(0.25))
+  intercept = quantile(w, 0.25) - slope * qnorm(0.25)
+
+  # add to existing plot
+  abline(intercept, slope, lty = 2, lwd = 2, col = "darkorange")
+}
+
+## -----------------------------------------------------------------------------
+set.seed(420)
+x = rnorm(100, mean = 0 , sd = 1)
+par(mfrow = c(1, 2))
+qqnorm(x, col = "dodgerblue")
+qqline(x, lty = 2, lwd = 2, col = "darkorange")
+qq_plot(x)
+
+## ---- fig.height = 4, fig.width = 8-------------------------------------------
+par(mfrow = c(1, 3))
+set.seed(420)
+qq_plot(rnorm(10))
+qq_plot(rnorm(25))
+qq_plot(rnorm(100))
+
+## ---- fig.height = 4, fig.width = 8-------------------------------------------
+par(mfrow = c(1, 3))
+set.seed(420)
+qq_plot(rt(10, df = 4))
+qq_plot(rt(25, df = 4))
+qq_plot(rt(100, df = 4))
+
+## ---- fig.height = 4, fig.width = 8-------------------------------------------
+par(mfrow = c(1, 3))
+set.seed(420)
+qq_plot(rexp(10))
+qq_plot(rexp(25))
+qq_plot(rexp(100))
+
+## -----------------------------------------------------------------------------
+qqnorm(resid(fit1), main = "Normal Q-Q Plot, fit1", col = "dodgerblue")
+qqline(resid(fit1), col = "darkorange", lwd = 2)
+
+## -----------------------------------------------------------------------------
+qqnorm(resid(fit2), main = "Normal Q-Q Plot, fit2", col = "dodgerblue")
+qqline(resid(fit2), col = "darkorange", lwd = 2)
+
+## -----------------------------------------------------------------------------
+qqnorm(resid(fit3), main = "Normal Q-Q Plot, fit3", col = "dodgerblue")
+qqline(resid(fit3), col = "darkorange", lwd = 2)
+
+## -----------------------------------------------------------------------------
+set.seed(42)
+shapiro.test(rnorm(25))
+shapiro.test(rexp(25))
+
+## -----------------------------------------------------------------------------
+shapiro.test(resid(fit1))
+
+## -----------------------------------------------------------------------------
+shapiro.test(resid(fit2))
+
+## -----------------------------------------------------------------------------
+shapiro.test(resid(fit3))
+
+## -----------------------------------------------------------------------------
+par(mfrow = c(1, 3))
+set.seed(42)
+ex_data  = data.frame(x = 1:10, y = 10:1 + rnorm(10))
+ex_model = lm(y ~ x, data = ex_data)
+
+# low leverage, yes outlier, small influence
+point1 = c(5.4, 11)
+model1 = lm(y ~ x, data = rbind(ex_data, point1))
+plot(y ~ x, data = rbind(ex_data, point1), cex = 1.5)
+points(x = point1[1], y = point1[2], pch = 4, cex = 5, col = "firebrick", lwd = 2)
+abline(ex_model, col = "dodgerblue", lwd = 2)
+abline(model1, lty = 2, col = "darkorange", lwd = 2)
+
+# high leverage, not outlier, low influence
+point2 = c(15, -4.1)
+model2 = lm(y ~ x, data = rbind(ex_data, point2))
+plot(y ~ x, data = rbind(ex_data, point2), cex = 1.5)
+points(x = point2[1], y = point2[2], pch = 4, cex = 5, col = "firebrick", lwd = 2)
+abline(ex_model, col = "dodgerblue", lwd = 2)
+abline(model2, lty = 2, col = "darkorange", lwd = 2)
+
+# high leverage, yes outlier, large influence
+point3 = c(15, 5.1)
+model3 = lm(y ~ x, data = rbind(ex_data, point3))
+plot(y ~ x, data = rbind(ex_data, point3), cex = 1.5)
+points(x = point3[1], y = point3[2], pch = 4, cex = 5, col = "firebrick", lwd = 2)
+abline(ex_model, col = "dodgerblue", lwd = 2)
+abline(model3, lty = 2, col = "darkorange", lwd = 2)
+
+## -----------------------------------------------------------------------------
+coef(ex_model)[2]
+
+## -----------------------------------------------------------------------------
+coef(model1)[2]
+
+## -----------------------------------------------------------------------------
+coef(model2)[2]
+
+## -----------------------------------------------------------------------------
+coef(model3)[2]
+
+## -----------------------------------------------------------------------------
+lev_ex = data.frame(
+  x1 = c(0, 11, 11, 7, 4, 10, 5, 8),
+  x2 = c(1, 5, 4, 3, 1, 4, 4, 2),
+  y  = c(11, 15, 13, 14, 0, 19, 16, 8))
+
+plot(x2 ~ x1, data = lev_ex, cex = 2)
+points(7, 3, pch = 20, col = "red", cex = 2)
+
+## -----------------------------------------------------------------------------
+X = cbind(rep(1, 8), lev_ex$x1, lev_ex$x2)
+H = X %*% solve(t(X) %*% X) %*% t(X)
+diag(H)
+
+## -----------------------------------------------------------------------------
+sum(diag(H))
+
+## -----------------------------------------------------------------------------
+lev_fit = lm(y ~ ., data = lev_ex)
+hatvalues(lev_fit)
+
+## -----------------------------------------------------------------------------
+coef(lev_fit)
+
+## -----------------------------------------------------------------------------
+which.max(hatvalues(lev_fit))
+lev_ex[which.max(hatvalues(lev_fit)),]
+
+## -----------------------------------------------------------------------------
+lev_ex_1 = lev_ex
+lev_ex_1$y[1] = 20
+lm(y ~ ., data = lev_ex_1)
+
+## -----------------------------------------------------------------------------
+which.min(hatvalues(lev_fit))
+lev_ex[which.min(hatvalues(lev_fit)),]
+
+## -----------------------------------------------------------------------------
+lev_ex_2 = lev_ex
+lev_ex_2$y[4] = 30
+lm(y ~ ., data = lev_ex_2)
+
+## -----------------------------------------------------------------------------
+mean(lev_ex$x1)
+mean(lev_ex$x2)
+lev_ex[4,]
+
+## -----------------------------------------------------------------------------
+hatvalues(model1)
+hatvalues(model2)
+hatvalues(model3)
+
+## -----------------------------------------------------------------------------
+hatvalues(model1) > 2 * mean(hatvalues(model1))
+hatvalues(model2) > 2 * mean(hatvalues(model2))
+hatvalues(model3) > 2 * mean(hatvalues(model3))
+
+## -----------------------------------------------------------------------------
+resid(model1)
+rstandard(model1)
+rstandard(model1)[abs(rstandard(model1)) > 2]
+
+## -----------------------------------------------------------------------------
+resid(model2)
+rstandard(model2)
+rstandard(model2)[abs(rstandard(model2)) > 2]
+
+## -----------------------------------------------------------------------------
+resid(model3)
+rstandard(model3)
+rstandard(model3)[abs(rstandard(model3)) > 2]
+
+## ---- echo = FALSE------------------------------------------------------------
+par(mfrow = c(1, 3))
+set.seed(42)
+ex_data  = data.frame(x = 1:10, y = 10:1 + rnorm(10))
+ex_model = lm(y ~ x, data = ex_data)
+
+# low leverage, yes outlier, small influence
+point1 = c(5.4, 11)
+model1 = lm(y ~ x, data = rbind(ex_data, point1))
+plot(y ~ x, data = rbind(ex_data, point1), cex = 1.5)
+points(x = point1[1], y = point1[2], pch = 4, cex = 5, col = "firebrick", lwd = 2)
+abline(ex_model, col = "dodgerblue", lwd = 2)
+abline(model1, lty = 2, col = "darkorange", lwd = 2)
+
+# high leverage, not outlier, low influence
+point2 = c(15, -4.1)
+model2 = lm(y ~ x, data = rbind(ex_data, point2))
+plot(y ~ x, data = rbind(ex_data, point2), cex = 1.5)
+points(x = point2[1], y = point2[2], pch = 4, cex = 5, col = "firebrick", lwd = 2)
+abline(ex_model, col = "dodgerblue", lwd = 2)
+abline(model2, lty = 2, col = "darkorange", lwd = 2)
+
+# high leverage, yes outlier, large influence
+point3 = c(15, 5.1)
+model3 = lm(y ~ x, data = rbind(ex_data, point3))
+plot(y ~ x, data = rbind(ex_data, point3), cex = 1.5)
+points(x = point3[1], y = point3[2], pch = 4, cex = 5, col = "firebrick", lwd = 2)
+abline(ex_model, col = "dodgerblue", lwd = 2)
+abline(model3, lty = 2, col = "darkorange", lwd = 2)
+
+## -----------------------------------------------------------------------------
+cooks.distance(model1)[11] > 4 / length(cooks.distance(model1))
+cooks.distance(model2)[11] > 4 / length(cooks.distance(model2))
+cooks.distance(model3)[11] > 4 / length(cooks.distance(model3))
+
+## -----------------------------------------------------------------------------
+mpg_hp_add = lm(mpg ~ hp + am, data = mtcars)
+
+## -----------------------------------------------------------------------------
+plot(fitted(mpg_hp_add), resid(mpg_hp_add), col = "dodgerblue", xlab = "Fitted", ylab = "Residual")
+abline(h = 0, col = "darkorange", lwd = 2)
+
+## -----------------------------------------------------------------------------
+bptest(mpg_hp_add)
+
+## -----------------------------------------------------------------------------
+qqnorm(resid(mpg_hp_add), col = "dodgerblue")
+qqline(resid(mpg_hp_add), col = "darkorange", lwd = 2)
+
+## -----------------------------------------------------------------------------
+shapiro.test(resid(mpg_hp_add))
+
+## -----------------------------------------------------------------------------
+sum(hatvalues(mpg_hp_add) > 2 * mean(hatvalues(mpg_hp_add)))
+
+## -----------------------------------------------------------------------------
+sum(abs(rstandard(mpg_hp_add)) > 2)
+
+## -----------------------------------------------------------------------------
+cd_mpg_hp_add = cooks.distance(mpg_hp_add)
+sum(cd_mpg_hp_add > 4 / length(cd_mpg_hp_add))
+large_cd_mpg = cd_mpg_hp_add > 4 / length(cd_mpg_hp_add)
+cd_mpg_hp_add[large_cd_mpg]
+
+## -----------------------------------------------------------------------------
+coef(mpg_hp_add)
+
+## -----------------------------------------------------------------------------
+mpg_hp_add_fix = lm(mpg ~ hp + am, data = mtcars, subset = cd_mpg_hp_add <= 4 / length(cd_mpg_hp_add))
+coef(mpg_hp_add_fix)
+
+## ---- fig.height = 8, fig.width = 8-------------------------------------------
+par(mfrow = c(2, 2))
+plot(mpg_hp_add)
+
+## ---- echo = FALSE------------------------------------------------------------
+# read data frame from the web
+autompg = read.table(
+  "http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data",
+  quote = "\"",
+  comment.char = "",
+  stringsAsFactors = FALSE)
+# give the dataframe headers
+colnames(autompg) = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin", "name")
+# remove missing data, which is stored as "?"
+autompg = subset(autompg, autompg$hp != "?")
+# remove the plymouth reliant, as it causes some issues
+autompg = subset(autompg, autompg$name != "plymouth reliant")
+# give the dataset row names, based on the engine, year and name
+rownames(autompg) = paste(autompg$cyl, "cylinder", autompg$year, autompg$name)
+# remove the variable for name
+autompg = subset(autompg, select = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin"))
+# change horsepower from character to numeric
+autompg$hp = as.numeric(autompg$hp)
+# create a dummary variable for foreign vs domestic cars. domestic = 1.
+autompg$domestic = as.numeric(autompg$origin == 1)
+# remove 3 and 5 cylinder cars (which are very rare.)
+autompg = autompg[autompg$cyl != 5,]
+autompg = autompg[autompg$cyl != 3,]
+# the following line would verify the remaining cylinder possibilities are 4, 6, 8
+#unique(autompg$cyl)
+# change cyl to a factor variable
+autompg$cyl = as.factor(autompg$cyl)
+
+## -----------------------------------------------------------------------------
+str(autompg)
+
+## -----------------------------------------------------------------------------
+big_model = lm(mpg ~ disp * hp * domestic, data = autompg)
+
+## -----------------------------------------------------------------------------
+qqnorm(resid(big_model), col = "dodgerblue")
+qqline(resid(big_model), col = "darkorange", lwd = 2)
+shapiro.test(resid(big_model))
+
+## -----------------------------------------------------------------------------
+big_mod_cd = cooks.distance(big_model)
+sum(big_mod_cd > 4 / length(big_mod_cd))
+
+## -----------------------------------------------------------------------------
+big_model_fix = lm(mpg ~ disp * hp * domestic, data = autompg, subset = big_mod_cd < 4 / length(big_mod_cd))
+qqnorm(resid(big_model_fix), col = "dodgerblue")
+qqline(resid(big_model_fix), col = "darkorange", lwd = 2)
+shapiro.test(resid(big_model_fix))
 
