@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Applied Statistics with R</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="Applied Statistics with <code>R</code>">
+  <meta name="generator" content="bookdown 0.1.1 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Applied Statistics with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://daviddalpiaz.github.io/appliedstats/" />
+  
+  
+  <meta name="github-repo" content="daviddalpiaz/appliedstats" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Applied Statistics with R" />
+  
+  
+  
+
+<meta name="author" content="David Dalpiaz">
+
+<meta name="date" content="2016-07-19">
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="model-diagnostics.html">
+
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applied Statistics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i><b>1.1</b> About This Book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#conventions"><i class="fa fa-check"></i><b>1.2</b> Conventions</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i><b>1.4</b> License</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>2</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-resources"><i class="fa fa-check"></i><b>2.1</b> <code>R</code> Resources</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#r-basics"><i class="fa fa-check"></i><b>2.2</b> <code>R</code> Basics</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#basic-calculations"><i class="fa fa-check"></i><b>2.2.1</b> Basic Calculations</a></li>
+<li class="chapter" data-level="2.2.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#getting-help"><i class="fa fa-check"></i><b>2.2.2</b> Getting Help</a></li>
+<li class="chapter" data-level="2.2.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#installing-packages"><i class="fa fa-check"></i><b>2.2.3</b> Installing Packages</a></li>
+<li class="chapter" data-level="2.2.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-types"><i class="fa fa-check"></i><b>2.2.4</b> Data Types</a></li>
+<li class="chapter" data-level="2.2.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#vectors"><i class="fa fa-check"></i><b>2.2.5</b> Vectors</a></li>
+<li class="chapter" data-level="2.2.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#summary-statistics"><i class="fa fa-check"></i><b>2.2.6</b> Summary Statistics</a></li>
+<li class="chapter" data-level="2.2.7" data-path="introduction-to-r.html"><a href="introduction-to-r.html#matrices"><i class="fa fa-check"></i><b>2.2.7</b> Matrices</a></li>
+<li class="chapter" data-level="2.2.8" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-frames"><i class="fa fa-check"></i><b>2.2.8</b> Data Frames</a></li>
+<li class="chapter" data-level="2.2.9" data-path="introduction-to-r.html"><a href="introduction-to-r.html#plotting"><i class="fa fa-check"></i><b>2.2.9</b> Plotting</a></li>
+<li class="chapter" data-level="2.2.10" data-path="introduction-to-r.html"><a href="introduction-to-r.html#distributions"><i class="fa fa-check"></i><b>2.2.10</b> Distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#programming-basics"><i class="fa fa-check"></i><b>2.3</b> Programming Basics</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#logical-operators"><i class="fa fa-check"></i><b>2.3.1</b> Logical Operators</a></li>
+<li class="chapter" data-level="2.3.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#control-flow"><i class="fa fa-check"></i><b>2.3.2</b> Control Flow</a></li>
+<li class="chapter" data-level="2.3.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#functions"><i class="fa fa-check"></i><b>2.3.3</b> Functions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#hypothesis-tests-in-r"><i class="fa fa-check"></i><b>2.4</b> Hypothesis Tests in <code>R</code></a><ul>
+<li class="chapter" data-level="2.4.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#one-sample-t-test-review"><i class="fa fa-check"></i><b>2.4.1</b> One Sample t-Test: Review</a></li>
+<li class="chapter" data-level="2.4.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#one-sample-t-test-example"><i class="fa fa-check"></i><b>2.4.2</b> One Sample t-Test: Example</a></li>
+<li class="chapter" data-level="2.4.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#two-sample-t-test-review"><i class="fa fa-check"></i><b>2.4.3</b> Two Sample t-Test: Review</a></li>
+<li class="chapter" data-level="2.4.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#two-sample-t-test-example"><i class="fa fa-check"></i><b>2.4.4</b> Two Sample t-Test: Example</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#simulation"><i class="fa fa-check"></i><b>2.5</b> Simulation</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#paired-differences"><i class="fa fa-check"></i><b>2.5.1</b> Paired Differences</a></li>
+<li class="chapter" data-level="2.5.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#distribution-of-a-sample-mean"><i class="fa fa-check"></i><b>2.5.2</b> Distribution of a Sample Mean</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html"><i class="fa fa-check"></i><b>3</b> Simple Linear Regression</a><ul>
+<li class="chapter" data-level="3.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#modeling"><i class="fa fa-check"></i><b>3.1</b> Modeling</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#simple-linear-regression-model"><i class="fa fa-check"></i><b>3.1.1</b> Simple Linear Regression Model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#least-squares-approach"><i class="fa fa-check"></i><b>3.2</b> Least Squares Approach</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#making-predictions"><i class="fa fa-check"></i><b>3.2.1</b> Making Predictions</a></li>
+<li class="chapter" data-level="3.2.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#residuals"><i class="fa fa-check"></i><b>3.2.2</b> Residuals</a></li>
+<li class="chapter" data-level="3.2.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#variance-estimation"><i class="fa fa-check"></i><b>3.2.3</b> Variance Estimation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#decomposition-of-variation"><i class="fa fa-check"></i><b>3.3</b> Decomposition of Variation</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#coefficient-of-determination"><i class="fa fa-check"></i><b>3.3.1</b> Coefficient of Determination</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#the-lm-function"><i class="fa fa-check"></i><b>3.4</b> The <code>lm</code> Function</a></li>
+<li class="chapter" data-level="3.5" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#maximum-likelihood-estimation-mle-approach"><i class="fa fa-check"></i><b>3.5</b> Maximum Likelihood Estimation (MLE) Approach</a></li>
+<li class="chapter" data-level="3.6" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#simulating-slr"><i class="fa fa-check"></i><b>3.6</b> Simulating SLR</a></li>
+<li class="chapter" data-level="3.7" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#history"><i class="fa fa-check"></i><b>3.7</b> History</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html"><i class="fa fa-check"></i><b>4</b> Inference for Simple Linear Regression</a><ul>
+<li class="chapter" data-level="4.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#gaussmarkov-theorem"><i class="fa fa-check"></i><b>4.1</b> Gauss–Markov Theorem</a></li>
+<li class="chapter" data-level="4.2" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#sampling-distributions"><i class="fa fa-check"></i><b>4.2</b> Sampling Distributions</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#simulating-sampling-distributions"><i class="fa fa-check"></i><b>4.2.1</b> Simulating Sampling Distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#standard-errors"><i class="fa fa-check"></i><b>4.3</b> Standard Errors</a></li>
+<li class="chapter" data-level="4.4" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-intervals-for-slope-and-intercept"><i class="fa fa-check"></i><b>4.4</b> Confidence Intervals for Slope and Intercept</a></li>
+<li class="chapter" data-level="4.5" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#hypothesis-tests"><i class="fa fa-check"></i><b>4.5</b> Hypothesis Tests</a></li>
+<li class="chapter" data-level="4.6" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#cars-example"><i class="fa fa-check"></i><b>4.6</b> <code>cars</code> Example</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#tests-in-r"><i class="fa fa-check"></i><b>4.6.1</b> Tests in <code>R</code></a></li>
+<li class="chapter" data-level="4.6.2" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#significance-of-regression-t-test"><i class="fa fa-check"></i><b>4.6.2</b> Significance of Regression, t-Test</a></li>
+<li class="chapter" data-level="4.6.3" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-intervals-in-r"><i class="fa fa-check"></i><b>4.6.3</b> Confidence Intervals in <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-interval-for-mean-response"><i class="fa fa-check"></i><b>4.7</b> Confidence Interval for Mean Response</a></li>
+<li class="chapter" data-level="4.8" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#prediction-interval-for-new-observations"><i class="fa fa-check"></i><b>4.8</b> Prediction Interval for New Observations</a></li>
+<li class="chapter" data-level="4.9" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-and-prediction-bands"><i class="fa fa-check"></i><b>4.9</b> Confidence and Prediction Bands</a></li>
+<li class="chapter" data-level="4.10" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#significance-of-regression-f-test"><i class="fa fa-check"></i><b>4.10</b> Significance of Regression, F-Test</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html"><i class="fa fa-check"></i><b>5</b> Multiple Linear Regression</a><ul>
+<li class="chapter" data-level="5.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#matrix-approach-to-regression"><i class="fa fa-check"></i><b>5.1</b> Matrix Approach to Regression</a></li>
+<li class="chapter" data-level="5.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#sampling-distribution"><i class="fa fa-check"></i><b>5.2</b> Sampling Distribution</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#single-parameter-tests"><i class="fa fa-check"></i><b>5.2.1</b> Single Parameter Tests</a></li>
+<li class="chapter" data-level="5.2.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#confidence-intervals"><i class="fa fa-check"></i><b>5.2.2</b> Confidence Intervals</a></li>
+<li class="chapter" data-level="5.2.3" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#confidence-intervals-for-mean-response"><i class="fa fa-check"></i><b>5.2.3</b> Confidence Intervals for Mean Response</a></li>
+<li class="chapter" data-level="5.2.4" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#prediction-intervals"><i class="fa fa-check"></i><b>5.2.4</b> Prediction Intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#signifiance-of-regression"><i class="fa fa-check"></i><b>5.3</b> Signifiance of Regression</a></li>
+<li class="chapter" data-level="5.4" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#nested-models"><i class="fa fa-check"></i><b>5.4</b> Nested Models</a></li>
+<li class="chapter" data-level="5.5" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#simulation-1"><i class="fa fa-check"></i><b>5.5</b> Simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html"><i class="fa fa-check"></i><b>6</b> Categorical Predictors and Interactions</a><ul>
+<li class="chapter" data-level="6.1" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#dummy-variables"><i class="fa fa-check"></i><b>6.1</b> Dummy Variables</a></li>
+<li class="chapter" data-level="6.2" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#interactions"><i class="fa fa-check"></i><b>6.2</b> Interactions</a></li>
+<li class="chapter" data-level="6.3" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#factor-variables"><i class="fa fa-check"></i><b>6.3</b> Factor Variables</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#factors-with-more-than-two-levels"><i class="fa fa-check"></i><b>6.3.1</b> Factors with More Than Two Levels</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#parameterization"><i class="fa fa-check"></i><b>6.4</b> Parameterization</a></li>
+<li class="chapter" data-level="6.5" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#building-larger-models"><i class="fa fa-check"></i><b>6.5</b> Building Larger Models</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i><b>7</b> Model Diagnostics</a><ul>
+<li class="chapter" data-level="7.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#model-assumptions"><i class="fa fa-check"></i><b>7.1</b> Model Assumptions</a></li>
+<li class="chapter" data-level="7.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#checking-assumptions"><i class="fa fa-check"></i><b>7.2</b> Checking Assumptions</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#fitted-versus-residuals-plot"><i class="fa fa-check"></i><b>7.2.1</b> Fitted versus Residuals Plot</a></li>
+<li class="chapter" data-level="7.2.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#breusch-pagan-test"><i class="fa fa-check"></i><b>7.2.2</b> Breusch-Pagan Test</a></li>
+<li class="chapter" data-level="7.2.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#histograms-1"><i class="fa fa-check"></i><b>7.2.3</b> Histograms</a></li>
+<li class="chapter" data-level="7.2.4" data-path="model-diagnostics.html"><a href="model-diagnostics.html#q-q-plots"><i class="fa fa-check"></i><b>7.2.4</b> Q-Q Plots</a></li>
+<li class="chapter" data-level="7.2.5" data-path="model-diagnostics.html"><a href="model-diagnostics.html#shapiro-wilk-test"><i class="fa fa-check"></i><b>7.2.5</b> Shapiro-Wilk Test</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#unusual-observations"><i class="fa fa-check"></i><b>7.3</b> Unusual Observations</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#leverage"><i class="fa fa-check"></i><b>7.3.1</b> Leverage</a></li>
+<li class="chapter" data-level="7.3.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#outliers"><i class="fa fa-check"></i><b>7.3.2</b> Outliers</a></li>
+<li class="chapter" data-level="7.3.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#influence"><i class="fa fa-check"></i><b>7.3.3</b> Influence</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="model-diagnostics.html"><a href="model-diagnostics.html#data-analysis-examples"><i class="fa fa-check"></i><b>7.4</b> Data Analysis Examples</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#good-diagnostics"><i class="fa fa-check"></i><b>7.4.1</b> Good Diagnostics</a></li>
+<li class="chapter" data-level="7.4.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#suspect-diagnostics"><i class="fa fa-check"></i><b>7.4.2</b> Suspect Diagnostics</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="transformations.html"><a href="transformations.html"><i class="fa fa-check"></i><b>8</b> Transformations</a><ul>
+<li class="chapter" data-level="8.1" data-path="transformations.html"><a href="transformations.html#response-transformation"><i class="fa fa-check"></i><b>8.1</b> Response Transformation</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="transformations.html"><a href="transformations.html#variance-stabilizing-transformations"><i class="fa fa-check"></i><b>8.1.1</b> Variance Stabilizing Transformations</a></li>
+<li class="chapter" data-level="8.1.2" data-path="transformations.html"><a href="transformations.html#box-cox-transformations"><i class="fa fa-check"></i><b>8.1.2</b> Box-Cox Transformations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="transformations.html"><a href="transformations.html#predictor-transformation"><i class="fa fa-check"></i><b>8.2</b> Predictor Transformation</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="transformations.html"><a href="transformations.html#polynomials"><i class="fa fa-check"></i><b>8.2.1</b> Polynomials</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/daviddalpiaz/appliedstats" target="blank">&copy; 2016 David Dalpiaz</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied Statistics with <code>R</code></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="transformations" class="section level1">
+<h1><span class="header-section-number">Chapter 8</span> Transformations</h1>
+<blockquote>
+<p>“Give me a lever long enough and a fulcrum on which to place it, and I shall move the world.”</p>
+<p>— <strong>Archimedes</strong></p>
+</blockquote>
+<p>After reading this chapter you will be able to:</p>
+<ul>
+<li>Understand the concept of a variance stabilizing transformation.</li>
+<li>Use transformations of the response to improve regression models.</li>
+<li>Use polynomial terms as predictors to fit more flexible regression models.</li>
+</ul>
+<p>Last chapter we checked the assumptions of regression models and looked at ways to diagnose possible issues. This chapter we will use transformations of both response and predictor variables in order to correct issues with model diagnostics, and to also potentially simply make a model fit data better.</p>
+<div id="response-transformation" class="section level2">
+<h2><span class="header-section-number">8.1</span> Response Transformation</h2>
+<p>Let’s look at some (fictional) salary data from the (fictional) company <em>Initech</em>. We will try to model <code>salary</code> as a function of <code>years</code> of experience. The data can be found in <a href="data/initech.csv"><code>initech.csv</code></a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">initech =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/initech.csv&quot;</span>)</code></pre></div>
+<p>We first fit a simple linear model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">initech_fit =<span class="st"> </span><span class="kw">lm</span>(salary ~<span class="st"> </span>years, <span class="dt">data =</span> initech)
+<span class="kw">summary</span>(initech_fit)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = salary ~ years, data = initech)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -17665.6  -5497.7   -725.7   4667.3  27812.9 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  11369.4     3160.2   3.598 0.000757 ***
+## years         2141.3      160.8  13.314  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 8642 on 48 degrees of freedom
+## Multiple R-squared:  0.7869, Adjusted R-squared:  0.7825 
+## F-statistic: 177.3 on 1 and 48 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>This model appears significant, but does it meet the model assumptions?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(salary ~<span class="st"> </span>years, <span class="dt">data =</span> initech, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)
+<span class="kw">abline</span>(initech_fit, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-369-1.png" width="672" /></p>
+<p>Adding the fitted line to the plot, we see that the linear relationship appears correct.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(initech_fit), <span class="kw">resid</span>(initech_fit), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,
+     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;orange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-370-1.png" width="672" /></p>
+<p>However, from the fitted versus residuals plot it appears there is non-constant variance. Specifically, the variance increases as the fitted value increases.</p>
+<div id="variance-stabilizing-transformations" class="section level3">
+<h3><span class="header-section-number">8.1.1</span> Variance Stabilizing Transformations</h3>
+<p>Recall the fitted value is our estimate of the mean at a particular value of <span class="math inline">\(x\)</span>. Under our usual assumptions,</p>
+<p><span class="math display">\[
+  \epsilon_i \sim N(0,\sigma^2)
+\]</span></p>
+<p>and thus</p>
+<p><span class="math display">\[
+  Var[Y | X = x] = \sigma^2
+\]</span></p>
+<p>which is a constant value for any value of <span class="math inline">\(x\)</span>.</p>
+<p>However, here we see that the variance is a function of the mean,</p>
+<p><span class="math display">\[
+  Var[Y | X = x] = h(\mu).
+\]</span></p>
+<p>In this case, <span class="math inline">\(h\)</span> is some increasing function.</p>
+<p>In order to correct for this, we would like to find some function of <span class="math inline">\(Y\)</span>, <span class="math inline">\(g(Y)\)</span> such that,</p>
+<p><span class="math display">\[
+  Var[g(Y) | X = x] = c
+\]</span></p>
+<p>where <span class="math inline">\(c\)</span> is a constant that does not depend on <span class="math inline">\(\mu\)</span>. A transformation that accomplishes this is called a <strong>variance stabilizaing transformation.</strong></p>
+<p>A common variance stabilizing transformation (VST) when we see increasing variance in a fitted versus residuals plot is <span class="math inline">\(\log(Y)\)</span>. Also, if the values of a variable range over more than one order of magnitude and the variable is <em>strictly positive</em>, then replacing the variable by its logarithm is likely to be helpful.</p>
+<p>A reminder, that for our purposes, <span class="math inline">\(\log\)</span> and <span class="math inline">\(\ln\)</span> are both the natural log. <code>R</code> uses <code>log</code> to mean the natural log, unless a different base is specified.</p>
+<p>We will now use a log transformed response for the <em>Initech</em> data,</p>
+<p><span class="math display">\[
+  \log(y_i) = \beta_0 + \beta_1 x_i + \epsilon_i.
+\]</span></p>
+<p>Note, if we re-scale the data from a log scale back to the original scale of the data, we now have</p>
+<p><span class="math display">\[
+  y_i = \exp(\beta_0 + \beta_1 x_i) \cdot \exp(\epsilon_i)
+\]</span></p>
+<p>which has the errors entering the model in a multiplicative fashion.</p>
+<p>Fitting this model in <code>R</code> requires only a minor modification to our formula specification.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">initech_fit_log =<span class="st"> </span><span class="kw">lm</span>(<span class="kw">log</span>(salary) ~<span class="st"> </span>years, <span class="dt">data =</span> initech)</code></pre></div>
+<p>Note that while <code>log(y)</code> is considered the new response variable, we do not actually create a new variable in <code>R</code>, but simply transform the variable inside the model formula.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">log</span>(salary) ~<span class="st"> </span>years, <span class="dt">data =</span> initech, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)
+<span class="kw">abline</span>(initech_fit_log, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-372-1.png" width="672" /></p>
+<p>Plotting the data on the transformed log scale and adding the fitted line, the relationship again appears linear, and we can already see that the variation about the fitted line looks constant.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(salary ~<span class="st"> </span>years, <span class="dt">data =</span> initech, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)
+<span class="kw">curve</span>(<span class="kw">exp</span>(initech_fit_log$coef[<span class="dv">1</span>] +<span class="st"> </span>initech_fit_log$coef[<span class="dv">2</span>] *<span class="st"> </span>x),
+      <span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">30</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-373-1.png" width="672" /></p>
+<p>By plotting the data on the original scale, and adding the fitted regression, we see an exponential relationship. However, this is still a <em>linear</em> model, since the new transformed response, <span class="math inline">\(\log(y)\)</span>, is still a <em>linear</em> combination of the predictors.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(initech_fit_log), <span class="kw">resid</span>(initech_fit_log), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,
+     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-374-1.png" width="672" /></p>
+<p>The fitted versus residuals plot looks much better. It appears the constant variance assumption is no longer violated.</p>
+<p>Comparing the RMSE using the original and transformed response, we also see that the log transformed model simply fits better, with a smaller average squared error.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(<span class="kw">mean</span>(<span class="kw">resid</span>(initech_fit) ^<span class="st"> </span><span class="dv">2</span>))</code></pre></div>
+<pre><code>## [1] 8467.647</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(<span class="kw">mean</span>(<span class="kw">resid</span>(initech_fit_log) ^<span class="st"> </span><span class="dv">2</span>))</code></pre></div>
+<pre><code>## [1] 0.1509989</code></pre>
+<p>But wait, that isn’t fair, this difference is simply due to the different scales being used.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(<span class="kw">mean</span>((initech$salary -<span class="st"> </span><span class="kw">fitted</span>(initech_fit)) ^<span class="st"> </span><span class="dv">2</span>))</code></pre></div>
+<pre><code>## [1] 8467.647</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(<span class="kw">mean</span>((initech$salary -<span class="st"> </span><span class="kw">exp</span>(<span class="kw">fitted</span>(initech_fit_log))) ^<span class="st"> </span><span class="dv">2</span>))</code></pre></div>
+<pre><code>## [1] 7874.517</code></pre>
+<p>Transforming the fitted values of the log model back to the data scale, we do indeed see that it fits better!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(initech_fit_log)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = log(salary) ~ years, data = initech)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.35435 -0.09045 -0.01726  0.09740  0.26357 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 9.841325   0.056355  174.63   &lt;2e-16 ***
+## years       0.049978   0.002868   17.43   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.1541 on 48 degrees of freedom
+## Multiple R-squared:  0.8635, Adjusted R-squared:  0.8607 
+## F-statistic: 303.6 on 1 and 48 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Again, the transformed response is a <em>linear</em> combination of the predictors,</p>
+<p><span class="math display">\[
+  \log(\hat{y}) = \hat{\beta}_0 + \hat{\beta}_1 x  = 9.84 + 0.05x.
+\]</span></p>
+<p>But now, if we re-scale the data from a log scale back to the original scale of the data, we now have</p>
+<p><span class="math display">\[
+  \hat{y} = \exp(\hat{\beta}_0) \exp(\hat{\beta}_1 x) = \exp(9.84)\exp(0.05x).
+\]</span></p>
+<p>We see that for every one additional year of experience, average salary increases <span class="math inline">\(\exp(0.05) = 1.051\)</span> times. We are now multiplying, not adding.</p>
+<p>While using a <span class="math inline">\(\log\)</span> transform is possibly the most common response variable transformation, many others exist. We will now consider a family of transformations and choose the best from among them, which includes the <span class="math inline">\(\log\)</span> transform.</p>
+</div>
+<div id="box-cox-transformations" class="section level3">
+<h3><span class="header-section-number">8.1.2</span> Box-Cox Transformations</h3>
+<p>The Box-Cox method considers a family of transformations on strictly positive response variables,</p>
+<p><span class="math display">\[
+g_\lambda(y) = \left\{
+\begin{array}{lr}\displaystyle\frac{y^\lambda - 1}{\lambda} &amp;  \lambda \neq 0\\
+        &amp; \\
+       \log(y) &amp;  \lambda = 0
+     \end{array}
+   \right.
+\]</span></p>
+<p>The <span class="math inline">\(\lambda\)</span> parameter is chosen by numerically maximizing the log-likelihood,</p>
+<p><span class="math display">\[
+  L(\lambda) = -\frac{n}{2}\log(RSS_\lambda / n) + (\lambda -1)\sum \log(y_i).
+\]</span></p>
+<p>A <span class="math inline">\(100(1 - \alpha)\%\)</span> confidence interval for <span class="math inline">\(\lambda\)</span> is,</p>
+<p><span class="math display">\[
+    \left\{ \lambda :  L(\lambda) &gt; L(\hat{\lambda}) - \frac{1}{2}\chi_{1,\alpha}^2  \right\}   
+\]</span></p>
+<p>which <code>R</code> will plot for us to help quickly select an appropriate <span class="math inline">\(\lambda\)</span> value. We often choose a “nice” value from within the confidence interval, instead of the value of <span class="math inline">\(\lambda\)</span> that truly maximizes the likelihood.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(MASS)
+<span class="kw">library</span>(faraway)</code></pre></div>
+<p>Here we need the <code>MASS</code> package for the <code>boxcox()</code> function, and we will consider a couple of datasets from the <code>faraway</code> package.</p>
+<p>First we will use the <code>savings</code> dataset as an example of using the Box-Cox method to justify the use of no transformation. We fit an additive multiple regression model with <code>sr</code> as the response and each of the other variables as predictors.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">savings_model =<span class="st"> </span><span class="kw">lm</span>(sr ~<span class="st"> </span>., <span class="dt">data =</span> savings)</code></pre></div>
+<p>We then use the <code>boxcox()</code> function to find the best transformation of the form considered by the Box-Cox method.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxcox</span>(savings_model, <span class="dt">plotit =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-380-1.png" width="672" /></p>
+<p><code>R</code> automatically plots the log-Likelihood as a function of possible <span class="math inline">\(\lambda\)</span> values. It indicates both the value that maximizes the log-likelihood, as well as a confidence interval for the <span class="math inline">\(\lambda\)</span> value that maximizes the log-likelihood.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxcox</span>(savings_model, <span class="dt">plotit =</span> <span class="ot">TRUE</span>, <span class="dt">lambda =</span> <span class="kw">seq</span>(<span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="dt">by =</span> <span class="fl">0.1</span>))</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-381-1.png" width="672" /></p>
+<p>Note that we can specify a range of <span class="math inline">\(\lambda\)</span> values to consider and thus be plotted. We often specify a range that is more visually interesting. Here we see that <span class="math inline">\(\lambda = 1\)</span> is both in the confidence interval, and is extremely close to the maximum. This suggests a transformation of the form</p>
+<p><span class="math display">\[
+\frac{y^\lambda - 1}{\lambda} = \frac{y^1 - 1}{1} = y - 1.
+\]</span></p>
+<p>This is essentially not a transformation. It would not change the variance or make the model fit better. By subtracting 1 from every value, we would only change the intercept of the model, and the resulting errors would be the same.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(savings_model), <span class="kw">resid</span>(savings_model), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,
+     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-382-1.png" width="672" /></p>
+<p>Looking at a fitted versus residuals plot verifies that there likely are not any issue with the assumptions of this model, which Breusch-Pagan and Shapiro-Wilk tests verify.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lmtest)
+<span class="kw">bptest</span>(savings_model)</code></pre></div>
+<pre><code>## 
+##  studentized Breusch-Pagan test
+## 
+## data:  savings_model
+## BP = 4.9852, df = 4, p-value = 0.2888</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(savings_model))</code></pre></div>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  resid(savings_model)
+## W = 0.98698, p-value = 0.8524</code></pre>
+<p>Now we will use the <code>gala</code> dataset as an example of using the Box-Cox method to justify a transformation other than <span class="math inline">\(\log\)</span>. We fit an additive multiple regression model with <code>Species</code> as the response and most of the other variables as predictors.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gala_model =<span class="st"> </span><span class="kw">lm</span>(Species ~<span class="st"> </span>Area +<span class="st"> </span>Elevation +<span class="st"> </span>Nearest +<span class="st"> </span>Scruz +<span class="st"> </span>Adjacent, <span class="dt">data =</span> gala)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(gala_model), <span class="kw">resid</span>(gala_model), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,
+     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-385-1.png" width="672" /></p>
+<p>Even though there is not a lot of data for large fitted values, it still seems very clear that the constant variance assumption is violated.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxcox</span>(gala_model, <span class="dt">lambda =</span> <span class="kw">seq</span>(-<span class="fl">0.25</span>, <span class="fl">0.75</span>, <span class="dt">by =</span> <span class="fl">0.05</span>), <span class="dt">plotit =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-386-1.png" width="672" /></p>
+<p>Using the Box-Cox method, we see that <span class="math inline">\(\lambda = 0.3\)</span> is both in the confidence interval, and is extremely close to the maximum, which suggests a transformation of the form</p>
+<p><span class="math display">\[
+\frac{y^\lambda - 1}{\lambda} = \frac{y^{0.3} - 1}{0.3}.
+\]</span></p>
+<p>We then fit a model with this transformation applied to the response.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gala_model_cox =<span class="st"> </span><span class="kw">lm</span>((((Species ^<span class="st"> </span><span class="fl">0.3</span>) -<span class="st"> </span><span class="dv">1</span>) /<span class="st"> </span><span class="fl">0.3</span>) ~<span class="st"> </span>Area +<span class="st"> </span>Elevation +<span class="st"> </span>Nearest +<span class="st"> </span>Scruz +<span class="st"> </span>Adjacent, <span class="dt">data =</span> gala)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(gala_model_cox), <span class="kw">resid</span>(gala_model_cox), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,
+     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-388-1.png" width="672" /></p>
+<p>The resulting fitted versus residuals plot looks much better!</p>
+<p>Lastly, we return to the <code>initech</code> data, and the <code>initech_fit</code> model we had used earlier. Recall, that this was the untransformed model, that we used a <span class="math inline">\(\log\)</span> transform to fix.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxcox</span>(initech_fit)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-389-1.png" width="672" /></p>
+<p>Using the Box-Cox method, we see that <span class="math inline">\(\lambda = 0\)</span> is both in the interval, and extremely close to the maximum, which suggests a transformation of the form</p>
+<p><span class="math display">\[
+  \log(y).
+\]</span></p>
+<p>So the Box-Cox method justifies our previous choice of a <span class="math inline">\(\log\)</span> transform!</p>
+</div>
+</div>
+<div id="predictor-transformation" class="section level2">
+<h2><span class="header-section-number">8.2</span> Predictor Transformation</h2>
+<p>In addition to transformation of the response variable, we can also consider transformations of predictor variables. Sometimes these transformations can help with violation of model assumptions, and other times they can be used to simply fit a more flexible model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(autompg)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    383 obs. of  9 variables:
+##  $ mpg     : num  18 15 18 16 17 15 14 14 14 15 ...
+##  $ cyl     : Factor w/ 3 levels &quot;4&quot;,&quot;6&quot;,&quot;8&quot;: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ disp    : num  307 350 318 304 302 429 454 440 455 390 ...
+##  $ hp      : num  130 165 150 150 140 198 220 215 225 190 ...
+##  $ wt      : num  3504 3693 3436 3433 3449 ...
+##  $ acc     : num  12 11.5 11 12 10.5 10 9 8.5 10 8.5 ...
+##  $ year    : int  70 70 70 70 70 70 70 70 70 70 ...
+##  $ origin  : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ domestic: num  1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<p>Recall the <code>autompg</code> dataset from the previous chapter. Here we will attempt to model <code>mpg</code> as a function of <code>hp</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot</span>(mpg ~<span class="st"> </span>hp, <span class="dt">data =</span> autompg, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)
+mpg_hp =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>hp, <span class="dt">data =</span> autompg)
+<span class="kw">abline</span>(mpg_hp, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="kw">plot</span>(<span class="kw">fitted</span>(mpg_hp), <span class="kw">resid</span>(mpg_hp), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,
+     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-392-1.png" width="768" /></p>
+<p>We first attempt SLR, but we see a rather obvious pattern in the fitted versus residuals plot, which includes increasing variance, so we attempt a <span class="math inline">\(\log\)</span> transform of the response.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot</span>(<span class="kw">log</span>(mpg) ~<span class="st"> </span>hp, <span class="dt">data =</span> autompg, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)
+mpg_hp_log =<span class="st"> </span><span class="kw">lm</span>(<span class="kw">log</span>(mpg) ~<span class="st"> </span>hp, <span class="dt">data =</span> autompg)
+<span class="kw">abline</span>(mpg_hp_log, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="kw">plot</span>(<span class="kw">fitted</span>(mpg_hp_log), <span class="kw">resid</span>(mpg_hp_log), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,
+     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-393-1.png" width="768" /></p>
+<p>After performing the <span class="math inline">\(\log\)</span> transform of the response, we still have some of the same issues with the fitted versus response. Now, we will try also <span class="math inline">\(\log\)</span> transforming the <strong>predictor</strong>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot</span>(<span class="kw">log</span>(mpg) ~<span class="st"> </span><span class="kw">log</span>(hp), <span class="dt">data =</span> autompg, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)
+mpg_hp_loglog =<span class="st"> </span><span class="kw">lm</span>(<span class="kw">log</span>(mpg) ~<span class="st"> </span><span class="kw">log</span>(hp), <span class="dt">data =</span> autompg)
+<span class="kw">abline</span>(mpg_hp_loglog, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="kw">plot</span>(<span class="kw">fitted</span>(mpg_hp_loglog), <span class="kw">resid</span>(mpg_hp_loglog), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,
+     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-394-1.png" width="768" /></p>
+<p>Now our fitting versus residuals plot looks good.</p>
+<div id="polynomials" class="section level3">
+<h3><span class="header-section-number">8.2.1</span> Polynomials</h3>
+<p>Another very common “transformation” of a predictor variable is the use of polynomial transformations. They are extremely useful as they allow for more flexible models, but do not change the units of the variables.</p>
+<p>It should come as no surprise that sales of a product are related to the advertising budget for the product, but there are diminishing returns. A company cannot always expect linear returns based on an increased advertising budget.</p>
+<p>Consider monthly data for the sales of <em>Initech</em> widgets, <span class="math inline">\(y\)</span>, as a function of <em>Initech</em>’s advertising expenditure for said widget, <span class="math inline">\(x\)</span>, both in ten thousand dollars. The data can be found in <a href="data/marketing.csv"><code>marketing.csv</code></a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">marketing =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/marketing.csv&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sales ~<span class="st"> </span>advert, <span class="dt">data =</span> marketing, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Advert Spending (in $100,00)&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Sales (in $100,00)&quot;</span>,
+     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-396-1.png" width="672" /></p>
+<p>We would like to fit the model,</p>
+<p><span class="math display">\[
+  y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \epsilon_i
+\]</span></p>
+<p>where <span class="math inline">\(\epsilon_i \sim N(0,\sigma^2)\)</span> for <span class="math inline">\(i = 1, 2, \cdots 21.\)</span></p>
+<p>The response <span class="math inline">\(y\)</span> is now a <strong>linear</strong> function of “two” variables which now allows <span class="math inline">\(y\)</span> to be a non-linear function of the original single predictor <span class="math inline">\(x\)</span>. We consider this a transformation, although we have actually in some sense added another predictor.</p>
+<p>Thus, our <span class="math inline">\(X\)</span> matrix is,</p>
+<p><span class="math display">\[
+  \begin{bmatrix}
+  1      &amp; x_1 &amp; x_1^2    \\
+  1      &amp; x_2  &amp; x_2^2   \\
+  1      &amp; x_3  &amp; x_3^2   \\
+  \ldots &amp; \ldots &amp; \ldots \\
+  1      &amp; x_{n}  &amp; x_{n}^2   \\
+  \end{bmatrix}
+\]</span></p>
+<p>We can then proceed to fit the model as we have in the past for multiple linear regression.</p>
+<p><span class="math display">\[
+\hat{\beta} = \left(  X^\top X  \right)^{-1}X^\top y.
+\]</span></p>
+<p>Our estimates will have the usual properties. The mean is still</p>
+<p><span class="math display">\[
+E[\hat{\beta}] = \beta,
+\]</span></p>
+<p>and variance</p>
+<p><span class="math display">\[
+Var[\hat{\beta}] = \sigma^2 \left(  X^\top X  \right)^{-1}.
+\]</span></p>
+<p>We also maintain the same distributional results</p>
+<p><span class="math display">\[
+\hat{\beta}_j \sim N\left(\beta_j, \sigma^2 C_{jj}  \right).
+\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mark_mod =<span class="st"> </span><span class="kw">lm</span>(sales ~<span class="st"> </span>advert, <span class="dt">data =</span> marketing)
+<span class="kw">summary</span>(mark_mod)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = sales ~ advert, data = marketing)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.7845 -1.4762 -0.5103  1.2361  3.1869 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   9.4502     0.6806   13.88 2.13e-11 ***
+## advert        1.1918     0.0937   12.72 9.65e-11 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.907 on 19 degrees of freedom
+## Multiple R-squared:  0.8949, Adjusted R-squared:  0.8894 
+## F-statistic: 161.8 on 1 and 19 DF,  p-value: 9.646e-11</code></pre>
+<p>While the SLR model is significant, the fitted versus residuals plot would have a very clear pattern.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mark_mod_poly2 =<span class="st"> </span><span class="kw">lm</span>(sales ~<span class="st"> </span>advert +<span class="st"> </span><span class="kw">I</span>(advert ^<span class="st"> </span><span class="dv">2</span>), <span class="dt">data =</span> marketing)
+<span class="kw">summary</span>(mark_mod_poly2)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = sales ~ advert + I(advert^2), data = marketing)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.9175 -0.8333 -0.1948  0.9292  2.1385 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  6.76161    0.67219  10.059 8.16e-09 ***
+## advert       2.46231    0.24830   9.917 1.02e-08 ***
+## I(advert^2) -0.08745    0.01658  -5.275 5.14e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.228 on 18 degrees of freedom
+## Multiple R-squared:  0.9587, Adjusted R-squared:  0.9541 
+## F-statistic:   209 on 2 and 18 DF,  p-value: 3.486e-13</code></pre>
+<p>To add the second order term we need to use the <code>I()</code> function in the model specification around our newly created predictor. We see that with the first order term in the model, the quadratic term is also significant.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n =<span class="st"> </span><span class="kw">length</span>(marketing$advert)
+X =<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">rep</span>(<span class="dv">1</span>, n), marketing$advert, marketing$advert ^<span class="st"> </span><span class="dv">2</span>)
+<span class="kw">t</span>(X) %*%<span class="st"> </span>X</code></pre></div>
+<pre><code>##         [,1]     [,2]      [,3]
+## [1,]   21.00   120.70   1107.95
+## [2,]  120.70  1107.95  12385.86
+## [3,] 1107.95 12385.86 151369.12</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">solve</span>(<span class="kw">t</span>(X) %*%<span class="st"> </span>X) %*%<span class="st"> </span><span class="kw">t</span>(X) %*%<span class="st"> </span>marketing$sales</code></pre></div>
+<pre><code>##             [,1]
+## [1,]  6.76161045
+## [2,]  2.46230964
+## [3,] -0.08745394</code></pre>
+<p>Here we verify the parameter estimates were found as we would expect.</p>
+<p>We could also add higher order terms, such as a third degree predictor. This is easy to do. Our <span class="math inline">\(X\)</span> matrix simply becomes larger again.</p>
+<p><span class="math display">\[
+  y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \beta_3 x_i^3 + \epsilon_i
+\]</span></p>
+<p><span class="math display">\[
+  \begin{bmatrix}
+  1      &amp; x_1 &amp; x_1^2  &amp; x_1^3    \\
+  1      &amp; x_2  &amp; x_2^2  &amp; x_2^3   \\
+  1      &amp; x_3  &amp; x_3^2  &amp; x_3^3   \\
+  \ldots &amp; \ldots &amp; \ldots &amp; \ldots \\
+  1      &amp; x_{n}  &amp; x_{n}^2  &amp; x_{n}^3    \\
+  \end{bmatrix}
+\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mark_mod_poly3 =<span class="st"> </span><span class="kw">lm</span>(sales ~<span class="st"> </span>advert +<span class="st"> </span><span class="kw">I</span>(advert ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(advert ^<span class="st"> </span><span class="dv">3</span>), <span class="dt">data =</span> marketing)
+<span class="kw">summary</span>(mark_mod_poly3)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = sales ~ advert + I(advert^2) + I(advert^3), data = marketing)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.44322 -0.61310 -0.01527  0.68131  1.22517 
+## 
+## Coefficients:
+##              Estimate Std. Error t value     Pr(&gt;|t|)    
+## (Intercept)  3.890070   0.761956   5.105 0.0000879488 ***
+## advert       4.681864   0.501032   9.344 0.0000000414 ***
+## I(advert^2) -0.455152   0.078977  -5.763 0.0000229561 ***
+## I(advert^3)  0.016131   0.003429   4.704     0.000205 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.8329 on 17 degrees of freedom
+## Multiple R-squared:  0.9821, Adjusted R-squared:  0.9789 
+## F-statistic: 310.2 on 3 and 17 DF,  p-value: 4.892e-15</code></pre>
+<p>Now we see that with the first and second order terms in the model, the third order term is also significant. But does this make sense practically? The following plot should gives hints as to why it doesn’t. (The model with the third order term doesn’t have diminishing returns!)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sales ~<span class="st"> </span>advert, <span class="dt">data =</span> marketing, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Advert Spending (in $100,00)&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Sales (in $100,00)&quot;</span>,
+     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="dv">2</span>)
+<span class="kw">abline</span>(mark_mod, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;green&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+xplot =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">16</span>, <span class="dt">by =</span> <span class="fl">0.01</span>)
+<span class="kw">lines</span>(xplot, <span class="kw">predict</span>(mark_mod_poly2, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">advert =</span> xplot)),
+      <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="kw">lines</span>(xplot, <span class="kw">predict</span>(mark_mod_poly3, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">advert =</span> xplot)),
+      <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-401-1.png" width="672" /></p>
+<p>The previous plot was made using base graphics in <code>R</code>. The next plot was made using the package <a href="http://ggplot2.org/"><code>ggplot2</code></a>, an increasingly popular plotting method in <code>R</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+<span class="kw">ggplot</span>(<span class="dt">data =</span> marketing, <span class="kw">aes</span>(<span class="dt">x =</span> advert, <span class="dt">y =</span> sales)) +
+<span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">color =</span> <span class="st">&quot;green&quot;</span>, <span class="dt">formula =</span> y ~<span class="st"> </span>x) +
+<span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">formula =</span> y ~<span class="st"> </span>x +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">2</span>)) +
+<span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">formula =</span> y ~<span class="st"> </span>x +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">2</span>)+<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">3</span>)) +
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">size =</span> <span class="dv">3</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-402-1.png" width="672" /></p>
+<p>Note we could fit a polynomial of an arbitrary order,</p>
+<p><span class="math display">\[
+  y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \cdots + \beta_{p-1}x_i^{p-1} + \epsilon_i
+\]</span></p>
+<p>However, we should be careful about over-fitting, since with a polynomial of degree one less than the number of observations, it is sometimes possible to fit a model perfectly.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
+x =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>)
+y =<span class="st"> </span><span class="dv">3</span> +<span class="st"> </span>x +<span class="st"> </span><span class="dv">4</span> *<span class="st"> </span>x ^<span class="st"> </span><span class="dv">2</span> +<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">11</span>, <span class="dv">0</span>, <span class="dv">20</span>)
+<span class="kw">plot</span>(x, y, <span class="dt">ylim =</span> <span class="kw">c</span>(-<span class="dv">300</span>, <span class="dv">400</span>), <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">pch =</span> <span class="dv">20</span>)
+fit =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">2</span>))
+<span class="co">#summary(fit)</span>
+fit_perf =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">3</span>) +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">4</span>) +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">5</span>) +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">6</span>)
+               +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">7</span>) +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">8</span>) +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">9</span>) +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">10</span>))
+<span class="kw">summary</span>(fit_perf)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x + I(x^2) + I(x^3) + I(x^4) + I(x^5) + I(x^6) + 
+##     I(x^7) + I(x^8) + I(x^9) + I(x^10))
+## 
+## Residuals:
+## ALL 11 residuals are 0: no residual degrees of freedom!
+## 
+## Coefficients:
+##                 Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)   -21.141315         NA      NA       NA
+## x           -1918.260330         NA      NA       NA
+## I(x^2)       4969.169159         NA      NA       NA
+## I(x^3)      -4932.231427         NA      NA       NA
+## I(x^4)       2580.602473         NA      NA       NA
+## I(x^5)       -803.533255         NA      NA       NA
+## I(x^6)        156.982335         NA      NA       NA
+## I(x^7)        -19.465675         NA      NA       NA
+## I(x^8)          1.489665         NA      NA       NA
+## I(x^9)         -0.064240         NA      NA       NA
+## I(x^10)         0.001195         NA      NA       NA
+## 
+## Residual standard error: NaN on 0 degrees of freedom
+## Multiple R-squared:      1,  Adjusted R-squared:    NaN 
+## F-statistic:   NaN on 10 and 0 DF,  p-value: NA</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">xplot =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)
+<span class="kw">lines</span>(xplot, <span class="kw">predict</span>(fit, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">x =</span> xplot)),
+      <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">1</span>)
+<span class="kw">lines</span>(xplot, <span class="kw">predict</span>(fit_perf, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">x =</span> xplot)),
+      <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-403-1.png" width="672" /></p>
+<p>Notice in the summary, <code>R</code> could not calculate standard errors. This is a result of being “out” of degrees of freedom. With 11 <span class="math inline">\(\beta\)</span> parameters and 11 data points, we use up all the degrees of freedom before we can estimate <span class="math inline">\(\sigma\)</span>.</p>
+<p>In this example, the true relationship is quadratic, but the order 10 polynomial’s fit is “perfect”. Next chapter we will focus on the trade-off between goodness of fit (minimizing errors) and complexity of model.</p>
+<p>Suppose you work for an automobile manufacturer which makes a large luxury sedan. You would like to know how the car performs from a fuel efficiency standpoint when it is driven at various speeds. Instead of testing the car at every conceivable speed (which would be impossible) you create an experiment where the car is driven at speeds of interest in increments of 5 miles per hour.</p>
+<p>Our goal then, is to fit a model to this data in order to be able to predict fuel efficiency when driving at certain speeds. The data from this example can be found in <a href="data/fuel_econ.csv"><code>fuel_econ.csv</code></a>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">econ =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/fuel_econ.csv&quot;</span>)</code></pre></div>
+<p>In this example, we will be frequently looking a the fitted versus residuals plot, so we <em>should</em> write a function to make our life easier, but this is left as an exercise for homework.</p>
+<p>We will also be adding fitted curves to scatterplots repeatedly, so smartly we will write a function to do so.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plot_econ_curve =<span class="st"> </span>function(model){
+  <span class="kw">plot</span>(mpg ~<span class="st"> </span>mph, <span class="dt">data =</span> econ, <span class="dt">xlab =</span> <span class="st">&quot;Speed (Miles per Hour)&quot;</span>, 
+       <span class="dt">ylab =</span> <span class="st">&quot;Fuel Efficiency (Miles per Gallon)&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, 
+       <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span><span class="dv">2</span>)
+  xplot =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">10</span>, <span class="dv">75</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)
+  <span class="kw">lines</span>(xplot, <span class="kw">predict</span>(model, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">mph =</span> xplot)),
+        <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">1</span>)
+}</code></pre></div>
+<p>So now we first fit a simple linear regression to this data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit1 =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>mph, <span class="dt">data =</span> econ)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot_econ_curve</span>(fit1)
+<span class="kw">plot</span>(<span class="kw">fitted</span>(fit1), <span class="kw">resid</span>(fit1), <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, 
+     <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span><span class="dv">2</span>)
+  <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-407-1.png" width="768" /></p>
+<p>Pretty clearly we can do better. Yes fuel efficiency does increase as speed increases, but only up to a certain point.</p>
+<p>We will now add polynomial terms until we fit a suitable fit.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit2 =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>mph +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">2</span>), <span class="dt">data =</span> econ)
+<span class="kw">summary</span>(fit2)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ mph + I(mph^2), data = econ)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.8411 -0.9694  0.0017  1.0181  3.3900 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2.4444505  1.4241091   1.716   0.0984 .  
+## mph          1.2716937  0.0757321  16.792 3.99e-15 ***
+## I(mph^2)    -0.0145014  0.0008719 -16.633 4.97e-15 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.663 on 25 degrees of freedom
+## Multiple R-squared:  0.9188, Adjusted R-squared:  0.9123 
+## F-statistic: 141.5 on 2 and 25 DF,  p-value: 2.338e-14</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot_econ_curve</span>(fit2)
+<span class="kw">plot</span>(<span class="kw">fitted</span>(fit2), <span class="kw">resid</span>(fit2), <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, 
+     <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span><span class="dv">2</span>)
+  <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-409-1.png" width="768" /></p>
+<p>While this model clearly fits much better, and the second order term is significant, we still see a pattern in the fitted versus residuals plot which suggests higher order terms will help. Also, we would expect the curve to flatten as speed increases or decreases, not go sharply downward as we see here.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit3 =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>mph +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">3</span>), <span class="dt">data =</span> econ)
+<span class="kw">summary</span>(fit3)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ mph + I(mph^2) + I(mph^3), data = econ)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.8112 -0.9677  0.0264  1.0345  3.3827 
+## 
+## Coefficients:
+##                 Estimate   Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2.257842158  2.767928398   0.816   0.4227    
+## mph          1.290771239  0.252928479   5.103 0.000032 ***
+## I(mph^2)    -0.015019730  0.006603861  -2.274   0.0322 *  
+## I(mph^3)     0.000004066  0.000051323   0.079   0.9375    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.697 on 24 degrees of freedom
+## Multiple R-squared:  0.9188, Adjusted R-squared:  0.9087 
+## F-statistic: 90.56 on 3 and 24 DF,  p-value: 3.17e-13</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot_econ_curve</span>(fit3)
+<span class="kw">plot</span>(<span class="kw">fitted</span>(fit3), <span class="kw">resid</span>(fit3), <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, 
+     <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span><span class="dv">2</span>)
+  <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-411-1.png" width="768" /></p>
+<p>Adding the third order term doesn’t seem to help at all. The fitted curve hardly changes. This makes sense, since what we would like is for the curve to flatten at the extremes. For this we will need an even degree polynomial term.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit4 =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>mph +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">3</span>) +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">4</span>), <span class="dt">data =</span> econ)
+<span class="kw">summary</span>(fit4)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ mph + I(mph^2) + I(mph^3) + I(mph^4), data = econ)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.57410 -0.60308  0.04236  0.74481  1.93038 
+## 
+## Coefficients:
+##                 Estimate   Std. Error t value    Pr(&gt;|t|)    
+## (Intercept) 21.460464535  2.964796563   7.238 0.000000228 ***
+## mph         -1.467700706  0.391271891  -3.751     0.00104 ** 
+## I(mph^2)     0.108111931  0.016728286   6.463 0.000001354 ***
+## I(mph^3)    -0.002129559  0.000284392  -7.488 0.000000131 ***
+## I(mph^4)     0.000012551  0.000001665   7.539 0.000000117 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.9307 on 23 degrees of freedom
+## Multiple R-squared:  0.9766, Adjusted R-squared:  0.9726 
+## F-statistic: 240.2 on 4 and 23 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot_econ_curve</span>(fit4)
+<span class="kw">plot</span>(<span class="kw">fitted</span>(fit4), <span class="kw">resid</span>(fit4), <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, 
+     <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span><span class="dv">2</span>)
+  <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-413-1.png" width="768" /></p>
+<p>Now we are making progress. The fourth order term is significant with the other terms in the model. Also we are starting to see what we expected for low and high speed. However, there still seems to be a bit of a pattern in the residuals, so we will again try more higher order terms. We will add the fifth and sixth together, since adding the fifth will be similar to adding the third.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit6 =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>mph +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">3</span>) +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">4</span>) +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">5</span>) +<span class="st"> </span><span class="kw">I</span>(mph^<span class="dv">6</span>), <span class="dt">data =</span> econ)
+<span class="kw">summary</span>(fit6)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ mph + I(mph^2) + I(mph^3) + I(mph^4) + I(mph^5) + 
+##     I(mph^6), data = econ)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.1129 -0.5717 -0.1707  0.5026  1.5288 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept) -4.206e+00  1.204e+01  -0.349   0.7304  
+## mph          4.203e+00  2.553e+00   1.646   0.1146  
+## I(mph^2)    -3.521e-01  2.012e-01  -1.750   0.0947 .
+## I(mph^3)     1.579e-02  7.691e-03   2.053   0.0527 .
+## I(mph^4)    -3.473e-04  1.529e-04  -2.271   0.0338 *
+## I(mph^5)     3.585e-06  1.518e-06   2.362   0.0279 *
+## I(mph^6)    -1.402e-08  5.941e-09  -2.360   0.0280 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.8657 on 21 degrees of freedom
+## Multiple R-squared:  0.9815, Adjusted R-squared:  0.9762 
+## F-statistic:   186 on 6 and 21 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot_econ_curve</span>(fit6)
+<span class="kw">plot</span>(<span class="kw">fitted</span>(fit6), <span class="kw">resid</span>(fit6), <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, 
+     <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span><span class="dv">2</span>)
+  <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-415-1.png" width="768" /></p>
+<p>Again the sixth order term is significant with the other terms in the model and here we see less pattern in the residuals plot. Let’s now test for which of the previous two models we prefer. We will test</p>
+<p><span class="math display">\[
+H_0: \beta_5 = \beta_6 = 0.
+\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(fit4, fit6)</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: mpg ~ mph + I(mph^2) + I(mph^3) + I(mph^4)
+## Model 2: mpg ~ mph + I(mph^2) + I(mph^3) + I(mph^4) + I(mph^5) + I(mph^6)
+##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)  
+## 1     23 19.922                             
+## 2     21 15.739  2    4.1828 2.7905 0.0842 .
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>So, this test does not reject the null hypothesis at a level of significance of <span class="math inline">\(\alpha = 0.05\)</span>, however the p-value is still rather small, and the fitted versus residuals plot is much better for the model with the sixth order term. This makes the sixth order model a good choice. We could repeat this process one more time.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit8 =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>mph +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">3</span>) +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">4</span>) +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">5</span>)
+          +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">6</span>) +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">7</span>) +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">8</span>), <span class="dt">data =</span> econ)
+<span class="kw">summary</span>(fit8)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ mph + I(mph^2) + I(mph^3) + I(mph^4) + I(mph^5) + 
+##     I(mph^6) + I(mph^7) + I(mph^8), data = econ)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.21938 -0.50464 -0.09105  0.49029  1.45440 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) -1.202e+01  7.045e+01  -0.171    0.866
+## mph          6.021e+00  2.014e+01   0.299    0.768
+## I(mph^2)    -5.037e-01  2.313e+00  -0.218    0.830
+## I(mph^3)     2.121e-02  1.408e-01   0.151    0.882
+## I(mph^4)    -4.008e-04  5.017e-03  -0.080    0.937
+## I(mph^5)     1.789e-06  1.080e-04   0.017    0.987
+## I(mph^6)     4.486e-08  1.381e-06   0.032    0.974
+## I(mph^7)    -6.456e-10  9.649e-09  -0.067    0.947
+## I(mph^8)     2.530e-12  2.835e-11   0.089    0.930
+## 
+## Residual standard error: 0.9034 on 19 degrees of freedom
+## Multiple R-squared:  0.9818, Adjusted R-squared:  0.9741 
+## F-statistic: 128.1 on 8 and 19 DF,  p-value: 7.074e-15</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot_econ_curve</span>(fit8)
+<span class="kw">plot</span>(<span class="kw">fitted</span>(fit8), <span class="kw">resid</span>(fit8), <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, 
+     <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span><span class="dv">2</span>)
+  <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-418-1.png" width="768" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit8)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ mph + I(mph^2) + I(mph^3) + I(mph^4) + I(mph^5) + 
+##     I(mph^6) + I(mph^7) + I(mph^8), data = econ)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.21938 -0.50464 -0.09105  0.49029  1.45440 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) -1.202e+01  7.045e+01  -0.171    0.866
+## mph          6.021e+00  2.014e+01   0.299    0.768
+## I(mph^2)    -5.037e-01  2.313e+00  -0.218    0.830
+## I(mph^3)     2.121e-02  1.408e-01   0.151    0.882
+## I(mph^4)    -4.008e-04  5.017e-03  -0.080    0.937
+## I(mph^5)     1.789e-06  1.080e-04   0.017    0.987
+## I(mph^6)     4.486e-08  1.381e-06   0.032    0.974
+## I(mph^7)    -6.456e-10  9.649e-09  -0.067    0.947
+## I(mph^8)     2.530e-12  2.835e-11   0.089    0.930
+## 
+## Residual standard error: 0.9034 on 19 degrees of freedom
+## Multiple R-squared:  0.9818, Adjusted R-squared:  0.9741 
+## F-statistic: 128.1 on 8 and 19 DF,  p-value: 7.074e-15</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(fit6, fit8)</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: mpg ~ mph + I(mph^2) + I(mph^3) + I(mph^4) + I(mph^5) + I(mph^6)
+## Model 2: mpg ~ mph + I(mph^2) + I(mph^3) + I(mph^4) + I(mph^5) + I(mph^6) + 
+##     I(mph^7) + I(mph^8)
+##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+## 1     21 15.739                           
+## 2     19 15.506  2    0.2324 0.1424 0.8682</code></pre>
+<p>Here we would clearly stick with <code>fit6</code>. The eighth order term is not significant with the other terms in the model and the F-test does not reject.</p>
+<p>As an aside, be aware that there is a quicker way to specify a model with many higher order terms.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit6_alt =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span><span class="kw">poly</span>(mph, <span class="dv">6</span>), <span class="dt">data =</span> econ)
+<span class="kw">all.equal</span>(<span class="kw">fitted</span>(fit6), <span class="kw">fitted</span>(fit6_alt))</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>We first verify that this method produces the same fitted values. However, the estimated coefficients are different.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(fit6)</code></pre></div>
+<pre><code>##       (Intercept)               mph          I(mph^2)          I(mph^3) 
+## -4.20622377616269  4.20338221905924 -0.35214523989512  0.01579340288449 
+##          I(mph^4)          I(mph^5)          I(mph^6) 
+## -0.00034726647879  0.00000358520124 -0.00000001401995</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(fit6_alt)</code></pre></div>
+<pre><code>##   (Intercept) poly(mph, 6)1 poly(mph, 6)2 poly(mph, 6)3 poly(mph, 6)4 
+##   24.40714286    4.16769628  -27.66685755    0.13446747    7.01671480 
+## poly(mph, 6)5 poly(mph, 6)6 
+##    0.09288754   -2.04307796</code></pre>
+<p>This is because <code>poly()</code> uses <em>orthogonal polynimials</em>, which solves an issue we will discuss in the next chapter.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit6)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ mph + I(mph^2) + I(mph^3) + I(mph^4) + I(mph^5) + 
+##     I(mph^6), data = econ)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.1129 -0.5717 -0.1707  0.5026  1.5288 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept) -4.206e+00  1.204e+01  -0.349   0.7304  
+## mph          4.203e+00  2.553e+00   1.646   0.1146  
+## I(mph^2)    -3.521e-01  2.012e-01  -1.750   0.0947 .
+## I(mph^3)     1.579e-02  7.691e-03   2.053   0.0527 .
+## I(mph^4)    -3.473e-04  1.529e-04  -2.271   0.0338 *
+## I(mph^5)     3.585e-06  1.518e-06   2.362   0.0279 *
+## I(mph^6)    -1.402e-08  5.941e-09  -2.360   0.0280 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.8657 on 21 degrees of freedom
+## Multiple R-squared:  0.9815, Adjusted R-squared:  0.9762 
+## F-statistic:   186 on 6 and 21 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit6_alt)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ poly(mph, 6), data = econ)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.1129 -0.5717 -0.1707  0.5026  1.5288 
+## 
+## Coefficients:
+##                Estimate Std. Error t value     Pr(&gt;|t|)    
+## (Intercept)    24.40714    0.16360 149.184      &lt; 2e-16 ***
+## poly(mph, 6)1   4.16770    0.86571   4.814 0.0000930613 ***
+## poly(mph, 6)2 -27.66686    0.86571 -31.958      &lt; 2e-16 ***
+## poly(mph, 6)3   0.13447    0.86571   0.155        0.878    
+## poly(mph, 6)4   7.01671    0.86571   8.105 0.0000000668 ***
+## poly(mph, 6)5   0.09289    0.86571   0.107        0.916    
+## poly(mph, 6)6  -2.04308    0.86571  -2.360        0.028 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.8657 on 21 degrees of freedom
+## Multiple R-squared:  0.9815, Adjusted R-squared:  0.9762 
+## F-statistic:   186 on 6 and 21 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Notice though that the p-value for testing the degree 6 term is the same. Because of this, for the most part we can use these interchangeably.</p>
+<p>To use <code>poly()</code> to obtain the same results as using <code>I()</code> repeatedly, we would need to set <code>raw = TRUE</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit6_alt2 =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span><span class="kw">poly</span>(mph, <span class="dv">6</span>, <span class="dt">raw =</span> <span class="ot">TRUE</span>), <span class="dt">data =</span> econ)
+<span class="kw">coef</span>(fit6_alt2)</code></pre></div>
+<pre><code>##               (Intercept) poly(mph, 6, raw = TRUE)1 poly(mph, 6, raw = TRUE)2 
+##         -4.20622377616269          4.20338221905924         -0.35214523989512 
+## poly(mph, 6, raw = TRUE)3 poly(mph, 6, raw = TRUE)4 poly(mph, 6, raw = TRUE)5 
+##          0.01579340288449         -0.00034726647879          0.00000358520124 
+## poly(mph, 6, raw = TRUE)6 
+##         -0.00000001401995</code></pre>
+<p>We’ve now seen how to transform predictor and response variables. In this chapter we have mostly focused on using this in the context of fixing SLR models. However, these concepts can easily be used together with categorical variables and interactions to build larger, more flexible models. In the next chapter, we will discuss how to choose a good model from a collection of possible models.</p>
+<p>Please note: some data currently used in this chapter was used, changed, and passed around over the years in STAT 420 at UIUC. Its original sources, if they exist, are at this time unknown to the author. As a result, they should only be considered for use with STAT 420 in Summer 2016. Going forward they will likely be replaced with alternative sourceable data that illustrates the same concepts.</p>
+
+<div id="refs" class="references">
+
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="model-diagnostics.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/daviddalpiaz/appliedstats/edit/master/07-transformations.Rmd",
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
