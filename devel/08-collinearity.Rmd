@@ -178,7 +178,11 @@ Here the variable added plot shows almost no linear relationship and the partial
 
 This trade off is mostly true in general. As a model gets more predictors, errors will get smaller and its prediction will be better, but it will be harder to interpret. This is why, if we are interested in the relationship between the predictors and the response, we often want a model that fits well with a small number of predictors.
 
+- TODO: Beware of overfitting? Over save for selection?
+
 # Bodyfat Example
+
+- TODO: Move this to different document. Split data into `.csv`
 
 In class we also discussed the following `bodyfat` example. While with all the predictors prediction is good, we have to be careful to remember how much of the space of $X$ we have seen and where it is a good idea to actually make predictions with correlated data.
 
@@ -237,7 +241,11 @@ num_sim =  10000
 
 x1 = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 x2 = c(1, 2, 3, 4, 5, 7, 6, 10, 9, 8)
+
+sd(x1)
+sd(x2)
 cor(x1, x2)
+
 true_line = beta_0 + beta_1 * x1 + beta_2 * x2
 beta_hat_bad = matrix(0, num_sim, 3)
 mse_bad = rep(0, num_sim)
@@ -251,7 +259,11 @@ for (s in 1:num_sim) {
 
 x1 = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 x2 = c(9, 2, 7, 4, 5, 6, 3, 8, 1, 10)
+
+sd(x1)
+sd(x2)
 cor(x1, x2)
+
 true_line = beta_0 + beta_1 * x1 + beta_2 * x2
 beta_hat_good = matrix(0, num_sim, 3)
 mse_good = rep(0, num_sim)
@@ -262,46 +274,50 @@ for (s in 1:num_sim) {
   beta_hat_good[s, ] = coef(reg_out)
   mse_good[s] = mean(resid(reg_out) ^ 2)
 }
+```
 
+- TODO: Add hats!
+
+```{r}
 par(mfrow = c(3, 2))
 hist(beta_hat_bad[, 2],
-     col = "orange",
-     border = "blue",
+     col = "darkorange",
+     border = "dodgerblue",
      main = expression("Histogram of " *beta[1]* " with Collinearity"),
      xlab = expression(beta[1])
 )
 hist(beta_hat_good[, 2],
-     col = "orange",
-     border = "blue",
+     col = "darkorange",
+     border = "dodgerblue",
      main = expression("Histogram of " *beta[1]* " without Collinearity"),
      xlab = expression(beta[1])
 )
 hist(beta_hat_bad[, 3],
-     col = "orange",
-     border = "blue",
+     col = "darkorange",
+     border = "dodgerblue",
      main = expression("Histogram of " *beta[2]* " with Collinearity"),
      xlab = expression(beta[2])
 )
 hist(beta_hat_good[, 3],
-     col = "orange",
-     border = "blue",
+     col = "darkorange",
+     border = "dodgerblue",
      main = expression("Histogram of " *beta[2]* " without Collinearity"),
      xlab = expression(beta[2])
 )
 hist(mse_bad,
-     col = "orange",
-     border = "blue",
+     col = "darkorange",
+     border = "dodgerblue",
      main = "MSE, with Collinearity",
      xlab = "MSE"
 )
 hist(mse_good,
-     col = "orange",
-     border = "blue",
+     col = "darkorange",
+     border = "dodgerblue",
      main = "MSE, without Collinearity",
      xlab = "MSE"
 )
 ```
 
-
+TODO: add numeric means and variances
 
 
