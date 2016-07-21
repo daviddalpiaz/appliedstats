@@ -1,0 +1,307 @@
+# Collinearity
+
+> "If I look confused it is because I am thinking."
+>
+> --- **Samuel Goldwyn**
+
+## Collinearity
+
+- TODO: Often called multicollinearity.
+
+\[
+  \boldsymbol{Y} = \boldsymbol{X}\boldsymbol{\beta} + \boldsymbol{\epsilon} \quad \quad \epsilon_i \sim N(0,\sigma^2)
+\]
+
+
+\[
+  \boldsymbol{\hat{\beta}} = \left(  \boldsymbol{X}^T \boldsymbol{X}  \right)^{-1}\boldsymbol{X}^T \boldsymbol{Y}
+  \quad
+  \quad
+  \quad
+  E[\boldsymbol{\hat{\beta}}] = \boldsymbol{\beta}
+  \quad
+  \quad
+  \quad
+  Var[\boldsymbol{\hat{\beta}}] = \boldsymbol{\sigma}^2 \left(  \boldsymbol{X}^T \boldsymbol{X}  \right)^{-1}
+\]
+
+```{r}
+set.seed(42)
+```
+
+# Introduction
+
+Let's create a dataset where one of the predictors, $x_3$, is a linear combination of the other predictors.
+
+```{r}
+gen_exact_collin_data = function(num_samples = 100) {
+  x1 = rnorm(n = num_samples, mean = 80, sd = 10)
+  x2 = rnorm(n = num_samples, mean = 70, sd = 5)
+  x3 = 2 * x1 + 4 * x2 + 3
+  y = 3 + x1 + x2 + rnorm(n = num_samples, mean = 0, sd = 1)
+  data.frame(y, x1, x2, x3)
+}
+
+exact_collin_data = gen_exact_collin_data()
+```
+
+What happens when we fit a regression model in `R`?
+
+```{r}
+exact_collin_fit = lm(y ~ x1 + x2 + x3, data = exact_collin_data)
+summary(exact_collin_fit)
+```
+
+We see that `R` simply decides to exclude the variable. Why is this happening?
+
+```{r, eval = FALSE}
+X = cbind(1, as.matrix(exact_collin_data[,-1]))
+solve(t(X) %*% X)
+```
+
+If we attempt to find $\boldsymbol{\hat{\beta}}$ using $\left(  \boldsymbol{X}^T \boldsymbol{X}  \right)^{-1}$, we see that this is not possible, due to the fact that the columns of $\boldsymbol{X}$ are linearly dependent. (The previous lines of code were not run, because they produce an error!)
+
+When this happens, we say there is exact collinearity. Exact collinearity is an extreme example of multicollinearity, which occurs in multiple regression when predictor variables are highly correlated.
+
+# Seat Position Example
+
+Looking at the `seatpos` dataset, we can see an example of this. For example, we expect a person's height to be highly correlated to their height when wearing shoes.
+
+```{r}
+library(faraway)
+pairs(seatpos, col = "dodgerblue")
+round(cor(seatpos), 2)
+```
+
+Unlike exact collinearity, here we can still fit a model with all of the predictors, but what effect does this have?
+
+```{r}
+fit = lm(hipcenter ~ ., data = seatpos)
+summary(fit)
+```
+
+One of the first things we should notice is that the $F$-test for the regression tells us that the regression is significant, however each individual predictor is not. Another interesting result is the opposite signs of the coefficients for `Ht` and `HtShoes`. This should seem rather counter-intuitive. 
+
+This happens as a result of the predictors being highly correlated. For example, the `HtShoe` variable explains a large amount of the variation in `Ht`. When they are both in the model, their effects on the response are lessened individually, but together they still explain a large portion of the variation of `hipcenter`.
+
+Define $R_j^2$ to be the proportion of observed variation in the $j$-th predictor explained by the other predictors. In other words $R_j^2$ is the multiple R-Squared for the regression of $x_j$ on each of the other predictors.
+
+```{r}
+fitHtShoes = lm(HtShoes ~ . - hipcenter, data = seatpos)
+summary(fitHtShoes)
+```
+
+Here we see that the other predictors explain $99.67\%$ of the variation in `HtShoe`.
+
+Now note that the variance of $\hat{\beta_j}$ can be written as
+
+\[
+  Var(\hat{\beta_j}) = \sigma^2 \left( \frac{1}{1 - R_j^2}  \right) \frac{1}{SX_jX_j}
+\]
+
+where $SX_jX_j = \sum(x_{ij}-\bar{x}_j)^2$. This gives us a way to understand how multicollinearity affects our regression estimates.
+
+We will call,
+
+\[
+  \frac{1}{1 - R_j^2}
+\]
+
+the **variance inflation factor.** The variance inflation factor quantifies the effect of multicollinearity on the variance of our regression estimates. When $R_j^2$ is large, $x_j$ is well explained by the other predictors. With a large $R_j^2$ the variance inflation factor becomes large. This tells us that when $x_j$ is highly correlated with other predictors, our estimate of $\beta_j$ is highly variable.
+
+The `vif` function from the `faraway` package calculates the VIFs for each of the predictors.
+
+```{r}
+vif(fit)
+```
+
+In practice it is common to say that any VIF greater than $5$ is problematic. So in this example we see there is a huge multicollinearity issue.
+
+If we add a small amount of noise to the data, we see that the estimates of the coefficients change drastically.
+
+```{r}
+fitNoise = lm(hipcenter + rnorm(38, mean = 0, sd = 10) ~ ., data = seatpos)
+# change the way noise is added, right now it is huge
+fit
+fitNoise
+```
+
+- TODO: Add example of predicting from both. make it so they are roughly the same
+
+Let's now look at a smaller model,
+
+```{r}
+fit2 = lm(hipcenter ~ Age + Weight + Ht, data = seatpos)
+summary(fit2)
+vif(fit2)
+```
+
+Immediately we see that multicollinearity isn't an issue here.
+
+```{r}
+anova(fit2, fit)
+```
+
+- TODO: redo noise example
+
+Also notice that using an $F$-test to compare the two models, we would prefer the smaller model.
+
+Let's now look at the effect of adding another variable to this model. Specifically we want to look at adding the variable `HtShoes`. So now our possible predictors are `HtShoes`, `Age`, `Weight`, and `Ht`. Our response is still `hipcenter`.
+
+To quantify this effect we will look at a **variable added plot** and a **partial correlation coefficient**. For both of these, we will look at the residuals of two models.
+
+* Regress the response against all of the predictors except the predictor of interest.
+* Regress the predictor of interest against the other predictors.
+
+```{r}
+fit3 = lm(HtShoes ~ Age + Weight + Ht, data = seatpos)
+```
+
+So now, the residuals of `fit2` give us the variation of `hipcenter` that is unexplained by `Age`, `Weight`, and `Ht`. Similarly, the residuals of `fit3` give us the variation of `HtShoes` unexplained by `Age`, `Weight`, and `Ht`.
+
+The correlation of these two residuals gives us the **partial correlation coefficient** of `HtShoes` and `hipcenter` with the effects of `Age`, `Weight`, and `Ht` removed.
+
+```{r}
+cor(resid(fit3), resid(fit2))
+```
+
+Similarly the **variable added plot** plots these residuals against each other. It is also helpful to regress the residuals of the response against the residuals of the predictor and add the regression line to the plot.
+
+```{r}
+plot(resid(fit3), resid(fit2))
+abline(h = 0, lty = 2)
+abline(v = 0, lty = 2)
+abline(lm(resid(fit2) ~ resid(fit3)), col = "red", lwd = 2)
+```
+
+Here the variable added plot shows almost no linear relationship and the partial correlation is very low. This tells us that adding `HtShoes` to the model would probably not be worthwhile. Since its variation is largely explained by the other predictors, adding it to the model will not do much to improve the model. However it will increase the variation of the estimates and make the model much harder to interpret.
+
+This trade off is mostly true in general. As a model gets more predictors, errors will get smaller and its prediction will be better, but it will be harder to interpret. This is why, if we are interested in the relationship between the predictors and the response, we often want a model that fits well with a small number of predictors.
+
+# Bodyfat Example
+
+In class we also discussed the following `bodyfat` example. While with all the predictors prediction is good, we have to be careful to remember how much of the space of $X$ we have seen and where it is a good idea to actually make predictions with correlated data.
+
+
+```{r}
+bodyfat = data.frame(
+  bodyfat = c(11.9,22.8,18.7,20.1,12.9,21.7,27.1,25.4,21.3,19.3,
+             25.4,27.2,11.7,17.8,12.8,23.9,22.6,25.4,14.8,21.1),
+  tricep = c(19.5,24.7,30.7,29.8,19.1,25.6,31.4,27.9,22.1,25.5,
+            31.1,30.4,18.7,19.7,14.6,29.5,27.7,30.2,22.7,25.2),
+  thigh = c(43.1,49.8,51.9,54.3,42.2,53.9,58.5,52.1,49.9,53.5,
+           56.6,56.7,46.5,44.2,42.7,54.4,55.3,58.6,48.2,51.0),
+  midarm = c(29.1,28.2,37.0,31.1,30.9,23.7,27.6,30.6,23.2,24.8,
+            30.0,28.3,23.0,28.6,21.3,30.1,25.7,24.6,27.1,27.5)
+)
+
+fit = lm(bodyfat ~., data = bodyfat)
+summary(fit)
+vif(fit)
+
+fit4 = lm(bodyfat ~ tricep, data = bodyfat)
+summary(fit4)
+vif(fit4)
+
+fit1 = lm(bodyfat ~ thigh + midarm, data = bodyfat)
+fit2 = lm(tricep ~ thigh + midarm, data = bodyfat)
+
+cor(resid(fit2),resid(fit1))
+
+
+plot(resid(fit2), resid(fit1))
+abline(h = 0, lty = 2)
+abline(v = 0, lty = 2)
+fit3 = lm(resid(fit1) ~ resid(fit2))
+abline(fit3)
+
+summary(bodyfat$tricep)
+summary(bodyfat$thigh)
+plot(bodyfat$tricep,bodyfat$thigh)
+```
+
+
+
+
+# Simulation Example
+
+Here we simulate an example with and without collinearity. Notice the difference in the distribution of the estimates of $\beta_1$, but the similarity in $MSE$.
+
+```{r, fig.width = 10, fig.height = 10}
+beta_0 = 7
+beta_1 = 3
+beta_2 = 4
+sigma  = 5
+n = 10
+num_sim =  10000
+
+x1 = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+x2 = c(1, 2, 3, 4, 5, 7, 6, 10, 9, 8)
+cor(x1, x2)
+true_line = beta_0 + beta_1 * x1 + beta_2 * x2
+beta_hat_bad = matrix(0, num_sim, 3)
+mse_bad = rep(0, num_sim)
+
+for (s in 1:num_sim) {
+  y = true_line + rnorm(n, 0, sigma)
+  reg_out = lm(y ~ x1 + x2)
+  beta_hat_bad[s, ] = coef(reg_out)
+  mse_bad[s] = mean(resid(reg_out) ^ 2)
+}
+
+x1 = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+x2 = c(9, 2, 7, 4, 5, 6, 3, 8, 1, 10)
+cor(x1, x2)
+true_line = beta_0 + beta_1 * x1 + beta_2 * x2
+beta_hat_good = matrix(0, num_sim, 3)
+mse_good = rep(0, num_sim)
+
+for (s in 1:num_sim) {
+  y = true_line + rnorm(n, 0, sigma)
+  reg_out = lm(y ~ x1 + x2)
+  beta_hat_good[s, ] = coef(reg_out)
+  mse_good[s] = mean(resid(reg_out) ^ 2)
+}
+
+par(mfrow = c(3, 2))
+hist(beta_hat_bad[, 2],
+     col = "orange",
+     border = "blue",
+     main = expression("Histogram of " *beta[1]* " with Collinearity"),
+     xlab = expression(beta[1])
+)
+hist(beta_hat_good[, 2],
+     col = "orange",
+     border = "blue",
+     main = expression("Histogram of " *beta[1]* " without Collinearity"),
+     xlab = expression(beta[1])
+)
+hist(beta_hat_bad[, 3],
+     col = "orange",
+     border = "blue",
+     main = expression("Histogram of " *beta[2]* " with Collinearity"),
+     xlab = expression(beta[2])
+)
+hist(beta_hat_good[, 3],
+     col = "orange",
+     border = "blue",
+     main = expression("Histogram of " *beta[2]* " without Collinearity"),
+     xlab = expression(beta[2])
+)
+hist(mse_bad,
+     col = "orange",
+     border = "blue",
+     main = "MSE, with Collinearity",
+     xlab = "MSE"
+)
+hist(mse_good,
+     col = "orange",
+     border = "blue",
+     main = "MSE, without Collinearity",
+     xlab = "MSE"
+)
+```
+
+
+
+
