@@ -4,7 +4,10 @@
 >
 > --- **Samuel Goldwyn**
 
-## Collinearity
+After reading this chapter you will be able to:
+
+- Identify collinearity in regression.
+- Understand the effect of collinearity on regression models.
 
 - TODO: Often called multicollinearity.
 
@@ -25,11 +28,7 @@
   Var[\boldsymbol{\hat{\beta}}] = \boldsymbol{\sigma}^2 \left(  \boldsymbol{X}^T \boldsymbol{X}  \right)^{-1}
 \]
 
-```{r}
-set.seed(42)
-```
-
-# Introduction
+## Exact Collinearity
 
 Let's create a dataset where one of the predictors, $x_3$, is a linear combination of the other predictors.
 
@@ -42,28 +41,48 @@ gen_exact_collin_data = function(num_samples = 100) {
   data.frame(y, x1, x2, x3)
 }
 
+set.seed(42)
 exact_collin_data = gen_exact_collin_data()
 ```
 
-What happens when we fit a regression model in `R`?
+What happens when we fit a regression model in `R` using all of the predictors?
 
 ```{r}
 exact_collin_fit = lm(y ~ x1 + x2 + x3, data = exact_collin_data)
 summary(exact_collin_fit)
 ```
 
-We see that `R` simply decides to exclude the variable. Why is this happening?
+We see that `R` simply decides to exclude a variable. Why is this happening?
 
 ```{r, eval = FALSE}
 X = cbind(1, as.matrix(exact_collin_data[,-1]))
 solve(t(X) %*% X)
 ```
 
-If we attempt to find $\boldsymbol{\hat{\beta}}$ using $\left(  \boldsymbol{X}^T \boldsymbol{X}  \right)^{-1}$, we see that this is not possible, due to the fact that the columns of $\boldsymbol{X}$ are linearly dependent. (The previous lines of code were not run, because they produce an error!)
+If we attempt to find $\boldsymbol{\hat{\beta}}$ using $\left(  \boldsymbol{X}^T \boldsymbol{X}  \right)^{-1}$, we see that this is not possible, due to the fact that the columns of $\boldsymbol{X}$ are linearly dependent. The previous lines of code were not run, because they produce an error!
 
-When this happens, we say there is exact collinearity. Exact collinearity is an extreme example of multicollinearity, which occurs in multiple regression when predictor variables are highly correlated.
+When this happens, we say there is exact collinearity. 
 
-# Seat Position Example
+```{r}
+fit1 = lm(y ~ x1 + x2, data = exact_collin_data)
+fit2 = lm(y ~ x1 + x3, data = exact_collin_data)
+fit3 = lm(y ~ x2 + x3, data = exact_collin_data)
+```
+
+```{r}
+all.equal(fitted(fit1), fitted(fit2))
+all.equal(fitted(fit2), fitted(fit3))
+```
+
+
+Exact collinearity is an extreme example of multicollinearity, which occurs in multiple regression when predictor variables are highly correlated.
+
+
+
+
+
+
+## Collinearity
 
 Looking at the `seatpos` dataset, we can see an example of this. For example, we expect a person's height to be highly correlated to their height when wearing shoes.
 
@@ -93,7 +112,12 @@ summary(fitHtShoes)
 
 Here we see that the other predictors explain $99.67\%$ of the variation in `HtShoe`.
 
+### Variance Inflation Factor.
+
 Now note that the variance of $\hat{\beta_j}$ can be written as
+
+- TODO: insert usual equation
+- TODO: change Sxx notation
 
 \[
   Var(\hat{\beta_j}) = \sigma^2 \left( \frac{1}{1 - R_j^2}  \right) \frac{1}{SX_jX_j}
@@ -108,6 +132,8 @@ We will call,
 \]
 
 the **variance inflation factor.** The variance inflation factor quantifies the effect of multicollinearity on the variance of our regression estimates. When $R_j^2$ is large, $x_j$ is well explained by the other predictors. With a large $R_j^2$ the variance inflation factor becomes large. This tells us that when $x_j$ is highly correlated with other predictors, our estimate of $\beta_j$ is highly variable.
+
+- TODO: what is "large"? close to 1.
 
 The `vif` function from the `faraway` package calculates the VIFs for each of the predictors.
 
@@ -127,6 +153,11 @@ fitNoise
 ```
 
 - TODO: Add example of predicting from both. make it so they are roughly the same
+- TODO: exp vs prediction
+
+```{r}
+plot(predict(fit), predict(fitNoise))
+```
 
 Let's now look at a smaller model,
 
@@ -180,7 +211,7 @@ This trade off is mostly true in general. As a model gets more predictors, error
 
 - TODO: Beware of overfitting? Over save for selection?
 
-# Bodyfat Example
+### Bodyfat Example
 
 - TODO: Move this to different document. Split data into `.csv`
 
@@ -224,52 +255,70 @@ summary(bodyfat$thigh)
 plot(bodyfat$tricep,bodyfat$thigh)
 ```
 
-
-
-
-# Simulation Example
+## Simulation
 
 Here we simulate an example with and without collinearity. Notice the difference in the distribution of the estimates of $\beta_1$, but the similarity in $MSE$.
 
-```{r, fig.width = 10, fig.height = 10}
+```{r}
 beta_0 = 7
 beta_1 = 3
 beta_2 = 4
 sigma  = 5
-n = 10
-num_sim =  10000
+```
 
+```{r}
+sample_size = 10
+num_sim     = 10000
+```
+
+```{r}
 x1 = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 x2 = c(1, 2, 3, 4, 5, 7, 6, 10, 9, 8)
+```
 
+```{r}
 sd(x1)
 sd(x2)
 cor(x1, x2)
+```
 
-true_line = beta_0 + beta_1 * x1 + beta_2 * x2
+```{r}
+true_line    = beta_0 + beta_1 * x1 + beta_2 * x2
 beta_hat_bad = matrix(0, num_sim, 3)
-mse_bad = rep(0, num_sim)
+mse_bad      = rep(0, num_sim)
+```
 
+```{r}
 for (s in 1:num_sim) {
-  y = true_line + rnorm(n, 0, sigma)
+  y = true_line + rnorm(n = sample_size, mean = 0, sd = sigma)
   reg_out = lm(y ~ x1 + x2)
   beta_hat_bad[s, ] = coef(reg_out)
   mse_bad[s] = mean(resid(reg_out) ^ 2)
 }
+```
 
+```{r}
 x1 = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 x2 = c(9, 2, 7, 4, 5, 6, 3, 8, 1, 10)
+```
 
+- TODO: note, sds are the same.
+
+```{r}
 sd(x1)
 sd(x2)
 cor(x1, x2)
+```
 
-true_line = beta_0 + beta_1 * x1 + beta_2 * x2
+```{r}
+true_line     = beta_0 + beta_1 * x1 + beta_2 * x2
 beta_hat_good = matrix(0, num_sim, 3)
-mse_good = rep(0, num_sim)
+mse_good      = rep(0, num_sim)
+```
 
+```{r}
 for (s in 1:num_sim) {
-  y = true_line + rnorm(n, 0, sigma)
+  y = true_line + rnorm(n = sample_size, mean = 0, sd = sigma)
   reg_out = lm(y ~ x1 + x2)
   beta_hat_good[s, ] = coef(reg_out)
   mse_good[s] = mean(resid(reg_out) ^ 2)
@@ -278,30 +327,30 @@ for (s in 1:num_sim) {
 
 - TODO: Add hats!
 
-```{r}
+```{r, fig.width = 10, fig.height = 10}
 par(mfrow = c(3, 2))
 hist(beta_hat_bad[, 2],
      col = "darkorange",
      border = "dodgerblue",
-     main = expression("Histogram of " *beta[1]* " with Collinearity"),
+     main = expression("Histogram of " *hat(beta)[1]* " with Collinearity"),
      xlab = expression(beta[1])
 )
 hist(beta_hat_good[, 2],
      col = "darkorange",
      border = "dodgerblue",
-     main = expression("Histogram of " *beta[1]* " without Collinearity"),
+     main = expression("Histogram of " *hat(beta)[1]* " without Collinearity"),
      xlab = expression(beta[1])
 )
 hist(beta_hat_bad[, 3],
      col = "darkorange",
      border = "dodgerblue",
-     main = expression("Histogram of " *beta[2]* " with Collinearity"),
+     main = expression("Histogram of " *hat(beta)[2]* " with Collinearity"),
      xlab = expression(beta[2])
 )
 hist(beta_hat_good[, 3],
      col = "darkorange",
      border = "dodgerblue",
-     main = expression("Histogram of " *beta[2]* " without Collinearity"),
+     main = expression("Histogram of " *hat(beta)[2]* " without Collinearity"),
      xlab = expression(beta[2])
 )
 hist(mse_bad,
@@ -320,4 +369,16 @@ hist(mse_good,
 
 TODO: add numeric means and variances
 
+```{r}
+mean(beta_hat_bad[,2])
+sd(beta_hat_bad[,2])
+mean(beta_hat_good[,2])
+sd(beta_hat_good[,2])
+```
 
+```{r}
+mean(mse_bad)
+mean(mse_good)
+```
+
+TODO: DONT USE VIF AS VARIABLE SELECTION, REMOVING HIGHEST IS BAD!!!!!!!!!!!!!!!!
