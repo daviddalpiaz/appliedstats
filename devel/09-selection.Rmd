@@ -1,11 +1,85 @@
 # Model Selection
 
-> "."
+> "Choose well. Your choice is brief, and yet endless."
 >
-> --- **.**
+> --- **Johann Wolfgang von Goethe**
 
-## Multicollinearity
+After reading this chapter you will be able to:
 
-## Explaination, Prediction
+- Understand the trade-off between goodness-of-fit and model complexity.
+- Use variable selection procedures to find a good model from a set of possible models.
 
 ## Variable Selection
+
+```{r}
+calc_loocv_rmse = function(model) {
+  sqrt(mean((resid(model) / (1 - hatvalues(model))) ^ 2 ))
+}
+
+
+
+
+make_poly_data = function(sample_size = 11) {
+  x = seq(0, 10)
+  y = 3 + x + 4 * x ^ 2 + rnorm(n = sample_size, mean = 0, sd = 20)
+  data.frame(x, y)
+}
+poly_data = make_poly_data()
+set.seed(1234)
+
+
+plot(y ~ x, data = poly_data, ylim = c(-100, 400), cex = 2, pch = 20)
+fit_quad = lm(y ~ poly(x, 2), data = poly_data)
+fit_big  = lm(y ~ poly(x, 8), data = poly_data)
+
+
+
+xplot = seq(0, 10, by = 0.1)
+lines(xplot, predict(fit_quad, newdata = data.frame(x = xplot)),
+      col = "dodgerblue", lwd = 2, lty = 1)
+lines(xplot, predict(fit_big, newdata = data.frame(x = xplot)),
+      col = "darkorange", lwd = 2, lty = 2)
+
+sqrt(mean(resid(fit_quad) ^ 2))
+sqrt(mean(resid(fit_big) ^ 2))
+
+calc_loocv_rmse(fit_quad)
+calc_loocv_rmse(fit_big)
+
+
+# add plot?
+
+
+# average error of **next** observation
+
+
+# try to do with perfect fit?
+```
+
+
+- verify with caret?
+
+- implicit
+    - cross-validation
+- explicit
+    - aic, bic, adj R2
+    
+    
+\[
+\text{CV(RMSE)}_n = \sqrt{\frac{1}{n} \sum_{i=1}^n e_{[i]}^2,}
+\]
+
+
+\[
+\text{CV(RMSE)}_n = \sqrt{\frac{1}{n}\sum_{i=1}^n [e_{i}/(1-h_{i})]^2,}
+\]
+
+
+
+\[
+{e_{[i]} = y_{i} – \hat{y}_{[i]}}
+\]
+
+
+- PRESS (Prediction Residual Sum of Squares)
+    - when not divided by n
