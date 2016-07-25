@@ -9,77 +9,312 @@ After reading this chapter you will be able to:
 - Understand the trade-off between goodness-of-fit and model complexity.
 - Use variable selection procedures to find a good model from a set of possible models.
 
-## Variable Selection
+Last chapter we saw how correlation between predictor variables can have undesirable effects on models. We used variance inflation factors to assess the seerity of the collinearity issues caused by these correlations. We also saw how fitting a smaller model, leaving out some of the correlation predictors, result in a model which no longer suffers from collinearity issues. But how should we chose this smaller model?
+
+This chapter, we will discuss several *criteria* and *procedures* for chosing a "good" model from among a choice of many.
+
+## Quality Criterion
+
+So far, we have seen criteria such as $R^2$ and RMSE for assessing quality of fit. However, both of these have a fatal flaw. By increasing the size of a model, that is adding predictors, that can at worst not improve. It is impossible to add a predictor to a model and make $R^2$ or RMSE worse. (Greater, or less, respectively.) That means, if we were to use either of this to chose between models, we would always simpliy choose the larger model.
+
+This suggests that we need a quality criteria that takes into account the size of the model, since our preference is for small models that fit well. We will look at three criteria that do this explicity: AIC, BIC and Adjuasted $R^2$. We will also look at one, Cross-Validted RMSE, which implicitly considers the size of the model.
+
+- TODO: "penalized"
+
+### Akaike Information Criterion
+
+- TODO: Akaike Information Criterion (AIC)
+- TODO: An Information Criterion
+
+\[
+\log L(\boldsymbol{\hat{\beta}}) = -\frac{n}{2}\log(2\pi) - \frac{n}{2}\log\left(\frac{RSS}{n}\right) - \frac{n}{2}
+\]
+
+\[
+AIC = -2 \log L(\boldsymbol{\hat{\beta}}) + 2p = n + n \log(2\pi) + n \log\left(\frac{RSS}{n}\right) + 2p
+\]
+
+### Bayesian Information Criterion
+
+- TODO: Bayesian Information Criterion (BIC)
+
+### Adjusted $R^2$
+
+### Cross-Validated RMSE
+
 
 ```{r}
 calc_loocv_rmse = function(model) {
-  sqrt(mean((resid(model) / (1 - hatvalues(model))) ^ 2 ))
+  sqrt(mean((resid(model) / (1 - hatvalues(model))) ^ 2))
 }
+```
 
-
-
-
+```{r}
 make_poly_data = function(sample_size = 11) {
   x = seq(0, 10)
   y = 3 + x + 4 * x ^ 2 + rnorm(n = sample_size, mean = 0, sd = 20)
   data.frame(x, y)
 }
-poly_data = make_poly_data()
+```
+
+```{r}
 set.seed(1234)
+poly_data = make_poly_data()
+```
 
-
-plot(y ~ x, data = poly_data, ylim = c(-100, 400), cex = 2, pch = 20)
+```{r}
 fit_quad = lm(y ~ poly(x, 2), data = poly_data)
 fit_big  = lm(y ~ poly(x, 8), data = poly_data)
+```
 
-
-
+```{r}
+plot(y ~ x, data = poly_data, ylim = c(-100, 400), cex = 2, pch = 20)
 xplot = seq(0, 10, by = 0.1)
 lines(xplot, predict(fit_quad, newdata = data.frame(x = xplot)),
       col = "dodgerblue", lwd = 2, lty = 1)
 lines(xplot, predict(fit_big, newdata = data.frame(x = xplot)),
       col = "darkorange", lwd = 2, lty = 2)
+```
 
+```{r}
 sqrt(mean(resid(fit_quad) ^ 2))
 sqrt(mean(resid(fit_big) ^ 2))
+```
 
+```{r}
 calc_loocv_rmse(fit_quad)
 calc_loocv_rmse(fit_big)
 
-
 # add plot?
 
-
 # average error of **next** observation
-
 
 # try to do with perfect fit?
 ```
 
 
-- verify with caret?
 
-- implicit
-    - cross-validation
-- explicit
-    - aic, bic, adj R2
-    
+## Selection Procedures
+
+### Forwards
+### Backwards
+### Stepwise
+### Exhaustive
+
+- $2 ^ p$
+- sum of binomial coeffs
+- shortcut for methods that use RSS in formula
+
+## `seatpos` Example
+
+## `autompg` Example
+
+- TODO: what variables are considered?
+
+```{r, echo = FALSE}
+autompg = read.table(
+  "http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data",
+  quote = "\"",
+  comment.char = "",
+  stringsAsFactors = FALSE)
+colnames(autompg) = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin", "name")
+autompg = subset(autompg, autompg$hp != "?")
+autompg = subset(autompg, autompg$name != "plymouth reliant")
+rownames(autompg) = paste(autompg$cyl, "cylinder", autompg$year, autompg$name)
+autompg$hp = as.numeric(autompg$hp)
+autompg$domestic = as.numeric(autompg$origin == 1)
+autompg = autompg[autompg$cyl != 5,]
+autompg = autompg[autompg$cyl != 3,]
+autompg$cyl = as.factor(autompg$cyl)
+autompg$domestic = as.factor(autompg$domestic)
+autompg = subset(autompg, select = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "domestic"))
+```
+
+```{r}
+str(autompg)
+```
+
+```{r}
+pairs(autompg)
+```
+
+- define first order, second order, etc... how they fit together
+
+```{r}
+fit = lm(log(mpg) ~ . ^ 2 + I(disp ^ 2) + I(disp ^ 2) + I(hp ^ 2) + I(wt ^ 2) + I(acc ^ 2), data = autompg)
+fit_back_aic = step(fit, direction = "backward")
+
+
+n = length(resid(fit))
+fit_back_bic = step(fit, direction = "backward", k = log(n))
+
+
+
+calc_loocv_rmse(fit_back_aic)
+calc_loocv_rmse(fit_back_bic)
+
+
+# how factors are handled
+
+
+# which is better for prediction?
+# which is better for explaination?
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Explaination versus Prediction
+
+
+
+
+
     
 \[
 \text{CV(RMSE)}_n = \sqrt{\frac{1}{n} \sum_{i=1}^n e_{[i]}^2,}
 \]
 
+- TODO: would normally need to fit $n$ regressions...
 
 \[
 \text{CV(RMSE)}_n = \sqrt{\frac{1}{n}\sum_{i=1}^n [e_{i}/(1-h_{i})]^2,}
 \]
-
-
 
 \[
 {e_{[i]} = y_{i} – \hat{y}_{[i]}}
 \]
 
 
+\[
+\hat{y}_{[i]} = x_i ^ \top \hat{\beta}_{[i]}
+\]
+
+where $\hat{\beta}_{[i]}$ is within $x_i$...
+
 - PRESS (Prediction Residual Sum of Squares)
     - when not divided by n
+
+```{r}
+library(faraway)
+fit = lm(hipcenter ~ ., data = seatpos)
+fit_start = lm(hipcenter ~ 1, data = seatpos)
+fit_back_aic = step(fit, direction = "backward")
+fit_forw_aic = step(fit_start, 
+                     hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg, 
+                     direction = "forward")
+fit_both_aic = step(fit, direction = "both")
+
+
+# neither has both Ht and HtShoes
+
+n = length(resid(fit))
+
+
+
+fit_back_bic = step(fit, direction = "backward", k = log(n))
+fit_forw_bic = step(fit_start, 
+                     hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg, 
+                     direction = "forward", k = log(n))
+fit_both_bic = step(fit, direction = "both", k = log(n))
+
+# again, neither has both Ht and HtShoes. all are smaller
+
+```
+
+
+
+```{r}
+
+
+extractAIC(fit_back_aic)
+extractAIC(fit_forw_aic)
+extractAIC(fit_both_aic)
+extractAIC(lm(hipcenter ~ Ht + Leg + Age, data = seatpos))
+extractAIC(lm(hipcenter ~ ., data = seatpos))
+
+library(broom)
+glance(fit_back_aic)
+glance(fit_back_aic)$AIC
+glance(lm(hipcenter ~ Age + Ht + Leg, data = seatpos))$AIC
+glance(lm(hipcenter ~ Ht, data = seatpos))$AIC
+glance(lm(hipcenter ~ ., data = seatpos))$AIC
+
+library(leaps)
+all_fits = summary(regsubsets(hipcenter ~ ., data = seatpos))
+
+all_fits$which
+all_fits$adjr2
+all_fits$bic
+
+
+p = length(coef(fit))
+n = length(resid(fit))
+
+BIC = n * log(all_fits$rss / n) + log(n) * (2:p)
+
+
+BIC - all_fits$bic
+
+n + n * log(2 * pi)
+
+which.min(all_fits$bic)
+
+all_fits$which[1,]
+
+
+
+AIC = n * log(all_fits$rss / n) + 2 * (2:p)
+which.min(AIC)
+all_fits$which[3,]
+
+which.min(all_fits$cp)
+
+library(broom)
+glance(fit) # AIC and BIC might not be on same scale as other calculations!
+
+
+
+# plots
+
+```
+
+
+- TODO: `trace = 0`
+
+
+
+
+
+
+
+```{r}
+-2 * glance(fit_both_aic)$log + 2 * length(coef(fit_both_aic))
+AIC(fit_both_aic)
+extractAIC(fit_both_aic) + n + n*log(2*pi)
+
+```
+
+
