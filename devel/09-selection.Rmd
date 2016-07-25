@@ -9,7 +9,7 @@ After reading this chapter you will be able to:
 - Understand the trade-off between goodness-of-fit and model complexity.
 - Use variable selection procedures to find a good model from a set of possible models.
 
-Last chapter we saw how correlation between predictor variables can have undesirable effects on models. We used variance inflation factors to assess the seerity of the collinearity issues caused by these correlations. We also saw how fitting a smaller model, leaving out some of the correlation predictors, result in a model which no longer suffers from collinearity issues. But how should we chose this smaller model?
+Last chapter we saw how correlation between predictor variables can have undesirable effects on models. We used variance inflation factors to assess the severity of the collinearity issues caused by these correlations. We also saw how fitting a smaller model, leaving out some of the correlated predictors, results in a model which no longer suffers from collinearity issues. But how should we chose this smaller model?
 
 This chapter, we will discuss several *criteria* and *procedures* for chosing a "good" model from among a choice of many.
 
@@ -19,35 +19,95 @@ So far, we have seen criteria such as $R^2$ and RMSE for assessing quality of fi
 
 This suggests that we need a quality criteria that takes into account the size of the model, since our preference is for small models that fit well. We will look at three criteria that do this explicity: AIC, BIC and Adjuasted $R^2$. We will also look at one, Cross-Validted RMSE, which implicitly considers the size of the model.
 
-- TODO: "penalized"
-
 ### Akaike Information Criterion
 
-- TODO: Akaike Information Criterion (AIC)
-- TODO: An Information Criterion
+The first criteria we ill discuss is the Akaike Information Criterion, or AIC for short. (Note that, when Aiaike first introducted this metric, it was simply called An Information Criterion.)
+
+Recall, the log-likelihood of a regression model can be written as
 
 \[
-\log L(\boldsymbol{\hat{\beta}}) = -\frac{n}{2}\log(2\pi) - \frac{n}{2}\log\left(\frac{RSS}{n}\right) - \frac{n}{2}
+\log L(\boldsymbol{\hat{\beta}}) = -\frac{n}{2}\log(2\pi) - \frac{n}{2}\log\left(\frac{RSS}{n}\right) - \frac{n}{2},
 \]
 
+where $RSS = \sum_{i=1}^n (y_i - \hat{y}_i) ^ 2$.
+
+Then we can define AIC as
+
 \[
-AIC = -2 \log L(\boldsymbol{\hat{\beta}}) + 2p = n + n \log(2\pi) + n \log\left(\frac{RSS}{n}\right) + 2p
+AIC = -2 \log L(\boldsymbol{\hat{\beta}}) + 2p = n + n \log(2\pi) + n \log\left(\frac{RSS}{n}\right) + 2p,
 \]
+
+which is a measure of quality of the model. The smaller the AIC, the beter. To see why, let's talk about the to main componenents of AIC, the likelihood and the "penalty."
+
+The likelihood portion of AIC is given by
+
+\[
+-2 \log L(\boldsymbol{\hat{\beta}}) = n + n \log(2\pi) + n \log\left(\frac{RSS}{n}\right).
+\]
+
+For the sake of comparing models, the only term here that will change is $n \log\left(\frac{RSS}{n}\right)$, which is function of $RSS$. The 
+
+\[
+n + n \log(2\pi)
+\]
+
+terms will be constant across all models applied to the same data. So, when a model fits well, that is, has a low $RSS$, then this likelihood component will be small.
+
+Similarly, we can discuss the "penalty" component of AIC which is,
+
+\[
+2p,
+\]
+
+where $p$ is the number of $\beta$ parameters in the model. We call this a penalty, because it is large when $p$ is large, but we are seeking to find a small AIC.
+
+Thus, a good model, that is one with a small AIC, will have a good balance between fitting well, and using a small number of parameters.
 
 ### Bayesian Information Criterion
 
-- TODO: Bayesian Information Criterion (BIC)
+The Bayesian Information Criterion, or BIC, is similar to AIC, but has a larger penalty. BIC also quantifies the trade-off between a model which fits well and the number of model parameters, however for a reasonable sample size, generally picks a smaller model than AIC. Again, for model selection use the model with the smallest BIC.
+
+\[
+BIC = -2 \log L(\boldsymbol{\hat{\beta}}) + \log(n) p = n + n\log(2\pi) + n\log\left(\frac{RSS}{n}\right) + \log(n)p.
+\]
+
+Notice that the AIC penalty was
+
+\[
+2p,
+\]
+
+whereas for BIC, the penatly is 
+
+\[
+\log(n) p.
+\]
+
+So, for any dataset where $log(n) > 2$ the BIC penalty will be larger than the AIC penalty, thus BIC will likely prefer a smaller model.
 
 ### Adjusted $R^2$
 
+Recall,
+
+\[
+R^2 = 1 - \frac{SSE}{SST} = 1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2}.
+\]
+
+We now define
+
+\[
+R_a^2 = 1 - \frac{SSE/(n-p)}{SST/(n-1)} = 1 - \left(  \frac{n-1}{n-p} \right)(1-R^2)
+\]
+
+which we call the Adjusted $R^2$.
+
+Unlike $R^2$ which can never become smaller with added predictors, Adjusted $R^2$ effectively penalizes for additional predictors, and can decrease with added predictors. Like $R^2$, larger is still better.
+
 ### Cross-Validated RMSE
 
+Each of the previous three metrics explicitly used $p$, the number of parameters, in their calculations. Thus, they all explicitly limit the size of models chosen when used to comapre models.
 
-```{r}
-calc_loocv_rmse = function(model) {
-  sqrt(mean((resid(model) / (1 - hatvalues(model))) ^ 2))
-}
-```
+We'll now briefly introduce **overfitting** and cross-validation.
 
 ```{r}
 make_poly_data = function(sample_size = 11) {
@@ -62,10 +122,20 @@ set.seed(1234)
 poly_data = make_poly_data()
 ```
 
+Here we have generated data which follows a quadratic pattern, specifically,
+
+\[
+y = 3 + x + 4 x ^ 2 + \epsilon.
+\]
+
+We'll now fit two models to this data, one which has the correct form, quadratic, and one that is huge, which includes terms up to and including an eighth degree.
+
 ```{r}
-fit_quad = lm(y ~ poly(x, 2), data = poly_data)
-fit_big  = lm(y ~ poly(x, 8), data = poly_data)
+fit_quad = lm(y ~ poly(x, degree = 2), data = poly_data)
+fit_big  = lm(y ~ poly(x, degree = 8), data = poly_data)
 ```
+
+We then plot the data and the results of the two models.
 
 ```{r}
 plot(y ~ x, data = poly_data, ylim = c(-100, 400), cex = 2, pch = 20)
@@ -76,16 +146,52 @@ lines(xplot, predict(fit_big, newdata = data.frame(x = xplot)),
       col = "darkorange", lwd = 2, lty = 2)
 ```
 
+We can see that the solid blue curve models this data rather nicely. The dashed orange curve fits the points better, however, it is unlikely that it is correctly modeling the true relationshipt between $x$ and $y$. It is fitting the random noise. This is an example of **overfitting**.
+
+We see that the larger model indeed has a lower RMSE.
+
 ```{r}
 sqrt(mean(resid(fit_quad) ^ 2))
 sqrt(mean(resid(fit_big) ^ 2))
 ```
 
+To correct for this, we will introduce cross-validation. We define the leave-one-out cross-validated RMSE to be
+
+\[
+\text{CV(RMSE)}_n = \sqrt{\frac{1}{n} \sum_{i=1}^n e_{[i]}^2}.
+\]
+
+\[
+{e_{[i]} = y_{i} – \hat{y}_{[i]}}
+\]
+
+\[
+\hat{y}_{[i]} = x_i ^ \top \hat{\beta}_{[i]}
+\]
+
+where $\hat{\beta}_{[i]}$ is within $x_i$...
+
+\[
+\text{CV(RMSE)}_n = \sqrt{\frac{1}{n}\sum_{i=1}^n [e_{i}/(1-h_{i})]^2,}
+\]
+
+
+
+
+
+
+- TODO: would normally need to fit $n$ regressions...
+
+
+```{r}
+calc_loocv_rmse = function(model) {
+  sqrt(mean((resid(model) / (1 - hatvalues(model))) ^ 2))
+}
+```
+
 ```{r}
 calc_loocv_rmse(fit_quad)
 calc_loocv_rmse(fit_big)
-
-# add plot?
 
 # average error of **next** observation
 
@@ -96,9 +202,16 @@ calc_loocv_rmse(fit_big)
 
 ## Selection Procedures
 
-### Forwards
+- TODO: need criteria + search procedure
+
 ### Backwards
+
+- TODO: Show p-value? at least discuss
+
+### Forwards
+
 ### Stepwise
+
 ### Exhaustive
 
 - $2 ^ p$
@@ -107,115 +220,9 @@ calc_loocv_rmse(fit_big)
 
 ## `seatpos` Example
 
-## `autompg` Example
-
-- TODO: what variables are considered?
-
-```{r, echo = FALSE}
-autompg = read.table(
-  "http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data",
-  quote = "\"",
-  comment.char = "",
-  stringsAsFactors = FALSE)
-colnames(autompg) = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin", "name")
-autompg = subset(autompg, autompg$hp != "?")
-autompg = subset(autompg, autompg$name != "plymouth reliant")
-rownames(autompg) = paste(autompg$cyl, "cylinder", autompg$year, autompg$name)
-autompg$hp = as.numeric(autompg$hp)
-autompg$domestic = as.numeric(autompg$origin == 1)
-autompg = autompg[autompg$cyl != 5,]
-autompg = autompg[autompg$cyl != 3,]
-autompg$cyl = as.factor(autompg$cyl)
-autompg$domestic = as.factor(autompg$domestic)
-autompg = subset(autompg, select = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "domestic"))
-```
-
-```{r}
-str(autompg)
-```
-
-```{r}
-pairs(autompg)
-```
-
-- define first order, second order, etc... how they fit together
-
-```{r}
-fit = lm(log(mpg) ~ . ^ 2 + I(disp ^ 2) + I(disp ^ 2) + I(hp ^ 2) + I(wt ^ 2) + I(acc ^ 2), data = autompg)
-fit_back_aic = step(fit, direction = "backward")
-
-
-n = length(resid(fit))
-fit_back_bic = step(fit, direction = "backward", k = log(n))
-
-
-
-calc_loocv_rmse(fit_back_aic)
-calc_loocv_rmse(fit_back_bic)
-
-
-# how factors are handled
-
-
-# which is better for prediction?
-# which is better for explaination?
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Explaination versus Prediction
-
-
-
-
 
     
-\[
-\text{CV(RMSE)}_n = \sqrt{\frac{1}{n} \sum_{i=1}^n e_{[i]}^2,}
-\]
 
-- TODO: would normally need to fit $n$ regressions...
-
-\[
-\text{CV(RMSE)}_n = \sqrt{\frac{1}{n}\sum_{i=1}^n [e_{i}/(1-h_{i})]^2,}
-\]
-
-\[
-{e_{[i]} = y_{i} – \hat{y}_{[i]}}
-\]
-
-
-\[
-\hat{y}_{[i]} = x_i ^ \top \hat{\beta}_{[i]}
-\]
-
-where $\hat{\beta}_{[i]}$ is within $x_i$...
-
-- PRESS (Prediction Residual Sum of Squares)
-    - when not divided by n
 
 ```{r}
 library(faraway)
@@ -255,12 +262,6 @@ extractAIC(fit_both_aic)
 extractAIC(lm(hipcenter ~ Ht + Leg + Age, data = seatpos))
 extractAIC(lm(hipcenter ~ ., data = seatpos))
 
-library(broom)
-glance(fit_back_aic)
-glance(fit_back_aic)$AIC
-glance(lm(hipcenter ~ Age + Ht + Leg, data = seatpos))$AIC
-glance(lm(hipcenter ~ Ht, data = seatpos))$AIC
-glance(lm(hipcenter ~ ., data = seatpos))$AIC
 
 library(leaps)
 all_fits = summary(regsubsets(hipcenter ~ ., data = seatpos))
@@ -274,7 +275,6 @@ p = length(coef(fit))
 n = length(resid(fit))
 
 BIC = n * log(all_fits$rss / n) + log(n) * (2:p)
-
 
 BIC - all_fits$bic
 
@@ -292,17 +292,66 @@ all_fits$which[3,]
 
 which.min(all_fits$cp)
 
-library(broom)
-glance(fit) # AIC and BIC might not be on same scale as other calculations!
-
-
 
 # plots
 
 ```
 
-
 - TODO: `trace = 0`
+
+## `autompg` Example
+
+- TODO: what variables are considered?
+
+```{r, echo = FALSE}
+autompg = read.table(
+  "http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data",
+  quote = "\"",
+  comment.char = "",
+  stringsAsFactors = FALSE)
+colnames(autompg) = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin", "name")
+autompg = subset(autompg, autompg$hp != "?")
+autompg = subset(autompg, autompg$name != "plymouth reliant")
+rownames(autompg) = paste(autompg$cyl, "cylinder", autompg$year, autompg$name)
+autompg$hp = as.numeric(autompg$hp)
+autompg$domestic = as.numeric(autompg$origin == 1)
+autompg = autompg[autompg$cyl != 5,]
+autompg = autompg[autompg$cyl != 3,]
+autompg$cyl = as.factor(autompg$cyl)
+autompg$domestic = as.factor(autompg$domestic)
+autompg = subset(autompg, select = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "domestic"))
+```
+
+```{r}
+str(autompg)
+```
+
+```{r}
+pairs(autompg)
+```
+
+- define first order, second order, etc... how they fit together
+
+```{r}
+fit = lm(log(mpg) ~ . ^ 2 + I(disp ^ 2) + I(disp ^ 2) + I(hp ^ 2) + I(wt ^ 2) + I(acc ^ 2), data = autompg)
+fit_back_aic = step(fit, direction = "backward")
+
+n = length(resid(fit))
+fit_back_bic = step(fit, direction = "backward", k = log(n))
+
+calc_loocv_rmse(fit_back_aic)
+calc_loocv_rmse(fit_back_bic)
+
+# how factors are handled
+
+# which is better for prediction?
+# which is better for explaination?
+```
+
+
+## Explaination versus Prediction
+
+- TODO: its own chapter?
 
 
 
@@ -311,10 +360,10 @@ glance(fit) # AIC and BIC might not be on same scale as other calculations!
 
 
 ```{r}
+library(broom)
 -2 * glance(fit_both_aic)$log + 2 * length(coef(fit_both_aic))
 AIC(fit_both_aic)
-extractAIC(fit_both_aic) + n + n*log(2*pi)
-
+extractAIC(fit_both_aic) + n + n * log(2 * pi)
 ```
 
 
