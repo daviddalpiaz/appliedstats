@@ -474,7 +474,7 @@ str(autompg)
 ```
 
 ```{r}
-pairs(autompg)
+pairs(autompg, col = "dodgerblue")
 ```
 
 - define first order, second order, etc... how they fit together
@@ -489,10 +489,11 @@ autompg_mod_back_bic = step(autompg_big_mod, direction = "backward", k = log(n),
 coef(autompg_mod_back_aic)
 coef(autompg_mod_back_bic)
 
-
+length(coef(autompg_big_mod))
 length(coef(autompg_mod_back_aic))
 length(coef(autompg_mod_back_bic))
 
+calc_loocv_rmse(autompg_big_mod)
 calc_loocv_rmse(autompg_mod_back_aic)
 calc_loocv_rmse(autompg_mod_back_bic)
 
