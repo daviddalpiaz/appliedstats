@@ -244,8 +244,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="10.1.4" data-path="model-selection.html"><a href="model-selection.html#cross-validated-rmse"><i class="fa fa-check"></i><b>10.1.4</b> Cross-Validated RMSE</a></li>
 </ul></li>
 <li class="chapter" data-level="10.2" data-path="model-selection.html"><a href="model-selection.html#selection-procedures"><i class="fa fa-check"></i><b>10.2</b> Selection Procedures</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="model-selection.html"><a href="model-selection.html#backwards-search"><i class="fa fa-check"></i><b>10.2.1</b> Backwards Search</a></li>
-<li class="chapter" data-level="10.2.2" data-path="model-selection.html"><a href="model-selection.html#forwards-search"><i class="fa fa-check"></i><b>10.2.2</b> Forwards Search</a></li>
+<li class="chapter" data-level="10.2.1" data-path="model-selection.html"><a href="model-selection.html#backward-search"><i class="fa fa-check"></i><b>10.2.1</b> Backward Search</a></li>
+<li class="chapter" data-level="10.2.2" data-path="model-selection.html"><a href="model-selection.html#forward-search"><i class="fa fa-check"></i><b>10.2.2</b> Forward Search</a></li>
 <li class="chapter" data-level="10.2.3" data-path="model-selection.html"><a href="model-selection.html#stepwise-search"><i class="fa fa-check"></i><b>10.2.3</b> Stepwise Search</a></li>
 <li class="chapter" data-level="10.2.4" data-path="model-selection.html"><a href="model-selection.html#exhaustive-search"><i class="fa fa-check"></i><b>10.2.4</b> Exhaustive Search</a></li>
 </ul></li>
@@ -286,16 +286,16 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>This chapter, we will discuss several <em>criteria</em> and <em>procedures</em> for choosing a “good” model from among a choice of many.</p>
 <div id="quality-criterion" class="section level2">
 <h2><span class="header-section-number">10.1</span> Quality Criterion</h2>
-<p>So far, we have seen criteria such as <span class="math inline">\(R^2\)</span> and RMSE for assessing quality of fit. However, both of these have a fatal flaw. By increasing the size of a model, that is adding predictors, that can at worst not improve. It is impossible to add a predictor to a model and make <span class="math inline">\(R^2\)</span> or RMSE worse. (Greater, or less, respectively.) That means, if we were to use either of this to chose between models, we would <em>always</em> simply choose the larger model.</p>
-<p>This suggests that we need a quality criteria that takes into account the size of the model, since our preference is for small models that still fit well. We are willing to sacrifice a small about of goodness-of-fit for obtaining a smaller model. We will look at three criteria that do this explicitly: AIC, BIC and Adjusted <span class="math inline">\(R^2\)</span>. We will also look at one, Cross-Validated RMSE, which implicitly considers the size of the model.</p>
+<p>So far, we have seen criteria such as <span class="math inline">\(R^2\)</span> and RMSE for assessing quality of fit. However, both of these have a fatal flaw. By increasing the size of a model, that is adding predictors, that can at worst not improve. It is impossible to add a predictor to a model and make <span class="math inline">\(R^2\)</span> or RMSE worse. That means, if we were to use either of these to chose between models, we would <em>always</em> simply choose the larger model.</p>
+<p>This suggests that we need a quality criteria that takes into account the size of the model, since our preference is for small models that still fit well. We are willing to sacrifice a small amount of goodness-of-fit for obtaining a smaller model. We will look at three criteria that do this explicitly: AIC, BIC and Adjusted <span class="math inline">\(R^2\)</span>. We will also look at one, Cross-Validated RMSE, which implicitly considers the size of the model.</p>
 <div id="akaike-information-criterion" class="section level3">
 <h3><span class="header-section-number">10.1.1</span> Akaike Information Criterion</h3>
 <p>The first criteria we will discuss is the Akaike Information Criterion, or AIC for short. (Note that, when <em>Aiaike</em> first introduced this metric, it was simply called <em>An</em> Information Criterion. The <em>A</em> has changed meaning over the years.)</p>
-<p>Recall, the log-likelihood of a regression model can be written as</p>
+<p>Recall, the maximized log-likelihood of a regression model can be written as</p>
 <p><span class="math display">\[
 \log L(\boldsymbol{\hat{\beta}}) = -\frac{n}{2}\log(2\pi) - \frac{n}{2}\log\left(\frac{RSS}{n}\right) - \frac{n}{2},
 \]</span></p>
-<p>where <span class="math inline">\(RSS = \sum_{i=1}^n (y_i - \hat{y}_i) ^ 2\)</span>.</p>
+<p>where <span class="math inline">\(RSS = \sum_{i=1}^n (y_i - \hat{y}_i) ^ 2\)</span> and <span class="math inline">\(\hat{\beta}\)</span> was chosen to maximize the likelihood.</p>
 <p>Then we can define AIC as</p>
 <p><span class="math display">\[
 AIC = -2 \log L(\boldsymbol{\hat{\beta}}) + 2p = n + n \log(2\pi) + n \log\left(\frac{RSS}{n}\right) + 2p,
@@ -336,7 +336,7 @@ BIC = -2 \log L(\boldsymbol{\hat{\beta}}) + \log(n) p = n + n\log(2\pi) + n\log\
 \log(n) p.
 \]</span></p>
 <p>So, for any dataset where <span class="math inline">\(log(n) &gt; 2\)</span> the BIC penalty will be larger than the AIC penalty, thus BIC will likely prefer a smaller model.</p>
-<p>Note that, sometimes the penalty is consider a general expression of the form</p>
+<p>Note that, sometimes the penalty is considered a general expression of the form</p>
 <p><span class="math display">\[
 k \cdot p.
 \]</span></p>
@@ -431,7 +431,7 @@ xplot =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</
       <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-468-1.png" width="672" /></p>
 <p>We see that on average, the solid blue line for the quadratic model has similar errors as before. It has changed very slightly. However, the dashed orange line for the large model, has a huge error at the point that was removed and is much different that the previous fit.</p>
-<p>This is the purpose of cross-validation. By assess how the model fits points that were not used to perform the regression, we get an idea of how well the model will work for future observations. It assess how well the model works in general, not simply on the observed data.</p>
+<p>This is the purpose of cross-validation. By assessing how the model fits points that were not used to perform the regression, we get an idea of how well the model will work for future observations. It assess how well the model works in general, not simply on the observed data.</p>
 </div>
 </div>
 <div id="selection-procedures" class="section level2">
@@ -446,13 +446,13 @@ hipcenter_mod =<span class="st"> </span><span class="kw">lm</span>(hipcenter ~<s
 ##  -1.32806864  -1.14311888  -6.43904627</code></pre>
 <p>Let’s return to the <code>seatpos</code> data from the <code>faraway</code> package. Now, let’s consider only models with first order terms, thus no interactions and no polynomials. There are <em>eight</em> predictors in this model. So if we consider all possible models, ranging from using 0 predictors, to all eight predictors, there are</p>
 <p><span class="math display">\[
-\sum_{k = 0}^p {{p} \choose {k}} = 2 ^ p = 2 ^ 8 = 256
+\sum_{k = 0}^{p - 1} {{p - 1} \choose {k}} = 2 ^ {p - 1} = 2 ^ 8 = 256
 \]</span></p>
 <p>possible models.</p>
 <p>If we had 10 or more predictors, we would already be considering over 100 models! For this reason, we often search through possible models in an intelligent way, bypassing some models that are unlikely to be considered good. We will consider three search procedures: backwards, forwards, and stepwise.</p>
-<div id="backwards-search" class="section level3">
-<h3><span class="header-section-number">10.2.1</span> Backwards Search</h3>
-<p>Backwards selection procedures start with all possible predictors in the model, then considers how deleting a single predictor will effect a chosen metric. Let’s try this on the <code>seatpos</code> data. We will use the <code>step()</code> function in <code>R</code> which by default uses AIC as its metric of choice.</p>
+<div id="backward-search" class="section level3">
+<h3><span class="header-section-number">10.2.1</span> Backward Search</h3>
+<p>Backward selection procedures start with all possible predictors in the model, then considers how deleting a single predictor will effect a chosen metric. Let’s try this on the <code>seatpos</code> data. We will use the <code>step()</code> function in <code>R</code> which by default uses AIC as its metric of choice.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hipcenter_mod_back_aic =<span class="st"> </span><span class="kw">step</span>(hipcenter_mod, <span class="dt">direction =</span> <span class="st">&quot;backward&quot;</span>)</code></pre></div>
 <pre><code>## Start:  AIC=283.62
 ## hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + 
@@ -632,35 +632,30 @@ hipcenter_mod_back_bic =<span class="st"> </span><span class="kw">step</span>(hi
 ## &lt;none&gt;                  48105 278.73
 ## - HtShoes  1     83534 131639 313.35</code></pre>
 <p>The procedure is exactly the same, except at each step we look to improve the BIC, which <code>R</code> still labels AIC in the output.</p>
-<p>The variable `<code>hipcenter_mod_back_bic</code> stores the model chosen by this procedure.</p>
+<p>The variable <code>hipcenter_mod_back_bic</code> stores the model chosen by this procedure.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(hipcenter_mod_back_bic)</code></pre></div>
 <pre><code>## (Intercept)     HtShoes 
 ##  565.592659   -4.262091</code></pre>
 <p>We note that this model is <em>smaller</em>, has fewer predictors, than the model chosen by AIC, which is what we would expect. Also note that while both models are different, neither uses both <code>Ht</code> and <code>HtShoes</code> which are extremely correlated.</p>
-<p>We can use information from the <code>summary()</code> function to compare their Adjusted <span class="math inline">\(R^2\)</span> values.</p>
+<p>We can use information from the <code>summary()</code> function to compare their Adjusted <span class="math inline">\(R^2\)</span> values. Note that either selected model performs better than the original full model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(hipcenter_mod)$adj.r.squared</code></pre></div>
+<pre><code>## [1] 0.6000855</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(hipcenter_mod_back_aic)$adj.r.squared</code></pre></div>
 <pre><code>## [1] 0.6531427</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(hipcenter_mod_back_bic)$adj.r.squared</code></pre></div>
 <pre><code>## [1] 0.6244149</code></pre>
-<p>We can also calculate the LOOCV RMSE for both.</p>
+<p>We can also calculate the LOOCV RMSE for both selected models, as well as the full model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calc_loocv_rmse</span>(hipcenter_mod)</code></pre></div>
+<pre><code>## [1] 44.44564</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calc_loocv_rmse</span>(hipcenter_mod_back_aic)</code></pre></div>
 <pre><code>## [1] 37.58473</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calc_loocv_rmse</span>(hipcenter_mod_back_bic)</code></pre></div>
 <pre><code>## [1] 37.40564</code></pre>
 <p>We see that we would prefer the model chosen via BIC if using LOOCV RMSE as our metric.</p>
-<ul>
-<li><strong>BELOW HERE IS A WORK IN PROGRESS</strong></li>
-<li><strong>BELOW HERE IS A WORK IN PROGRESS</strong></li>
-<li><strong>BELOW HERE IS A WORK IN PROGRESS</strong></li>
-<li><strong>BELOW HERE IS A WORK IN PROGRESS</strong></li>
-<li><strong>BELOW HERE IS A WORK IN PROGRESS</strong></li>
-<li><strong>BELOW HERE IS A WORK IN PROGRESS</strong></li>
-<li><strong>BELOW HERE IS A WORK IN PROGRESS</strong></li>
-<li><strong>BELOW HERE IS A WORK IN PROGRESS</strong></li>
-</ul>
 </div>
-<div id="forwards-search" class="section level3">
-<h3><span class="header-section-number">10.2.2</span> Forwards Search</h3>
+<div id="forward-search" class="section level3">
+<h3><span class="header-section-number">10.2.2</span> Forward Search</h3>
+<p>Forward selection is the exact opposite of backwards selection. Here we tell <code>R</code> to start with a model using no predictors, that is <code>hipcenter ~ 1</code>, then at each step <code>R</code> will attempt to add a predictor until it finds a good model or reaches <code>hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hipcenter_mod_start =<span class="st"> </span><span class="kw">lm</span>(hipcenter ~<span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> seatpos)
 hipcenter_mod_forw_aic =<span class="st"> </span><span class="kw">step</span>(hipcenter_mod_start, 
                               hipcenter ~<span class="st"> </span>Age +<span class="st"> </span>Weight +<span class="st"> </span>HtShoes +<span class="st"> </span>Ht +<span class="st"> </span>Seated +<span class="st"> </span>Arm +<span class="st"> </span>Thigh +<span class="st"> </span>Leg, 
@@ -714,6 +709,7 @@ hipcenter_mod_forw_aic =<span class="st"> </span><span class="kw">step</span>(hi
 ## + Seated   1    121.26 41817 276.13
 ## + Weight   1     46.83 41891 276.20
 ## + HtShoes  1     13.38 41925 276.23</code></pre>
+<p>Again, by default <code>R</code> uses AIC as its quality metric when using the <code>step()</code> function. Also note that now the rows begin with a <code>+</code> which indicates addition of predictors to the current model from any step.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hipcenter_mod_forw_bic =<span class="st"> </span><span class="kw">step</span>(hipcenter_mod_start, 
                               hipcenter ~<span class="st"> </span>Age +<span class="st"> </span>Weight +<span class="st"> </span>HtShoes +<span class="st"> </span>Ht +<span class="st"> </span>Seated +<span class="st"> </span>Arm +<span class="st"> </span>Thigh +<span class="st"> </span>Leg, 
                               <span class="dt">direction =</span> <span class="st">&quot;forward&quot;</span>, <span class="dt">k =</span> <span class="kw">log</span>(n))</code></pre></div>
@@ -743,10 +739,16 @@ hipcenter_mod_forw_aic =<span class="st"> </span><span class="kw">step</span>(hi
 ## + Arm      1     75.78 47540 281.92
 ## + HtShoes  1     25.76 47590 281.96
 ## + Thigh    1      4.63 47611 281.98</code></pre>
+<p>We can make the same modification as last time to instead use BIC with forward selection.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(hipcenter_mod)$adj.r.squared</code></pre></div>
+<pre><code>## [1] 0.6000855</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(hipcenter_mod_forw_aic)$adj.r.squared</code></pre></div>
 <pre><code>## [1] 0.6533055</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(hipcenter_mod_forw_bic)$adj.r.squared</code></pre></div>
 <pre><code>## [1] 0.6282374</code></pre>
+<p>We can compare the two selected models’ Adjusted <span class="math inline">\(R^2\)</span> as well as their LOOCV RMSE. The results are very similar to those using backwards selection, although the models are not exactly the same.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calc_loocv_rmse</span>(hipcenter_mod)</code></pre></div>
+<pre><code>## [1] 44.44564</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calc_loocv_rmse</span>(hipcenter_mod_forw_aic)</code></pre></div>
 <pre><code>## [1] 37.62516</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calc_loocv_rmse</span>(hipcenter_mod_forw_bic)</code></pre></div>
@@ -754,6 +756,8 @@ hipcenter_mod_forw_aic =<span class="st"> </span><span class="kw">step</span>(hi
 </div>
 <div id="stepwise-search" class="section level3">
 <h3><span class="header-section-number">10.2.3</span> Stepwise Search</h3>
+<p>Stepwise search checks going both backwards and forwards at every step. It considers the addition of any variable not currently in the model, as well as the removal of any variable currently in the model.</p>
+<p>Here we perform stepwise search using AIC as our metric. We start with the model <code>hipcenter ~ 1</code> and search up to <code>hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg</code>. Notice that at many of the steps, some row begin with <code>-</code>, while others begin with <code>+</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hipcenter_mod_both_aic =<span class="st"> </span><span class="kw">step</span>(hipcenter_mod_start, 
                               hipcenter ~<span class="st"> </span>Age +<span class="st"> </span>Weight +<span class="st"> </span>HtShoes +<span class="st"> </span>Ht +<span class="st"> </span>Seated +<span class="st"> </span>Arm +<span class="st"> </span>Thigh +<span class="st"> </span>Leg, 
                               <span class="dt">direction =</span> <span class="st">&quot;both&quot;</span>)</code></pre></div>
@@ -812,6 +816,7 @@ hipcenter_mod_forw_aic =<span class="st"> </span><span class="kw">step</span>(hi
 ## + Seated   1     121.3 41817 276.13
 ## + Weight   1      46.8 41891 276.20
 ## + HtShoes  1      13.4 41925 276.23</code></pre>
+<p>We could again instead use BIC as our metric.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hipcenter_mod_both_bic =<span class="st"> </span><span class="kw">step</span>(hipcenter_mod_start, 
                               hipcenter ~<span class="st"> </span>Age +<span class="st"> </span>Weight +<span class="st"> </span>HtShoes +<span class="st"> </span>Ht +<span class="st"> </span>Seated +<span class="st"> </span>Arm +<span class="st"> </span>Thigh +<span class="st"> </span>Leg, 
                               <span class="dt">direction =</span> <span class="st">&quot;both&quot;</span>, <span class="dt">k =</span> <span class="kw">log</span>(n))</code></pre></div>
@@ -842,10 +847,15 @@ hipcenter_mod_forw_aic =<span class="st"> </span><span class="kw">step</span>(hi
 ## + HtShoes  1        26  47590 281.96
 ## + Thigh    1         5  47611 281.98
 ## - Ht       1     84023 131639 313.35</code></pre>
+<p>Adjusted <span class="math inline">\(R^2\)</span> and LOOCV RMSE comparisons are similar to backwards and forwards, which is not at all surprising, as some of the models selected are the same as before.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(hipcenter_mod)$adj.r.squared</code></pre></div>
+<pre><code>## [1] 0.6000855</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(hipcenter_mod_both_aic)$adj.r.squared</code></pre></div>
 <pre><code>## [1] 0.6533055</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(hipcenter_mod_both_bic)$adj.r.squared</code></pre></div>
 <pre><code>## [1] 0.6282374</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calc_loocv_rmse</span>(hipcenter_mod)</code></pre></div>
+<pre><code>## [1] 44.44564</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calc_loocv_rmse</span>(hipcenter_mod_both_aic)</code></pre></div>
 <pre><code>## [1] 37.62516</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calc_loocv_rmse</span>(hipcenter_mod_both_bic)</code></pre></div>
@@ -853,10 +863,13 @@ hipcenter_mod_forw_aic =<span class="st"> </span><span class="kw">step</span>(hi
 </div>
 <div id="exhaustive-search" class="section level3">
 <h3><span class="header-section-number">10.2.4</span> Exhaustive Search</h3>
+<p>Backward, forward, and stepwise search are all useful, but do have an obvious issue. By not checking every possible model, sometimes they will miss the best possible model. With an extremely large number of predictors, sometimes this is necessary since checking every possible model would be rather time consuming, even with current computers.</p>
+<p>However, with a reasonably sized dataset, it isn’t too difficult to check all possible models. To do so, we will use the <code>regsubsets()</code> function in the <code>R</code> package <code>leaps</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(leaps)
-all_hipcenter_mod =<span class="st"> </span><span class="kw">summary</span>(<span class="kw">regsubsets</span>(hipcenter ~<span class="st"> </span>., <span class="dt">data =</span> seatpos))
-
-all_hipcenter_mod$which</code></pre></div>
+all_hipcenter_mod =<span class="st"> </span><span class="kw">summary</span>(<span class="kw">regsubsets</span>(hipcenter ~<span class="st"> </span>., <span class="dt">data =</span> seatpos))</code></pre></div>
+<p>A few points about this line of code. First, note that we immediately use <code>summary()</code> and store those results. That is simply the intended use of <code>regsubsets()</code>. Second, inside of <code>regsubsets()</code> we specify the model <code>hipcenter ~ .</code>. This will be the largest model considered, that is the model using all first-order predictors, and <code>R</code> will check all possible subsets.</p>
+<p>We’ll now look at the information stored in <code>all_hipcenter_mod</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">all_hipcenter_mod$which</code></pre></div>
 <pre><code>##   (Intercept)   Age Weight HtShoes    Ht Seated   Arm Thigh   Leg
 ## 1        TRUE FALSE  FALSE   FALSE  TRUE  FALSE FALSE FALSE FALSE
 ## 2        TRUE FALSE  FALSE   FALSE  TRUE  FALSE FALSE FALSE  TRUE
@@ -866,21 +879,44 @@ all_hipcenter_mod$which</code></pre></div>
 ## 6        TRUE  TRUE  FALSE    TRUE FALSE   TRUE  TRUE  TRUE  TRUE
 ## 7        TRUE  TRUE   TRUE    TRUE FALSE   TRUE  TRUE  TRUE  TRUE
 ## 8        TRUE  TRUE   TRUE    TRUE  TRUE   TRUE  TRUE  TRUE  TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">which.max</span>(all_hipcenter_mod$adjr2)</code></pre></div>
+<p>Using <code>$which</code> gives us the best model, according to RSS, for a model of each possible size, in this case ranging from one to eight predictors. For example the best model with four predictors (<span class="math inline">\(p = 5\)</span>) would use <code>Age</code>, <code>HtShoes</code>, <code>Thigh</code>, and <code>Leg</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">all_hipcenter_mod$rss</code></pre></div>
+<pre><code>## [1] 47615.79 44834.69 41938.09 41485.01 41313.00 41277.90 41266.80 41261.78</code></pre>
+<p>We can obtain the RSS for each of these models using <code>$rss</code>. Notice that these are decreasing since the models range from small to large.</p>
+<p>Now that we have the RSS for each of these models, it is rather easy to obtain AIC, BIC, and Adjusted <span class="math inline">\(R^2\)</span> since they are all a function of RSS. Also, since we have the models with the best RSS for each size, they will result in the models with the best AIC, BIC, and Adjusted <span class="math inline">\(R^2\)</span> for each size. Then by picking from those, we can find the overall best AIC, BIC, and Adjusted <span class="math inline">\(R^2\)</span>.</p>
+<p>Conveniently, Adjusted <span class="math inline">\(R^2\)</span> is automatically calculated.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">all_hipcenter_mod$adjr2</code></pre></div>
+<pre><code>## [1] 0.6282374 0.6399496 0.6533055 0.6466586 0.6371276 0.6257403 0.6133690
+## [8] 0.6000855</code></pre>
+<p>To find which model has the highest Adjusted <span class="math inline">\(R^2\)</span> we can use the <code>which.max()</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">best_r2_ind =</span> <span class="kw">which.max</span>(all_hipcenter_mod$adjr2))</code></pre></div>
 <pre><code>## [1] 3</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p =<span class="st"> </span><span class="kw">length</span>(<span class="kw">coef</span>(hipcenter_mod))
-n =<span class="st"> </span><span class="kw">length</span>(<span class="kw">resid</span>(hipcenter_mod))
-
-hipcenter_mod_aic =<span class="st"> </span>n *<span class="st"> </span><span class="kw">log</span>(all_hipcenter_mod$rss /<span class="st"> </span>n) +<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span>(<span class="dv">2</span>:p)
-<span class="kw">which.min</span>(hipcenter_mod_aic)</code></pre></div>
-<pre><code>## [1] 3</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">all_hipcenter_mod$which[<span class="dv">3</span>,]</code></pre></div>
+<p>We can then extract the predictors of that model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">all_hipcenter_mod$which[best_r2_ind, ]</code></pre></div>
 <pre><code>## (Intercept)         Age      Weight     HtShoes          Ht      Seated 
 ##        TRUE        TRUE       FALSE       FALSE        TRUE       FALSE 
 ##         Arm       Thigh         Leg 
 ##       FALSE       FALSE        TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hipcenter_mod_best_aic =<span class="st"> </span><span class="kw">lm</span>(hipcenter ~<span class="st"> </span>Age +<span class="st"> </span>Ht +<span class="st"> </span>Leg, <span class="dt">data =</span> seatpos)
-<span class="kw">extractAIC</span>(hipcenter_mod_best_aic)</code></pre></div>
+<p>We’ll now calculate AIC and BIC for the each of the models with the best RSS. To do so, we will need both <span class="math inline">\(n\)</span> and the <span class="math inline">\(p\)</span> for the largest possible model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p =<span class="st"> </span><span class="kw">length</span>(<span class="kw">coef</span>(hipcenter_mod))
+n =<span class="st"> </span><span class="kw">length</span>(<span class="kw">resid</span>(hipcenter_mod))</code></pre></div>
+<p>We’ll use the approximation of AIC which leaves of the constant term that is equal across all models.</p>
+<p><span class="math display">\[
+AIC \approx n\log\left(\frac{RSS}{n}\right) + 2p.
+\]</span></p>
+<p>Since we have the RSS of each model stored, this is easy to calculate.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hipcenter_mod_aic =<span class="st"> </span>n *<span class="st"> </span><span class="kw">log</span>(all_hipcenter_mod$rss /<span class="st"> </span>n) +<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span>(<span class="dv">2</span>:p)</code></pre></div>
+<p>We can then extract the predictors of the model with the best AIC.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">best_aic_ind =<span class="st"> </span><span class="kw">which.min</span>(hipcenter_mod_aic)
+all_hipcenter_mod$which[best_aic_ind,]</code></pre></div>
+<pre><code>## (Intercept)         Age      Weight     HtShoes          Ht      Seated 
+##        TRUE        TRUE       FALSE       FALSE        TRUE       FALSE 
+##         Arm       Thigh         Leg 
+##       FALSE       FALSE        TRUE</code></pre>
+<p>Let’s fit this model so we can compare to our previously chosen models using AIC and search procedures.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hipcenter_mod_best_aic =<span class="st"> </span><span class="kw">lm</span>(hipcenter ~<span class="st"> </span>Age +<span class="st"> </span>Ht +<span class="st"> </span>Leg, <span class="dt">data =</span> seatpos)</code></pre></div>
+<p>The <code>extractAIC()</code> function will calculate the AIC approximation defined above for a fitted model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">extractAIC</span>(hipcenter_mod_best_aic)</code></pre></div>
 <pre><code>## [1]   4.0000 274.2418</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">extractAIC</span>(hipcenter_mod_back_aic)</code></pre></div>
 <pre><code>## [1]   4.0000 274.2597</code></pre>
@@ -888,19 +924,24 @@ hipcenter_mod_aic =<span class="st"> </span>n *<span class="st"> </span><span cl
 <pre><code>## [1]   4.0000 274.2418</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">extractAIC</span>(hipcenter_mod_both_aic)</code></pre></div>
 <pre><code>## [1]   4.0000 274.2418</code></pre>
+<p>We see that two of the models chosen by search procedures have the best possible AIC, as they are the same model. This is however never guaranteed. We see that the model chosen using backwards selection does not achieve the smallest possible AIC.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(hipcenter_mod_aic ~<span class="st"> </span><span class="kw">I</span>(<span class="dv">2</span>:p), <span class="dt">ylab =</span> <span class="st">&quot;AIC&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;p, number of parameters&quot;</span>, 
      <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">cex =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-485-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hipcenter_mod_bic =<span class="st"> </span>n *<span class="st"> </span><span class="kw">log</span>(all_hipcenter_mod$rss /<span class="st"> </span>n) +<span class="st"> </span><span class="kw">log</span>(n) *<span class="st"> </span>(<span class="dv">2</span>:p) <span class="co"># why this equation?</span>
-<span class="kw">which.min</span>(hipcenter_mod_bic)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-496-1.png" width="672" /></p>
+<p>We could easily repeat this process for BIC.</p>
+<p><span class="math display">\[
+BIC \approx n\log\left(\frac{RSS}{n}\right) + \log(n)p.
+\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hipcenter_mod_bic =<span class="st"> </span>n *<span class="st"> </span><span class="kw">log</span>(all_hipcenter_mod$rss /<span class="st"> </span>n) +<span class="st"> </span><span class="kw">log</span>(n) *<span class="st"> </span>(<span class="dv">2</span>:p)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">which.min</span>(hipcenter_mod_bic)</code></pre></div>
 <pre><code>## [1] 1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">all_hipcenter_mod$which[<span class="dv">1</span>,]</code></pre></div>
 <pre><code>## (Intercept)         Age      Weight     HtShoes          Ht      Seated 
 ##        TRUE       FALSE       FALSE       FALSE        TRUE       FALSE 
 ##         Arm       Thigh         Leg 
 ##       FALSE       FALSE       FALSE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hipcenter_mod_best_bic =<span class="st"> </span><span class="kw">lm</span>(hipcenter ~<span class="st"> </span>Ht, <span class="dt">data =</span> seatpos)
-<span class="kw">extractAIC</span>(hipcenter_mod_best_bic, <span class="dt">k =</span> <span class="kw">log</span>(n))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hipcenter_mod_best_bic =<span class="st"> </span><span class="kw">lm</span>(hipcenter ~<span class="st"> </span>Ht, <span class="dt">data =</span> seatpos)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">extractAIC</span>(hipcenter_mod_best_bic, <span class="dt">k =</span> <span class="kw">log</span>(n))</code></pre></div>
 <pre><code>## [1]   2.0000 278.3418</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">extractAIC</span>(hipcenter_mod_back_bic, <span class="dt">k =</span> <span class="kw">log</span>(n))</code></pre></div>
 <pre><code>## [1]   2.0000 278.7306</code></pre>
@@ -908,19 +949,27 @@ hipcenter_mod_aic =<span class="st"> </span>n *<span class="st"> </span><span cl
 <pre><code>## [1]   2.0000 278.3418</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">extractAIC</span>(hipcenter_mod_both_bic, <span class="dt">k =</span> <span class="kw">log</span>(n))</code></pre></div>
 <pre><code>## [1]   2.0000 278.3418</code></pre>
-<p><span class="math display">\[
-AIC \approx n\log\left(\frac{RSS}{n}\right) + 2p.
-\]</span></p>
-<p><span class="math display">\[
-BIC \approx n\log\left(\frac{RSS}{n}\right) + \log(n)p.
-\]</span></p>
 </div>
 </div>
 <div id="higher-order-terms" class="section level2">
 <h2><span class="header-section-number">10.3</span> Higher Order Terms</h2>
-<ul>
-<li><code>autompg</code> Example</li>
-</ul>
+<p>So far we have only allowed first-order terms in our models. Let’s return to the <code>autompg</code> dataset to explore higher-order terms.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">autompg =<span class="st"> </span><span class="kw">read.table</span>(
+  <span class="st">&quot;http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data&quot;</span>,
+  <span class="dt">quote =</span> <span class="st">&quot;</span><span class="ch">\&quot;</span><span class="st">&quot;</span>,
+  <span class="dt">comment.char =</span> <span class="st">&quot;&quot;</span>,
+  <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
+<span class="kw">colnames</span>(autompg) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;mpg&quot;</span>, <span class="st">&quot;cyl&quot;</span>, <span class="st">&quot;disp&quot;</span>, <span class="st">&quot;hp&quot;</span>, <span class="st">&quot;wt&quot;</span>, <span class="st">&quot;acc&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;origin&quot;</span>, <span class="st">&quot;name&quot;</span>)
+autompg =<span class="st"> </span><span class="kw">subset</span>(autompg, autompg$hp !=<span class="st"> &quot;?&quot;</span>)
+autompg =<span class="st"> </span><span class="kw">subset</span>(autompg, autompg$name !=<span class="st"> &quot;plymouth reliant&quot;</span>)
+<span class="kw">rownames</span>(autompg) =<span class="st"> </span><span class="kw">paste</span>(autompg$cyl, <span class="st">&quot;cylinder&quot;</span>, autompg$year, autompg$name)
+autompg$hp =<span class="st"> </span><span class="kw">as.numeric</span>(autompg$hp)
+autompg$domestic =<span class="st"> </span><span class="kw">as.numeric</span>(autompg$origin ==<span class="st"> </span><span class="dv">1</span>)
+autompg =<span class="st"> </span>autompg[autompg$cyl !=<span class="st"> </span><span class="dv">5</span>,]
+autompg =<span class="st"> </span>autompg[autompg$cyl !=<span class="st"> </span><span class="dv">3</span>,]
+autompg$cyl =<span class="st"> </span><span class="kw">as.factor</span>(autompg$cyl)
+autompg$domestic =<span class="st"> </span><span class="kw">as.factor</span>(autompg$domestic)
+autompg =<span class="st"> </span><span class="kw">subset</span>(autompg, <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot;mpg&quot;</span>, <span class="st">&quot;cyl&quot;</span>, <span class="st">&quot;disp&quot;</span>, <span class="st">&quot;hp&quot;</span>, <span class="st">&quot;wt&quot;</span>, <span class="st">&quot;acc&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;domestic&quot;</span>))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(autompg)</code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    383 obs. of  8 variables:
 ##  $ mpg     : num  18 15 18 16 17 15 14 14 14 15 ...
@@ -931,15 +980,24 @@ BIC \approx n\log\left(\frac{RSS}{n}\right) + \log(n)p.
 ##  $ acc     : num  12 11.5 11 12 10.5 10 9 8.5 10 8.5 ...
 ##  $ year    : int  70 70 70 70 70 70 70 70 70 70 ...
 ##  $ domestic: Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 2 2 2 2 2 2 2 2 2 2 ...</code></pre>
+<p>Recall that we have two factor variables, <code>cyl</code> and <code>domestic</code>. The <code>cyl</code> variable has three levels, while the <code>domestic</code> variable has only two. Thus the <code>cyl</code> variable will be coded using two dummy variables, while the <code>domestic</code> variable will only need one. We will pay attention to this later.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pairs</span>(autompg, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-489-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">autompg_big_mod =<span class="st"> </span><span class="kw">lm</span>(<span class="kw">log</span>(mpg) ~<span class="st"> </span>. ^<span class="st"> </span><span class="dv">2</span> +<span class="st"> </span><span class="kw">I</span>(disp ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(disp ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(hp ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(wt ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(acc ^<span class="st"> </span><span class="dv">2</span>), <span class="dt">data =</span> autompg)
-autompg_mod_back_aic =<span class="st"> </span><span class="kw">step</span>(autompg_big_mod, <span class="dt">direction =</span> <span class="st">&quot;backward&quot;</span>, <span class="dt">trace =</span> <span class="dv">0</span>)
-
-n =<span class="st"> </span><span class="kw">length</span>(<span class="kw">resid</span>(autompg_big_mod))
-autompg_mod_back_bic =<span class="st"> </span><span class="kw">step</span>(autompg_big_mod, <span class="dt">direction =</span> <span class="st">&quot;backward&quot;</span>, <span class="dt">k =</span> <span class="kw">log</span>(n), <span class="dt">trace =</span> <span class="dv">0</span>)
-
-<span class="kw">coef</span>(autompg_mod_back_aic)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-503-1.png" width="672" /></p>
+<p>We’ll use the <code>pairs()</code> plot to determine which variables may benefit from a quadratic relationship with the response. We’ll also consider all possible two-way interactions. We won’t consider any three-order or higher. For example, we won’t consider the interaction between first-order terms and the added quadratic terms.</p>
+<p>So now, we’ll fit this rather large model. We’ll use a log-transformed response. Notice that <code>log(mpg) ~ . ^ 2</code> will automatically consider all first-order terms, as well as all two-way interactions. We use <code>I(var_name ^ 2)</code> to add quadratic terms for some variables. This generally works better than using <code>poly()</code> when performing variable selection.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">autompg_big_mod =<span class="st"> </span><span class="kw">lm</span>(<span class="kw">log</span>(mpg) ~<span class="st"> </span>. ^<span class="st"> </span><span class="dv">2</span> +<span class="st"> </span><span class="kw">I</span>(disp ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(disp ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(hp ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(wt ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(acc ^<span class="st"> </span><span class="dv">2</span>), <span class="dt">data =</span> autompg)</code></pre></div>
+<p>We think it is rather unlikely that we truly need all of these terms. There are quite a few!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw">coef</span>(autompg_big_mod))</code></pre></div>
+<pre><code>## [1] 40</code></pre>
+<p>We’ll try backwards search with both AIC and BIC to attempt to find a smaller, more reasonable model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">autompg_mod_back_aic =<span class="st"> </span><span class="kw">step</span>(autompg_big_mod, <span class="dt">direction =</span> <span class="st">&quot;backward&quot;</span>, <span class="dt">trace =</span> <span class="dv">0</span>)</code></pre></div>
+<p>Notice that we used <code>trace = 0</code> in the function call. This suppress the output for each step, and simply stores the chosen model. This is useful, as this code would otherwise create a large amount of output. If we had viewed the output, which you can try on your own by removing <code>trace = 0</code>, we would see that <code>R</code> only considers the <code>cyl</code> variable as a single variable, despite the fact that it is coded using two dummy variables. So removing <code>cyl</code> would actually remove two parameters from the resulting model.</p>
+<p>You should also notice that <code>R</code> respects hierarchy when attempting to remove variables. That is, for example, <code>R</code> will not consider removing <code>hp</code> if <code>hp:disp</code> or <code>I(hp ^ 2)</code> are currently in the model.</p>
+<p>We also use BIC.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n =<span class="st"> </span><span class="kw">length</span>(<span class="kw">resid</span>(autompg_big_mod))
+autompg_mod_back_bic =<span class="st"> </span><span class="kw">step</span>(autompg_big_mod, <span class="dt">direction =</span> <span class="st">&quot;backward&quot;</span>, <span class="dt">k =</span> <span class="kw">log</span>(n), <span class="dt">trace =</span> <span class="dv">0</span>)</code></pre></div>
+<p>Looking at the coefficients of the two chosen models, we see they are still rather large.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(autompg_mod_back_aic)</code></pre></div>
 <pre><code>##      (Intercept)             cyl6             cyl8             disp 
 ##  3.6718839511472 -0.1602563336333 -0.8581644338393 -0.0093719707873 
 ##               hp               wt              acc             year 
@@ -959,12 +1017,14 @@ autompg_mod_back_bic =<span class="st"> </span><span class="kw">step</span>(auto
 ##  0.3341578960873  0.0043154925327  0.0461009496981  0.0000004102804 
 ##           hp:acc         acc:year    acc:domestic1 
 ## -0.0003386261424  0.0025001372156 -0.0219329407492</code></pre>
+<p>However, they are much smaller than the original full model. Also notice that the resulting models respect hierarchy.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw">coef</span>(autompg_big_mod))</code></pre></div>
 <pre><code>## [1] 40</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw">coef</span>(autompg_mod_back_aic))</code></pre></div>
 <pre><code>## [1] 19</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw">coef</span>(autompg_mod_back_bic))</code></pre></div>
 <pre><code>## [1] 15</code></pre>
+<p>Calculating the LOOCV RMSE for each, we see that the model chosen using BIC performs the best. That means that it is both the best model for prediction, since it achieves the best LOOCV RMSE, but also the best model for explanation, as it is also the smallest.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calc_loocv_rmse</span>(autompg_big_mod)</code></pre></div>
 <pre><code>## [1] 0.1112024</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calc_loocv_rmse</span>(autompg_mod_back_aic)</code></pre></div>
