@@ -17,7 +17,7 @@ This chapter, we will discuss several *criteria* and *procedures* for choosing a
 
 So far, we have seen criteria such as $R^2$ and RMSE for assessing quality of fit. However, both of these have a fatal flaw. By increasing the size of a model, that is adding predictors, that can at worst not improve. It is impossible to add a predictor to a model and make $R^2$ or RMSE worse. (Greater, or less, respectively.) That means, if we were to use either of this to chose between models, we would *always* simply choose the larger model.
 
-This suggests that we need a quality criteria that takes into account the size of the model, since our preference is for small models that still fit well. We are willing to sacrific a small about of goodness-of-fit for obtaining a smaller model. We will look at three criteria that do this explicitly: AIC, BIC and Adjusted $R^2$. We will also look at one, Cross-Validated RMSE, which implicitly considers the size of the model.
+This suggests that we need a quality criteria that takes into account the size of the model, since our preference is for small models that still fit well. We are willing to sacrifice a small about of goodness-of-fit for obtaining a smaller model. We will look at three criteria that do this explicitly: AIC, BIC and Adjusted $R^2$. We will also look at one, Cross-Validated RMSE, which implicitly considers the size of the model.
 
 ### Akaike Information Criterion
 
@@ -285,13 +285,13 @@ n = length(resid(hipcenter_mod))
 n * log(mean(resid(hipcenter_mod) ^ 2)) + 2 * 9
 ```
 
-Returning to the first step, `R` then gives us a row which shows the effect of deleting an of the predictors. The `-` signs at the beginning of each row indicates we are considering removing a predictor. There is also a row with `<none>` which is a row for keeping the current model. Notice that this row has the smallest RSS, as it is the largest model.
+Returning to the first step, `R` then gives us a row which shows the effect of deleting each of the current predictors. The `-` signs at the beginning of each row indicates we are considering removing a predictor. There is also a row with `<none>` which is a row for keeping the current model. Notice that this row has the smallest RSS, as it is the largest model.
 
-We see that every row above `<none>` has a smaller AIC than the row for `<none>` with the one at the top, `Ht`, giving the lowest AIC. Thus we remove `Ht` from the model, and continute the process.
+We see that every row above `<none>` has a smaller AIC than the row for `<none>` with the one at the top, `Ht`, giving the lowest AIC. Thus we remove `Ht` from the model, and continue the process.
 
 Notice, in the second step, we start with the model `hipcenter ~ Age + Weight + HtShoes + Seated + Arm + Thigh + Leg` and the variable `Ht` is no longer considered.
 
-We continute the process until we reach the model `hipcenter ~ Age + HtShoes + Leg`. At this step, the row for `<none>` tops the list, as removing any additional variables will not improve the AIC. This is the model which is stored in `hipcenter_mod_back_aic`.
+We continue the process until we reach the model `hipcenter ~ Age + HtShoes + Leg`. At this step, the row for `<none>` tops the list, as removing any additional variable will not improve the AIC. This is the model which is stored in `hipcenter_mod_back_aic`.
 
 ```{r}
 coef(hipcenter_mod_back_aic)
@@ -304,7 +304,7 @@ n = length(resid(hipcenter_mod))
 hipcenter_mod_back_bic = step(hipcenter_mod, direction = "backward", k = log(n))
 ```
 
-The procedure is exactly the same, except at each step we look to improve the BIC, which `R` is still calling AIC in the output.
+The procedure is exactly the same, except at each step we look to improve the BIC, which `R` still labels AIC in the output.
 
 The variable ``hipcenter_mod_back_bic` stores the model chosen by this procedure.
 
@@ -312,7 +312,7 @@ The variable ``hipcenter_mod_back_bic` stores the model chosen by this procedure
 coef(hipcenter_mod_back_bic)
 ```
 
-We note that this model is *smaller*, has fewer predictors, than the model chosen by AIC, which is what we would expect.
+We note that this model is *smaller*, has fewer predictors, than the model chosen by AIC, which is what we would expect. Also note that while both models are different, neither uses both `Ht` and `HtShoes` which are extremely correlated.
 
 We can use information from the `summary()` function to compare their Adjusted $R^2$ values.
 
@@ -321,7 +321,7 @@ summary(hipcenter_mod_back_aic)$adj.r.squared
 summary(hipcenter_mod_back_bic)$adj.r.squared
 ```
 
-We can also calulate the LOOCV RMSE for both.
+We can also calculate the LOOCV RMSE for both.
 
 ```{r}
 calc_loocv_rmse(hipcenter_mod_back_aic)
@@ -329,6 +329,15 @@ calc_loocv_rmse(hipcenter_mod_back_bic)
 ```
 
 We see that we would prefer the model chosen via BIC if using LOOCV RMSE as our metric.
+
+- **BELOW HERE IS A WORK IN PROGRESS**
+- **BELOW HERE IS A WORK IN PROGRESS**
+- **BELOW HERE IS A WORK IN PROGRESS**
+- **BELOW HERE IS A WORK IN PROGRESS**
+- **BELOW HERE IS A WORK IN PROGRESS**
+- **BELOW HERE IS A WORK IN PROGRESS**
+- **BELOW HERE IS A WORK IN PROGRESS**
+- **BELOW HERE IS A WORK IN PROGRESS**
 
 ### Forwards Search
 
@@ -338,7 +347,6 @@ hipcenter_mod_forw_aic = step(hipcenter_mod_start,
                               hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg, 
                               direction = "forward")
 ```
-
 
 ```{r}
 hipcenter_mod_forw_bic = step(hipcenter_mod_start, 
@@ -356,10 +364,7 @@ calc_loocv_rmse(hipcenter_mod_forw_aic)
 calc_loocv_rmse(hipcenter_mod_forw_bic)
 ```
 
-
 ### Stepwise Search
-
-- TODO: Could be reversed
 
 ```{r}
 hipcenter_mod_both_aic = step(hipcenter_mod_start, 
@@ -373,8 +378,6 @@ hipcenter_mod_both_bic = step(hipcenter_mod_start,
                               direction = "both", k = log(n))
 ```
 
-- TODO: neither has both Ht and HtShoes
-
 ```{r}
 summary(hipcenter_mod_both_aic)$adj.r.squared
 summary(hipcenter_mod_both_bic)$adj.r.squared
@@ -385,21 +388,9 @@ calc_loocv_rmse(hipcenter_mod_both_aic)
 calc_loocv_rmse(hipcenter_mod_both_bic)
 ```
 
-### Exhaustive
-
-- $2 ^ p$
-- sum of binomial coeffs
-- shortcut for methods that use RSS in formula
-
-
-
-
-    
-
+### Exhaustive Search
 
 ```{r}
-
-
 library(leaps)
 all_hipcenter_mod = summary(regsubsets(hipcenter ~ ., data = seatpos))
 
@@ -409,8 +400,7 @@ which.max(all_hipcenter_mod$adjr2)
 p = length(coef(hipcenter_mod))
 n = length(resid(hipcenter_mod))
 
-
-hipcenter_mod_aic = n * log(all_hipcenter_mod$rss / n) + 2 * (2:p) # why this equation?
+hipcenter_mod_aic = n * log(all_hipcenter_mod$rss / n) + 2 * (2:p)
 which.min(hipcenter_mod_aic)
 all_hipcenter_mod$which[3,]
 hipcenter_mod_best_aic = lm(hipcenter ~ Age + Ht + Leg, data = seatpos)
@@ -430,10 +420,7 @@ extractAIC(hipcenter_mod_best_bic, k = log(n))
 extractAIC(hipcenter_mod_back_bic, k = log(n))
 extractAIC(hipcenter_mod_forw_bic, k = log(n))
 extractAIC(hipcenter_mod_both_bic, k = log(n))
-
 ```
-
-
 
 \[
 AIC \approx n\log\left(\frac{RSS}{n}\right) + 2p.
@@ -445,10 +432,12 @@ BIC \approx n\log\left(\frac{RSS}{n}\right) + \log(n)p.
 
 ## Higher Order Terms
 
-`autompg` Example
+- `autompg` Example
 
-- TODO: what variables are considered?
-- TODO: `trace = 0`
+```{r, echo = FALSE, eval = FALSE}
+# - TODO: what variables are considered?
+# - TODO: `trace = 0`
+```
 
 ```{r, echo = FALSE}
 autompg = read.table(
@@ -477,7 +466,10 @@ str(autompg)
 pairs(autompg, col = "dodgerblue")
 ```
 
-- define first order, second order, etc... how they fit together
+```{r, echo = FALSE, eval = FALSE}
+# 
+# - define first order, second order, etc... how they fit together
+```
 
 ```{r}
 autompg_big_mod = lm(log(mpg) ~ . ^ 2 + I(disp ^ 2) + I(disp ^ 2) + I(hp ^ 2) + I(wt ^ 2) + I(acc ^ 2), data = autompg)
@@ -497,16 +489,19 @@ calc_loocv_rmse(autompg_big_mod)
 calc_loocv_rmse(autompg_mod_back_aic)
 calc_loocv_rmse(autompg_mod_back_bic)
 
+
+```
+
+```{r, echo = FALSE, eval = FALSE}
 # how factors are handled
 
 # which is better for prediction?
-# which is better for explaination?
-```
+# which is better for explaination?```
 
 
 ## Explaination versus Prediction
 
-- TODO: its own chapter?
+#- TODO: its own chapter?
 
 
-
+```
