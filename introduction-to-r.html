@@ -250,6 +250,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="10.2.4" data-path="model-selection.html"><a href="model-selection.html#exhaustive-search"><i class="fa fa-check"></i><b>10.2.4</b> Exhaustive Search</a></li>
 </ul></li>
 <li class="chapter" data-level="10.3" data-path="model-selection.html"><a href="model-selection.html#higher-order-terms"><i class="fa fa-check"></i><b>10.3</b> Higher Order Terms</a></li>
+<li class="chapter" data-level="10.4" data-path="model-selection.html"><a href="model-selection.html#explanation-versus-prediction"><i class="fa fa-check"></i><b>10.4</b> Explanation versus Prediction</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="model-selection.html"><a href="model-selection.html#explanation"><i class="fa fa-check"></i><b>10.4.1</b> Explanation</a></li>
+<li class="chapter" data-level="10.4.2" data-path="model-selection.html"><a href="model-selection.html#prediction"><i class="fa fa-check"></i><b>10.4.2</b> Prediction</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/daviddalpiaz/appliedstats" target="blank">&copy; 2016 David Dalpiaz</a></li>
@@ -986,8 +990,8 @@ mpg %&gt;%<span class="st"> </span><span class="kw">filter</span>(hwy &gt;<span 
 <pre><code>## [1] 11.79982</code></pre>
 <p>Lastly, to generate a random sample of size <code>n = 10</code>, use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</code></pre></div>
-<pre><code>##  [1]   3.9123756   4.5028586  -3.1892462   0.9740169  12.6583053   1.3416388
-##  [7] -16.1210575   4.4854035   7.6088850   2.5019854</code></pre>
+<pre><code>##  [1]  8.1366716 -1.7292104 -0.6778885 -0.2433615  6.1531493 -2.1565641
+##  [7]  3.5248244  0.3797185 -2.7482463  6.8775464</code></pre>
 <p>These functions exist for many other distributions, including but not limited to:</p>
 <table>
 <thead>
@@ -1202,11 +1206,11 @@ x</code></pre></div>
 <p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the output of the final line of the body is what is returned by the function. In this case the function returns the vector stored in the variable <code>results</code>.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</code></pre></div>
-<pre><code>##  [1] 14.6697264  6.2750512  0.5548279  8.0902343  3.1874125 -0.4430050
-##  [7]  8.4479605 -5.5303563  3.3605064  3.6451649</code></pre>
+<pre><code>##  [1] -1.0288666  1.0555353  2.6827451  2.8143585 -0.4656082  3.6494273
+##  [7] -4.8465968  0.3010517  8.8969407  6.5458909</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)</code></pre></div>
-<pre><code>##  [1]  1.8769506  0.3682921 -0.6597243  0.6945098 -0.1866064 -0.8390510
-##  [7]  0.7587989 -1.7533301 -0.1554986 -0.1043409</code></pre>
+<pre><code>##  [1] -0.7634819 -0.2311251  0.1844647  0.2180788 -0.6196255  0.4313556
+##  [7] -1.7385312 -0.4238204  1.7715719  1.1711132</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">standardize =<span class="st"> </span>function(x) {
   (x -<span class="st"> </span><span class="kw">mean</span>(x)) /<span class="st"> </span><span class="kw">sd</span>(x)
@@ -1243,14 +1247,14 @@ s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
   <span class="kw">sqrt</span>((<span class="dv">1</span> /<span class="st"> </span>n) *<span class="st"> </span><span class="kw">sum</span>((x -<span class="st"> </span><span class="kw">mean</span>(x)) ^<span class="st"> </span><span class="dv">2</span>))
 }</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 5.564331</code></pre>
+<pre><code>## [1] 3.915423</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample, <span class="dt">biased =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<pre><code>## [1] 5.564331</code></pre>
+<pre><code>## [1] 3.915423</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 5.564331</code></pre>
+<pre><code>## [1] 3.915423</code></pre>
 <p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built in function <code>sd()</code>. Finally, let’s examine the biased estimate of <span class="math inline">\(\sigma\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample, <span class="dt">biased =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## [1] 5.278788</code></pre>
+<pre><code>## [1] 3.714496</code></pre>
 </div>
 </div>
 <div id="hypothesis-tests-in-r" class="section level2">

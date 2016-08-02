@@ -250,6 +250,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="10.2.4" data-path="model-selection.html"><a href="model-selection.html#exhaustive-search"><i class="fa fa-check"></i><b>10.2.4</b> Exhaustive Search</a></li>
 </ul></li>
 <li class="chapter" data-level="10.3" data-path="model-selection.html"><a href="model-selection.html#higher-order-terms"><i class="fa fa-check"></i><b>10.3</b> Higher Order Terms</a></li>
+<li class="chapter" data-level="10.4" data-path="model-selection.html"><a href="model-selection.html#explanation-versus-prediction"><i class="fa fa-check"></i><b>10.4</b> Explanation versus Prediction</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="model-selection.html"><a href="model-selection.html#explanation"><i class="fa fa-check"></i><b>10.4.1</b> Explanation</a></li>
+<li class="chapter" data-level="10.4.2" data-path="model-selection.html"><a href="model-selection.html#prediction"><i class="fa fa-check"></i><b>10.4.2</b> Prediction</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/daviddalpiaz/appliedstats" target="blank">&copy; 2016 David Dalpiaz</a></li>
@@ -281,6 +285,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ul>
 <li>Understand the trade-off between goodness-of-fit and model complexity.</li>
 <li>Use variable selection procedures to find a good model from a set of possible models.</li>
+<li>Understand the two uses of models: explanation and prediction.</li>
 </ul>
 <p>Last chapter we saw how correlation between predictor variables can have undesirable effects on models. We used variance inflation factors to assess the severity of the collinearity issues caused by these correlations. We also saw how fitting a smaller model, leaving out some of the correlated predictors, results in a model which no longer suffers from collinearity issues. But how should we chose this smaller model?</p>
 <p>This chapter, we will discuss several <em>criteria</em> and <em>procedures</em> for choosing a “good” model from among a choice of many.</p>
@@ -1031,9 +1036,53 @@ autompg_mod_back_bic =<span class="st"> </span><span class="kw">step</span>(auto
 <pre><code>## [1] 0.1032888</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calc_loocv_rmse</span>(autompg_mod_back_bic)</code></pre></div>
 <pre><code>## [1] 0.103134</code></pre>
+</div>
+<div id="explanation-versus-prediction" class="section level2">
+<h2><span class="header-section-number">10.4</span> Explanation versus Prediction</h2>
+<p>Throughout this chapter, we have attempted to find reasonably “small” models, which are good at <strong>explaining</strong> the relationship between the response and the predictors, that also have small errors which are thus good for making <strong>predictions</strong>.</p>
+<p>We’ll further discuss the model <code>autompg_mod_back_bic</code> to better explain the difference between using models for <em>explaining</em> and <em>predicting</em>. This is the model fit to the <code>autompg</code> data that was chosen using Backwards Search and BIC, which obtained the lowest LOOCV RMSE of the models we considered.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">autompg_mod_back_bic</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = log(mpg) ~ cyl + disp + hp + wt + acc + year + domestic + 
+##     cyl:acc + disp:wt + hp:acc + acc:year + acc:domestic, data = autompg)
+## 
+## Coefficients:
+##   (Intercept)           cyl6           cyl8           disp             hp  
+##  4.6578470391  -0.1086165018  -0.7611630775  -0.0016093164   0.0026212660  
+##            wt            acc           year      domestic1       cyl6:acc  
+## -0.0002635972  -0.1670601022  -0.0104564627   0.3341578961   0.0043154925  
+##      cyl8:acc        disp:wt         hp:acc       acc:year  acc:domestic1  
+##  0.0461009497   0.0000004103  -0.0003386261   0.0025001372  -0.0219329407</code></pre>
+<p>Notice this is a somewhat “large” model, which uses 15 parameters, including several interaction terms. Do we care that this is a “large” model? The answer is, <strong>it depends</strong>.</p>
+<div id="explanation" class="section level3">
+<h3><span class="header-section-number">10.4.1</span> Explanation</h3>
+<p>Suppose we would like to use this model for explanation. Perhaps we are a car manufacturer trying to engineer a fuel efficient vehicle. If this is the case, we are interested in both what predictor variables are useful for explaining the car’s fuel efficiency, as well as how those variables effect fuel efficiency. By understanding this relationship, we can use this knowledge to our advantage when designing a car.</p>
+<p>To explain a relationship, we are interested in keeping models as small as possible, since smaller models are easy to interpret. The fewer predictors the less considerations we need to make in our design process. Also the fewer interactions and polynomial terms, the easier it is to interpret any one parameter, since the parameter interpretations are conditional on which parameters are in the model.</p>
+<p>Note that <em>linear</em> models are rather interpretable to begin with. Later in your data analysis careers, you will see more complicated models that may fit data better, but are much harder, if not impossible to interpret. These models aren’t very useful for explaining a relationship.</p>
+<p>To find small and interpretable models, we would use selection criterion that <em>explicitly</em> penalize larger models, such as AIC and BIC. In this case we still obtained a somewhat large model, but much smaller than the model we used to start the selection process.</p>
+<div id="correlation-and-causation" class="section level4">
+<h4><span class="header-section-number">10.4.1.1</span> Correlation and Causation</h4>
+<p>A word of caution when using a model to <em>explain</em> a relationship. There are two terms often used to describe a relationship between two variables: <em>causation</em> and <em>correlation</em>. <a href="https://xkcd.com/552/">Correlation</a> is often also referred to as association.</p>
+<p>Just because two variable are correlated does not necessarily mean that one causes the other. For example, considering modeling <code>mpg</code> as only a function of <code>hp</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(mpg ~<span class="st"> </span>hp, <span class="dt">data =</span> autompg, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-512-1.png" width="672" /></p>
+<p>Does an increase in horsepower cause a drop in fuel efficiency? Or, perhaps the causality is reversed and an increase in fuel efficiency cause a decrease in horsepower. Or, perhaps there is a third variable that explains both!</p>
+<p>The issue here is the we have <strong>observational</strong> data. With observational data, we can only detect associations. To speak with confidence about causality, we would nee to run <strong>experiments</strong>.</p>
+<p>This is a concept that you should encounter often in your statistics education. For some further reading, and some related fallacies, see: <a href="https://en.wikipedia.org/wiki/Correlation_does_not_imply_causation">Wikipedia: Correlation does not imply causation</a>.</p>
+</div>
+</div>
+<div id="prediction" class="section level3">
+<h3><span class="header-section-number">10.4.2</span> Prediction</h3>
+<p>Suppose now instead of the manufacturer who would like to build a car, we are a consumer who wishes to purchase a new car. However this particular car is so new, it has not been rigorously tested, so we are unsure of what fuel efficiency to expect. (And, as skeptics, we don’t trust what the manufacturer is telling us.)</p>
+<p>In this case, we would like to use the model to help <em>predict</em> the fuel efficiency of this car based on its attributes, which are the predictors of the model. The smaller the errors the model makes, the more confident we are in its prediction. Thus, to find models for prediction, we would use selection criterion that <em>implicitly</em> penalize larger models, such as LOOCV RMSE. So long as the model does not over-fit, we do not actually care how large the model becomes. Explaining the relationship between the variables is not our goal here, we simply want to know what kind of fuel efficiency we should expect!</p>
+<p>If we <strong>only</strong> care about prediction, we don’t need to worry about correlation vs causation, and we don’t need to worry about model assumptions.</p>
+<p>If a variable is correlated with the response, it doesn’t actually matter if it causes an effect on the response, it can still be useful for prediction. For example, in elementary school aged children their shoe size certainly doesn’t <em>cause</em> them to read at a higher level, however we could very easily use shoe size to make a prediction about a child’s reading ability. The larger their shoe size, the better they read. There’s a lurking variable here though, their age! (Don’t send your kids to school with size 14 shoes, it won’t make them read better!)</p>
+<p>We also don’t care about model assumptions. Least squares is least squares. For a specified model, it will find the values of the parameters which will minimize the squared error loss. Your results might be largely uninterpretable and useless for inference, but for prediction none of that matters.</p>
 
 <div id="refs" class="references">
 
+</div>
 </div>
 </div>
 </div>
