@@ -1179,7 +1179,16 @@ t.test(values ~ group, data = t_test_data,
 
 ## Simulation
 
-One of the biggest strengths of `R` is its ability to carry out simulations. We'll look at two examples here, however simulation will be a topic we revisit several times throughout the course.
+Simulation and model fitting are related but opposite processes.
+
+- In **simulation**, the *data generating process* is known. We will know the form of the model as well as the value of each of the parameters. In particular, we will often control the distribution and parameters which define the randomness, or noise in the data.
+- In **model fitting**, the *data* is known. We will then assume a certain form of model and find the best possible values of the parameters given the observed data. Essentially we are seeking to uncover the truth. Often we will attempt to fit many models, and we will learn metrics to assess which model fits best.
+
+![Simulation vs Modeling](images/simulation.png)
+
+Often we will simulate data according to a process we decide, then use a modeling method seen in class. We can then verify how well the method works, since we know the data generating process.
+
+One of the biggest strengths of `R` is its ability to carry out simulations using built-in functions for generating random samples from certain distributions. We'll look at two very simple examples here, however simulation will be a topic we revisit several times throughout the course.
 
 ### Paired Differences
 
