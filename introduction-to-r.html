@@ -25,7 +25,7 @@
 
 <meta name="author" content="David Dalpiaz">
 
-<meta name="date" content="2016-08-20">
+<meta name="date" content="2016-08-21">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -996,8 +996,8 @@ mpg %&gt;%<span class="st"> </span><span class="kw">filter</span>(hwy &gt;<span 
 <pre><code>## [1] 11.79982</code></pre>
 <p>Lastly, to generate a random sample of size <code>n = 10</code>, use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</code></pre></div>
-<pre><code>##  [1]  2.5690781 -8.6633548 -0.8230496  0.4438916 10.5988277  4.0555358
-##  [7] -3.3176532 -1.1302791  2.9643110  0.9715710</code></pre>
+<pre><code>##  [1]  6.0423403  4.8233096 -3.2569256 10.3471560 -0.7805607  7.0377542
+##  [7]  9.4706423 -3.8627662 -7.1407113  2.5015380</code></pre>
 <p>These functions exist for many other distributions, including but not limited to:</p>
 <table>
 <thead>
@@ -1212,11 +1212,11 @@ x</code></pre></div>
 <p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the output of the final line of the body is what is returned by the function. In this case the function returns the vector stored in the variable <code>results</code>.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</code></pre></div>
-<pre><code>##  [1]  3.972320 -8.672031  6.043922  2.859900  7.411771  5.020474  5.221812
-##  [8]  8.988003  3.458806  1.808756</code></pre>
+<pre><code>##  [1]  5.637924 -1.320942 -3.914593  1.851316  8.772314  2.339142 -4.963324
+##  [8]  9.433485  9.062584 -5.503420</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)</code></pre></div>
-<pre><code>##  [1]  0.07495584 -2.55083061  0.50515478 -0.15605455  0.78920884  0.29262071
-##  [7]  0.33443133  1.11653673 -0.03168287 -0.37434019</code></pre>
+<pre><code>##  [1]  0.59137057 -0.58493282 -1.02335476 -0.04870497  1.12119724  0.03375544
+##  [7] -1.20062880  1.23295937  1.17026350 -1.29192478</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">standardize =<span class="st"> </span>function(x) {
   (x -<span class="st"> </span><span class="kw">mean</span>(x)) /<span class="st"> </span><span class="kw">sd</span>(x)
@@ -1253,14 +1253,14 @@ s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
   <span class="kw">sqrt</span>((<span class="dv">1</span> /<span class="st"> </span>n) *<span class="st"> </span><span class="kw">sum</span>((x -<span class="st"> </span><span class="kw">mean</span>(x)) ^<span class="st"> </span><span class="dv">2</span>))
 }</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 4.815453</code></pre>
+<pre><code>## [1] 5.915877</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample, <span class="dt">biased =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<pre><code>## [1] 4.815453</code></pre>
+<pre><code>## [1] 5.915877</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 4.815453</code></pre>
+<pre><code>## [1] 5.915877</code></pre>
 <p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built in function <code>sd()</code>. Finally, let’s examine the biased estimate of <span class="math inline">\(\sigma\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample, <span class="dt">biased =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## [1] 4.56834</code></pre>
+<pre><code>## [1] 5.612294</code></pre>
 </div>
 </div>
 <div id="hypothesis-tests-in-r" class="section level2">
@@ -1448,7 +1448,17 @@ P(t_{12} &gt; 1.8233692).
 </div>
 <div id="simulation" class="section level2">
 <h2><span class="header-section-number">2.5</span> Simulation</h2>
-<p>One of the biggest strengths of <code>R</code> is its ability to carry out simulations. We’ll look at two examples here, however simulation will be a topic we revisit several times throughout the course.</p>
+<p>Simulation and model fitting are related but opposite processes.</p>
+<ul>
+<li>In <strong>simulation</strong>, the <em>data generating process</em> is known. We will know the form of the model as well as the value of each of the parameters. In particular, we will often control the distribution and parameters which define the randomness, or noise in the data.</li>
+<li>In <strong>model fitting</strong>, the <em>data</em> is known. We will then assume a certain form of model and find the best possible values of the parameters given the observed data. Essentially we are seeking to uncover the truth. Often we will attempt to fit many models, and we will learn metrics to assess which model fits best.</li>
+</ul>
+<div class="figure">
+<img src="images/simulation.png" alt="Simulation vs Modeling" />
+<p class="caption">Simulation vs Modeling</p>
+</div>
+<p>Often we will simulate data according to a process we decide, then use a modeling method seen in class. We can then verify how well the method works, since we know the data generating process.</p>
+<p>One of the biggest strengths of <code>R</code> is its ability to carry out simulations using built-in functions for generating random samples from certain distributions. We’ll look at two very simple examples here, however simulation will be a topic we revisit several times throughout the course.</p>
 <div id="paired-differences" class="section level3">
 <h3><span class="header-section-number">2.5.1</span> Paired Differences</h3>
 <p>Consider the model:</p>
