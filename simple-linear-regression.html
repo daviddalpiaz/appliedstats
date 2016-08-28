@@ -25,7 +25,7 @@
 
 <meta name="author" content="David Dalpiaz">
 
-<meta name="date" content="2016-08-21">
+<meta name="date" content="2016-08-28">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -924,7 +924,7 @@ beta_1  =<span class="st"> </span><span class="dv">2</span>
 sigma   =<span class="st"> </span><span class="dv">1</span></code></pre></div>
 <p>Next, we obtain simulated values of <span class="math inline">\(\epsilon_i\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">epsilon =<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> sigma)</code></pre></div>
-<p>Now, since the <span class="math inline">\(x_i\)</span> values in SLR are considered fixed and known, we simply generate them from a uniform distribution. Know, that this is an arbitrary, but common practice.</p>
+<p>Now, since the <span class="math inline">\(x_i\)</span> values in SLR are considered fixed and known, we simply generate them from a uniform distribution, and then use them for the remainder of the analysis. Know that this is an arbitrary, but common practice.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">runif</span>(n, <span class="dv">0</span>, <span class="dv">10</span>)</code></pre></div>
 <p>We then generate the <span class="math inline">\(y\)</span> values according the specified functional relationship.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y =<span class="st"> </span>beta_0 +<span class="st"> </span>beta_1 *<span class="st"> </span>x +<span class="st"> </span>epsilon</code></pre></div>
@@ -938,29 +938,28 @@ sigma   =<span class="st"> </span><span class="dv">1</span></code></pre></div>
 <span class="kw">abline</span>(sim_fit)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-181-1.png" width="672" /></p>
 <p>We should say here, that we’re being sort of lazy, and not the good kinda of lazy that could be considered efficient. Any time you simulate data, you should consider doing two things: writing a function, and storing the data in a data frame.</p>
-<p>The function below, <code>sim_slr()</code> can be used for the same task as above, but is much more flexible.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_slr =<span class="st"> </span>function(n, <span class="dt">beta_0 =</span> <span class="dv">10</span>, <span class="dt">beta_1 =</span> <span class="dv">5</span>, <span class="dt">sigma =</span> <span class="dv">1</span>, <span class="dt">xmin =</span> <span class="dv">0</span>, <span class="dt">xmax =</span> <span class="dv">10</span>) {
+<p>The function below, <code>sim_slr()</code>, can be used for the same task as above, but is much more flexible. Notice that we provide <code>x</code> to the function, instead of generating <code>x</code> inside the function. When simulating SLR, since <code>x</code> is considered known, we repeatedly use the same <code>x</code> values across all simulations.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_slr =<span class="st"> </span>function(n, x, <span class="dt">beta_0 =</span> <span class="dv">10</span>, <span class="dt">beta_1 =</span> <span class="dv">5</span>, <span class="dt">sigma =</span> <span class="dv">1</span>) {
   epsilon =<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> sigma)
-  x       =<span class="st"> </span><span class="kw">runif</span>(n, xmin, xmax)
   y       =<span class="st"> </span>beta_0 +<span class="st"> </span>beta_1 *<span class="st"> </span>x +<span class="st"> </span>epsilon
   <span class="kw">data.frame</span>(<span class="dt">predictor =</span> x, <span class="dt">response =</span> y)
 }</code></pre></div>
 <p>Here, we use the function to repeat the analysis above.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_data =<span class="st"> </span><span class="kw">sim_slr</span>(<span class="dt">n =</span> <span class="dv">20</span>, <span class="dt">beta_0 =</span> <span class="dv">5</span>, <span class="dt">beta_1 =</span> <span class="dv">2</span>, <span class="dt">sigma =</span> <span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_data =<span class="st"> </span><span class="kw">sim_slr</span>(<span class="dt">n =</span> <span class="dv">20</span>, <span class="dt">x =</span> x, <span class="dt">beta_0 =</span> <span class="dv">5</span>, <span class="dt">beta_1 =</span> <span class="dv">2</span>, <span class="dt">sigma =</span> <span class="dv">1</span>)</code></pre></div>
 <p>This time, the simulated observations are stored in a data frame.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(sim_data)</code></pre></div>
 <pre><code>##   predictor  response
-## 1  9.348230 23.329224
-## 2  5.504941 16.195112
-## 3  6.017662 17.617148
-## 4  1.969945 10.339627
-## 5  5.352366 14.977440
-## 6  1.795557  9.893657</code></pre>
+## 1  6.262453 17.157672
+## 2  2.171577  9.528385
+## 3  2.165673  9.913170
+## 4  3.889450 14.178637
+## 5  9.424557 23.121822
+## 6  9.626080 25.554703</code></pre>
 <p>Now when we fit the model with <code>lm()</code> we can use a <code>data</code> argument, a very good practice.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_fit =<span class="st"> </span><span class="kw">lm</span>(response ~<span class="st"> </span>predictor, <span class="dt">data =</span> sim_data)
 <span class="kw">coef</span>(sim_fit)</code></pre></div>
 <pre><code>## (Intercept)   predictor 
-##    6.162023    1.792461</code></pre>
+##    5.571320    1.924544</code></pre>
 <p>And this time, we’ll make the plot look a lot nicer.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(response ~<span class="st"> </span>predictor, <span class="dt">data =</span> sim_data,
      <span class="dt">xlab =</span> <span class="st">&quot;Simulated Predictor Variable&quot;</span>,
