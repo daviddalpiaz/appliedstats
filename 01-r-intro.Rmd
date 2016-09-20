@@ -442,6 +442,97 @@ Or, lastly, create a square matrix of a certain dimension with `1` for every ele
 diag(5)
 ```
 
+#### Calculations with Vectors and Matrices {-}
+
+Certain operations in `R`, for example `%*%` have different behavior on vectors and matrices. To illustrate this, we will first create two vectors.
+
+```{r}
+a_vec = c(1, 2, 3)
+b_vec = c(2, 2, 2)
+```
+
+Note that these are indeed vectors. They are not matrices.
+
+```{r}
+c(is.vector(a_vec), is.vector(b_vec))
+c(is.matrix(a_vec), is.matrix(b_vec))
+```
+
+When this is the case, the `%*%` operator is used to calculate the **dot product**, also know as the **inner product** of the two vectors.
+
+The dot product of vectors $\boldsymbol{a} = \lbrack a_1, a_2, \cdots a_n \rbrack$ and $\boldsymbol{b} = \lbrack b_1, b_2, \cdots b_n \rbrack$ is defined to be
+
+\[
+\boldsymbol{a} \cdot \boldsymbol{b} = \sum_{i = 1}^{n} a_i b_i = a_1 b_1 + a_2 b_2 + \cdots a_n b_n.
+\]
+
+```{r}
+a_vec %*% b_vec # inner product
+a_vec %o% b_vec # outer product
+```
+
+The `%o%` operator is used to calculate the **outer product** of the two vectors.
+
+When vectors are coerced to become matrices, they are column vectors. So a vector of length $n$ becomes an $n \times 1$ matrix after coercion.
+
+```{r}
+as.matrix(a_vec)
+```
+
+If we use the `%*%` operator on matrices, `%*%` again performs the expected matrix multiplication. So you might expect the following to produce an error, because the dimensions are incorrect.
+
+```{r}
+as.matrix(a_vec) %*% b_vec
+```
+
+At face value this is a $3 \times 1$ matrix, multiplied by a $3 \times 1$ matrix. However, when `b_vec` is automatically coerced to be a matrix, `R` decided to make it a "row vector", a $1 \times 3$ matrix, so that the multiplication has conformable dimensions.
+
+If we had coerced both, then `R` would produce an error.
+
+```{r, eval = FALSE}
+as.matrix(a_vec) %*% as.matrix(b_vec)
+```
+
+Another way to calculate a *dot product* is with the `crossprod()` function. Given two vectors, the `crossprod()` function calculates their dot product. The function has a rather misleading name.
+
+```{r}
+crossprod(a_vec, b_vec)  # inner product
+tcrossprod(a_vec, b_vec)  # outer product
+```
+
+This function could be very useful later. When used with matrices $X$ and $Y$ as arguments, it calculates
+
+\[
+X^\top Y.
+\]
+
+When dealing with linear models, the calculation
+
+\[
+X^\top X
+\]
+
+is used repeatedly.
+
+```{r}
+C_mat = matrix(c(1, 2, 3, 4, 5, 6), 2, 3)
+D_mat = matrix(c(2, 2, 2, 2, 2, 2), 2, 3)
+```
+
+This is useful both as a shortcut for a frequent calculation and as a more efficient implementation than using `t()` and `%*%`.
+
+```{r}
+crossprod(C_mat, D_mat)
+t(C_mat) %*% D_mat
+all.equal(crossprod(C_mat, D_mat), t(C_mat) %*% D_mat)
+```
+
+```{r}
+crossprod(C_mat, C_mat)
+t(C_mat) %*% C_mat
+all.equal(crossprod(C_mat, C_mat), t(C_mat) %*% C_mat)
+```
+
 ### Data Frames
 
 We have previously seen vectors and matrices for storing data as we introduced `R`. We will now introduce a **data frame** which will be the most common way that we store and interact with data in this course.
