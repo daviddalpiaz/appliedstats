@@ -8,7 +8,7 @@
   <title>Applied Statistics with R</title>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="Applied Statistics with <code>R</code>">
-  <meta name="generator" content="bookdown 0.1.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.1.9 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 
 <meta name="author" content="David Dalpiaz">
 
-<meta name="date" content="2016-09-15">
+<meta name="date" content="2016-09-20">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -320,7 +320,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
      <span class="dt">pch  =</span> <span class="dv">20</span>,
      <span class="dt">cex  =</span> <span class="dv">3</span>,
      <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-136-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-146-1.png" width="672" /></p>
 <p>Let’s now define some terminology. We have pairs of data, <span class="math inline">\((x_i, y_i)\)</span>, for <span class="math inline">\(i = 1, 2, \ldots n\)</span>, where <span class="math inline">\(n\)</span> is the sample size of the dataset.</p>
 <p>We use <span class="math inline">\(i\)</span> as an index, simply for notation. We use <span class="math inline">\(x_i\)</span> as the <strong>predictor</strong> (explanatory) variable. The predictor variable is used to help <em>predict</em> or explain the <strong>response</strong> (target, outcome) variable, <span class="math inline">\(y_i\)</span>.</p>
 <p>Other texts may use the term independent variable instead of predictor and dependent variable in place of response. However, those monikers imply mathematical characteristics that might not be true. While these other terms are not incorrect, independence is already a strictly defined concept in probability. For example, when trying to predict a person’s weight given their height, would it be accurate to say that height is independent of weight? Certainly not, but that is an unintended implication of saying “independent variable.” We prefer to stay away from this nomenclature.</p>
@@ -644,9 +644,9 @@ R2</code></pre></div>
 <pre><code>## [1] 0.6510794</code></pre>
 <p>For the <code>cars</code> example, we calculate <span class="math inline">\(R^2 = 0.651\)</span>. We then say that <span class="math inline">\(65.1\%\)</span> of the observed variability in stopping distance is explained by the linear relationship with speed.</p>
 <p>The following three plots visually demonstrate the three “sums of squares” for a simulated dataset which has <span class="math inline">\(R^2 = 0.901\)</span> which is a somewhat high value. Notice in the third plot, that the orange arrows account for a larger proportion of the total arrow.</p>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-157-1.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-157-2.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-157-3.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-167-1.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-167-2.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-167-3.png" width="672" /></p>
 <p>The next three plots again visually demonstrate the three “sums of squares,” this time for a simulated dataset which has <span class="math inline">\(R^2 = 0.459\)</span>. Notice in the third plot, that now the blue arrows account for a larger proportion of the total arrow.</p>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-159-1.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-159-2.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-159-3.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-169-1.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-169-2.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-169-3.png" width="672" /></p>
 </div>
 </div>
 <div id="the-lm-function" class="section level2">
@@ -677,7 +677,7 @@ R2</code></pre></div>
      <span class="dt">cex  =</span> <span class="dv">3</span>,
      <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 <span class="kw">abline</span>(stop_dist_model, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-163-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-173-1.png" width="672" /></p>
 <p>The <code>abline()</code> function is used to add lines of the form <span class="math inline">\(a + bx\)</span> to a plot. (Hence <strong><code>ab</code></strong><code>line</code>.) When we give it <code>stop_dist_model</code> as an argument, it automatically extracts the regression coefficient estimates (<span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>) and uses them as the slope and intercept of the line. Here we also use <code>lwd</code> to modify the width of the line, as well as <code>col</code> to modify the color of the line.</p>
 <p>The “thing” that is returned by the <code>lm()</code> function is actually an object of class <code>lm</code> which is a list. The exact details of this are unimportant unless you are seriously interested in the inner-workings of <code>R</code>, but know that we can determine the names of the elements of the list using the <code>names()</code> command.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(stop_dist_model)</code></pre></div>
@@ -936,7 +936,7 @@ sigma   =<span class="st"> </span><span class="dv">1</span></code></pre></div>
 <p>And look at that, they aren’t too far from the parameters we specified!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y ~<span class="st"> </span>x)
 <span class="kw">abline</span>(sim_fit)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-181-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-191-1.png" width="672" /></p>
 <p>We should say here, that we’re being sort of lazy, and not the good kinda of lazy that could be considered efficient. Any time you simulate data, you should consider doing two things: writing a function, and storing the data in a data frame.</p>
 <p>The function below, <code>sim_slr()</code>, can be used for the same task as above, but is much more flexible. Notice that we provide <code>x</code> to the function, instead of generating <code>x</code> inside the function. When simulating SLR, since <code>x</code> is considered known, we repeatedly use the same <code>x</code> values across all simulations.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_slr =<span class="st"> </span>function(n, x, <span class="dt">beta_0 =</span> <span class="dv">10</span>, <span class="dt">beta_1 =</span> <span class="dv">5</span>, <span class="dt">sigma =</span> <span class="dv">1</span>) {
@@ -969,7 +969,7 @@ sigma   =<span class="st"> </span><span class="dv">1</span></code></pre></div>
      <span class="dt">cex  =</span> <span class="dv">2</span>,
      <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 <span class="kw">abline</span>(sim_fit, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-186-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-196-1.png" width="672" /></p>
 </div>
 <div id="history" class="section level2">
 <h2><span class="header-section-number">3.7</span> History</h2>

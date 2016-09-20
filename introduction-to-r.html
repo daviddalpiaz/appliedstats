@@ -8,7 +8,7 @@
   <title>Applied Statistics with R</title>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="Applied Statistics with <code>R</code>">
-  <meta name="generator" content="bookdown 0.1.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.1.9 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 
 <meta name="author" content="David Dalpiaz">
 
-<meta name="date" content="2016-09-15">
+<meta name="date" content="2016-09-20">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -774,6 +774,91 @@ X</code></pre></div>
 ## [3,]    0    0    1    0    0
 ## [4,]    0    0    0    1    0
 ## [5,]    0    0    0    0    1</code></pre>
+<div id="calculations-with-vectors-and-matrices" class="section level4 unnumbered">
+<h4>Calculations with Vectors and Matrices</h4>
+<p>Certain operations in <code>R</code>, for example <code>%*%</code> have different behavior on vectors and matrices. To illustrate this, we will first create two vectors.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a_vec =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
+b_vec =<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>)</code></pre></div>
+<p>Note that these are indeed vectors. They are not matrices.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">is.vector</span>(a_vec), <span class="kw">is.vector</span>(b_vec))</code></pre></div>
+<pre><code>## [1] TRUE TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">is.matrix</span>(a_vec), <span class="kw">is.matrix</span>(b_vec))</code></pre></div>
+<pre><code>## [1] FALSE FALSE</code></pre>
+<p>When this is the case, the <code>%*%</code> operator is used to calculate the <strong>dot product</strong>, also know as the <strong>inner product</strong> of the two vectors.</p>
+<p>The dot product of vectors <span class="math inline">\(\boldsymbol{a} = \lbrack a_1, a_2, \cdots a_n \rbrack\)</span> and <span class="math inline">\(\boldsymbol{b} = \lbrack b_1, b_2, \cdots b_n \rbrack\)</span> is defined to be</p>
+<p><span class="math display">\[
+\boldsymbol{a} \cdot \boldsymbol{b} = \sum_{i = 1}^{n} a_i b_i = a_1 b_1 + a_2 b_2 + \cdots a_n b_n.
+\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a_vec %*%<span class="st"> </span>b_vec <span class="co"># inner product</span></code></pre></div>
+<pre><code>##      [,1]
+## [1,]   12</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">a_vec %o%<span class="st"> </span>b_vec <span class="co"># outer product</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    2    2    2
+## [2,]    4    4    4
+## [3,]    6    6    6</code></pre>
+<p>The <code>%o%</code> operator is used to calculate the <strong>outer product</strong> of the two vectors.</p>
+<p>When vectors are coerced to become matrices, they are column vectors. So a vector of length <span class="math inline">\(n\)</span> becomes an <span class="math inline">\(n \times 1\)</span> matrix after coercion.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.matrix</span>(a_vec)</code></pre></div>
+<pre><code>##      [,1]
+## [1,]    1
+## [2,]    2
+## [3,]    3</code></pre>
+<p>If we use the <code>%*%</code> operator on matrices, <code>%*%</code> again performs the expected matrix multiplication. So you might expect the following to produce an error, because the dimensions are incorrect.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.matrix</span>(a_vec) %*%<span class="st"> </span>b_vec</code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    2    2    2
+## [2,]    4    4    4
+## [3,]    6    6    6</code></pre>
+<p>At face value this is a <span class="math inline">\(3 \times 1\)</span> matrix, multiplied by a <span class="math inline">\(3 \times 1\)</span> matrix. However, when <code>b_vec</code> is automatically coerced to be a matrix, <code>R</code> decided to make it a “row vector”, a <span class="math inline">\(1 \times 3\)</span> matrix, so that the multiplication has conformable dimensions.</p>
+<p>If we had coerced both, then <code>R</code> would produce an error.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">as.matrix</span>(a_vec) %*%<span class="st"> </span><span class="kw">as.matrix</span>(b_vec)</code></pre></div>
+<p>Another way to calculate a <em>dot product</em> is with the <code>crossprod()</code> function. Given two vectors, the <code>crossprod()</code> function calculates their dot product. The function has a rather misleading name.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">crossprod</span>(a_vec, b_vec)  <span class="co"># inner product</span></code></pre></div>
+<pre><code>##      [,1]
+## [1,]   12</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tcrossprod</span>(a_vec, b_vec)  <span class="co"># outer product</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    2    2    2
+## [2,]    4    4    4
+## [3,]    6    6    6</code></pre>
+<p>This function could be very useful later. When used with matrices <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> as arguments, it calculates</p>
+<p><span class="math display">\[
+X^\top Y.
+\]</span></p>
+<p>When dealing with linear models, the calculation</p>
+<p><span class="math display">\[
+X^\top X
+\]</span></p>
+<p>is used repeatedly.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">C_mat =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>), <span class="dv">2</span>, <span class="dv">3</span>)
+D_mat =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="dv">2</span>, <span class="dv">3</span>)</code></pre></div>
+<p>This is useful both as a shortcut for a frequent calculation and as a more efficient implementation than using <code>t()</code> and <code>%*%</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">crossprod</span>(C_mat, D_mat)</code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    6    6    6
+## [2,]   14   14   14
+## [3,]   22   22   22</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t</span>(C_mat) %*%<span class="st"> </span>D_mat</code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    6    6    6
+## [2,]   14   14   14
+## [3,]   22   22   22</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(<span class="kw">crossprod</span>(C_mat, D_mat), <span class="kw">t</span>(C_mat) %*%<span class="st"> </span>D_mat)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">crossprod</span>(C_mat, C_mat)</code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    5   11   17
+## [2,]   11   25   39
+## [3,]   17   39   61</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">t</span>(C_mat) %*%<span class="st"> </span>C_mat</code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    5   11   17
+## [2,]   11   25   39
+## [3,]   17   39   61</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(<span class="kw">crossprod</span>(C_mat, C_mat), <span class="kw">t</span>(C_mat) %*%<span class="st"> </span>C_mat)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+</div>
 </div>
 <div id="data-frames" class="section level3">
 <h3><span class="header-section-number">2.2.8</span> Data Frames</h3>
@@ -916,7 +1001,7 @@ mpg %&gt;%<span class="st"> </span><span class="kw">filter</span>(hwy &gt;<span 
 <h4><span class="header-section-number">2.2.9.1</span> Histograms</h4>
 <p>When visualizing a single numerical variable, a <strong>histogram</strong> will be our go-to tool, which can be created in <code>R</code> using the <code>hist()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(mpg$cty)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-59-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
 <p>The histogram function has a number of parameters which can be changed to make our plot look much nicer. Use the <code>?</code> operator to read the documentation for the <code>hist()</code> to see a full list of these parameters.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(mpg$cty,
      <span class="dt">xlab   =</span> <span class="st">&quot;Miles Per Gallon (City)&quot;</span>,
@@ -924,7 +1009,7 @@ mpg %&gt;%<span class="st"> </span><span class="kw">filter</span>(hwy &gt;<span 
      <span class="dt">breaks =</span> <span class="dv">12</span>,
      <span class="dt">col    =</span> <span class="st">&quot;dodgerblue&quot;</span>,
      <span class="dt">border =</span> <span class="st">&quot;darkorange&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
 <p>Importantly, you should always be sure to label your axes and give the plot a title. The argument <code>breaks</code> is specific to <code>hist()</code>. Entering an integer will give a suggestion to <code>R</code> for how many bars to use for the histogram. By default <code>R</code> will attempt to intelligently guess a good number of <code>breaks</code>, but as we can see here, it is sometimes useful to modify this yourself.</p>
 </div>
 <div id="boxplots" class="section level4">
@@ -934,10 +1019,10 @@ mpg %&gt;%<span class="st"> </span><span class="kw">filter</span>(hwy &gt;<span 
 <pre><code>## [1] &quot;f&quot; &quot;4&quot; &quot;r&quot;</code></pre>
 <p>First note that we can use a single boxplot as an alternative to a histogram for visualizing a single numerical variable. To do so in <code>R</code>, we use the <code>boxplot()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(mpg$hwy)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-72-1.png" width="672" /></p>
 <p>However, more often we will use boxplots to compare a numerical variable for different values of a categorical variable.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(hwy ~<span class="st"> </span>drv, <span class="dt">data =</span> mpg)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-73-1.png" width="672" /></p>
 <p>Here used the <code>boxplot()</code> command to create side-by-side boxplots. However, since we are now dealing with two variables, the syntax has changed. The <code>R</code> syntax <code>hwy ~ drv, data = mpg</code> reads “Plot the <code>hwy</code> variable against the <code>drv</code> variable using the dataset <code>mpg</code>.” We see the use of a <code>~</code> (which specifies a formula) and also a <code>data =</code> argument. This will be a syntax that is common to many functions we will use in this course.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(hwy ~<span class="st"> </span>drv, <span class="dt">data =</span> mpg,
      <span class="dt">xlab   =</span> <span class="st">&quot;Drivetrain (f = FWD, r = RWD, 4 = 4WD)&quot;</span>,
@@ -947,14 +1032,14 @@ mpg %&gt;%<span class="st"> </span><span class="kw">filter</span>(hwy &gt;<span 
      <span class="dt">cex    =</span> <span class="dv">2</span>,
      <span class="dt">col    =</span> <span class="st">&quot;darkorange&quot;</span>,
      <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-64-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-74-1.png" width="672" /></p>
 <p>Again, <code>boxplot()</code> has a number of additional arguments which have the ability to make our plot more visually appealing.</p>
 </div>
 <div id="scatterplots" class="section level4">
 <h4><span class="header-section-number">2.2.9.3</span> Scatterplots</h4>
 <p>Lastly, to visualize the relationship between two numeric variables we will use a <strong>scatterplot</strong>. This can be done with the <code>plot()</code> function and the <code>~</code> syntax we just used with a boxplot. (The function <code>plot()</code> can also be used more generally; see the documentation for details.)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(hwy ~<span class="st"> </span>displ, <span class="dt">data =</span> mpg)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-75-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(hwy ~<span class="st"> </span>displ, <span class="dt">data =</span> mpg,
      <span class="dt">xlab =</span> <span class="st">&quot;Engine Displacement (in Liters)&quot;</span>,
      <span class="dt">ylab =</span> <span class="st">&quot;Miles Per Gallon (Highway)&quot;</span>,
@@ -962,7 +1047,7 @@ mpg %&gt;%<span class="st"> </span><span class="kw">filter</span>(hwy &gt;<span 
      <span class="dt">pch  =</span> <span class="dv">20</span>,
      <span class="dt">cex  =</span> <span class="dv">2</span>,
      <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-76-1.png" width="672" /></p>
 </div>
 </div>
 <div id="distributions" class="section level3">
@@ -996,8 +1081,8 @@ mpg %&gt;%<span class="st"> </span><span class="kw">filter</span>(hwy &gt;<span 
 <pre><code>## [1] 11.79982</code></pre>
 <p>Lastly, to generate a random sample of size <code>n = 10</code>, use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</code></pre></div>
-<pre><code>##  [1] -0.485923880  0.003159084 10.983655721  0.093122857  6.757023545
-##  [6]  5.722649253  1.267992661  0.296668210 10.207839794  5.269026917</code></pre>
+<pre><code>##  [1] 14.24174971 -2.88136924 -2.16785572  7.52596144 -2.85673238 -1.45242518
+##  [7] -0.59051351  0.24458776 -0.07046595 -4.55883021</code></pre>
 <p>These functions exist for many other distributions, including but not limited to:</p>
 <table>
 <thead>
@@ -1212,11 +1297,11 @@ x</code></pre></div>
 <p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the output of the final line of the body is what is returned by the function. In this case the function returns the vector stored in the variable <code>results</code>.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</code></pre></div>
-<pre><code>##  [1]  2.590211  5.974281  1.425262 11.128233 -2.991646  0.940726 -2.347653
-##  [8]  1.722954 -1.025688  2.633481</code></pre>
+<pre><code>##  [1] -6.3029666  2.0958738  0.8637364 -4.0091421  0.9115228 -2.5012442
+##  [7]  6.3776516 -2.1938627  3.8557954  3.7827104</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)</code></pre></div>
-<pre><code>##  [1]  0.14129882  0.95840220 -0.13998503  2.20285395 -1.20647321 -0.25697908
-##  [7] -1.05097739 -0.06810554 -0.73178125  0.15174653</code></pre>
+<pre><code>##  [1] -1.6601225  0.4553621  0.1450136 -1.0823582  0.1570499 -0.7025516
+##  [7]  1.5338485 -0.6251289  0.8986479  0.8802394</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">standardize =<span class="st"> </span>function(x) {
   (x -<span class="st"> </span><span class="kw">mean</span>(x)) /<span class="st"> </span><span class="kw">sd</span>(x)
@@ -1253,14 +1338,14 @@ s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
   <span class="kw">sqrt</span>((<span class="dv">1</span> /<span class="st"> </span>n) *<span class="st"> </span><span class="kw">sum</span>((x -<span class="st"> </span><span class="kw">mean</span>(x)) ^<span class="st"> </span><span class="dv">2</span>))
 }</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 4.141544</code></pre>
+<pre><code>## [1] 3.970173</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample, <span class="dt">biased =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<pre><code>## [1] 4.141544</code></pre>
+<pre><code>## [1] 3.970173</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 4.141544</code></pre>
+<pre><code>## [1] 3.970173</code></pre>
 <p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built in function <code>sd()</code>. Finally, let’s examine the biased estimate of <span class="math inline">\(\sigma\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sd</span>(test_sample, <span class="dt">biased =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## [1] 3.929014</code></pre>
+<pre><code>## [1] 3.766437</code></pre>
 </div>
 </div>
 <div id="hypothesis-tests-in-r" class="section level2">
@@ -1543,7 +1628,7 @@ differences =<span class="st"> </span><span class="kw">rep</span>(<span class="d
      <span class="dt">xlab   =</span> <span class="st">&quot;Simulated Values of D&quot;</span>,
      <span class="dt">col    =</span> <span class="st">&quot;dodgerblue&quot;</span>,
      <span class="dt">border =</span> <span class="st">&quot;darkorange&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-120-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-130-1.png" width="672" /></p>
 <p>Also the sample mean and variance are very close to to what we would expect.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(differences)</code></pre></div>
 <pre><code>## [1] 1.001423</code></pre>
@@ -1588,7 +1673,7 @@ x_bars      =<span class="st"> </span><span class="kw">rep</span>(<span class="d
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x_bar_hist =<span class="st"> </span><span class="kw">hist</span>(x_bars, <span class="dt">breaks =</span> <span class="dv">50</span>, 
                   <span class="dt">main =</span> <span class="st">&quot;Histogram of Sample Means&quot;</span>,
                   <span class="dt">xlab =</span> <span class="st">&quot;Sample Means&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-126-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-136-1.png" width="672" /></p>
 <p>Now we will compare sample statistics from the empirical distribution with their known values based on the parent distribution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">mean</span>(x_bars), mu)</code></pre></div>
 <pre><code>## [1] 10.00008 10.00000</code></pre>
@@ -1608,7 +1693,7 @@ x_bars      =<span class="st"> </span><span class="kw">rep</span>(<span class="d
 x_bar_hist =<span class="st"> </span><span class="kw">hist</span>(x_bars, <span class="dt">breaks =</span> <span class="dv">50</span>, <span class="dt">col =</span> shading,
                   <span class="dt">main =</span> <span class="st">&quot;Histogram of Sample Means, Two Standard Deviations&quot;</span>,
                   <span class="dt">xlab =</span> <span class="st">&quot;Sample Means&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-131-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-141-1.png" width="672" /></p>
 
 </div>
 </div>

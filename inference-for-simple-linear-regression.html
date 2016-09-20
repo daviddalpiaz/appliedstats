@@ -8,7 +8,7 @@
   <title>Applied Statistics with R</title>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="Applied Statistics with <code>R</code>">
-  <meta name="generator" content="bookdown 0.1.7 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.1.9 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 
 <meta name="author" content="David Dalpiaz">
 
-<meta name="date" content="2016-09-15">
+<meta name="date" content="2016-09-20">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -341,7 +341,7 @@ s_e = RSE = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
      <span class="dt">cex  =</span> <span class="dv">2</span>,
      <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 <span class="kw">abline</span>(stop_dist_model, <span class="dt">lwd =</span> <span class="dv">5</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-188-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-198-1.png" width="672" /></p>
 <p>To get started, we’ll note that there is another equivalent expression for <span class="math inline">\(S_{xy}\)</span> which we did not see last chapter,</p>
 <p><span class="math display">\[
 S_{xy}= \sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y}) = \sum_{i = 1}^{n}(x_i - \bar{x}) y_i.
@@ -518,7 +518,7 @@ for(i in <span class="dv">1</span>:num_samples) {
      <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">1</span>]), <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 <span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> beta_1, <span class="dt">sd =</span> <span class="kw">sqrt</span>(var_beta_1_hat)), 
       <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-194-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-204-1.png" width="672" /></p>
 <p>We then repeat the process for <span class="math inline">\(\hat{\beta}_0\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(beta_0_hats) <span class="co"># empirical mean</span></code></pre></div>
 <pre><code>## [1] 3.001147</code></pre>
@@ -532,7 +532,7 @@ for(i in <span class="dv">1</span>:num_samples) {
      <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">0</span>]), <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 <span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> beta_0, <span class="dt">sd =</span> <span class="kw">sqrt</span>(var_beta_0_hat)),
       <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-196-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-206-1.png" width="672" /></p>
 <p>In this simulation study, we have only simulated a finite number of samples. To truly verify the distributional results, we would need to observe an infinite number of samples. However, the following plot should make it clear that if we continued simulating, the empirical results would get closer and closer to what we should expect.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="co"># adjusted plot margins, otherwise the &quot;hat&quot; does not display</span>
 <span class="kw">plot</span>(<span class="kw">cumsum</span>(beta_1_hats) /<span class="st"> </span>(<span class="dv">1</span>:<span class="kw">length</span>(beta_1_hats)), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">5.95</span>, <span class="fl">6.05</span>),
@@ -540,14 +540,14 @@ for(i in <span class="dv">1</span>:num_samples) {
      <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;Empirical Mean of &quot;</span> ~<span class="st"> </span><span class="kw">hat</span>(beta)[<span class="dv">1</span>]),
      <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">6</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-197-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-207-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="co"># adjusted plot margins, otherwise the &quot;hat&quot; does not display</span>
 <span class="kw">plot</span>(<span class="kw">cumsum</span>(beta_0_hats) /<span class="st"> </span>(<span class="dv">1</span>:<span class="kw">length</span>(beta_0_hats)), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">2.95</span>, <span class="fl">3.05</span>),
      <span class="dt">xlab =</span> <span class="st">&quot;Number of Simulations&quot;</span>,
      <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;Empirical Mean of &quot;</span> ~<span class="st"> </span><span class="kw">hat</span>(beta)[<span class="dv">0</span>]),
      <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-197-2.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-207-2.png" width="672" /></p>
 </div>
 </div>
 <div id="standard-errors" class="section level2">
@@ -788,7 +788,7 @@ Y_i = \beta_0 + \epsilon_i.
 \text{p-value} = 1.4898365\times 10^{-12}.
 \]</span></p>
 <p>With this extremely low p-value, we would reject the null hypothesis at any reasonable <span class="math inline">\(\alpha\)</span> level, say for example <span class="math inline">\(\alpha = 0.01\)</span>. So we say there is a significant <strong>linear</strong> relationship between speed and stopping distance. Notice that we emphasize <strong>linear</strong>.</p>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-205-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-215-1.png" width="672" /></p>
 <p>In this plot of simulated data, we see a clear relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, however it is not a linear relationship. If we fit a line to this data, it is very flat. The resulting test for <span class="math inline">\(H_0: \beta_1 = 0\)</span>  <span class="math inline">\(H_1: \beta_1 \neq 0\)</span> gives a large p-value, in this case <span class="math inline">\(0.7564548\)</span>, so we would fail to reject and say that there is no significant linear relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. We will see later how to fit a curve to this data using a “linear” model, but for now, realize that testing <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs <span class="math inline">\(H_1: \beta_1 \neq 0\)</span> can only detect straight line relationships.</p>
 </div>
 <div id="confidence-intervals-in-r" class="section level3">
@@ -903,7 +903,7 @@ dist_pi_band =<span class="st"> </span><span class="kw">predict</span>(stop_dist
 <span class="kw">lines</span>(speed_grid, dist_pi_band[,<span class="st">&quot;lwr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;green&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">3</span>)
 <span class="kw">lines</span>(speed_grid, dist_pi_band[,<span class="st">&quot;upr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;green&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">3</span>)
 <span class="kw">points</span>(<span class="kw">mean</span>(cars$speed), <span class="kw">mean</span>(cars$dist), <span class="dt">pch =</span> <span class="st">&quot;+&quot;</span>, <span class="dt">cex =</span> <span class="dv">3</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-210-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-220-1.png" width="672" /></p>
 <p>Some things to notice:</p>
 <ul>
 <li>We use the <code>ylim</code> argument to stretch the <span class="math inline">\(y\)</span>-axis of the plot, since the bands extend further than the points.</li>
