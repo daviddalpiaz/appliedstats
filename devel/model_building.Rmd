@@ -1,0 +1,89 @@
+# Model Building
+
+> "Statisticians, like artists, have the bad habit of falling in love with their models."
+>
+> --- **George Box**
+
+Let's take a step back and consider the process of finding a model for data at a higher level.
+
+\[
+y = f(x_1, x_2, x_3, \ldots, x_{p-1}, \epsilon)
+\]
+
+
+\[
+y = \beta_0 + \beta_1 x_{1} + \beta_2 x_{2} + \cdots + \beta_{p-1} x_{p-1} + \epsilon
+\]
+
+- $p-1$ predictors
+- $p$ $\beta$ parameters for signal, one 
+
+
+## Family, Form, and Fit
+
+- family: lm(), glm(), non-para, etc
+- form: family + which variables, which transformation A
+- fit: find "best" values of the parameters
+
+comparing families
+comparing forms, explain or predict?
+
+
+
+restrictions based on family + form
+
+- additive
+- linear
+
+
+## Explanation versus Prediction
+
+
+### Explanation
+
+```{r, echo = FALSE}
+autompg = read.table(
+  "http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data",
+  quote = "\"",
+  comment.char = "",
+  stringsAsFactors = FALSE)
+colnames(autompg) = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin", "name")
+autompg = subset(autompg, autompg$hp != "?")
+autompg = subset(autompg, autompg$name != "plymouth reliant")
+rownames(autompg) = paste(autompg$cyl, "cylinder", autompg$year, autompg$name)
+autompg$hp = as.numeric(autompg$hp)
+autompg$domestic = as.numeric(autompg$origin == 1)
+autompg = autompg[autompg$cyl != 5,]
+autompg = autompg[autompg$cyl != 3,]
+autompg$cyl = as.factor(autompg$cyl)
+autompg$domestic = as.factor(autompg$domestic)
+autompg = subset(autompg, select = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "domestic"))
+```
+
+#### Correlation and Causation
+
+A word of caution when using a model to *explain* a relationship. There are two terms often used to describe a relationship between two variables: *causation* and *correlation*. [Correlation](https://xkcd.com/552/) is often also referred to as association.
+
+Just because two variable are correlated does not necessarily mean that one causes the other. For example, considering modeling `mpg` as only a function of `hp`.
+
+
+
+```{r}
+plot(mpg ~ hp, data = autompg, col = "dodgerblue", pch = 20, cex = 1.5)
+```
+
+Does an increase in horsepower cause a drop in fuel efficiency? Or, perhaps the causality is reversed and an increase in fuel efficiency cause a decrease in horsepower. Or, perhaps there is a third variable that explains both!
+
+The issue here is the we have **observational** data. With observational data, we can only detect associations. To speak with confidence about causality, we would nee to run **experiments**.
+
+This is a concept that you should encounter often in your statistics education. For some further reading, and some related fallacies, see: [Wikipedia: Correlation does not imply causation](https://en.wikipedia.org/wiki/Correlation_does_not_imply_causation).
+
+
+### Prediction
+
+
+#### Test-Train Split
+
+
+
+
