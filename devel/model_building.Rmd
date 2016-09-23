@@ -4,19 +4,39 @@
 >
 > --- **George Box**
 
-Let's take a step back and consider the process of finding a model for data at a higher level.
+Let's take a step back and consider the process of finding a model for data at a higher level. We are attempting to find a model for a response variable $y$ based on a number of predictors $x_1, x_2, x_3, \ldots, x_{p-1}$.
+
+Essentially, we are trying to discover the functional relationship between $y$ and the predictors. We also consider $y$ to be a function of some noise. Rarely if ever do we expect there to be an *exact* functional relationship between the predictors and the response.
 
 \[
 y = f(x_1, x_2, x_3, \ldots, x_{p-1}, \epsilon)
 \]
 
+We *could* consider all sorts of complicated functions for $f$. You will likely encounter several ways of doing this in future machine learning courses. So far in this course we have focused on linear regression. That is
 
 \[
-y = \beta_0 + \beta_1 x_{1} + \beta_2 x_{2} + \cdots + \beta_{p-1} x_{p-1} + \epsilon
+y = f(x_1, x_2, x_3, \ldots, x_{p-1}, \epsilon) = \beta_0 + \beta_1 x_{1} + \beta_2 x_{2} + \cdots + \beta_{p-1} x_{p-1} + \epsilon
 \]
 
-- $p-1$ predictors
-- $p$ $\beta$ parameters for signal, one 
+In the big picture of possible models that we could fit to this data, this is a rather restrictive model.
+
+
+
+
+
+
+
+
+
+
+
+
+
+This model has:
+
+- $p-1$ predictors.
+- $p$ $\beta$-parameters for signal
+- one 
 
 
 ## Family, Form, and Fit
@@ -42,31 +62,31 @@ restrictions based on family + form
 ### Explanation
 
 ```{r, echo = FALSE}
+# read the data from the web
 autompg = read.table(
   "http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data",
   quote = "\"",
   comment.char = "",
   stringsAsFactors = FALSE)
+# give the dataframe headers
 colnames(autompg) = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin", "name")
+# remove missing data, which is stored as "?"
 autompg = subset(autompg, autompg$hp != "?")
+# remove the plymouth reliant, as it causes some issues
 autompg = subset(autompg, autompg$name != "plymouth reliant")
+# give the dataset row names, based on the engine, year and name
 rownames(autompg) = paste(autompg$cyl, "cylinder", autompg$year, autompg$name)
+# remove the variable for name, as will as origin
+autompg = subset(autompg, select = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year"))
+# change horsepower from character to numeric
 autompg$hp = as.numeric(autompg$hp)
-autompg$domestic = as.numeric(autompg$origin == 1)
-autompg = autompg[autompg$cyl != 5,]
-autompg = autompg[autompg$cyl != 3,]
-autompg$cyl = as.factor(autompg$cyl)
-autompg$domestic = as.factor(autompg$domestic)
-autompg = subset(autompg, select = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "domestic"))
 ```
 
 #### Correlation and Causation
 
 A word of caution when using a model to *explain* a relationship. There are two terms often used to describe a relationship between two variables: *causation* and *correlation*. [Correlation](https://xkcd.com/552/) is often also referred to as association.
 
-Just because two variable are correlated does not necessarily mean that one causes the other. For example, considering modeling `mpg` as only a function of `hp`.
-
-
+Just because two variables are correlated does not necessarily mean that one causes the other. For example, considering modeling `mpg` as only a function of `hp`.
 
 ```{r}
 plot(mpg ~ hp, data = autompg, col = "dodgerblue", pch = 20, cex = 1.5)
@@ -74,13 +94,14 @@ plot(mpg ~ hp, data = autompg, col = "dodgerblue", pch = 20, cex = 1.5)
 
 Does an increase in horsepower cause a drop in fuel efficiency? Or, perhaps the causality is reversed and an increase in fuel efficiency cause a decrease in horsepower. Or, perhaps there is a third variable that explains both!
 
-The issue here is the we have **observational** data. With observational data, we can only detect associations. To speak with confidence about causality, we would nee to run **experiments**.
+The issue here is the we have **observational** data. With observational data, we can only detect *associations*. To speak with confidence about *causality*, we would nee to run **experiments**.
 
 This is a concept that you should encounter often in your statistics education. For some further reading, and some related fallacies, see: [Wikipedia: Correlation does not imply causation](https://en.wikipedia.org/wiki/Correlation_does_not_imply_causation).
 
 
 ### Prediction
 
+use single variable plots to describe overfitting
 
 #### Test-Train Split
 
