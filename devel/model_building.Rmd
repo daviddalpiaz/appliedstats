@@ -6,81 +6,89 @@
 
 Let's take a step back and consider the process of finding a model for data at a higher level. We are attempting to find a model for a response variable $y$ based on a number of predictors $x_1, x_2, x_3, \ldots, x_{p-1}$.
 
-Essentially, we are trying to discover the functional relationship between $y$ and the predictors. We also consider $y$ to be a function of some noise. Rarely if ever do we expect there to be an *exact* functional relationship between the predictors and the response.
+Essentially, we are trying to discover the functional relationship between $y$ and the predictors. In this chapter we were fitting models for a car's fuel efficency (`mpg`) as a function of its attributes (`wt`, `year`, `cyl`, `disp`, `hp`, `acc`). We also consider $y$ to be a function of some noise. Rarely if ever do we expect there to be an *exact* functional relationship between the predictors and the response.
 
 \[
-y = f(x_1, x_2, x_3, \ldots, x_{p-1}, \epsilon)
+y = f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon
 \]
 
-We *could* consider all sorts of complicated functions for $f$. You will likely encounter several ways of doing this in future machine learning courses. So far in this course we have focused on linear regression. That is
+We can think of this as
 
 \[
-y = f(x_1, x_2, x_3, \ldots, x_{p-1}, \epsilon) = \beta_0 + \beta_1 x_{1} + \beta_2 x_{2} + \cdots + \beta_{p-1} x_{p-1} + \epsilon
+\text{response} = \text{signal} + \text{noise}.
 \]
 
-In the big picture of possible models that we could fit to this data, this is a rather restrictive model.
+We *could* consider all sorts of complicated functions for $f$. You will likely encounter several ways of doing this in future machine learning courses. So far in this course we have focused on (multiple) linear regression. That is
 
+\[
+y = f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon = \beta_0 + \beta_1 x_{1} + \beta_2 x_{2} + \cdots + \beta_{p-1} x_{p-1} + \epsilon
+\]
 
-
-
-
-
-
-
-
-
-
-
-
-This model has:
-
-- $p-1$ predictors.
-- $p$ $\beta$-parameters for signal
-- one 
-
+In the big picture of possible models that we could fit to this data, this is a rather restrictive model. What do we mean by a restrictive model?
 
 ## Family, Form, and Fit
 
-- family: lm(), glm(), non-para, etc
-- form: family + which variables, which transformation A
-- fit: find "best" values of the parameters
+TODO: 
+- family: `lm()`, `glm()`, non-parametric (smooth, trees, etc), etc
+- form: family + which variables, which transformations, interactions, etc.
+- fit: find "best" values of the parameters (refer back to different minimizations in SLR)
 
-comparing families
-comparing forms, explain or predict?
+TODO: assume family + form, obtain best fit
 
+TODO: restrictions based on family + form
 
-
-restrictions based on family + form
-
-- additive
-- linear
+TODO: - additive (later, we'll add interactions)
+TODO: - linear (later we'll use transformations)
 
 
 ## Explanation versus Prediction
 
+What is the purpose of fitting a model to data? Usually it is to accomplish one of two goals. We can use a model to **explain** the relationship between the response and the predictors. Models can also be used to **predict** the response based on the predictors. Often, a good model will do both, but we'll discuss both goals separately since the process of finding models for explaining and predicting have some differences.
 
 ### Explanation
 
+Suppose we would like to find a model that explains fuel efficency (`mpg`) based on a car's attributes (`wt`, `year`, `cyl`, `disp`, `hp`, `acc`). Perhaps we are a car manufacturer trying to engineer a fuel efficient vehicle. If this is the case, we are interested in both which predictor variables are useful for explaining the car's fuel efficiency, as well as how those variables effect fuel efficiency. By understanding this relationship, we can use this knowledge to our advantage when designing a car.
+
+To explain a relationship, we are interested in keeping models as small as possible, since smaller models are easy to interpret. The fewer predictors the less considerations we need to make in our design process. 
+
+Note that *linear* models of any size are rather interpretable to begin with. Later in your data analysis careers, you will see more complicated models that may fit data better, but are much harder, if not impossible to interpret. These models aren't nearly as useful for explaining a relationship.
+
+To find small and interpretable models, we would use selection criterion that *explicitly* penalize larger models, such as AIC and BIC. In this case we still obtained a somewhat large model, but much smaller than the model we used to start the selection process.
+
+
+
+
+
+
+
+
+
+TODO: If the goal of a model is to explain the relationship between the response and the predictors, we are looking for a model that is **small* and **interpretable**.
+
+TODO: what is small
+TODO: - few predictors
+TODO: what is interpretable
+TODO: - this is linear regression's bread and butter
+TODO: __extra assumptions__
+
 ```{r, echo = FALSE}
-# read the data from the web
 autompg = read.table(
   "http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data",
   quote = "\"",
   comment.char = "",
   stringsAsFactors = FALSE)
-# give the dataframe headers
 colnames(autompg) = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin", "name")
-# remove missing data, which is stored as "?"
 autompg = subset(autompg, autompg$hp != "?")
-# remove the plymouth reliant, as it causes some issues
 autompg = subset(autompg, autompg$name != "plymouth reliant")
-# give the dataset row names, based on the engine, year and name
 rownames(autompg) = paste(autompg$cyl, "cylinder", autompg$year, autompg$name)
-# remove the variable for name, as will as origin
 autompg = subset(autompg, select = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year"))
-# change horsepower from character to numeric
 autompg$hp = as.numeric(autompg$hp)
 ```
+
+TODO: how to compare? family, form, fit
+
+TODO: Tools: ANOVA()
+
 
 #### Correlation and Causation
 
@@ -94,16 +102,148 @@ plot(mpg ~ hp, data = autompg, col = "dodgerblue", pch = 20, cex = 1.5)
 
 Does an increase in horsepower cause a drop in fuel efficiency? Or, perhaps the causality is reversed and an increase in fuel efficiency cause a decrease in horsepower. Or, perhaps there is a third variable that explains both!
 
-The issue here is the we have **observational** data. With observational data, we can only detect *associations*. To speak with confidence about *causality*, we would nee to run **experiments**.
+The issue here is that we have **observational** data. With observational data, we can only detect *associations*. To speak with confidence about *causality*, we would need to run **experiments**. Often, this is decision is made for us, before we ever see data, so we can only modify our interpretation.
 
 This is a concept that you should encounter often in your statistics education. For some further reading, and some related fallacies, see: [Wikipedia: Correlation does not imply causation](https://en.wikipedia.org/wiki/Correlation_does_not_imply_causation).
 
+TODO: Upcoming: ANOVA and experiments and A/B Testing.
 
 ### Prediction
 
-use single variable plots to describe overfitting
+If the goal of a model is to predict the response, then the **only** consideration is how well the model fits the data. For this, we will need a metric. In regression problems, this is most often RMSE.
+
+\[
+\text{RMSE}(\text{model, data}) = \sqrt{\frac{1}{n} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2}
+\]
+
+where
+
+- $y_i$ are the actual values of the response for the given data
+- $\hat{y}_i$ are the predicted values using the fitted model and the predictors from the data
+
+Correlation and causation are *not* an issue here. If a predictor is correlated with the response, it is useful for prediction.
+
+Suppose now instead of the manufacturer who would like to build a car, we are a consumer who wishes to purchase a new car. However this particular car is so new, it has not been rigorously tested, so we are unsure of what fuel efficiency to expect. (And, as skeptics, we don't trust what the manufacturer is telling us.)
+
+In this case, we would like to use the model to help *predict* the fuel efficiency of this car based on its attributes, which are the predictors of the model. The smaller the errors the model makes, the more confident we are in its prediction. Thus, to find models for prediction, we would use selection criterion that *implicitly* penalize larger models, such as LOOCV RMSE. So long as the model does not over-fit, we do not actually care how large the model becomes. Explaining the relationship between the variables is not our goal here, we simply want to know what kind of fuel efficiency we should expect!
+
+If we **only** care about prediction, we don't need to worry about correlation vs causation, and we don't need to worry about model assumptions. 
+
+If a variable is correlated with the response, it doesn't actually matter if it causes an effect on the response, it can still be useful for prediction. For example, in elementary school aged children their shoe size certainly doesn't *cause* them to read at a higher level, however we could very easily use shoe size to make a prediction about a child's reading ability. The larger their shoe size, the better they read. There's a lurking variable here though, their age! (Don't send your kids to school with size 14 shoes, it won't make them read better!)
+
+We also don't care about model assumptions. Least squares is least squares. For a specified model, it will find the values of the parameters which will minimize the squared error loss. Your results might be largely uninterpretable and useless for inference, but for prediction none of that matters.
+
+TODO: Don't care about assumptions either.
 
 #### Test-Train Split
+
+TODO: how to compare?  family, form, fit
+TODO: Train = fit on seen, eval on seen
+TODO: Test = fit on seen, eval on unseen
+
+```{r, echo=FALSE, fig.height=6, fig.width=12}
+set.seed(42)
+n = 30
+beta_0 = 1
+beta_1 = 0.5
+sigma = 3
+x = runif(n, 0, 10)
+xplot = seq(-1, 11, by = 0.1)
+
+sim_slr = function(n, x, beta_0 = 10, beta_1 = 5, sigma = 1) {
+  epsilon = rnorm(n, mean = 0, sd = sigma)
+  y       = beta_0 + beta_1 * x + epsilon
+  data.frame(predictor = x, response = y)
+}
+
+sim_data = sim_slr(n = n, x = x, beta_0 = beta_0, beta_1 = beta_1, sigma = sigma)
+
+sim_fit_1 = lm(response ~ predictor, data = sim_data)
+sim_fit_2 = lm(response ~ poly(predictor, 7), data = sim_data)
+
+
+rmse = function(actual, predicted) {
+  sqrt(mean((actual - predicted) ^ 2))
+}
+
+# rmse(sim_data$response, predict(sim_fit_1))
+# rmse(sim_data$response, predict(sim_fit_2))
+
+set.seed(420)
+n = 30
+x = runif(n, 0, 10)
+sim_data_new = sim_slr(n = n, x = x, beta_0 = beta_0, beta_1 = beta_1, sigma = sigma)
+
+# rmse(sim_data_new$response, predict(sim_fit_1, sim_data_new))
+# rmse(sim_data_new$response, predict(sim_fit_2, sim_data_new))
+
+par(mfrow = c(1, 2))
+
+plot(response ~ predictor, data = sim_data,
+     xlab = "Predictor", ylab = "Response",
+     main = "Simulated Train Data",
+     pch  = 20, cex  = 3, col = "darkgrey",
+     xlim = c(-1, 11), ylim = c(-6, 11))
+abline(sim_fit_1, lwd = 3, col = "dodgerblue")
+lines(xplot, predict(sim_fit_2, newdata = data.frame(predictor = xplot)),
+      lwd = 3, lty = 2, col = "darkorange")
+
+plot(response ~ predictor, data = sim_data_new,
+     xlab = "Predictor", ylab = "Response",
+     main = "Simulated Test Data",
+     pch  = 20, cex  = 3, col = "darkgrey",
+     xlim = c(-1, 11), ylim = c(-6, 11))
+abline(sim_fit_1, lwd = 3, col = "dodgerblue")
+lines(xplot, predict(sim_fit_2, newdata = data.frame(predictor = xplot)),
+      lwd = 3, lty = 2, col = "darkorange")
+
+# plot(response ~ predictor, data = rbind(sim_data, sim_data_new),
+#      xlab = "Predictor", ylab = "Response",
+#      main = "Simulated Test Data",
+#      pch  = 20, cex  = 3, col = "darkgrey",
+#      xlim = c(-1, 11), ylim = c(-6, 11))
+# abline(sim_fit_1, lwd = 3, col = "dodgerblue")
+# lines(xplot, predict(sim_fit_2, newdata = data.frame(predictor = xplot)),
+#       lwd = 3, lty = 2, col = "darkorange")
+
+
+```
+
+| Model   | Train                                           | Test                                                              |
+|---------|-------------------------------------------------|-------------------------------------------------------------------|
+| Simple  | `r rmse(sim_data$response, predict(sim_fit_1))` | `r rmse(sim_data_new$response, predict(sim_fit_1, sim_data_new))` |
+| Complex | `r rmse(sim_data$response, predict(sim_fit_2))` | `r rmse(sim_data_new$response, predict(sim_fit_2, sim_data_new))` |
+
+
+TODO: DOESN'T OVERFIT
+
+
+
+TODO: Both? Using above methods, likely will result in a model good for both.
+
+TODO: SMALL + INTERPRETABLE
+TODO: DOESN'T OVERFIT
+
+
+TODO: Complex ~ Wiggly
+
+
+
+TODO: can't generate more data in practice. so split your existing data. see homework
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
