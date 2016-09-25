@@ -107,9 +107,49 @@ These forms are **restrictive** in two senses. First, they only allow for linear
 
 A **family** of models is a broader grouping of many possible *forms* of a model. For example, above we saw several forms of models from the family of linear models. We will only ever concern ourselves with linear models, which model a response as a linear combination of predictors. There are certainly other families of models.
 
-For example, there are several families of *non-parametric* regression. Smoothing is a broad family of models. As are regression trees.
+For example, there are several families of *non-parametric* regression. Smoothing is a broad family of models. As are regression trees. 
 
 In linear regression, we specified models with parameters, $\beta_j$ and fit the model by finding the best values of these parameters. This is a *parametric* approach. A non-parametric approach skips the step of specifying a model with parameters, and are often described as more of an algorithm. Non-parametric models are often used in machine learning.
+
+```{r, echo=FALSE, fig.height=6, fig.width=12}
+set.seed(42)
+n = 30
+beta_0 = 1
+beta_1 = 0.5
+sigma = 3
+x = runif(n, 0, 10)
+xplot = seq(0, 10, by = 0.1)
+
+sim_slr = function(n, x, beta_0 = 10, beta_1 = 5, sigma = 1) {
+  epsilon = rnorm(n, mean = 0, sd = sigma)
+  y       = beta_0 + beta_1 * x + epsilon
+  data.frame(predictor = x, response = y)
+}
+
+sim_data = sim_slr(n = n, x = x, beta_0 = beta_0, beta_1 = beta_1, sigma = sigma)
+
+sim_fit_1 = lm(response ~ predictor, data = sim_data)
+sim_fit_2 = loess(response ~ predictor, data = sim_data)
+
+par(mfrow = c(1, 2))
+
+plot(response ~ predictor, data = sim_data,
+     xlab = "Predictor", ylab = "Response",
+     main = "Linear Regression",
+     pch  = 20, cex  = 3, col = "darkgrey",
+     xlim = c(0, 10), ylim = c(-6, 11))
+abline(sim_fit_1, lwd = 3, col = "dodgerblue")
+
+plot(response ~ predictor, data = sim_data,
+     xlab = "Predictor", ylab = "Response",
+     main = "Smoothing",
+     pch  = 20, cex  = 3, col = "darkgrey",
+     xlim = c(0, 10), ylim = c(-6, 11))
+lines(xplot, predict(sim_fit_2, newdata = data.frame(predictor = xplot)),
+      lwd = 3, lty = 2, col = "darkorange")
+```
+
+Here, SLR (parametric) is used on the left, while smoothing (non-parametric) is used on the right. SLR finds the best slope and regression. Smoothing produces the fitted $y$ value at a particular $x$ value by considering the $y$ values of the data in a neighborhood of the $x$ value considered. (Local smoothing.)
 
 Why the focus on **linear models**? Two big reasons:
 
