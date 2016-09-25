@@ -28,14 +28,76 @@ In the big picture of possible models that we could fit to this data, this is a 
 
 ## Family, Form, and Fit
 
+When modeling data, there are a number of choices that need to be made.
+
+- What **family** of models will be considered?
+- What **form** of the model will be used?
+- How will the model be **fit**?
+
+Let's work backwards and discuss each of these. 
+
+### Fit
+
+Consider one of the simplest models we could fit to data, simple linear regression.
+
+\[
+y = f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon = \beta_0 + \beta_1 x_{1} + \epsilon
+\]
+
+So here, dispite having multiple predictors, we chose to use only one. How is this model **fit**? We will almost exclusively use the method of least squares, but recall, we had seen alternative methods of fitting this model.
+
+\[
+\underset{\beta_0, \beta_1}{\mathrm{argmin}} \max|y_i - (\beta_0 + \beta_1 x_i)|.
+\]
+
+\[
+\underset{\beta_0, \beta_1}{\mathrm{argmin}} \sum_{i = 1}^{n}|y_i - (\beta_0 + \beta_1 x_i)|.
+\]
+
+\[
+\underset{\beta_0, \beta_1}{\mathrm{argmin}} \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2.
+\]
+
+Any of these methods (we will always uses the last, least squares) will obtain estimates of the unknown parameters $\beta_0$ adn $\beta_1$. Since those are the only unkowns of the specified model, we have then *fit* the model. The fitted model is then
+
+\[
+\hat{y} = \hat{f}(x_1, x_2, x_3, \ldots, x_{p-1}) = \hat{\beta}_0 + \hat{\beta}_1 x_{1}
+\]
+
+Note that, now we have dropped the term for the noise. We don't make any effort to model the noise, only the signal.
+
+### Form
+
+What are the different **forms** a model could take? Currently, for the linear models we have considered, the only method for altering the form of the model, is to control the predictors used. For example, one form of the multiple linear regression model is simple linear regression.
+
+\[
+y = f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon = \beta_0 + \beta_1 x_{1} + \epsilon
+\]
+
+We could also consider a SLR model with a different predictor, thus altering the form of the model.
+
+\[
+y = f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon = \beta_0 + \beta_2 x_{2} + \epsilon
+\]
+
+Often, we'll use multiple predictors in out model. Very often, we will at least try a model with all possible predictors.
+
+\[
+y = f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon = \beta_0 + \beta_1 x_{1} + \beta_2 x_{2} + \cdots + \beta_{p-1} x_{p-1} + \epsilon
+\]
+
+
+### Family
+
 TODO: 
-- family: `lm()`, `glm()`, non-parametric (smooth, trees, etc), etc
+- family: `lm()`, `glm()`, non-parametric (smooth, trees, etc), etc (certain class of restrictions, in our case, linear combinatinos of predictors)
 - form: family + which variables, which transformations, interactions, etc.
 - fit: find "best" values of the parameters (refer back to different minimizations in SLR)
 
 TODO: assume family + form, obtain best fit
 
 TODO: restrictions based on family + form
+
 
 TODO: - additive (later, we'll add interactions)
 TODO: - linear (later we'll use transformations)
@@ -53,15 +115,7 @@ To explain a relationship, we are interested in keeping models as small as possi
 
 Note that *linear* models of any size are rather interpretable to begin with. Later in your data analysis careers, you will see more complicated models that may fit data better, but are much harder, if not impossible to interpret. These models aren't nearly as useful for explaining a relationship.
 
-To find small and interpretable models, we would use selection criterion that *explicitly* penalize larger models, such as AIC and BIC. In this case we still obtained a somewhat large model, but much smaller than the model we used to start the selection process.
-
-
-
-
-
-
-
-
+TOODO: To find small and interpretable models, we would use selection criterion that *explicitly* penalize larger models, such as AIC and BIC. In this case we still obtained a somewhat large model, but much smaller than the model we used to start the selection process. __Eventually we will do this. For now, we need to use ANOVA() in an ad-hoc manner. For inference, we need an extra assumption. Normallity of errors. We will discuss this is great detail later.__
 
 TODO: If the goal of a model is to explain the relationship between the response and the predictors, we are looking for a model that is **small* and **interpretable**.
 
@@ -88,7 +142,6 @@ autompg$hp = as.numeric(autompg$hp)
 TODO: how to compare? family, form, fit
 
 TODO: Tools: ANOVA()
-
 
 #### Correlation and Causation
 
