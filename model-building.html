@@ -378,6 +378,8 @@ y &amp;= f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon \\
 <p>A <strong>family</strong> of models is a broader grouping of many possible <em>forms</em> of a model. For example, above we saw several forms of models from the family of linear models. We will only ever concern ourselves with linear models, which model a response as a linear combination of predictors. There are certainly other families of models.</p>
 <p>For example, there are several families of <em>non-parametric</em> regression. Smoothing is a broad family of models. As are regression trees.</p>
 <p>In linear regression, we specified models with parameters, <span class="math inline">\(\beta_j\)</span> and fit the model by finding the best values of these parameters. This is a <em>parametric</em> approach. A non-parametric approach skips the step of specifying a model with parameters, and are often described as more of an algorithm. Non-parametric models are often used in machine learning.</p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-263-1.png" width="1152" /></p>
+<p>Here, SLR (parametric) is used on the left, while smoothing (non-parametric) is used on the right. SLR finds the best slope and regression. Smoothing produces the fitted <span class="math inline">\(y\)</span> value at a particular <span class="math inline">\(x\)</span> value by considering the <span class="math inline">\(y\)</span> values of the data in a neighborhood of the <span class="math inline">\(x\)</span> value considered. (Local smoothing.)</p>
 <p>Why the focus on <strong>linear models</strong>? Two big reasons:</p>
 <ul>
 <li>Linear models are <strong>the</strong> go-to model. Linear models have been around for a long time, and are computationally easy. A linear model may not be the final model you use, but often, it should be the first model you try.</li>
@@ -427,7 +429,7 @@ y = \beta_0 + \beta_1 x_{1} + \beta_3 x_{3} + \beta_5 x_{5} + \epsilon
 <p>A word of caution when using a model to <em>explain</em> a relationship. There are two terms often used to describe a relationship between two variables: <em>causation</em> and <em>correlation</em>. <a href="https://xkcd.com/552/">Correlation</a> is often also referred to as association.</p>
 <p>Just because two variables are correlated does not necessarily mean that one causes the other. For example, consider modeling <code>mpg</code> as only a function of <code>hp</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(mpg ~<span class="st"> </span>hp, <span class="dt">data =</span> autompg, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-264-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-265-1.png" width="672" /></p>
 <p>Does an increase in horsepower cause a drop in fuel efficiency? Or, perhaps the causality is reversed and an increase in fuel efficiency cause a decrease in horsepower. Or, perhaps there is a third variable that explains both!</p>
 <p>The issue here is that we have <strong>observational</strong> data. With observational data, we can only detect <em>associations</em>. To speak with confidence about <em>causality</em>, we would need to run <strong>experiments</strong>. Often, this is decision is made for us, before we ever see data, so we can only modify our interpretation.</p>
 <p>This is a concept that you should encounter often in your statistics education. For some further reading, and some related fallacies, see: <a href="https://en.wikipedia.org/wiki/Correlation_does_not_imply_causation">Wikipedia: Correlation does not imply causation</a>.</p>
@@ -458,7 +460,7 @@ y = \beta_0 + \beta_1 x_{1} + \beta_3 x_{3} + \beta_5 x_{5} + \epsilon
 <li>Test RMSE: model fit on seen data, evaluated on <strong>unseen</strong> data</li>
 </ul>
 <p>Below, we simulate some data and fit two models. We will call the solid blue line the “simple” model. The dashed orange line will be called the “complex” model, which was fit with methods we do not yet know.</p>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-265-1.png" width="1152" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-266-1.png" width="1152" /></p>
 <p>The left panel shows the data that was used to fit the two models. Clearly the “complex” model fits the data much better. The right panel shows additional data that was simulated in the same manner as the original data. Here we see that the “simple” model fits much better. The dashed orange line almost seems random.</p>
 <table>
 <thead>
