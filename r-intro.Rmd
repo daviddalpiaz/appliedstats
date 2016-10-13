@@ -1009,34 +1009,34 @@ Also, the following line of code would produce an error since arguments without 
 power_of_num(power = 5)
 ```
 
-To further illustrate a function with a default argument, we will write a function that calculates sample standard deviation two ways.
+To further illustrate a function with a default argument, we will write a function that calculates sample variance two ways.
 
-By default, is will calculate the unbiased estimate of $\sigma$, which we will call $s$.
+By default, is will calculate the unbiased estimate of $\sigma^2$, which we will call $s$.
 
 \[
-s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
+s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2
 \]
 
-It will also have the ability to return the biased estimate (based on maximum likelihood) which we will call $\hat{\sigma}$.
+It will also have the ability to return the biased estimate (based on maximum likelihood) which we will call $\hat{\sigma}^2$.
 
 \[
-\hat{\sigma} = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(x - \bar{x})^2}
+\hat{\sigma}^2 = \frac{1}{n}\sum_{i=1}^{n}(x - \bar{x})^2
 \]
 
 ```{r}
-get_sd = function(x, biased = FALSE) {
+get_var = function(x, biased = FALSE) {
   n = length(x) - 1 * !biased
-  sqrt((1 / n) * sum((x - mean(x)) ^ 2))
+  (1 / n) * sum((x - mean(x)) ^ 2)
 }
 ```
 
 ```{r}
-get_sd(test_sample)
-get_sd(test_sample, biased = FALSE)
-sd(test_sample)
+get_var(test_sample)
+get_var(test_sample, biased = FALSE)
+var(test_sample)
 ```
 
-We see the function is working as expected, and when returning the unbiased estimate it matches `R`'s built in function `sd()`. Finally, let's examine the biased estimate of $\sigma$.
+We see the function is working as expected, and when returning the unbiased estimate it matches `R`'s built in function `var()`. Finally, let's examine the biased estimate of $\sigma^2$.
 
 ```{r}
 get_sd(test_sample, biased = TRUE)
