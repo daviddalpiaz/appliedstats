@@ -1,46 +1,502 @@
+
+```{r, echo = FALSE, eval = FALSE}
+In the future, this may come before regression, so the idea of discussing numeric predictors is not needed.
+```
+
 # Analysis of Variance
+
+<style type="text/css">
+.table {
+
+    width: 70%;
+    margin-left:10%; 
+    margin-right:10%;
+
+}
+</style>
+
+This chapter, which currently lives in the Appendix, are notes specific to the Fall 2016 run of STAT 420 for the MCS-DS program.
+
 
 > "To find out what happens when you change something, it is necessary to change it."
 >
 > --- **Box, Hunter, and Hunter**, Statistics for Experimenters (1978)
 
-- discuss exp vs prediction
+
+Thus far, we have built models for numeric responses, when the predictors are all numeric. We'll take a minor detour to go back and consider models which *only* have **categorical** predictors. A categorical predictor is a variabel which takes only a finitie number of values, which are not ordered. For example a variable which takes possible values `red`, `blue`, `green` is categorical. In the context of using a categorical variable as a predictor, it would place observations into different groups (categories).
+
+We've also mostly been dealing with observational data. The methods in this section are most useful in experimental settings, but still work with observational data. (However, for causation, we'd prefer experiments.)
+
+## Experiments
+
+The biggest difference between an observation study and an experiement is *how* the predictor data is obtained. Is the experimenter in control?
+
+- In an observational study, both response and predictor data are obtained via observation.
+- In an experiment, the predictor data are values determined by the experiementer. The experiment is run and the response is observed.
 
 
-```{r}
-library(xtable)
-fm1       = aov(tlimth ~ sex * ethnicty, data = tli)
-fm1_table = xtable(fm1)
-knitr::kable(fm1_table)
-# figure out how to omit NAs in output
+
+
+
+TODO: factors
+TODO: levels
+TODO: treatment, control
+TODO: randomization
+TODO: replicates (true, not repeated measurements)
+
+Wikipedia article on [design of experiments.](https://en.wikipedia.org/wiki/Design_of_experiments)
+
+- fisher
+- AB Testing
+
+### Two-Sample t-Test
+
+
+
+TODO: one factor
+TODO: two levels
+TODO: often one is control
+TODO: randomization
+TODO: assumptions
+- means
+- equal variance (certain two-sample t-test)
+- independence
+
+## One-Way ANOVA
+
+Consider the model
+
+\[
+y_{ij} = \mu + \alpha_i + e_{ij}
+\]
+
+where
+
+\[
+\sum \alpha_i = 0
+\]
+
+and
+
+\[
+e_{ij} \sim N(0,\sigma^{2}).
+\]
+
+Here,
+
+- $i = 1, 2, \ldots I$ where $I$ is the number of groups.
+- $j = 1, 2, \ldots n_i$ where $n_i$ is the number of observations in group $i$.
+
+Then the total sample size is
+
+\[
+N = \sum_{i = i}^{I} n_i
+\]
+
+The mean of each group is given by
+
+\[
+\mu_i = \mu + \alpha_i.
+\]
+
+TODO: We coudl like to test...
+
+so
+
+\[
+\begin{align}
+H_0: & \mu_1 = \mu_2 = \ldots \mu_i \\
+H_A: & \text{Not all } \mu_i \text{ are equal.}
+\end{align}
+\]
+
+or
+
+\[
+\begin{align}
+H_0: & \alpha_1 = \alpha_2 = \ldots = \alpha_i = 0 \\
+H_A: & \text{Not all } \alpha_i \text{ are } 0.
+\end{align}
+\]
+
+TODO: extended t-test
+
+TODO: focus on sample means as estimates of group means
+
+\[
+\mu_i = \mu + \alpha_i
+\]
+
+TODO: assumptions
+TODO: indep covered by randomization
+
+TODO: Least Squares (how estimation is done)
+
+TODO: write tradional ANOVA table
+
+The Analysis of Variance Idea:
+Analysis of Variance (ANOVA) compares the variation due to specific sources (between groups) with the variation among individuals who should be similar (within groups). In particular, ANOVA tests whether several populations have the same mean by comparing how far apart the sample means are with how much variation there is within the samples.
+
+Assumptions
+
+- We have **$I$ independent simple random samples**, one from each of the $I$ populations.
+
+
+- $\bar{y}_i$ is the sample mean of group $i$.
+- $\bar{y}$ is the overal sample mean.
+- $s_{i}^{2}$ is the sample variance of group $i$
+
+
+\[
+SST = \sum_{i = i}^{I} \sum_{j = 1}^{n_i} (y_{ij} - \bar{y})^2
+\]
+
+\[
+SSB = \sum_{i = i}^{I} \sum_{j = 1}^{n_i} (\bar{y}_i - \bar{y})^2 = \sum_{i = i}^{I} n_i (\bar{y}_i - \bar{y})^2
+\]
+
+\[
+SSW = \sum_{i = i}^{I} \sum_{j = 1}^{n_i} (y_{ij} - \bar{y}_i)^2 = \sum_{i = i}^{I} (n_i - 1) s_{i}^{2}
+\]
+
+Otherwise known as error where $y_{ij}$  is OBS and $\bar{y}_i$ is fitted. fitting a sample mean to each group
+
+| Source  | Sum of Squares | Degrees of Freedom | Mean Square | $F$         |
+|---------|----------------|--------------------|-------------|-------------|
+| Between | SSB            | $I$                | $SSB / DRB$ | $MSB / MSW$ |
+| Within  | SSW            | $n - I$            | $SSW / DRW$ |             |
+| Total   | SST            | $n - 1$            |             |             |
+
+
+```{r, echo = FALSE}
+plot_anova = function(n = 20, mu_a = 0, mu_b = 0, mu_c = 0, sigma = 1) {
+
+  response = rnorm(n * 3, mean = c(mu_a , mu_b, mu_c), sd = sigma)
+  group    = factor(rep(LETTERS[1:3], n))
+  
+  xmin <- min(c(mu_a , mu_b, mu_c)) - 3 * sigma
+  xmax <- max(c(mu_a , mu_b, mu_c)) + 3 * sigma
+  
+  plot(0, main = "", 
+       xlim = c(xmin, xmax), ylim = c(0, 0.40), type = "n", 
+       xlab = "observations", ylab = "density")
+  
+  curve(dnorm(x, mean = mu_a, sd = sigma), 
+        from = mu_a - 3 * sigma, to = mu_a + 3 * sigma, 
+        add = TRUE, lwd = 2, col = "dodgerblue", lty = 1)
+  
+  curve(dnorm(x, mean = mu_b, sd = sigma), 
+        from = mu_b - 3 * sigma, to = mu_b + 3 * sigma, 
+        add = TRUE, lwd = 2, col = "darkorange", lty = 2)
+  
+  curve(dnorm(x, mean = mu_c, sd = sigma), 
+        from = mu_c - 3 * sigma, to = mu_c + 3 * sigma, 
+        add = TRUE, lwd = 3, col = "black", lty = 3)
+
+  rug(response[group == "A"], col = "dodgerblue",   lwd = 1.5, ticksize = 0.1, quiet = TRUE, lty = 1)
+  rug(response[group == "B"], col = "darkorange", lwd = 1.5, ticksize = 0.1, quiet = TRUE, lty = 2)
+  rug(response[group == "C"], col = "black",  lwd = 2, ticksize = 0.1, quiet = TRUE, lty = 3)
+  
+}
 ```
 
-A/B Testing Example.
+```{r, fig.height = 12, fig.width = 12}
+set.seed(42)
+par(mfrow = c(2, 2))
+plot_anova(n = 20, mu_a = -5, mu_b = 0, mu_c = 5, sigma = 1)
+plot_anova(n = 20, mu_a = 0, mu_b = 0, mu_c = 0, sigma = 1)
+plot_anova(n = 20, mu_a = -1, mu_b = 0, mu_c = 1, sigma = 1)
+plot_anova(n = 20, mu_a = -1, mu_b = 0, mu_c = 1, sigma = 2)
+```
 
-plot for pairwise comparisons, call plot on results of TukeyHSD()
-link to FDR, etc.
+### Factor Variables
 
+TODO: note `aov()` expects it, otherwise regression, be careful!
 
-- stat significance vs practical significance, effect size
+```{r}
+set.seed(42)
+response = rnorm(15)
+group    = c(rep(1, 5), rep(2, 5), rep(3, 5))
+bad = data.frame(response, group)
+summary(aov(response ~ group, data = bad))
 
-- interaction plot
+good = data.frame(response, group = as.factor(group))
+summary(aov(response ~ group, data = good))
 
+str(bad)
+str(good)
 
+bad
+good
+```
 
+TODO: describe sim below, distribution of test statistic
 
-## Two-Sample t
+```{r}
+library(broom)
 
-## ANOVA
+sim_anova = function(n = 10, mu_a = 0, mu_b = 0, mu_c = 0, mu_d = 0, sigma = 1, stat = TRUE) {
+  
+  # create data from one-way ANOVA model with four groups of equal size
+  # response simulated from normal with group mean, shared variance
+  # group variable indicates group A, B, C or D
+  sim_data = data.frame(
+    response = c(rnorm(n = n, mean = mu_a, sd = sigma),
+                 rnorm(n = n, mean = mu_b, sd = sigma),
+                 rnorm(n = n, mean = mu_c, sd = sigma),
+                 rnorm(n = n, mean = mu_d, sd = sigma)),
+    group = c(rep("A", times = n), rep("B", times = n), 
+              rep("C", times = n), rep("D", times = n))
+  )
+  
+  # obtain F-statistic and p-value for testing difference of means
+  aov_results = aov(response ~ group, data = sim_data)
+  f_stat = glance(aov_results)$stat
+  p_val  = glance(aov_results)$p.val
+  
+  # return f_stat if stat = TRUE, otheriwse, p-value
+  ifelse(stat, f_stat, p_val)
+  
+}
 
-- consider moving kw to "fixes" chapter
+f_stats = replicate(n = 10000, sim_anova(stat = TRUE))
+hist(f_stats, breaks = 100, prob = TRUE, border = "dodgerblue")
+curve(df(x, df1 = 4 - 1, df2 = 40 - 4), col = "darkorange", add = TRUE, lwd = 2)
+```
 
-## Multiple Comparisons
+TODO: Simulate power, things that effect power
 
-- `tukeyHSD()`
-- no scheffe
+```{r}
+p_vals = replicate(n = 1000, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
+                                       sigma = 1.5, stat = FALSE))
+mean(p_vals < 0.05)
+mean(p_vals < 0.01)
+```
+
+```{r}
+p_vals = replicate(n = 1000, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
+                                       sigma = 2.0, stat = FALSE))
+mean(p_vals < 0.05)
+mean(p_vals < 0.01)
+```
+
+```{r}
+p_vals = replicate(n = 1000, sim_anova(mu_a = -2, mu_b = 0, mu_c = 0, mu_d = 2, 
+                                       sigma = 2.0, stat = FALSE))
+mean(p_vals < 0.05)
+mean(p_vals < 0.01)
+```
+
+- TODO: Example
+
+```{r}
+library(faraway)
+names(coagulation)
+plot(coag ~ diet, data = coagulation, col = 2:5)
+coag_aov = aov(coag ~ diet, data = coagulation)
+coag_aov
+summary(coag_aov)
+```
+
+## Post Hoc Testing
+
+[](https://projecteuclid.org/euclid.aoms/1177704711)
+[](http://courses.csail.mit.edu/18.337/2015/docs/50YearsDataScience.pdf)
+
+- TODO: say a bit about tukey
+- TODO: multiple testing, simulation to verify?
+- TODO: family-wise error rate
+- TODO: bonferroni is conservative
+- TODO: [](https://en.wikipedia.org/wiki/Post_hoc_analysis)
+- TODO: [](https://en.wikipedia.org/wiki/Family-wise_error_rate)
+
+```{r}
+# TODO: explain with()
+with(coagulation, pairwise.t.test(coag, diet, p.adj = "none"))
+# pairwise.t.test(coagulation$coag, coagulation$diet, p.adj = "none")
+with(coagulation, pairwise.t.test(coag, diet, p.adj = "bonferroni"))
+
+TukeyHSD(coag_aov)
+plot(TukeyHSD(coag_aov))
+```
+
+```{r}
+get_p_val = function() {
+  x = rnorm(20)
+  g = c(rep("A", 10), rep("B", 10))
+  glance(t.test(x ~ g))$p.value
+  
+}
+
+#FWER
+mean(replicate(1000, any(replicate(10, get_p_val()) < 0.05)))
+
+#FWER
+mean(replicate(1000, any(p.adjust(replicate(10, get_p_val()), "bonferroni") < 0.05)))
+```
+
 
 ## Two-Way ANOVA
 
-## Factorial Design
+\[
+y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}
+\]
 
-## As Linear Model
+where
+
+\[
+i = 1, \cdots I \quad j = 1, \cdots J \quad k = 1 \cdots, K
+\]
+
+and $\epsilon_{ijk}$ are $N(0, \sigma^2)$ random variables.
+\
+\
+
+With constraints:
+
+\[
+\sum \alpha_i = 0 \quad \quad \sum \beta_j = 0.
+\]
+
+Additionally:
+
+\[
+(\alpha \beta)_{1j} + (\alpha \beta)_{2j} + (\alpha \beta)_{3j} = 0 \\
+(\alpha \beta)_{i1} + (\alpha \beta)_{i2} + (\alpha \beta)_{i3} + (\alpha \beta)_{i4} = 0
+\]
+
+for any $i$ or $j$.
+
+Interaction Model: $y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}$
+
+|                  | **Factor B, Level 1**| **Factor B, Level 2**|
+|------------------|------------------|------------------|
+| **Factor A, Level 1** | $\mu + \alpha_1 + \beta_1 + (\alpha\beta)_{11}$ | $\mu + \alpha_1 + \beta_2 + (\alpha\beta)_{12}$ |
+| **Factor A, Level 2** | $\mu + \alpha_2 + \beta_1 + (\alpha\beta)_{21}$ | $\mu + \alpha_2 + \beta_2 + (\alpha\beta)_{22}$ |
+
+Additive Model: $y_{ijk} = \mu + \alpha_i + \beta_j + \epsilon_{ijk}$
+
+|                  | **Factor B, Level 1**| **Factor B, Level 2**|
+|------------------|------------------|------------------|
+| **Factor A, Level 1** | $\mu + \alpha_1 + \beta_1$ | $\mu + \alpha_1 + \beta_2$ |
+| **Factor A, Level 2** | $\mu + \alpha_2 + \beta_1$ | $\mu + \alpha_2 + \beta_2$ |
+
+Factor B Only Model (One-Way): $y_{ijk} = \mu + \beta_j + \epsilon_{ijk}$
+
+|                  | **Factor B, Level 1**| **Factor B, Level 2**|
+|------------------|------------------|------------------|
+| **Factor A, Level 1** | $\mu + \beta_1$ | $\mu + \beta_2$ |
+| **Factor A, Level 2** | $\mu + \beta_1$ | $\mu + \beta_2$ |
+
+Factor A Only Model (One-Way): $y_{ijk} = \mu + \alpha_i + \epsilon_{ijk}$
+
+|                  | **Factor B, Level 1**| **Factor B, Level 2**|
+|------------------|------------------|------------------|
+| **Factor A, Level 1** | $\mu + \alpha_1$ | $\mu + \alpha_1$ |
+| **Factor A, Level 2** | $\mu + \alpha_2$ | $\mu + \alpha_2$ |
+
+Null Model: $y_{ijk} = \mu + \epsilon_{ijk}$
+
+|                  | **Factor B, Level 1**| **Factor B, Level 2**|
+|------------------|------------------|------------------|
+| **Factor A, Level 1** | $\mu$ | $\mu$ |
+| **Factor A, Level 2** | $\mu$ | $\mu$ |
+
+TODO: mentioned no replication, interaction issue
+TODO: hierarchy
+
+TODO: don't fully write tradional ANOVA table. explain what is being compared. send to reference.
+
+TODO: which rows do which test
+TODO: correct if int is not significant
+
+```{r, fig.height = 5, fig.width = 15}
+par(mfrow = c(1, 2))
+with(rats, interaction.plot(poison, treat, time, lwd = 2, col = 1:4))
+with(rats, interaction.plot(treat, poison, time, lwd = 2, col = 1:3))
+```
+
+```{r}
+summary(aov(time ~ poison * treat, data = rats))
+```
+
+```{r}
+rats_int   = aov(time ~ poison * treat, data = rats) # interaction model
+rats_add   = aov(time ~ poison + treat, data = rats) # additive model
+rats_pois  = aov(time ~ poison , data = rats)        # single factor model   
+rats_treat = aov(time ~ treat, data = rats)          # single factor model
+rats_null  = aov(time ~ 1, data = rats)              # null model
+```
+
+```{r}
+table = expand.grid(poison = unique(rats$poison), treat = unique(rats$treat))
+table
+matrix(paste0(table$poison, "-", table$treat) , 4, 3, byrow = TRUE)
+```
+
+```{r}
+get_est_means = function(model) {
+  mat = matrix(predict(model, table), nrow = 4, ncol = 3, byrow = TRUE)
+  colnames(mat) = c("I", "II", "III")
+  rownames(mat) = c("A", "B", "C", "D")
+  mat
+}
+```
+
+```{r}
+knitr::kable(get_est_means(rats_int))
+```
+
+```{r}
+knitr::kable(get_est_means(rats_add))
+```
+
+```{r}
+additive_means = get_est_means(rats_add)
+additive_means[1,] - additive_means[2,]
+```
+
+```{r}
+interaction_means = get_est_means(rats_int)
+interaction_means[1,] - interaction_means[2,]
+```
+
+```{r}
+knitr::kable(get_est_means(rats_pois))
+```
+
+```{r}
+knitr::kable(get_est_means(rats_treat))
+```
+
+```{r}
+knitr::kable(get_est_means(rats_null))
+```
+
+```{r, echo = FALSE, eval = FALSE}
+# future hw qusetions
+# change anything? does result change?
+# rate of dying = 1/ time
+#plot(aov(1 / time ~ poison * treat, data = rats))
+#summary(aov(1 / time ~ poison * treat, data = rats))
+```
+
+```{r, fig.height = 5, fig.width = 15}
+par(mfrow = c(1, 2))
+with(warpbreaks, interaction.plot(wool, tension, breaks, lwd = 2, col = 2:4))
+with(warpbreaks, interaction.plot(tension, wool, breaks, lwd = 2, col = 2:3))
+```
+
+## Flow Charts
+
+- TODO: one big chart for one-two-multi-interaction etc
+- TODO: in video only?
+
+## Details
+
+- TODO: link to resources with details
+
+
+## Misc
+
+- TODO: stat significance vs practical significance, effect size
