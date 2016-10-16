@@ -1,7 +1,4 @@
-
-```{r, echo = FALSE, eval = FALSE}
-In the future, this may come before regression, so the idea of discussing numeric predictors is not needed.
-```
+<!-- In the future, this may be placed before regression, so the idea of discussing numeric predictors is not needed. The idea of a predictor may not have been introduced, so the focus should be on groups. -->
 
 # Analysis of Variance
 
@@ -15,59 +12,120 @@ In the future, this may come before regression, so the idea of discussing numeri
 }
 </style>
 
-This chapter, which currently lives in the Appendix, are notes specific to the Fall 2016 run of STAT 420 for the MCS-DS program.
-
+This chapter, which currently lives at the end of the text, are notes specific to the Fall 2016 run of STAT 420 for the MCS-DS program.
 
 > "To find out what happens when you change something, it is necessary to change it."
 >
 > --- **Box, Hunter, and Hunter**, Statistics for Experimenters (1978)
 
+Thus far, we have built models for numeric responses, when the predictors are all numeric. We'll take a minor detour to go back and consider models which *only* have **categorical** predictors. A categorical predictor is a variable which takes only a finite number of values, which are not ordered. For example a variable which takes possible values `red`, `blue`, `green` is categorical. In the context of using a categorical variable as a predictor, it would place observations into different groups (categories).
 
-Thus far, we have built models for numeric responses, when the predictors are all numeric. We'll take a minor detour to go back and consider models which *only* have **categorical** predictors. A categorical predictor is a variabel which takes only a finitie number of values, which are not ordered. For example a variable which takes possible values `red`, `blue`, `green` is categorical. In the context of using a categorical variable as a predictor, it would place observations into different groups (categories).
-
-We've also mostly been dealing with observational data. The methods in this section are most useful in experimental settings, but still work with observational data. (However, for causation, we'd prefer experiments.)
+We've also mostly been dealing with observational data. The methods in this section are most useful in experimental settings, but still work with observational data. (However, for determining causation, we require experiments.)
 
 ## Experiments
 
-The biggest difference between an observation study and an experiement is *how* the predictor data is obtained. Is the experimenter in control?
+The biggest difference between an observational study and an experiment is *how* the predictor data is obtained. Is the experimenter in control?
 
-- In an observational study, both response and predictor data are obtained via observation.
-- In an experiment, the predictor data are values determined by the experiementer. The experiment is run and the response is observed.
+- In an **observational** study, both response and predictor data are obtained via observation.
+- In an **experiment**, the predictor data are values determined by the experimenter. The experiment is run and the response is observed.
 
+In an experiment, the predictors, which are controlled by the experimenter, are called **factors**. The possible values of these factors are called **levels**. Subjects are *randomly* assigned to a level of each of the factors.
 
+The design of experiments could be a course by itself. The Wikipedia article on [design of experiments](https://en.wikipedia.org/wiki/Design_of_experiments) gives a good overview. Originally, most of the methodology was developed for agricultural applications by [R. A. Fisher](https://en.wikipedia.org/wiki/Ronald_Fisher), but are still in use today, now in a wide variety of application areas. Notably, these methods have seen a resurgence as "A/B Testing."
 
-
-
-TODO: factors
-TODO: levels
-TODO: treatment, control
-TODO: randomization
-TODO: replicates (true, not repeated measurements)
-
-Wikipedia article on [design of experiments.](https://en.wikipedia.org/wiki/Design_of_experiments)
-
-- fisher
-- AB Testing
+<!-- TODO: In the future, discuss the Morrow Plots: http://cropsci.illinois.edu/research/morrow -->
 
 ### Two-Sample t-Test
 
+The simplest example of an experimental design is the setup for a two-sample $t$-test. There is a single factor variable with two levels which split the subjects into two groups. Often, one level is considered the **control**, while the other is the **treatment**. The subjects are randomly assigned to one of the two groups. After being assigned to a group, each subject has some quantity measured, which is the response variable.
 
+Mathematically, we consider the model
 
-TODO: one factor
-TODO: two levels
-TODO: often one is control
-TODO: randomization
-TODO: assumptions
-- means
-- equal variance (certain two-sample t-test)
-- independence
+\[
+y_{ij} \sim N(\mu_i, \sigma^2)
+\]
+
+where $i = 1, 2$ for the two groups and $j = 1, 2, \ldots n_i$. Here $n_i$ is the number of subjects in group $i$. So $y_{13}$ would be the measurement for the third member of the first group.
+
+So measurements of subjects in group $1$ follow a normal distribution with mean $\mu_1$.
+
+\[
+y_{1j} \sim N(\mu_1, \sigma^2)
+\]
+
+Then measurements of subjects in group $2$ follow a normal distribution with mean $\mu_2$.
+
+\[
+y_{2j} \sim N(\mu_2, \sigma^2)
+\]
+
+This model makes a number of assumptions. Specifically, 
+
+- The observations follow a **normal** distribution. The mean of each group is different.
+- **Equal variance** for each group.
+- **Independence**. Which is believable if groups were randomly assigned.
+
+Later, we will investigate the normal and equal variance assumptions. For now, we will continue to assume they are reasonable.
+
+The natural question to ask: Is there a difference between the two groups? The specific question we'll answer: Are the means of the two groups different?
+
+Mathematically, that is
+
+\[
+H_0: \mu_1 = \mu_2 \quad \text{vs} \quad H_1: \mu_1 \neq \mu_2
+\]
+
+For the stated model and assuming the null hypothesis is true, the $t$ test statistic would follow a $t$ distribution with degrees of freedom $n_1 + n_2 - 2$.
+
+```{r, echo = FALSE}
+set.seed(42)
+sleep_means = c(6.5, 8.2)
+sleep_sigma = 1.2
+
+melatonin = data.frame(
+  sleep = rnorm(n = 20, mean = sleep_means, sd = sleep_sigma),
+  group = rep(c("control", "treatment"), 10)
+)
+```
+
+As an example, suppose we are interested in the effect of [melatotin](https://en.wikipedia.org/wiki/Melatonin) on sleep duration. A researcher obtains a random sample of 20 adult males. Of these subjects, 10 are randomly chosen for the control group, which will receive a placebo. The remaining 10 will be given 5mg of melatonin before bed. The sleep duration in hours of each subject is then measured. The researcher chooses a significance level of $\alpha = 0.10$. Was sleep duration affected by the melatonin?
+
+```{r}
+melatonin
+```
+
+Here, we would like to test,
+
+\[
+H_0: \mu_C = \mu_T \quad \text{vs} \quad H_1: \mu_C \neq \mu_T
+\]
+
+To do so in `R`, we use the `t.test()` function, with the `var.equal` argument set to `TRUE`.
+
+```{r}
+t.test(sleep ~ group, data = melatonin, var.equal = TRUE)
+```
+
+At a significance level of $\alpha = 0.10$, we reject the null hypothesis. It seems that the melatonin had a **statistically significant** effect. Be aware that statistical significance is not always the same as scientific or **practical significance**. To determine practical significance, we need to investigate the **effect size** in the context of the situation. Here the effect size is the difference of the sample means.
+
+```{r}
+t.test(sleep ~ group, data = melatonin, var.equal = TRUE)$estimate
+```
+
+Here we see that the subjects in the melatonin group sleep an average of about 1.5 hours longer than the control group. An hour and a half of sleep is certainly important!
+
+With a big enough sample size, we could make an effect size of say, four minutes statistically significant. Is it worth taking a pill every night to get an extra four minutes of sleep? (Probably not.)
+
+```{r}
+boxplot(sleep ~ group, data = melatonin, col = 5:6)
+```
 
 ## One-Way ANOVA
 
-Consider the model
+What if there are more than two groups? Consider the model
 
 \[
-y_{ij} = \mu + \alpha_i + e_{ij}
+y_{ij} = \mu + \alpha_i + e_{ij}.
 \]
 
 where
@@ -84,7 +142,7 @@ e_{ij} \sim N(0,\sigma^{2}).
 
 Here,
 
-- $i = 1, 2, \ldots I$ where $I$ is the number of groups.
+- $i = 1, 2, \ldots g$ where $g$ is the number of groups.
 - $j = 1, 2, \ldots n_i$ where $n_i$ is the number of observations in group $i$.
 
 Then the total sample size is
@@ -93,91 +151,85 @@ Then the total sample size is
 N = \sum_{i = i}^{I} n_i
 \]
 
-The mean of each group is given by
+Observations from group $i$ follow a normal distribution
+
+\[
+y_{ij} \sim N(\mu_i,\sigma^{2})
+\]
+
+where mean of each group is given by
 
 \[
 \mu_i = \mu + \alpha_i.
 \]
 
-TODO: We coudl like to test...
+Here $\alpha_i$ measures the effect of group $i$. It is the difference between the overall mean and the mean of group $i$.
 
-so
+Essentially, the assumptions here are the same as the two sample case, however now, we simply have more groups.
 
-\[
-\begin{align}
-H_0: & \mu_1 = \mu_2 = \ldots \mu_i \\
-H_A: & \text{Not all } \mu_i \text{ are equal.}
-\end{align}
-\]
-
-or
+Much like the two-sample case, we would again like to test if the means of the groups are equal.
 
 \[
-\begin{align}
-H_0: & \alpha_1 = \alpha_2 = \ldots = \alpha_i = 0 \\
-H_A: & \text{Not all } \alpha_i \text{ are } 0.
-\end{align}
+H_0: \mu_1 = \mu_2 = \ldots \mu_i \quad \text{vs} \quad H_1: \text{ Not all } \mu_i \text{ are equal.}
 \]
 
-TODO: extended t-test
+Notice that the alternative simply indicates the some of the means are not equal, not specifically which are not equal. More on that later.
 
-TODO: focus on sample means as estimates of group means
+Alternatively, we could write
 
 \[
-\mu_i = \mu + \alpha_i
+H_0: \alpha_1 = \alpha_2 = \ldots = \alpha_i = 0 \quad \text{vs} \quad H_1: \text{ Not all } \alpha_i \text{ are } 0.
 \]
 
-TODO: assumptions
-TODO: indep covered by randomization
+This test is called **Analysis of Variance**. Analysis of Variance (ANOVA) compares the variation due to specific sources (between groups) with the variation among individuals who should be similar (within groups). In particular, ANOVA tests whether several populations have the same mean by comparing how far apart the sample means are with how much variation there is within the samples. We uses variability of means to test for equality of means, thus the use of variance in the name.
 
-TODO: Least Squares (how estimation is done)
-
-TODO: write tradional ANOVA table
-
-The Analysis of Variance Idea:
-Analysis of Variance (ANOVA) compares the variation due to specific sources (between groups) with the variation among individuals who should be similar (within groups). In particular, ANOVA tests whether several populations have the same mean by comparing how far apart the sample means are with how much variation there is within the samples.
-
-Assumptions
-
-- We have **$I$ independent simple random samples**, one from each of the $I$ populations.
-
+We'll leave out most of the details about how the estimation is done, but we'll see later, that it is done via least squares. We'll use `R` to obtain these estimates, but they are actually rather simple. We only need to think about the sample means of the groups.
 
 - $\bar{y}_i$ is the sample mean of group $i$.
-- $\bar{y}$ is the overal sample mean.
+- $\bar{y}$ is the overall sample mean.
 - $s_{i}^{2}$ is the sample variance of group $i$
 
+We'll then decompose the variance, as we've seen before in regression. The **total** variation measures how much the observations vary about the overall sample mean, ignoring the groups.
 
 \[
 SST = \sum_{i = i}^{I} \sum_{j = 1}^{n_i} (y_{ij} - \bar{y})^2
 \]
 
+The variation **between** groups looks at how far the individual sample means are from the overall sample mean.
+
 \[
 SSB = \sum_{i = i}^{I} \sum_{j = 1}^{n_i} (\bar{y}_i - \bar{y})^2 = \sum_{i = i}^{I} n_i (\bar{y}_i - \bar{y})^2
 \]
+
+Lastly, the **within** group variation measures how far observations are from the sample mean of its group.
 
 \[
 SSW = \sum_{i = i}^{I} \sum_{j = 1}^{n_i} (y_{ij} - \bar{y}_i)^2 = \sum_{i = i}^{I} (n_i - 1) s_{i}^{2}
 \]
 
-Otherwise known as error where $y_{ij}$  is OBS and $\bar{y}_i$ is fitted. fitting a sample mean to each group
+This could also be thought of as the error sum of squares, where $y_{ij}$ is an observation and $\bar{y}_i$ is its fitted (predicted) value from the model. 
+
+To develop the test statistic for ANOVA, we place this information into an ANVOA table.
 
 | Source  | Sum of Squares | Degrees of Freedom | Mean Square | $F$         |
-|---------|----------------|--------------------|-------------|-------------|
-| Between | SSB            | $I$                | $SSB / DRB$ | $MSB / MSW$ |
-| Within  | SSW            | $n - I$            | $SSW / DRW$ |             |
+|---------|--------------|----------------|------------|-------------|
+| Between | SSB            | $g$                | $SSB / DRB$ | $MSB / MSW$ |
+| Within  | SSW            | $n - g$            | $SSW / DRW$ |             |
 | Total   | SST            | $n - 1$            |             |             |
 
+We reject the null (means equal) when the $F$ statistic is large. This occurs when the variation between groups is large compared to the variation within groups. Under the null hypothesis, the distribution of the test statistic is $F$ with degrees of freedom $g$ and $n - g$.
 
 ```{r, echo = FALSE}
+library(broom)
 plot_anova = function(n = 20, mu_a = 0, mu_b = 0, mu_c = 0, sigma = 1) {
 
   response = rnorm(n * 3, mean = c(mu_a , mu_b, mu_c), sd = sigma)
   group    = factor(rep(LETTERS[1:3], n))
   
-  xmin <- min(c(mu_a , mu_b, mu_c)) - 3 * sigma
-  xmax <- max(c(mu_a , mu_b, mu_c)) + 3 * sigma
+  xmin = min(c(mu_a , mu_b, mu_c)) - 3 * sigma
+  xmax = max(c(mu_a , mu_b, mu_c)) + 3 * sigma
   
-  plot(0, main = "", 
+  plot(0, main = "Truth", 
        xlim = c(xmin, xmax), ylim = c(0, 0.40), type = "n", 
        xlab = "observations", ylab = "density")
   
@@ -193,44 +245,158 @@ plot_anova = function(n = 20, mu_a = 0, mu_b = 0, mu_c = 0, sigma = 1) {
         from = mu_c - 3 * sigma, to = mu_c + 3 * sigma, 
         add = TRUE, lwd = 3, col = "black", lty = 3)
 
-  rug(response[group == "A"], col = "dodgerblue",   lwd = 1.5, ticksize = 0.1, quiet = TRUE, lty = 1)
-  rug(response[group == "B"], col = "darkorange", lwd = 1.5, ticksize = 0.1, quiet = TRUE, lty = 2)
-  rug(response[group == "C"], col = "black",  lwd = 2, ticksize = 0.1, quiet = TRUE, lty = 3)
+  rug(response[group == "A"], col = "dodgerblue",
+      lwd = 1.5, ticksize = 0.1, quiet = TRUE, lty = 1)
+  rug(response[group == "B"], col = "darkorange", 
+      lwd = 1.5, ticksize = 0.1, quiet = TRUE, lty = 2)
+  rug(response[group == "C"], col = "black",
+      lwd = 2, ticksize = 0.1, quiet = TRUE, lty = 3)
   
+  boxplot(response ~ group, xlab = "group", main = "Observed Data")
+  stripchart(response ~ group, vertical = TRUE, method = "jitter", add = TRUE, 
+             pch = 20, col  = c("dodgerblue", "darkorange", "black"))
+  abline(h = mean(response), lwd = 2, lty = 2, col = "grey")
+  
+  aov_results = aov(response ~ group)
+  f_stat = glance(aov_results)$stat
+  p_val  = glance(aov_results)$p.val
+  list(f = f_stat, p = p_val)
 }
 ```
 
-```{r, fig.height = 12, fig.width = 12}
-set.seed(42)
-par(mfrow = c(2, 2))
-plot_anova(n = 20, mu_a = -5, mu_b = 0, mu_c = 5, sigma = 1)
-plot_anova(n = 20, mu_a = 0, mu_b = 0, mu_c = 0, sigma = 1)
-plot_anova(n = 20, mu_a = -1, mu_b = 0, mu_c = 1, sigma = 1)
-plot_anova(n = 20, mu_a = -1, mu_b = 0, mu_c = 1, sigma = 2)
+```{r, echo = FALSE, eval = FALSE}
+This should be a Shiny app.
+Should output entire ANOVA table.
+Do with ggplot2 and custom boxplots with show min, sd, mean, sd, max
 ```
+
+```{r, echo = FALSE, eval = FALSE}
+library(manipulate)
+manipulate(plot_anova(n, mu_a, mu_b, mu_c, sigma), 
+           n = slider(2, 50, 20), 
+           mu_a = slider(-10, 10, 0), 
+           mu_b = slider(-10, 10, 0), 
+           mu_c = slider(-10, 10, 0), 
+           sigma = slider(1, 10, 1))
+```
+
+Let's see what this looks like in a few situations. In each of the following examples, we'll consider sampling 20 observations ($n_i = 20$) from three populations (groups).
+
+First, consider $\mu_A = -5, \mu_B = 0, \mu_C = 5$ with $\sigma = 1$.
+
+```{r, fig.height = 5, fig.width = 10, echo = FALSE}
+set.seed(42)
+par(mfrow = c(1, 2))
+p1 = plot_anova(n = 20, mu_a = -5, mu_b = 0, mu_c = 5, sigma = 1)
+```
+
+The left panel shows the three normal distributinos we are sampling from. The ticks along the $x$-axis show the randomly sampled observations. The right panel, re-displays only the sampled values in a boxplot. Note that the midline of the boxes is actually the sample median, but since we are simulating from a symmetric distribution, it should be close to the sample mean.
+
+Here the sample means vary a lot around the overall sample mean, which is the dashed grey lined on the right panel. Within the groups there is variability, but it is still obvious that the sample means are very different.
+
+As a result, we we obtain a large test statistic, thus small p-value. 
+
+- $F = `r p1$f`$
+- $\text{p-value} = `r p1$p`$
+
+Now consider $\mu_A = 0, \mu_B = 0, \mu_C = 0$ with $\sigma = 1$. That is, equal means for the groups.
+
+```{r, fig.height = 5, fig.width = 10, echo = FALSE}
+set.seed(1337)
+par(mfrow = c(1, 2))
+p2 = plot_anova(n = 20, mu_a =  0, mu_b = 0, mu_c = 0, sigma = 1)
+```
+
+Here the sample means vary only a tiny bit around the overall sample mean Within the groups there is variability, this time much larger than the variability of the sample means.
+
+As a result, we we obtain a small test statistic, thus large p-value. 
+
+- $F = `r p2$f`$
+- $\text{p-value} = `r p2$p`$
+
+The next two examples show different means, with different levels of noise. Notice how these affect the test statistic and p-value.
+
+- $\mu_A = -1, \mu_B = 0, \mu_C = 1, \sigma = 1$
+
+```{r, fig.height = 5, fig.width = 10, echo = FALSE}
+set.seed(42)
+par(mfrow = c(1, 2))
+p3 = plot_anova(n = 20, mu_a = -1, mu_b = 0, mu_c = 1, sigma = 1)
+```
+
+- $F = `r p3$f`$
+- $\text{p-value} = `r p3$p`$
+
+Above, there isn't obvious seperation between the groups like the first example, but it is still obvious the means are different. Below, there is more noise. Visually it is somewhat hard to tell, but the test suggests a difference of means.
+
+- $\mu_A = -1, \mu_B = 0, \mu_C = 1, \sigma = 2$
+- $n_i = 20$ for each group.
+
+```{r, fig.height = 5, fig.width = 10, echo = FALSE}
+set.seed(42)
+par(mfrow = c(1, 2))
+p4 = plot_anova(n = 20, mu_a = -1, mu_b = 0, mu_c = 1, sigma = 2)
+```
+
+- $F = `r p4$f`$
+- $\text{p-value} = `r p4$p`$
+
+Let's consider an example with real data. We'll use the `coagulation` dataset from the `faraway` library. Here four different diets (`A`, `B`, `C`, `D`) were administered to a random sample of 24 animals. The subjects were randomly assigned to one of the four diets. For each, the their blood coagulation time was measured in seconds.
+
+Here we would like to test
+
+\[
+H_0: \mu_A = \mu_B = \mu_C = \mu_D 
+\]
+
+where, for example, $\mu_A$ is the mean blood coagulation time for an animal that ate diet `A`.
+
+```{r}
+library(faraway)
+names(coagulation)
+plot(coag ~ diet, data = coagulation, col = 2:5)
+```
+
+We first load the data and create the relevant boxplot. The plot alone suggests a difference of means. The `aov()` function is used to obtain the relevant sums of squares. Using the `summary()` function on the output from `aov()` creates the desired ANOVA table. (Without the unneeded row for total.)
+
+```{r}
+coag_aov = aov(coag ~ diet, data = coagulation)
+coag_aov
+summary(coag_aov)
+```
+
+Were we to run this experiement, we would have pre-specified a significance level. However, notice that the p-value of this test is incredible low, so using any reasonable significance level we would reject the null hypothesis. Thus we believe the diets had an effect on blood coagulation time.
+
+```{r}
+diets = data.frame(diet = unique(coagulation$diet))
+data.frame(diets, coag = predict(coag_aov, diets))
+```
+
+Here, we've created a dataframe with a row for each diet. By predicting on this dataframe, we obtain the sample means of each diet (group).
 
 ### Factor Variables
 
-TODO: note `aov()` expects it, otherwise regression, be careful!
+When performing ANOVA in `R`, be sure the grouping variable is a factor variable. If it is not, your result might not be ANOVA, but instead a linear regression with the predictor variable considered numeric.
 
 ```{r}
 set.seed(42)
 response = rnorm(15)
 group    = c(rep(1, 5), rep(2, 5), rep(3, 5))
 bad = data.frame(response, group)
-summary(aov(response ~ group, data = bad))
+summary(aov(response ~ group, data = bad)) # wrong DF!
 
 good = data.frame(response, group = as.factor(group))
 summary(aov(response ~ group, data = good))
 
-str(bad)
-str(good)
-
-bad
-good
+is.factor(bad$group)  # 1, 2, and 3 are numbers.
+is.factor(good$group) # 1, 2, and 3 are labels.
 ```
 
-TODO: describe sim below, distribution of test statistic
+### Some Simulation
+
+- TODO: increase num_sims to 10000
+
+Here we verify the distribution of the test statistic under the null hypothesis. We simulate from the null model (equal variance) to obtain an emperical distribution of the $F$ statistic, and compare it to the expected distribution.
 
 ```{r}
 library(broom)
@@ -259,46 +425,46 @@ sim_anova = function(n = 10, mu_a = 0, mu_b = 0, mu_c = 0, mu_d = 0, sigma = 1, 
   
 }
 
-f_stats = replicate(n = 10000, sim_anova(stat = TRUE))
+f_stats = replicate(n = 100, sim_anova(stat = TRUE))
 hist(f_stats, breaks = 100, prob = TRUE, border = "dodgerblue")
 curve(df(x, df1 = 4 - 1, df2 = 40 - 4), col = "darkorange", add = TRUE, lwd = 2)
 ```
 
-TODO: Simulate power, things that effect power
+- TODO: Simulate power, things that effect power
+- TODO: increase n to 1000
 
 ```{r}
-p_vals = replicate(n = 1000, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
-                                       sigma = 1.5, stat = FALSE))
+p_vals = replicate(n = 10, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
+                                     sigma = 1.5, stat = FALSE))
 mean(p_vals < 0.05)
 mean(p_vals < 0.01)
 ```
 
 ```{r}
-p_vals = replicate(n = 1000, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
-                                       sigma = 2.0, stat = FALSE))
+p_vals = replicate(n = 10, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
+                                     sigma = 2.0, stat = FALSE))
 mean(p_vals < 0.05)
 mean(p_vals < 0.01)
 ```
 
 ```{r}
-p_vals = replicate(n = 1000, sim_anova(mu_a = -2, mu_b = 0, mu_c = 0, mu_d = 2, 
-                                       sigma = 2.0, stat = FALSE))
+p_vals = replicate(n = 10, sim_anova(mu_a = -2, mu_b = 0, mu_c = 0, mu_d = 2, 
+                                     sigma = 2.0, stat = FALSE))
 mean(p_vals < 0.05)
 mean(p_vals < 0.01)
-```
-
-- TODO: Example
-
-```{r}
-library(faraway)
-names(coagulation)
-plot(coag ~ diet, data = coagulation, col = 2:5)
-coag_aov = aov(coag ~ diet, data = coagulation)
-coag_aov
-summary(coag_aov)
 ```
 
 ## Post Hoc Testing
+
+Suppose we reject the null hypothesis from the ANOVA test for equal means. That tells us that the means are different, but which means? The obvious strategy is to test all possible comparisons of two means. We can do this easily in `R`.
+
+```{r}
+with(coagulation, pairwise.t.test(coag, diet, p.adj = "none"))
+# pairwise.t.test(coagulation$coag, coagulation$diet, p.adj = "none")
+```
+
+- TODO: with() replaces a data = argument
+- TODO: no adjustment
 
 [](https://projecteuclid.org/euclid.aoms/1177704711)
 [](http://courses.csail.mit.edu/18.337/2015/docs/50YearsDataScience.pdf)
@@ -309,37 +475,50 @@ summary(coag_aov)
 - TODO: bonferroni is conservative
 - TODO: [](https://en.wikipedia.org/wiki/Post_hoc_analysis)
 - TODO: [](https://en.wikipedia.org/wiki/Family-wise_error_rate)
+- TODO: procedure error rate
 
 ```{r}
-# TODO: explain with()
-with(coagulation, pairwise.t.test(coag, diet, p.adj = "none"))
-# pairwise.t.test(coagulation$coag, coagulation$diet, p.adj = "none")
 with(coagulation, pairwise.t.test(coag, diet, p.adj = "bonferroni"))
+```
 
+```{r}
 TukeyHSD(coag_aov)
+```
+
+```{r}
 plot(TukeyHSD(coag_aov))
 ```
+
+- TODO; increase replication to 1000
 
 ```{r}
 get_p_val = function() {
   x = rnorm(20)
   g = c(rep("A", 10), rep("B", 10))
   glance(t.test(x ~ g))$p.value
-  
 }
 
-#FWER
+set.seed(1337)
+
+# FWER
+# 10 tests
+# no adjustment
 mean(replicate(1000, any(replicate(10, get_p_val()) < 0.05)))
+# too big
 
-#FWER
+# FWER
+# 10 tests
+# bonf adjustment
 mean(replicate(1000, any(p.adjust(replicate(10, get_p_val()), "bonferroni") < 0.05)))
+# too small (conservative)
 ```
-
 
 ## Two-Way ANOVA
 
+What if there is more than one factor variable? Why do we need to limit ourselves to experiments with only one factor? We don't! Consider the model
+
 \[
-y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}
+y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}.
 \]
 
 where
@@ -349,16 +528,14 @@ i = 1, \cdots I \quad j = 1, \cdots J \quad k = 1 \cdots, K
 \]
 
 and $\epsilon_{ijk}$ are $N(0, \sigma^2)$ random variables.
-\
-\
 
-With constraints:
+We have constraints
 
 \[
 \sum \alpha_i = 0 \quad \quad \sum \beta_j = 0.
 \]
 
-Additionally:
+and
 
 \[
 (\alpha \beta)_{1j} + (\alpha \beta)_{2j} + (\alpha \beta)_{3j} = 0 \\
@@ -366,6 +543,9 @@ Additionally:
 \]
 
 for any $i$ or $j$.
+
+- TODO: what each effect is. they have this meaning because of the constraints
+- TODO: define factorial design.
 
 Interaction Model: $y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}$
 
@@ -402,13 +582,15 @@ Null Model: $y_{ijk} = \mu + \epsilon_{ijk}$
 | **Factor A, Level 1** | $\mu$ | $\mu$ |
 | **Factor A, Level 2** | $\mu$ | $\mu$ |
 
-TODO: mentioned no replication, interaction issue
-TODO: hierarchy
+- TODO: mentioned no replication, interaction issue
+- TODO: hierarchy
+- TODO: the important thign is the difference between interaction adn additive models. same number of means, but slight difference.
 
-TODO: don't fully write tradional ANOVA table. explain what is being compared. send to reference.
+- TODO: don't fully write tradional ANOVA table. explain what is being compared. send to reference.
 
-TODO: which rows do which test
-TODO: correct if int is not significant
+- TODO: which rows do which test
+- TODO: which model is chosen?
+- TODO: correct if int is not significant
 
 ```{r, fig.height = 5, fig.width = 15}
 par(mfrow = c(1, 2))
@@ -481,22 +663,10 @@ knitr::kable(get_est_means(rats_null))
 #summary(aov(1 / time ~ poison * treat, data = rats))
 ```
 
+- TODO: example with obvious interaction
+
 ```{r, fig.height = 5, fig.width = 15}
 par(mfrow = c(1, 2))
 with(warpbreaks, interaction.plot(wool, tension, breaks, lwd = 2, col = 2:4))
 with(warpbreaks, interaction.plot(tension, wool, breaks, lwd = 2, col = 2:3))
 ```
-
-## Flow Charts
-
-- TODO: one big chart for one-two-multi-interaction etc
-- TODO: in video only?
-
-## Details
-
-- TODO: link to resources with details
-
-
-## Misc
-
-- TODO: stat significance vs practical significance, effect size
