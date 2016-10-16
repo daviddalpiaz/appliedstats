@@ -192,19 +192,19 @@ We'll leave out most of the details about how the estimation is done, but we'll 
 We'll then decompose the variance, as we've seen before in regression. The **total** variation measures how much the observations vary about the overall sample mean, ignoring the groups.
 
 \[
-SST = \sum_{i = i}^{I} \sum_{j = 1}^{n_i} (y_{ij} - \bar{y})^2
+SST = \sum_{i = i}^{g} \sum_{j = 1}^{n_i} (y_{ij} - \bar{y})^2
 \]
 
 The variation **between** groups looks at how far the individual sample means are from the overall sample mean.
 
 \[
-SSB = \sum_{i = i}^{I} \sum_{j = 1}^{n_i} (\bar{y}_i - \bar{y})^2 = \sum_{i = i}^{I} n_i (\bar{y}_i - \bar{y})^2
+SSB = \sum_{i = i}^{g} \sum_{j = 1}^{n_i} (\bar{y}_i - \bar{y})^2 = \sum_{i = i}^{g} n_i (\bar{y}_i - \bar{y})^2
 \]
 
 Lastly, the **within** group variation measures how far observations are from the sample mean of its group.
 
 \[
-SSW = \sum_{i = i}^{I} \sum_{j = 1}^{n_i} (y_{ij} - \bar{y}_i)^2 = \sum_{i = i}^{I} (n_i - 1) s_{i}^{2}
+SSW = \sum_{i = i}^{g} \sum_{j = 1}^{n_i} (y_{ij} - \bar{y}_i)^2 = \sum_{i = i}^{g} (n_i - 1) s_{i}^{2}
 \]
 
 This could also be thought of as the error sum of squares, where $y_{ij}$ is an observation and $\bar{y}_i$ is its fitted (predicted) value from the model. 
@@ -213,8 +213,8 @@ To develop the test statistic for ANOVA, we place this information into an ANVOA
 
 | Source  | Sum of Squares | Degrees of Freedom | Mean Square | $F$         |
 |---------|--------------|----------------|------------|-------------|
-| Between | SSB            | $g$                | $SSB / DRB$ | $MSB / MSW$ |
-| Within  | SSW            | $n - g$            | $SSW / DRW$ |             |
+| Between | SSB            | $g$                | SSB / DRB | MSB / MSW |
+| Within  | SSW            | $n - g$            | SSW / DRW |             |
 | Total   | SST            | $n - 1$            |             |             |
 
 We reject the null (means equal) when the $F$ statistic is large. This occurs when the variation between groups is large compared to the variation within groups. Under the null hypothesis, the distribution of the test statistic is $F$ with degrees of freedom $g$ and $n - g$.
@@ -252,10 +252,20 @@ plot_anova = function(n = 20, mu_a = 0, mu_b = 0, mu_c = 0, sigma = 1) {
   rug(response[group == "C"], col = "black",
       lwd = 2, ticksize = 0.1, quiet = TRUE, lty = 3)
   
-  boxplot(response ~ group, xlab = "group", main = "Observed Data")
+  boxplot(response ~ group, xlab = "group", main = "Observed Data", medcol = "white", varwidth = FALSE)
   stripchart(response ~ group, vertical = TRUE, method = "jitter", add = TRUE, 
              pch = 20, col  = c("dodgerblue", "darkorange", "black"))
-  abline(h = mean(response), lwd = 2, lty = 2, col = "grey")
+  
+  abline(h = mean(response), lwd = 3, lty = 1, col = "darkgrey")
+  
+  #abline(h = mean(response[group == "A"]), lwd = 2, lty = 2, col = "dodgerblue")
+  #abline(h = mean(response[group == "B"]), lwd = 2, lty = 2, col = "darkorange")
+  #abline(h = mean(response[group == "C"]), lwd = 2, lty = 2, col = "black")
+  
+  segments(x0 = 0.6, x1 = 1.4, y0 = mean(response[group == "A"]), y1 = mean(response[group == "A"]), lwd = 2, lty = 2, col = "dodgerblue")
+  segments(x0 = 1.6, x1 = 2.4, y0 = mean(response[group == "B"]), y1 = mean(response[group == "B"]), lwd = 2, lty = 2, col = "darkorange")
+  segments(x0 = 2.6, x1 = 3.4, y0 = mean(response[group == "C"]), y1 = mean(response[group == "C"]), lwd = 2, lty = 2, col = "black")
+
   
   aov_results = aov(response ~ group)
   f_stat = glance(aov_results)$stat
@@ -290,9 +300,9 @@ par(mfrow = c(1, 2))
 p1 = plot_anova(n = 20, mu_a = -5, mu_b = 0, mu_c = 5, sigma = 1)
 ```
 
-The left panel shows the three normal distributinos we are sampling from. The ticks along the $x$-axis show the randomly sampled observations. The right panel, re-displays only the sampled values in a boxplot. Note that the midline of the boxes is actually the sample median, but since we are simulating from a symmetric distribution, it should be close to the sample mean.
+The left panel shows the three normal distributions we are sampling from. The ticks along the $x$-axis show the randomly sampled observations. The right panel, re-displays only the sampled values in a boxplot. Note that the mid-line of the boxes is usually the sample median. These boxplots have been modified to use the sample mean.
 
-Here the sample means vary a lot around the overall sample mean, which is the dashed grey lined on the right panel. Within the groups there is variability, but it is still obvious that the sample means are very different.
+Here the sample means vary a lot around the overall sample mean, which is the solid grey line on the right panel. Within the groups there is variability, but it is still obvious that the sample means are very different.
 
 As a result, we we obtain a large test statistic, thus small p-value. 
 
@@ -327,7 +337,7 @@ p3 = plot_anova(n = 20, mu_a = -1, mu_b = 0, mu_c = 1, sigma = 1)
 - $F = `r p3$f`$
 - $\text{p-value} = `r p3$p`$
 
-Above, there isn't obvious seperation between the groups like the first example, but it is still obvious the means are different. Below, there is more noise. Visually it is somewhat hard to tell, but the test suggests a difference of means.
+Above, there isn't obvious separation between the groups like the first example, but it is still obvious the means are different. Below, there is more noise. Visually it is somewhat hard to tell, but the test suggests a difference of means.
 
 - $\mu_A = -1, \mu_B = 0, \mu_C = 1, \sigma = 2$
 - $n_i = 20$ for each group.
@@ -365,7 +375,7 @@ coag_aov
 summary(coag_aov)
 ```
 
-Were we to run this experiement, we would have pre-specified a significance level. However, notice that the p-value of this test is incredible low, so using any reasonable significance level we would reject the null hypothesis. Thus we believe the diets had an effect on blood coagulation time.
+Were we to run this experiment, we would have pre-specified a significance level. However, notice that the p-value of this test is incredible low, so using any reasonable significance level we would reject the null hypothesis. Thus we believe the diets had an effect on blood coagulation time.
 
 ```{r}
 diets = data.frame(diet = unique(coagulation$diet))
@@ -396,7 +406,7 @@ is.factor(good$group) # 1, 2, and 3 are labels.
 
 - TODO: increase num_sims to 10000
 
-Here we verify the distribution of the test statistic under the null hypothesis. We simulate from the null model (equal variance) to obtain an emperical distribution of the $F$ statistic, and compare it to the expected distribution.
+Here we verify the distribution of the test statistic under the null hypothesis. We simulate from the null model (equal variance) to obtain an empirical distribution of the $F$ statistic, and compare it to the expected distribution.
 
 ```{r}
 library(broom)
@@ -426,12 +436,33 @@ sim_anova = function(n = 10, mu_a = 0, mu_b = 0, mu_c = 0, mu_d = 0, sigma = 1, 
 }
 
 f_stats = replicate(n = 100, sim_anova(stat = TRUE))
-hist(f_stats, breaks = 100, prob = TRUE, border = "dodgerblue")
+hist(f_stats, breaks = 100, prob = TRUE, border = "dodgerblue", main = "Empirical Distribution of F")
 curve(df(x, df1 = 4 - 1, df2 = 40 - 4), col = "darkorange", add = TRUE, lwd = 2)
 ```
 
-- TODO: Simulate power, things that effect power
 - TODO: increase n to 1000
+
+Now that we’re performing experiments, getting more data means finding more test subjects, running more lab tests, etc. In other words, it will cost more time and money.
+
+We'd like to design our experiment so that we have a good chance of detecting an interesting effect size, without spending too much money. There's no point in running an experiment if there’s only a very low chance that it has a significant result that you care about. (Remember, not all statistically significant results have practical value.)
+
+We'd like the ANOVA test to have high **power** for an alternative hypothesis with a minimum desired effect size.
+
+\[
+\text{Power } = P(\text{Rejct } H_0 \mid H_0 \text{ False})
+\]
+
+That is, for a true difference of means that we deem interesting, we want the test to reject with high probability.
+
+A number of things can affect the power of a test:
+
+- Effect size. It is easier to detect larger effects.
+- Noise. The less noise, the test will more likely reject.
+- Significance level $\alpha$. Lower significance level makes rejecting more difficult.
+- Sample size. Large samples means easier to detect differences.
+- Balanced design. An equal number of observations per group leads to higher power.
+
+The following simulations look at the effect of $\alpha$, effect size, and noise level on the power of an ANOVA $F$-test. Homework will look into sample size and balance.
 
 ```{r}
 p_vals = replicate(n = 10, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
@@ -463,31 +494,27 @@ with(coagulation, pairwise.t.test(coag, diet, p.adj = "none"))
 # pairwise.t.test(coagulation$coag, coagulation$diet, p.adj = "none")
 ```
 
-- TODO: with() replaces a data = argument
-- TODO: no adjustment
+Notice the `pairwise.t.test()` function does not have a `data` argument. To avoid using `attach()` or the `$` operator, we introduce the `with()` function. The commented line would perform the same operation.
 
-[](https://projecteuclid.org/euclid.aoms/1177704711)
-[](http://courses.csail.mit.edu/18.337/2015/docs/50YearsDataScience.pdf)
+Also note that we are using the argument `p.adj = "none"`. What is this? An adjustment (in this case not an adjustment) to the p-value of each test. Why would we need to do this?
 
-- TODO: say a bit about tukey
-- TODO: multiple testing, simulation to verify?
-- TODO: family-wise error rate
-- TODO: bonferroni is conservative
-- TODO: [](https://en.wikipedia.org/wiki/Post_hoc_analysis)
-- TODO: [](https://en.wikipedia.org/wiki/Family-wise_error_rate)
-- TODO: procedure error rate
+The adjustment is an attempt to correct for the [multiple testing problem](https://en.wikipedia.org/wiki/Multiple_comparisons_problem). (See also: [Relevant XKCD](https://xkcd.com/882/). ) Imagine that you knew ahead of time that you were going to perform 100 $t$-tests. Suppose you wish to do this with a false positive rate of $\alpha = 0.05$. If we use this significance level for each test, for 100 tests, we then expect 5 false positives. That means, with 100 tests, we're almost guaranteed to have at least one error.
+
+What we'd really like, is for the [family-wise error rate](https://en.wikipedia.org/wiki/Family-wise_error_rate) to be 0.05. If we consider the 100 tests to be a single "experiment" the FWER is the rate of one or more false positives for in the full experiment (100 tests). Consider it an error rate for an entire procedure, instead of a single test.
+
+With this in mind, one of the simplest adjustments we can make, is to increase the p-values for each test, depending on the number of tests. In particular the Bonferroni correction simply multiplies by the number of tests.
+
+\[
+\text{p-value-bonf} = \min(1, n_{tests} \cdot \text{p-value})
+\]
 
 ```{r}
 with(coagulation, pairwise.t.test(coag, diet, p.adj = "bonferroni"))
 ```
 
-```{r}
-TukeyHSD(coag_aov)
-```
+We see that these p-values are much higher than the unadjusted p-values, thus, we are less likely to reject each tests. As a result, the FWER is 0.05, instead of an error rate of 0.05 for each test.
 
-```{r}
-plot(TukeyHSD(coag_aov))
-```
+We can simulate the 100 test scenario to illustrate this point.
 
 - TODO; increase replication to 1000
 
@@ -500,18 +527,34 @@ get_p_val = function() {
 
 set.seed(1337)
 
-# FWER
-# 10 tests
+# FWER with 100 tests
+# desired rate = 0.05
 # no adjustment
-mean(replicate(1000, any(replicate(10, get_p_val()) < 0.05)))
-# too big
+mean(replicate(10, any(replicate(100, get_p_val()) < 0.05)))
 
-# FWER
-# 10 tests
+# FWER with 100 tests
+# desired rate = 0.05
 # bonf adjustment
-mean(replicate(1000, any(p.adjust(replicate(10, get_p_val()), "bonferroni") < 0.05)))
-# too small (conservative)
+mean(replicate(10, any(p.adjust(replicate(100, get_p_val()), "bonferroni") < 0.05)))
 ```
+
+For the specific case of testing all two-way mean differences after an ANOVA test, there are [a number of potential methods](https://en.wikipedia.org/wiki/Post_hoc_analysis) for making an adjustment of this type. The pros and cons of the potential methods are beyond the scope of this course. We choose a method for its ease of use, and to a lesser extent, its developer.
+
+Tukey's Honest Significance difference can be applied directly to an object which was created using `aov()`. It will adjust the p-values of the pairwise comparisons of the means to control the FWER, in this case, for 0.05. Notice it also gives confidence intervals for the difference of the means.
+
+```{r}
+TukeyHSD(coag_aov, conf.level = 0.95)
+```
+
+Based on these results, we see no difference between `A` and `D` as well as `B` and `C`. All other pairwise comparisons are significant. If you return to the original boxplot, these results should not be surprising.
+
+Also, nicely, we can easily produce a plot of these confidence intervals.
+
+```{r}
+plot(TukeyHSD(coag_aov, conf.level = 0.95))
+```
+
+The creator of this method, [John Tukey](https://en.wikipedia.org/wiki/John_Tukey), is an important figure in the history of data science. He essentially [predicted the rise of data science over 50 years ago](https://projecteuclid.org/euclid.aoms/1177704711). For some retrospective thoughts on those 50 years, see [this paper from David Donoho](http://courses.csail.mit.edu/18.337/2015/docs/50YearsDataScience.pdf)
 
 ## Two-Way ANOVA
 
@@ -521,13 +564,7 @@ What if there is more than one factor variable? Why do we need to limit ourselve
 y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}.
 \]
 
-where
-
-\[
-i = 1, \cdots I \quad j = 1, \cdots J \quad k = 1 \cdots, K
-\]
-
-and $\epsilon_{ijk}$ are $N(0, \sigma^2)$ random variables.
+where $\epsilon_{ijk}$ are $N(0, \sigma^2)$ random variables.
 
 We have constraints
 
@@ -544,49 +581,62 @@ and
 
 for any $i$ or $j$.
 
-- TODO: what each effect is. they have this meaning because of the constraints
-- TODO: define factorial design.
+Here,
 
-Interaction Model: $y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}$
+- $i = 1, 2, \ldots I$ where $I$ is the number of levels of factor $A$.
+- $j = 1, 2, \ldots J$ where $J$ is the number of levels of factor $B$.
+- $k = 1, 2, \ldots K$ where $K$ is the number of replicates per group.
+
+Here, we can think of a group as a combination of a level from each of the factors. So for example, one group will receive level $2$ of factor $A$ and level $3$ of factor $B$. The number of replicates is the number of subjects in each group. Here $y_{135}$ would be the measurement for the fifth member (replicate) of the group for level $1$ of factor $A$ and level $3$ of factor $B$.
+
+We call this setup an $I \times J$ **factorial design** with $K$ replicates.
+
+- $\alpha_i$ measures the effect of level $i$ of factor $A$. We call these the **main effects** of factor $A$.
+- $\alpha_j$ measures the effect of level $j$ of factor $B$. We call these the **main effects** of factor $B$.
+- $(\alpha \beta)_{ij}$ is a single parameter. We use $\alpha \beta$ to note that this parameter measures the **interaction** between the two main effects.
+
+Under this setup, there are a number of models that we can compare. Consider a $2 \times 2$ factorial design. The following tables shows the means for each of the possible groups under each model.
+
+**Interaction** Model: $y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}$
 
 |                  | **Factor B, Level 1**| **Factor B, Level 2**|
 |------------------|------------------|------------------|
 | **Factor A, Level 1** | $\mu + \alpha_1 + \beta_1 + (\alpha\beta)_{11}$ | $\mu + \alpha_1 + \beta_2 + (\alpha\beta)_{12}$ |
 | **Factor A, Level 2** | $\mu + \alpha_2 + \beta_1 + (\alpha\beta)_{21}$ | $\mu + \alpha_2 + \beta_2 + (\alpha\beta)_{22}$ |
 
-Additive Model: $y_{ijk} = \mu + \alpha_i + \beta_j + \epsilon_{ijk}$
+**Additive** Model: $y_{ijk} = \mu + \alpha_i + \beta_j + \epsilon_{ijk}$
 
 |                  | **Factor B, Level 1**| **Factor B, Level 2**|
 |------------------|------------------|------------------|
 | **Factor A, Level 1** | $\mu + \alpha_1 + \beta_1$ | $\mu + \alpha_1 + \beta_2$ |
 | **Factor A, Level 2** | $\mu + \alpha_2 + \beta_1$ | $\mu + \alpha_2 + \beta_2$ |
 
-Factor B Only Model (One-Way): $y_{ijk} = \mu + \beta_j + \epsilon_{ijk}$
+**Factor B** Only Model (One-Way): $y_{ijk} = \mu + \beta_j + \epsilon_{ijk}$
 
 |                  | **Factor B, Level 1**| **Factor B, Level 2**|
 |------------------|------------------|------------------|
 | **Factor A, Level 1** | $\mu + \beta_1$ | $\mu + \beta_2$ |
 | **Factor A, Level 2** | $\mu + \beta_1$ | $\mu + \beta_2$ |
 
-Factor A Only Model (One-Way): $y_{ijk} = \mu + \alpha_i + \epsilon_{ijk}$
+**Factor A** Only Model (One-Way): $y_{ijk} = \mu + \alpha_i + \epsilon_{ijk}$
 
 |                  | **Factor B, Level 1**| **Factor B, Level 2**|
 |------------------|------------------|------------------|
 | **Factor A, Level 1** | $\mu + \alpha_1$ | $\mu + \alpha_1$ |
 | **Factor A, Level 2** | $\mu + \alpha_2$ | $\mu + \alpha_2$ |
 
-Null Model: $y_{ijk} = \mu + \epsilon_{ijk}$
+**Null** Model: $y_{ijk} = \mu + \epsilon_{ijk}$
 
 |                  | **Factor B, Level 1**| **Factor B, Level 2**|
 |------------------|------------------|------------------|
 | **Factor A, Level 1** | $\mu$ | $\mu$ |
 | **Factor A, Level 2** | $\mu$ | $\mu$ |
 
-- TODO: mentioned no replication, interaction issue
+- TODO: mention no replication, interaction issue
 - TODO: hierarchy
-- TODO: the important thign is the difference between interaction adn additive models. same number of means, but slight difference.
+- TODO: the important thing is the difference between interaction and additive models. same number of means, but slight difference.
 
-- TODO: don't fully write tradional ANOVA table. explain what is being compared. send to reference.
+- TODO: don't fully write traditional ANOVA table. explain what is being compared. send to reference.
 
 - TODO: which rows do which test
 - TODO: which model is chosen?
@@ -670,3 +720,9 @@ par(mfrow = c(1, 2))
 with(warpbreaks, interaction.plot(wool, tension, breaks, lwd = 2, col = 2:4))
 with(warpbreaks, interaction.plot(tension, wool, breaks, lwd = 2, col = 2:3))
 ```
+
+
+```{r, echo = FALSE, eval = FALSE}
+two-way calculation details in an appendix
+```
+
