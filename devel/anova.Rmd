@@ -1,3 +1,6 @@
+---
+output: html_document
+---
 <!-- In the future, this may be placed before regression, so the idea of discussing numeric predictors is not needed. The idea of a predictor may not have been introduced, so the focus should be on groups. -->
 
 # Analysis of Variance
@@ -31,11 +34,11 @@ The biggest difference between an observational study and an experiment is *how*
 
 In an experiment, the predictors, which are controlled by the experimenter, are called **factors**. The possible values of these factors are called **levels**. Subjects are *randomly* assigned to a level of each of the factors.
 
-The design of experiments could be a course by itself. The Wikipedia article on [design of experiments](https://en.wikipedia.org/wiki/Design_of_experiments) gives a good overview. Originally, most of the methodology was developed for agricultural applications by [R. A. Fisher](https://en.wikipedia.org/wiki/Ronald_Fisher), but are still in use today, now in a wide variety of application areas. Notably, these methods have seen a resurgence as "A/B Testing."
+The design of experiments could be a course by itself. The Wikipedia article on [design of experiments](https://en.wikipedia.org/wiki/Design_of_experiments) gives a good overview. Originally, most of the methodology was developed for agricultural applications by [R. A. Fisher](https://en.wikipedia.org/wiki/Ronald_Fisher), but are still in use today, now in a wide variety of application areas. Notably, these methods have seen a resurgence as a part of "A/B Testing."
 
 <!-- TODO: In the future, discuss the Morrow Plots: http://cropsci.illinois.edu/research/morrow -->
 
-### Two-Sample t-Test
+## Two-Sample t-Test
 
 The simplest example of an experimental design is the setup for a two-sample $t$-test. There is a single factor variable with two levels which split the subjects into two groups. Often, one level is considered the **control**, while the other is the **treatment**. The subjects are randomly assigned to one of the two groups. After being assigned to a group, each subject has some quantity measured, which is the response variable.
 
@@ -157,7 +160,7 @@ Observations from group $i$ follow a normal distribution
 y_{ij} \sim N(\mu_i,\sigma^{2})
 \]
 
-where mean of each group is given by
+where the mean of each group is given by
 
 \[
 \mu_i = \mu + \alpha_i.
@@ -170,7 +173,7 @@ Essentially, the assumptions here are the same as the two sample case, however n
 Much like the two-sample case, we would again like to test if the means of the groups are equal.
 
 \[
-H_0: \mu_1 = \mu_2 = \ldots \mu_i \quad \text{vs} \quad H_1: \text{ Not all } \mu_i \text{ are equal.}
+H_0: \mu_1 = \mu_2 = \ldots \mu_g \quad \text{vs} \quad H_1: \text{ Not all } \mu_i \text{ are equal.}
 \]
 
 Notice that the alternative simply indicates the some of the means are not equal, not specifically which are not equal. More on that later.
@@ -178,18 +181,18 @@ Notice that the alternative simply indicates the some of the means are not equal
 Alternatively, we could write
 
 \[
-H_0: \alpha_1 = \alpha_2 = \ldots = \alpha_i = 0 \quad \text{vs} \quad H_1: \text{ Not all } \alpha_i \text{ are } 0.
+H_0: \alpha_1 = \alpha_2 = \ldots = \alpha_g = 0 \quad \text{vs} \quad H_1: \text{ Not all } \alpha_i \text{ are } 0.
 \]
 
-This test is called **Analysis of Variance**. Analysis of Variance (ANOVA) compares the variation due to specific sources (between groups) with the variation among individuals who should be similar (within groups). In particular, ANOVA tests whether several populations have the same mean by comparing how far apart the sample means are with how much variation there is within the samples. We uses variability of means to test for equality of means, thus the use of variance in the name.
+This test is called **Analysis of Variance**. Analysis of Variance (ANOVA) compares the variation due to specific sources (between groups) with the variation among individuals who should be similar (within groups). In particular, ANOVA tests whether several populations have the same mean by comparing how far apart the sample means are with how much variation there is within the samples. We use variability of means to test for equality of means, thus the use of *variance* in the name for a test about means.
 
 We'll leave out most of the details about how the estimation is done, but we'll see later, that it is done via least squares. We'll use `R` to obtain these estimates, but they are actually rather simple. We only need to think about the sample means of the groups.
 
 - $\bar{y}_i$ is the sample mean of group $i$.
 - $\bar{y}$ is the overall sample mean.
-- $s_{i}^{2}$ is the sample variance of group $i$
+- $s_{i}^{2}$ is the sample variance of group $i$.
 
-We'll then decompose the variance, as we've seen before in regression. The **total** variation measures how much the observations vary about the overall sample mean, ignoring the groups.
+We'll then decompose the variance, as we've seen before in regression. The **total** variation measures how much the observations vary about the overall sample mean, *ignoring the groups*.
 
 \[
 SST = \sum_{i = i}^{g} \sum_{j = 1}^{n_i} (y_{ij} - \bar{y})^2
@@ -213,11 +216,11 @@ To develop the test statistic for ANOVA, we place this information into an ANVOA
 
 | Source  | Sum of Squares | Degrees of Freedom | Mean Square | $F$         |
 |---------|--------------|----------------|------------|-------------|
-| Between | SSB            | $g$                | SSB / DRB | MSB / MSW |
-| Within  | SSW            | $n - g$            | SSW / DRW |             |
-| Total   | SST            | $n - 1$            |             |             |
+| Between | SSB            | $g - 1$            | SSB / DFB | MSB / MSW |
+| Within  | SSW            | $N - g$            | SSW / DFW |             |
+| Total   | SST            | $N - 1$            |             |             |
 
-We reject the null (means equal) when the $F$ statistic is large. This occurs when the variation between groups is large compared to the variation within groups. Under the null hypothesis, the distribution of the test statistic is $F$ with degrees of freedom $g$ and $n - g$.
+We reject the null (equal means) when the $F$ statistic is large. This occurs when the variation between groups is large compared to the variation within groups. Under the null hypothesis, the distribution of the test statistic is $F$ with degrees of freedom $g - 1$ and $N - g$.
 
 ```{r, echo = FALSE}
 library(broom)
@@ -304,7 +307,7 @@ The left panel shows the three normal distributions we are sampling from. The ti
 
 Here the sample means vary a lot around the overall sample mean, which is the solid grey line on the right panel. Within the groups there is variability, but it is still obvious that the sample means are very different.
 
-As a result, we we obtain a large test statistic, thus small p-value. 
+As a result, we we obtain a *large* test statistic, thus *small* p-value. 
 
 - $F = `r p1$f`$
 - $\text{p-value} = `r p1$p`$
@@ -317,9 +320,9 @@ par(mfrow = c(1, 2))
 p2 = plot_anova(n = 20, mu_a =  0, mu_b = 0, mu_c = 0, sigma = 1)
 ```
 
-Here the sample means vary only a tiny bit around the overall sample mean Within the groups there is variability, this time much larger than the variability of the sample means.
+Here the sample means vary only a tiny bit around the overall sample mean. Within the groups there is variability, this time much larger than the variability of the sample means.
 
-As a result, we we obtain a small test statistic, thus large p-value. 
+As a result, we we obtain a *small* test statistic, thus *large* p-value. 
 
 - $F = `r p2$f`$
 - $\text{p-value} = `r p2$p`$
@@ -337,7 +340,7 @@ p3 = plot_anova(n = 20, mu_a = -1, mu_b = 0, mu_c = 1, sigma = 1)
 - $F = `r p3$f`$
 - $\text{p-value} = `r p3$p`$
 
-Above, there isn't obvious separation between the groups like the first example, but it is still obvious the means are different. Below, there is more noise. Visually it is somewhat hard to tell, but the test suggests a difference of means.
+Above, there isn't obvious separation between the groups like the first example, but it is still obvious the means are different. Below, there is more noise. Visually it is somewhat hard to tell, but the test still suggests a difference of means. (At an $\alpha$ 05 0.05.)
 
 - $\mu_A = -1, \mu_B = 0, \mu_C = 1, \sigma = 2$
 - $n_i = 20$ for each group.
@@ -351,7 +354,7 @@ p4 = plot_anova(n = 20, mu_a = -1, mu_b = 0, mu_c = 1, sigma = 2)
 - $F = `r p4$f`$
 - $\text{p-value} = `r p4$p`$
 
-Let's consider an example with real data. We'll use the `coagulation` dataset from the `faraway` library. Here four different diets (`A`, `B`, `C`, `D`) were administered to a random sample of 24 animals. The subjects were randomly assigned to one of the four diets. For each, the their blood coagulation time was measured in seconds.
+Let's consider an example with real data. We'll use the `coagulation` dataset from the `faraway` library. Here four different diets (`A`, `B`, `C`, `D`) were administered to a random sample of 24 animals. The subjects were randomly assigned to one of the four diets. For each, their blood coagulation time was measured in seconds.
 
 Here we would like to test
 
@@ -406,7 +409,7 @@ is.factor(good$group) # 1, 2, and 3 are labels.
 
 - TODO: increase num_sims to 10000
 
-Here we verify the distribution of the test statistic under the null hypothesis. We simulate from the null model (equal variance) to obtain an empirical distribution of the $F$ statistic, and compare it to the expected distribution.
+Here we verify the distribution of the test statistic under the null hypothesis. We simulate from a null model (equal variance) to obtain an empirical distribution of the $F$ statistic. We add the curve for the expected distribution.
 
 ```{r}
 library(broom)
@@ -456,13 +459,13 @@ That is, for a true difference of means that we deem interesting, we want the te
 
 A number of things can affect the power of a test:
 
-- Effect size. It is easier to detect larger effects.
-- Noise. The less noise, the test will more likely reject.
-- Significance level $\alpha$. Lower significance level makes rejecting more difficult.
-- Sample size. Large samples means easier to detect differences.
-- Balanced design. An equal number of observations per group leads to higher power.
+- **Effect size**. It is easier to detect larger effects.
+- **Noise level** $\sigma$. The less noise, the easier it is to detect signal (effect). We don't have much ability to control this, except maybe to measure more accurately.
+- **Significance level** $\alpha$. Lower significance level makes rejecting more difficult. (But also allows for less false positives.)
+- **Sample size**. Large samples means easier to detect effects.
+- **Balanced design**. An equal number of observations per group leads to higher power.
 
-The following simulations look at the effect of $\alpha$, effect size, and noise level on the power of an ANOVA $F$-test. Homework will look into sample size and balance.
+The following simulations look at the effect of significance level, effect size, and noise level on the power of an ANOVA $F$-test. Homework will look into sample size and balance.
 
 ```{r}
 p_vals = replicate(n = 10, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
@@ -487,7 +490,7 @@ mean(p_vals < 0.01)
 
 ## Post Hoc Testing
 
-Suppose we reject the null hypothesis from the ANOVA test for equal means. That tells us that the means are different, but which means? The obvious strategy is to test all possible comparisons of two means. We can do this easily in `R`.
+Suppose we reject the null hypothesis from the ANOVA test for equal means. That tells us that the means are different. But which means? All of them? Some of them? The obvious strategy is to test all possible comparisons of two means. We can do this easily in `R`.
 
 ```{r}
 with(coagulation, pairwise.t.test(coag, diet, p.adj = "none"))
@@ -520,9 +523,14 @@ We can simulate the 100 test scenario to illustrate this point.
 
 ```{r}
 get_p_val = function() {
-  x = rnorm(20)
+  
+  # create data for two groups, equal mean
+  y = rnorm(20, mean = 0, sd = 1)
   g = c(rep("A", 10), rep("B", 10))
-  glance(t.test(x ~ g))$p.value
+  
+  # p-value of t-test when null is true
+  glance(t.test(y ~ g, var.equal = TRUE))$p.value
+  
 }
 
 set.seed(1337)
@@ -534,7 +542,7 @@ mean(replicate(10, any(replicate(100, get_p_val()) < 0.05)))
 
 # FWER with 100 tests
 # desired rate = 0.05
-# bonf adjustment
+# bonferroni adjustment
 mean(replicate(10, any(p.adjust(replicate(100, get_p_val()), "bonferroni") < 0.05)))
 ```
 
@@ -554,7 +562,7 @@ Also, nicely, we can easily produce a plot of these confidence intervals.
 plot(TukeyHSD(coag_aov, conf.level = 0.95))
 ```
 
-The creator of this method, [John Tukey](https://en.wikipedia.org/wiki/John_Tukey), is an important figure in the history of data science. He essentially [predicted the rise of data science over 50 years ago](https://projecteuclid.org/euclid.aoms/1177704711). For some retrospective thoughts on those 50 years, see [this paper from David Donoho](http://courses.csail.mit.edu/18.337/2015/docs/50YearsDataScience.pdf)
+The creator of this method, [John Tukey](https://en.wikipedia.org/wiki/John_Tukey), is an important figure in the history of data science. He essentially [predicted the rise of data science over 50 years ago](https://projecteuclid.org/euclid.aoms/1177704711). For some retrospective thoughts on those 50 years, see [this paper from David Donoho](http://courses.csail.mit.edu/18.337/2015/docs/50YearsDataScience.pdf).
 
 ## Two-Way ANOVA
 
@@ -566,7 +574,7 @@ y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}.
 
 where $\epsilon_{ijk}$ are $N(0, \sigma^2)$ random variables.
 
-We have constraints
+We add constraints
 
 \[
 \sum \alpha_i = 0 \quad \quad \sum \beta_j = 0.
@@ -589,13 +597,13 @@ Here,
 
 Here, we can think of a group as a combination of a level from each of the factors. So for example, one group will receive level $2$ of factor $A$ and level $3$ of factor $B$. The number of replicates is the number of subjects in each group. Here $y_{135}$ would be the measurement for the fifth member (replicate) of the group for level $1$ of factor $A$ and level $3$ of factor $B$.
 
-We call this setup an $I \times J$ **factorial design** with $K$ replicates.
+We call this setup an $I \times J$ **factorial design** with $K$ replicates. (Our current notation only allows for equal replicates in each group. It isn't difficult to allow for different replicates for different groups, but we'll proceed using equal replicates per group, which if possible, is desirable.)
 
 - $\alpha_i$ measures the effect of level $i$ of factor $A$. We call these the **main effects** of factor $A$.
-- $\alpha_j$ measures the effect of level $j$ of factor $B$. We call these the **main effects** of factor $B$.
+- $\beta_j$ measures the effect of level $j$ of factor $B$. We call these the **main effects** of factor $B$.
 - $(\alpha \beta)_{ij}$ is a single parameter. We use $\alpha \beta$ to note that this parameter measures the **interaction** between the two main effects.
 
-Under this setup, there are a number of models that we can compare. Consider a $2 \times 2$ factorial design. The following tables shows the means for each of the possible groups under each model.
+Under this setup, there are a number of models that we can compare. Consider a $2 \times 2$ factorial design. The following tables show the means for each of the possible groups under each model.
 
 **Interaction** Model: $y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}$
 
@@ -632,15 +640,18 @@ Under this setup, there are a number of models that we can compare. Consider a $
 | **Factor A, Level 1** | $\mu$ | $\mu$ |
 | **Factor A, Level 2** | $\mu$ | $\mu$ |
 
-- TODO: mention no replication, interaction issue
-- TODO: hierarchy
-- TODO: the important thing is the difference between interaction and additive models. same number of means, but slight difference.
+The question then, is which of these models should we use if we have two factors? The most important question to consider is whether or not we should model the **interaction**. Is the effect of Factor A the *same* for all levels of Factor B? In the additive model, yes. In the interaction model, no. Both models woud use a different mean for each group, but in a very specific way in both cases.
 
-- TODO: don't fully write traditional ANOVA table. explain what is being compared. send to reference.
+Let's discuss these comparisons by looking at some examples. We'll first look at the `rats` data from the `faraway` package. There are two factors here: `poison` and `treat`. We use the `levels()` function to extract the levels of a factor variable.
 
-- TODO: which rows do which test
-- TODO: which model is chosen?
-- TODO: correct if int is not significant
+```{r}
+levels(rats$poison)
+levels(rats$treat)
+```
+
+Here, 48 rats were randomly assignmed both one of three poisons and one of four possible treatments. The experimenters then measures their survival time in tens of hours. A total of 12 groups, each with 4 replicates.
+
+Before running any tests, we should first look at the data. We will create **interaction plots**, which will help us visualize the effect of one factor, as we move through the levels of another factor.
 
 ```{r, fig.height = 5, fig.width = 15}
 par(mfrow = c(1, 2))
@@ -648,9 +659,10 @@ with(rats, interaction.plot(poison, treat, time, lwd = 2, col = 1:4))
 with(rats, interaction.plot(treat, poison, time, lwd = 2, col = 1:3))
 ```
 
-```{r}
-summary(aov(time ~ poison * treat, data = rats))
-```
+- TODO: parallel lines means no interaction. same effect
+- TODO: what indicates interaction? is it significant?
+
+Let's fit each of the possible models, then investigate their estimates for each of the group means.
 
 ```{r}
 rats_int   = aov(time ~ poison * treat, data = rats) # interaction model
@@ -660,11 +672,15 @@ rats_treat = aov(time ~ treat, data = rats)          # single factor model
 rats_null  = aov(time ~ 1, data = rats)              # null model
 ```
 
+To get the estimates, we'll create a table which we will predict on. 
+
 ```{r}
 table = expand.grid(poison = unique(rats$poison), treat = unique(rats$treat))
 table
 matrix(paste0(table$poison, "-", table$treat) , 4, 3, byrow = TRUE)
 ```
+
+Since we'll be repeating ourselves a number of times, we write a function to perform the prediction. Some housekeeping is done to keep the estimates in order, and provide row and column names. Above, we've shown where each of the estimates will be placed in the resulting matrix.
 
 ```{r}
 get_est_means = function(model) {
@@ -675,13 +691,19 @@ get_est_means = function(model) {
 }
 ```
 
+First, we obtain the estimates from the **interaction** model. Note that each cell has a different value. 
+
 ```{r}
 knitr::kable(get_est_means(rats_int))
 ```
 
+Next, we obtain the estimates from the **additive** model. Again, each cell has a different value. We also see that these estimates are somewhat close to those from the interaction model.
+
 ```{r}
 knitr::kable(get_est_means(rats_add))
 ```
+
+To understand the difference, let's consider the effect of the treatments.
 
 ```{r}
 additive_means = get_est_means(rats_add)
@@ -705,10 +727,82 @@ knitr::kable(get_est_means(rats_treat))
 knitr::kable(get_est_means(rats_null))
 ```
 
+
+
+
+
+
+
+
+
+- TODO: hierarchy
+
+| Source         | Sum of Squares | Degrees of Freedom | Mean Square   | $F$          |
+|-----------|----------|----------------|-----------|---------|
+| Factor A       | SSA            | $I -1$             | SSA / DFA   | MSA / MSE  |
+| Factor B       | SSB            | $J -1$             | SSB / DFB   | MSB / MSE  |
+| AB Interaction | SSAB           | $(I -1)(J -1)$     | SSAB / DFAB | MSAB / MSE |
+| Error          | SSE            | $IJ(K - 1)$        | SSE / DFE   |              |
+| Total          | SST            | $IJK - 1$          |               |              |
+
+The row for **AB Interaction** tests:
+
+\[
+H_0: \text{ All }(\alpha\beta)_{ij} = 0. \quad \text{vs} \quad H_1: \text{ Not all } (\alpha\beta)_{ij} \text{ are } 0.
+\]
+
+- Null Model: $y_{ijk} = \mu + \alpha_i + \beta_j + \epsilon_{ijk}.$ (Additive Model.)
+- Alternative Model: $y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}.$ (Interaction Model.)
+
+We reject the null when the $F$ statistic is large. Under the null hypothesis, the distribution of the test statistic is $F$ with degrees of freedom $(I -1)(J -1)$ and $IJ(K - 1)$.
+
+The row for **Factor B** tests:
+
+\[
+H_0: \text{ All }\beta_{j} = 0. \quad \text{vs} \quad H_1: \text{ Not all } \beta_{j} \text{ are } 0.
+\]
+
+- Null Model: $y_{ijk} = \mu + \alpha_i + \epsilon_{ijk}.$ (Only Factor A Model.)
+- Alternative Model: $y_{ijk} = \mu + \alpha_i + \beta_j + \epsilon_{ijk}.$ (Additive Model.)
+
+We reject the null when the $F$ statistic is large. Under the null hypothesis, the distribution of the test statistic is $F$ with degrees of freedom $J - 1$ and $IJ(K - 1)$.
+
+The row for **Factor A** tests:
+
+\[
+H_0: \text{ All }\alpha_{i} = 0. \quad \text{vs} \quad H_1: \text{ Not all } \alpha_{i} \text{ are } 0.
+\]
+
+- Null Model: $y_{ijk} = \mu + \beta_j + \epsilon_{ijk}.$ (Only Factor B Model.)
+- Alternative Model: $y_{ijk} = \mu + \alpha_i + \beta_j + \epsilon_{ijk}.$ (Additive Model.)
+
+We reject the null when the $F$ statistic is large. Under the null hypothesis, the distribution of the test statistic is $F$ with degrees of freedom $I - 1$ and $IJ(K - 1)$.
+
+These tests should be performed according to the model **hierarchy**.
+
+- TODO: update reference
+
+![Model Hierarchy](../images/hierarchy.png)
+
+```{r}
+summary(aov(time ~ poison * treat, data = rats))
+```
+
+- TODO: mention no replication, interaction issue
+- TODO: correct if int is not significant?
+
+- TODO: here we pick the full additive model
+
+```{r}
+TukeyHSD(aov(time ~ poison + treat, data = rats))
+```
+
+
+
 ```{r, echo = FALSE, eval = FALSE}
 # future hw qusetions
+# rate of dying = 1 / time
 # change anything? does result change?
-# rate of dying = 1/ time
 #plot(aov(1 / time ~ poison * treat, data = rats))
 #summary(aov(1 / time ~ poison * treat, data = rats))
 ```
@@ -721,8 +815,18 @@ with(warpbreaks, interaction.plot(wool, tension, breaks, lwd = 2, col = 2:4))
 with(warpbreaks, interaction.plot(tension, wool, breaks, lwd = 2, col = 2:3))
 ```
 
+```{r}
+summary(aov(breaks ~ wool * tension, data = warpbreaks))
+```
+
 
 ```{r, echo = FALSE, eval = FALSE}
 two-way calculation details in an appendix
+```
+
+- TODO: here we pick the interaction model
+
+```{r}
+TukeyHSD(aov(breaks ~ wool * tension, data = warpbreaks))
 ```
 
