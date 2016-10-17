@@ -440,7 +440,7 @@ sim_anova = function(n = 10, mu_a = 0, mu_b = 0, mu_c = 0, mu_d = 0, sigma = 1, 
   
 }
 
-f_stats = replicate(n = 10000, sim_anova(stat = TRUE))
+f_stats = replicate(n = 5000, sim_anova(stat = TRUE))
 hist(f_stats, breaks = 100, prob = TRUE, border = "dodgerblue", main = "Empirical Distribution of F")
 curve(df(x, df1 = 4 - 1, df2 = 40 - 4), col = "darkorange", add = TRUE, lwd = 2)
 ```
