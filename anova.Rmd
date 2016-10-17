@@ -123,6 +123,10 @@ With a big enough sample size, we could make an effect size of say, four minutes
 boxplot(sleep ~ group, data = melatonin, col = 5:6)
 ```
 
+```{r, echo = FALSE, eval = FALSE}
+other parametarization, explain identify
+```
+
 ## One-Way ANOVA
 
 What if there are more than two groups? Consider the model
@@ -340,7 +344,7 @@ p3 = plot_anova(n = 20, mu_a = -1, mu_b = 0, mu_c = 1, sigma = 1)
 - $F = `r p3$f`$
 - $\text{p-value} = `r p3$p`$
 
-Above, there isn't obvious separation between the groups like the first example, but it is still obvious the means are different. Below, there is more noise. Visually it is somewhat hard to tell, but the test still suggests a difference of means. (At an $\alpha$ 05 0.05.)
+Above, there isn't obvious separation between the groups like the first example, but it is still obvious the means are different. Below, there is more noise. Visually it is somewhat hard to tell, but the test still suggests a difference of means. (At an $\alpha$ of 0.05.)
 
 - $\mu_A = -1, \mu_B = 0, \mu_C = 1, \sigma = 2$
 - $n_i = 20$ for each group.
@@ -354,7 +358,7 @@ p4 = plot_anova(n = 20, mu_a = -1, mu_b = 0, mu_c = 1, sigma = 2)
 - $F = `r p4$f`$
 - $\text{p-value} = `r p4$p`$
 
-Let's consider an example with real data. We'll use the `coagulation` dataset from the `faraway` library. Here four different diets (`A`, `B`, `C`, `D`) were administered to a random sample of 24 animals. The subjects were randomly assigned to one of the four diets. For each, their blood coagulation time was measured in seconds.
+Let's consider an example with real data. We'll use the `coagulation` dataset from the `faraway` package. Here four different diets (`A`, `B`, `C`, `D`) were administered to a random sample of 24 animals. The subjects were randomly assigned to one of the four diets. For each, their blood coagulation time was measured in seconds.
 
 Here we would like to test
 
@@ -378,7 +382,7 @@ coag_aov
 summary(coag_aov)
 ```
 
-Were we to run this experiment, we would have pre-specified a significance level. However, notice that the p-value of this test is incredible low, so using any reasonable significance level we would reject the null hypothesis. Thus we believe the diets had an effect on blood coagulation time.
+Were we to run this experiment, we would have pre-specified a significance level. However, notice that the p-value of this test is incredibly low, so using any reasonable significance level we would reject the null hypothesis. Thus we believe the diets had an effect on blood coagulation time.
 
 ```{r}
 diets = data.frame(diet = unique(coagulation$diet))
@@ -406,8 +410,6 @@ is.factor(good$group) # 1, 2, and 3 are labels.
 ```
 
 ### Some Simulation
-
-- TODO: increase num_sims to 10000
 
 Here we verify the distribution of the test statistic under the null hypothesis. We simulate from a null model (equal variance) to obtain an empirical distribution of the $F$ statistic. We add the curve for the expected distribution.
 
@@ -438,12 +440,12 @@ sim_anova = function(n = 10, mu_a = 0, mu_b = 0, mu_c = 0, mu_d = 0, sigma = 1, 
   
 }
 
-f_stats = replicate(n = 100, sim_anova(stat = TRUE))
+f_stats = replicate(n = 10000, sim_anova(stat = TRUE))
 hist(f_stats, breaks = 100, prob = TRUE, border = "dodgerblue", main = "Empirical Distribution of F")
 curve(df(x, df1 = 4 - 1, df2 = 40 - 4), col = "darkorange", add = TRUE, lwd = 2)
 ```
 
-- TODO: increase n to 1000
+### Power
 
 Now that we’re performing experiments, getting more data means finding more test subjects, running more lab tests, etc. In other words, it will cost more time and money.
 
@@ -468,21 +470,21 @@ A number of things can affect the power of a test:
 The following simulations look at the effect of significance level, effect size, and noise level on the power of an ANOVA $F$-test. Homework will look into sample size and balance.
 
 ```{r}
-p_vals = replicate(n = 10, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
+p_vals = replicate(n = 1000, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
                                      sigma = 1.5, stat = FALSE))
 mean(p_vals < 0.05)
 mean(p_vals < 0.01)
 ```
 
 ```{r}
-p_vals = replicate(n = 10, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
+p_vals = replicate(n = 1000, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
                                      sigma = 2.0, stat = FALSE))
 mean(p_vals < 0.05)
 mean(p_vals < 0.01)
 ```
 
 ```{r}
-p_vals = replicate(n = 10, sim_anova(mu_a = -2, mu_b = 0, mu_c = 0, mu_d = 2, 
+p_vals = replicate(n = 1000, sim_anova(mu_a = -2, mu_b = 0, mu_c = 0, mu_d = 2, 
                                      sigma = 2.0, stat = FALSE))
 mean(p_vals < 0.05)
 mean(p_vals < 0.01)
@@ -519,8 +521,6 @@ We see that these p-values are much higher than the unadjusted p-values, thus, w
 
 We can simulate the 100 test scenario to illustrate this point.
 
-- TODO; increase replication to 1000
-
 ```{r}
 get_p_val = function() {
   
@@ -538,12 +538,12 @@ set.seed(1337)
 # FWER with 100 tests
 # desired rate = 0.05
 # no adjustment
-mean(replicate(10, any(replicate(100, get_p_val()) < 0.05)))
+mean(replicate(1000, any(replicate(100, get_p_val()) < 0.05)))
 
 # FWER with 100 tests
 # desired rate = 0.05
 # bonferroni adjustment
-mean(replicate(10, any(p.adjust(replicate(100, get_p_val()), "bonferroni") < 0.05)))
+mean(replicate(1000, any(p.adjust(replicate(100, get_p_val()), "bonferroni") < 0.05)))
 ```
 
 For the specific case of testing all two-way mean differences after an ANOVA test, there are [a number of potential methods](https://en.wikipedia.org/wiki/Post_hoc_analysis) for making an adjustment of this type. The pros and cons of the potential methods are beyond the scope of this course. We choose a method for its ease of use, and to a lesser extent, its developer.
@@ -640,7 +640,7 @@ Under this setup, there are a number of models that we can compare. Consider a $
 | **Factor A, Level 1** | $\mu$ | $\mu$ |
 | **Factor A, Level 2** | $\mu$ | $\mu$ |
 
-The question then, is which of these models should we use if we have two factors? The most important question to consider is whether or not we should model the **interaction**. Is the effect of Factor A the *same* for all levels of Factor B? In the additive model, yes. In the interaction model, no. Both models woud use a different mean for each group, but in a very specific way in both cases.
+The question then, is which of these models should we use if we have two factors? The most important question to consider is whether or not we should model the **interaction**. Is the effect of Factor A the *same* for all levels of Factor B? In the additive model, yes. In the interaction model, no. Both models would use a different mean for each group, but in a very specific way in both cases.
 
 Let's discuss these comparisons by looking at some examples. We'll first look at the `rats` data from the `faraway` package. There are two factors here: `poison` and `treat`. We use the `levels()` function to extract the levels of a factor variable.
 
@@ -649,7 +649,7 @@ levels(rats$poison)
 levels(rats$treat)
 ```
 
-Here, 48 rats were randomly assignmed both one of three poisons and one of four possible treatments. The experimenters then measures their survival time in tens of hours. A total of 12 groups, each with 4 replicates.
+Here, 48 rats were randomly assigned both one of three poisons and one of four possible treatments. The experimenters then measures their survival time in tens of hours. A total of 12 groups, each with 4 replicates.
 
 Before running any tests, we should first look at the data. We will create **interaction plots**, which will help us visualize the effect of one factor, as we move through the levels of another factor.
 
@@ -659,8 +659,9 @@ with(rats, interaction.plot(poison, treat, time, lwd = 2, col = 1:4))
 with(rats, interaction.plot(treat, poison, time, lwd = 2, col = 1:3))
 ```
 
-- TODO: parallel lines means no interaction. same effect
-- TODO: what indicates interaction? is it significant?
+If there is not interaction, thus an additive model, we would expect to see parallel lines. That would mean, when we change the level of one factor, there can be an effect on the response. However, the difference between the levels of the other factor should still be the same.
+
+The obvious indication of interaction would be lines that cross while heading in different directions. Here we don't see that, but the lines aren't strictly parallel, and there is some overlap on the right panel. However, is this interaction effect significant? 
 
 Let's fit each of the possible models, then investigate their estimates for each of the group means.
 
@@ -707,13 +708,17 @@ To understand the difference, let's consider the effect of the treatments.
 
 ```{r}
 additive_means = get_est_means(rats_add)
-additive_means[1,] - additive_means[2,]
+additive_means["A",] - additive_means["B",]
 ```
 
 ```{r}
 interaction_means = get_est_means(rats_int)
-interaction_means[1,] - interaction_means[2,]
+interaction_means["A",] - interaction_means["B",]
 ```
+
+This is the key difference between the interaction and additive models. The difference between the effect of treatments `A` and `B` is the **same** for each poison in the additive model. They are **different** in the interaction model.
+
+The remaining three models are much simpler, having either only row or only column effects. Or no effects in the case of the null model.
 
 ```{r}
 knitr::kable(get_est_means(rats_pois))
@@ -727,15 +732,7 @@ knitr::kable(get_est_means(rats_treat))
 knitr::kable(get_est_means(rats_null))
 ```
 
-
-
-
-
-
-
-
-
-- TODO: hierarchy
+To perform the needed tests, we will need to create another ANOVA table. (We'll skip the details of the sums of squares calculations and simply let `R` take care of them.)
 
 | Source         | Sum of Squares | Degrees of Freedom | Mean Square   | $F$          |
 |-----------|----------|----------------|-----------|---------|
@@ -778,26 +775,27 @@ H_0: \text{ All }\alpha_{i} = 0. \quad \text{vs} \quad H_1: \text{ Not all } \al
 
 We reject the null when the $F$ statistic is large. Under the null hypothesis, the distribution of the test statistic is $F$ with degrees of freedom $I - 1$ and $IJ(K - 1)$.
 
-These tests should be performed according to the model **hierarchy**.
+These tests should be performed according to the model **hierarchy**. First consider the test of interaction. If it is significant, we select the interaction model and perform no further testing. If interaction is not significant, we then consider the necessity of the individual factors of the additive model.
 
-- TODO: update reference
-
-![Model Hierarchy](../images/hierarchy.png)
+![Model Hierarchy](images/hierarchy.png)
 
 ```{r}
 summary(aov(time ~ poison * treat, data = rats))
 ```
 
+Using a significance level of $\alpha = 0.05$, we see that the interaction is not significant. Within the additive model, both factors are significant, so we select the additive model.
+
+```{r, echo = FALSE, eval = FALSE}
 - TODO: mention no replication, interaction issue
 - TODO: correct if int is not significant?
-
 - TODO: here we pick the full additive model
+```
+
+Within the additive model, we could do further testing about the main effects.
 
 ```{r}
 TukeyHSD(aov(time ~ poison + treat, data = rats))
 ```
-
-
 
 ```{r, echo = FALSE, eval = FALSE}
 # future hw qusetions
@@ -807,7 +805,7 @@ TukeyHSD(aov(time ~ poison + treat, data = rats))
 #summary(aov(1 / time ~ poison * treat, data = rats))
 ```
 
-- TODO: example with obvious interaction
+For an example **with** interaction, we investigate the `warpbreaks` dataset, a default dataset in `R`.
 
 ```{r, fig.height = 5, fig.width = 15}
 par(mfrow = c(1, 2))
@@ -815,18 +813,23 @@ with(warpbreaks, interaction.plot(wool, tension, breaks, lwd = 2, col = 2:4))
 with(warpbreaks, interaction.plot(tension, wool, breaks, lwd = 2, col = 2:3))
 ```
 
+Either plot makes it rather clear that the `wool` and `tensions` factors interact.
+
 ```{r}
 summary(aov(breaks ~ wool * tension, data = warpbreaks))
 ```
 
+Using an $\alpha$ of $0.05$ the ANOVA test finds that the interaction is significant, so we use the interaction model here.
 
 ```{r, echo = FALSE, eval = FALSE}
 two-way calculation details in an appendix
 ```
 
-- TODO: here we pick the interaction model
-
-```{r}
+```{r, echo = FALSE, eval = FALSE}
 TukeyHSD(aov(breaks ~ wool * tension, data = warpbreaks))
+```
+
+```{r, echo = FALSE, eval = FALSE}
+George Casella - Statistical Design
 ```
 
