@@ -264,16 +264,11 @@ plot_anova = function(n = 20, mu_a = 0, mu_b = 0, mu_c = 0, sigma = 1) {
              pch = 20, col  = c("dodgerblue", "darkorange", "black"))
   
   abline(h = mean(response), lwd = 3, lty = 1, col = "darkgrey")
-  
-  #abline(h = mean(response[group == "A"]), lwd = 2, lty = 2, col = "dodgerblue")
-  #abline(h = mean(response[group == "B"]), lwd = 2, lty = 2, col = "darkorange")
-  #abline(h = mean(response[group == "C"]), lwd = 2, lty = 2, col = "black")
-  
+
   segments(x0 = 0.6, x1 = 1.4, y0 = mean(response[group == "A"]), y1 = mean(response[group == "A"]), lwd = 2, lty = 2, col = "dodgerblue")
   segments(x0 = 1.6, x1 = 2.4, y0 = mean(response[group == "B"]), y1 = mean(response[group == "B"]), lwd = 2, lty = 2, col = "darkorange")
   segments(x0 = 2.6, x1 = 3.4, y0 = mean(response[group == "C"]), y1 = mean(response[group == "C"]), lwd = 2, lty = 2, col = "black")
 
-  
   aov_results = aov(response ~ group)
   f_stat = glance(aov_results)$stat
   p_val  = glance(aov_results)$p.val
@@ -289,6 +284,7 @@ Do with ggplot2 and custom boxplots with show min, sd, mean, sd, max
 
 ```{r, echo = FALSE, eval = FALSE}
 library(manipulate)
+par(mfrow = c(1, 2))
 manipulate(plot_anova(n, mu_a, mu_b, mu_c, sigma), 
            n = slider(2, 50, 20), 
            mu_a = slider(-10, 10, 0), 
