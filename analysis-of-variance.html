@@ -26,7 +26,7 @@
 <meta name="author" content="David Dalpiaz">
 
   
-<meta name="date" content="2016-10-22">
+<meta name="date" content="2016-10-23">
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -940,8 +940,8 @@ rats_pois  =<span class="st"> </span><span class="kw">aov</span>(time ~<span cla
 rats_treat =<span class="st"> </span><span class="kw">aov</span>(time ~<span class="st"> </span>treat, <span class="dt">data =</span> rats)          <span class="co"># single factor model</span>
 rats_null  =<span class="st"> </span><span class="kw">aov</span>(time ~<span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> rats)              <span class="co"># null model</span></code></pre></div>
 <p>To get the estimates, we’ll create a table which we will predict on.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">table =<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">poison =</span> <span class="kw">unique</span>(rats$poison), <span class="dt">treat =</span> <span class="kw">unique</span>(rats$treat))
-table</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rats_table =<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">poison =</span> <span class="kw">unique</span>(rats$poison), <span class="dt">treat =</span> <span class="kw">unique</span>(rats$treat))
+rats_table</code></pre></div>
 <pre><code>##    poison treat
 ## 1       I     A
 ## 2      II     A
@@ -955,21 +955,21 @@ table</code></pre></div>
 ## 10      I     D
 ## 11     II     D
 ## 12    III     D</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">matrix</span>(<span class="kw">paste0</span>(table$poison, <span class="st">&quot;-&quot;</span>, table$treat) , <span class="dv">4</span>, <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">matrix</span>(<span class="kw">paste0</span>(rats_table$poison, <span class="st">&quot;-&quot;</span>, rats_table$treat) , <span class="dv">4</span>, <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>##      [,1]  [,2]   [,3]   
 ## [1,] &quot;I-A&quot; &quot;II-A&quot; &quot;III-A&quot;
 ## [2,] &quot;I-B&quot; &quot;II-B&quot; &quot;III-B&quot;
 ## [3,] &quot;I-C&quot; &quot;II-C&quot; &quot;III-C&quot;
 ## [4,] &quot;I-D&quot; &quot;II-D&quot; &quot;III-D&quot;</code></pre>
 <p>Since we’ll be repeating ourselves a number of times, we write a function to perform the prediction. Some housekeeping is done to keep the estimates in order, and provide row and column names. Above, we’ve shown where each of the estimates will be placed in the resulting matrix.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_est_means =<span class="st"> </span>function(model) {
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_est_means =<span class="st"> </span>function(model, table) {
   mat =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">predict</span>(model, table), <span class="dt">nrow =</span> <span class="dv">4</span>, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)
   <span class="kw">colnames</span>(mat) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;II&quot;</span>, <span class="st">&quot;III&quot;</span>)
   <span class="kw">rownames</span>(mat) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;D&quot;</span>)
   mat
 }</code></pre></div>
 <p>First, we obtain the estimates from the <strong>interaction</strong> model. Note that each cell has a different value.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr::<span class="kw">kable</span>(<span class="kw">get_est_means</span>(rats_int))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr::<span class="kw">kable</span>(<span class="kw">get_est_means</span>(<span class="dt">model =</span> rats_int, <span class="dt">table =</span> rats_table))</code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1007,7 +1007,7 @@ table</code></pre></div>
 </tbody>
 </table>
 <p>Next, we obtain the estimates from the <strong>additive</strong> model. Again, each cell has a different value. We also see that these estimates are somewhat close to those from the interaction model.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr::<span class="kw">kable</span>(<span class="kw">get_est_means</span>(rats_add))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr::<span class="kw">kable</span>(<span class="kw">get_est_means</span>(<span class="dt">model =</span> rats_add, <span class="dt">table =</span> rats_table))</code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1045,17 +1045,17 @@ table</code></pre></div>
 </tbody>
 </table>
 <p>To understand the difference, let’s consider the effect of the treatments.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">additive_means =<span class="st"> </span><span class="kw">get_est_means</span>(rats_add)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">additive_means =<span class="st"> </span><span class="kw">get_est_means</span>(<span class="dt">model =</span> rats_add, <span class="dt">table =</span> rats_table)
 additive_means[<span class="st">&quot;A&quot;</span>,] -<span class="st"> </span>additive_means[<span class="st">&quot;B&quot;</span>,]</code></pre></div>
 <pre><code>##       I      II     III 
 ## -0.3625 -0.3625 -0.3625</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">interaction_means =<span class="st"> </span><span class="kw">get_est_means</span>(rats_int)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">interaction_means =<span class="st"> </span><span class="kw">get_est_means</span>(<span class="dt">model =</span> rats_int, <span class="dt">table =</span> rats_table)
 interaction_means[<span class="st">&quot;A&quot;</span>,] -<span class="st"> </span>interaction_means[<span class="st">&quot;B&quot;</span>,]</code></pre></div>
 <pre><code>##       I      II     III 
 ## -0.4675 -0.4950 -0.1250</code></pre>
 <p>This is the key difference between the interaction and additive models. The difference between the effect of treatments <code>A</code> and <code>B</code> is the <strong>same</strong> for each poison in the additive model. They are <strong>different</strong> in the interaction model.</p>
 <p>The remaining three models are much simpler, having either only row or only column effects. Or no effects in the case of the null model.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr::<span class="kw">kable</span>(<span class="kw">get_est_means</span>(rats_pois))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr::<span class="kw">kable</span>(<span class="kw">get_est_means</span>(<span class="dt">model =</span> rats_pois, <span class="dt">table =</span> rats_table))</code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1092,7 +1092,7 @@ interaction_means[<span class="st">&quot;A&quot;</span>,] -<span class="st"> </s
 </tr>
 </tbody>
 </table>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr::<span class="kw">kable</span>(<span class="kw">get_est_means</span>(rats_treat))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr::<span class="kw">kable</span>(<span class="kw">get_est_means</span>(<span class="dt">model =</span> rats_treat, <span class="dt">table =</span> rats_table))</code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1129,7 +1129,7 @@ interaction_means[<span class="st">&quot;A&quot;</span>,] -<span class="st"> </s
 </tr>
 </tbody>
 </table>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr::<span class="kw">kable</span>(<span class="kw">get_est_means</span>(rats_null))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr::<span class="kw">kable</span>(<span class="kw">get_est_means</span>(<span class="dt">model =</span> rats_null, <span class="dt">table =</span> rats_table))</code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1288,7 +1288,7 @@ H_0: \text{ All }\alpha_{i} = 0. \quad \text{vs} \quad H_1: \text{ Not all } \al
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">with</span>(warpbreaks, <span class="kw">interaction.plot</span>(wool, tension, breaks, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">2</span>:<span class="dv">4</span>))
 <span class="kw">with</span>(warpbreaks, <span class="kw">interaction.plot</span>(tension, wool, breaks, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">2</span>:<span class="dv">3</span>))</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-570-1.png" width="1440" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-571-1.png" width="1440" /></p>
 <p>Either plot makes it rather clear that the <code>wool</code> and <code>tensions</code> factors interact.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">aov</span>(breaks ~<span class="st"> </span>wool *<span class="st"> </span>tension, <span class="dt">data =</span> warpbreaks))</code></pre></div>
 <pre><code>##              Df Sum Sq Mean Sq F value   Pr(&gt;F)    
