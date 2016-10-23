@@ -672,15 +672,15 @@ rats_null  = aov(time ~ 1, data = rats)              # null model
 To get the estimates, we'll create a table which we will predict on. 
 
 ```{r}
-table = expand.grid(poison = unique(rats$poison), treat = unique(rats$treat))
-table
-matrix(paste0(table$poison, "-", table$treat) , 4, 3, byrow = TRUE)
+rats_table = expand.grid(poison = unique(rats$poison), treat = unique(rats$treat))
+rats_table
+matrix(paste0(rats_table$poison, "-", rats_table$treat) , 4, 3, byrow = TRUE)
 ```
 
 Since we'll be repeating ourselves a number of times, we write a function to perform the prediction. Some housekeeping is done to keep the estimates in order, and provide row and column names. Above, we've shown where each of the estimates will be placed in the resulting matrix.
 
 ```{r}
-get_est_means = function(model) {
+get_est_means = function(model, table) {
   mat = matrix(predict(model, table), nrow = 4, ncol = 3, byrow = TRUE)
   colnames(mat) = c("I", "II", "III")
   rownames(mat) = c("A", "B", "C", "D")
@@ -691,24 +691,28 @@ get_est_means = function(model) {
 First, we obtain the estimates from the **interaction** model. Note that each cell has a different value. 
 
 ```{r}
-knitr::kable(get_est_means(rats_int))
+knitr::kable(get_est_means(model = rats_int, table = rats_table))
+```
+
+```{r, echo = FALSE, eval = FALSE}
+model.tables(rats_int, type = "mean")
 ```
 
 Next, we obtain the estimates from the **additive** model. Again, each cell has a different value. We also see that these estimates are somewhat close to those from the interaction model.
 
 ```{r}
-knitr::kable(get_est_means(rats_add))
+knitr::kable(get_est_means(model = rats_add, table = rats_table))
 ```
 
 To understand the difference, let's consider the effect of the treatments.
 
 ```{r}
-additive_means = get_est_means(rats_add)
+additive_means = get_est_means(model = rats_add, table = rats_table)
 additive_means["A",] - additive_means["B",]
 ```
 
 ```{r}
-interaction_means = get_est_means(rats_int)
+interaction_means = get_est_means(model = rats_int, table = rats_table)
 interaction_means["A",] - interaction_means["B",]
 ```
 
@@ -717,15 +721,15 @@ This is the key difference between the interaction and additive models. The diff
 The remaining three models are much simpler, having either only row or only column effects. Or no effects in the case of the null model.
 
 ```{r}
-knitr::kable(get_est_means(rats_pois))
+knitr::kable(get_est_means(model = rats_pois, table = rats_table))
 ```
 
 ```{r}
-knitr::kable(get_est_means(rats_treat))
+knitr::kable(get_est_means(model = rats_treat, table = rats_table))
 ```
 
 ```{r}
-knitr::kable(get_est_means(rats_null))
+knitr::kable(get_est_means(model = rats_null, table = rats_table))
 ```
 
 To perform the needed tests, we will need to create another ANOVA table. (We'll skip the details of the sums of squares calculations and simply let `R` take care of them.)
