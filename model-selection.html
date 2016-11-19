@@ -8,7 +8,7 @@
   <title>Applied Statistics with R</title>
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="Applied Statistics with <code>R</code>">
-  <meta name="generator" content="bookdown 0.1.18 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.2.3 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -26,7 +26,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2016-11-04">
+<meta name="date" content="2016-11-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -318,7 +318,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>This suggests that we need a quality criteria that takes into account the size of the model, since our preference is for small models that still fit well. We are willing to sacrifice a small amount of goodness-of-fit for obtaining a smaller model. We will look at three criteria that do this explicitly: AIC, BIC and Adjusted <span class="math inline">\(R^2\)</span>. We will also look at one, Cross-Validated RMSE, which implicitly considers the size of the model.</p>
 <div id="akaike-information-criterion" class="section level3">
 <h3><span class="header-section-number">11.1.1</span> Akaike Information Criterion</h3>
-<p>The first criteria we will discuss is the Akaike Information Criterion, or AIC for short. (Note that, when <em>Aiaike</em> first introduced this metric, it was simply called <em>An</em> Information Criterion. The <em>A</em> has changed meaning over the years.)</p>
+<p>The first criteria we will discuss is the Akaike Information Criterion, or AIC for short. (Note that, when <em>Akaike</em> first introduced this metric, it was simply called <em>An</em> Information Criterion. The <em>A</em> has changed meaning over the years.)</p>
 <p>Recall, the maximized log-likelihood of a regression model can be written as</p>
 <p><span class="math display">\[
 \log L(\boldsymbol{\hat{\beta}}) = -\frac{n}{2}\log(2\pi) - \frac{n}{2}\log\left(\frac{RSS}{n}\right) - \frac{n}{2},
@@ -477,7 +477,7 @@ hipcenter_mod =<span class="st"> </span><span class="kw">lm</span>(hipcenter ~<s
 \sum_{k = 0}^{p - 1} {{p - 1} \choose {k}} = 2 ^ {p - 1} = 2 ^ 8 = 256
 \]</span></p>
 <p>possible models.</p>
-<p>If we had 10 or more predictors, we would already be considering over 100 models! For this reason, we often search through possible models in an intelligent way, bypassing some models that are unlikely to be considered good. We will consider three search procedures: backwards, forwards, and stepwise.</p>
+<p>If we had 10 or more predictors, we would already be considering over 1000 models! For this reason, we often search through possible models in an intelligent way, bypassing some models that are unlikely to be considered good. We will consider three search procedures: backwards, forwards, and stepwise.</p>
 <div id="backward-search" class="section level3">
 <h3><span class="header-section-number">11.2.1</span> Backward Search</h3>
 <p>Backward selection procedures start with all possible predictors in the model, then considers how deleting a single predictor will effect a chosen metric. Let’s try this on the <code>seatpos</code> data. We will use the <code>step()</code> function in <code>R</code> which by default uses AIC as its metric of choice.</p>
@@ -1125,6 +1125,7 @@ autompg_mod_back_bic =<span class="st"> </span><span class="kw">step</span>(auto
 require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
+"github": false,
 "facebook": true,
 "twitter": true,
 "google": false,
