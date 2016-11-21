@@ -26,7 +26,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2016-11-19">
+<meta name="date" content="2016-11-21">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1013,7 +1013,7 @@ autompg =<span class="st"> </span><span class="kw">subset</span>(autompg, <span 
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-518-1.png" width="672" /></p>
 <p>We’ll use the <code>pairs()</code> plot to determine which variables may benefit from a quadratic relationship with the response. We’ll also consider all possible two-way interactions. We won’t consider any three-order or higher. For example, we won’t consider the interaction between first-order terms and the added quadratic terms.</p>
 <p>So now, we’ll fit this rather large model. We’ll use a log-transformed response. Notice that <code>log(mpg) ~ . ^ 2</code> will automatically consider all first-order terms, as well as all two-way interactions. We use <code>I(var_name ^ 2)</code> to add quadratic terms for some variables. This generally works better than using <code>poly()</code> when performing variable selection.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">autompg_big_mod =<span class="st"> </span><span class="kw">lm</span>(<span class="kw">log</span>(mpg) ~<span class="st"> </span>. ^<span class="st"> </span><span class="dv">2</span> +<span class="st"> </span><span class="kw">I</span>(disp ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(disp ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(hp ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(wt ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(acc ^<span class="st"> </span><span class="dv">2</span>), <span class="dt">data =</span> autompg)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">autompg_big_mod =<span class="st"> </span><span class="kw">lm</span>(<span class="kw">log</span>(mpg) ~<span class="st"> </span>. ^<span class="st"> </span><span class="dv">2</span> +<span class="st"> </span><span class="kw">I</span>(disp ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(hp ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(wt ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(acc ^<span class="st"> </span><span class="dv">2</span>), <span class="dt">data =</span> autompg)</code></pre></div>
 <p>We think it is rather unlikely that we truly need all of these terms. There are quite a few!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw">coef</span>(autompg_big_mod))</code></pre></div>
 <pre><code>## [1] 40</code></pre>
