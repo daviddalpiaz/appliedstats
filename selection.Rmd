@@ -561,7 +561,7 @@ We'll use the `pairs()` plot to determine which variables may benefit from a qua
 So now, we'll fit this rather large model. We'll use a log-transformed response. Notice that `log(mpg) ~ . ^ 2` will automatically consider all first-order terms, as well as all two-way interactions. We use `I(var_name ^ 2)` to add quadratic terms for some variables. This generally works better than using `poly()` when performing variable selection.
 
 ```{r}
-autompg_big_mod = lm(log(mpg) ~ . ^ 2 + I(disp ^ 2) + I(disp ^ 2) + I(hp ^ 2) + I(wt ^ 2) + I(acc ^ 2), data = autompg)
+autompg_big_mod = lm(log(mpg) ~ . ^ 2 + I(disp ^ 2) + I(hp ^ 2) + I(wt ^ 2) + I(acc ^ 2), data = autompg)
 ```
 
 We think it is rather unlikely that we truly need all of these terms. There are quite a few!
