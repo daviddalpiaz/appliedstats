@@ -6,9 +6,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Applied Statistics with R</title>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
   <meta name="description" content="Applied Statistics with <code>R</code>">
-  <meta name="generator" content="bookdown 0.3.1 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.8 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -26,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2016-12-05">
+<meta name="date" content="2017-01-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -93,6 +92,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </head>
 
 <body>
+
 
 
   <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
@@ -325,13 +325,21 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li>Perform hypothesis tests using <code>R</code>.</li>
 <li>Perform basic simulations in <code>R</code>.</li>
 </ul>
+<!-- NOTE: THIS DOCUMENT IS CURRENTLY BEHIND A SIMILAR VERSION IN THE R4SL REPO -->
+<!-- NOTE: THIS DOCUMENT IS CURRENTLY BEHIND A SIMILAR VERSION IN THE R4SL REPO -->
+<!-- https://github.com/daviddalpiaz/r4sl -->
+<!-- https://github.com/daviddalpiaz/r4sl -->
+<!-- https://github.com/daviddalpiaz/r4sl -->
+<!-- https://github.com/daviddalpiaz/r4sl -->
+<!-- NOTE: THIS DOCUMENT IS CURRENTLY BEHIND A SIMILAR VERSION IN THE R4SL REPO -->
+<!-- NOTE: THIS DOCUMENT IS CURRENTLY BEHIND A SIMILAR VERSION IN THE R4SL REPO -->
 <div id="r-resources" class="section level2">
 <h2><span class="header-section-number">2.1</span> <code>R</code> Resources</h2>
 <p><code>R</code> is both a programming language and software environment for statistical computing, which is <em>free</em> and <em>open-source</em>. To get started, you will need to install two pieces of software:</p>
 <ul>
 <li><a href="http://cran.r-project.org/"><code>R</code>, the actual programming language.</a>
 <ul>
-<li>Chose your operating system, and select the most recent version, 3.3.1.</li>
+<li>Chose your operating system, and select the most recent version, 3.3.2.</li>
 </ul></li>
 <li><a href="http://www.rstudio.com/">RStudio, an excellent IDE for working with <code>R</code>.</a>
 <ul>
@@ -1116,8 +1124,8 @@ mpg %&gt;%<span class="st"> </span><span class="kw">filter</span>(hwy &gt;<span 
 <pre><code>## [1] 11.79982</code></pre>
 <p>Lastly, to generate a random sample of size <code>n = 10</code>, use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</code></pre></div>
-<pre><code>##  [1]  0.1232522  3.6055931  5.9048479  0.8924868  0.5072829 -6.4924298
-##  [7] -6.8089998  5.3052724  2.5457509  2.3243003</code></pre>
+<pre><code>##  [1]  0.4065017 -3.0995629 -0.5500687 -1.2578376  7.0470821 -1.2443746
+##  [7]  4.5206277  1.9587854  6.6333931  9.0948585</code></pre>
 <p>These functions exist for many other distributions, including but not limited to:</p>
 <table>
 <thead>
@@ -1332,11 +1340,11 @@ x</code></pre></div>
 <p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the output of the final line of the body is what is returned by the function. In this case the function returns the vector stored in the variable <code>results</code>.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</code></pre></div>
-<pre><code>##  [1]  1.7937426 -0.6677724  6.5762390  6.2261674 -3.2086652 -8.5098651
-##  [7]  0.2132038  0.4995714 -2.2944022  5.1643504</code></pre>
+<pre><code>##  [1]  0.6928568  1.0521571 -8.4034834  2.2048634  7.4366907  8.0058731
+##  [7]  0.4266667 -7.9045050 -0.1333911 -2.8109974</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)</code></pre></div>
-<pre><code>##  [1]  0.25941226 -0.26636355  1.28094615  1.20617139 -0.80909435 -1.94142250
-##  [7] -0.07818839 -0.01702072 -0.61380917  0.97936890</code></pre>
+<pre><code>##  [1]  0.11679793  0.18276241 -1.55321286  0.39438948  1.35490854  1.45940558
+##  [7]  0.06792769 -1.46160466 -0.03489418 -0.52647994</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">standardize =<span class="st"> </span>function(x) {
   (x -<span class="st"> </span><span class="kw">mean</span>(x)) /<span class="st"> </span><span class="kw">sd</span>(x)
@@ -1373,14 +1381,14 @@ s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2
   (<span class="dv">1</span> /<span class="st"> </span>n) *<span class="st"> </span><span class="kw">sum</span>((x -<span class="st"> </span><span class="kw">mean</span>(x)) ^<span class="st"> </span><span class="dv">2</span>)
 }</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_var</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 21.91814</code></pre>
+<pre><code>## [1] 29.66845</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<pre><code>## [1] 21.91814</code></pre>
+<pre><code>## [1] 29.66845</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(test_sample)</code></pre></div>
-<pre><code>## [1] 21.91814</code></pre>
+<pre><code>## [1] 29.66845</code></pre>
 <p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built in function <code>var()</code>. Finally, let’s examine the biased estimate of <span class="math inline">\(\sigma^2\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<pre><code>## [1] 19.72633</code></pre>
+<pre><code>## [1] 26.7016</code></pre>
 </div>
 </div>
 <div id="hypothesis-tests-in-r" class="section level2">
@@ -1739,8 +1747,9 @@ x_bar_hist =<span class="st"> </span><span class="kw">hist</span>(x_bars, <span 
         </div>
       </div>
 <a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="simple-linear-regression.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
-
+<a href="simple-linear-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
