@@ -855,13 +855,17 @@ In practice you will almost never have a true model, and you will use data to at
 
 For this example, we will simulate `n = 20` observations from the model
 
-\[
-y_i = 5 + 2 x_i + \epsilon_i.
-\]
+$$
+Y = 5 + 2 x + \epsilon.
+$$
 
-That is $\beta_0 = 5$, $\beta_1 = 2$, and let $\epsilon_i \sim N(\mu = 0, \sigma^2 = 1)$.
+That is $\beta_0 = 5$, $\beta_1 = 2$, and let $\epsilon \sim N(\mu = 0, \sigma^2 = 1)$. Or, even more succinctly we could write
 
-We first set the parameters of the simulation.
+$$
+Y \mid X = x \sim N(\mu = 5 + 2 x, \sigma^ 2 = 1).
+$$
+
+We first set the true parameters of the model to be simulated.
 
 ```{r}
 n       = 20
@@ -870,9 +874,10 @@ beta_1  = 2
 sigma   = 1
 ```
 
-Next, we obtain simulated values of $\epsilon_i$.
+Next, we obtain simulated values of $\epsilon_i$ after setting a seed for reproducibility.
 
 ```{r}
+set.seed(42)
 epsilon = rnorm(n, mean = 0, sd = sigma)
 ```
 
@@ -888,14 +893,14 @@ We then generate the $y$ values according the specified functional relationship.
 y = beta_0 + beta_1 * x + epsilon
 ```
 
-Now to check how well the method of least squares works, we use `lm()` to fit the model to our data, then take a look at the estimated coefficients.
+The data, $(x_i, y_i)$, represent a possible sample from the true distribution. Now to check how well the method of least squares works, we use `lm()` to fit the model to our simulated data, then take a look at the estimated coefficients.
 
 ```{r}
 sim_fit = lm(y ~ x)
 coef(sim_fit)
 ```
 
-And look at that, they aren't too far from the parameters we specified!
+And look at that, they aren't too far from the true parameters we specified!
 
 ```{r}
 plot(y ~ x)
@@ -904,12 +909,13 @@ abline(sim_fit)
 
 We should say here, that we're being sort of lazy, and not the good kinda of lazy that could be considered efficient. Any time you simulate data, you should consider doing two things: writing a function, and storing the data in a data frame.
 
-The function below, `sim_slr()`, can be used for the same task as above, but is much more flexible. Notice that we provide `x` to the function, instead of generating `x` inside the function. When simulating SLR, since `x` is considered known, we repeatedly use the same `x` values across all simulations.
+The function below, `sim_slr()`, can be used for the same task as above, but is much more flexible. Notice that we provide `x` to the function, instead of generating `x` inside the function. In the SLR model, the $x_i$ are considered known values. That is, they are not random, so we do not assume a distribution for the $x_i$. Because of this, we will repeatedly use the same `x` values across all simulations.
 
 ```{r}
-sim_slr = function(n, x, beta_0 = 10, beta_1 = 5, sigma = 1) {
+sim_slr = function(x, beta_0 = 10, beta_1 = 5, sigma = 1) {
+  n = length(x)
   epsilon = rnorm(n, mean = 0, sd = sigma)
-  y       = beta_0 + beta_1 * x + epsilon
+  y = beta_0 + beta_1 * x + epsilon
   data.frame(predictor = x, response = y)
 }
 ```
@@ -917,7 +923,7 @@ sim_slr = function(n, x, beta_0 = 10, beta_1 = 5, sigma = 1) {
 Here, we use the function to repeat the analysis above.
 
 ```{r}
-sim_data = sim_slr(n = 20, x = x, beta_0 = 5, beta_1 = 2, sigma = 1)
+sim_data = sim_slr(x = x, beta_0 = 5, beta_1 = 2, sigma = 1)
 ```
 
 This time, the simulated observations are stored in a data frame.
