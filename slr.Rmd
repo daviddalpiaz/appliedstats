@@ -50,7 +50,7 @@ plot(dist ~ speed, data = cars,
      ylab = "Stopping Distance (in Feet)",
      main = "Stopping Distance vs Speed",
      pch  = 20,
-     cex  = 3,
+     cex  = 2,
      col  = "dodgerblue")
 ```
 
@@ -64,15 +64,16 @@ In the `cars` example, we are interested in using the predictor variable `speed`
 
 Broadly speaking, we would like to model the relationship between $X$ and $Y$ using the form
 
-\[
+$$
 Y = f(X) + \epsilon.
-\]
+$$
 
 The function $f$ describes the functional relationship between the two variables, and the $\epsilon$ term is used to account for error. This indicates that if we plug in a given value of $X$ as input, our output is a value of $Y$, within a certain range of error. You could think of this a number of ways:
 
 - Response = Prediction + Error
 - Response = Signal + Noise
 - Response = Model + Unexplained
+- Response = Deterministic + Random
 - Response = Explainable + Unexplainable
 
 What sort of function should we use for $f(X)$ for the `cars` data?
@@ -85,7 +86,7 @@ plot(dist ~ speed, data = cars,
      ylab = "Stopping Distance (in Feet)",
      main = "Stopping Distance vs Speed",
      pch  = 20,
-     cex  = 3,
+     cex  = 2,
      col  = "dodgerblue")
 underfit_model = lm(dist ~ 1, data = cars)
 abline(underfit_model, lwd = 3, col = "darkorange")
@@ -101,7 +102,7 @@ plot(dist ~ speed, data = cars,
      ylab = "Stopping Distance (in Feet)",
      main = "Stopping Distance vs Speed",
      pch  = 20,
-     cex  = 3,
+     cex  = 2,
      col  = "dodgerblue")
 lines(x, predict(overfit_model, data.frame(speed = x)), lwd = 2, col = "darkorange")
 ```
@@ -115,26 +116,32 @@ plot(dist ~ speed, data = cars,
      ylab = "Stopping Distance (in Feet)",
      main = "Stopping Distance vs Speed",
      pch  = 20,
-     cex  = 3,
+     cex  = 2,
      col  = "dodgerblue")
 abline(stop_dist_model, lwd = 3, col = "darkorange")
 ```
 
 With this in mind, we would like to restrict our choice of $f(X)$ to *linear* functions of $X$. We will write our model using $\beta_1$ for the slope, and $\beta_0$ for the intercept,
 
-\[
+$$
 Y = \beta_0 + \beta_1 X + \epsilon.
-\]
+$$
 
 ### Simple Linear Regression Model
 
 We now define what we will call the simple linear regression model,
 
-\[
+$$
 Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
-\]
+$$
 
-where $\epsilon_i \sim N(0, \sigma^2)$. That is, the $\epsilon_i$ are *independent and identically distributed* (iid) normal random variables with mean $0$ and variance $\sigma^2$. This model has three parameters to be estimated: $\beta_0$, $\beta_1$, and $\sigma^2$, which are fixed, but unknown constants.
+where
+
+$$
+\epsilon_i \sim N(0, \sigma^2).
+$$
+
+That is, the $\epsilon_i$ are *independent and identically distributed* (iid) normal random variables with mean $0$ and variance $\sigma^2$. This model has three parameters to be estimated: $\beta_0$, $\beta_1$, and $\sigma^2$, which are fixed, but unknown constants.
 
 We have slightly modified our notation here. We are now using $Y_i$ and $x_i$, since we will be fitting this model to a set of $n$ data points, for $i = 1, 2, \ldots n$.
 
@@ -144,19 +151,19 @@ In the simple linear regression model, the $x_i$ are assumed to be fixed, known 
 
 The random $Y_i$ are a function of $x_i$, thus we can write its mean as a function of $x_i$,
 
-\[
-E[Y_i] = \beta_0 + \beta_1 x_i.
-\]
+$$
+\text{E}[Y_i] = \beta_0 + \beta_1 x_i.
+$$
 
 However, its variance remains constant for each $x_i$,
 
-\[
-Var[Y_i] = \sigma^2.
-\]
+$$
+\text{Var}[Y_i] = \sigma^2.
+$$
 
 This is visually displayed in the image below. We see that for any value $x$, the expected value of $Y$ is $\beta_0 + \beta_1 x$. At each value of $x$, $Y$ has the same variance $\sigma^2$.
 
-![Simple Linear Regression Model [UC David Stat Wiki](http://statwiki.ucdavis.edu/Textbook_Maps/General_Statistics/Map%3A_Introductory_Statistics_(Shafer_and_Zhang)/10%3A_Correlation_and_Regression/10.3_Modelling_Linear_Relationships_with_Randomness_Present)](images/model.jpg)
+![Simple Linear Regression Model [Introductory Statistics (Shafer and Zhang), UC David Stat Wiki](http://statwiki.ucdavis.edu/Textbook_Maps/General_Statistics/Map%3A_Introductory_Statistics_(Shafer_and_Zhang)/10%3A_Correlation_and_Regression/10.3_Modelling_Linear_Relationships_with_Randomness_Present)](images/model.jpg)
 
 Often, we directly talk about the assumptions that this model makes. They can be cleverly shortened to **LINE**.  
 
@@ -165,31 +172,33 @@ Often, we directly talk about the assumptions that this model makes. They can be
 - **N**ormal. The errors, $\epsilon$ are normally distributed. That is the "error" around the line follows a normal distribution.
 - **E**qual Variance. At each value of $x$, the variance of $Y$ is the same, $\sigma^2$.
 
+We are also assuming that the values of $x$ are fixed, that is, not random. We do not make a distributional assumption about the predictor variable.
+
 As a side note, we will often refer to simple linear regression as **SLR**. Some explanation of the name SLR:
 
 - **Simple** refers to the fact that we are using a single predictor variable. Later we will use multiple predictor variables.
 - **Linear** tells us that our model for $Y$ is a linear combination of the predictors $X$. (In this case just the one.) Right now, this always results in a model that is a line, but later we will see how this is not always the case.
-- **Regression** simply means that we are attempting to measure the relationship between a response variable and (one or more) predictor variables.
+- **Regression** simply means that we are attempting to measure the relationship between a *numeric* response variable and (one or more) predictor variables.
 
 So SLR models $Y$ as a linear function of $X$, but how do we actually define a good line? There are an infinite number of lines we could use, so we will attempt to find one with "small errors." That is a line with as many points as close to it as possible. The questions now becomes, how do we find such a line? There are many approaches we could take.
 
 We could find the line that has the smallest maximum distance from any of the points to the line. That is,
 
-\[
+$$
 \underset{\beta_0, \beta_1}{\mathrm{argmin}} \max|y_i - (\beta_0 + \beta_1 x_i)|.
-\]
+$$
 
 We could find the line that minimizes the sum of all the distances from the points to the line. That is,
 
-\[
+$$
 \underset{\beta_0, \beta_1}{\mathrm{argmin}} \sum_{i = 1}^{n}|y_i - (\beta_0 + \beta_1 x_i)|.
-\]
+$$
 
 We could find the line that minimizes the sum of all the squared distances from the points to the line. That is,
 
-\[
+$$
 \underset{\beta_0, \beta_1}{\mathrm{argmin}} \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2.
-\]
+$$
 
 This last option is called the method of **least squares**. It is essentially the de-facto method for fitting a line to data. (You may have even seen it before in a linear algebra course.) Its popularity is largely due to the fact that it is mathematically "easy." (Which was important historically, as computers are a modern contraption.) It is also very popular because many relationships are well approximated by a linear function.
 
@@ -197,65 +206,65 @@ This last option is called the method of **least squares**. It is essentially th
 
 Given observations $(x_i, y_i)$, for $i = 1, 2, \ldots n$, we want to find values of $\beta_0$ and $\beta_1$ which minimize
 
-\[
+$$
 f(\beta_0, \beta_1) = \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2 = \sum_{i = 1}^{n}(y_i - \beta_0 - \beta_1 x_i)^2.
-\]
+$$
 
 We will call these values $\hat{\beta}_0$ and $\hat{\beta}_1$.
 
 First, we take a partial derivative with respect to both $\beta_0$ and $\beta_1$.
 
-\[
+$$
 \begin{aligned}
 \frac{\partial f}{\partial \beta_0} &= -2 \sum_{i = 1}^{n}(y_i - \beta_0 - \beta_1 x_i) \\
 \frac{\partial f}{\partial \beta_1} &= -2 \sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i)
 \end{aligned}
-\]
+$$
 
 We then set each of the partial derivatives equal to zero and solving the resulting system of equations.
 
-\[
+$$
 \begin{aligned}
 \sum_{i = 1}^{n}(y_i - \beta_0 - \beta_1 x_i) &= 0 \\
 \sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i) &= 0 
 \end{aligned}
-\]
+$$
 
 While solving the system of equations, one common algebraic rearrangement results in the **normal equations**.
 
-\[
+$$
 \begin{aligned}
 \sum_{i = 1}^{n} y_i &= n \beta_0 + \beta_1 \sum_{i = 1}^{n} x_i \\
 \sum_{i = 1}^{n} x_i y_i &= \beta_0 \sum_{i = 1}^{n} x_i + \beta_1 \sum_{i = 1}^{n} x_i^2
 \end{aligned}
-\]
+$$
 
 Finally, we finish solving the system of equations.
 
-\[
+$$
 \begin{aligned}
 \hat{\beta}_1 &= \frac{\sum_{i = 1}^{n} x_i y_i - \frac{(\sum_{i = 1}^{n} x_i)(\sum_{i = 1}^{n} y_i)}{n}}{\sum_{i = 1}^{n} x_i^2 - \frac{(\sum_{i = 1}^{n} x_i)^2}{n}} = \frac{S_{xy}}{S_{xx}}\\
 \hat{\beta}_0 &= \bar{y} - \hat{\beta}_1 \bar{x}
 \end{aligned}
-\]
+$$
 
 Here, we have defined some notation for the expression we've obtained. Note that they have alternative forms which are much easier to work with. (We won't do it here, but you can try to prove the equalities below on your own, for "fun.") We use the capital letter $S$ to denote "summation" which replaces the capital letter $\Sigma$ when we calculate these values based on observed data, $(x_i ,y_i)$. The subscripts such as $xy$ denote over which variables the function $(z - \bar{z})$ is applied.
 
-\[
+$$
 \begin{aligned}
 S_{xy} &= \sum_{i = 1}^{n} x_i y_i - \frac{(\sum_{i = 1}^{n} x_i)(\sum_{i = 1}^{n} y_i)}{n}  = \sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y})\\
 S_{xx} &= \sum_{i = 1}^{n} x_i^2 - \frac{(\sum_{i = 1}^{n} x_i)^2}{n}  = \sum_{i = 1}^{n}(x_i - \bar{x})^2\\
 S_{yy} &= \sum_{i = 1}^{n} y_i^2 - \frac{(\sum_{i = 1}^{n} y_i)^2}{n}  = \sum_{i = 1}^{n}(y_i - \bar{y})^2
 \end{aligned}
-\]
+$$
 
 Note that these summations $S$ are not to be confused with sample standard deviation $s$.
 
 By using the above alternative expressions for $S_{xy}$ and $S_{xx}$, we arrive at a cleaner, more useful expression for $\hat{\beta}_1$.
 
-\[
+$$
 \hat{\beta}_1 = \frac{S_{xy}}{S_{xx}} = \frac{\sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i = 1}^{n}(x_i - \bar{x})^2}
-\]
+$$
 
 Traditionally we would now calculate $\hat{\beta}_0$ and $\hat{\beta}_1$ by hand for the `cars` dataset. However because we are living in the 21st century and are intelligent (or lazy or efficient, depending on your perspective), we will utilize `R` to do the number crunching for us.
 
@@ -287,23 +296,23 @@ What do these values tell us about our dataset?
 
 The slope *parameter* $\beta_1$ tells us that for an increase in speed of one mile per hour, the **mean** stopping distance increases by $\beta_1$. It is important to specify that we are talking about the mean. Recall that $\beta_0 + \beta_1 x$ is the estimated mean of $Y$, in this case stopping distance, for a particular value of $x$. (In this case speed.) So $\beta_1$ tells us how the mean of $Y$ is affected by a change in $x$.
 
-Similarly, the *estimate* $\hat{\beta}_1 = `r round(beta_1_hat, 3)`$ tells us that for an increase in speed of one mile per hour, the **estimated** *mean* stopping distance increases by $`r round(beta_1_hat, 3)`$ feet. Here we should be sure to specify we are discussing an estimated quantity. Recall that $\hat{y}$ is the estimated mean of $Y$, so $\hat{\beta}_1$ tells us how the estimated mean of $Y$ is affected by changing $x$. 
+Similarly, the *estimate* $\hat{\beta}_1 = `r round(beta_1_hat, 2)`$ tells us that for an increase in speed of one mile per hour, the **estimated** *mean* stopping distance increases by $`r round(beta_1_hat, 2)`$ feet. Here we should be sure to specify we are discussing an estimated quantity. Recall that $\hat{y}$ is the estimated mean of $Y$, so $\hat{\beta}_1$ tells us how the estimated mean of $Y$ is affected by changing $x$. 
 
-The intercept *parameter* $\beta_0$ tells us the **mean** stopping distance for a car traveling zero miles per hour. (Not moving.) The *estimate* $\hat{\beta}_0 = `r round(beta_0_hat, 3)`$ tells us that the **estimated** mean stopping distance for a car traveling zero miles per hour is $`r round(beta_0_hat, 3)`$ feet. So when you apply the brakes to a car that is not moving, it moves backwards? This doesn't seem right. (Extrapolation, which we will see later, is the issue here.) 
+The intercept *parameter* $\beta_0$ tells us the **mean** stopping distance for a car traveling zero miles per hour. (Not moving.) The *estimate* $\hat{\beta}_0 = `r round(beta_0_hat, 2)`$ tells us that the **estimated** mean stopping distance for a car traveling zero miles per hour is $`r round(beta_0_hat, 2)`$ feet. So when you apply the brakes to a car that is not moving, it moves backwards? This doesn't seem right. (Extrapolation, which we will see later, is the issue here.) 
 
 ### Making Predictions
 
 We can now write the **fitted** or estimated line,
 
-\[
+$$
 \hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x.
-\]
+$$
 
 In this case,
 
-\[
-\hat{y} = `r round(beta_0_hat, 3)` + `r round(beta_1_hat, 3)` x.
-\]
+$$
+\hat{y} = `r round(beta_0_hat, 2)` + `r round(beta_1_hat, 2)` x.
+$$
 
 We can now use this line to make predictions. First, let's see the possible $x$ values in the `cars` dataset. Since some $x$ values may appear more than once, we use the `unique()` to return each unique value only once.
 
@@ -313,15 +322,15 @@ unique(cars$speed)
 
 Let's make a prediction for the stopping distance of a car traveling at 8 miles per hour.
 
-\[
-\hat{y} = `r round(beta_0_hat, 3)` + `r round(beta_1_hat, 3)` \times 8 = `r round(beta_0_hat + beta_1_hat * 8, 3)`
-\]
+$$
+\hat{y} = `r round(beta_0_hat, 2)` + `r round(beta_1_hat, 2)` \times 8 % = `r round(beta_0_hat + beta_1_hat * 8, 2)`
+$$
 
 ```{r}
 beta_0_hat + beta_1_hat * 8
 ```
 
-This tells us that the estimated mean stopping distance of a car traveling at 8 miles per hour is `r round(beta_0_hat + beta_1_hat * 8, 3)`.
+This tells us that the estimated mean stopping distance of a car traveling at 8 miles per hour is $`r round(beta_0_hat + beta_1_hat * 8, 2)`$.
 
 Now let's make a prediction for the stopping distance of a car traveling at 21 miles per hour. This is considered **interpolation** as 21 is not an observed value of $x$. (But is in the data range.) We can use the special `%in%` operator to quickly verify this in `R`.
 
@@ -334,9 +343,9 @@ Now let's make a prediction for the stopping distance of a car traveling at 21 m
 min(cars$speed) < 21 & 21 < max(cars$speed)
 ```
 
-\[
-\hat{y} = `r round(beta_0_hat, 3)` + `r round(beta_1_hat, 3)` \times 21 = `r round(beta_0_hat + beta_1_hat * 21, 3)`
-\]
+$$
+\hat{y} = `r round(beta_0_hat, 2)` + `r round(beta_1_hat, 2)` \times 21 % = `r round(beta_0_hat + beta_1_hat * 21, 2)`
+$$
 
 ```{r}
 beta_0_hat + beta_1_hat * 21
@@ -349,9 +358,9 @@ range(cars$speed)
 range(cars$speed)[1] < 50 & 50 < range(cars$speed)[2] 
 ```
 
-\[
-\hat{y} = `r round(beta_0_hat, 3)` + `r round(beta_1_hat, 3)` \times 50 = `r round(beta_0_hat + beta_1_hat * 50, 3)`
-\]
+$$
+\hat{y} = `r round(beta_0_hat, 2)` + `r round(beta_1_hat, 2)` \times 50 % = `r round(beta_0_hat + beta_1_hat * 50, 2)`
+$$
 
 ```{r}
 beta_0_hat + beta_1_hat * 50
@@ -359,21 +368,21 @@ beta_0_hat + beta_1_hat * 50
 
 Cars travel 50 miles per hour rather easily today, but not in the 1920s!
 
-This is also an issue we saw when interpreting $\hat{\beta}_0 = `r round(beta_0_hat, 3)`$, which is equivalent to making a prediction at $x = 0$. We should not be confident in the estimated linear relationship outside of the range of data we have observed.
+This is also an issue we saw when interpreting $\hat{\beta}_0 = `r round(beta_0_hat, 2)`$, which is equivalent to making a prediction at $x = 0$. We should not be confident in the estimated linear relationship outside of the range of data we have observed.
 
 ### Residuals
 
 If we think of our model as "Response = Prediction + Error," we can then write it as
 
-\[
+$$
 y = \hat{y} + e.
-\]
+$$
 
 We then define a **residual** to be the observed value minus the predicted value.
 
-\[
+$$
 e_i = y_i - \hat{y}_i
-\]
+$$
 
 Let's calculate the residual for the prediction we made for a car traveling 8 miles per hour. First, we need to obtain the observed value of $y$ for this $x$ value.
 
@@ -385,15 +394,15 @@ cars[which(cars$speed == 8), ]
 
 We can then calculate the residual.
 
-\[
-e = 16 - `r round(beta_0_hat + beta_1_hat * 8, 3)` = `r round(16 - (beta_0_hat + beta_1_hat * 8), 3)`
-\]
+$$
+e = 16 - `r round(beta_0_hat + beta_1_hat * 8, 2)` = `r round(16 - (beta_0_hat + beta_1_hat * 8), 2)`
+$$
 
 ```{r}
 16 - (beta_0_hat + beta_1_hat * 8)
 ```
 
-The positive residual value indicates that the observed stopping distance is actually `r round(16 - (beta_0_hat + beta_1_hat * 8), 3)` feet more than what was predicted.
+The positive residual value indicates that the observed stopping distance is actually `r round(16 - (beta_0_hat + beta_1_hat * 8), 2)` feet more than what was predicted.
 
 ### Variance Estimation
 
@@ -401,32 +410,33 @@ We'll now use the residuals for each of the points to create an estimate for the
 
 Recall that,
 
-\[
-E[Y_i] = \beta_0 + \beta_1 x_i.
-\]
+$$
+\text{E}[Y_i] = \beta_0 + \beta_1 x_i.
+$$
 
 So,
 
-\[
+$$
 \hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_i
-\]
+$$
 
 is a natural estimate for the mean of $Y_i$ for a given value of $x_i$.
 
 Also, recall that when we specified the model, we had three unknown parameters; $\beta_0$, $\beta_1$, and $\sigma^2$. The method of least squares gave us estimates for $\beta_0$ and $\beta_1$, however, we have yet to see an estimate for $\sigma^2$. We will now define $s_e^2$ which will be an estimate for $\sigma^2$.
 
-\[
+$$
 \begin{aligned}
-s_e^2 &= \frac{1}{n - 2} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2 \\
+s_e^2 &= \frac{1}{n - 2} \sum_{i = 1}^{n}(y_i - (\hat{\beta}_0 + \hat{\beta}_1 x_i))^2 \\
+      &= \frac{1}{n - 2} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2 \\
       &= \frac{1}{n - 2} \sum_{i = 1}^{n} e_i^2
 \end{aligned}
-\]
+$$
 
 This probably seems like a natural estimate, aside from the use of $n - 2$, which we will put off explaining until the next chapter. It should actually look rather similar to something we have seen before.
 
-\[
+$$
 s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x_i - \bar{x})^2
-\]
+$$
 
 Here, $s^2$ is the estimate of $\sigma^2$ when we have a single random variable $X$. In this case $\bar{x}$ is an estimate of $\mu$ which is assumed to be the same for each $x$.
 
@@ -440,22 +450,22 @@ s2_e  = sum(e^2) / (n - 2)
 s2_e
 ```
 
-Just as with the univariate measure of variance, this value of `r round(s2_e, 3)` doesn't have a practical interpretation in terms of stopping distance. Taking the square root, however, computes the standard deviation of the residuals, also known as *residual standard error*.
+Just as with the univariate measure of variance, this value of `r round(s2_e, 2)` doesn't have a practical interpretation in terms of stopping distance. Taking the square root, however, computes the standard deviation of the residuals, also known as *residual standard error*.
 
 ```{r}
 s_e = sqrt(s2_e)
 s_e
 ```
 
-This tells us that our estimates of mean stopping distance are "typically" off by `r round(s_e, 3)` feet.
+This tells us that our estimates of mean stopping distance are "typically" off by `r round(s_e, 2)` feet.
 
 ##  Decomposition of Variation
 
 We can re-express $y_i - \bar{y}$, which measures the deviation of an observation from the sample mean, in the following way,
 
-\[
+$$
 y_i - \bar{y} = (y_i - \hat{y}_i) + (\hat{y}_i - \bar{y}).
-\]
+$$
 
 This is the common mathematical trick of "adding zero." In  this case we both added and subtracted $\hat{y}_i$.
 
@@ -463,39 +473,39 @@ Here, $y_i - \hat{y}_i$ measures the deviation of an observation from the fitted
 
 If we square then sum both sides of the equation above, we can obtain the following,
 
-\[
+$$
 \sum_{i=1}^{n}(y_i - \bar{y})^2 = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2.
-\]
+$$
 
 This should be somewhat alarming or amazing. How is this true? For now we will leave this questions unanswered. (Think about this, and maybe try to prove it.) We will now define three of the quantities seen in this equation. 
 
 #### Sum of Squares Total {-}
 
-\[
-SST = \sum_{i=1}^{n}(y_i - \bar{y})^2
-\]
+$$
+\text{SST} = \sum_{i=1}^{n}(y_i - \bar{y})^2
+$$
 
-The quantity "Sum of Squares Total," or $SST$, represents the **total variation** of the observed $y$ values. This should be a familiar looking expression. Note that,
+The quantity "Sum of Squares Total," or $\text{SST}$, represents the **total variation** of the observed $y$ values. This should be a familiar looking expression. Note that,
 
-\[
-s ^ 2 = \frac{1}{n - 1}\sum_{i=1}^{n}(y_i - \bar{y})^2 = \frac{1}{n - 1} SST.
-\]
+$$
+s ^ 2 = \frac{1}{n - 1}\sum_{i=1}^{n}(y_i - \bar{y})^2 = \frac{1}{n - 1} \text{SST}.
+$$
 
 #### Sum of Squares Regression {-}
 
-\[
-SSReg = \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2
-\]
+$$
+\text{SSReg} = \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2
+$$
 
-The quantity "Sum of Squares Regression," $SSReg$, represents the **explained variation** of the observed $y$ values.
+The quantity "Sum of Squares Regression," $\text{SSReg}$, represents the **explained variation** of the observed $y$ values.
 
 #### Sum of Squares Error {-}
 
-\[
-SSE = RSS = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2
-\]
+$$
+\text{SSE} = \text{RSS} = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2
+$$
 
-The quantity "Sum of Squares Error," $SSE$, represents the **unexplained variation** of the observed $y$ values. You will often see $SSE$ written as $RSS$, or "Residual Sum of Squares."
+The quantity "Sum of Squares Error," $\text{SSE}$, represents the **unexplained variation** of the observed $y$ values. You will often see $\text{SSE}$ written as $\text{RSS}$, or "Residual Sum of Squares."
 
 ```{r}
 SST   = sum((y - mean(y)) ^ 2)
@@ -506,9 +516,9 @@ c(SST = SST, SSReg = SSReg, SSE = SSE)
 
 Note that,
 
-\[
-s_e^2 = \frac{SSE}{n - 2}.
-\]
+$$
+s_e^2 = \frac{\text{SSE}}{n - 2}.
+$$
 
 ```{r}
 SSE / (n - 2)
@@ -526,12 +536,12 @@ These three measures also do not have an important practical interpretation indi
 
 The **coefficient of determination**, $R^2$, is defined as
 
-\[
+$$
 R^2 = \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} =
-\frac{SSReg}{SST} = 
+\frac{\text{SSReg}}{\text{SST}} = 
 1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} = 
-1 - \frac{\sum_{i = 1}^{n}e_i^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} = 1 - \frac{SSE}{SST}
-\]
+1 - \frac{\sum_{i = 1}^{n}e_i^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} = 1 - \frac{\text{SSE}}{\text{SST}}
+$$
 
 The coefficient of determination is interpreted as the proportion of observed variation in $y$ that can be explained by the simple linear regression model.
 
@@ -540,31 +550,31 @@ R2 = SSReg / SST
 R2
 ```
 
-For the `cars` example, we calculate $R^2 = `r round(R2, 3)`$. We then say that $`r round(R2, 3)*100`\%$ of the observed variability in stopping distance is explained by the linear relationship with speed.
+For the `cars` example, we calculate $R^2 = `r round(R2, 2)`$. We then say that $`r round(R2, 3)*100`\%$ of the observed variability in stopping distance is explained by the linear relationship with speed.
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
-## TODO: this code and be made much better
+## TODO: this code can be made much better
 # show for different R^2 values?
 #
 
 set.seed(42)
-generate_data <- function(int = 1,
+generate_data = function(int = 1,
                           slope = 2,
                           sigma = 5,
                           n_obs = 15,
                           x_min = 0,
                           x_max = 10) {
-  x <- seq(x_min, x_max, length.out = n_obs)
-  y <- int + slope * x + rnorm(n_obs, 0, sigma)
-  fit <- lm(y ~ x)
-  y_hat <- fitted(fit)
-  y_bar <- rep(mean(y), n_obs)
+  x = seq(x_min, x_max, length.out = n_obs)
+  y = int + slope * x + rnorm(n_obs, 0, sigma)
+  fit = lm(y ~ x)
+  y_hat = fitted(fit)
+  y_bar = rep(mean(y), n_obs)
   data.frame(x, y, y_hat, y_bar)
 }
 
-plot_total_dev <- function(reg_data) {
+plot_total_dev = function(reg_data) {
   plot(reg_data$x, reg_data$y, main = "SST (Sum of Squares Total)", 
-       xlab = "x", ylab = "y", pch = 20, cex = 3, col = "grey")
+       xlab = "x", ylab = "y", pch = 20, cex = 2, col = "grey")
   arrows(reg_data$x, reg_data$y_bar,
          reg_data$x, reg_data$y_hat,
          col = 'darkorange', lwd = 1, length = 0.2, angle = 20)
@@ -575,18 +585,18 @@ plot_total_dev <- function(reg_data) {
   abline(lm(y ~ x, data = reg_data), lwd = 2, col = "grey")
 }
 
-plot_unexp_dev <- function(reg_data) {
+plot_unexp_dev = function(reg_data) {
   plot(reg_data$x, reg_data$y, main = "SSE (Sum of Squares Error)",
-       xlab = "x", ylab = "y", pch = 20, cex = 3, col = "grey")
+       xlab = "x", ylab = "y", pch = 20, cex = 2, col = "grey")
   arrows(reg_data$x, reg_data$y_hat,
          reg_data$x, reg_data$y,
          col = 'dodgerblue', lwd = 1, length = 0.2, angle = 20)
   abline(lm(y ~ x, data = reg_data), lwd = 2, col = "grey")
 }
 
-plot_exp_dev <- function(reg_data) {
+plot_exp_dev = function(reg_data) {
   plot(reg_data$x, reg_data$y, main = "SSReg (Sum of Squares Regression)", 
-  xlab = "x", ylab = "y", pch = 20, cex = 3, col = "grey")
+  xlab = "x", ylab = "y", pch = 20, cex = 2, col = "grey")
   arrows(reg_data$x, reg_data$y_bar,
          reg_data$x, reg_data$y_hat,
          col = 'darkorange', lwd = 1, length = 0.2, angle = 20)
@@ -599,7 +609,7 @@ plot_exp_dev <- function(reg_data) {
 plot_data <- generate_data(sigma = 2)
 ```
 
-The following three plots visually demonstrate the three "sums of squares" for a simulated dataset which has $R^2 = `r round(summary(lm(y ~ x, data = plot_data))$r.sq, 3)`$ which is a somewhat high value. Notice in the third plot, that the orange arrows account for a larger proportion of the total arrow.
+The following three plots visually demonstrate the three "sums of squares" for a simulated dataset which has $R^2 = `r round(summary(lm(y ~ x, data = plot_data))$r.sq, 2)`$ which is a somewhat high value. Notice in the third plot, that the orange arrows account for a larger proportion of the total arrow.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 plot_exp_dev(plot_data)
@@ -611,7 +621,7 @@ plot_total_dev(plot_data)
 plot_data <- generate_data(sigma = 6)
 ```
 
-The next three plots again visually demonstrate the three "sums of squares," this time for a simulated dataset which has $R^2 = `r round(summary(lm(y ~ x, data = plot_data))$r.sq, 3)`$. Notice in the third plot, that now the blue arrows account for a larger proportion of the total arrow.
+The next three plots again visually demonstrate the three "sums of squares," this time for a simulated dataset which has $R^2 = `r round(summary(lm(y ~ x, data = plot_data))$r.sq, 2)`$. Notice in the third plot, that now the blue arrows account for a larger proportion of the total arrow.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 plot_exp_dev(plot_data)
@@ -653,7 +663,7 @@ plot(dist ~ speed, data = cars,
      ylab = "Stopping Distance (in Feet)",
      main = "Stopping Distance vs Speed",
      pch  = 20,
-     cex  = 3,
+     cex  = 2,
      col  = "dodgerblue")
 abline(stop_dist_model, lwd = 3, col = "darkorange")
 ```
@@ -706,9 +716,9 @@ summary(stop_dist_model)$sigma
 
 Note that this is the same result seen earlier as `s_e`. You may also notice that this value was display above as a result of the `summary()` command, which `R` labeled the "Residual Standard Error."
 
-\[
-s_e = RSE = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
-\]
+$$
+s_e = \text{RSE} = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
+$$
 
 Often it is useful to talk about $s_e$ (or RSE) instead of $s_e^2$ because of their units. The units of $s_e$ in the `cars` example is feet, while the units of $s_e^2$ is feet-squared.
 
@@ -726,13 +736,13 @@ We could also predict multiple values at once.
 predict(stop_dist_model, data.frame(speed = c(8, 21, 50)))
 ```
 
-\[
+$$
 \begin{aligned}
-\hat{y} &= `r round(beta_0_hat, 3)` + `r round(beta_1_hat, 3)` \times 8 = `r round(beta_0_hat + beta_1_hat * 8, 3)` \\
-\hat{y} &= `r round(beta_0_hat, 3)` + `r round(beta_1_hat, 3)` \times 21 = `r round(beta_0_hat + beta_1_hat * 21, 3)` \\
-\hat{y} &= `r round(beta_0_hat, 3)` + `r round(beta_1_hat, 3)` \times 50 = `r round(beta_0_hat + beta_1_hat * 50, 3)`
+\hat{y} &= `r round(beta_0_hat, 2)` + `r round(beta_1_hat, 2)` \times 8 = `r round(beta_0_hat + beta_1_hat * 8, 2)` \\
+\hat{y} &= `r round(beta_0_hat, 2)` + `r round(beta_1_hat, 2)` \times 21 = `r round(beta_0_hat + beta_1_hat * 21, 2)` \\
+\hat{y} &= `r round(beta_0_hat, 2)` + `r round(beta_1_hat, 2)` \times 50 = `r round(beta_0_hat + beta_1_hat * 50, 2)`
 \end{aligned}
-\]
+$$
 
 Or we could calculate the fitted value for each of the original data points.
 
@@ -756,94 +766,101 @@ fitted(stop_dist_model)
 
 Recall the model,
 
-\[
+$$
 Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
-\]
+$$
 
 where $e_i \sim N(0, \sigma^2)$.
 
 Then we can find the mean and variance of each $Y_i$.
 
-\[
-E[Y_i] = \beta_0 + \beta_1 x_i
-\]
+$$
+\text{E}[Y_i] = \beta_0 + \beta_1 x_i
+$$
 
 and
 
-\[
-Var[Y_i] = \sigma^2.
-\]
+$$
+\text{Var}[Y_i] = \sigma^2.
+$$
+
+
+
+$$
+Y_i \mid X_i = x_i \sim N(\beta_0 + \beta_1 x_i, \sigma^2)
+$$
+
 
 Recall that the pdf of a random variable $X \sim N(\mu, \sigma^2)$ is given by
 
-\[
+$$
 f_{X}(x; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp{\left[-\frac{1}{2}\left(\frac{x - \mu}{\sigma}\right)^2\right]}.
-\]
+$$
 
 Then we can write the pdf of each of the $Y_i$ as
 
-\[
+$$
 f_{Y_i}(y_i; x_i, \beta_0, \beta_1, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp{\left[-\frac{1}{2}\left(\frac{y_i - (\beta_0 + \beta_1 x_i)}{\sigma}\right)^2\right]}.
-\]
+$$
 
 Given $n$ data points $(x_i, y_i)$ we can write the likelihood, which is a function of the three parameters $\beta_0$, $\beta_1$, and $\sigma^2$. Since the data have been observed, we use lower case $y_i$ to denote that these values are no longer random.
 
-\[
+$$
 L(\beta_0, \beta_1, \sigma^2) = \prod_{i = 1}^{n} \frac{1}{\sqrt{2\pi\sigma^2}} \exp{\left[-\frac{1}{2}\left(\frac{y_i - \beta_0 - \beta_1 x_i}{\sigma}\right)^2\right]}
-\]
+$$
 
 Our goal is to find values of $\beta_0$, $\beta_1$, and $\sigma^2$ which maximize this function, which is a straightforward multivariate calculus problem.
 
 We'll start by doing a bit of rearranging to make our task easier.
 
-\[
+$$
 L(\beta_0, \beta_1, \sigma^2) = \left(\frac{1}{\sqrt{2 \pi \sigma^2}}\right)^n \exp{\left[-\frac{1}{2 \sigma^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2\right]}
-\]
+$$
 
 Then, as is often the case when finding MLEs, for mathematical convenience we will take the natural logarithm of the likelihood function since log is a monotonically increasing function. Then we will proceed to maximize the log-likelihood, and the resulting estimates will be the same as if we had not taken the log.
 
-\[
+$$
 \log L(\beta_0, \beta_1, \sigma^2) = -\frac{n}{2}\log(2 \pi) - \frac{n}{2}\log(\sigma^2) - \frac{1}{2 \sigma^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2
-\]
+$$
 
 Note that we use $\log$ to mean the natural logarithm. We now take a partial derivative with respect to each of the parameters.
 
-\[
+$$
 \begin{aligned}
 \frac{\partial \log L(\beta_0, \beta_1, \sigma^2)}{\partial \beta_0} &= \frac{1}{\sigma^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)\\
 \frac{\partial \log L(\beta_0, \beta_1, \sigma^2)}{\partial \beta_1} &= \frac{1}{\sigma^2} \sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i) \\
 \frac{\partial \log L(\beta_0, \beta_1, \sigma^2)}{\partial \sigma^2} &= -\frac{n}{2 \sigma^2} + \frac{1}{2(\sigma^2)^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2
 \end{aligned}
-\]
+$$
 
 We then set each of the partial derivatives equal to zero and solve the resulting system of equations.
 
-\[
+$$
 \begin{aligned}
 \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i) &= 0\\
 \sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i) &= 0\\
 -\frac{n}{2 \sigma^2} + \frac{1}{2(\sigma^2)^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2 &= 0
 \end{aligned}
-\]
+$$
 
 You may notice that the first two equations also appear in the least squares approach. Then, skipping the issue of actually checking if we have found a maximum, we then arrive at our estimates. We call these estimates the maximum likelihood estimates.
 
-\[
+$$
 \begin{aligned}
 \hat{\beta}_1 &= \frac{\sum_{i = 1}^{n} x_i y_i - \frac{(\sum_{i = 1}^{n} x_i)(\sum_{i = 1}^{n} y_i)}{n}}{\sum_{i = 1}^{n} x_i^2 - \frac{(\sum_{i = 1}^{n} x_i)^2}{n}} = \frac{S_{xy}}{S_{xx}}\\
 \hat{\beta}_0 &= \bar{y} - \hat{\beta}_1 \bar{x}\\
 \hat{\sigma}^2 &= \frac{1}{n} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2
 \end{aligned}
-\]
+$$
 
 Note that $\hat{\beta}_0$ and $\hat{\beta}_1$ are the same as the least squares estimates. However we now have a new estimate of $\sigma^2$, that is $\hat{\sigma}^2$. So we now have two different estimates of $\sigma^2$.
 
-\[
+$$
 \begin{aligned}
 s_e^2 &= \frac{1}{n - 2} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2 = \frac{1}{n - 2} \sum_{i = 1}^{n}e_i^2 & \text{Least Squares}\\
 \hat{\sigma}^2 &= \frac{1}{n} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2 = \frac{1}{n} \sum_{i = 1}^{n}e_i^2 & \text{MLE}
 \end{aligned}
-\]
+$$
 
 In the next chapter, we will discuss in detail the difference between these two estimates, which involves biasedness.
 
