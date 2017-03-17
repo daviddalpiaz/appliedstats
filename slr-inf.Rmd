@@ -772,14 +772,14 @@ Also notice that these two intervals are wider than the corresponding confidence
 
 Often we will like to plot both confidence intervals for the mean response and prediction intervals for all possible values of $x$. We calls these confidence and prediction bands.
 
-```{r}
+```{r, fig.height=5, fig.width=8, message=TRUE}
 speed_grid = seq(min(cars$speed), max(cars$speed), by = 0.01)
 dist_ci_band = predict(stop_dist_model, 
-                           newdata = data.frame(speed = speed_grid), 
-                           interval = "confidence", level = 0.99)
+                       newdata = data.frame(speed = speed_grid), 
+                       interval = "confidence", level = 0.99)
 dist_pi_band = predict(stop_dist_model, 
-                           newdata = data.frame(speed = speed_grid), 
-                           interval = "prediction", level = 0.99) 
+                       newdata = data.frame(speed = speed_grid), 
+                       interval = "prediction", level = 0.99) 
 
 plot(dist ~ speed, data = cars,
      xlab = "Speed (in Miles Per Hour)",
@@ -787,14 +787,14 @@ plot(dist ~ speed, data = cars,
      main = "Stopping Distance vs Speed",
      pch  = 20,
      cex  = 2,
-     col  = "dodgerblue",
-     ylim = c(-50, 140))
+     col  = "grey",
+     ylim = c(min(dist_pi_band), max(dist_pi_band)))
 abline(stop_dist_model, lwd = 5, col = "darkorange")
 
-lines(speed_grid, dist_ci_band[,"lwr"], col = "red", lwd = 3, lty = 2)
-lines(speed_grid, dist_ci_band[,"upr"], col = "red", lwd = 3, lty = 2)
-lines(speed_grid, dist_pi_band[,"lwr"], col = "green", lwd = 3, lty = 3)
-lines(speed_grid, dist_pi_band[,"upr"], col = "green", lwd = 3, lty = 3)
+lines(speed_grid, dist_ci_band[,"lwr"], col = "dodgerblue", lwd = 3, lty = 2)
+lines(speed_grid, dist_ci_band[,"upr"], col = "dodgerblue", lwd = 3, lty = 2)
+lines(speed_grid, dist_pi_band[,"lwr"], col = "dodgerblue", lwd = 3, lty = 3)
+lines(speed_grid, dist_pi_band[,"upr"], col = "dodgerblue", lwd = 3, lty = 3)
 points(mean(cars$speed), mean(cars$dist), pch = "+", cex = 3)
 ```
 
