@@ -25,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2017-03-16">
+<meta name="date" content="2017-03-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -347,7 +347,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
      <span class="dt">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,
      <span class="dt">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,
      <span class="dt">pch  =</span> <span class="dv">20</span>,
-     <span class="dt">cex  =</span> <span class="dv">3</span>,
+     <span class="dt">cex  =</span> <span class="dv">2</span>,
      <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-146-1.png" width="672" /></p>
 <p>Let’s now define some terminology. We have pairs of data, <span class="math inline">\((x_i, y_i)\)</span>, for <span class="math inline">\(i = 1, 2, \ldots n\)</span>, where <span class="math inline">\(n\)</span> is the sample size of the dataset.</p>
@@ -363,6 +363,7 @@ Y = f(X) + \epsilon.
 <li>Response = Prediction + Error</li>
 <li>Response = Signal + Noise</li>
 <li>Response = Model + Unexplained</li>
+<li>Response = Deterministic + Random</li>
 <li>Response = Explainable + Unexplainable</li>
 </ul>
 <p>What sort of function should we use for <span class="math inline">\(f(X)\)</span> for the <code>cars</code> data?</p>
@@ -382,22 +383,26 @@ Y = \beta_0 + \beta_1 X + \epsilon.
 <p><span class="math display">\[
 Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 \]</span></p>
-<p>where <span class="math inline">\(\epsilon_i \sim N(0, \sigma^2)\)</span>. That is, the <span class="math inline">\(\epsilon_i\)</span> are <em>independent and identically distributed</em> (iid) normal random variables with mean <span class="math inline">\(0\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. This model has three parameters to be estimated: <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>, and <span class="math inline">\(\sigma^2\)</span>, which are fixed, but unknown constants.</p>
+<p>where</p>
+<p><span class="math display">\[
+\epsilon_i \sim N(0, \sigma^2).
+\]</span></p>
+<p>That is, the <span class="math inline">\(\epsilon_i\)</span> are <em>independent and identically distributed</em> (iid) normal random variables with mean <span class="math inline">\(0\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. This model has three parameters to be estimated: <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>, and <span class="math inline">\(\sigma^2\)</span>, which are fixed, but unknown constants.</p>
 <p>We have slightly modified our notation here. We are now using <span class="math inline">\(Y_i\)</span> and <span class="math inline">\(x_i\)</span>, since we will be fitting this model to a set of <span class="math inline">\(n\)</span> data points, for <span class="math inline">\(i = 1, 2, \ldots n\)</span>.</p>
 <p>Recall that we use capital <span class="math inline">\(Y\)</span> to indicate a random variable, and lower case <span class="math inline">\(y\)</span> to denote a potential value of the random variable. Since we will have <span class="math inline">\(n\)</span> observations, we have <span class="math inline">\(n\)</span> random variables <span class="math inline">\(Y_i\)</span> and their possible values <span class="math inline">\(y_i\)</span>.</p>
 <p>In the simple linear regression model, the <span class="math inline">\(x_i\)</span> are assumed to be fixed, known constants, and are thus notated with a lower case variable. The response <span class="math inline">\(Y_i\)</span> remains a random variable because of the random behavior of the error variable, <span class="math inline">\(\epsilon_i\)</span>. That is, each response <span class="math inline">\(Y_i\)</span> is tied to an observable <span class="math inline">\(x_i\)</span> and a random, unobservable, <span class="math inline">\(\epsilon_i\)</span>.</p>
 <p>The random <span class="math inline">\(Y_i\)</span> are a function of <span class="math inline">\(x_i\)</span>, thus we can write its mean as a function of <span class="math inline">\(x_i\)</span>,</p>
 <p><span class="math display">\[
-E[Y_i] = \beta_0 + \beta_1 x_i.
+\text{E}[Y_i] = \beta_0 + \beta_1 x_i.
 \]</span></p>
 <p>However, its variance remains constant for each <span class="math inline">\(x_i\)</span>,</p>
 <p><span class="math display">\[
-Var[Y_i] = \sigma^2.
+\text{Var}[Y_i] = \sigma^2.
 \]</span></p>
 <p>This is visually displayed in the image below. We see that for any value <span class="math inline">\(x\)</span>, the expected value of <span class="math inline">\(Y\)</span> is <span class="math inline">\(\beta_0 + \beta_1 x\)</span>. At each value of <span class="math inline">\(x\)</span>, <span class="math inline">\(Y\)</span> has the same variance <span class="math inline">\(\sigma^2\)</span>.</p>
 <div class="figure">
-<img src="images/model.jpg" alt="Simple Linear Regression Model UC David Stat Wiki" />
-<p class="caption">Simple Linear Regression Model <a href="http://statwiki.ucdavis.edu/Textbook_Maps/General_Statistics/Map%3A_Introductory_Statistics_(Shafer_and_Zhang)/10%3A_Correlation_and_Regression/10.3_Modelling_Linear_Relationships_with_Randomness_Present">UC David Stat Wiki</a></p>
+<img src="images/model.jpg" alt="Simple Linear Regression Model Introductory Statistics (Shafer and Zhang), UC David Stat Wiki" />
+<p class="caption">Simple Linear Regression Model <a href="http://statwiki.ucdavis.edu/Textbook_Maps/General_Statistics/Map%3A_Introductory_Statistics_(Shafer_and_Zhang)/10%3A_Correlation_and_Regression/10.3_Modelling_Linear_Relationships_with_Randomness_Present">Introductory Statistics (Shafer and Zhang), UC David Stat Wiki</a></p>
 </div>
 <p>Often, we directly talk about the assumptions that this model makes. They can be cleverly shortened to <strong>LINE</strong>.</p>
 <ul>
@@ -406,11 +411,12 @@ Var[Y_i] = \sigma^2.
 <li><strong>N</strong>ormal. The errors, <span class="math inline">\(\epsilon\)</span> are normally distributed. That is the “error” around the line follows a normal distribution.</li>
 <li><strong>E</strong>qual Variance. At each value of <span class="math inline">\(x\)</span>, the variance of <span class="math inline">\(Y\)</span> is the same, <span class="math inline">\(\sigma^2\)</span>.</li>
 </ul>
+<p>We are also assuming that the values of <span class="math inline">\(x\)</span> are fixed, that is, not random. We do not make a distributional assumption about the predictor variable.</p>
 <p>As a side note, we will often refer to simple linear regression as <strong>SLR</strong>. Some explanation of the name SLR:</p>
 <ul>
 <li><strong>Simple</strong> refers to the fact that we are using a single predictor variable. Later we will use multiple predictor variables.</li>
 <li><strong>Linear</strong> tells us that our model for <span class="math inline">\(Y\)</span> is a linear combination of the predictors <span class="math inline">\(X\)</span>. (In this case just the one.) Right now, this always results in a model that is a line, but later we will see how this is not always the case.</li>
-<li><strong>Regression</strong> simply means that we are attempting to measure the relationship between a response variable and (one or more) predictor variables.</li>
+<li><strong>Regression</strong> simply means that we are attempting to measure the relationship between a <em>numeric</em> response variable and (one or more) predictor variables.</li>
 </ul>
 <p>So SLR models <span class="math inline">\(Y\)</span> as a linear function of <span class="math inline">\(X\)</span>, but how do we actually define a good line? There are an infinite number of lines we could use, so we will attempt to find one with “small errors.” That is a line with as many points as close to it as possible. The questions now becomes, how do we find such a line? There are many approaches we could take.</p>
 <p>We could find the line that has the smallest maximum distance from any of the points to the line. That is,</p>
@@ -493,8 +499,8 @@ beta_0_hat =<span class="st"> </span><span class="kw">mean</span>(y) -<span clas
 <pre><code>## [1] -17.579095   3.932409</code></pre>
 <p>What do these values tell us about our dataset?</p>
 <p>The slope <em>parameter</em> <span class="math inline">\(\beta_1\)</span> tells us that for an increase in speed of one mile per hour, the <strong>mean</strong> stopping distance increases by <span class="math inline">\(\beta_1\)</span>. It is important to specify that we are talking about the mean. Recall that <span class="math inline">\(\beta_0 + \beta_1 x\)</span> is the estimated mean of <span class="math inline">\(Y\)</span>, in this case stopping distance, for a particular value of <span class="math inline">\(x\)</span>. (In this case speed.) So <span class="math inline">\(\beta_1\)</span> tells us how the mean of <span class="math inline">\(Y\)</span> is affected by a change in <span class="math inline">\(x\)</span>.</p>
-<p>Similarly, the <em>estimate</em> <span class="math inline">\(\hat{\beta}_1 = 3.932\)</span> tells us that for an increase in speed of one mile per hour, the <strong>estimated</strong> <em>mean</em> stopping distance increases by <span class="math inline">\(3.932\)</span> feet. Here we should be sure to specify we are discussing an estimated quantity. Recall that <span class="math inline">\(\hat{y}\)</span> is the estimated mean of <span class="math inline">\(Y\)</span>, so <span class="math inline">\(\hat{\beta}_1\)</span> tells us how the estimated mean of <span class="math inline">\(Y\)</span> is affected by changing <span class="math inline">\(x\)</span>.</p>
-<p>The intercept <em>parameter</em> <span class="math inline">\(\beta_0\)</span> tells us the <strong>mean</strong> stopping distance for a car traveling zero miles per hour. (Not moving.) The <em>estimate</em> <span class="math inline">\(\hat{\beta}_0 = -17.579\)</span> tells us that the <strong>estimated</strong> mean stopping distance for a car traveling zero miles per hour is <span class="math inline">\(-17.579\)</span> feet. So when you apply the brakes to a car that is not moving, it moves backwards? This doesn’t seem right. (Extrapolation, which we will see later, is the issue here.)</p>
+<p>Similarly, the <em>estimate</em> <span class="math inline">\(\hat{\beta}_1 = 3.93\)</span> tells us that for an increase in speed of one mile per hour, the <strong>estimated</strong> <em>mean</em> stopping distance increases by <span class="math inline">\(3.93\)</span> feet. Here we should be sure to specify we are discussing an estimated quantity. Recall that <span class="math inline">\(\hat{y}\)</span> is the estimated mean of <span class="math inline">\(Y\)</span>, so <span class="math inline">\(\hat{\beta}_1\)</span> tells us how the estimated mean of <span class="math inline">\(Y\)</span> is affected by changing <span class="math inline">\(x\)</span>.</p>
+<p>The intercept <em>parameter</em> <span class="math inline">\(\beta_0\)</span> tells us the <strong>mean</strong> stopping distance for a car traveling zero miles per hour. (Not moving.) The <em>estimate</em> <span class="math inline">\(\hat{\beta}_0 = -17.58\)</span> tells us that the <strong>estimated</strong> mean stopping distance for a car traveling zero miles per hour is <span class="math inline">\(-17.58\)</span> feet. So when you apply the brakes to a car that is not moving, it moves backwards? This doesn’t seem right. (Extrapolation, which we will see later, is the issue here.)</p>
 <div id="making-predictions" class="section level3">
 <h3><span class="header-section-number">3.2.1</span> Making Predictions</h3>
 <p>We can now write the <strong>fitted</strong> or estimated line,</p>
@@ -503,18 +509,18 @@ beta_0_hat =<span class="st"> </span><span class="kw">mean</span>(y) -<span clas
 \]</span></p>
 <p>In this case,</p>
 <p><span class="math display">\[
-\hat{y} = -17.579 + 3.932 x.
+\hat{y} = -17.58 + 3.93 x.
 \]</span></p>
 <p>We can now use this line to make predictions. First, let’s see the possible <span class="math inline">\(x\)</span> values in the <code>cars</code> dataset. Since some <span class="math inline">\(x\)</span> values may appear more than once, we use the <code>unique()</code> to return each unique value only once.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unique</span>(cars$speed)</code></pre></div>
 <pre><code>##  [1]  4  7  8  9 10 11 12 13 14 15 16 17 18 19 20 22 23 24 25</code></pre>
 <p>Let’s make a prediction for the stopping distance of a car traveling at 8 miles per hour.</p>
 <p><span class="math display">\[
-\hat{y} = -17.579 + 3.932 \times 8 = 13.88
+\hat{y} = -17.58 + 3.93 \times 8 % = 13.88
 \]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beta_0_hat +<span class="st"> </span>beta_1_hat *<span class="st"> </span><span class="dv">8</span></code></pre></div>
 <pre><code>## [1] 13.88018</code></pre>
-<p>This tells us that the estimated mean stopping distance of a car traveling at 8 miles per hour is 13.88.</p>
+<p>This tells us that the estimated mean stopping distance of a car traveling at 8 miles per hour is <span class="math inline">\(13.88\)</span>.</p>
 <p>Now let’s make a prediction for the stopping distance of a car traveling at 21 miles per hour. This is considered <strong>interpolation</strong> as 21 is not an observed value of <span class="math inline">\(x\)</span>. (But is in the data range.) We can use the special <code>%in%</code> operator to quickly verify this in <code>R</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">8</span> %in%<span class="st"> </span><span class="kw">unique</span>(cars$speed)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
@@ -523,7 +529,7 @@ beta_0_hat =<span class="st"> </span><span class="kw">mean</span>(y) -<span clas
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">min</span>(cars$speed) &lt;<span class="st"> </span><span class="dv">21</span> &amp;<span class="st"> </span><span class="dv">21</span> &lt;<span class="st"> </span><span class="kw">max</span>(cars$speed)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p><span class="math display">\[
-\hat{y} = -17.579 + 3.932 \times 21 = 65.001
+\hat{y} = -17.58 + 3.93 \times 21 % = 65
 \]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beta_0_hat +<span class="st"> </span>beta_1_hat *<span class="st"> </span><span class="dv">21</span></code></pre></div>
 <pre><code>## [1] 65.00149</code></pre>
@@ -533,12 +539,12 @@ beta_0_hat =<span class="st"> </span><span class="kw">mean</span>(y) -<span clas
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">range</span>(cars$speed)[<span class="dv">1</span>] &lt;<span class="st"> </span><span class="dv">50</span> &amp;<span class="st"> </span><span class="dv">50</span> &lt;<span class="st"> </span><span class="kw">range</span>(cars$speed)[<span class="dv">2</span>] </code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <p><span class="math display">\[
-\hat{y} = -17.579 + 3.932 \times 50 = 179.041
+\hat{y} = -17.58 + 3.93 \times 50 % = 179.04
 \]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">beta_0_hat +<span class="st"> </span>beta_1_hat *<span class="st"> </span><span class="dv">50</span></code></pre></div>
 <pre><code>## [1] 179.0413</code></pre>
 <p>Cars travel 50 miles per hour rather easily today, but not in the 1920s!</p>
-<p>This is also an issue we saw when interpreting <span class="math inline">\(\hat{\beta}_0 = -17.579\)</span>, which is equivalent to making a prediction at <span class="math inline">\(x = 0\)</span>. We should not be confident in the estimated linear relationship outside of the range of data we have observed.</p>
+<p>This is also an issue we saw when interpreting <span class="math inline">\(\hat{\beta}_0 = -17.58\)</span>, which is equivalent to making a prediction at <span class="math inline">\(x = 0\)</span>. We should not be confident in the estimated linear relationship outside of the range of data we have observed.</p>
 </div>
 <div id="residuals" class="section level3">
 <h3><span class="header-section-number">3.2.2</span> Residuals</h3>
@@ -572,7 +578,7 @@ e = 16 - 13.88 = 2.12
 <p>We’ll now use the residuals for each of the points to create an estimate for the variance, <span class="math inline">\(\sigma^2\)</span>.</p>
 <p>Recall that,</p>
 <p><span class="math display">\[
-E[Y_i] = \beta_0 + \beta_1 x_i.
+\text{E}[Y_i] = \beta_0 + \beta_1 x_i.
 \]</span></p>
 <p>So,</p>
 <p><span class="math display">\[
@@ -582,7 +588,8 @@ E[Y_i] = \beta_0 + \beta_1 x_i.
 <p>Also, recall that when we specified the model, we had three unknown parameters; <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>, and <span class="math inline">\(\sigma^2\)</span>. The method of least squares gave us estimates for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, however, we have yet to see an estimate for <span class="math inline">\(\sigma^2\)</span>. We will now define <span class="math inline">\(s_e^2\)</span> which will be an estimate for <span class="math inline">\(\sigma^2\)</span>.</p>
 <p><span class="math display">\[
 \begin{aligned}
-s_e^2 &amp;= \frac{1}{n - 2} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2 \\
+s_e^2 &amp;= \frac{1}{n - 2} \sum_{i = 1}^{n}(y_i - (\hat{\beta}_0 + \hat{\beta}_1 x_i))^2 \\
+      &amp;= \frac{1}{n - 2} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2 \\
       &amp;= \frac{1}{n - 2} \sum_{i = 1}^{n} e_i^2
 \end{aligned}
 \]</span></p>
@@ -598,7 +605,7 @@ n     =<span class="st"> </span><span class="kw">length</span>(e)
 s2_e  =<span class="st"> </span><span class="kw">sum</span>(e^<span class="dv">2</span>) /<span class="st"> </span>(n -<span class="st"> </span><span class="dv">2</span>)
 s2_e</code></pre></div>
 <pre><code>## [1] 236.5317</code></pre>
-<p>Just as with the univariate measure of variance, this value of 236.532 doesn’t have a practical interpretation in terms of stopping distance. Taking the square root, however, computes the standard deviation of the residuals, also known as <em>residual standard error</em>.</p>
+<p>Just as with the univariate measure of variance, this value of 236.53 doesn’t have a practical interpretation in terms of stopping distance. Taking the square root, however, computes the standard deviation of the residuals, also known as <em>residual standard error</em>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s_e =<span class="st"> </span><span class="kw">sqrt</span>(s2_e)
 s_e</code></pre></div>
 <pre><code>## [1] 15.37959</code></pre>
@@ -621,26 +628,26 @@ y_i - \bar{y} = (y_i - \hat{y}_i) + (\hat{y}_i - \bar{y}).
 <div id="sum-of-squares-total" class="section level4 unnumbered">
 <h4>Sum of Squares Total</h4>
 <p><span class="math display">\[
-SST = \sum_{i=1}^{n}(y_i - \bar{y})^2
+\text{SST} = \sum_{i=1}^{n}(y_i - \bar{y})^2
 \]</span></p>
-<p>The quantity “Sum of Squares Total,” or <span class="math inline">\(SST\)</span>, represents the <strong>total variation</strong> of the observed <span class="math inline">\(y\)</span> values. This should be a familiar looking expression. Note that,</p>
+<p>The quantity “Sum of Squares Total,” or <span class="math inline">\(\text{SST}\)</span>, represents the <strong>total variation</strong> of the observed <span class="math inline">\(y\)</span> values. This should be a familiar looking expression. Note that,</p>
 <p><span class="math display">\[
-s ^ 2 = \frac{1}{n - 1}\sum_{i=1}^{n}(y_i - \bar{y})^2 = \frac{1}{n - 1} SST.
+s ^ 2 = \frac{1}{n - 1}\sum_{i=1}^{n}(y_i - \bar{y})^2 = \frac{1}{n - 1} \text{SST}.
 \]</span></p>
 </div>
 <div id="sum-of-squares-regression" class="section level4 unnumbered">
 <h4>Sum of Squares Regression</h4>
 <p><span class="math display">\[
-SSReg = \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2
+\text{SSReg} = \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2
 \]</span></p>
-<p>The quantity “Sum of Squares Regression,” <span class="math inline">\(SSReg\)</span>, represents the <strong>explained variation</strong> of the observed <span class="math inline">\(y\)</span> values.</p>
+<p>The quantity “Sum of Squares Regression,” <span class="math inline">\(\text{SSReg}\)</span>, represents the <strong>explained variation</strong> of the observed <span class="math inline">\(y\)</span> values.</p>
 </div>
 <div id="sum-of-squares-error" class="section level4 unnumbered">
 <h4>Sum of Squares Error</h4>
 <p><span class="math display">\[
-SSE = RSS = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2
+\text{SSE} = \text{RSS} = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2
 \]</span></p>
-<p>The quantity “Sum of Squares Error,” <span class="math inline">\(SSE\)</span>, represents the <strong>unexplained variation</strong> of the observed <span class="math inline">\(y\)</span> values. You will often see <span class="math inline">\(SSE\)</span> written as <span class="math inline">\(RSS\)</span>, or “Residual Sum of Squares.”</p>
+<p>The quantity “Sum of Squares Error,” <span class="math inline">\(\text{SSE}\)</span>, represents the <strong>unexplained variation</strong> of the observed <span class="math inline">\(y\)</span> values. You will often see <span class="math inline">\(\text{SSE}\)</span> written as <span class="math inline">\(\text{RSS}\)</span>, or “Residual Sum of Squares.”</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SST   =<span class="st"> </span><span class="kw">sum</span>((y -<span class="st"> </span><span class="kw">mean</span>(y)) ^<span class="st"> </span><span class="dv">2</span>)
 SSReg =<span class="st"> </span><span class="kw">sum</span>((y_hat -<span class="st"> </span><span class="kw">mean</span>(y)) ^<span class="st"> </span><span class="dv">2</span>)
 SSE   =<span class="st"> </span><span class="kw">sum</span>((y -<span class="st"> </span>y_hat) ^<span class="st"> </span><span class="dv">2</span>)
@@ -649,7 +656,7 @@ SSE   =<span class="st"> </span><span class="kw">sum</span>((y -<span class="st"
 ## 32538.98 21185.46 11353.52</code></pre>
 <p>Note that,</p>
 <p><span class="math display">\[
-s_e^2 = \frac{SSE}{n - 2}.
+s_e^2 = \frac{\text{SSE}}{n - 2}.
 \]</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SSE /<span class="st"> </span>(n -<span class="st"> </span><span class="dv">2</span>)</code></pre></div>
 <pre><code>## [1] 236.5317</code></pre>
@@ -663,18 +670,18 @@ s_e^2 = \frac{SSE}{n - 2}.
 <p>The <strong>coefficient of determination</strong>, <span class="math inline">\(R^2\)</span>, is defined as</p>
 <p><span class="math display">\[
 R^2 = \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} =
-\frac{SSReg}{SST} = 
+\frac{\text{SSReg}}{\text{SST}} = 
 1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} = 
-1 - \frac{\sum_{i = 1}^{n}e_i^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} = 1 - \frac{SSE}{SST}
+1 - \frac{\sum_{i = 1}^{n}e_i^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} = 1 - \frac{\text{SSE}}{\text{SST}}
 \]</span></p>
 <p>The coefficient of determination is interpreted as the proportion of observed variation in <span class="math inline">\(y\)</span> that can be explained by the simple linear regression model.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">R2 =<span class="st"> </span>SSReg /<span class="st"> </span>SST
 R2</code></pre></div>
 <pre><code>## [1] 0.6510794</code></pre>
-<p>For the <code>cars</code> example, we calculate <span class="math inline">\(R^2 = 0.651\)</span>. We then say that <span class="math inline">\(65.1\%\)</span> of the observed variability in stopping distance is explained by the linear relationship with speed.</p>
-<p>The following three plots visually demonstrate the three “sums of squares” for a simulated dataset which has <span class="math inline">\(R^2 = 0.901\)</span> which is a somewhat high value. Notice in the third plot, that the orange arrows account for a larger proportion of the total arrow.</p>
+<p>For the <code>cars</code> example, we calculate <span class="math inline">\(R^2 = 0.65\)</span>. We then say that <span class="math inline">\(65.1\%\)</span> of the observed variability in stopping distance is explained by the linear relationship with speed.</p>
+<p>The following three plots visually demonstrate the three “sums of squares” for a simulated dataset which has <span class="math inline">\(R^2 = 0.9\)</span> which is a somewhat high value. Notice in the third plot, that the orange arrows account for a larger proportion of the total arrow.</p>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-167-1.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-167-2.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-167-3.png" width="672" /></p>
-<p>The next three plots again visually demonstrate the three “sums of squares,” this time for a simulated dataset which has <span class="math inline">\(R^2 = 0.459\)</span>. Notice in the third plot, that now the blue arrows account for a larger proportion of the total arrow.</p>
+<p>The next three plots again visually demonstrate the three “sums of squares,” this time for a simulated dataset which has <span class="math inline">\(R^2 = 0.46\)</span>. Notice in the third plot, that now the blue arrows account for a larger proportion of the total arrow.</p>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-169-1.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-169-2.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-169-3.png" width="672" /></p>
 </div>
 </div>
@@ -703,7 +710,7 @@ R2</code></pre></div>
      <span class="dt">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,
      <span class="dt">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,
      <span class="dt">pch  =</span> <span class="dv">20</span>,
-     <span class="dt">cex  =</span> <span class="dv">3</span>,
+     <span class="dt">cex  =</span> <span class="dv">2</span>,
      <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 <span class="kw">abline</span>(stop_dist_model, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-173-1.png" width="672" /></p>
@@ -800,7 +807,7 @@ R2</code></pre></div>
 <pre><code>## [1] 15.37959</code></pre>
 <p>Note that this is the same result seen earlier as <code>s_e</code>. You may also notice that this value was display above as a result of the <code>summary()</code> command, which <code>R</code> labeled the “Residual Standard Error.”</p>
 <p><span class="math display">\[
-s_e = RSE = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
+s_e = \text{RSE} = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 \]</span></p>
 <p>Often it is useful to talk about <span class="math inline">\(s_e\)</span> (or RSE) instead of <span class="math inline">\(s_e^2\)</span> because of their units. The units of <span class="math inline">\(s_e\)</span> in the <code>cars</code> example is feet, while the units of <span class="math inline">\(s_e^2\)</span> is feet-squared.</p>
 <p>Another useful function, which we will use almost as often as <code>lm()</code> is the <code>predict()</code> function.</p>
@@ -814,9 +821,9 @@ s_e = RSE = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 ##  13.88018  65.00149 179.04134</code></pre>
 <p><span class="math display">\[
 \begin{aligned}
-\hat{y} &amp;= -17.579 + 3.932 \times 8 = 13.88 \\
-\hat{y} &amp;= -17.579 + 3.932 \times 21 = 65.001 \\
-\hat{y} &amp;= -17.579 + 3.932 \times 50 = 179.041
+\hat{y} &amp;= -17.58 + 3.93 \times 8 = 13.88 \\
+\hat{y} &amp;= -17.58 + 3.93 \times 21 = 65 \\
+\hat{y} &amp;= -17.58 + 3.93 \times 50 = 179.04
 \end{aligned}
 \]</span></p>
 <p>Or we could calculate the fitted value for each of the original data points.</p>
@@ -877,11 +884,14 @@ Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 <p>where <span class="math inline">\(e_i \sim N(0, \sigma^2)\)</span>.</p>
 <p>Then we can find the mean and variance of each <span class="math inline">\(Y_i\)</span>.</p>
 <p><span class="math display">\[
-E[Y_i] = \beta_0 + \beta_1 x_i
+\text{E}[Y_i] = \beta_0 + \beta_1 x_i
 \]</span></p>
 <p>and</p>
 <p><span class="math display">\[
-Var[Y_i] = \sigma^2.
+\text{Var}[Y_i] = \sigma^2.
+\]</span></p>
+<p><span class="math display">\[
+Y_i \mid X_i = x_i \sim N(\beta_0 + \beta_1 x_i, \sigma^2)
 \]</span></p>
 <p>Recall that the pdf of a random variable <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span> is given by</p>
 <p><span class="math display">\[
