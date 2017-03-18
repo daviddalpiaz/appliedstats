@@ -25,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2017-03-17">
+<meta name="date" content="2017-03-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -391,13 +391,17 @@ Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 <p>We have slightly modified our notation here. We are now using <span class="math inline">\(Y_i\)</span> and <span class="math inline">\(x_i\)</span>, since we will be fitting this model to a set of <span class="math inline">\(n\)</span> data points, for <span class="math inline">\(i = 1, 2, \ldots n\)</span>.</p>
 <p>Recall that we use capital <span class="math inline">\(Y\)</span> to indicate a random variable, and lower case <span class="math inline">\(y\)</span> to denote a potential value of the random variable. Since we will have <span class="math inline">\(n\)</span> observations, we have <span class="math inline">\(n\)</span> random variables <span class="math inline">\(Y_i\)</span> and their possible values <span class="math inline">\(y_i\)</span>.</p>
 <p>In the simple linear regression model, the <span class="math inline">\(x_i\)</span> are assumed to be fixed, known constants, and are thus notated with a lower case variable. The response <span class="math inline">\(Y_i\)</span> remains a random variable because of the random behavior of the error variable, <span class="math inline">\(\epsilon_i\)</span>. That is, each response <span class="math inline">\(Y_i\)</span> is tied to an observable <span class="math inline">\(x_i\)</span> and a random, unobservable, <span class="math inline">\(\epsilon_i\)</span>.</p>
+<p>Essentially, we could explicitly think of the <span class="math inline">\(Y_i\)</span> as having a different distribution for each <span class="math inline">\(X_i\)</span>. In other words, <span class="math inline">\(Y_i\)</span> has a conditional distribution dependent on the value of <span class="math inline">\(X_i\)</span>, written <span class="math inline">\(x_i\)</span>. Doing so, we still make no distributional assumptions of the <span class="math inline">\(X_i\)</span>, since we are only interested in the distribution of the <span class="math inline">\(Y_i\)</span> for a particular value <span class="math inline">\(x_i\)</span>.</p>
+<p><span class="math display">\[
+Y_i \mid X_i \sim N(\beta_0 + \beta_1 x_i, \sigma^2)
+\]</span></p>
 <p>The random <span class="math inline">\(Y_i\)</span> are a function of <span class="math inline">\(x_i\)</span>, thus we can write its mean as a function of <span class="math inline">\(x_i\)</span>,</p>
 <p><span class="math display">\[
-\text{E}[Y_i] = \beta_0 + \beta_1 x_i.
+\text{E}[Y_i \mid X_i = x_i] = \beta_0 + \beta_1 x_i.
 \]</span></p>
 <p>However, its variance remains constant for each <span class="math inline">\(x_i\)</span>,</p>
 <p><span class="math display">\[
-\text{Var}[Y_i] = \sigma^2.
+\text{Var}[Y_i \mid X_i = x_i] = \sigma^2.
 \]</span></p>
 <p>This is visually displayed in the image below. We see that for any value <span class="math inline">\(x\)</span>, the expected value of <span class="math inline">\(Y\)</span> is <span class="math inline">\(\beta_0 + \beta_1 x\)</span>. At each value of <span class="math inline">\(x\)</span>, <span class="math inline">\(Y\)</span> has the same variance <span class="math inline">\(\sigma^2\)</span>.</p>
 <div class="figure">
@@ -416,7 +420,7 @@ Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 <ul>
 <li><strong>Simple</strong> refers to the fact that we are using a single predictor variable. Later we will use multiple predictor variables.</li>
 <li><strong>Linear</strong> tells us that our model for <span class="math inline">\(Y\)</span> is a linear combination of the predictors <span class="math inline">\(X\)</span>. (In this case just the one.) Right now, this always results in a model that is a line, but later we will see how this is not always the case.</li>
-<li><strong>Regression</strong> simply means that we are attempting to measure the relationship between a <em>numeric</em> response variable and (one or more) predictor variables.</li>
+<li><strong>Regression</strong> simply means that we are attempting to measure the relationship between a response variable and (one or more) predictor variables. In the case of SLR, both the response and the predictor are <em>numeric</em> variables.</li>
 </ul>
 <p>So SLR models <span class="math inline">\(Y\)</span> as a linear function of <span class="math inline">\(X\)</span>, but how do we actually define a good line? There are an infinite number of lines we could use, so we will attempt to find one with “small errors.” That is a line with as many points as close to it as possible. The questions now becomes, how do we find such a line? There are many approaches we could take.</p>
 <p>We could find the line that has the smallest maximum distance from any of the points to the line. That is,</p>
@@ -578,7 +582,7 @@ e = 16 - 13.88 = 2.12
 <p>We’ll now use the residuals for each of the points to create an estimate for the variance, <span class="math inline">\(\sigma^2\)</span>.</p>
 <p>Recall that,</p>
 <p><span class="math display">\[
-\text{E}[Y_i] = \beta_0 + \beta_1 x_i.
+\text{E}[Y_i \mid X_i = x_i] = \beta_0 + \beta_1 x_i.
 \]</span></p>
 <p>So,</p>
 <p><span class="math display">\[
@@ -669,20 +673,22 @@ s_e^2 = \frac{\text{SSE}}{n - 2}.
 <h3><span class="header-section-number">3.3.1</span> Coefficient of Determination</h3>
 <p>The <strong>coefficient of determination</strong>, <span class="math inline">\(R^2\)</span>, is defined as</p>
 <p><span class="math display">\[
-R^2 = \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} =
-\frac{\text{SSReg}}{\text{SST}} = 
-1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} = 
-1 - \frac{\sum_{i = 1}^{n}e_i^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} = 1 - \frac{\text{SSE}}{\text{SST}}
+\begin{aligned}
+R^2 &amp;= \frac{\text{SSReg}}{\text{SST}} = \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} \\[2.5ex]
+    &amp;= \frac{\text{SST} - \text{SSE}}{\text{SST}} = 1 - \frac{\text{SSE}}{\text{SST}} \\[2.5ex]
+    &amp;= 1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} = 
+1 - \frac{\sum_{i = 1}^{n}e_i^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2}
+\end{aligned}
 \]</span></p>
 <p>The coefficient of determination is interpreted as the proportion of observed variation in <span class="math inline">\(y\)</span> that can be explained by the simple linear regression model.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">R2 =<span class="st"> </span>SSReg /<span class="st"> </span>SST
 R2</code></pre></div>
 <pre><code>## [1] 0.6510794</code></pre>
-<p>For the <code>cars</code> example, we calculate <span class="math inline">\(R^2 = 0.65\)</span>. We then say that <span class="math inline">\(65.1\%\)</span> of the observed variability in stopping distance is explained by the linear relationship with speed.</p>
-<p>The following three plots visually demonstrate the three “sums of squares” for a simulated dataset which has <span class="math inline">\(R^2 = 0.9\)</span> which is a somewhat high value. Notice in the third plot, that the orange arrows account for a larger proportion of the total arrow.</p>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-167-1.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-167-2.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-167-3.png" width="672" /></p>
-<p>The next three plots again visually demonstrate the three “sums of squares,” this time for a simulated dataset which has <span class="math inline">\(R^2 = 0.46\)</span>. Notice in the third plot, that now the blue arrows account for a larger proportion of the total arrow.</p>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-169-1.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-169-2.png" width="672" /><img src="applied_statistics_files/figure-html/unnamed-chunk-169-3.png" width="672" /></p>
+<p>For the <code>cars</code> example, we calculate <span class="math inline">\(R^2 = 0.65\)</span>. We then say that <span class="math inline">\(65\%\)</span> of the observed variability in stopping distance is explained by the linear relationship with speed.</p>
+<p>The following plots visually demonstrate the three “sums of squares” for a simulated dataset which has <span class="math inline">\(R^2 = 0.92\)</span> which is a somewhat high value. Notice in the final plot, that the orange arrows account for a larger proportion of the total arrow.</p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-167-1.png" width="1152" /></p>
+<p>The next plots again visually demonstrate the three “sums of squares,” this time for a simulated dataset which has <span class="math inline">\(R^2 = 0.19\)</span>. Notice in the final plot, that now the blue arrows account for a larger proportion of the total arrow.</p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-169-1.png" width="1152" /></p>
 </div>
 </div>
 <div id="the-lm-function" class="section level2">
@@ -701,7 +707,7 @@ R2</code></pre></div>
 ## Coefficients:
 ## (Intercept)        speed  
 ##     -17.579        3.932</code></pre>
-<p>We see that it first tells us the formula we input into <code>R</code>, that is <code>lm(formula = dist ~ speed, data = cars)</code>. We also see the coefficients of the model. We can check that these are what we had calculated previously. (Minus some rounding that <code>R</code> is doing to display the results.)</p>
+<p>We see that it first tells us the formula we input into <code>R</code>, that is <code>lm(formula = dist ~ speed, data = cars)</code>. We also see the coefficients of the model. We can check that these are what we had calculated previously. (Minus some rounding that <code>R</code> is doing when displaying the results. They are stored with full precision.)</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(beta_0_hat, beta_1_hat)</code></pre></div>
 <pre><code>## [1] -17.579095   3.932409</code></pre>
 <p>Next, it would be nice to add the fitted line to the scatterplot. To do so we will use the <code>abline()</code> function.</p>
@@ -811,12 +817,12 @@ s_e = \text{RSE} = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 \]</span></p>
 <p>Often it is useful to talk about <span class="math inline">\(s_e\)</span> (or RSE) instead of <span class="math inline">\(s_e^2\)</span> because of their units. The units of <span class="math inline">\(s_e\)</span> in the <code>cars</code> example is feet, while the units of <span class="math inline">\(s_e^2\)</span> is feet-squared.</p>
 <p>Another useful function, which we will use almost as often as <code>lm()</code> is the <code>predict()</code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(stop_dist_model, <span class="kw">data.frame</span>(<span class="dt">speed =</span> <span class="dv">8</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(stop_dist_model, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">speed =</span> <span class="dv">8</span>))</code></pre></div>
 <pre><code>##        1 
 ## 13.88018</code></pre>
 <p>The above code reads “predict the stopping distance of a car traveling 8 miles per hour using the <code>stop_dist_model</code>.” Importantly, the second argument to <code>predict()</code> is a data frame that we make in place. We do this so that we can specify that <code>8</code> is a value of <code>speed</code>, so that predict knows how to use it with the model stored in <code>stop_dist_model</code>. We see that this result is what we had calculated “by hand” previously.</p>
 <p>We could also predict multiple values at once.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(stop_dist_model, <span class="kw">data.frame</span>(<span class="dt">speed =</span> <span class="kw">c</span>(<span class="dv">8</span>, <span class="dv">21</span>, <span class="dv">50</span>)))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(stop_dist_model, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">speed =</span> <span class="kw">c</span>(<span class="dv">8</span>, <span class="dv">21</span>, <span class="dv">50</span>)))</code></pre></div>
 <pre><code>##         1         2         3 
 ##  13.88018  65.00149 179.04134</code></pre>
 <p><span class="math display">\[
@@ -826,8 +832,8 @@ s_e = \text{RSE} = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 \hat{y} &amp;= -17.58 + 3.93 \times 50 = 179.04
 \end{aligned}
 \]</span></p>
-<p>Or we could calculate the fitted value for each of the original data points.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(stop_dist_model, <span class="kw">data.frame</span>(<span class="dt">speed =</span> cars$speed))</code></pre></div>
+<p>Or we could calculate the fitted value for each of the original data points. We can simply supply the original data frame, <code>cars</code>, since it contains a variables called <code>speed</code> which has the values we would like to predict at.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(stop_dist_model, <span class="dt">newdata =</span> cars)</code></pre></div>
 <pre><code>##         1         2         3         4         5         6         7         8 
 ## -1.849460 -1.849460  9.947766  9.947766 13.880175 17.812584 21.744993 21.744993 
 ##         9        10        11        12        13        14        15        16 
@@ -842,6 +848,7 @@ s_e = \text{RSE} = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 ## 61.069080 61.069080 61.069080 68.933898 72.866307 76.798715 76.798715 76.798715 
 ##        49        50 
 ## 76.798715 80.731124</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># predict(stop_dist_model, newdata = data.frame(speed = cars$speed))</span></code></pre></div>
 <p>This is actually equivalent to simply calling <code>predict()</code> on <code>stop_dist_model</code> without a second argument.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(stop_dist_model)</code></pre></div>
 <pre><code>##         1         2         3         4         5         6         7         8 
@@ -884,14 +891,15 @@ Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 <p>where <span class="math inline">\(e_i \sim N(0, \sigma^2)\)</span>.</p>
 <p>Then we can find the mean and variance of each <span class="math inline">\(Y_i\)</span>.</p>
 <p><span class="math display">\[
-\text{E}[Y_i] = \beta_0 + \beta_1 x_i
+\text{E}[Y_i \mid X_i = x_i] = \beta_0 + \beta_1 x_i
 \]</span></p>
 <p>and</p>
 <p><span class="math display">\[
-\text{Var}[Y_i] = \sigma^2.
+\text{Var}[Y_i \mid X_i = x_i] = \sigma^2.
 \]</span></p>
+<p>Addtionaly, the <span class="math inline">\(Y_i\)</span> follow a normal distribution conditioned on the <span class="math inline">\(x_i\)</span>.</p>
 <p><span class="math display">\[
-Y_i \mid X_i = x_i \sim N(\beta_0 + \beta_1 x_i, \sigma^2)
+Y_i \mid X_i \sim N(\beta_0 + \beta_1 x_i, \sigma^2)
 \]</span></p>
 <p>Recall that the pdf of a random variable <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span> is given by</p>
 <p><span class="math display">\[
@@ -951,31 +959,32 @@ s_e^2 &amp;= \frac{1}{n - 2} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2 = \frac{1}{n - 
 <h2><span class="header-section-number">3.6</span> Simulating SLR</h2>
 <p>We return again to more examples of simulation. This will be a common theme!</p>
 <p>In practice you will almost never have a true model, and you will use data to attempt to recover information about the unknown true model. With simulation, we decide the true model and simulate data from the it. Then we apply a method to the data, in this case least squares. Now, since we know the true model, we can assess how well it did.</p>
-<p>For this example, we will simulate <code>n = 20</code> observations from the model</p>
+<p>For this example, we will simulate <span class="math inline">\(n = 20\)</span> observations from the model</p>
 <p><span class="math display">\[
-Y = 5 + 2 x + \epsilon.
+Y = 5 - 2 x + \epsilon.
 \]</span></p>
-<p>That is <span class="math inline">\(\beta_0 = 5\)</span>, <span class="math inline">\(\beta_1 = 2\)</span>, and let <span class="math inline">\(\epsilon \sim N(\mu = 0, \sigma^2 = 1)\)</span>. Or, even more succinctly we could write</p>
+<p>That is <span class="math inline">\(\beta_0 = 5\)</span>, <span class="math inline">\(\beta_1 = -2\)</span>, and let <span class="math inline">\(\epsilon \sim N(\mu = 0, \sigma^2 = 1)\)</span>. Or, even more succinctly we could write</p>
 <p><span class="math display">\[
-Y \mid X = x \sim N(\mu = 5 + 2 x, \sigma^ 2 = 1).
+Y \mid X \sim N(\mu = 5 - 2 x, \sigma^ 2 = 1).
 \]</span></p>
 <p>We first set the true parameters of the model to be simulated.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n       =<span class="st"> </span><span class="dv">20</span>
 beta_0  =<span class="st"> </span><span class="dv">5</span>
-beta_1  =<span class="st"> </span><span class="dv">2</span>
+beta_1  =<span class="st"> </span>-<span class="dv">2</span>
 sigma   =<span class="st"> </span><span class="dv">1</span></code></pre></div>
 <p>Next, we obtain simulated values of <span class="math inline">\(\epsilon_i\)</span> after setting a seed for reproducibility.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
 epsilon =<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> sigma)</code></pre></div>
-<p>Now, since the <span class="math inline">\(x_i\)</span> values in SLR are considered fixed and known, we simply generate them from a uniform distribution, and then use them for the remainder of the analysis. Know that this is an arbitrary, but common practice.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x =<span class="st"> </span><span class="kw">runif</span>(n, <span class="dv">0</span>, <span class="dv">10</span>)</code></pre></div>
+<p>Now, since the <span class="math inline">\(x_i\)</span> values in SLR are considered fixed and known, we simply generate them from a uniform distribution, and then use them for the remainder of the analysis. Know that this is an arbitrary, but common practice. We could have also specified 20 specific values of our choice.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
+x =<span class="st"> </span><span class="kw">runif</span>(n, <span class="dv">0</span>, <span class="dv">10</span>)</code></pre></div>
 <p>We then generate the <span class="math inline">\(y\)</span> values according the specified functional relationship.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y =<span class="st"> </span>beta_0 +<span class="st"> </span>beta_1 *<span class="st"> </span>x +<span class="st"> </span>epsilon</code></pre></div>
 <p>The data, <span class="math inline">\((x_i, y_i)\)</span>, represent a possible sample from the true distribution. Now to check how well the method of least squares works, we use <code>lm()</code> to fit the model to our simulated data, then take a look at the estimated coefficients.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_fit =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x)
 <span class="kw">coef</span>(sim_fit)</code></pre></div>
 <pre><code>## (Intercept)           x 
-##    4.410157    2.147387</code></pre>
+##    4.328924   -1.859251</code></pre>
 <p>And look at that, they aren’t too far from the true parameters we specified!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y ~<span class="st"> </span>x)
 <span class="kw">abline</span>(sim_fit)</code></pre></div>
@@ -989,21 +998,22 @@ epsilon =<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="
   <span class="kw">data.frame</span>(<span class="dt">predictor =</span> x, <span class="dt">response =</span> y)
 }</code></pre></div>
 <p>Here, we use the function to repeat the analysis above.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_data =<span class="st"> </span><span class="kw">sim_slr</span>(<span class="dt">x =</span> x, <span class="dt">beta_0 =</span> <span class="dv">5</span>, <span class="dt">beta_1 =</span> <span class="dv">2</span>, <span class="dt">sigma =</span> <span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
+sim_data =<span class="st"> </span><span class="kw">sim_slr</span>(<span class="dt">x =</span> x, <span class="dt">beta_0 =</span> <span class="dv">5</span>, <span class="dt">beta_1 =</span> -<span class="dv">2</span>, <span class="dt">sigma =</span> <span class="dv">1</span>)</code></pre></div>
 <p>This time, the simulated observations are stored in a data frame.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(sim_data)</code></pre></div>
-<pre><code>##   predictor  response
-## 1 3.7955924 13.046635
-## 2 4.3577158 14.420269
-## 3 0.3743103  6.783724
-## 4 9.7353991 23.861872
-## 5 4.3175125 14.139980
-## 6 9.5757660 22.434523</code></pre>
+<pre><code>##   predictor    response
+## 1  9.148060 -11.9251624
+## 2  9.370754 -14.3062064
+## 3  2.861395  -0.3596623
+## 4  8.304476 -10.9760899
+## 5  6.417455  -7.4306421
+## 6  5.190959  -5.4880435</code></pre>
 <p>Now when we fit the model with <code>lm()</code> we can use a <code>data</code> argument, a very good practice.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_fit =<span class="st"> </span><span class="kw">lm</span>(response ~<span class="st"> </span>predictor, <span class="dt">data =</span> sim_data)
 <span class="kw">coef</span>(sim_fit)</code></pre></div>
 <pre><code>## (Intercept)   predictor 
-##    5.809358    1.811201</code></pre>
+##    4.328924   -1.859251</code></pre>
 <p>And this time, we’ll make the plot look a lot nicer.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(response ~<span class="st"> </span>predictor, <span class="dt">data =</span> sim_data,
      <span class="dt">xlab =</span> <span class="st">&quot;Simulated Predictor Variable&quot;</span>,
@@ -1011,8 +1021,11 @@ epsilon =<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="
      <span class="dt">main =</span> <span class="st">&quot;Simulated Regression Data&quot;</span>,
      <span class="dt">pch  =</span> <span class="dv">20</span>,
      <span class="dt">cex  =</span> <span class="dv">2</span>,
-     <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-<span class="kw">abline</span>(sim_fit, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</code></pre></div>
+     <span class="dt">col  =</span> <span class="st">&quot;grey&quot;</span>)
+<span class="kw">abline</span>(sim_fit, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)
+<span class="kw">abline</span>(beta_0, beta_1, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
+<span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Estimate&quot;</span>, <span class="st">&quot;Truth&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">lwd =</span> <span class="dv">2</span>,
+       <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>))</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-196-1.png" width="672" /></p>
 </div>
 <div id="history" class="section level2">
