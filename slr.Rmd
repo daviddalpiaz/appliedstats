@@ -147,18 +147,24 @@ We have slightly modified our notation here. We are now using $Y_i$ and $x_i$, s
 
 Recall that we use capital $Y$ to indicate a random variable, and lower case $y$ to denote a potential value of the random variable. Since we will have $n$ observations, we have $n$ random variables $Y_i$ and their possible values $y_i$.
 
-In the simple linear regression model, the $x_i$ are assumed to be fixed, known constants, and are thus notated with a lower case variable. The response $Y_i$ remains a random variable because of the random behavior of the error variable, $\epsilon_i$. That is, each response $Y_i$ is tied to an observable $x_i$ and a random, unobservable, $\epsilon_i$.  
+In the simple linear regression model, the $x_i$ are assumed to be fixed, known constants, and are thus notated with a lower case variable. The response $Y_i$ remains a random variable because of the random behavior of the error variable, $\epsilon_i$. That is, each response $Y_i$ is tied to an observable $x_i$ and a random, unobservable, $\epsilon_i$.
+
+Essentially, we could explicitly think of the $Y_i$ as having a different distribution for each $X_i$. In other words, $Y_i$ has a conditional distribution dependent on the value of $X_i$, written $x_i$. Doing so, we still make no distributional assumptions of the $X_i$, since we are only interested in the distribution of the $Y_i$ for a particular value $x_i$. 
+
+$$
+Y_i \mid X_i \sim N(\beta_0 + \beta_1 x_i, \sigma^2)
+$$
 
 The random $Y_i$ are a function of $x_i$, thus we can write its mean as a function of $x_i$,
 
 $$
-\text{E}[Y_i] = \beta_0 + \beta_1 x_i.
+\text{E}[Y_i \mid X_i = x_i] = \beta_0 + \beta_1 x_i.
 $$
 
 However, its variance remains constant for each $x_i$,
 
 $$
-\text{Var}[Y_i] = \sigma^2.
+\text{Var}[Y_i \mid X_i = x_i] = \sigma^2.
 $$
 
 This is visually displayed in the image below. We see that for any value $x$, the expected value of $Y$ is $\beta_0 + \beta_1 x$. At each value of $x$, $Y$ has the same variance $\sigma^2$.
@@ -178,7 +184,7 @@ As a side note, we will often refer to simple linear regression as **SLR**. Some
 
 - **Simple** refers to the fact that we are using a single predictor variable. Later we will use multiple predictor variables.
 - **Linear** tells us that our model for $Y$ is a linear combination of the predictors $X$. (In this case just the one.) Right now, this always results in a model that is a line, but later we will see how this is not always the case.
-- **Regression** simply means that we are attempting to measure the relationship between a *numeric* response variable and (one or more) predictor variables.
+- **Regression** simply means that we are attempting to measure the relationship between a response variable and (one or more) predictor variables. In the case of SLR, both the response and the predictor are *numeric* variables. 
 
 So SLR models $Y$ as a linear function of $X$, but how do we actually define a good line? There are an infinite number of lines we could use, so we will attempt to find one with "small errors." That is a line with as many points as close to it as possible. The questions now becomes, how do we find such a line? There are many approaches we could take.
 
@@ -411,7 +417,7 @@ We'll now use the residuals for each of the points to create an estimate for the
 Recall that,
 
 $$
-\text{E}[Y_i] = \beta_0 + \beta_1 x_i.
+\text{E}[Y_i \mid X_i = x_i] = \beta_0 + \beta_1 x_i.
 $$
 
 So,
@@ -537,10 +543,12 @@ These three measures also do not have an important practical interpretation indi
 The **coefficient of determination**, $R^2$, is defined as
 
 $$
-R^2 = \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} =
-\frac{\text{SSReg}}{\text{SST}} = 
-1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} = 
-1 - \frac{\sum_{i = 1}^{n}e_i^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} = 1 - \frac{\text{SSE}}{\text{SST}}
+\begin{aligned}
+R^2 &= \frac{\text{SSReg}}{\text{SST}} = \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} \\[2.5ex]
+    &= \frac{\text{SST} - \text{SSE}}{\text{SST}} = 1 - \frac{\text{SSE}}{\text{SST}} \\[2.5ex]
+    &= 1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} = 
+1 - \frac{\sum_{i = 1}^{n}e_i^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2}
+\end{aligned}
 $$
 
 The coefficient of determination is interpreted as the proportion of observed variation in $y$ that can be explained by the simple linear regression model.
@@ -550,20 +558,15 @@ R2 = SSReg / SST
 R2
 ```
 
-For the `cars` example, we calculate $R^2 = `r round(R2, 2)`$. We then say that $`r round(R2, 3)*100`\%$ of the observed variability in stopping distance is explained by the linear relationship with speed.
+For the `cars` example, we calculate $R^2 = `r round(R2, 2)`$. We then say that $`r round(R2, 2) * 100`\%$ of the observed variability in stopping distance is explained by the linear relationship with speed.
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
-## TODO: this code can be made much better
-# show for different R^2 values?
-#
-
-set.seed(42)
 generate_data = function(int = 1,
-                          slope = 2,
-                          sigma = 5,
-                          n_obs = 15,
-                          x_min = 0,
-                          x_max = 10) {
+                         slope = 2,
+                         sigma = 5,
+                         n_obs = 15,
+                         x_min = 0,
+                         x_max = 10) {
   x = seq(x_min, x_max, length.out = n_obs)
   y = int + slope * x + rnorm(n_obs, 0, sigma)
   fit = lm(y ~ x)
@@ -576,11 +579,21 @@ plot_total_dev = function(reg_data) {
   plot(reg_data$x, reg_data$y, main = "SST (Sum of Squares Total)", 
        xlab = "x", ylab = "y", pch = 20, cex = 2, col = "grey")
   arrows(reg_data$x, reg_data$y_bar,
+         reg_data$x, reg_data$y,
+         col = 'grey', lwd = 1, lty = 3, length = 0.2, angle = 20)
+  abline(h = mean(reg_data$y), lwd = 2,col = "grey")
+  # abline(lm(y ~ x, data = reg_data), lwd = 2, col = "grey")
+}
+
+plot_total_dev_prop = function(reg_data) {
+  plot(reg_data$x, reg_data$y, main = "SST (Sum of Squares Total)", 
+       xlab = "x", ylab = "y", pch = 20, cex = 2, col = "grey")
+  arrows(reg_data$x, reg_data$y_bar,
          reg_data$x, reg_data$y_hat,
          col = 'darkorange', lwd = 1, length = 0.2, angle = 20)
   arrows(reg_data$x, reg_data$y_hat,
          reg_data$x, reg_data$y,
-         col = 'dodgerblue', lwd = 2, lty = 2, length = 0.2, angle = 20)
+         col = 'dodgerblue', lwd = 1, lty = 2, length = 0.2, angle = 20)
   abline(h = mean(reg_data$y), lwd = 2,col = "grey")
   abline(lm(y ~ x, data = reg_data), lwd = 2, col = "grey")
 }
@@ -590,7 +603,7 @@ plot_unexp_dev = function(reg_data) {
        xlab = "x", ylab = "y", pch = 20, cex = 2, col = "grey")
   arrows(reg_data$x, reg_data$y_hat,
          reg_data$x, reg_data$y,
-         col = 'dodgerblue', lwd = 1, length = 0.2, angle = 20)
+         col = 'dodgerblue', lwd = 1, lty = 2, length = 0.2, angle = 20)
   abline(lm(y ~ x, data = reg_data), lwd = 2, col = "grey")
 }
 
@@ -606,27 +619,33 @@ plot_exp_dev = function(reg_data) {
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-plot_data <- generate_data(sigma = 2)
+set.seed(2)
+plot_data = generate_data(sigma = 2)
 ```
 
-The following three plots visually demonstrate the three "sums of squares" for a simulated dataset which has $R^2 = `r round(summary(lm(y ~ x, data = plot_data))$r.sq, 2)`$ which is a somewhat high value. Notice in the third plot, that the orange arrows account for a larger proportion of the total arrow.
+The following plots visually demonstrate the three "sums of squares" for a simulated dataset which has $R^2 = `r round(summary(lm(y ~ x, data = plot_data))$r.sq, 2)`$ which is a somewhat high value. Notice in the final plot, that the orange arrows account for a larger proportion of the total arrow.
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, echo=FALSE, fig.height=12, fig.width=12, message=FALSE, warning=FALSE}
+par(mfrow = c(2, 2))
 plot_exp_dev(plot_data)
 plot_unexp_dev(plot_data)
 plot_total_dev(plot_data)
+plot_total_dev_prop(plot_data)
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-plot_data <- generate_data(sigma = 6)
+set.seed(1)
+plot_data = generate_data(slope = -1.5, sigma = 10)
 ```
 
-The next three plots again visually demonstrate the three "sums of squares," this time for a simulated dataset which has $R^2 = `r round(summary(lm(y ~ x, data = plot_data))$r.sq, 2)`$. Notice in the third plot, that now the blue arrows account for a larger proportion of the total arrow.
+The next plots again visually demonstrate the three "sums of squares," this time for a simulated dataset which has $R^2 = `r round(summary(lm(y ~ x, data = plot_data))$r.sq, 2)`$. Notice in the final plot, that now the blue arrows account for a larger proportion of the total arrow.
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, echo=FALSE, fig.height=12, fig.width=12, message=FALSE, warning=FALSE}
+par(mfrow = c(2, 2))
 plot_exp_dev(plot_data)
 plot_unexp_dev(plot_data)
 plot_total_dev(plot_data)
+plot_total_dev_prop(plot_data)
 ```
 
 ## The `lm` Function
@@ -649,7 +668,7 @@ The variable `stop_dist_model` now contains a wealth of information, and we will
 stop_dist_model
 ```
 
-We see that it first tells us the formula we input into `R`, that is `lm(formula = dist ~ speed, data = cars)`. We also see the coefficients of the model. We can check that these are what we had calculated previously. (Minus some rounding that `R` is doing to display the results.)
+We see that it first tells us the formula we input into `R`, that is `lm(formula = dist ~ speed, data = cars)`. We also see the coefficients of the model. We can check that these are what we had calculated previously. (Minus some rounding that `R` is doing when displaying the results. They are stored with full precision.)
 
 ```{r}
 c(beta_0_hat, beta_1_hat)
@@ -725,7 +744,7 @@ Often it is useful to talk about $s_e$ (or RSE) instead of $s_e^2$ because of th
 Another useful function, which we will use almost as often as `lm()` is the `predict()` function.
 
 ```{r}
-predict(stop_dist_model, data.frame(speed = 8))
+predict(stop_dist_model, newdata = data.frame(speed = 8))
 ```
 
 The above code reads "predict the stopping distance of a car traveling 8 miles per hour using the `stop_dist_model`." Importantly, the second argument to `predict()` is a data frame that we make in place. We do this so that we can specify that `8` is a value of `speed`, so that predict knows how to use it with the model stored in `stop_dist_model`. We see that this result is what we had calculated "by hand" previously.
@@ -733,7 +752,7 @@ The above code reads "predict the stopping distance of a car traveling 8 miles p
 We could also predict multiple values at once.
 
 ```{r}
-predict(stop_dist_model, data.frame(speed = c(8, 21, 50)))
+predict(stop_dist_model, newdata = data.frame(speed = c(8, 21, 50)))
 ```
 
 $$
@@ -744,10 +763,11 @@ $$
 \end{aligned}
 $$
 
-Or we could calculate the fitted value for each of the original data points.
+Or we could calculate the fitted value for each of the original data points. We can simply supply the original data frame, `cars`, since it contains a variables called `speed` which has the values we would like to predict at.
 
 ```{r}
-predict(stop_dist_model, data.frame(speed = cars$speed))
+predict(stop_dist_model, newdata = cars)
+# predict(stop_dist_model, newdata = data.frame(speed = cars$speed))
 ```
 
 This is actually equivalent to simply calling `predict()` on `stop_dist_model` without a second argument.
@@ -775,19 +795,19 @@ where $e_i \sim N(0, \sigma^2)$.
 Then we can find the mean and variance of each $Y_i$.
 
 $$
-\text{E}[Y_i] = \beta_0 + \beta_1 x_i
+\text{E}[Y_i \mid X_i = x_i] = \beta_0 + \beta_1 x_i
 $$
 
 and
 
 $$
-\text{Var}[Y_i] = \sigma^2.
+\text{Var}[Y_i \mid X_i = x_i] = \sigma^2.
 $$
 
-
+Addtionaly, the $Y_i$ follow a normal distribution conditioned on the $x_i$.
 
 $$
-Y_i \mid X_i = x_i \sim N(\beta_0 + \beta_1 x_i, \sigma^2)
+Y_i \mid X_i \sim N(\beta_0 + \beta_1 x_i, \sigma^2)
 $$
 
 
@@ -870,16 +890,16 @@ We return again to more examples of simulation. This will be a common theme!
 
 In practice you will almost never have a true model, and you will use data to attempt to recover information about the unknown true model. With simulation, we decide the true model and simulate data from the it. Then we apply a method to the data, in this case least squares. Now, since we know the true model, we can assess how well it did.
 
-For this example, we will simulate `n = 20` observations from the model
+For this example, we will simulate $n = 20$ observations from the model
 
 $$
-Y = 5 + 2 x + \epsilon.
+Y = 5 - 2 x + \epsilon.
 $$
 
-That is $\beta_0 = 5$, $\beta_1 = 2$, and let $\epsilon \sim N(\mu = 0, \sigma^2 = 1)$. Or, even more succinctly we could write
+That is $\beta_0 = 5$, $\beta_1 = -2$, and let $\epsilon \sim N(\mu = 0, \sigma^2 = 1)$. Or, even more succinctly we could write
 
 $$
-Y \mid X = x \sim N(\mu = 5 + 2 x, \sigma^ 2 = 1).
+Y \mid X \sim N(\mu = 5 - 2 x, \sigma^ 2 = 1).
 $$
 
 We first set the true parameters of the model to be simulated.
@@ -887,7 +907,7 @@ We first set the true parameters of the model to be simulated.
 ```{r}
 n       = 20
 beta_0  = 5
-beta_1  = 2
+beta_1  = -2
 sigma   = 1
 ```
 
@@ -898,9 +918,10 @@ set.seed(42)
 epsilon = rnorm(n, mean = 0, sd = sigma)
 ```
 
-Now, since the $x_i$ values in SLR are considered fixed and known, we simply generate them from a uniform distribution, and then use them for the remainder of the analysis. Know that this is an arbitrary, but common practice. 
+Now, since the $x_i$ values in SLR are considered fixed and known, we simply generate them from a uniform distribution, and then use them for the remainder of the analysis. Know that this is an arbitrary, but common practice. We could have also specified 20 specific values of our choice.
 
 ```{r}
+set.seed(42)
 x = runif(n, 0, 10)
 ```
 
@@ -940,7 +961,8 @@ sim_slr = function(x, beta_0 = 10, beta_1 = 5, sigma = 1) {
 Here, we use the function to repeat the analysis above.
 
 ```{r}
-sim_data = sim_slr(x = x, beta_0 = 5, beta_1 = 2, sigma = 1)
+set.seed(42)
+sim_data = sim_slr(x = x, beta_0 = 5, beta_1 = -2, sigma = 1)
 ```
 
 This time, the simulated observations are stored in a data frame.
@@ -965,8 +987,11 @@ plot(response ~ predictor, data = sim_data,
      main = "Simulated Regression Data",
      pch  = 20,
      cex  = 2,
-     col  = "dodgerblue")
-abline(sim_fit, lwd = 3, col = "darkorange")
+     col  = "grey")
+abline(sim_fit, lwd = 3, lty = 1, col = "darkorange")
+abline(beta_0, beta_1, lwd = 3, lty = 2, col = "dodgerblue")
+legend("topright", c("Estimate", "Truth"), lty = c(1, 2), lwd = 2,
+       col = c("darkorange", "dodgerblue"))
 ```
 
 ## History
