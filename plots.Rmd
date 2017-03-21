@@ -1,0 +1,62 @@
+# Plots
+
+This document is for testing purposes only.
+
+```{r, echo = FALSE}
+plot(dist ~ speed, data = cars,
+     xlab = "Speed (in Miles Per Hour)",
+     ylab = "Stopping Distance (in Feet)",
+     main = "Stopping Distance vs Speed",
+     pch  = 20,
+     cex  = 2,
+     col  = "grey")
+```
+
+```{r}
+generate_data = function(int = 1,
+                         slope = 2,
+                         sigma = 5,
+                         n_obs = 15,
+                         x_min = 0,
+                         x_max = 10) {
+  x = seq(x_min, x_max, length.out = n_obs)
+  y = int + slope * x + rnorm(n_obs, 0, sigma)
+  fit = lm(y ~ x)
+  y_hat = fitted(fit)
+  y_bar = rep(mean(y), n_obs)
+  data.frame(x, y, y_hat, y_bar)
+}
+```
+
+
+```{r, fig.height = 8, fig.width = 16}
+set.seed(2)
+reg_data = generate_data(sigma = 2)
+par(mfrow = c(1, 2))
+plot(reg_data$x, reg_data$y, main = "", 
+     xlab = "x", ylab = "y", pch = 20, cex = 2, col = "grey")
+abline(h = mean(reg_data$y), col = "grey", lwd = 2)
+plot(reg_data$x, reg_data$y, main = "", 
+     xlab = "x", ylab = "y", pch = 20, cex = 2, col = "grey")
+fit = lm(y ~ x, data = reg_data)
+abline(fit, col = "grey", lwd = 2)
+```
+
+```{r, fig.height = 8, fig.width = 8}
+set.seed(2)
+reg_data = generate_data(sigma = 2)
+plot(reg_data$x, reg_data$y, main = "", 
+     xlab = "x", ylab = "y", pch = 20, cex = 2, col = "grey")
+abline(h = mean(reg_data$y), col = "grey", lwd = 2)
+fit = lm(y ~ x, data = reg_data)
+abline(fit, col = "grey", lwd = 2)
+```
+
+
+
+
+
+
+
+
+
