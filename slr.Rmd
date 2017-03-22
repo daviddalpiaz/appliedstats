@@ -890,7 +890,7 @@ We return again to more examples of simulation. This will be a common theme!
 
 In practice you will almost never have a true model, and you will use data to attempt to recover information about the unknown true model. With simulation, we decide the true model and simulate data from the it. Then we apply a method to the data, in this case least squares. Now, since we know the true model, we can assess how well it did.
 
-For this example, we will simulate $n = 20$ observations from the model
+For this example, we will simulate $n = 21$ observations from the model
 
 $$
 Y = 5 - 2 x + \epsilon.
@@ -905,7 +905,7 @@ $$
 We first set the true parameters of the model to be simulated.
 
 ```{r}
-num_obs = 20
+num_obs = 21
 beta_0  = 5
 beta_1  = -2
 sigma   = 3
@@ -921,9 +921,9 @@ epsilon = rnorm(n = num_obs, mean = 0, sd = sigma)
 Now, since the $x_i$ values in SLR are considered fixed and known, we simply specify 20 values. Another common practice is to generate them from a uniform distribution, and then use them for the remainder of the analysis.
 
 ```{r}
-x_vals = seq(from = 0, to = 10, length.out = 20)
+x_vals = seq(from = 0, to = 10, length.out = num_obs)
 # set.seed(1)
-# x_vals = runif(n, 0, 10)
+# x_vals = runif(num_obs, 0, 10)
 ```
 
 We then generate the $y$ values according the specified functional relationship.
