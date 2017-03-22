@@ -25,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2017-03-21">
+<meta name="date" content="2017-03-22">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -964,30 +964,31 @@ s_e^2 &amp;= \frac{1}{n - 2} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2 = \frac{1}{n - 
 <p><span class="math display">\[
 Y = 5 - 2 x + \epsilon.
 \]</span></p>
-<p>That is <span class="math inline">\(\beta_0 = 5\)</span>, <span class="math inline">\(\beta_1 = -2\)</span>, and let <span class="math inline">\(\epsilon \sim N(\mu = 0, \sigma^2 = 1)\)</span>. Or, even more succinctly we could write</p>
+<p>That is <span class="math inline">\(\beta_0 = 5\)</span>, <span class="math inline">\(\beta_1 = -2\)</span>, and let <span class="math inline">\(\epsilon \sim N(\mu = 0, \sigma^2 = 9)\)</span>. Or, even more succinctly we could write</p>
 <p><span class="math display">\[
-Y \mid X \sim N(\mu = 5 - 2 x, \sigma^ 2 = 1).
+Y \mid X \sim N(\mu = 5 - 2 x, \sigma^ 2 = 9).
 \]</span></p>
 <p>We first set the true parameters of the model to be simulated.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n       =<span class="st"> </span><span class="dv">20</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">num_obs =<span class="st"> </span><span class="dv">20</span>
 beta_0  =<span class="st"> </span><span class="dv">5</span>
 beta_1  =<span class="st"> </span>-<span class="dv">2</span>
-sigma   =<span class="st"> </span><span class="dv">1</span></code></pre></div>
+sigma   =<span class="st"> </span><span class="dv">3</span></code></pre></div>
 <p>Next, we obtain simulated values of <span class="math inline">\(\epsilon_i\)</span> after setting a seed for reproducibility.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
-epsilon =<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> sigma)</code></pre></div>
-<p>Now, since the <span class="math inline">\(x_i\)</span> values in SLR are considered fixed and known, we simply generate them from a uniform distribution, and then use them for the remainder of the analysis. Know that this is an arbitrary, but common practice. We could have also specified 20 specific values of our choice.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
-x =<span class="st"> </span><span class="kw">runif</span>(n, <span class="dv">0</span>, <span class="dv">10</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+epsilon =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> num_obs, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> sigma)</code></pre></div>
+<p>Now, since the <span class="math inline">\(x_i\)</span> values in SLR are considered fixed and known, we simply specify 20 values. Another common practice is to generate them from a uniform distribution, and then use them for the remainder of the analysis.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x_vals =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">10</span>, <span class="dt">length.out =</span> <span class="dv">20</span>)
+<span class="co"># set.seed(1)</span>
+<span class="co"># x_vals = runif(n, 0, 10)</span></code></pre></div>
 <p>We then generate the <span class="math inline">\(y\)</span> values according the specified functional relationship.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y =<span class="st"> </span>beta_0 +<span class="st"> </span>beta_1 *<span class="st"> </span>x +<span class="st"> </span>epsilon</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">y_vals =<span class="st"> </span>beta_0 +<span class="st"> </span>beta_1 *<span class="st"> </span>x_vals +<span class="st"> </span>epsilon</code></pre></div>
 <p>The data, <span class="math inline">\((x_i, y_i)\)</span>, represent a possible sample from the true distribution. Now to check how well the method of least squares works, we use <code>lm()</code> to fit the model to our simulated data, then take a look at the estimated coefficients.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_fit =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_fit =<span class="st"> </span><span class="kw">lm</span>(y_vals ~<span class="st"> </span>x_vals)
 <span class="kw">coef</span>(sim_fit)</code></pre></div>
-<pre><code>## (Intercept)           x 
-##    4.328924   -1.859251</code></pre>
+<pre><code>## (Intercept)      x_vals 
+##    4.956469   -1.876979</code></pre>
 <p>And look at that, they aren’t too far from the true parameters we specified!</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y ~<span class="st"> </span>x)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y_vals ~<span class="st"> </span>x_vals)
 <span class="kw">abline</span>(sim_fit)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-191-1.png" width="672" /></p>
 <p>We should say here, that we’re being sort of lazy, and not the good kinda of lazy that could be considered efficient. Any time you simulate data, you should consider doing two things: writing a function, and storing the data in a data frame.</p>
@@ -999,22 +1000,22 @@ x =<span class="st"> </span><span class="kw">runif</span>(n, <span class="dv">0<
   <span class="kw">data.frame</span>(<span class="dt">predictor =</span> x, <span class="dt">response =</span> y)
 }</code></pre></div>
 <p>Here, we use the function to repeat the analysis above.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
-sim_data =<span class="st"> </span><span class="kw">sim_slr</span>(<span class="dt">x =</span> x, <span class="dt">beta_0 =</span> <span class="dv">5</span>, <span class="dt">beta_1 =</span> -<span class="dv">2</span>, <span class="dt">sigma =</span> <span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1</span>)
+sim_data =<span class="st"> </span><span class="kw">sim_slr</span>(<span class="dt">x =</span> x_vals, <span class="dt">beta_0 =</span> <span class="dv">5</span>, <span class="dt">beta_1 =</span> -<span class="dv">2</span>, <span class="dt">sigma =</span> <span class="dv">3</span>)</code></pre></div>
 <p>This time, the simulated observations are stored in a data frame.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(sim_data)</code></pre></div>
-<pre><code>##   predictor    response
-## 1  9.148060 -11.9251624
-## 2  9.370754 -14.3062064
-## 3  2.861395  -0.3596623
-## 4  8.304476 -10.9760899
-## 5  6.417455  -7.4306421
-## 6  5.190959  -5.4880435</code></pre>
+<pre><code>##   predictor  response
+## 1 0.0000000  3.120639
+## 2 0.5263158  4.498298
+## 3 1.0526316  0.387851
+## 4 1.5789474  6.627948
+## 5 2.1052632  1.777997
+## 6 2.6315789 -2.724563</code></pre>
 <p>Now when we fit the model with <code>lm()</code> we can use a <code>data</code> argument, a very good practice.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_fit =<span class="st"> </span><span class="kw">lm</span>(response ~<span class="st"> </span>predictor, <span class="dt">data =</span> sim_data)
 <span class="kw">coef</span>(sim_fit)</code></pre></div>
 <pre><code>## (Intercept)   predictor 
-##    4.328924   -1.859251</code></pre>
+##    4.956469   -1.876979</code></pre>
 <p>And this time, we’ll make the plot look a lot nicer.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(response ~<span class="st"> </span>predictor, <span class="dt">data =</span> sim_data,
      <span class="dt">xlab =</span> <span class="st">&quot;Simulated Predictor Variable&quot;</span>,
