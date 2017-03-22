@@ -896,52 +896,53 @@ $$
 Y = 5 - 2 x + \epsilon.
 $$
 
-That is $\beta_0 = 5$, $\beta_1 = -2$, and let $\epsilon \sim N(\mu = 0, \sigma^2 = 1)$. Or, even more succinctly we could write
+That is $\beta_0 = 5$, $\beta_1 = -2$, and let $\epsilon \sim N(\mu = 0, \sigma^2 = 9)$. Or, even more succinctly we could write
 
 $$
-Y \mid X \sim N(\mu = 5 - 2 x, \sigma^ 2 = 1).
+Y \mid X \sim N(\mu = 5 - 2 x, \sigma^ 2 = 9).
 $$
 
 We first set the true parameters of the model to be simulated.
 
 ```{r}
-n       = 20
+num_obs = 20
 beta_0  = 5
 beta_1  = -2
-sigma   = 1
+sigma   = 3
 ```
 
 Next, we obtain simulated values of $\epsilon_i$ after setting a seed for reproducibility.
 
 ```{r}
-set.seed(42)
-epsilon = rnorm(n, mean = 0, sd = sigma)
+set.seed(1)
+epsilon = rnorm(n = num_obs, mean = 0, sd = sigma)
 ```
 
-Now, since the $x_i$ values in SLR are considered fixed and known, we simply generate them from a uniform distribution, and then use them for the remainder of the analysis. Know that this is an arbitrary, but common practice. We could have also specified 20 specific values of our choice.
+Now, since the $x_i$ values in SLR are considered fixed and known, we simply specify 20 values. Another common practice is to generate them from a uniform distribution, and then use them for the remainder of the analysis.
 
 ```{r}
-set.seed(42)
-x = runif(n, 0, 10)
+x_vals = seq(from = 0, to = 10, length.out = 20)
+# set.seed(1)
+# x_vals = runif(n, 0, 10)
 ```
 
 We then generate the $y$ values according the specified functional relationship.
 
 ```{r}
-y = beta_0 + beta_1 * x + epsilon
+y_vals = beta_0 + beta_1 * x_vals + epsilon
 ```
 
 The data, $(x_i, y_i)$, represent a possible sample from the true distribution. Now to check how well the method of least squares works, we use `lm()` to fit the model to our simulated data, then take a look at the estimated coefficients.
 
 ```{r}
-sim_fit = lm(y ~ x)
+sim_fit = lm(y_vals ~ x_vals)
 coef(sim_fit)
 ```
 
 And look at that, they aren't too far from the true parameters we specified!
 
 ```{r}
-plot(y ~ x)
+plot(y_vals ~ x_vals)
 abline(sim_fit)
 ```
 
@@ -961,8 +962,8 @@ sim_slr = function(x, beta_0 = 10, beta_1 = 5, sigma = 1) {
 Here, we use the function to repeat the analysis above.
 
 ```{r}
-set.seed(42)
-sim_data = sim_slr(x = x, beta_0 = 5, beta_1 = -2, sigma = 1)
+set.seed(1)
+sim_data = sim_slr(x = x_vals, beta_0 = 5, beta_1 = -2, sigma = 3)
 ```
 
 This time, the simulated observations are stored in a data frame.
