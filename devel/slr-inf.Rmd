@@ -34,10 +34,10 @@ We called these values $\hat{\beta}_0$ and $\hat{\beta}_1$, which we found to be
 We also estimated $\sigma ^2$ using $s_e^2$. In other words, we found that $s_e$ is an estimate of $\sigma$, where;
 
 \[
-s_e = \text{RSE} = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
+s_e = RSE = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 \]
 
-which we also called $\text{RSE}$, for "Residual Standard Error."
+which we also called RSE, for "Residual Standard Error."
 
 When applied to the `cars` data, we obtained the following results:
 
@@ -251,8 +251,8 @@ That is,
 
 \[
 \begin{aligned}
-\text{E}[\hat{\beta}_1] &= `r beta_1` \\
-\text{Var}[\hat{\beta}_1] &= `r var_beta_1_hat`
+E[\hat{\beta}_1] &= `r beta_1` \\
+Var[\hat{\beta}_1] &= `r var_beta_1_hat`
 \end{aligned}
 \]
 
@@ -260,8 +260,8 @@ and
 
 \[
 \begin{aligned}
-\text{E}[\hat{\beta}_0] &= `r beta_0` \\
-\text{Var}[\hat{\beta}_0] &= `r var_beta_0_hat`.
+E[\hat{\beta}_0] &= `r beta_0` \\
+Var[\hat{\beta}_0] &= `r var_beta_0_hat`.
 \end{aligned}
 \]
 
@@ -352,25 +352,25 @@ So now we believe the two distributional results,
 Then by standardizing these results we find that
 
 \[
-\frac{\hat{\beta}_0 - \beta_0}{\text{SD}[\hat{\beta}_0]} \sim N(0, 1)
+\frac{\hat{\beta}_0 - \beta_0}{SD[\hat{\beta}_0]} \sim N(0, 1)
 \]
 
 and
 
 \[
-\frac{\hat{\beta}_1 - \beta_1}{\text{SD}[\hat{\beta}_1]} \sim N(0, 1)
+\frac{\hat{\beta}_1 - \beta_1}{SD[\hat{\beta}_1]} \sim N(0, 1)
 \]
 
 where
 
 \[
-\text{SD}[\hat{\beta}_0] = \sigma\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}
+SD[\hat{\beta}_0] = \sigma\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}
 \]
 
 and
 
 \[
-\text{SD}[\hat{\beta}_1] = \frac{\sigma}{\sqrt{S_{xx}}}.
+SD[\hat{\beta}_1] = \frac{\sigma}{\sqrt{S_{xx}}}.
 \]
 
 Since we don't know $\sigma$ in practice, we will have to estimate it using $s_e$, which we plug into our existing expression for the standard deviations of our estimates.
@@ -378,34 +378,34 @@ Since we don't know $\sigma$ in practice, we will have to estimate it using $s_e
 These two new expressions are called **standard errors** which are the *estimated* standard deviations of the sampling distributions.
 
 \[
-\text{SE}[\hat{\beta}_0] = s_e\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}
+SE[\hat{\beta}_0] = s_e\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}
 \]
 
 \[
-\text{SE}[\hat{\beta}_1] = \frac{s_e}{\sqrt{S_{xx}}}
+SE[\hat{\beta}_1] = \frac{s_e}{\sqrt{S_{xx}}}
 \]
 
 Now if we divide by the standard error, instead of the standard deviation, we obtain the following results which will allow us to make confidence intervals and perform hypothesis testing.
 
 \[
-\frac{\hat{\beta}_0 - \beta_0}{\text{SE}[\hat{\beta}_0]} \sim t_{n-2}
+\frac{\hat{\beta}_0 - \beta_0}{SE[\hat{\beta}_0]} \sim t_{n-2}
 \]
 
 \[
-\frac{\hat{\beta}_1 - \beta_1}{\text{SE}[\hat{\beta}_1]} \sim t_{n-2}
+\frac{\hat{\beta}_1 - \beta_1}{SE[\hat{\beta}_1]} \sim t_{n-2}
 \]
 
 To see this, first note that,
 
 \[
-\frac{\text{RSS}}{\sigma^2} = \frac{(n-2)s_e^2}{\sigma^2} \sim \chi_{n-2}^2.
+\frac{RSS}{\sigma^2} = \frac{(n-2)s_e^2}{\sigma^2} \sim \chi_{n-2}^2.
 \]
 
 Then we use the classic trick of "multiply by 1" and some rearranging to arrive at
 
 \[
 \begin{aligned}
-\frac{\hat{\beta}_1 - \beta_1}{\text{SE}[\hat{\beta}_1]} 
+\frac{\hat{\beta}_1 - \beta_1}{SE[\hat{\beta}_1]} 
 &= \frac{\hat{\beta}_1 - \beta_1}{s_e / \sqrt{S_{xx}}} \\
 &= \frac{\hat{\beta}_1 - \beta_1}{s_e / \sqrt{S_{xx}}} \cdot \frac{\sigma / \sqrt{S_{xx}}}{\sigma / \sqrt{S_{xx}}} \\
 &= \frac{\hat{\beta}_1 - \beta_1}{\sigma / \sqrt{S_{xx}}} \cdot \frac{\sigma / \sqrt{S_{xx}}}{s_e / \sqrt{S_{xx}}} \\
@@ -436,27 +436,27 @@ T \sim t_d.
 Recall that confidence intervals for means often take the form:
 
 \[
-\text{EST} \pm \text{CRIT} \cdot \text{SE}
+EST \pm CRIT \cdot SE
 \]
 
 or
 
 \[
-\text{EST} \pm \text{MARGIN}
+EST \pm MARGIN
 \]
 
-where $\text{EST}$ is an estimate for the parameter of interest, $\text{SE}$ is the standard error of the estimate and $\text{MARGIN} = \text{CRIT} \cdot \text{SE}$.
+where $EST$ is an estimate for the parameter of interest, $SE$ is the standard error of the estimate and $MARGIN = CRIT \cdot SE$.
 
 Then, for $\beta_0$ and $\beta_1$ we can create confidence intervals using
 
 \[
-\hat{\beta}_0 \pm t_{\alpha/2, n - 2} \cdot \text{SE}[\hat{\beta}_0] \quad \quad \quad \hat{\beta}_0 \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}}
+\hat{\beta}_0 \pm t_{\alpha/2, n - 2} \cdot SE[\hat{\beta}_0] \quad \quad \quad \hat{\beta}_0 \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}}
 \]
 
 and
 
 \[
-\hat{\beta}_1 \pm t_{\alpha/2, n - 2} \cdot \text{SE}[\hat{\beta}_1]  \quad \quad \quad \hat{\beta}_1 \pm t_{\alpha/2, n - 2} \cdot \frac{s_e}{\sqrt{S_{xx}}}
+\hat{\beta}_1 \pm t_{\alpha/2, n - 2} \cdot SE[\hat{\beta}_1]  \quad \quad \quad \hat{\beta}_1 \pm t_{\alpha/2, n - 2} \cdot \frac{s_e}{\sqrt{S_{xx}}}
 \]
 
 where $t_{\alpha/2, n - 2}$ is the critical value such that $P(t_{n-2} > t_{\alpha/2, n - 2}) = \alpha/2$.
@@ -467,13 +467,13 @@ where $t_{\alpha/2, n - 2}$ is the critical value such that $P(t_{n-2} > t_{\alp
 >
 > --- **Ronald Aylmer Fisher**
 
-Recall that a test statistic ($\text{TS}$) for testing means often take the form:
+Recall that a test statistic ($TS$) for testing means often take the form:
 
 \[
-\text{TS} = \frac{\text{EST} - \text{HYP}}{\text{SE}}
+TS = \frac{EST - HYP}{SE}
 \]
 
-where $\text{EST}$ is an estimate for the parameter of interest, $\text{HYP}$ is a hypothesized value of the parameter, and $\text{SE}$ is the standard error of the estimate.
+where $EST$ is an estimate for the parameter of interest, $HYP$ is a hypothesized value of the parameter, and $SE$ is the standard error of the estimate.
 
 So, to test
 
@@ -484,7 +484,7 @@ H_0: \beta_0 = \beta_{00} \quad \text{vs} \quad H_1: \beta_0 \neq \beta_{00}
 we use the test statistic
 
 \[
-t = \frac{\hat{\beta}_0 - \beta_{00}}{\text{SE}[\hat{\beta}_0]} = \frac{\hat{\beta}_0-\beta_{00}}{s_e\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}}
+t = \frac{\hat{\beta}_0 - \beta_{00}}{SE[\hat{\beta}_0]} = \frac{\hat{\beta}_0-\beta_{00}}{s_e\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}}
 \]
 
 which, under the null hypothesis, follows a $t$ distribution with $n - 2$ degrees of freedom. We use $\beta_{00}$ to denote the hypothesized value of $\beta_0$.
@@ -498,7 +498,7 @@ H_0: \beta_1 = \beta_{10} \quad \text{vs} \quad H_1: \beta_1 \neq \beta_{10}
 we use the test statistic
 
 \[
-t = \frac{\hat{\beta}_1-\beta_{10}}{\text{SE}[\hat{\beta}_1]} = \frac{\hat{\beta}_1-\beta_{10}}{s_e / \sqrt{S_{xx}}}
+t = \frac{\hat{\beta}_1-\beta_{10}}{SE[\hat{\beta}_1]} = \frac{\hat{\beta}_1-\beta_{10}}{s_e / \sqrt{S_{xx}}}
 \]
 
 which again, under the null hypothesis, follows a $t$ distribution with $n - 2$ degrees of freedom. We now use $\beta_{10}$ to denote the hypothesized value of $\beta_1$.
@@ -550,13 +550,13 @@ Again, the first value, `Estimate` is
 The second value, `Std. Error`, is the standard error of $\hat{\beta}_1$,
 
 \[
-\text{SE}[\hat{\beta}_1] = \frac{s_e}{\sqrt{S_{xx}}} = `r summary(stop_dist_model)$coefficients[2,2]`.
+SE[\hat{\beta}_1] = \frac{s_e}{\sqrt{S_{xx}}} = `r summary(stop_dist_model)$coefficients[2,2]`.
 \]
 
 The third value, `t value`, is the value of the test statistics for testing $H_0: \beta_1 = 0$ vs $H_1: \beta_1 \neq 0$,
 
 \[
-t = \frac{\hat{\beta}_1-0}{\text{SE}[\hat{\beta}_1]} = \frac{\hat{\beta}_1-0}{s_e / \sqrt{S_{xx}}} = `r summary(stop_dist_model)$coefficients[2,3]`.
+t = \frac{\hat{\beta}_1-0}{SE[\hat{\beta}_1]} = \frac{\hat{\beta}_1-0}{s_e / \sqrt{S_{xx}}} = `r summary(stop_dist_model)$coefficients[2,3]`.
 \]
 
 Lastly, `Pr(>|t|)`, gives us the p-value of that test.
@@ -683,7 +683,7 @@ confint(stop_dist_model, parm = "speed", level = 0.99)
 
 ## Confidence Interval for Mean Response
 
-In addition to confidence intervals for $\beta_0$ and $\beta_1$, there are two other common interval estimates used with regression. The first is called a **confidence interval for the mean response**. Often, we would like an interval estimate for the mean, $E[Y]$ for a particular value of $x$.
+In addition to confidence intervals for $\beta_0$ and $\beta_1$ there two other common interval estimates used with regression. The first is called a **confidence interval for the mean response**. Often, we would like an interval estimate for the mean, $E[Y]$ for a particular value of $x$.
 
 In this situation we use $\hat{y}$ as our estimate of $E[Y]$.
 
@@ -694,19 +694,19 @@ In this situation we use $\hat{y}$ as our estimate of $E[Y]$.
 Recall that,
 
 \[
-\text{E}[Y] = \beta_0 + \beta_1 x
+E[Y] = \beta_0 + \beta_1 x
 \]
 
 Thus, $\hat{y}$ is a good estimate since it is unbiased:
 
 \[
-\text{E}[\hat{y}] = \beta_0 + \beta_1 x.
+E[\hat{y}] = \beta_0 + \beta_1 x.
 \]
 
 We could then derive,
 
 \[
-\text{Var}[\hat{y}] = \sigma^2 \left(\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right).
+Var[\hat{y}] = \sigma^2 \left(\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right).
 \]
 
 Like the other estimates we have seen, $\hat{y}$ also follows a normal distribution,
@@ -718,7 +718,7 @@ Like the other estimates we have seen, $\hat{y}$ also follows a normal distribut
 And lastly, since we need to estimate this variance, we arrive at the standard error of our estimate,
 
 \[
-\text{SE}[\hat{y}] = s_e \sqrt{\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}.
+SE[\hat{y}] = s_e \sqrt{\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}.
 \]
 
 We can then use this to find the confidence interval for the mean response,
@@ -737,20 +737,20 @@ predict(stop_dist_model, newdata = new_speeds,
 
 ## Prediction Interval for New Observations
 
-Sometimes we would like an interval estimate for a new observation, $Y$ for a particular value of $x$. This is very similar to an interval for the mean response, $\text{E}[Y]$, but different in one very important way.
+Sometimes we would like an interval estimate for a new observation, $Y$ for a particular value of $x$. This is very similar to an interval for the mean response, $E[Y]$, but different in one very important way.
 
 Our best guess for a new observation is still $\hat{y}$. The estimated mean is still the best prediction we can make. The difference is in the amount of variability, since we know that observations will vary about the true regression line according to a $N(0, \sigma^2)$ distribution. Because of this we add an extra factor of $\sigma^2$ to our estimates variability.
 
 \[
-\text{Var}[\hat{y} + \epsilon] = \sigma^2 \left(1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right)
+Var[\hat{y}] = \sigma^2 \left(1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right)
 \]
 
 \[
-\hat{y} + \epsilon \sim N \left(\beta_0 + \beta_1 x, \sigma^2 \left(1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right) \right)
+\hat{y} \sim N \left(\beta_0 + \beta_1 x, \sigma^2 \left(1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right) \right)
 \]
 
 \[
-\text{SE}[\hat{y} + \epsilon] = s_e \sqrt{1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}
+SE[\hat{y}] = s_e \sqrt{1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}
 \]
 
 We can then find a **prediction interval** using,
@@ -819,15 +819,15 @@ Recall from last chapter the decomposition of variance we saw before calculating
 or, in short,
 
 \[
-\text{SST} = \text{SSReg} + \text{SSE}.
+SST = SSReg + SSE.
 \]
 
 To develop the $F$ test, we will arrange this information in an **ANOVA** table,
 
 | Source     | Sum of Squares  | Degrees of Freedom | Mean Square | $F$ |
 |------------|-----------------|------------|-----------|-----------|
-| Regression | $\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2$ | $1$ | $\text{SSReg} / 1$     | $\text{MSReg} / \text{MSE}$ |
-| Error      | $\sum_{i=1}^{n}(y_i - \hat{y}_i)^2$     | $n - 2$ | $\text{SSE} / (n - 2)$ |             |
+| Regression | $\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2$ | $1$ | $SSReg / 1$     | $MSReg / MSE$ |
+| Error      | $\sum_{i=1}^{n}(y_i - \hat{y}_i)^2$     | $n - 2$ | $SSE / (n - 2)$ |             |
 | Total      | $\sum_{i=1}^{n}(y_i - \bar{y})^2$       | $n - 1$ |                 |             |
 
 ANOVA, or Analysis of Variance will be a concept we return to often in this course. For now, we will focus on the results of the table, which is the $F$ statistic,
