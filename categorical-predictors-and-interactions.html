@@ -25,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2017-03-31">
+<meta name="date" content="2017-04-02">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -368,7 +368,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 <p>As we often do, we will start by plotting the data. We are interested in <code>mpg</code> as the response variable, and <code>hp</code> as a predictor.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(mpg ~<span class="st"> </span>hp, <span class="dt">data =</span> mtcars, <span class="dt">col =</span> am +<span class="st"> </span><span class="dv">1</span>, <span class="dt">pch =</span> am +<span class="st"> </span><span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-269-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-271-1.png" width="672" /></p>
 <p>We used a common <code>R</code> “trick” when plotting this data. The <code>am</code> variable takes two possible values; <code>0</code> for automatic transmission, and <code>1</code> for manual transmissions. <code>R</code> can use numbers to represent colors, however the color for <code>0</code> is white. So we take the <code>am</code> vector and add <code>1</code> to it. Then observations with automatic transmissions are now represented by <code>1</code>, which is black in <code>R</code>, and manual transmission are represented by <code>2</code>, which is red in <code>R</code>. (Note, we are only adding <code>1</code> inside the call to <code>plot()</code>, we are not actually modifying the values stored in <code>am</code>.)</p>
 <p>We now fit the SLR model</p>
 <p><span class="math display">\[
@@ -379,7 +379,7 @@ Y = \beta_0 + \beta_1 x_1 + \epsilon,
 <p>We then re-plot the data and add the fitted line to the plot.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(mpg ~<span class="st"> </span>hp, <span class="dt">data =</span> mtcars, <span class="dt">col =</span> am +<span class="st"> </span><span class="dv">1</span>, <span class="dt">pch =</span> am +<span class="st"> </span><span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">2</span>)
 <span class="kw">abline</span>(mpg_hp_slr, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;green&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-271-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-273-1.png" width="672" /></p>
 <p>We should notice a pattern here. The red, manual observations largely fall above the line, while the black, automatic observations are mostly below the line. This means our model underestimates the fuel efficiency of manual transmissions, and overestimates the fuel efficiency of automatic transmissions. To correct for this, we will add a predictor to our model, namely, <code>am</code> as <span class="math inline">\(x_2\)</span>.</p>
 <p>Our new model is</p>
 <p><span class="math display">\[
@@ -432,7 +432,7 @@ slope_manu =<span class="st"> </span><span class="kw">coef</span>(mpg_hp_add)[<s
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(mpg ~<span class="st"> </span>hp, <span class="dt">data =</span> mtcars, <span class="dt">col =</span> am +<span class="st"> </span><span class="dv">1</span>, <span class="dt">pch =</span> am +<span class="st"> </span><span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">2</span>)
 <span class="kw">abline</span>(int_auto, slope_auto, <span class="dt">col =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="co"># add line for auto</span>
 <span class="kw">abline</span>(int_manu, slope_manu, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="co"># add line for manual</span></code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-275-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-277-1.png" width="672" /></p>
 <p>We notice right away that the points are no longer systematically incorrect. The red, manual observations vary about the red line in no particular pattern without underestimating the observations as before. The black, automatic points vary about the black line, also without an obvious pattern.</p>
 <p>They say a picture is worth a thousand words, but as a statistician, sometimes a picture is worth an entire analysis. The above picture makes it plainly obvious that <span class="math inline">\(\beta_2\)</span> is significant, but let’s verify mathematically. Essentially we would like to test:</p>
 <p><span class="math display">\[
@@ -533,7 +533,7 @@ slope_dom =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_add)[<
 <span class="kw">plot</span>(mpg ~<span class="st"> </span>disp, <span class="dt">data =</span> autompg, <span class="dt">col =</span> domestic +<span class="st"> </span><span class="dv">1</span>, <span class="dt">pch =</span> domestic +<span class="st"> </span><span class="dv">1</span>)
 <span class="kw">abline</span>(int_for, slope_for, <span class="dt">col =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="co"># add line for foreign cars</span>
 <span class="kw">abline</span>(int_dom, slope_dom, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="co"># add line for domestic cars</span></code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-280-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-282-1.png" width="672" /></p>
 <p>This is a model that allows for two <em>parallel</em> lines, meaning the <code>mpg</code> can be different on average between foreign and domestic cars of the same engine displacement, but the change in average <code>mpg</code> for an increase in displacement is the same for both. We can see this model isn’t doing very well here. The red line fits the red points fairly well, but the black line isn’t doing very well for the black points, it should clearly have a more negative slope. Essentially, we would like a model that allows for two different slopes.</p>
 <p>Consider the following model,</p>
 <p><span class="math display">\[
@@ -619,7 +619,7 @@ slope_dom =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_int)[<
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(mpg ~<span class="st"> </span>disp, <span class="dt">data =</span> autompg, <span class="dt">col =</span> domestic +<span class="st"> </span><span class="dv">1</span>, <span class="dt">pch =</span> domestic +<span class="st"> </span><span class="dv">1</span>)
 <span class="kw">abline</span>(int_for, slope_for, <span class="dt">col =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="co"># add line for foreign cars</span>
 <span class="kw">abline</span>(int_dom, slope_dom, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="co"># add line for domestic cars</span></code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-288-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-290-1.png" width="672" /></p>
 <p>We see that these lines fit the data much better, which matches the result of our tests.</p>
 <p>So far we have only seen interaction between a categorical variable (<code>domestic</code>) and a numerical variable (<code>disp</code>). While this is easy to visualize, since it allows for different slopes for two lines, it is not the only type of interaction we can use in a model. We can also consider interactions between two numerical variables.</p>
 <p>Consider the model,</p>
@@ -861,7 +861,7 @@ slope_all_cyl =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_ad
 <span class="kw">abline</span>(int_4cyl, slope_all_cyl, <span class="dt">col =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">abline</span>(int_6cyl, slope_all_cyl, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">abline</span>(int_8cyl, slope_all_cyl, <span class="dt">col =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-302-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-304-1.png" width="672" /></p>
 <p>On this plot, we have</p>
 <ul>
 <li>4 Cylinder: black dots, solid black line.</li>
@@ -910,7 +910,7 @@ slope_8cyl =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_int_c
 <span class="kw">abline</span>(int_4cyl, slope_4cyl, <span class="dt">col =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">abline</span>(int_6cyl, slope_6cyl, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">abline</span>(int_8cyl, slope_8cyl, <span class="dt">col =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-304-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-306-1.png" width="672" /></p>
 <p>This looks much better! We can see that for medium displacement cars, 6 cylinder cars now perform better than 8 cylinder cars, which seems much more reasonable than before.</p>
 <p>To completely justify the interaction model (i.e., a unique slope for each <code>cyl</code> level) compared to the additive model (single slope), we can perform an <span class="math inline">\(F\)</span>-test. Notice first, that there is no <span class="math inline">\(t\)</span>-test that will be able to do this since the difference between the two models is not a single parameter.</p>
 <p>We will test,</p>

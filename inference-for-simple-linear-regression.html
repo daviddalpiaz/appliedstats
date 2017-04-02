@@ -25,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2017-03-31">
+<meta name="date" content="2017-04-02">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -318,7 +318,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>After reading this chapter you will be able to:</p>
 <ul>
 <li>Understand the distributions of regression estimates.</li>
-<li>Create interval estimates for regression parameters.</li>
+<li>Create interval estimates for regression parameters, mean response, and predictions.</li>
 <li>Test for significance of regression.</li>
 </ul>
 <p>Last chapter we defined the simple linear regression model,</p>
@@ -338,9 +338,9 @@ f(\beta_0, \beta_1) = \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2.
 \]</span></p>
 <p>We also estimated <span class="math inline">\(\sigma ^2\)</span> using <span class="math inline">\(s_e^2\)</span>. In other words, we found that <span class="math inline">\(s_e\)</span> is an estimate of <span class="math inline">\(\sigma\)</span>, where;</p>
 <p><span class="math display">\[
-s_e = RSE = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
+s_e = \text{RSE} = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 \]</span></p>
-<p>which we also called RSE, for “Residual Standard Error.”</p>
+<p>which we also called <span class="math inline">\(\text{RSE}\)</span>, for “Residual Standard Error.”</p>
 <p>When applied to the <code>cars</code> data, we obtained the following results:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stop_dist_model =<span class="st"> </span><span class="kw">lm</span>(dist ~<span class="st"> </span>speed, <span class="dt">data =</span> cars)
 <span class="kw">summary</span>(stop_dist_model)</code></pre></div>
@@ -369,7 +369,7 @@ s_e = RSE = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
      <span class="dt">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,
      <span class="dt">pch  =</span> <span class="dv">20</span>,
      <span class="dt">cex  =</span> <span class="dv">2</span>,
-     <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)
+     <span class="dt">col  =</span> <span class="st">&quot;grey&quot;</span>)
 <span class="kw">abline</span>(stop_dist_model, <span class="dt">lwd =</span> <span class="dv">5</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-198-1.png" width="672" /></p>
 <p>To get started, we’ll note that there is another equivalent expression for <span class="math inline">\(S_{xy}\)</span> which we did not see last chapter,</p>
@@ -446,7 +446,7 @@ S_{xy}= \sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y}) = \sum_{i = 1}^{n}(x_i - 
 <p><span class="math display">\[
 \hat{\beta}_1 = \frac{S_{xy}}{S_{xx}} 
 = \frac{\sum_{i = 1}^{n}(x_i - \bar{x}) Y_i}{\sum_{i = 1}^{n}(x_i - \bar{x})^2}
-\sim N\left(  \beta_1, \frac{\sigma^2}{\sum_{i = 1}^{n}(x_i - \bar{x})^2} \right).
+\sim N\left(  \beta_1, \ \frac{\sigma^2}{\sum_{i = 1}^{n}(x_i - \bar{x})^2} \right).
 \]</span></p>
 <p>Or more succinctly,</p>
 <p><span class="math display">\[
@@ -455,7 +455,7 @@ S_{xy}= \sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y}) = \sum_{i = 1}^{n}(x_i - 
 <p>And for <span class="math inline">\(\hat{\beta}_0\)</span>,</p>
 <p><span class="math display">\[
 \hat{\beta}_0 = \bar{Y} - \hat{\beta}_1 \bar{x} 
-\sim N\left(  \beta_0, \frac{\sigma^2 \sum_{i = 1}^{n}x_i^2}{n \sum_{i = 1}^{n}(x_i - \bar{x})^2} \right).
+\sim N\left(  \beta_0, \ \frac{\sigma^2 \sum_{i = 1}^{n}x_i^2}{n \sum_{i = 1}^{n}(x_i - \bar{x})^2} \right).
 \]</span></p>
 <p>Or more succinctly,</p>
 <p><span class="math display">\[
@@ -507,18 +507,18 @@ sigma  =<span class="st"> </span><span class="dv">2</span></code></pre></div>
 <p>That is,</p>
 <p><span class="math display">\[
 \begin{aligned}
-E[\hat{\beta}_1] &amp;= 6 \\
-Var[\hat{\beta}_1] &amp;= 0.1176238
+\text{E}[\hat{\beta}_1] &amp;= 6 \\
+\text{Var}[\hat{\beta}_1] &amp;= 0.1176238
 \end{aligned}
 \]</span></p>
 <p>and</p>
 <p><span class="math display">\[
 \begin{aligned}
-E[\hat{\beta}_0] &amp;= 3 \\
-Var[\hat{\beta}_0] &amp;= 0.04.
+\text{E}[\hat{\beta}_0] &amp;= 3 \\
+\text{Var}[\hat{\beta}_0] &amp;= 0.04.
 \end{aligned}
 \]</span></p>
-<p>We now simulate this model 10,000 times. Note this may not be the most <code>R</code> way of doing the simulation. We perform the simulation in this manner in an attempt at clarity.</p>
+<p>We now simulate data from this model 10,000 times. Note this may not be the most <code>R</code> way of doing the simulation. We perform the simulation in this manner in an attempt at clarity. For example, we could have used the <code>sim_slr()</code> function from the previous chapter. We also simply store variables in the global environment instead of creating a data frame for each new simulated dataset.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">num_samples =<span class="st"> </span><span class="dv">10000</span>
 beta_0_hats =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, num_samples)
 beta_1_hats =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, num_samples)
@@ -532,7 +532,7 @@ for(i in <span class="dv">1</span>:num_samples) {
   beta_0_hats[i] =<span class="st"> </span><span class="kw">coef</span>(sim_model)[<span class="dv">1</span>]
   beta_1_hats[i] =<span class="st"> </span><span class="kw">coef</span>(sim_model)[<span class="dv">2</span>]
 }</code></pre></div>
-<p>The variables <code>beta_0_hats</code> and <code>beta_1_hats</code> now store 10,000 simulated values of <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> respectively.</p>
+<p>Each time we simulated the data, we obtained values of the estimated coefficiets. The variables <code>beta_0_hats</code> and <code>beta_1_hats</code> now store 10,000 simulated values of <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> respectively.</p>
 <p>We first verify the distribution of <span class="math inline">\(\hat{\beta}_1\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(beta_1_hats) <span class="co"># empirical mean</span></code></pre></div>
 <pre><code>## [1] 6.001998</code></pre>
@@ -542,7 +542,7 @@ for(i in <span class="dv">1</span>:num_samples) {
 <pre><code>## [1] 0.11899</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">var_beta_1_hat    <span class="co"># true variance</span></code></pre></div>
 <pre><code>## [1] 0.1176238</code></pre>
-<p>We see that the empirical and true means and variances are <em>very</em> similar. We also verify that the empirical distribution is normal. We plot a histogram of the <code>beta_1_hats</code>, and add the curve for the true distribution of <span class="math inline">\(\beta_1\)</span>. We use <code>prob = TRUE</code> to put the histogram on the same scale as the normal curve.</p>
+<p>We see that the empirical and true means and variances are <em>very</em> similar. We also verify that the empirical distribution is normal. To do so, we plot a histogram of the <code>beta_1_hats</code>, and add the curve for the true distribution of <span class="math inline">\(\hat{\beta}_1\)</span>. We use <code>prob = TRUE</code> to put the histogram on the same scale as the normal curve.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># note need to use prob = TRUE</span>
 <span class="kw">hist</span>(beta_1_hats, <span class="dt">prob =</span> <span class="ot">TRUE</span>, <span class="dt">breaks =</span> <span class="dv">20</span>, 
      <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">1</span>]), <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)
@@ -558,7 +558,7 @@ for(i in <span class="dv">1</span>:num_samples) {
 <pre><code>## [1] 0.04017924</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">var_beta_0_hat    <span class="co"># true variance</span></code></pre></div>
 <pre><code>## [1] 0.04</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(beta_0_hats, <span class="dt">prob =</span> <span class="ot">TRUE</span>, <span class="dt">breaks =</span> <span class="dv">20</span>, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(beta_0_hats, <span class="dt">prob =</span> <span class="ot">TRUE</span>, <span class="dt">breaks =</span> <span class="dv">25</span>, 
      <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">0</span>]), <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 <span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> beta_0, <span class="dt">sd =</span> <span class="kw">sqrt</span>(var_beta_0_hat)),
       <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre></div>
@@ -591,80 +591,98 @@ for(i in <span class="dv">1</span>:num_samples) {
 \]</span></p>
 <p>Then by standardizing these results we find that</p>
 <p><span class="math display">\[
-\frac{\hat{\beta}_0 - \beta_0}{SD[\hat{\beta}_0]} \sim N(0, 1)
+\frac{\hat{\beta}_0 - \beta_0}{\text{SD}[\hat{\beta}_0]} \sim N(0, 1)
 \]</span></p>
 <p>and</p>
 <p><span class="math display">\[
-\frac{\hat{\beta}_1 - \beta_1}{SD[\hat{\beta}_1]} \sim N(0, 1)
+\frac{\hat{\beta}_1 - \beta_1}{\text{SD}[\hat{\beta}_1]} \sim N(0, 1)
 \]</span></p>
 <p>where</p>
 <p><span class="math display">\[
-SD[\hat{\beta}_0] = \sigma\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}
+\text{SD}[\hat{\beta}_0] = \sigma\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}
 \]</span></p>
 <p>and</p>
 <p><span class="math display">\[
-SD[\hat{\beta}_1] = \frac{\sigma}{\sqrt{S_{xx}}}.
+\text{SD}[\hat{\beta}_1] = \frac{\sigma}{\sqrt{S_{xx}}}.
 \]</span></p>
 <p>Since we don’t know <span class="math inline">\(\sigma\)</span> in practice, we will have to estimate it using <span class="math inline">\(s_e\)</span>, which we plug into our existing expression for the standard deviations of our estimates.</p>
 <p>These two new expressions are called <strong>standard errors</strong> which are the <em>estimated</em> standard deviations of the sampling distributions.</p>
 <p><span class="math display">\[
-SE[\hat{\beta}_0] = s_e\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}
+\text{SE}[\hat{\beta}_0] = s_e\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}
 \]</span></p>
 <p><span class="math display">\[
-SE[\hat{\beta}_1] = \frac{s_e}{\sqrt{S_{xx}}}
+\text{SE}[\hat{\beta}_1] = \frac{s_e}{\sqrt{S_{xx}}}
 \]</span></p>
 <p>Now if we divide by the standard error, instead of the standard deviation, we obtain the following results which will allow us to make confidence intervals and perform hypothesis testing.</p>
 <p><span class="math display">\[
-\frac{\hat{\beta}_0 - \beta_0}{SE[\hat{\beta}_0]} \sim t_{n-2}
+\frac{\hat{\beta}_0 - \beta_0}{\text{SE}[\hat{\beta}_0]} \sim t_{n-2}
 \]</span></p>
 <p><span class="math display">\[
-\frac{\hat{\beta}_1 - \beta_1}{SE[\hat{\beta}_1]} \sim t_{n-2}
+\frac{\hat{\beta}_1 - \beta_1}{\text{SE}[\hat{\beta}_1]} \sim t_{n-2}
 \]</span></p>
 <p>To see this, first note that,</p>
 <p><span class="math display">\[
-\frac{RSS}{\sigma^2} = \frac{(n-2)s_e^2}{\sigma^2} \sim \chi_{n-2}^2.
+\frac{\text{RSS}}{\sigma^2} = \frac{(n-2)s_e^2}{\sigma^2} \sim \chi_{n-2}^2.
 \]</span></p>
+<p>Also recall that a random variable <span class="math inline">\(T\)</span> defined as,</p>
+<p><span class="math display">\[
+T = \frac{Z}{\sqrt{\frac{\chi_{d}^2}{d}}}
+\]</span></p>
+<p>follows a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(d\)</span> degrees of freedom, where <span class="math inline">\(\chi_{d}^2\)</span> is a <span class="math inline">\(\chi^2\)</span> random variable with <span class="math inline">\(d\)</span> degrees of freedom.</p>
+<p>We write,</p>
+<p><span class="math display">\[
+T \sim t_d
+\]</span></p>
+<p>to say that the random variable <span class="math inline">\(T\)</span> follows a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(d\)</span> degrees of freedom.</p>
 <p>Then we use the classic trick of “multiply by 1” and some rearranging to arrive at</p>
 <p><span class="math display">\[
 \begin{aligned}
-\frac{\hat{\beta}_1 - \beta_1}{SE[\hat{\beta}_1]} 
+\frac{\hat{\beta}_1 - \beta_1}{\text{SE}[\hat{\beta}_1]} 
 &amp;= \frac{\hat{\beta}_1 - \beta_1}{s_e / \sqrt{S_{xx}}} \\
 &amp;= \frac{\hat{\beta}_1 - \beta_1}{s_e / \sqrt{S_{xx}}} \cdot \frac{\sigma / \sqrt{S_{xx}}}{\sigma / \sqrt{S_{xx}}} \\
 &amp;= \frac{\hat{\beta}_1 - \beta_1}{\sigma / \sqrt{S_{xx}}} \cdot \frac{\sigma / \sqrt{S_{xx}}}{s_e / \sqrt{S_{xx}}} \\
-&amp;= \frac{\hat{\beta}_1 - \beta_1}{\sigma / \sqrt{S_{xx}}} \bigg/ \sqrt{\frac{s_e^2}{\sigma^2}}
+&amp;= \frac{\hat{\beta}_1 - \beta_1}{\sigma / \sqrt{S_{xx}}} \bigg/ \sqrt{\frac{s_e^2}{\sigma^2}} \\
+&amp;= \frac{\hat{\beta}_1 - \beta_1}{\text{SD}[\hat{\beta}_1]} \bigg/ \sqrt{\frac{\frac{(n - s)s_e^2}{\sigma^2}}{n - 2}}
 \sim \frac{Z}{\sqrt{\frac{\chi_{n-2}^2}{n-2}}}
 \sim t_{n-2}
 \end{aligned}
 \]</span></p>
 <p>where <span class="math inline">\(Z \sim N(0,1)\)</span>.</p>
-<p>Recall that a random variable <span class="math inline">\(T\)</span> defined as,</p>
-<p><span class="math display">\[
-T = \frac{Z}{\sqrt{\frac{\chi_{d}^2}{d}}}
-\]</span></p>
-<p>follows a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(d\)</span> degrees of freedom, where <span class="math inline">\(\chi_{d}^2\)</span> is a <span class="math inline">\(\chi^2\)</span> random variable with <span class="math inline">\(d\)</span> degrees of freedom.</p>
-<p>That is,</p>
-<p><span class="math display">\[
-T \sim t_d.
-\]</span></p>
+<p>Recall that a <span class="math inline">\(t\)</span> distribution is similar to a standard normal, but with heavier tails. As the degrees of freedom increases, the <span class="math inline">\(t\)</span> distribution becomes more and more like a standard normal. Below we plot a standard normal distribution as well as two examples of a <span class="math inline">\(t\)</span> distribution with different degrees of freedom. Notice how the <span class="math inline">\(t\)</span> distribution with the larger degrees of freedom is more similar to the standard normal curve.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define grid of x values</span>
+x =<span class="st"> </span><span class="kw">seq</span>(-<span class="dv">4</span>, <span class="dv">4</span>, <span class="dt">length =</span> <span class="dv">100</span>)
+
+<span class="co"># plot curve for standard normal</span>
+<span class="kw">plot</span>(x, <span class="kw">dnorm</span>(x), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">2</span>,
+     <span class="dt">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Density&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Normal vs t Distributions&quot;</span>)
+<span class="co"># add curves for t distributions</span>
+<span class="kw">lines</span>(x, <span class="kw">dt</span>(x, <span class="dt">df =</span> <span class="dv">1</span>), <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)
+<span class="kw">lines</span>(x, <span class="kw">dt</span>(x, <span class="dt">df =</span> <span class="dv">10</span>), <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
+
+<span class="co"># add legend</span>
+<span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Distributions&quot;</span>,
+       <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;t, df = 1&quot;</span>, <span class="st">&quot;t, df = 10&quot;</span>, <span class="st">&quot;Standard Normal&quot;</span>), 
+       <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty=</span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-208-1.png" width="672" /></p>
 </div>
 <div id="confidence-intervals-for-slope-and-intercept" class="section level2">
 <h2><span class="header-section-number">4.4</span> Confidence Intervals for Slope and Intercept</h2>
 <p>Recall that confidence intervals for means often take the form:</p>
 <p><span class="math display">\[
-EST \pm CRIT \cdot SE
+\text{EST} \pm \text{CRIT} \cdot \text{SE}
 \]</span></p>
 <p>or</p>
 <p><span class="math display">\[
-EST \pm MARGIN
+\text{EST} \pm \text{MARGIN}
 \]</span></p>
-<p>where <span class="math inline">\(EST\)</span> is an estimate for the parameter of interest, <span class="math inline">\(SE\)</span> is the standard error of the estimate and <span class="math inline">\(MARGIN = CRIT \cdot SE\)</span>.</p>
+<p>where <span class="math inline">\(\text{EST}\)</span> is an estimate for the parameter of interest, <span class="math inline">\(\text{SE}\)</span> is the standard error of the estimate, and <span class="math inline">\(\text{MARGIN} = \text{CRIT} \cdot \text{SE}\)</span>.</p>
 <p>Then, for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> we can create confidence intervals using</p>
 <p><span class="math display">\[
-\hat{\beta}_0 \pm t_{\alpha/2, n - 2} \cdot SE[\hat{\beta}_0] \quad \quad \quad \hat{\beta}_0 \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}}
+\hat{\beta}_0 \pm t_{\alpha/2, n - 2} \cdot \text{SE}[\hat{\beta}_0] \quad \quad \quad \hat{\beta}_0 \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}}
 \]</span></p>
 <p>and</p>
 <p><span class="math display">\[
-\hat{\beta}_1 \pm t_{\alpha/2, n - 2} \cdot SE[\hat{\beta}_1]  \quad \quad \quad \hat{\beta}_1 \pm t_{\alpha/2, n - 2} \cdot \frac{s_e}{\sqrt{S_{xx}}}
+\hat{\beta}_1 \pm t_{\alpha/2, n - 2} \cdot \text{SE}[\hat{\beta}_1]  \quad \quad \quad \hat{\beta}_1 \pm t_{\alpha/2, n - 2} \cdot \frac{s_e}{\sqrt{S_{xx}}}
 \]</span></p>
 <p>where <span class="math inline">\(t_{\alpha/2, n - 2}\)</span> is the critical value such that <span class="math inline">\(P(t_{n-2} &gt; t_{\alpha/2, n - 2}) = \alpha/2\)</span>.</p>
 </div>
@@ -674,18 +692,18 @@ EST \pm MARGIN
 <p>“We may speak of this hypothesis as the ‘<a href="https://xkcd.com/892/">null hypothesis</a>’, and it should be noted that the null hypothesis is never proved or established, but is possibly disproved, in the course of experimentation.”</p>
 <p>— <strong>Ronald Aylmer Fisher</strong></p>
 </blockquote>
-<p>Recall that a test statistic (<span class="math inline">\(TS\)</span>) for testing means often take the form:</p>
+<p>Recall that a test statistic (<span class="math inline">\(\text{TS}\)</span>) for testing means often take the form:</p>
 <p><span class="math display">\[
-TS = \frac{EST - HYP}{SE}
+\text{TS} = \frac{\text{EST} - \text{HYP}}{\text{SE}}
 \]</span></p>
-<p>where <span class="math inline">\(EST\)</span> is an estimate for the parameter of interest, <span class="math inline">\(HYP\)</span> is a hypothesized value of the parameter, and <span class="math inline">\(SE\)</span> is the standard error of the estimate.</p>
+<p>where <span class="math inline">\(\text{EST}\)</span> is an estimate for the parameter of interest, <span class="math inline">\(\text{HYP}\)</span> is a hypothesized value of the parameter, and <span class="math inline">\(\text{SE}\)</span> is the standard error of the estimate.</p>
 <p>So, to test</p>
 <p><span class="math display">\[
 H_0: \beta_0 = \beta_{00} \quad \text{vs} \quad H_1: \beta_0 \neq \beta_{00}
 \]</span></p>
 <p>we use the test statistic</p>
 <p><span class="math display">\[
-t = \frac{\hat{\beta}_0 - \beta_{00}}{SE[\hat{\beta}_0]} = \frac{\hat{\beta}_0-\beta_{00}}{s_e\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}}
+t = \frac{\hat{\beta}_0 - \beta_{00}}{\text{SE}[\hat{\beta}_0]} = \frac{\hat{\beta}_0-\beta_{00}}{s_e\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}}
 \]</span></p>
 <p>which, under the null hypothesis, follows a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n - 2\)</span> degrees of freedom. We use <span class="math inline">\(\beta_{00}\)</span> to denote the hypothesized value of <span class="math inline">\(\beta_0\)</span>.</p>
 <p>Similarly, to test</p>
@@ -694,7 +712,7 @@ H_0: \beta_1 = \beta_{10} \quad \text{vs} \quad H_1: \beta_1 \neq \beta_{10}
 \]</span></p>
 <p>we use the test statistic</p>
 <p><span class="math display">\[
-t = \frac{\hat{\beta}_1-\beta_{10}}{SE[\hat{\beta}_1]} = \frac{\hat{\beta}_1-\beta_{10}}{s_e / \sqrt{S_{xx}}}
+t = \frac{\hat{\beta}_1-\beta_{10}}{\text{SE}[\hat{\beta}_1]} = \frac{\hat{\beta}_1-\beta_{10}}{s_e / \sqrt{S_{xx}}}
 \]</span></p>
 <p>which again, under the null hypothesis, follows a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n - 2\)</span> degrees of freedom. We now use <span class="math inline">\(\beta_{10}\)</span> to denote the hypothesized value of <span class="math inline">\(\beta_1\)</span>.</p>
 </div>
@@ -751,11 +769,11 @@ t = \frac{\hat{\beta}_1-\beta_{10}}{SE[\hat{\beta}_1]} = \frac{\hat{\beta}_1-\be
 \]</span></p>
 <p>The second value, <code>Std. Error</code>, is the standard error of <span class="math inline">\(\hat{\beta}_1\)</span>,</p>
 <p><span class="math display">\[
-SE[\hat{\beta}_1] = \frac{s_e}{\sqrt{S_{xx}}} = 0.4155128.
+\text{SE}[\hat{\beta}_1] = \frac{s_e}{\sqrt{S_{xx}}} = 0.4155128.
 \]</span></p>
-<p>The third value, <code>t value</code>, is the value of the test statistics for testing <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs <span class="math inline">\(H_1: \beta_1 \neq 0\)</span>,</p>
+<p>The third value, <code>t value</code>, is the value of the test statistic for testing <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs <span class="math inline">\(H_1: \beta_1 \neq 0\)</span>,</p>
 <p><span class="math display">\[
-t = \frac{\hat{\beta}_1-0}{SE[\hat{\beta}_1]} = \frac{\hat{\beta}_1-0}{s_e / \sqrt{S_{xx}}} = 9.46399.
+t = \frac{\hat{\beta}_1-0}{\text{SE}[\hat{\beta}_1]} = \frac{\hat{\beta}_1-0}{s_e / \sqrt{S_{xx}}} = 9.46399.
 \]</span></p>
 <p>Lastly, <code>Pr(&gt;|t|)</code>, gives us the p-value of that test.</p>
 <p><span class="math display">\[
@@ -769,15 +787,15 @@ t = \frac{\hat{\beta}_1-0}{SE[\hat{\beta}_1]} = \frac{\hat{\beta}_1-0}{s_e / \sq
 <p>In summary, the following code stores the information of <code>summary(stop_dist_model)$coefficients</code> in a new variable <code>stop_dist_model_test_info</code>, then extracts each element into a new variable which describes the information it contains.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stop_dist_model_test_info =<span class="st"> </span><span class="kw">summary</span>(stop_dist_model)$coefficients
 
-beta_0_hat      =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>,<span class="dv">1</span>] <span class="co"># Estimate</span>
-beta_0_hat_se   =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>,<span class="dv">2</span>] <span class="co"># Std. Error</span>
-beta_0_hat_t    =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>,<span class="dv">3</span>] <span class="co"># t value</span>
-beta_0_hat_pval =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>,<span class="dv">4</span>] <span class="co"># Pr(&gt;|t|)</span>
+beta_0_hat      =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>, <span class="dv">1</span>] <span class="co"># Estimate</span>
+beta_0_hat_se   =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>, <span class="dv">2</span>] <span class="co"># Std. Error</span>
+beta_0_hat_t    =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>, <span class="dv">3</span>] <span class="co"># t value</span>
+beta_0_hat_pval =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>, <span class="dv">4</span>] <span class="co"># Pr(&gt;|t|)</span>
 
-beta_1_hat      =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>,<span class="dv">1</span>] <span class="co"># Estimate</span>
-beta_1_hat_se   =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>,<span class="dv">2</span>] <span class="co"># Std. Error</span>
-beta_1_hat_t    =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>,<span class="dv">3</span>] <span class="co"># t value</span>
-beta_1_hat_pval =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>,<span class="dv">4</span>] <span class="co"># Pr(&gt;|t|)</span></code></pre></div>
+beta_1_hat      =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>, <span class="dv">1</span>] <span class="co"># Estimate</span>
+beta_1_hat_se   =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>, <span class="dv">2</span>] <span class="co"># Std. Error</span>
+beta_1_hat_t    =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>, <span class="dv">3</span>] <span class="co"># t value</span>
+beta_1_hat_pval =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>, <span class="dv">4</span>] <span class="co"># Pr(&gt;|t|)</span></code></pre></div>
 <p>We can then verify some equivalent expressions: the <span class="math inline">\(t\)</span> test statistic for <span class="math inline">\(\hat{\beta}_1\)</span> and the two-sided p-value associated with that test statistic.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(beta_1_hat -<span class="st"> </span><span class="dv">0</span>) /<span class="st"> </span>beta_1_hat_se</code></pre></div>
 <pre><code>## [1] 9.46399</code></pre>
@@ -818,8 +836,8 @@ Y_i = \beta_0 + \epsilon_i.
 \text{p-value} = 1.4898365\times 10^{-12}.
 \]</span></p>
 <p>With this extremely low p-value, we would reject the null hypothesis at any reasonable <span class="math inline">\(\alpha\)</span> level, say for example <span class="math inline">\(\alpha = 0.01\)</span>. So we say there is a significant <strong>linear</strong> relationship between speed and stopping distance. Notice that we emphasize <strong>linear</strong>.</p>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-215-1.png" width="672" /></p>
-<p>In this plot of simulated data, we see a clear relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, however it is not a linear relationship. If we fit a line to this data, it is very flat. The resulting test for <span class="math inline">\(H_0: \beta_1 = 0\)</span>  <span class="math inline">\(H_1: \beta_1 \neq 0\)</span> gives a large p-value, in this case <span class="math inline">\(0.7564548\)</span>, so we would fail to reject and say that there is no significant linear relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. We will see later how to fit a curve to this data using a “linear” model, but for now, realize that testing <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs <span class="math inline">\(H_1: \beta_1 \neq 0\)</span> can only detect straight line relationships.</p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-216-1.png" width="672" /></p>
+<p>In this plot of simulated data, we see a clear relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, however it is not a linear relationship. If we fit a line to this data, it is very flat. The resulting test for <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs <span class="math inline">\(H_1: \beta_1 \neq 0\)</span> gives a large p-value, in this case <span class="math inline">\(0.7564548\)</span>, so we would fail to reject and say that there is no significant linear relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. We will see later how to fit a curve to this data using a “linear” model, but for now, realize that testing <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs <span class="math inline">\(H_1: \beta_1 \neq 0\)</span> can only detect straight line relationships.</p>
 </div>
 <div id="confidence-intervals-in-r" class="section level3">
 <h3><span class="header-section-number">4.6.3</span> Confidence Intervals in <code>R</code></h3>
@@ -834,45 +852,59 @@ Y_i = \beta_0 + \epsilon_i.
 <p>You should be somewhat suspicious of the confidence interval for <span class="math inline">\(\beta_0\)</span>, as it covers negative values, which correspond to negative stopping distances. Technically the interpretation would be that we are 99% confident that the average stopping distance of a car traveling 0 miles per hour is between -35.7066103 and 0.5484205 feet, but we don’t really believe that, since we are actually certain that it would be non-negative.</p>
 <p>Note, we can extract specific values from this output a number of ways. This code is not run, and instead, you should check how it relates to the output of the code above.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">1</span>,]
-<span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">1</span>,<span class="dv">1</span>]
-<span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">1</span>,<span class="dv">2</span>]
+<span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">1</span>, <span class="dv">1</span>]
+<span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">1</span>, <span class="dv">2</span>]
 <span class="kw">confint</span>(stop_dist_model, <span class="dt">parm =</span> <span class="st">&quot;(Intercept)&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>)
 <span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">2</span>,]
-<span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">2</span>,<span class="dv">1</span>]
-<span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">2</span>,<span class="dv">2</span>]
+<span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">2</span>, <span class="dv">1</span>]
+<span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">2</span>, <span class="dv">2</span>]
 <span class="kw">confint</span>(stop_dist_model, <span class="dt">parm =</span> <span class="st">&quot;speed&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>)</code></pre></div>
+<p>We can also verify that calculations that <code>R</code> is performing for the <span class="math inline">\(\beta_1\)</span> interval.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># store estimate</span>
+beta_1_hat =<span class="st"> </span><span class="kw">coef</span>(stop_dist_model)[<span class="dv">2</span>]
+
+<span class="co"># store standard error</span>
+beta_1_hat_se =<span class="st"> </span><span class="kw">summary</span>(stop_dist_model)$coefficients[<span class="dv">2</span>, <span class="dv">2</span>]
+
+<span class="co"># calculate critical value for two-sided 99% CI</span>
+crit =<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.995</span>, <span class="dt">df =</span> <span class="kw">length</span>(<span class="kw">resid</span>(stop_dist_model)) -<span class="st"> </span><span class="dv">2</span>)
+
+<span class="co"># est - margin, est + margin</span>
+<span class="kw">c</span>(beta_1_hat -<span class="st"> </span>crit *<span class="st"> </span>beta_1_hat_se, beta_1_hat +<span class="st"> </span>crit *<span class="st"> </span>beta_1_hat_se)</code></pre></div>
+<pre><code>##    speed    speed 
+## 2.817919 5.046899</code></pre>
 </div>
 </div>
 <div id="confidence-interval-for-mean-response" class="section level2">
 <h2><span class="header-section-number">4.7</span> Confidence Interval for Mean Response</h2>
-<p>In addition to confidence intervals for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> there two other common interval estimates used with regression. The first is called a <strong>confidence interval for the mean response</strong>. Often, we would like an interval estimate for the mean, <span class="math inline">\(E[Y]\)</span> for a particular value of <span class="math inline">\(x\)</span>.</p>
-<p>In this situation we use <span class="math inline">\(\hat{y}\)</span> as our estimate of <span class="math inline">\(E[Y]\)</span>.</p>
+<p>In addition to confidence intervals for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, there are two other common interval estimates used with regression. The first is called a <strong>confidence interval for the mean response</strong>. Often, we would like an interval estimate for the mean, <span class="math inline">\(E[Y \mid X = x]\)</span> for a particular value of <span class="math inline">\(x\)</span>.</p>
+<p>In this situation we use <span class="math inline">\(\hat{y}(x)\)</span> as our estimate of <span class="math inline">\(E[Y \mid X = x]\)</span>. We modify our notation slightly to make it clear that the the predicted value is a function of the <span class="math inline">\(x\)</span> value.</p>
 <p><span class="math display">\[
-\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x
+\hat{y}(x) = \hat{\beta}_0 + \hat{\beta}_1 x
 \]</span></p>
 <p>Recall that,</p>
 <p><span class="math display">\[
-E[Y] = \beta_0 + \beta_1 x
+\text{E}[Y \mid X = x] = \beta_0 + \beta_1 x.
 \]</span></p>
-<p>Thus, <span class="math inline">\(\hat{y}\)</span> is a good estimate since it is unbiased:</p>
+<p>Thus, <span class="math inline">\(\hat{y}(x)\)</span> is a good estimate since it is unbiased:</p>
 <p><span class="math display">\[
-E[\hat{y}] = \beta_0 + \beta_1 x.
+\text{E}[\hat{y}(x)] = \beta_0 + \beta_1 x.
 \]</span></p>
 <p>We could then derive,</p>
 <p><span class="math display">\[
-Var[\hat{y}] = \sigma^2 \left(\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right).
+\text{Var}[\hat{y}(x)] = \sigma^2 \left(\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right).
 \]</span></p>
-<p>Like the other estimates we have seen, <span class="math inline">\(\hat{y}\)</span> also follows a normal distribution,</p>
+<p>Like the other estimates we have seen, <span class="math inline">\(\hat{y}(x)\)</span> also follows a normal distribution. Since <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are linear combinations of normal random variables, <span class="math inline">\(\hat{y}(x)\)</span> is as well.</p>
 <p><span class="math display">\[
-\hat{y} \sim N \left(\beta_0 + \beta_1 x, \sigma^2 \left(\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right) \right).
+\hat{y}(x) \sim N \left(\beta_0 + \beta_1 x, \sigma^2 \left(\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right) \right)
 \]</span></p>
 <p>And lastly, since we need to estimate this variance, we arrive at the standard error of our estimate,</p>
 <p><span class="math display">\[
-SE[\hat{y}] = s_e \sqrt{\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}.
+\text{SE}[\hat{y}(x)] = s_e \sqrt{\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}.
 \]</span></p>
 <p>We can then use this to find the confidence interval for the mean response,</p>
 <p><span class="math display">\[
-\hat{y} \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}
+\hat{y}(x) \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}
 \]</span></p>
 <p>To find confidence intervals for the mean response using <code>R</code>, we use the <code>predict()</code> function. We give the function our fitted model as well as new data, stored as a data frame. (This is important, so that <code>R</code> knows the name of the predictor variable.) Here, we are finding the confidence interval for the mean stopping distance when a car is travelling 5 miles per hour and when a car is travelling 21 miles per hour.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new_speeds =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">speed =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">21</span>))
@@ -884,20 +916,20 @@ SE[\hat{y}] = s_e \sqrt{\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}.
 </div>
 <div id="prediction-interval-for-new-observations" class="section level2">
 <h2><span class="header-section-number">4.8</span> Prediction Interval for New Observations</h2>
-<p>Sometimes we would like an interval estimate for a new observation, <span class="math inline">\(Y\)</span> for a particular value of <span class="math inline">\(x\)</span>. This is very similar to an interval for the mean response, <span class="math inline">\(E[Y]\)</span>, but different in one very important way.</p>
-<p>Our best guess for a new observation is still <span class="math inline">\(\hat{y}\)</span>. The estimated mean is still the best prediction we can make. The difference is in the amount of variability, since we know that observations will vary about the true regression line according to a <span class="math inline">\(N(0, \sigma^2)\)</span> distribution. Because of this we add an extra factor of <span class="math inline">\(\sigma^2\)</span> to our estimates variability.</p>
+<p>Sometimes we would like an interval estimate for a new observation, <span class="math inline">\(Y\)</span>, for a particular value of <span class="math inline">\(x\)</span>. This is very similar to an interval for the mean response, <span class="math inline">\(\text{E}[Y \mid X = x]\)</span>, but different in one very important way.</p>
+<p>Our best guess for a new observation is still <span class="math inline">\(\hat{y}(x)\)</span>. The estimated mean is still the best prediction we can make. The difference is in the amount of variability. We know that observations will vary about the true regression line according to a <span class="math inline">\(N(0, \sigma^2)\)</span> distribution. Because of this we add an extra factor of <span class="math inline">\(\sigma^2\)</span> to our estimate’s variability in order to account for the variability of observations about the regression line.</p>
 <p><span class="math display">\[
-Var[\hat{y}] = \sigma^2 \left(1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right)
+\text{Var}[\hat{y}(x) + \epsilon] = \text{Var}[\hat{y}(x)] + \text{Var}[\epsilon] = \sigma^2 \left(\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right) + \sigma^2 = \sigma^2 \left(1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right)
 \]</span></p>
 <p><span class="math display">\[
-\hat{y} \sim N \left(\beta_0 + \beta_1 x, \sigma^2 \left(1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right) \right)
+\hat{y}(x) + \epsilon \sim N \left(\beta_0 + \beta_1 x, \ \sigma^2 \left(1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right) \right)
 \]</span></p>
 <p><span class="math display">\[
-SE[\hat{y}] = s_e \sqrt{1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}
+\text{SE}[\hat{y}(x) + \epsilon] = s_e \sqrt{1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}
 \]</span></p>
 <p>We can then find a <strong>prediction interval</strong> using,</p>
 <p><span class="math display">\[
-\hat{y} \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}.
+\hat{y}(x) \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}.
 \]</span></p>
 <p>To calculate this for a set of points in <code>R</code> notice there is only a minor change in syntax from finding a confidence interval for the mean response.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(stop_dist_model, <span class="dt">newdata =</span> new_speeds, 
@@ -933,7 +965,7 @@ dist_pi_band =<span class="st"> </span><span class="kw">predict</span>(stop_dist
 <span class="kw">lines</span>(speed_grid, dist_pi_band[,<span class="st">&quot;lwr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">3</span>)
 <span class="kw">lines</span>(speed_grid, dist_pi_band[,<span class="st">&quot;upr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">3</span>)
 <span class="kw">points</span>(<span class="kw">mean</span>(cars$speed), <span class="kw">mean</span>(cars$dist), <span class="dt">pch =</span> <span class="st">&quot;+&quot;</span>, <span class="dt">cex =</span> <span class="dv">3</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-220-1.png" width="768" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-222-1.png" width="960" /></p>
 <p>Some things to notice:</p>
 <ul>
 <li>We use the <code>ylim</code> argument to stretch the <span class="math inline">\(y\)</span>-axis of the plot, since the bands extend further than the points.</li>
@@ -942,7 +974,7 @@ dist_pi_band =<span class="st"> </span><span class="kw">predict</span>(stop_dist
 <li>This is a point that the regression line will <strong>always</strong> pass through. (Think about why.)</li>
 <li>This is the point where both the confidence and prediction bands are the narrowest. Look at the standard errors of both to understand why.</li>
 </ul></li>
-<li>The prediction bands (green) are less curved than the confidence bands (red). This is a result of the extra factor of <span class="math inline">\(\sigma^2\)</span> added to the variance at any value of <span class="math inline">\(x\)</span>.</li>
+<li>The prediction bands (dotted blue) are less curved than the confidence bands (dashed blue). This is a result of the extra factor of <span class="math inline">\(\sigma^2\)</span> added to the variance at any value of <span class="math inline">\(x\)</span>.</li>
 </ul>
 </div>
 <div id="significance-of-regression-f-test" class="section level2">
@@ -954,7 +986,7 @@ dist_pi_band =<span class="st"> </span><span class="kw">predict</span>(stop_dist
 \]</span></p>
 <p>or, in short,</p>
 <p><span class="math display">\[
-SST = SSReg + SSE.
+\text{SST} = \text{SSReg} + \text{SSE}.
 \]</span></p>
 <p>To develop the <span class="math inline">\(F\)</span> test, we will arrange this information in an <strong>ANOVA</strong> table,</p>
 <table style="width:94%;">
@@ -979,14 +1011,14 @@ SST = SSReg + SSE.
 <td align="left">Regression</td>
 <td align="left"><span class="math inline">\(\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2\)</span></td>
 <td align="left"><span class="math inline">\(1\)</span></td>
-<td align="left"><span class="math inline">\(SSReg / 1\)</span></td>
-<td align="left"><span class="math inline">\(MSReg / MSE\)</span></td>
+<td align="left"><span class="math inline">\(\text{SSReg} / 1\)</span></td>
+<td align="left"><span class="math inline">\(\text{MSReg} / \text{MSE}\)</span></td>
 </tr>
 <tr class="even">
 <td align="left">Error</td>
 <td align="left"><span class="math inline">\(\sum_{i=1}^{n}(y_i - \hat{y}_i)^2\)</span></td>
 <td align="left"><span class="math inline">\(n - 2\)</span></td>
-<td align="left"><span class="math inline">\(SSE / (n - 2)\)</span></td>
+<td align="left"><span class="math inline">\(\text{SSE} / (n - 2)\)</span></td>
 <td align="left"></td>
 </tr>
 <tr class="odd">
