@@ -352,6 +352,63 @@ x =<span class="st"> </span><span class="kw">seq</span>(-<span class="dv">4</spa
 <span class="kw">plot</span>(x, <span class="kw">dt</span>(x, <span class="dt">df =</span> <span class="dv">10</span>), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">2</span>,
      <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-582-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))
+
+sim_slr =<span class="st"> </span>function(x, <span class="dt">beta_0 =</span> <span class="dv">10</span>, <span class="dt">beta_1 =</span> <span class="dv">5</span>, <span class="dt">sigma =</span> <span class="dv">1</span>) {
+  n =<span class="st"> </span><span class="kw">length</span>(x)
+  epsilon =<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> sigma)
+  y =<span class="st"> </span>beta_0 +<span class="st"> </span>beta_1 *<span class="st"> </span>x +<span class="st"> </span>epsilon
+  <span class="kw">data.frame</span>(<span class="dt">predictor =</span> x, <span class="dt">response =</span> y)
+}
+
+<span class="co"># suppose alpha = 0.05, which is how often we are willing to make a mistake if the null hypothesis is true</span>
+
+<span class="kw">set.seed</span>(<span class="dv">9</span>)
+x =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">20</span>, <span class="dt">length.out =</span> <span class="dv">21</span>)
+<span class="co"># beta_1 = 0, sigma = 1</span>
+<span class="co"># beta_1 = 0.5, sigma = 7</span>
+sim_data =<span class="st"> </span><span class="kw">sim_slr</span>(<span class="dt">x =</span> x, <span class="dt">beta_0 =</span> <span class="dv">2</span>, <span class="dt">beta_1 =</span> <span class="dv">0</span>, <span class="dt">sigma =</span> <span class="dv">1</span>)
+
+sim_fit =<span class="st"> </span><span class="kw">lm</span>(response ~<span class="st"> </span>predictor, <span class="dt">data =</span> sim_data)
+<span class="kw">summary</span>(sim_fit)$coefficients[<span class="st">&quot;predictor&quot;</span>, <span class="st">&quot;Pr(&gt;|t|)&quot;</span>]</code></pre></div>
+<pre><code>## [1] 0.522562</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(response ~<span class="st"> </span>predictor, <span class="dt">data =</span> sim_data, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(-<span class="dv">1</span>, <span class="dv">5</span>))
+<span class="kw">abline</span>(sim_fit, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)
+<span class="kw">abline</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
+<span class="kw">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Estimate&quot;</span>, <span class="st">&quot;Truth&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">lwd =</span> <span class="dv">2</span>,
+       <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>))
+
+<span class="kw">set.seed</span>(<span class="dv">78</span>)
+x =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">20</span>, <span class="dt">length.out =</span> <span class="dv">21</span>)
+<span class="co"># beta_1 = 0, sigma = 1</span>
+<span class="co"># beta_1 = 0.5, sigma = 7</span>
+sim_data =<span class="st"> </span><span class="kw">sim_slr</span>(<span class="dt">x =</span> x, <span class="dt">beta_0 =</span> <span class="dv">2</span>, <span class="dt">beta_1 =</span> <span class="dv">0</span>, <span class="dt">sigma =</span> <span class="dv">1</span>)
+
+sim_fit =<span class="st"> </span><span class="kw">lm</span>(response ~<span class="st"> </span>predictor, <span class="dt">data =</span> sim_data)
+<span class="kw">summary</span>(sim_fit)$coefficients[<span class="st">&quot;predictor&quot;</span>, <span class="st">&quot;Pr(&gt;|t|)&quot;</span>]</code></pre></div>
+<pre><code>## [1] 0.03364931</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(response ~<span class="st"> </span>predictor, <span class="dt">data =</span> sim_data, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(-<span class="dv">1</span>, <span class="dv">5</span>))
+<span class="kw">abline</span>(sim_fit, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)
+<span class="kw">abline</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
+<span class="kw">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Estimate&quot;</span>, <span class="st">&quot;Truth&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">lwd =</span> <span class="dv">2</span>,
+       <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>))
+
+<span class="kw">set.seed</span>(<span class="dv">1</span>)
+x =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">20</span>, <span class="dt">length.out =</span> <span class="dv">21</span>)
+<span class="co"># beta_1 = 0, sigma = 1</span>
+<span class="co"># beta_1 = 0.5, sigma = 7</span>
+sim_data =<span class="st"> </span><span class="kw">sim_slr</span>(<span class="dt">x =</span> x, <span class="dt">beta_0 =</span> <span class="dv">2</span>, <span class="dt">beta_1 =</span> <span class="dv">1</span>, <span class="dt">sigma =</span> <span class="dv">2</span>)
+
+sim_fit =<span class="st"> </span><span class="kw">lm</span>(response ~<span class="st"> </span>predictor, <span class="dt">data =</span> sim_data)
+<span class="kw">summary</span>(sim_fit)$coefficients[<span class="st">&quot;predictor&quot;</span>, <span class="st">&quot;Pr(&gt;|t|)&quot;</span>]</code></pre></div>
+<pre><code>## [1] 3.724353e-12</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(response ~<span class="st"> </span>predictor, <span class="dt">data =</span> sim_data, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)
+<span class="kw">abline</span>(sim_fit, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)
+<span class="kw">abline</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="kw">mean</span>(sim_data$response), <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">3</span>)
+<span class="kw">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Estimate&quot;</span>, <span class="st">&quot;Truth&quot;</span>, <span class="st">&quot;Null Estimate&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">lwd =</span> <span class="dv">2</span>,
+       <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-583-1.png" width="960" /></p>
 
 <div id="refs" class="references">
 
