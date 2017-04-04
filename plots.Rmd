@@ -64,6 +64,64 @@ plot(x, dt(x, df = 10), type = "l", lty = 1, lwd = 2,
 
 
 
+```{r, fig.height=5, fig.width=10}
+par(mfrow = c(1, 3))
+
+sim_slr = function(x, beta_0 = 10, beta_1 = 5, sigma = 1) {
+  n = length(x)
+  epsilon = rnorm(n, mean = 0, sd = sigma)
+  y = beta_0 + beta_1 * x + epsilon
+  data.frame(predictor = x, response = y)
+}
+
+# suppose alpha = 0.05, which is how often we are willing to make a mistake if the null hypothesis is true
+
+set.seed(9)
+x = seq(1, 20, length.out = 21)
+# beta_1 = 0, sigma = 1
+# beta_1 = 0.5, sigma = 7
+sim_data = sim_slr(x = x, beta_0 = 2, beta_1 = 0, sigma = 1)
+
+sim_fit = lm(response ~ predictor, data = sim_data)
+summary(sim_fit)$coefficients["predictor", "Pr(>|t|)"]
+
+plot(response ~ predictor, data = sim_data, pch = 20, col = "grey", cex = 1.5, ylim = c(-1, 5))
+abline(sim_fit, lwd = 3, lty = 1, col = "darkorange")
+abline(2, 0, lwd = 3, lty = 2, col = "dodgerblue")
+legend("topleft", c("Estimate", "Truth"), lty = c(1, 2), lwd = 2,
+       col = c("darkorange", "dodgerblue"))
+
+set.seed(78)
+x = seq(1, 20, length.out = 21)
+# beta_1 = 0, sigma = 1
+# beta_1 = 0.5, sigma = 7
+sim_data = sim_slr(x = x, beta_0 = 2, beta_1 = 0, sigma = 1)
+
+sim_fit = lm(response ~ predictor, data = sim_data)
+summary(sim_fit)$coefficients["predictor", "Pr(>|t|)"]
+
+plot(response ~ predictor, data = sim_data, pch = 20, col = "grey", cex = 1.5, ylim = c(-1, 5))
+abline(sim_fit, lwd = 3, lty = 1, col = "darkorange")
+abline(2, 0, lwd = 3, lty = 2, col = "dodgerblue")
+legend("topleft", c("Estimate", "Truth"), lty = c(1, 2), lwd = 2,
+       col = c("darkorange", "dodgerblue"))
+
+set.seed(1)
+x = seq(1, 20, length.out = 21)
+# beta_1 = 0, sigma = 1
+# beta_1 = 0.5, sigma = 7
+sim_data = sim_slr(x = x, beta_0 = 2, beta_1 = 1, sigma = 2)
+
+sim_fit = lm(response ~ predictor, data = sim_data)
+summary(sim_fit)$coefficients["predictor", "Pr(>|t|)"]
+
+plot(response ~ predictor, data = sim_data, pch = 20, col = "grey", cex = 1.5)
+abline(sim_fit, lwd = 3, lty = 1, col = "darkorange")
+abline(2, 1, lwd = 3, lty = 2, col = "dodgerblue")
+abline(h = mean(sim_data$response), lwd = 3, lty = 3)
+legend("topleft", c("Estimate", "Truth", "Null Estimate"), lty = c(1, 2, 3), lwd = 2,
+       col = c("darkorange", "dodgerblue", "black"))
+```
 
 
 
