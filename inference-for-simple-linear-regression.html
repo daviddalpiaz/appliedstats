@@ -25,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2017-04-03">
+<meta name="date" content="2017-04-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -919,7 +919,11 @@ crit =<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.995
 <p>Sometimes we would like an interval estimate for a new observation, <span class="math inline">\(Y\)</span>, for a particular value of <span class="math inline">\(x\)</span>. This is very similar to an interval for the mean response, <span class="math inline">\(\text{E}[Y \mid X = x]\)</span>, but different in one very important way.</p>
 <p>Our best guess for a new observation is still <span class="math inline">\(\hat{y}(x)\)</span>. The estimated mean is still the best prediction we can make. The difference is in the amount of variability. We know that observations will vary about the true regression line according to a <span class="math inline">\(N(0, \sigma^2)\)</span> distribution. Because of this we add an extra factor of <span class="math inline">\(\sigma^2\)</span> to our estimate’s variability in order to account for the variability of observations about the regression line.</p>
 <p><span class="math display">\[
-\text{Var}[\hat{y}(x) + \epsilon] = \text{Var}[\hat{y}(x)] + \text{Var}[\epsilon] = \sigma^2 \left(\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right) + \sigma^2 = \sigma^2 \left(1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right)
+\begin{aligned}
+\text{Var}[\hat{y}(x) + \epsilon] &amp;= \text{Var}[\hat{y}(x)] + \text{Var}[\epsilon] \\[2ex]
+&amp;= \sigma^2 \left(\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right) + \sigma^2 \\[2ex]
+&amp;= \sigma^2 \left(1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right)
+\end{aligned}
 \]</span></p>
 <p><span class="math display">\[
 \hat{y}(x) + \epsilon \sim N \left(\beta_0 + \beta_1 x, \ \sigma^2 \left(1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right) \right)
