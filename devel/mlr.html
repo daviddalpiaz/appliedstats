@@ -422,11 +422,11 @@ E[\hat{\beta}_j] = \beta_j.
 \]</span></p>
 <p>We also have</p>
 <p><span class="math display">\[
-Var[\hat{\beta}] = \sigma^2 \left(  X^\top X  \right)^{-1}
+\text{Var}[\hat{\beta}] = \sigma^2 \left(  X^\top X  \right)^{-1}
 \]</span></p>
 <p>and for any <span class="math inline">\(\hat{\beta}_j\)</span> we have</p>
 <p><span class="math display">\[
-Var[\hat{\beta}_j] = \sigma^2 C_{jj}
+\text{Var}[\hat{\beta}_j] = \sigma^2 C_{jj}
 \]</span></p>
 <p>where</p>
 <p><span class="math display">\[
@@ -445,11 +445,11 @@ C_{(p-1)0} &amp; C_{(p-1)1} &amp; C_{(p-1)2} &amp; \cdots &amp; C_{(p-1)(p-1)} \
 <p>Essentially, the diagonal elements correspond to the <span class="math inline">\(\beta\)</span> vector.</p>
 <p>Then the standard error for the <span class="math inline">\(\hat{\beta}\)</span> vector is given by</p>
 <p><span class="math display">\[
-SE[\hat{\beta}] = s_e \sqrt{\left(  X^\top X  \right)^{-1}}
+\text{SE}[\hat{\beta}] = s_e \sqrt{\left(  X^\top X  \right)^{-1}}
 \]</span></p>
 <p>and for a particular <span class="math inline">\(\hat{\beta}_j\)</span></p>
 <p><span class="math display">\[
-SE[\hat{\beta}_j] = s_e \sqrt{C_{jj}}.
+\text{SE}[\hat{\beta}_j] = s_e \sqrt{C_{jj}}.
 \]</span></p>
 <p>Lastly, each of the <span class="math inline">\(\hat{\beta}_j\)</span> follows a normal distribution,</p>
 <p><span class="math display">\[
@@ -468,7 +468,7 @@ H_0: \beta_j = 0 \quad \text{vs} \quad H_1: \beta_j \neq 0
 \]</span></p>
 <p>Again, the test statistic takes the form</p>
 <p><span class="math display">\[
-TS = \frac{EST - HYP}{SE}.
+\text{TS} = \frac{\text{EST} - \text{HYP}}{\text{SE}}.
 \]</span></p>
 <p>In particular,</p>
 <p><span class="math display">\[
@@ -506,11 +506,11 @@ H_0: \beta_1 = 0 \quad \text{vs} \quad H_1: \beta_1 \neq 0
 <h3>Confidence Intervals</h3>
 <p>Since <span class="math inline">\(\hat{\beta}_j\)</span> is our estimate for <span class="math inline">\(\beta_j\)</span> and we have</p>
 <p><span class="math display">\[
-E[\hat{\beta}_j] = \beta_j
+\text{E}[\hat{\beta}_j] = \beta_j
 \]</span></p>
 <p>as well as the standard error,</p>
 <p><span class="math display">\[
-SE[\hat{\beta}_j] = s_e\sqrt{C_{jj}}
+\text{SE}[\hat{\beta}_j] = s_e\sqrt{C_{jj}}
 \]</span></p>
 <p>and the sampling distribution of <span class="math inline">\(\hat{\beta}_j\)</span> is Normal, then we can easily construct confidence intervals for each of the <span class="math inline">\(\hat{\beta}_j\)</span>.</p>
 <p><span class="math display">\[
@@ -525,7 +525,7 @@ SE[\hat{\beta}_j] = s_e\sqrt{C_{jj}}
 </div>
 <div id="confidence-intervals-for-mean-response" class="section level3">
 <h3>Confidence Intervals for Mean Response</h3>
-<p>As we saw in SLR, we can create confidence intervals for mean response, that is, an interval estimate for <span class="math inline">\(E[Y]\)</span>. In SLR, the mean of <span class="math inline">\(Y\)</span> was only dependent on a single value <span class="math inline">\(x\)</span>. Now, in multiple regression, <span class="math inline">\(E[Y]\)</span> is dependent on the value of each of the predictors, so we define the vector <span class="math inline">\(x_0\)</span> to be,</p>
+<p>As we saw in SLR, we can create confidence intervals for the mean response, that is, an interval estimate for <span class="math inline">\(\text{E}[Y \mid X = x]\)</span>. In SLR, the mean of <span class="math inline">\(Y\)</span> was only dependent on a single value <span class="math inline">\(x\)</span>. Now, in multiple regression, <span class="math inline">\(\text{E}[Y \mid X = x]\)</span> is dependent on the value of each of the predictors, so we define the vector <span class="math inline">\(x_0\)</span> to be,</p>
 <p><span class="math display">\[
 x_{0} = \begin{bmatrix}
 1 \\
@@ -535,23 +535,23 @@ x_{02} \\
 x_{0(p-1)} \\
 \end{bmatrix}.
 \]</span></p>
-<p>Then our estimate of <span class="math inline">\(E[Y]\)</span> for a set of values <span class="math inline">\(x_0\)</span> is given by</p>
+<p>Then our estimate of <span class="math inline">\(\text{E}[Y \mid X = x_0]\)</span> for a set of values <span class="math inline">\(x_0\)</span> is given by</p>
 <p><span class="math display">\[
 \begin{aligned}
-\hat{y} &amp;= x_{0}^\top\hat{\beta} \\
+\hat{y}(x_0) &amp;= x_{0}^\top\hat{\beta} \\
 &amp;= \hat{\beta}_0 + \hat{\beta}_1 x_{01} + \hat{\beta}_2 x_{02} + \cdots + \hat{\beta}_{p-1} x_{0(p-1)}.
 \end{aligned}
 \]</span></p>
 <p>As with SLR, this is an unbiased estimate.</p>
 <p><span class="math display">\[
 \begin{aligned}
-E[\hat{y}] &amp;= x_{0}^\top\beta \\
+\text{E}[\hat{y}(x_0)] &amp;= x_{0}^\top\beta \\
 &amp;= \beta_0 + \beta_1 x_{01} + \beta_2 x_{02} + \cdots + \beta_{p-1} x_{0(p-1)}
 \end{aligned}
 \]</span></p>
 <p>To make an interval estimate, we will also need its standard error.</p>
 <p><span class="math display">\[
-SE[\hat{y}] = s_e \sqrt{x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
+\text{SE}[\hat{y}(x_0)] = s_e \sqrt{x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
 \]</span></p>
 <p>Putting it all together, we obtain a confidence interval for the mean response.</p>
 <p><span class="math display">\[
@@ -563,12 +563,12 @@ new_cars</code></pre>
 <pre><code>##     wt year
 ## 1 3500   76
 ## 2 5000   81</code></pre>
-<p>We can then use the <code>predict()</code> function with <code>interval = &quot;confidence&quot;</code> to obtain intervals for the mean fuel efficiency for both new car. Again, it is important to make the data passed to <code>newdata</code> a data frame, so that <code>R</code> knows which values are for which variables.</p>
+<p>We can then use the <code>predict()</code> function with <code>interval = &quot;confidence&quot;</code> to obtain intervals for the mean fuel efficiency for both new cars. Again, it is important to make the data passed to <code>newdata</code> a data frame, so that <code>R</code> knows which values are for which variables.</p>
 <pre class="r"><code>predict(mpg_model, newdata = new_cars, interval = &quot;confidence&quot;, level = 0.99)</code></pre>
 <pre><code>##        fit     lwr      upr
 ## 1 20.00684 19.4712 20.54248
 ## 2 13.86154 12.3341 15.38898</code></pre>
-<p><code>R</code> then reports the estimate <span class="math inline">\(\hat{y}\)</span> (<code>fit</code>) for each, as well as the lower (<code>lwr</code>) and upper (<code>upr</code>) bounds for the interval at a desired level (99%).</p>
+<p><code>R</code> then reports the estimate <span class="math inline">\(\hat{y}(x_0)\)</span> (<code>fit</code>) for each, as well as the lower (<code>lwr</code>) and upper (<code>upr</code>) bounds for the interval at a desired level (99%).</p>
 <p>A word of caution here: one of these estimates is good while one is suspect.</p>
 <pre class="r"><code>new_cars$wt</code></pre>
 <pre><code>## [1] 3500 5000</code></pre>
@@ -604,7 +604,7 @@ x_{0} = \begin{bmatrix}
 \end{bmatrix}
 \]</span></p>
 <p><span class="math display">\[
-\hat{y}  = x_{0}^\top\hat{\beta} = 
+\hat{y}(x_0)  = x_{0}^\top\hat{\beta} = 
 \begin{bmatrix}
 1    &amp;
 3500 &amp;
@@ -617,39 +617,41 @@ x_{0} = \begin{bmatrix}
 \end{bmatrix}= 20.0068411
 \]</span></p>
 <p>Also note that, using a particular value for <span class="math inline">\(x_0\)</span>, we can essentially extract certain <span class="math inline">\(\hat{\beta}_j\)</span> values.</p>
-<pre class="r"><code>x0 = c(0, 0, 1)
-x0 %*% beta_hat</code></pre>
-<pre><code>##          [,1]
-## [1,] 0.761402</code></pre>
 <pre class="r"><code>beta_hat</code></pre>
 <pre><code>##               [,1]
 ## [1,] -14.637641945
 ## [2,]  -0.006634876
 ## [3,]   0.761401955</code></pre>
+<pre class="r"><code>x0 = c(0, 0, 1)
+x0 %*% beta_hat</code></pre>
+<pre><code>##          [,1]
+## [1,] 0.761402</code></pre>
 <p>With this in mind, confidence intervals for the individual <span class="math inline">\(\hat{\beta}_j\)</span> are actually a special case of a confidence interval for mean response.</p>
 </div>
 <div id="prediction-intervals" class="section level3">
 <h3>Prediction Intervals</h3>
 <p>As with SLR, creating prediction intervals involves one slight change to the standard error to account for the fact that we are now considering an observation, instead of a mean.</p>
-<p>Here we use <span class="math inline">\(\hat{y}_{Pred}\)</span> to estimate <span class="math inline">\(Y_0\)</span>, the value of <span class="math inline">\(Y\)</span> for the predictor vector <span class="math inline">\(x_0\)</span></p>
+<p>Here we use <span class="math inline">\(\hat{y}(x_0)\)</span> to estimate <span class="math inline">\(Y_0\)</span>, a new observation of <span class="math inline">\(Y\)</span> at the predictor vector <span class="math inline">\(x_0\)</span>.</p>
 <p><span class="math display">\[
 \begin{aligned}
-\hat{y}_{Pred} &amp;= x_{0}^\top\hat{\beta} \\
+\hat{y}(x_0) &amp;= x_{0}^\top\hat{\beta} \\
 &amp;= \hat{\beta}_0 + \hat{\beta}_1 x_{01} + \hat{\beta}_2 x_{02} + \cdots + \hat{\beta}_{p-1}
 \end{aligned}
 \]</span></p>
 <p><span class="math display">\[
 \begin{aligned}
-E[\hat{y}_{Pred}] &amp;= Y_0 \\
+E[\hat{y}(x_0)] &amp;= Y_0 \\
 &amp;= x_{0}^\top\beta \\
 &amp;= \beta_0 + \beta_1 x_{01} + \beta_2 x_{02} + \cdots + \beta_{p-1} x_{0(p-1)}
 \end{aligned}
 \]</span></p>
+<p>As we did with SLR, we need to account for the additional variability of an observation about its mean.</p>
 <p><span class="math display">\[
-SE[\hat{y}_{Pred}] = s_e \sqrt{1 + x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
+\text{SE}[\hat{y}(x_0) + \epsilon] = s_e \sqrt{1 + x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
 \]</span></p>
+<p>Then we arrive at our updated prediction interval for MLR.</p>
 <p><span class="math display">\[
-\hat{y}_{Pred} \pm t_{\alpha/2, n - p} \cdot s_e \sqrt{1 + x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
+\hat{y}(x_0) \pm t_{\alpha/2, n - p} \cdot s_e \sqrt{1 + x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
 \]</span></p>
 <pre class="r"><code>new_cars</code></pre>
 <pre><code>##     wt year
@@ -663,15 +665,19 @@ SE[\hat{y}_{Pred}] = s_e \sqrt{1 + x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
 </div>
 <div id="signifiance-of-regression" class="section level2">
 <h2>Signifiance of Regression</h2>
-<p>The decomposition of variation that we had seen in SLR still remains true,</p>
+<p>The decomposition of variation that we had seen in SLR still holds for MLR.</p>
 <p><span class="math display">\[
-\sum_{i=1}^{n}(y_i - \bar{y})^2 = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2.
+\sum_{i=1}^{n}(y_i - \bar{y})^2 = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2
 \]</span></p>
-<p>Which means that, we can still calculate <span class="math inline">\(R^2\)</span> in the same manner as before, which <code>R</code> continues to do automatically.</p>
+<p>That is,</p>
+<p><span class="math display">\[
+\text{SST} = \text{SSReg} + \text{SSE}.
+\]</span></p>
+<p>This means that, we can still calculate <span class="math inline">\(R^2\)</span> in the same manner as before, which <code>R</code> continues to do automatically.</p>
 <pre class="r"><code>summary(mpg_model)$r.squared</code></pre>
 <pre><code>## [1] 0.8082355</code></pre>
 <p>The interpretation changes slightly as compared to SLR. In this MLR case, we say that <span class="math inline">\(80.82\%\)</span> for the observed variation in miles per gallon is explained by the linear relationship with the two predictor variables, weight and year.</p>
-<p>We can also create the ANOVA table as before and perform the significance of regression test. In multiple regression, the significance of regression test is</p>
+<p>In multiple regression, the significance of regression test is</p>
 <p><span class="math display">\[
 H_0: \beta_1 = \beta_2 = \cdots = \beta_{p - 1} = 0.
 \]</span></p>
@@ -679,7 +685,7 @@ H_0: \beta_1 = \beta_2 = \cdots = \beta_{p - 1} = 0.
 <p><span class="math display">\[
 Y_i = \beta_0 + \epsilon_i.
 \]</span></p>
-<p>This is a model where the regression is insignificant. None of the predictors have a significant linear relationship with the response. Notationally, we will denote the fitted values of this model as <span class="math inline">\(\hat{y}_{0i}\)</span>, which in this case happens to be:</p>
+<p>This is a model where the <em>regression</em> is insignificant. <strong>None</strong> of the predictors have a significant linear relationship with the response. Notationally, we will denote the fitted values of this model as <span class="math inline">\(\hat{y}_{0i}\)</span>, which in this case happens to be:</p>
 <p><span class="math display">\[
 \hat{y}_{0i} = \bar{y}.
 \]</span></p>
@@ -691,7 +697,9 @@ H_1: \text{At least one of } \beta_j \neq 0, j = 1, 2, \cdots, (p-1)
 <p><span class="math display">\[
 Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{(p-1)} x_{i(p-1)} + \epsilon_i
 \]</span></p>
-<p>This is a model where the regression is significant. At least one of the predictors has a significant linear relationship with the response. We will denote the fitted values of this model as <span class="math inline">\(\hat{y}_{1i}\)</span>. The ANOVA table is then nearly identical to the ANOVA table from SLR, with two exceptions in the degrees of freedom column.</p>
+<p>This is a model where the regression is significant. <strong>At least one</strong> of the predictors has a significant linear relationship with the response. There is some linear relationship between <span class="math inline">\(y\)</span> and the predictors, <span class="math inline">\(x_1, x_2, \ldots, x_{p - 1}\)</span>.</p>
+<p>We will denote the fitted values of this model as <span class="math inline">\(\hat{y}_{1i}\)</span>.</p>
+<p>To develop the <span class="math inline">\(F\)</span> test for the significance of the regression, we will arrange the variance decomposition into an ANOVA table.</p>
 <table style="width:94%;">
 <colgroup>
 <col width="18%"></col>
@@ -714,14 +722,14 @@ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{(p-1)} x_{i(p-
 <td>Regression</td>
 <td><span class="math inline">\(\sum_{i=1}^{n}(\hat{y}_{1i} - \bar{y})^2\)</span></td>
 <td><span class="math inline">\(p - 1\)</span></td>
-<td><span class="math inline">\(SSReg / (p - 1)\)</span></td>
-<td><span class="math inline">\(MSReg / MSE\)</span></td>
+<td><span class="math inline">\(\text{SSReg} / (p - 1)\)</span></td>
+<td><span class="math inline">\(\text{MSReg} / \text{MSE}\)</span></td>
 </tr>
 <tr class="even">
 <td>Error</td>
 <td><span class="math inline">\(\sum_{i=1}^{n}(y_i - \hat{y}_{1i})^2\)</span></td>
 <td><span class="math inline">\(n - p\)</span></td>
-<td><span class="math inline">\(SSE / (n - p)\)</span></td>
+<td><span class="math inline">\(\text{SSE} / (n - p)\)</span></td>
 <td></td>
 </tr>
 <tr class="odd">
@@ -741,8 +749,8 @@ F = \frac{\sum_{i=1}^{n}(\hat{y}_{1i} - \bar{y})^2 / (p - 1)}{\sum_{i=1}^{n}(y_i
 <p><span class="math display">\[
 P(F_{p-1, n-p} &gt; F)
 \]</span></p>
-<p>since we reject for large values of <span class="math inline">\(F\)</span>. Here <span class="math inline">\(F_{p-1, n-p}\)</span> represents a random variable which follows an <span class="math inline">\(F\)</span> distribution with <span class="math inline">\(p - 1\)</span> and <span class="math inline">\(n - p\)</span> degrees of freedom.</p>
-<p>To perform this test in <code>R</code>, we first explicitly specify the two models in <code>R</code> and save the results in different variables. We then use <code>anova()</code> to compare the two models, giving <code>anova()</code> the null model first and the alternative (full) model second.</p>
+<p>since we reject for large values of <span class="math inline">\(F\)</span>. A large value of the statistic corresponds to a large portion of the variance being explained by the regression. Here <span class="math inline">\(F_{p-1, n-p}\)</span> represents a random variable which follows an <span class="math inline">\(F\)</span> distribution with <span class="math inline">\(p - 1\)</span> and <span class="math inline">\(n - p\)</span> degrees of freedom.</p>
+<p>To perform this test in <code>R</code>, we first explicitly specify the two models in <code>R</code> and save the results in different variables. We then use <code>anova()</code> to compare the two models, giving <code>anova()</code> the null model first and the alternative (full) model second. (Specifying the full model first will result in the same p-value, but some nonsensical intermediate values.)</p>
 <p>In this case,</p>
 <ul>
 <li><span class="math inline">\(H_0\)</span>: <span class="math inline">\(Y_i = \beta_0 + \epsilon_i\)</span></li>
@@ -845,14 +853,14 @@ H_0: \beta_q = \beta_{q+1} = \cdots = \beta_{p - 1} = 0.
 <td>Diff</td>
 <td><span class="math inline">\(\sum_{i=1}^{n}(\hat{y}_{1i} - \hat{y}_{0i})^2\)</span></td>
 <td><span class="math inline">\(p - q\)</span></td>
-<td><span class="math inline">\(SSD / (p - q)\)</span></td>
-<td><span class="math inline">\(MSD / MSE\)</span></td>
+<td><span class="math inline">\(\text{SSD} / (p - q)\)</span></td>
+<td><span class="math inline">\(\text{MSD} / \text{MSE}\)</span></td>
 </tr>
 <tr class="even">
 <td>Full</td>
 <td><span class="math inline">\(\sum_{i=1}^{n}(y_i - \hat{y}_{1i})^2\)</span></td>
 <td><span class="math inline">\(n - p\)</span></td>
-<td><span class="math inline">\(SSE / (n - p)\)</span></td>
+<td><span class="math inline">\(\text{SSE} / (n - p)\)</span></td>
 <td></td>
 </tr>
 <tr class="odd">
@@ -876,9 +884,9 @@ F = \frac{\sum_{i=1}^{n}(\hat{y}_{1i} - \hat{y}_{0i})^2 / (p - q)}{\sum_{i=1}^{n
 <li>Full: <code>mpg ~ wt + year + cyl + disp + hp + acc</code></li>
 <li>Null: <code>mpg ~ wt + year</code></li>
 </ul>
-<p>Note that these are nested models, as the null model contains a subset of the predictors from the full model, and no additional predictors. Both models have an intercept <span class="math inline">\(\beta_0\)</span> as well as a coefficient in front of each of the predictors. We could then write the null hypothesis for comping these two models as,</p>
+<p>Note that these are nested models, as the null model contains a subset of the predictors from the full model, and no additional predictors. Both models have an intercept <span class="math inline">\(\beta_0\)</span> as well as a coefficient in front of each of the predictors. We could then write the null hypothesis for comparing these two models as,</p>
 <p><span class="math display">\[
-H_0: \beta_{cyl} = \beta_{disp} = \beta_{hp} = \beta_{acc} = 0
+H_0: \beta_{\texttt{cyl}} = \beta_{\texttt{disp}} = \beta_{\texttt{hp}} = \beta_{\texttt{acc}} = 0
 \]</span></p>
 <p>The alternative is simply that at least one of the <span class="math inline">\(\beta_{j}\)</span> from the null is not 0.</p>
 <p>To perform this test in <code>R</code> we first define both models, then give them to the <code>anova()</code> commands.</p>
@@ -976,7 +984,6 @@ sim_data = data.frame(x1, x2, y)</code></pre>
 <p><span class="math display">\[
 \hat{\beta}_2 \sim N\left(\mu = 6, \sigma^2 = 0.0236438  \right).
 \]</span></p>
-<p>Note that <span class="math inline">\(C_{22}\)</span> corresponds to the element in the <strong>third</strong> row and <strong>third</strong> column since <code>R</code> is indexed starting at <code>1</code>, but we index the <span class="math inline">\(C\)</span> matrix starting at <code>0</code> to match the diagonal elements to the corresponding <span class="math inline">\(\beta_j\)</span>.</p>
 <p>Note that <span class="math inline">\(C_{22}\)</span> corresponds to the element in the <strong>third</strong> row and <strong>third</strong> column since <span class="math inline">\(\beta_2\)</span> is the <strong>third</strong> parameter in the model and because <code>R</code> is indexed starting at <code>1</code>. However, we index the <span class="math inline">\(C\)</span> matrix starting at <code>0</code> to match the diagonal elements to the corresponding <span class="math inline">\(\beta_j\)</span>.</p>
 <pre class="r"><code>C[3, 3]</code></pre>
 <pre><code>## [1] 0.00147774</code></pre>
@@ -1000,7 +1007,7 @@ for(i in 1:num_sims) {
 <pre><code>## [1] 6</code></pre>
 <p>We also see that the variance of the simulated values is close to the true variance of <span class="math inline">\(\hat{\beta}_2\)</span>.</p>
 <p><span class="math display">\[
-Var[\hat{\beta}_2] = \sigma^2 C_{22} = 16 \times 0.0014777 = 0.0236438
+\text{Var}[\hat{\beta}_2] = \sigma^2 \cdot C_{22} = 16 \times 0.0014777 = 0.0236438
 \]</span></p>
 <pre class="r"><code>var(beta_hat_2)</code></pre>
 <pre><code>## [1] 0.02360853</code></pre>
@@ -1011,7 +1018,7 @@ Var[\hat{\beta}_2] = \sigma^2 C_{22} = 16 \times 0.0014777 = 0.0236438
 <pre><code>## [1] 0.1536507</code></pre>
 <pre class="r"><code>sqrt(sigma ^ 2 * C[2 + 1, 2 + 1])</code></pre>
 <pre><code>## [1] 0.1537655</code></pre>
-<p>Lastly, we plot a histogram of the simulated values, and overlay the true distribution.</p>
+<p>Lastly, we plot a histogram of the <em>simulated values</em>, and overlay the <em>true distribution</em>.</p>
 <pre class="r"><code>hist(beta_hat_2, prob = TRUE, breaks = 20, 
      xlab = expression(hat(beta)[2]), main = &quot;&quot;, border = &quot;dodgerblue&quot;)
 curve(dnorm(x, mean = beta_2, sd = sqrt(sigma ^ 2 * C[2 + 1, 2 + 1])), 
