@@ -42,7 +42,14 @@ autompg = subset(autompg, select = c("mpg", "cyl", "disp", "hp", "wt", "acc", "y
 # change horsepower from character to numeric
 autompg$hp = as.numeric(autompg$hp)
 str(autompg)
+
 ```
+
+```{r, echo = FALSE}
+# create local csv for backup
+write.csv(autompg, "data/autompg.csv")
+```
+
 
 We will once again discuss a dataset with information about cars. [This dataset](http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data), which can be found at the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Auto+MPG) contains a response variable `mpg` which stores the city fuel efficiency of cars, as well as several predictor variables for the attributes of the vehicles. We load the data, and perform some basic tidying before moving on to analysis.
 
