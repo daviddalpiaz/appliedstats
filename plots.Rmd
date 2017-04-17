@@ -125,3 +125,108 @@ legend("topleft", c("Estimate", "Truth", "Null Estimate"), lty = c(1, 2, 3), lwd
 
 
 
+
+
+
+
+
+
+
+```{r}
+set.seed(1337)
+n = 100 # sample size
+p = 3
+
+beta_0 = 5
+beta_1 = -2
+beta_2 = 6
+sigma  = 4
+
+
+x0 = rep(1, n)
+x1 = sample(seq(1, 10, length = n))
+x2 = sample(seq(1, 10, length = n))
+X = cbind(x0, x1, x2)
+C = solve(t(X) %*% X)
+
+
+eps      = rnorm(n, mean = 0, sd = sigma)
+y        = beta_0 + beta_1 * x1 + beta_2 * x2 + eps
+sim_data = data.frame(x1, x2, y)
+
+
+
+# make this use data.frame? or, simply hide this?
+fit = lm(y ~ x1 + x2)
+
+grid.lines = 25
+x1.pred = seq(min(x1), max(x1), length.out = grid.lines)
+x2.pred = seq(min(x2), max(x2), length.out = grid.lines)
+x1x2 = expand.grid(x1 = x1.pred, x2 = x2.pred)
+
+y.pred = matrix(predict(fit, newdata = x1x2), 
+                nrow = grid.lines, ncol = grid.lines)
+# fitted points for droplines to surface
+fitpoints = predict(fit)
+
+```
+
+
+
+
+```{r, fig.height = 15, fig.width = 15}
+par(mfrow = c(1, 3))
+
+scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), lighting = TRUE, colkey = FALSE, pch = 20,
+          theta = 0, phi = 45, ticktype = "detailed", zlim = c(min(y.pred), max(y.pred)), clim = c(min(y.pred), max(y.pred)),
+          xlab = "x1", ylab = "x2", zlab = "y",
+          # surf = list(x = x1.pred, y = x2.pred, z = y.pred, facets = NA, fit = fitpoints), 
+          main = "")
+
+scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), lighting = TRUE, colkey = FALSE,
+          theta = 45, phi = 15, ticktype = "detailed", zlim = c(min(y.pred), max(y.pred)), clim = c(min(y.pred), max(y.pred)),
+          xlab = "x1", ylab = "x2", zlab = "y",
+          # surf = list(x = x1.pred, y = x2.pred, z = y.pred, facets = NA, fit = fitpoints), 
+          main = "")
+
+scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), lighting = TRUE, colkey = FALSE,
+          theta = 90, phi = 0, ticktype = "detailed", zlim = c(min(y.pred), max(y.pred)), clim = c(min(y.pred), max(y.pred)),
+          xlab = "x1", ylab = "x2", zlab = "y",
+          # surf = list(x = x1.pred, y = x2.pred, z = y.pred, facets = NA, fit = fitpoints), 
+          main = "")
+
+```
+
+
+```{r, fig.height = 15, fig.width = 15}
+par(mfrow = c(1, 3))
+
+scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), lighting = TRUE, colkey = FALSE, pch = 20,
+          theta = 0, phi = 45, ticktype = "detailed", zlim = c(min(y.pred), max(y.pred)), clim = c(min(y.pred), max(y.pred)),
+          xlab = "x1", ylab = "x2", zlab = "y",
+          surf = list(x = x1.pred, y = x2.pred, z = y.pred, facets = NA, fit = fitpoints),
+          main = "")
+
+scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), lighting = TRUE, colkey = FALSE,
+          theta = 45, phi = 15, ticktype = "detailed", zlim = c(min(y.pred), max(y.pred)), clim = c(min(y.pred), max(y.pred)),
+          xlab = "x1", ylab = "x2", zlab = "y",
+          surf = list(x = x1.pred, y = x2.pred, z = y.pred, facets = NA, fit = fitpoints),
+          main = "")
+
+scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), lighting = TRUE, colkey = FALSE,
+          theta = 90, phi = 0, ticktype = "detailed", zlim = c(min(y.pred), max(y.pred)), clim = c(min(y.pred), max(y.pred)),
+          xlab = "x1", ylab = "x2", zlab = "y",
+          surf = list(x = x1.pred, y = x2.pred, z = y.pred, facets = NA, fit = fitpoints),
+          main = "")
+```
+
+
+
+
+```{r, fig.height = 20, fig.width = 20}
+scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), lighting = TRUE, colkey = FALSE,
+          theta = 90, phi = -15, ticktype = "detailed", zlim = c(min(y.pred), max(y.pred)), clim = c(min(y.pred), max(y.pred)),
+          xlab = "x1", ylab = "x2", zlab = "y",
+          surf = list(x = x1.pred, y = x2.pred, z = y.pred, facets = NA, fit = fitpoints),
+          main = "")
+```
