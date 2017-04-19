@@ -42,7 +42,14 @@ autompg = subset(autompg, select = c("mpg", "cyl", "disp", "hp", "wt", "acc", "y
 # change horsepower from character to numeric
 autompg$hp = as.numeric(autompg$hp)
 str(autompg)
+
 ```
+
+```{r, echo = FALSE}
+# create local csv for backup
+write.csv(autompg, "data/autompg.csv")
+```
+
 
 We will once again discuss a dataset with information about cars. [This dataset](http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data), which can be found at the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Auto+MPG) contains a response variable `mpg` which stores the city fuel efficiency of cars, as well as several predictor variables for the attributes of the vehicles. We load the data, and perform some basic tidying before moving on to analysis.
 
@@ -375,13 +382,13 @@ E[\hat{\beta}_j] = \beta_j.
 We also have
 
 \[
-Var[\hat{\beta}] = \sigma^2 \left(  X^\top X  \right)^{-1}
+\text{Var}[\hat{\beta}] = \sigma^2 \left(  X^\top X  \right)^{-1}
 \]
 
 and for any $\hat{\beta}_j$ we have
 
 \[
-Var[\hat{\beta}_j] = \sigma^2 C_{jj}
+\text{Var}[\hat{\beta}_j] = \sigma^2 C_{jj}
 \]
 
 where 
@@ -407,13 +414,13 @@ Essentially, the diagonal elements correspond to the $\beta$ vector.
 Then the standard error for the $\hat{\beta}$ vector is given by
 
 \[
-SE[\hat{\beta}] = s_e \sqrt{\left(  X^\top X  \right)^{-1}}
+\text{SE}[\hat{\beta}] = s_e \sqrt{\left(  X^\top X  \right)^{-1}}
 \]
 
 and for a particular $\hat{\beta}_j$
 
 \[
-SE[\hat{\beta}_j] = s_e \sqrt{C_{jj}}.
+\text{SE}[\hat{\beta}_j] = s_e \sqrt{C_{jj}}.
 \]
 
 Lastly, each of the $\hat{\beta}_j$ follows a normal distribution,
@@ -441,7 +448,7 @@ H_0: \beta_j = 0 \quad \text{vs} \quad H_1: \beta_j \neq 0
 Again, the test statistic takes the form
 
 \[
-TS = \frac{EST - HYP}{SE}.
+\text{TS} = \frac{\text{EST} - \text{HYP}}{\text{SE}}.
 \]
 
 In particular,
@@ -489,13 +496,13 @@ This is important. We are not simply testing whether or not there is a relations
 Since $\hat{\beta}_j$ is our estimate for $\beta_j$ and we have
 
 \[
-E[\hat{\beta}_j] = \beta_j
+\text{E}[\hat{\beta}_j] = \beta_j
 \]
 
 as well as the standard error,
 
 \[
-SE[\hat{\beta}_j] = s_e\sqrt{C_{jj}}
+\text{SE}[\hat{\beta}_j] = s_e\sqrt{C_{jj}}
 \]
 
 and the sampling distribution of $\hat{\beta}_j$ is Normal, then we can easily construct confidence intervals for each of the $\hat{\beta}_j$.
@@ -512,7 +519,7 @@ confint(mpg_model, level = 0.99)
 
 ### Confidence Intervals for Mean Response
 
-As we saw in SLR, we can create confidence intervals for mean response, that is, an interval estimate for $E[Y]$. In SLR, the mean of $Y$ was only dependent on a single value $x$. Now, in multiple regression, $E[Y]$ is dependent on the value of each of the predictors, so we define the vector $x_0$ to be, 
+As we saw in SLR, we can create confidence intervals for the mean response, that is, an interval estimate for $\text{E}[Y \mid X = x]$. In SLR, the mean of $Y$ was only dependent on a single value $x$. Now, in multiple regression, $\text{E}[Y \mid X = x]$ is dependent on the value of each of the predictors, so we define the vector $x_0$ to be, 
 
 \[
 x_{0} = \begin{bmatrix}
@@ -524,11 +531,11 @@ x_{0(p-1)} \\
 \end{bmatrix}.
 \]
 
-Then our estimate of $E[Y]$ for a set of values $x_0$ is given by
+Then our estimate of $\text{E}[Y \mid X = x_0]$ for a set of values $x_0$ is given by
 
 \[
 \begin{aligned}
-\hat{y} &= x_{0}^\top\hat{\beta} \\
+\hat{y}(x_0) &= x_{0}^\top\hat{\beta} \\
 &= \hat{\beta}_0 + \hat{\beta}_1 x_{01} + \hat{\beta}_2 x_{02} + \cdots + \hat{\beta}_{p-1} x_{0(p-1)}.
 \end{aligned}
 \]
@@ -537,7 +544,7 @@ As with SLR, this is an unbiased estimate.
 
 \[
 \begin{aligned}
-E[\hat{y}] &= x_{0}^\top\beta \\
+\text{E}[\hat{y}(x_0)] &= x_{0}^\top\beta \\
 &= \beta_0 + \beta_1 x_{01} + \beta_2 x_{02} + \cdots + \beta_{p-1} x_{0(p-1)}
 \end{aligned}
 \]
@@ -545,7 +552,7 @@ E[\hat{y}] &= x_{0}^\top\beta \\
 To make an interval estimate, we will also need its standard error.
 
 \[
-SE[\hat{y}] = s_e \sqrt{x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
+\text{SE}[\hat{y}(x_0)] = s_e \sqrt{x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
 \]
 
 Putting it all together, we obtain a confidence interval for the mean response.
@@ -561,13 +568,13 @@ new_cars = data.frame(wt = c(3500, 5000), year = c(76, 81))
 new_cars
 ```
 
-We can then use the `predict()` function with `interval = "confidence"` to obtain intervals for the mean fuel efficiency for both new car. Again, it is important to make the data passed to `newdata` a data frame, so that `R` knows which values are for which variables.
+We can then use the `predict()` function with `interval = "confidence"` to obtain intervals for the mean fuel efficiency for both new cars. Again, it is important to make the data passed to `newdata` a data frame, so that `R` knows which values are for which variables.
 
 ```{r}
 predict(mpg_model, newdata = new_cars, interval = "confidence", level = 0.99)
 ```
 
-`R` then reports the estimate $\hat{y}$ (`fit`) for each, as well as the lower (`lwr`) and upper (`upr`) bounds for the interval at a desired level (99%).
+`R` then reports the estimate $\hat{y}(x_0)$ (`fit`) for each, as well as the lower (`lwr`) and upper (`upr`) bounds for the interval at a desired level (99%).
 
 A word of caution here: one of these estimates is good while one is suspect.
 
@@ -616,7 +623,7 @@ x_{0} = \begin{bmatrix}
 \]
 
 \[
-\hat{y}  = x_{0}^\top\hat{\beta} = 
+\hat{y}(x_0)  = x_{0}^\top\hat{\beta} = 
 \begin{bmatrix}
 1    &
 3500 &
@@ -632,9 +639,9 @@ x_{0} = \begin{bmatrix}
 Also note that, using a particular value for $x_0$, we can essentially extract certain $\hat{\beta}_j$ values.
 
 ```{r}
+beta_hat
 x0 = c(0, 0, 1)
 x0 %*% beta_hat
-beta_hat
 ```
 
 With this in mind, confidence intervals for the individual $\hat{\beta}_j$ are actually a special case of a confidence interval for mean response. 
@@ -643,29 +650,33 @@ With this in mind, confidence intervals for the individual $\hat{\beta}_j$ are a
 
 As with SLR, creating prediction intervals involves one slight change to the standard error to account for the fact that we are now considering an observation, instead of a mean.
 
-Here we use $\hat{y}_{Pred}$ to estimate $Y_0$, the value of $Y$ for the predictor vector $x_0$
+Here we use $\hat{y}(x_0)$ to estimate $Y_0$, a new observation of $Y$ at the predictor vector $x_0$.
 
 \[
 \begin{aligned}
-\hat{y}_{Pred} &= x_{0}^\top\hat{\beta} \\
+\hat{y}(x_0) &= x_{0}^\top\hat{\beta} \\
 &= \hat{\beta}_0 + \hat{\beta}_1 x_{01} + \hat{\beta}_2 x_{02} + \cdots + \hat{\beta}_{p-1}
 \end{aligned}
 \]
 
 \[
 \begin{aligned}
-E[\hat{y}_{Pred}] &= Y_0 \\
+E[\hat{y}(x_0)] &= Y_0 \\
 &= x_{0}^\top\beta \\
 &= \beta_0 + \beta_1 x_{01} + \beta_2 x_{02} + \cdots + \beta_{p-1} x_{0(p-1)}
 \end{aligned}
 \]
 
-\[
-SE[\hat{y}_{Pred}] = s_e \sqrt{1 + x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
-\]
+As we did with SLR, we need to account for the additional variability of an observation about its mean.
 
 \[
-\hat{y}_{Pred} \pm t_{\alpha/2, n - p} \cdot s_e \sqrt{1 + x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
+\text{SE}[\hat{y}(x_0) + \epsilon] = s_e \sqrt{1 + x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
+\]
+
+Then we arrive at our updated prediction interval for MLR.
+
+\[
+\hat{y}(x_0) \pm t_{\alpha/2, n - p} \cdot s_e \sqrt{1 + x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
 \]
 
 ```{r}
@@ -675,13 +686,19 @@ predict(mpg_model, newdata = new_cars, interval = "prediction", level = 0.99)
 
 ## Signifiance of Regression
 
-The decomposition of variation that we had seen in SLR still remains true,
+The decomposition of variation that we had seen in SLR still holds for MLR.
 
 \[
-\sum_{i=1}^{n}(y_i - \bar{y})^2 = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2.
+\sum_{i=1}^{n}(y_i - \bar{y})^2 = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2
 \]
 
-Which means that, we can still calculate $R^2$ in the same manner as before, which `R` continues to do automatically.
+That is,
+
+\[
+\text{SST} = \text{SSReg} + \text{SSE}.
+\]
+
+This means that, we can still calculate $R^2$ in the same manner as before, which `R` continues to do automatically.
 
 ```{r}
 summary(mpg_model)$r.squared
@@ -689,7 +706,7 @@ summary(mpg_model)$r.squared
 
 The interpretation changes slightly as compared to SLR. In this MLR case, we say that $`r round(100*summary(mpg_model)$r.squared, 2)`\%$ for the observed variation in miles per gallon is explained by the linear relationship with the two predictor variables, weight and year.
 
-We can also create the ANOVA table as before and perform the significance of regression test. In multiple regression, the significance of regression test is
+In multiple regression, the significance of regression test is
 
 \[
 H_0: \beta_1 = \beta_2 = \cdots = \beta_{p - 1} = 0.
@@ -701,7 +718,7 @@ Here, we see that the null hypothesis sets all of the $\beta_j$ equal to 0, *exc
 Y_i = \beta_0 + \epsilon_i.
 \]
 
-This is a model where the regression is insignificant. None of the predictors have a significant linear relationship with the response. Notationally, we will denote the fitted values of this model as $\hat{y}_{0i}$, which in this case happens to be:
+This is a model where the *regression* is insignificant. **None** of the predictors have a significant linear relationship with the response. Notationally, we will denote the fitted values of this model as $\hat{y}_{0i}$, which in this case happens to be:
 
 \[
 \hat{y}_{0i} = \bar{y}.
@@ -719,12 +736,16 @@ We could then say that the full model, or "model under the alternative hypothesi
 Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{(p-1)} x_{i(p-1)} + \epsilon_i
 \]
 
-This is a model where the regression is significant. At least one of the predictors has a significant linear relationship with the response. We will denote the fitted values of this model as $\hat{y}_{1i}$. The ANOVA table is then nearly identical to the ANOVA table from SLR, with two exceptions in the degrees of freedom column.
+This is a model where the regression is significant. **At least one** of the predictors has a significant linear relationship with the response. There is some linear relationship between $y$ and the predictors, $x_1, x_2, \ldots, x_{p - 1}$.
+
+We will denote the fitted values of this model as $\hat{y}_{1i}$.
+
+To develop the $F$ test for the significance of the regression, we will arrange the variance decomposition into an ANOVA table.
 
 | Source     | Sum of Squares  | Degrees of Freedom | Mean Square | $F$ |
 |------------|-----------------|------------|-----------|-----------|
-| Regression | $\sum_{i=1}^{n}(\hat{y}_{1i} - \bar{y})^2$ | $p - 1$ | $SSReg / (p - 1)$ | $MSReg / MSE$ |
-| Error      | $\sum_{i=1}^{n}(y_i - \hat{y}_{1i})^2$     | $n - p$ | $SSE / (n - p)$ |             |
+| Regression | $\sum_{i=1}^{n}(\hat{y}_{1i} - \bar{y})^2$ | $p - 1$ | $\text{SSReg} / (p - 1)$ | $\text{MSReg} / \text{MSE}$ |
+| Error      | $\sum_{i=1}^{n}(y_i - \hat{y}_{1i})^2$     | $n - p$ | $\text{SSE} / (n - p)$ |             |
 | Total      | $\sum_{i=1}^{n}(y_i - \bar{y})^2$       | $n - 1$ |                 |             |
 
 In summary, the $F$ statistic is
@@ -739,9 +760,9 @@ and the p-value is calculated as
 P(F_{p-1, n-p} > F)
 \]
 
-since we reject for large values of $F$. Here $F_{p-1, n-p}$ represents a random variable which follows an $F$ distribution with $p - 1$ and $n - p$ degrees of freedom.
+since we reject for large values of $F$. A large value of the statistic corresponds to a large portion of the variance being explained by the regression. Here $F_{p-1, n-p}$ represents a random variable which follows an $F$ distribution with $p - 1$ and $n - p$ degrees of freedom.
 
-To perform this test in `R`, we first explicitly specify the two models in `R` and save the results in different variables. We then use `anova()` to compare the two models, giving `anova()` the null model first and the alternative (full) model second.
+To perform this test in `R`, we first explicitly specify the two models in `R` and save the results in different variables. We then use `anova()` to compare the two models, giving `anova()` the null model first and the alternative (full) model second. (Specifying the full model first will result in the same p-value, but some nonsensical intermediate values.)
 
 In this case,
 
@@ -815,8 +836,8 @@ We can then perform this test using an $F$-test, which is the result of the foll
 
 | Source | Sum of Squares  | Degrees of Freedom | Mean Square | $F$ |
 |--------|-----------------|------------|-----------|-----------|
-| Diff   | $\sum_{i=1}^{n}(\hat{y}_{1i} - \hat{y}_{0i})^2$ | $p - q$ | $SSD   / (p - q)$ | $MSD / MSE$ |
-| Full   | $\sum_{i=1}^{n}(y_i - \hat{y}_{1i})^2$          | $n - p$ | $SSE   / (n - p)$ |             |
+| Diff   | $\sum_{i=1}^{n}(\hat{y}_{1i} - \hat{y}_{0i})^2$ | $p - q$ | $\text{SSD}   / (p - q)$ | $\text{MSD} / \text{MSE}$ |
+| Full   | $\sum_{i=1}^{n}(y_i - \hat{y}_{1i})^2$          | $n - p$ | $\text{SSE}   / (n - p)$ |             |
 | Null   | $\sum_{i=1}^{n}(y_i - \hat{y}_{0i})^2$          | $n - q$ |                   |             |
 
 \[
@@ -836,10 +857,10 @@ We'll continue to use `mpg` as the response, but now we will consider two differ
 - Full: `mpg ~ wt + year + cyl + disp + hp + acc`
 - Null: `mpg ~ wt + year`
 
-Note that these are nested models, as the null model contains a subset of the predictors from the full model, and no additional predictors. Both models have an intercept $\beta_0$ as well as a coefficient in front of each of the predictors. We could then write the null hypothesis for comping these two models as,
+Note that these are nested models, as the null model contains a subset of the predictors from the full model, and no additional predictors. Both models have an intercept $\beta_0$ as well as a coefficient in front of each of the predictors. We could then write the null hypothesis for comparing these two models as,
 
 \[
-H_0: \beta_{cyl} = \beta_{disp} = \beta_{hp} = \beta_{acc} = 0
+H_0: \beta_{\texttt{cyl}} = \beta_{\texttt{disp}} = \beta_{\texttt{hp}} = \beta_{\texttt{acc}} = 0
 \]
 
 The alternative is simply that at least one of the $\beta_{j}$ from the null is not 0.
@@ -985,8 +1006,6 @@ In this case,
 \hat{\beta}_2 \sim N\left(\mu = `r beta_2`, \sigma^2 = `r sigma^2 * C[2+1, 2+1]`  \right).
 \]
 
-Note that $C_{22}$ corresponds to the element in the **third** row and **third** column since `R` is indexed starting at `1`, but we index the $C$ matrix starting at `0` to match the diagonal elements to the corresponding $\beta_j$.
-
 Note that $C_{22}$ corresponds to the element in the **third** row and **third** column since $\beta_2$ is the **third** parameter in the model and because `R` is indexed starting at `1`. However, we index the $C$ matrix starting at `0` to match the diagonal elements to the corresponding $\beta_j$.
 
 ```{r}
@@ -1018,7 +1037,7 @@ beta_2
 We also see that the variance of the simulated values is close to the true variance of $\hat{\beta}_2$.
 
 \[
-Var[\hat{\beta}_2] = \sigma^2 C_{22} = `r sigma^2` \times `r C[2+1, 2+1]` = `r sigma^2 * C[2+1, 2+1]`
+\text{Var}[\hat{\beta}_2] = \sigma^2 \cdot C_{22} = `r sigma^2` \times `r C[2+1, 2+1]` = `r sigma^2 * C[2+1, 2+1]`
 \]
 
 ```{r}
@@ -1033,7 +1052,7 @@ sd(beta_hat_2)
 sqrt(sigma ^ 2 * C[2 + 1, 2 + 1])
 ```
 
-Lastly, we plot a histogram of the simulated values, and overlay the true distribution.
+Lastly, we plot a histogram of the *simulated values*, and overlay the *true distribution*.
 
 ```{r}
 hist(beta_hat_2, prob = TRUE, breaks = 20, 
