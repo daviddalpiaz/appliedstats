@@ -25,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2017-04-17">
+<meta name="date" content="2017-04-19">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -443,65 +443,63 @@ x1x2 =<span class="st"> </span><span class="kw">expand.grid</span>(<span class="
 y.pred =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">predict</span>(fit, <span class="dt">newdata =</span> x1x2), 
                 <span class="dt">nrow =</span> grid.lines, <span class="dt">ncol =</span> grid.lines)
 <span class="co"># fitted points for droplines to surface</span>
-fitpoints =<span class="st"> </span><span class="kw">predict</span>(fit)</code></pre></div>
+fitpoints =<span class="st"> </span><span class="kw">predict</span>(fit)
+
+<span class="kw">library</span>(<span class="st">&quot;plot3D&quot;</span>)
+
+
+
+
+minlim =<span class="st"> </span><span class="kw">min</span>(fitpoints, y.pred, y) -<span class="st"> </span><span class="fl">0.1</span>
+maxlim =<span class="st"> </span><span class="kw">max</span>(fitpoints, y.pred, y) +<span class="st"> </span><span class="fl">0.1</span>
+
+bothlim =<span class="st"> </span><span class="kw">c</span>(minlim, maxlim)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))
 
-<span class="kw">scatter3D</span>(x1, x2, y, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">gg.col</span>(<span class="dv">1000</span>), <span class="dt">lighting =</span> <span class="ot">TRUE</span>, <span class="dt">colkey =</span> <span class="ot">FALSE</span>, <span class="dt">pch =</span> <span class="dv">20</span>,
-          <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), 
-          <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10</span>),
-          <span class="dt">theta =</span> <span class="dv">0</span>, <span class="dt">phi =</span> <span class="dv">45</span>, <span class="dt">ticktype =</span> <span class="st">&quot;detailed&quot;</span>, <span class="dt">zlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(y.pred), <span class="kw">max</span>(y.pred)), <span class="dt">clim =</span> <span class="kw">c</span>(<span class="kw">min</span>(y.pred), <span class="kw">max</span>(y.pred)),
+<span class="kw">scatter3D</span>(x1, x2, y, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">gg.col</span>(<span class="dv">1000</span>), <span class="dt">colkey =</span> <span class="ot">FALSE</span>, <span class="dt">pch =</span> <span class="dv">20</span>,
+          <span class="dt">theta =</span> <span class="dv">0</span>, <span class="dt">phi =</span> <span class="dv">45</span>, <span class="dt">zlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(y.pred), <span class="kw">max</span>(y.pred)), <span class="dt">clim =</span> bothlim,
           <span class="dt">xlab =</span> <span class="st">&quot;x1&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;x2&quot;</span>, <span class="dt">zlab =</span> <span class="st">&quot;y&quot;</span>,
           <span class="co"># surf = list(x = x1.pred, y = x2.pred, z = y.pred, facets = NA, fit = fitpoints), </span>
           <span class="dt">main =</span> <span class="st">&quot;&quot;</span>)
 
-<span class="kw">scatter3D</span>(x1, x2, y, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">gg.col</span>(<span class="dv">1000</span>), <span class="dt">lighting =</span> <span class="ot">TRUE</span>, <span class="dt">colkey =</span> <span class="ot">FALSE</span>,
-          <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), 
-          <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10</span>),
-          <span class="dt">theta =</span> <span class="dv">45</span>, <span class="dt">phi =</span> <span class="dv">15</span>, <span class="dt">ticktype =</span> <span class="st">&quot;detailed&quot;</span>, <span class="dt">zlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(y.pred), <span class="kw">max</span>(y.pred)), <span class="dt">clim =</span> <span class="kw">c</span>(<span class="kw">min</span>(y.pred), <span class="kw">max</span>(y.pred)),
+<span class="kw">scatter3D</span>(x1, x2, y, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">gg.col</span>(<span class="dv">1000</span>), <span class="dt">colkey =</span> <span class="ot">FALSE</span>,
+          <span class="dt">theta =</span> <span class="dv">45</span>, <span class="dt">phi =</span> <span class="dv">15</span>, <span class="dt">zlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(y.pred), <span class="kw">max</span>(y.pred)), <span class="dt">clim =</span> bothlim,
           <span class="dt">xlab =</span> <span class="st">&quot;x1&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;x2&quot;</span>, <span class="dt">zlab =</span> <span class="st">&quot;y&quot;</span>,
           <span class="co"># surf = list(x = x1.pred, y = x2.pred, z = y.pred, facets = NA, fit = fitpoints), </span>
           <span class="dt">main =</span> <span class="st">&quot;&quot;</span>)
 
-<span class="kw">scatter3D</span>(x1, x2, y, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">gg.col</span>(<span class="dv">1000</span>), <span class="dt">lighting =</span> <span class="ot">TRUE</span>, <span class="dt">colkey =</span> <span class="ot">FALSE</span>,
-          <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), 
-          <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10</span>),
-          <span class="dt">theta =</span> <span class="dv">90</span>, <span class="dt">phi =</span> <span class="dv">0</span>, <span class="dt">ticktype =</span> <span class="st">&quot;detailed&quot;</span>, <span class="dt">zlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(y.pred), <span class="kw">max</span>(y.pred)), <span class="dt">clim =</span> <span class="kw">c</span>(<span class="kw">min</span>(y.pred), <span class="kw">max</span>(y.pred)),
+<span class="kw">scatter3D</span>(x1, x2, y, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">gg.col</span>(<span class="dv">1000</span>), <span class="dt">colkey =</span> <span class="ot">FALSE</span>,
+          <span class="dt">theta =</span> <span class="dv">90</span>, <span class="dt">phi =</span> <span class="dv">0</span>, <span class="dt">zlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(y.pred), <span class="kw">max</span>(y.pred)), <span class="dt">clim =</span> bothlim,
           <span class="dt">xlab =</span> <span class="st">&quot;x1&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;x2&quot;</span>, <span class="dt">zlab =</span> <span class="st">&quot;y&quot;</span>,
           <span class="co"># surf = list(x = x1.pred, y = x2.pred, z = y.pred, facets = NA, fit = fitpoints), </span>
           <span class="dt">main =</span> <span class="st">&quot;&quot;</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-585-1.png" width="1440" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))
 
-<span class="kw">scatter3D</span>(x1, x2, y, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">gg.col</span>(<span class="dv">1000</span>), <span class="dt">lighting =</span> <span class="ot">TRUE</span>, <span class="dt">colkey =</span> <span class="ot">FALSE</span>, <span class="dt">pch =</span> <span class="dv">20</span>,
-                    <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), 
-          <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10</span>),
-          <span class="dt">theta =</span> <span class="dv">0</span>, <span class="dt">phi =</span> <span class="dv">45</span>, <span class="dt">ticktype =</span> <span class="st">&quot;detailed&quot;</span>, <span class="dt">zlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(y.pred), <span class="kw">max</span>(y.pred)), <span class="dt">clim =</span> <span class="kw">c</span>(<span class="kw">min</span>(y.pred), <span class="kw">max</span>(y.pred)),
+<span class="kw">scatter3D</span>(x1, x2, y, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">gg.col</span>(<span class="dv">1000</span>), <span class="dt">colkey =</span> <span class="ot">FALSE</span>, <span class="dt">pch =</span> <span class="dv">20</span>,
+          <span class="dt">theta =</span> <span class="dv">0</span>, <span class="dt">phi =</span> <span class="dv">45</span>, <span class="dt">zlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(y.pred), <span class="kw">max</span>(y.pred)), <span class="dt">clim =</span> bothlim,
           <span class="dt">xlab =</span> <span class="st">&quot;x1&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;x2&quot;</span>, <span class="dt">zlab =</span> <span class="st">&quot;y&quot;</span>,
           <span class="dt">surf =</span> <span class="kw">list</span>(<span class="dt">x =</span> x1.pred, <span class="dt">y =</span> x2.pred, <span class="dt">z =</span> y.pred, <span class="dt">facets =</span> <span class="ot">NA</span>, <span class="dt">fit =</span> fitpoints),
           <span class="dt">main =</span> <span class="st">&quot;&quot;</span>)
 
-<span class="kw">scatter3D</span>(x1, x2, y, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">gg.col</span>(<span class="dv">1000</span>), <span class="dt">lighting =</span> <span class="ot">TRUE</span>, <span class="dt">colkey =</span> <span class="ot">FALSE</span>,
-                    <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), 
-          <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10</span>),
-          <span class="dt">theta =</span> <span class="dv">45</span>, <span class="dt">phi =</span> <span class="dv">15</span>, <span class="dt">ticktype =</span> <span class="st">&quot;detailed&quot;</span>, <span class="dt">zlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(y.pred), <span class="kw">max</span>(y.pred)), <span class="dt">clim =</span> <span class="kw">c</span>(<span class="kw">min</span>(y.pred), <span class="kw">max</span>(y.pred)),
+<span class="kw">scatter3D</span>(x1, x2, y, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">gg.col</span>(<span class="dv">1000</span>), <span class="dt">colkey =</span> <span class="ot">FALSE</span>,
+          <span class="dt">theta =</span> <span class="dv">45</span>, <span class="dt">phi =</span> <span class="dv">15</span>, <span class="dt">zlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(y.pred), <span class="kw">max</span>(y.pred)), <span class="dt">clim =</span> bothlim,
           <span class="dt">xlab =</span> <span class="st">&quot;x1&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;x2&quot;</span>, <span class="dt">zlab =</span> <span class="st">&quot;y&quot;</span>,
           <span class="dt">surf =</span> <span class="kw">list</span>(<span class="dt">x =</span> x1.pred, <span class="dt">y =</span> x2.pred, <span class="dt">z =</span> y.pred, <span class="dt">facets =</span> <span class="ot">NA</span>, <span class="dt">fit =</span> fitpoints),
           <span class="dt">main =</span> <span class="st">&quot;&quot;</span>)
 
-<span class="kw">scatter3D</span>(x1, x2, y, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">gg.col</span>(<span class="dv">1000</span>), <span class="dt">lighting =</span> <span class="ot">TRUE</span>, <span class="dt">colkey =</span> <span class="ot">FALSE</span>,
-                    <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), 
-          <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">10</span>),
-          <span class="dt">theta =</span> <span class="dv">90</span>, <span class="dt">phi =</span> <span class="dv">0</span>, <span class="dt">ticktype =</span> <span class="st">&quot;detailed&quot;</span>, <span class="dt">zlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(y.pred), <span class="kw">max</span>(y.pred)), <span class="dt">clim =</span> <span class="kw">c</span>(<span class="kw">min</span>(y.pred), <span class="kw">max</span>(y.pred)),
+<span class="kw">scatter3D</span>(x1, x2, y, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">gg.col</span>(<span class="dv">1000</span>), <span class="dt">colkey =</span> <span class="ot">FALSE</span>,
+          <span class="dt">theta =</span> <span class="dv">90</span>, <span class="dt">phi =</span> <span class="dv">0</span>, <span class="dt">zlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(y.pred), <span class="kw">max</span>(y.pred)), <span class="dt">clim =</span> bothlim,
           <span class="dt">xlab =</span> <span class="st">&quot;x1&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;x2&quot;</span>, <span class="dt">zlab =</span> <span class="st">&quot;y&quot;</span>,
           <span class="dt">surf =</span> <span class="kw">list</span>(<span class="dt">x =</span> x1.pred, <span class="dt">y =</span> x2.pred, <span class="dt">z =</span> y.pred, <span class="dt">facets =</span> <span class="ot">NA</span>, <span class="dt">fit =</span> fitpoints),
           <span class="dt">main =</span> <span class="st">&quot;&quot;</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-586-1.png" width="1440" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">scatter3D</span>(x1, x2, y, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">gg.col</span>(<span class="dv">1000</span>), <span class="dt">lighting =</span> <span class="ot">TRUE</span>, <span class="dt">colkey =</span> <span class="ot">FALSE</span>,
-          <span class="dt">theta =</span> <span class="dv">90</span>, <span class="dt">phi =</span> -<span class="dv">15</span>, <span class="dt">ticktype =</span> <span class="st">&quot;detailed&quot;</span>, <span class="dt">zlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(y.pred), <span class="kw">max</span>(y.pred)), <span class="dt">clim =</span> <span class="kw">c</span>(<span class="kw">min</span>(y.pred), <span class="kw">max</span>(y.pred)),
+          <span class="dt">theta =</span> <span class="dv">95</span>, <span class="dt">phi =</span> -<span class="dv">10</span>, <span class="dt">zlim =</span> <span class="kw">c</span>(<span class="kw">min</span>(y.pred), <span class="kw">max</span>(y.pred)), <span class="dt">clim =</span> bothlim,
           <span class="dt">xlab =</span> <span class="st">&quot;x1&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;x2&quot;</span>, <span class="dt">zlab =</span> <span class="st">&quot;y&quot;</span>,
           <span class="dt">surf =</span> <span class="kw">list</span>(<span class="dt">x =</span> x1.pred, <span class="dt">y =</span> x2.pred, <span class="dt">z =</span> y.pred, <span class="dt">facets =</span> <span class="ot">NA</span>, <span class="dt">fit =</span> fitpoints),
           <span class="dt">main =</span> <span class="st">&quot;&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-587-1.png" width="1920" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-587-1.png" width="960" /></p>
 
 <div id="refs" class="references">
 
