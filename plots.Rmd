@@ -169,6 +169,15 @@ y.pred = matrix(predict(fit, newdata = x1x2),
 # fitted points for droplines to surface
 fitpoints = predict(fit)
 
+library("plot3D")
+
+
+
+
+minlim = min(fitpoints, y.pred, y) - 0.1
+maxlim = max(fitpoints, y.pred, y) + 0.1
+
+bothlim = c(minlim, maxlim)
 ```
 
 
@@ -177,56 +186,43 @@ fitpoints = predict(fit)
 ```{r, fig.height = 15, fig.width = 15}
 par(mfrow = c(1, 3))
 
-scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), lighting = TRUE, colkey = FALSE, pch = 20,
-          xlim = c(0, 10), 
-          ylim = c(0, 10),
-          theta = 0, phi = 45, ticktype = "detailed", zlim = c(min(y.pred), max(y.pred)), clim = c(min(y.pred), max(y.pred)),
+scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), colkey = FALSE, pch = 20,
+          theta = 0, phi = 45, zlim = c(min(y.pred), max(y.pred)), clim = bothlim,
           xlab = "x1", ylab = "x2", zlab = "y",
           # surf = list(x = x1.pred, y = x2.pred, z = y.pred, facets = NA, fit = fitpoints), 
           main = "")
 
-scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), lighting = TRUE, colkey = FALSE,
-          xlim = c(0, 10), 
-          ylim = c(0, 10),
-          theta = 45, phi = 15, ticktype = "detailed", zlim = c(min(y.pred), max(y.pred)), clim = c(min(y.pred), max(y.pred)),
+scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), colkey = FALSE,
+          theta = 45, phi = 15, zlim = c(min(y.pred), max(y.pred)), clim = bothlim,
           xlab = "x1", ylab = "x2", zlab = "y",
           # surf = list(x = x1.pred, y = x2.pred, z = y.pred, facets = NA, fit = fitpoints), 
           main = "")
 
-scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), lighting = TRUE, colkey = FALSE,
-          xlim = c(0, 10), 
-          ylim = c(0, 10),
-          theta = 90, phi = 0, ticktype = "detailed", zlim = c(min(y.pred), max(y.pred)), clim = c(min(y.pred), max(y.pred)),
+scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), colkey = FALSE,
+          theta = 90, phi = 0, zlim = c(min(y.pred), max(y.pred)), clim = bothlim,
           xlab = "x1", ylab = "x2", zlab = "y",
           # surf = list(x = x1.pred, y = x2.pred, z = y.pred, facets = NA, fit = fitpoints), 
           main = "")
-
 ```
 
 
 ```{r, fig.height = 15, fig.width = 15}
 par(mfrow = c(1, 3))
 
-scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), lighting = TRUE, colkey = FALSE, pch = 20,
-                    xlim = c(0, 10), 
-          ylim = c(0, 10),
-          theta = 0, phi = 45, ticktype = "detailed", zlim = c(min(y.pred), max(y.pred)), clim = c(min(y.pred), max(y.pred)),
+scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), colkey = FALSE, pch = 20,
+          theta = 0, phi = 45, zlim = c(min(y.pred), max(y.pred)), clim = bothlim,
           xlab = "x1", ylab = "x2", zlab = "y",
           surf = list(x = x1.pred, y = x2.pred, z = y.pred, facets = NA, fit = fitpoints),
           main = "")
 
-scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), lighting = TRUE, colkey = FALSE,
-                    xlim = c(0, 10), 
-          ylim = c(0, 10),
-          theta = 45, phi = 15, ticktype = "detailed", zlim = c(min(y.pred), max(y.pred)), clim = c(min(y.pred), max(y.pred)),
+scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), colkey = FALSE,
+          theta = 45, phi = 15, zlim = c(min(y.pred), max(y.pred)), clim = bothlim,
           xlab = "x1", ylab = "x2", zlab = "y",
           surf = list(x = x1.pred, y = x2.pred, z = y.pred, facets = NA, fit = fitpoints),
           main = "")
 
-scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), lighting = TRUE, colkey = FALSE,
-                    xlim = c(0, 10), 
-          ylim = c(0, 10),
-          theta = 90, phi = 0, ticktype = "detailed", zlim = c(min(y.pred), max(y.pred)), clim = c(min(y.pred), max(y.pred)),
+scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), colkey = FALSE,
+          theta = 90, phi = 0, zlim = c(min(y.pred), max(y.pred)), clim = bothlim,
           xlab = "x1", ylab = "x2", zlab = "y",
           surf = list(x = x1.pred, y = x2.pred, z = y.pred, facets = NA, fit = fitpoints),
           main = "")
@@ -235,9 +231,9 @@ scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), lighting = TRUE, col
 
 
 
-```{r, fig.height = 20, fig.width = 20}
+```{r, fig.height = 10, fig.width = 10}
 scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), lighting = TRUE, colkey = FALSE,
-          theta = 90, phi = -15, ticktype = "detailed", zlim = c(min(y.pred), max(y.pred)), clim = c(min(y.pred), max(y.pred)),
+          theta = 95, phi = -10, zlim = c(min(y.pred), max(y.pred)), clim = bothlim,
           xlab = "x1", ylab = "x2", zlab = "y",
           surf = list(x = x1.pred, y = x2.pred, z = y.pred, facets = NA, fit = fitpoints),
           main = "")
