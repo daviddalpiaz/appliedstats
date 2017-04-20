@@ -25,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2017-04-19">
+<meta name="date" content="2017-04-20">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -277,18 +277,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="12.10" data-path="beyond.html"><a href="beyond.html#high-performance-computing"><i class="fa fa-check"></i><b>12.10</b> High Performance Computing</a></li>
 <li class="chapter" data-level="12.11" data-path="beyond.html"><a href="beyond.html#further-r-resources"><i class="fa fa-check"></i><b>12.11</b> Further <code>R</code> Resources</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html"><i class="fa fa-check"></i><b>13</b> Analysis of Variance</a><ul>
-<li class="chapter" data-level="13.1" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#experiments"><i class="fa fa-check"></i><b>13.1</b> Experiments</a></li>
-<li class="chapter" data-level="13.2" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#two-sample-t-test"><i class="fa fa-check"></i><b>13.2</b> Two-Sample t-Test</a></li>
-<li class="chapter" data-level="13.3" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#one-way-anova"><i class="fa fa-check"></i><b>13.3</b> One-Way ANOVA</a><ul>
-<li class="chapter" data-level="13.3.1" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#factor-variables-1"><i class="fa fa-check"></i><b>13.3.1</b> Factor Variables</a></li>
-<li class="chapter" data-level="13.3.2" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#some-simulation"><i class="fa fa-check"></i><b>13.3.2</b> Some Simulation</a></li>
-<li class="chapter" data-level="13.3.3" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#power"><i class="fa fa-check"></i><b>13.3.3</b> Power</a></li>
-</ul></li>
-<li class="chapter" data-level="13.4" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#post-hoc-testing"><i class="fa fa-check"></i><b>13.4</b> Post Hoc Testing</a></li>
-<li class="chapter" data-level="13.5" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#two-way-anova"><i class="fa fa-check"></i><b>13.5</b> Two-Way ANOVA</a></li>
-</ul></li>
-<li class="chapter" data-level="14" data-path="plots.html"><a href="plots.html"><i class="fa fa-check"></i><b>14</b> Plots</a></li>
+<li class="chapter" data-level="13" data-path="plots.html"><a href="plots.html"><i class="fa fa-check"></i><b>13</b> Plots</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/daviddalpiaz/appliedstats" target="blank">&copy; 2016 David Dalpiaz</a></li>
 
@@ -745,7 +734,7 @@ x_{0(p-1)} \\
 \]</span></p>
 <p>Putting it all together, we obtain a confidence interval for the mean response.</p>
 <p><span class="math display">\[
-\hat{y} \pm t_{\alpha/2, n - p} \cdot s_e \sqrt{x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
+\hat{y}(x_0) \pm t_{\alpha/2, n - p} \cdot s_e \sqrt{x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
 \]</span></p>
 <p>The math has changed a bit, but the process in <code>R</code> remains almost identical. Here, we create a data frame for two additional cars. One car that weighs 3500 pounds produced in 1976, as well as a second car that weighs 5000 pounds which was produced in 1981.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new_cars =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">wt =</span> <span class="kw">c</span>(<span class="dv">3500</span>, <span class="dv">5000</span>), <span class="dt">year =</span> <span class="kw">c</span>(<span class="dv">76</span>, <span class="dv">81</span>))
