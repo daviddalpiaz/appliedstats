@@ -1,0 +1,199 @@
+---
+title: "RMarkdown Template"
+author: "David Dalpiaz"
+date: ""
+output: 
+  html_document: 
+    toc: yes
+---
+
+# RMarkdown Basics
+
+[RMarkdown](http://rmarkdown.rstudio.com/) at its core is a combination of [`R`](https://cran.r-project.org/) and [Markdown](https://daringfireball.net/projects/markdown/) used to generate reproducible reports for data analyses.
+
+Markdown and `R` are mixed together in a `.Rmd` file, which can then be rendered into a number of formats including `.html`, `.pdf`, and `.docx`. There will be a strong preference for `.html` in this course. 
+
+Have a look at [this `.Rmd`](rmd_template.Rmd) to see how this document was generated! It should be read alongside the rendered `.html` to best understand how everything works. Alternatively, you could render the `.Rmd` inside RStudio, and you'll automatically have both side-by-side. You can also modifying the `.Rmd` along the way, and see what effects your modifications have.
+
+Formatting text is easy. **This is bold.** *This is italics.* `This text appears as monospaced.`
+
+- Unordered list element 1.
+- Unordered list element 2.
+- Unordered list element 3.
+
+1. Ordered list element 1.
+2. Ordered list element 2.
+3. Ordered list element 3.
+
+We could mix lists and links:
+
+- [RMarkdown Documentation](http://rmarkdown.rstudio.com/)
+- [RMarkdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf)
+- [Table Generator](http://www.tablesgenerator.com/markdown_tables)
+
+Tables are sometimes tricky using Markdown. See the above link for a helpful Markdown table generator.
+
+| A  | B  | C  |
+|----|----|----|
+| 1  | 2  | 3  |
+| Do | Re | Mi |
+
+# Adding `R`
+
+So far we have only used Markdown to create html. This is useful by itself, but the real power of RMarkdown comes when we add `R`. There are two ways we can do this. We can use `R` code chunks, or run `R` inline.
+
+## `R` Chunks
+
+The following is an example of an `R` code chunk
+
+```{r example_chunk}
+# define function
+get_sd = function(x, biased = FALSE) {
+  n = length(x) - 1 * !biased
+  sqrt((1 / n) * sum((x - mean(x)) ^ 2))
+}
+
+# generate random sample data
+set.seed(42)
+(test_sample = rnorm(n = 10, mean = 2, sd = 5))
+
+# run function on generated data
+get_sd(test_sample)
+```
+
+There is a lot going on here. In the `.Rmd` file, notice the syntax that creates and ends the chunk. Also note that `example_chunk` is the chunk name. Everything between the start and end syntax must be valid `R` code. Chunk names are not necessary, but can become useful as your documents grow in size.
+
+In this example, we define a function, generate some random data in a reproducible manner, displayed the data, then ran our function.
+
+## Inline `R`
+
+`R` can also be ran in the middle of exposition. For example, the mean of the data we generated is `r mean(test_sample)`.
+
+# Importing Data
+
+When using RMarkdown, any time you *knit* your document to its final form, say `.html`, a number of programs run in the background. Your current `R` environment seen in RStudio will be reset. Any objects you created while working interactively inside RStudio will be ignored. Essentially a new `R` session will be spawned in the background and the code in your document is run there from start to finish. For this reason, things such as importing data must be explicitly coded into your document.
+
+```{r load_data, message = FALSE, warning = FALSE}
+library(readr)
+example_data = read_csv("example-data.csv")
+```
+
+The above loads the file stored in `example_data.csv` and stores it in a variable named `example_data`. Note that when this line runs during *knitting*, your **working directory** is considered the directory which contains your `.Rmd` file. This is why we did not give a full file path. We simply used a relative reference. You should **always** reference data in this manner.
+
+Note that we use the newer `read_csv()` from the `readr` package instead of the default `read.csv()`.
+
+# Working Directory
+
+Whenever `R` code is run, there is always a current working directory. This allows for relative references to external files, in addition to absolute references. Since the working directory when knitting a file is always the directory that contains the `.Rmd` file, it can be helpful to set the working directory inside RStudio to match while working interactively.
+
+To do so, select `Session > Set Working Directory > To Source File Location` while editing a `.Rmd` file. This will set the working directory to the path that contains the `.Rmd`. You can also use `getwd()` and `setwd()` to manipulate your working directory programmatically. These should only be used interactively. Using them inside an RMarkdown document would likely result in lessened reproducibility.
+
+**As of recent RStudio updates, this practice is not always necessary when working interactively.** If lines of code are being "Output Inline," then the working directory is automatically the directory which contains the `.Rmd` file.
+
+# Packages
+
+Packages are key to using `R`. The community generated packages are a large part of `R`'s success, and it is extremely rare to perform an analysis without using at least some packages. Once installed, packages must be loaded before they are used, so again, since your environment is initialized with nothing during knitting, these must be included in your RMarkdown file.
+
+```{r}
+#install.packages("ggplot2")
+library(ggplot2)
+```
+
+Here we load the `ggplot2` package, which should be installed interactively **before** knitting the file. The install command is included for reference, but commented out. It *could* be left uncommented, but then the package would re-install every time you knit your document.
+
+```{r}
+#install.packages("rmarkdown")
+```
+
+Note that `rmarkdown` is actually a package in `R`! If `R` never prompts you to install `rmarkdown` and its associated packages when first creating an RMarkdown document, use the above command to install them manually.
+
+# Plotting
+
+The following generates a boring plot.
+
+```{r boring_plot}
+plot(z ~ x, data = example_data)
+```
+
+This next plot, uses data from the package `ggplot2` to create a more interesting plot. Notice it is *huge* in the resulting document, since we have modified some *chunk options* in the RMarkdown file to manipulate its size.
+
+```{r better_plot, fig.height = 10, fig.width = 10}
+plot(hwy ~ displ, data = mpg,
+     xlab = "Engine Displacement (in Liters)",
+     ylab = "Miles Per Gallon (Highway)",
+     main = "MPG (Highway) vs Engine Displacement",
+     pch  = 20,
+     cex  = 2,
+     col  = "dodgerblue")
+```
+
+# Chunk Options
+
+We have already seen chunk options `fig.height` and `fig.width` which modified the size of plots from a particular chunk. There are many [chunk options](http://yihui.name/knitr/options/), but we will discuss some others which are frequently used including; `eval`, `echo`, `message`, and `warning`
+
+```{r not_run, eval = FALSE}
+install.packages("rmarkdown")
+?log
+View(mpg)
+```
+
+Using `eval = FALSE` the above chunk displays the code, but it is not run. We've already discussed not wanting install code to run. The `?` code pulls up documentation of a function. This will spawn a browser window when knitting, or potentially crash during knitting. Similarly, using `View()` is an issue with RMarkdown. Inside RStudio, this would pull up a window which displays the data. However, when knitting, `R` runs in the background and RStudio is not modifying the `View()` function. This, on OSX especially, usually causes knitting to fail.
+
+```{r not_displayed, echo = FALSE}
+print("Hello World!")
+```
+
+Above, we see output, but no code! This is done using `echo = FALSE`, which is often useful.
+
+```{r, message = FALSE, warning = FALSE}
+x = 1:10
+y = 1:10
+summary(lm(y ~ x))
+```
+
+The above code produces a warning, for reasons we will discuss later. Sometimes, in final reports, it is nice to hide these, which we have done here. `message = FALSE` and `warning = FALSE` can be used to do so. Messages are often created when loading packages to give the user information about the effects of loading the package. These should be suppressed in final reports. Be careful about suppressing these messages and warnings too early in an analyses as you could potentially miss important information!
+
+Later we may discuss `cache` and `dependson` which can be useful when dealing with time-consuming chunks that occur with large data or many simulations.
+
+# Adding Math with LaTeX
+
+Another benefit of RMarkdown is the ability to add [Latex for mathematics typesetting](https://www.latex-project.org/about/). Like `R` code, there are two ways we can include Latex; displaystyle and inline.
+
+Note that use of LaTeX is somewhat dependent on the resulting file format. For example, it cannot be used at all with `.docx`. To use it with `.pdf` you must have LaTeX install on your machine.
+
+With `.html` the LaTeX is not actually rendered during knitting, but actually rendered in your browser using MathJax.
+
+## Displaystyle LaTeX
+
+Displaystyle is used for larger equations which appear centered on their own line.
+
+$$
+s = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2}
+$$
+
+## Inline LaTex
+
+We could mix LaTeX commands in the middle of exposition, for example: $t = 2$. We could actually mix `R` with Latex as well! For example: $\bar{x} = `r mean(test_sample)`$.
+
+# Output Options
+
+At the beginning of the document, there is code which describes some metadata and settings of the document. For this file, that code is:
+
+```{r header, eval = FALSE}
+title: "RMarkdown Template"
+author: "David Dalpiaz"
+date: ""
+output: 
+  html_document: 
+    toc: yes
+```
+
+This describes the output format as html, defines the theme, and `toc` tells `R` to automatically create a Table of Contents based on the headers and sub-headers you have defined using `#`.
+
+You can edit this yourself, or click the settings button at the top of the document and select `Output Options...`. Here you can explore other themes and syntax highlighting options, as well as many additional options. Using this method will automatically modify this information in the document.
+
+# Try It!
+
+Be sure to play with this document! Change it. Break it. Fix it. The best way to learn RMarkdown (or really almost anything) is to try, fail, then find out what you did wrong.
+
+RStudio has provided a number of [beginner tutorials](http://rmarkdown.rstudio.com/lesson-1.html) which have been greatly improved recently and detail many of the specifics potentially not covered in this document. RMarkdown is continually improving, and this document covers only the very basics.
