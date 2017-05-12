@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Applied Statistics with R</title>
   <meta name="description" content="Applied Statistics with <code>R</code>">
-  <meta name="generator" content="bookdown 0.3.18 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.20 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2017-04-24">
+<meta name="date" content="2017-05-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -135,6 +135,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.1" data-path="summarizing-data.html"><a href="summarizing-data.html#summary-statistics"><i class="fa fa-check"></i><b>4.1</b> Summary Statistics</a><ul>
 <li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#central-tendency"><i class="fa fa-check"></i>Central Tendency</a></li>
 <li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#spread"><i class="fa fa-check"></i>Spread</a></li>
+<li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical"><i class="fa fa-check"></i>Categorical</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="summarizing-data.html"><a href="summarizing-data.html#plotting"><i class="fa fa-check"></i><b>4.2</b> Plotting</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="summarizing-data.html"><a href="summarizing-data.html#histograms"><i class="fa fa-check"></i><b>4.2.1</b> Histograms</a></li>
@@ -365,12 +366,12 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>This model appears significant, but does it meet the model assumptions?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(salary ~<span class="st"> </span>years, <span class="dt">data =</span> initech, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)
 <span class="kw">abline</span>(initech_fit, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-400-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-399-1.png" width="672" /></p>
 <p>Adding the fitted line to the plot, we see that the linear relationship appears correct.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(initech_fit), <span class="kw">resid</span>(initech_fit), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,
      <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;orange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-401-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-400-1.png" width="672" /></p>
 <p>However, from the fitted versus residuals plot it appears there is non-constant variance. Specifically, the variance increases as the fitted value increases.</p>
 <div id="variance-stabilizing-transformations" class="section level3">
 <h3><span class="header-section-number">13.1.1</span> Variance Stabilizing Transformations</h3>
@@ -409,17 +410,17 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Note that while <code>log(y)</code> is considered the new response variable, we do not actually create a new variable in <code>R</code>, but simply transform the variable inside the model formula.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">log</span>(salary) ~<span class="st"> </span>years, <span class="dt">data =</span> initech, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)
 <span class="kw">abline</span>(initech_fit_log, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-403-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-402-1.png" width="672" /></p>
 <p>Plotting the data on the transformed log scale and adding the fitted line, the relationship again appears linear, and we can already see that the variation about the fitted line looks constant.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(salary ~<span class="st"> </span>years, <span class="dt">data =</span> initech, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)
 <span class="kw">curve</span>(<span class="kw">exp</span>(initech_fit_log$coef[<span class="dv">1</span>] +<span class="st"> </span>initech_fit_log$coef[<span class="dv">2</span>] *<span class="st"> </span>x),
       <span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">30</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-404-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-403-1.png" width="672" /></p>
 <p>By plotting the data on the original scale, and adding the fitted regression, we see an exponential relationship. However, this is still a <em>linear</em> model, since the new transformed response, <span class="math inline">\(\log(y)\)</span>, is still a <em>linear</em> combination of the predictors.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(initech_fit_log), <span class="kw">resid</span>(initech_fit_log), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,
      <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-405-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-404-1.png" width="672" /></p>
 <p>The fitted versus residuals plot looks much better. It appears the constant variance assumption is no longer violated.</p>
 <p>Comparing the RMSE using the original and transformed response, we also see that the log transformed model simply fits better, with a smaller average squared error.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(<span class="kw">mean</span>(<span class="kw">resid</span>(initech_fit) ^<span class="st"> </span><span class="dv">2</span>))</code></pre></div>
@@ -489,10 +490,10 @@ g_\lambda(y) = \left\{
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">savings_model =<span class="st"> </span><span class="kw">lm</span>(sr ~<span class="st"> </span>., <span class="dt">data =</span> savings)</code></pre></div>
 <p>We then use the <code>boxcox()</code> function to find the best transformation of the form considered by the Box-Cox method.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxcox</span>(savings_model, <span class="dt">plotit =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-411-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-410-1.png" width="672" /></p>
 <p><code>R</code> automatically plots the log-Likelihood as a function of possible <span class="math inline">\(\lambda\)</span> values. It indicates both the value that maximizes the log-likelihood, as well as a confidence interval for the <span class="math inline">\(\lambda\)</span> value that maximizes the log-likelihood.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxcox</span>(savings_model, <span class="dt">plotit =</span> <span class="ot">TRUE</span>, <span class="dt">lambda =</span> <span class="kw">seq</span>(<span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="dt">by =</span> <span class="fl">0.1</span>))</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-412-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-411-1.png" width="672" /></p>
 <p>Note that we can specify a range of <span class="math inline">\(\lambda\)</span> values to consider and thus be plotted. We often specify a range that is more visually interesting. Here we see that <span class="math inline">\(\lambda = 1\)</span> is both in the confidence interval, and is extremely close to the maximum. This suggests a transformation of the form</p>
 <p><span class="math display">\[
 \frac{y^\lambda - 1}{\lambda} = \frac{y^1 - 1}{1} = y - 1.
@@ -501,7 +502,7 @@ g_\lambda(y) = \left\{
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(savings_model), <span class="kw">resid</span>(savings_model), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,
      <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-413-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-412-1.png" width="672" /></p>
 <p>Looking at a fitted versus residuals plot verifies that there likely are not any issue with the assumptions of this model, which Breusch-Pagan and Shapiro-Wilk tests verify.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lmtest)
 <span class="kw">bptest</span>(savings_model)</code></pre></div>
@@ -521,10 +522,10 @@ g_\lambda(y) = \left\{
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(gala_model), <span class="kw">resid</span>(gala_model), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,
      <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-416-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-415-1.png" width="672" /></p>
 <p>Even though there is not a lot of data for large fitted values, it still seems very clear that the constant variance assumption is violated.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxcox</span>(gala_model, <span class="dt">lambda =</span> <span class="kw">seq</span>(-<span class="fl">0.25</span>, <span class="fl">0.75</span>, <span class="dt">by =</span> <span class="fl">0.05</span>), <span class="dt">plotit =</span> <span class="ot">TRUE</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-417-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-416-1.png" width="672" /></p>
 <p>Using the Box-Cox method, we see that <span class="math inline">\(\lambda = 0.3\)</span> is both in the confidence interval, and is extremely close to the maximum, which suggests a transformation of the form</p>
 <p><span class="math display">\[
 \frac{y^\lambda - 1}{\lambda} = \frac{y^{0.3} - 1}{0.3}.
@@ -534,11 +535,11 @@ g_\lambda(y) = \left\{
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(gala_model_cox), <span class="kw">resid</span>(gala_model_cox), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,
      <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-419-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-418-1.png" width="672" /></p>
 <p>The resulting fitted versus residuals plot looks much better!</p>
 <p>Lastly, we return to the <code>initech</code> data, and the <code>initech_fit</code> model we had used earlier. Recall, that this was the untransformed model, that we used a <span class="math inline">\(\log\)</span> transform to fix.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxcox</span>(initech_fit)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-420-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-419-1.png" width="672" /></p>
 <p>Using the Box-Cox method, we see that <span class="math inline">\(\lambda = 0\)</span> is both in the interval, and extremely close to the maximum, which suggests a transformation of the form</p>
 <p><span class="math display">\[
   \log(y).
@@ -568,7 +569,7 @@ mpg_hp =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st
 <span class="kw">plot</span>(<span class="kw">fitted</span>(mpg_hp), <span class="kw">resid</span>(mpg_hp), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,
      <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-423-1.png" width="768" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-422-1.png" width="768" /></p>
 <p>We first attempt SLR, but we see a rather obvious pattern in the fitted versus residuals plot, which includes increasing variance, so we attempt a <span class="math inline">\(\log\)</span> transform of the response.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(<span class="kw">log</span>(mpg) ~<span class="st"> </span>hp, <span class="dt">data =</span> autompg, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)
@@ -577,7 +578,7 @@ mpg_hp_log =<span class="st"> </span><span class="kw">lm</span>(<span class="kw"
 <span class="kw">plot</span>(<span class="kw">fitted</span>(mpg_hp_log), <span class="kw">resid</span>(mpg_hp_log), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,
      <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-424-1.png" width="768" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-423-1.png" width="768" /></p>
 <p>After performing the <span class="math inline">\(\log\)</span> transform of the response, we still have some of the same issues with the fitted versus response. Now, we will try also <span class="math inline">\(\log\)</span> transforming the <strong>predictor</strong>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(<span class="kw">log</span>(mpg) ~<span class="st"> </span><span class="kw">log</span>(hp), <span class="dt">data =</span> autompg, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)
@@ -586,7 +587,7 @@ mpg_hp_loglog =<span class="st"> </span><span class="kw">lm</span>(<span class="
 <span class="kw">plot</span>(<span class="kw">fitted</span>(mpg_hp_loglog), <span class="kw">resid</span>(mpg_hp_loglog), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,
      <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-425-1.png" width="768" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-424-1.png" width="768" /></p>
 <p>Here, our fitted versus residuals plot looks good.</p>
 <div id="polynomials" class="section level3">
 <h3><span class="header-section-number">13.2.1</span> Polynomials</h3>
@@ -597,7 +598,7 @@ mpg_hp_loglog =<span class="st"> </span><span class="kw">lm</span>(<span class="
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sales ~<span class="st"> </span>advert, <span class="dt">data =</span> marketing, 
      <span class="dt">xlab =</span> <span class="st">&quot;Advert Spending (in $100,00)&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Sales (in $100,00)&quot;</span>,
      <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-427-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-426-1.png" width="672" /></p>
 <p>We would like to fit the model,</p>
 <p><span class="math display">\[
   y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \epsilon_i
@@ -731,7 +732,7 @@ xplot =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</
       <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">lines</span>(xplot, <span class="kw">predict</span>(mark_mod_poly3, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">advert =</span> xplot)),
       <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-432-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-431-1.png" width="672" /></p>
 <p>The previous plot was made using base graphics in <code>R</code>. The next plot was made using the package <a href="http://ggplot2.org/"><code>ggplot2</code></a>, an increasingly popular plotting method in <code>R</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
 <span class="kw">ggplot</span>(<span class="dt">data =</span> marketing, <span class="kw">aes</span>(<span class="dt">x =</span> advert, <span class="dt">y =</span> sales)) +
@@ -739,7 +740,7 @@ xplot =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</
 <span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">formula =</span> y ~<span class="st"> </span>x +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">2</span>)) +
 <span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">formula =</span> y ~<span class="st"> </span>x +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">2</span>)+<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">3</span>)) +
 <span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">size =</span> <span class="dv">3</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-433-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-432-1.png" width="672" /></p>
 <p>Note we could fit a polynomial of an arbitrary order,</p>
 <p><span class="math display">\[
   y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \cdots + \beta_{p-1}x_i^{p-1} + \epsilon_i
@@ -784,7 +785,7 @@ fit_perf =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st
       <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">1</span>)
 <span class="kw">lines</span>(xplot, <span class="kw">predict</span>(fit_perf, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">x =</span> xplot)),
       <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-434-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-433-1.png" width="672" /></p>
 <p>Notice in the summary, <code>R</code> could not calculate standard errors. This is a result of being “out” of degrees of freedom. With 11 <span class="math inline">\(\beta\)</span> parameters and 11 data points, we use up all the degrees of freedom before we can estimate <span class="math inline">\(\sigma\)</span>.</p>
 <p>In this example, the true relationship is quadratic, but the order 10 polynomial’s fit is “perfect”. Next chapter we will focus on the trade-off between goodness of fit (minimizing errors) and complexity of model.</p>
 <p>Suppose you work for an automobile manufacturer which makes a large luxury sedan. You would like to know how the car performs from a fuel efficiency standpoint when it is driven at various speeds. Instead of testing the car at every conceivable speed (which would be impossible) you create an experiment where the car is driven at speeds of interest in increments of 5 miles per hour.</p>
@@ -807,7 +808,7 @@ fit_perf =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st
 <span class="kw">plot</span>(<span class="kw">fitted</span>(fit1), <span class="kw">resid</span>(fit1), <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, 
      <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span><span class="dv">2</span>)
   <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-438-1.png" width="768" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-437-1.png" width="768" /></p>
 <p>Pretty clearly we can do better. Yes fuel efficiency does increase as speed increases, but only up to a certain point.</p>
 <p>We will now add polynomial terms until we fit a suitable fit.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit2 =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>mph +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">2</span>), <span class="dt">data =</span> econ)
@@ -836,7 +837,7 @@ fit_perf =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st
 <span class="kw">plot</span>(<span class="kw">fitted</span>(fit2), <span class="kw">resid</span>(fit2), <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, 
      <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span><span class="dv">2</span>)
   <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-440-1.png" width="768" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-439-1.png" width="768" /></p>
 <p>While this model clearly fits much better, and the second order term is significant, we still see a pattern in the fitted versus residuals plot which suggests higher order terms will help. Also, we would expect the curve to flatten as speed increases or decreases, not go sharply downward as we see here.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit3 =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>mph +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">3</span>), <span class="dt">data =</span> econ)
 <span class="kw">summary</span>(fit3)</code></pre></div>
@@ -865,7 +866,7 @@ fit_perf =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st
 <span class="kw">plot</span>(<span class="kw">fitted</span>(fit3), <span class="kw">resid</span>(fit3), <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, 
      <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span><span class="dv">2</span>)
   <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-442-1.png" width="768" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-441-1.png" width="768" /></p>
 <p>Adding the third order term doesn’t seem to help at all. The fitted curve hardly changes. This makes sense, since what we would like is for the curve to flatten at the extremes. For this we will need an even degree polynomial term.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit4 =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>mph +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">3</span>) +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">4</span>), <span class="dt">data =</span> econ)
 <span class="kw">summary</span>(fit4)</code></pre></div>
@@ -895,7 +896,7 @@ fit_perf =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st
 <span class="kw">plot</span>(<span class="kw">fitted</span>(fit4), <span class="kw">resid</span>(fit4), <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, 
      <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span><span class="dv">2</span>)
   <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-444-1.png" width="768" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-443-1.png" width="768" /></p>
 <p>Now we are making progress. The fourth order term is significant with the other terms in the model. Also we are starting to see what we expected for low and high speed. However, there still seems to be a bit of a pattern in the residuals, so we will again try more higher order terms. We will add the fifth and sixth together, since adding the fifth will be similar to adding the third.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit6 =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>mph +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">3</span>) +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">4</span>) +<span class="st"> </span><span class="kw">I</span>(mph ^<span class="st"> </span><span class="dv">5</span>) +<span class="st"> </span><span class="kw">I</span>(mph^<span class="dv">6</span>), <span class="dt">data =</span> econ)
 <span class="kw">summary</span>(fit6)</code></pre></div>
@@ -928,7 +929,7 @@ fit_perf =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st
 <span class="kw">plot</span>(<span class="kw">fitted</span>(fit6), <span class="kw">resid</span>(fit6), <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, 
      <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span><span class="dv">2</span>)
   <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-446-1.png" width="768" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-445-1.png" width="768" /></p>
 <p>Again the sixth order term is significant with the other terms in the model and here we see less pattern in the residuals plot. Let’s now test for which of the previous two models we prefer. We will test</p>
 <p><span class="math display">\[
 H_0: \beta_5 = \beta_6 = 0.
@@ -976,7 +977,7 @@ H_0: \beta_5 = \beta_6 = 0.
 <span class="kw">plot</span>(<span class="kw">fitted</span>(fit8), <span class="kw">resid</span>(fit8), <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, 
      <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span><span class="dv">2</span>)
   <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-449-1.png" width="768" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-448-1.png" width="768" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit8)</code></pre></div>
 <pre><code>## 
 ## Call:
@@ -1144,7 +1145,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);

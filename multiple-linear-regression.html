@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Applied Statistics with R</title>
   <meta name="description" content="Applied Statistics with <code>R</code>">
-  <meta name="generator" content="bookdown 0.3.18 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.3.20 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2017-04-24">
+<meta name="date" content="2017-05-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -135,6 +135,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="4.1" data-path="summarizing-data.html"><a href="summarizing-data.html#summary-statistics"><i class="fa fa-check"></i><b>4.1</b> Summary Statistics</a><ul>
 <li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#central-tendency"><i class="fa fa-check"></i>Central Tendency</a></li>
 <li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#spread"><i class="fa fa-check"></i>Spread</a></li>
+<li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical"><i class="fa fa-check"></i>Categorical</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="summarizing-data.html"><a href="summarizing-data.html#plotting"><i class="fa fa-check"></i><b>4.2</b> Plotting</a><ul>
 <li class="chapter" data-level="4.2.1" data-path="summarizing-data.html"><a href="summarizing-data.html#histograms"><i class="fa fa-check"></i><b>4.2.1</b> Histograms</a></li>
@@ -383,7 +384,7 @@ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \epsilon_i, \qquad i = 1, 2, \
 <li><span class="math inline">\(x_{i2}\)</span> as the model year (<code>year</code>) of the <span class="math inline">\(i\)</span>th car.</li>
 </ul>
 <p>The picture below will visualize what we would like to accomplish. The data points <span class="math inline">\((x_{i1}, x_{i2}, y_i)\)</span> now exist in 3-dimensional space, so instead of fitting a line to the data, we will fit a plane. (We’ll soon move to higher dimensions, so this will be the last example that is easy to visualize and think about this way.)</p>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-241-1.png" width="576" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-240-1.png" width="576" /></p>
 <p>How do we find such a plane? Well, we would like a plane that is as close as possible to the data points. That is, we would like it to minimize the errors it is making. How will we define these errors? Squared distance of course! So, we would like to minimize</p>
 <p><span class="math display">\[
 f(\beta_0, \beta_1, \beta_2) = \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2}))^2
@@ -788,7 +789,7 @@ new_cars</code></pre></div>
 <p>As are the years of each of the new cars.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(year ~<span class="st"> </span>wt, <span class="dt">data =</span> autompg, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)
 <span class="kw">points</span>(new_cars, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">cex =</span> <span class="dv">3</span>, <span class="dt">pch =</span> <span class="st">&quot;X&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-253-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-252-1.png" width="672" /></p>
 <p>However, we have to consider weight and year together now. And based on the above plot, one of the new cars is within the “blob” of observed values, while the other, the car from 1981 weighing 5000 pounds, is noticeably outside of the observed values. This is a hidden extrapolation which you should be aware of when using multiple regression.</p>
 <p>Shifting gears back to the new data pair that can be reasonably estimated, we do a quick verification of some of the mathematics in <code>R</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x0 =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3500</span>, <span class="dv">76</span>)
@@ -1154,7 +1155,7 @@ C =<span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</sp
 y        =<span class="st"> </span>beta_0 +<span class="st"> </span>beta_1 *<span class="st"> </span>x1 +<span class="st"> </span>beta_2 *<span class="st"> </span>x2 +<span class="st"> </span>eps
 sim_data =<span class="st"> </span><span class="kw">data.frame</span>(x1, x2, y)</code></pre></div>
 <p>Plotting this data and fitting the regression produces the following plot.</p>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-267-1.png" width="576" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-266-1.png" width="576" /></p>
 <p>We then calculate</p>
 <p><span class="math display">\[
 \hat{\beta} = \left(  X^\top X  \right)^{-1}X^\top y.
@@ -1228,7 +1229,7 @@ for(i in <span class="dv">1</span>:num_sims) {
      <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">2</span>]), <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 <span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> beta_2, <span class="dt">sd =</span> <span class="kw">sqrt</span>(sigma ^<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span>C[<span class="dv">2</span> +<span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> +<span class="st"> </span><span class="dv">1</span>])), 
       <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-277-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-276-1.png" width="672" /></p>
 <p>This looks good! The simulation-based histogram appears to be Normal with mean 6 and spread of about 0.15 as you measure from center to inflection point. That matches really well with the sampling distribution of <span class="math inline">\(\hat{\beta}_2 \sim N\left(\mu = 6, \sigma^2 = 0.0236438 \right)\)</span>.</p>
 <p>One last check, we verify the <span class="math inline">\(68 - 95 - 99.7\)</span> rule.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sd_bh2 =<span class="st"> </span><span class="kw">sqrt</span>(sigma ^<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span>C[<span class="dv">2</span> +<span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> +<span class="st"> </span><span class="dv">1</span>])
@@ -1293,7 +1294,7 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(script.src))
       script.src  = script.src.replace(/^https?:/, '');
     document.getElementsByTagName("head")[0].appendChild(script);
