@@ -2,40 +2,34 @@
 
 ## Summary Statistics
 
-`R` has built in functions for a large number of summary statistics.
-
-```{r}
-(y = 1:100)
-```
-
-TODO: change to mpg$cty, discuss what the results mean
+`R` has built in functions for a large number of summary statistics. For numeric variables, we can summarize data with the center and spread.
 
 ### Central Tendency {-}
 
 | Measure | `R`         | Result        |
 |---------|-------------|---------------|
-| Mean    | `mean(y)`   | `r mean(y)`   |
-| Median  | `median(y)` | `r median(y)` |
+| Mean    | `mean(mpg$cty)`   | `r mean(mpg$cty)`   |
+| Median  | `median(mpg$cty)` | `r median(mpg$cty)` |
 
 ### Spread {-}
 
-| Measure            | `R`        | Result       |
-|--------------------|------------|--------------|
-| Variance           | `var(y)`   | `r var(y)`   |
-| Standard Deviation | `sd(y)`    | `r sd(y)`    |
-| IQR                | `IQR(y)`   | `r IQR(y)`   |
-| Minimum            | `min(y)`   | `r min(y)`   |
-| Maximum            | `max(y)`   | `r max(y)`   |
-| Range              | `range(y)` | `r range(y)` |
+| Measure            | `R`              | Result             |
+|--------------------|------------------|--------------------|
+| Variance           | `var(mpg$cty)`   | `r var(mpg$cty)`   |
+| Standard Deviation | `sd(mpg$cty)`    | `r sd(mpg$cty)`    |
+| IQR                | `IQR(mpg$cty)`   | `r IQR(mpg$cty)`   |
+| Minimum            | `min(mpg$cty)`   | `r min(mpg$cty)`   |
+| Maximum            | `max(mpg$cty)`   | `r max(mpg$cty)`   |
+| Range              | `range(mpg$cty)` | `r range(mpg$cty)` |
 
-- TODO: categorical summary
+### Categorical {-}
+
+For categorical variables, counts and percentages can be used for summary.
 
 ```{r}
 table(mpg$drv)
 table(mpg$drv) / nrow(mpg)
 ```
-
-TODO: discuss relationships found in the data, look at the data.
 
 ## Plotting
 
@@ -47,8 +41,6 @@ We will look at four methods of visualizing data that we will use throughout the
 - Barplots
 - Boxplots
 - Scatterplots
-
-TODO: discuss relationships found in the data
 
 ### Histograms
 
@@ -73,7 +65,7 @@ Importantly, you should always be sure to label your axes and give the plot a ti
 
 ### Barplots
 
-TODO: narrative
+Somewhat similar to a histogram, a barplot can provide a visual summary of a categorical variable, or a numeric variable with a finite number of values, like a ranking from 1 to 10.
 
 ```{r}
 barplot(table(mpg$drv))

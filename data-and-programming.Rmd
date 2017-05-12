@@ -51,7 +51,7 @@ The pros and cons of these two are well beyond the scope of this book, but know 
 
 If you wish to use `<-`, you will still need to use `=`, however only for argument passing. Some users like to keep assignment (`<-`) and argument passing (`=`) separate. No matter what you choose, the more important thing is that you **stay consistent**. Also, if working on a larger collaborative project, you should use whatever style is already in place.
 
-- TODO: coercion
+Because vectors must contains elements that are all the same type, `R` will automatically coerce to a single type when attempting to create a vector that combines multiple types.
 
 ```{r}
 c(42, "Statistics", TRUE)
@@ -63,8 +63,6 @@ Frequently you may wish to create a vector based on a sequence of numbers. The q
 ```{r}
 (y = 1:100)
 ```
-
-- TODO: style note
 
 Here we see `R` labeling the rows after the first since this is a large vector. Also, we see that by putting parentheses around the assignment, `R` both stores the vector in a variable called `y` and automatically outputs `y` to the console.
 
@@ -184,9 +182,6 @@ We see that when a function like `log()` is called on a vector `x`, a vector is 
 | `x | y`  | `x` or `y`                       | `(3 > 42) | TRUE`      | `r (3 > 42) | TRUE`      |
 | `x & y`  | `x` and `y`                      | `(3 < 4) & ( 42 > 13)` | `r (3 < 4) & ( 42 > 13)` |
 
-
-- TODO: add narrative, split chunks
-
 In `R`, logical operators are vectorized. 
 
 ```{r}
@@ -219,6 +214,7 @@ sum(x > 3)
 as.numeric(x > 3)
 ```
 
+Here we see that using the `sum()` function on a vector of logical `TRUE` and `FALSE` values that is the result of `x > 3` results in a numeric result. `R` is first automatically coercing the logical to numeric where `TRUE` is `1` and `FALSE` is `0`. This coercion from logical to numeric happens for most mathematical operations.
 
 ```{r}
 which(x > 3)
@@ -325,8 +321,6 @@ X[2, c(1, 3)]
 
 Matrices can also be created by combining vectors as columns, using `cbind`, or combining vectors as rows, using `rbind`.
 
-- TODO: some subsetting returns vectors.
-
 ```{r}
 x = 1:9
 rev(x)
@@ -341,7 +335,7 @@ rbind(x, rev(x), rep(1, 9))
 cbind(col_1 = x, col_2 = rev(x), col_3 = rep(1, 9))
 ```
 
-- TODO: named columns
+When using `rbind` and `cbind` you can specify "argument" names that will be used as column names.
 
 `R` can then be used to perform matrix calculations.
 
@@ -374,7 +368,7 @@ Z
 solve(Z)
 ```
 
-- TODO: explain
+To verify that `solve(Z)` returns the inverse, we multiply it by `Z`. We would expect this to return the identity matrix, however we see that this is not the case due to some computational issues. However, `R` also has the `all.equal()` function which checks for equality, with some small tolerance which accounts for some computational issues. The `identical()` function is used to check for exact equality.
 
 ```{r}
 solve(Z) %*% Z
@@ -505,7 +499,7 @@ all.equal(crossprod(C_mat, C_mat), t(C_mat) %*% C_mat)
 
 ### Lists
 
-- TODO: explain list stuff below:
+A list is a one-dimensional heterogeneous data structure. So it is indexed like a vector with a single integer value, but each element can contain an element of any type.
 
 ```{r}
 # creation
@@ -519,6 +513,11 @@ ex_list = list(
   e = diag(5)
 )
 ```
+
+Lists can be subset using two syntaxes, the `$` operator, and square brackets `[]`. The `$` operator returns a named **element** of a list. The `[]` syntax returns a **list**, while the `[[]]` returns an **element** of a list.
+
+- `ex_list[1]` returns a list contain the first element.
+- `ex_list[[1]]` returns the first element of the list, in this case, a vector.
 
 ```{r}
 # subsetting
@@ -534,7 +533,6 @@ ex_list[["e"]]
 ex_list$d
 ex_list$d(arg = 1)
 ```
-
 
 ### Data Frames
 
@@ -552,7 +550,7 @@ Unlike a matrix, which can be thought of as a vector rearranged into rows and co
 example_data
 ```
 
-- TODO: explain below
+Unlike a list which has more flexibility, the elements of a data frame must all be vectors, and have the same length.
 
 ```{r}
 example_data$x
@@ -566,7 +564,6 @@ str(example_data)
 nrow(example_data)
 ncol(example_data)
 dim(example_data)
-
 ```
 
 The `data.frame()` function above is one way to create a data frame. We can also import data from various file types in into `R`, as well as use data stored in packages.
@@ -686,9 +683,7 @@ mpg %>% filter(hwy > 35) %>% select(manufacturer, model, year)
 
 All three approaches produce the same results. Which you use will be largely based on a given situation as well as user preference.
 
-- TODO: general data.frame subsetting
-
-- TODO: difference between data.frame (more like matrix) and tibble (more like list) subsetting
+When subsetting a data frame, be aware of what is being returned, as sometimes it may be a vector instead of a data frame. Also note that there are differences between subsetting a data frame and a tibble. A data frame operates more like a matrix where it is possible to reduce the subset to a vector. A tibble operates more like a list where it always subsets to another tibble.
 
 ## Programming Basics
 
