@@ -4,7 +4,7 @@ git config --global user.email "dalpiaz2@illinois.edu"
 
 # Clone the gh-pages repository
 git clone -b gh-pages \
-  https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git \
+  https://${GITHUB_PAT}@github.com/${TRAVIS_REPO_SLUG}.git \
   book-output
   
 # Change to the gh-page clone book-output directory
