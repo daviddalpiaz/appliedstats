@@ -1,0 +1,661 @@
+# Model Selection
+
+> "Choose well. Your choice is brief, and yet endless."
+>
+> --- **Johann Wolfgang von Goethe**
+
+After reading this chapter you will be able to:
+
+- Understand the trade-off between goodness-of-fit and model complexity.
+- Use variable selection procedures to find a good model from a set of possible models.
+- Understand the two uses of models: explanation and prediction.
+
+Last chapter we saw how correlation between predictor variables can have undesirable effects on models. We used variance inflation factors to assess the severity of the collinearity issues caused by these correlations. We also saw how fitting a smaller model, leaving out some of the correlated predictors, results in a model which no longer suffers from collinearity issues. But how should we chose this smaller model?
+
+This chapter, we will discuss several *criteria* and *procedures* for choosing a "good" model from among a choice of many.
+
+## Quality Criterion
+
+So far, we have seen criteria such as $R^2$ and RMSE for assessing quality of fit. However, both of these have a fatal flaw. By increasing the size of a model, that is adding predictors, that can at worst not improve. It is impossible to add a predictor to a model and make $R^2$ or RMSE worse. That means, if we were to use either of these to chose between models, we would *always* simply choose the larger model.
+
+This suggests that we need a quality criteria that takes into account the size of the model, since our preference is for small models that still fit well. We are willing to sacrifice a small amount of goodness-of-fit for obtaining a smaller model. We will look at three criteria that do this explicitly: AIC, BIC and Adjusted $R^2$. We will also look at one, Cross-Validated RMSE, which implicitly considers the size of the model.
+
+### Akaike Information Criterion
+
+The first criteria we will discuss is the Akaike Information Criterion, or AIC for short. (Note that, when *Akaike* first introduced this metric, it was simply called *An* Information Criterion. The *A* has changed meaning over the years.)
+
+Recall, the maximized log-likelihood of a regression model can be written as
+
+\[
+\log L(\boldsymbol{\hat{\beta}}) = -\frac{n}{2}\log(2\pi) - \frac{n}{2}\log\left(\frac{RSS}{n}\right) - \frac{n}{2},
+\]
+
+where $RSS = \sum_{i=1}^n (y_i - \hat{y}_i) ^ 2$ and $\hat{\beta}$ was chosen to maximize the likelihood.
+
+Then we can define AIC as
+
+\[
+AIC = -2 \log L(\boldsymbol{\hat{\beta}}) + 2p = n + n \log(2\pi) + n \log\left(\frac{RSS}{n}\right) + 2p,
+\]
+
+which is a measure of quality of the model. The smaller the AIC, the better. To see why, let's talk about the two main components of AIC, the **likelihood** (which measures goodness-of-fit) and the **penalty** (which is a function of the size of the model).
+
+The likelihood portion of AIC is given by
+
+\[
+-2 \log L(\boldsymbol{\hat{\beta}}) = n + n \log(2\pi) + n \log\left(\frac{RSS}{n}\right).
+\]
+
+For the sake of comparing models, the only term here that will change is $n \log\left(\frac{RSS}{n}\right)$, which is function of $RSS$. The 
+
+\[
+n + n \log(2\pi)
+\]
+
+terms will be constant across all models applied to the same data. So, when a model fits well, that is, has a low $RSS$, then this likelihood component will be small.
+
+Similarly, we can discuss the penalty component of AIC which is,
+
+\[
+2p,
+\]
+
+where $p$ is the number of $\beta$ parameters in the model. We call this a penalty, because it is large when $p$ is large, but we are seeking to find a small AIC.
+
+Thus, a good model, that is one with a small AIC, will have a good balance between fitting well, and using a small number of parameters. For comparing models
+
+\[
+AIC \approx n\log\left(\frac{RSS}{n}\right) + 2p
+\]
+
+is a sufficient expression, as $n + n \log(2\pi)$ is the same across all models for any particular dataset.
+
+### Bayesian Information Criterion
+
+The Bayesian Information Criterion, or BIC, is similar to AIC, but has a larger penalty. BIC also quantifies the trade-off between a model which fits well and the number of model parameters, however for a reasonable sample size, generally picks a smaller model than AIC. Again, for model selection use the model with the smallest BIC.
+
+\[
+BIC = -2 \log L(\boldsymbol{\hat{\beta}}) + \log(n) p = n + n\log(2\pi) + n\log\left(\frac{RSS}{n}\right) + \log(n)p.
+\]
+
+Notice that the AIC penalty was
+
+\[
+2p,
+\]
+
+whereas for BIC, the penalty is 
+
+\[
+\log(n) p.
+\]
+
+So, for any dataset where $log(n) > 2$ the BIC penalty will be larger than the AIC penalty, thus BIC will likely prefer a smaller model.  
+
+Note that, sometimes the penalty is considered a general expression of the form
+
+\[
+k \cdot p.
+\]
+
+Then, for AIC $k = 2$, and for BIC $k = \log(n)$.
+
+For comparing models
+
+\[
+BIC \approx n\log\left(\frac{RSS}{n}\right) + \log(n)p
+\]
+
+is again a sufficient expression, as $n + n \log(2\pi)$ is the same across all models for any particular dataset.
+
+### Adjusted R-Squared
+
+Recall,
+
+\[
+R^2 = 1 - \frac{SSE}{SST} = 1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2}.
+\]
+
+We now define
+
+\[
+R_a^2 = 1 - \frac{SSE/(n-p)}{SST/(n-1)} = 1 - \left(  \frac{n-1}{n-p} \right)(1-R^2)
+\]
+
+which we call the Adjusted $R^2$.
+
+Unlike $R^2$ which can never become smaller with added predictors, Adjusted $R^2$ effectively penalizes for additional predictors, and can decrease with added predictors. Like $R^2$, larger is still better.
+
+### Cross-Validated RMSE
+
+Each of the previous three metrics explicitly used $p$, the number of parameters, in their calculations. Thus, they all explicitly limit the size of models chosen when used to compare models.
+
+We'll now briefly introduce **overfitting** and **cross-validation**.
+
+```{r}
+make_poly_data = function(sample_size = 11) {
+  x = seq(0, 10)
+  y = 3 + x + 4 * x ^ 2 + rnorm(n = sample_size, mean = 0, sd = 20)
+  data.frame(x, y)
+}
+```
+
+```{r}
+set.seed(1234)
+poly_data = make_poly_data()
+```
+
+Here we have generated data which follows a quadratic pattern, specifically,
+
+\[
+y = 3 + x + 4 x ^ 2 + \epsilon.
+\]
+
+We'll now fit two models to this data, one which has the correct form, quadratic, and one that is large, which includes terms up to and including an eighth degree.
+
+```{r}
+fit_quad = lm(y ~ poly(x, degree = 2), data = poly_data)
+fit_big  = lm(y ~ poly(x, degree = 8), data = poly_data)
+```
+
+We then plot the data and the results of the two models.
+
+```{r}
+plot(y ~ x, data = poly_data, ylim = c(-100, 400), cex = 2, pch = 20)
+xplot = seq(0, 10, by = 0.1)
+lines(xplot, predict(fit_quad, newdata = data.frame(x = xplot)),
+      col = "dodgerblue", lwd = 2, lty = 1)
+lines(xplot, predict(fit_big, newdata = data.frame(x = xplot)),
+      col = "darkorange", lwd = 2, lty = 2)
+```
+
+We can see that the solid blue curve models this data rather nicely. The dashed orange curve fits the points better, making smaller errors, however it is unlikely that it is correctly modeling the true relationship between $x$ and $y$. It is fitting the random noise. This is an example of **overfitting**.
+
+We see that the larger model indeed has a lower RMSE.
+
+```{r}
+sqrt(mean(resid(fit_quad) ^ 2))
+sqrt(mean(resid(fit_big) ^ 2))
+```
+
+To correct for this, we will introduce cross-validation. We define the leave-one-out cross-validated RMSE to be
+
+\[
+\text{CV(RMSE)}_n = \sqrt{\frac{1}{n} \sum_{i=1}^n e_{[i]}^2}.
+\]
+
+The $e_{[i]}$ are the residual for the $i$th observation, when that observation is **not** used to fit the model.
+
+\[
+{e_{[i]} = y_{i} – \hat{y}_{[i]}}
+\]
+
+That is, the fitted value is calculated as
+
+\[
+\hat{y}_{[i]} = x_i ^ \top \hat{\beta}_{[i]}
+\]
+
+where $\hat{\beta}_{[i]}$ are the estimated coefficients when the $i$th observation is removed from the dataset. 
+
+In general, to perform this calculation, we would be required to fit the model $n$ times, once with each possible observation removed. However, for leave-one-out cross-validation and linear models, the equation can be rewritten as
+
+\[
+\text{CV(RMSE)}_n = \sqrt{\frac{1}{n}\sum_{i=1}^n [e_{i}/(1-h_{i})]^2,}
+\]
+
+where $h_i$ are the leverages and $e_i$ are the usual residuals. This is great, because now we can obtain the LOOCV RMSE by fitting only one model! In practice 5 or 10 fold cross-validation are much more popular. For example, in 5-fold cross-validation, the model is fit 5 times, each time leaving out a fifth of the data, then predicting on those values. We'll leave in-depth examination of cross-validation to a machine learning course, and simply use LOOCV here.
+
+Let's calculate LOOCV RMSE for both models, then discuss *why* we want to do so. We first write a function which calculates the LOOCV RMSE as defined using the shortcut formula for linear models.
+
+```{r}
+calc_loocv_rmse = function(model) {
+  sqrt(mean((resid(model) / (1 - hatvalues(model))) ^ 2))
+}
+```
+
+Then calculate the metric for both models.
+
+```{r}
+calc_loocv_rmse(fit_quad)
+calc_loocv_rmse(fit_big)
+```
+
+Now we see that the quadratic model has a much smaller LOOCV RMSE, so we would prefer this quadratic model. This is because the large model has *severely* over-fit the data. By leaving a single data point out and fitting the large model, the resulting fit is much different than the fit using all of the data. For example, let's leave out the third data point and fit both models, then plot the result.
+
+```{r}
+fit_quad_removed = lm(y ~ poly(x, degree = 2), data = poly_data[-3, ])
+fit_big_removed  = lm(y ~ poly(x, degree = 8), data = poly_data[-3, ])
+
+plot(y ~ x, data = poly_data, ylim = c(-100, 400), cex = 2, pch = 20)
+xplot = seq(0, 10, by = 0.1)
+lines(xplot, predict(fit_quad_removed, newdata = data.frame(x = xplot)),
+      col = "dodgerblue", lwd = 2, lty = 1)
+lines(xplot, predict(fit_big_removed, newdata = data.frame(x = xplot)),
+      col = "darkorange", lwd = 2, lty = 2)
+```
+
+We see that on average, the solid blue line for the quadratic model has similar errors as before. It has changed very slightly. However, the dashed orange line for the large model, has a huge error at the point that was removed and is much different that the previous fit.
+
+This is the purpose of cross-validation. By assessing how the model fits points that were not used to perform the regression, we get an idea of how well the model will work for future observations. It assess how well the model works in general, not simply on the observed data.
+
+## Selection Procedures
+
+We've now seen a number of model quality criteria, but now we need to address which models to consider. Model selection involves both a quality criterion, plus a search procedure. 
+
+```{r}
+library(faraway)
+hipcenter_mod = lm(hipcenter ~ ., data = seatpos)
+coef(hipcenter_mod)
+```
+
+Let's return to the `seatpos` data from the `faraway` package. Now, let's consider only models with first order terms, thus no interactions and no polynomials. There are *eight* predictors in this model. So if we consider all possible models, ranging from using 0 predictors, to all eight predictors, there are 
+
+\[
+\sum_{k = 0}^{p - 1} {{p - 1} \choose {k}} = 2 ^ {p - 1} = 2 ^ 8 = 256
+\]
+
+possible models.
+
+If we had 10 or more predictors, we would already be considering over 1000 models! For this reason, we often search through possible models in an intelligent way, bypassing some models that are unlikely to be considered good. We will consider three search procedures: backwards, forwards, and stepwise.
+
+### Backward Search
+
+Backward selection procedures start with all possible predictors in the model, then considers how deleting a single predictor will effect a chosen metric. Let's try this on the `seatpos` data. We will use the `step()` function in `R` which by default uses AIC as its metric of choice.
+
+```{r}
+hipcenter_mod_back_aic = step(hipcenter_mod, direction = "backward")
+```
+
+We start with the model `hipcenter ~ .`, which is otherwise known as `hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg`. `R` will then repeatedly attempt to delete a predictor until it stops, or reaches the model `hipcenter ~ 1`, which contains no predictors.
+
+At each "step", `R` reports the current model, its AIC, and the possible steps with their RSS and more importantly AIC.
+
+In this example, at the first step, the current model is `hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg` which has an AIC of `283.62`. Note that when `R` is calculating this value, it is using `extractAIC()`, which uses the expression
+
+\[
+AIC \approx n\log\left(\frac{RSS}{n}\right) + 2p,
+\]
+
+which we quickly verify.
+
+```{r}
+extractAIC(hipcenter_mod) # returns both p and AIC
+n = length(resid(hipcenter_mod))
+(p = length(coef(hipcenter_mod)))
+n * log(mean(resid(hipcenter_mod) ^ 2)) + 2 * 9
+```
+
+Returning to the first step, `R` then gives us a row which shows the effect of deleting each of the current predictors. The `-` signs at the beginning of each row indicates we are considering removing a predictor. There is also a row with `<none>` which is a row for keeping the current model. Notice that this row has the smallest RSS, as it is the largest model.
+
+We see that every row above `<none>` has a smaller AIC than the row for `<none>` with the one at the top, `Ht`, giving the lowest AIC. Thus we remove `Ht` from the model, and continue the process.
+
+Notice, in the second step, we start with the model `hipcenter ~ Age + Weight + HtShoes + Seated + Arm + Thigh + Leg` and the variable `Ht` is no longer considered.
+
+We continue the process until we reach the model `hipcenter ~ Age + HtShoes + Leg`. At this step, the row for `<none>` tops the list, as removing any additional variable will not improve the AIC. This is the model which is stored in `hipcenter_mod_back_aic`.
+
+```{r}
+coef(hipcenter_mod_back_aic)
+```
+
+We could also search through the possible models in a backwards fashion using BIC. To do so, we again use the `step()` function, but now specify `k = log(n)`, where `n` stores the number of observations in the data.
+
+```{r}
+n = length(resid(hipcenter_mod))
+hipcenter_mod_back_bic = step(hipcenter_mod, direction = "backward", k = log(n))
+```
+
+The procedure is exactly the same, except at each step we look to improve the BIC, which `R` still labels AIC in the output.
+
+The variable `hipcenter_mod_back_bic` stores the model chosen by this procedure.
+
+```{r}
+coef(hipcenter_mod_back_bic)
+```
+
+We note that this model is *smaller*, has fewer predictors, than the model chosen by AIC, which is what we would expect. Also note that while both models are different, neither uses both `Ht` and `HtShoes` which are extremely correlated.
+
+We can use information from the `summary()` function to compare their Adjusted $R^2$ values. Note that either selected model performs better than the original full model.
+
+```{r}
+summary(hipcenter_mod)$adj.r.squared
+summary(hipcenter_mod_back_aic)$adj.r.squared
+summary(hipcenter_mod_back_bic)$adj.r.squared
+```
+
+We can also calculate the LOOCV RMSE for both selected models, as well as the full model.
+
+```{r}
+calc_loocv_rmse(hipcenter_mod)
+calc_loocv_rmse(hipcenter_mod_back_aic)
+calc_loocv_rmse(hipcenter_mod_back_bic)
+```
+
+We see that we would prefer the model chosen via BIC if using LOOCV RMSE as our metric.
+
+### Forward Search
+
+Forward selection is the exact opposite of backwards selection. Here we tell `R` to start with a model using no predictors, that is `hipcenter ~ 1`, then at each step `R` will attempt to add a predictor until it finds a good model or reaches `hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg`.
+
+```{r}
+hipcenter_mod_start = lm(hipcenter ~ 1, data = seatpos)
+hipcenter_mod_forw_aic = step(hipcenter_mod_start, 
+                              hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg, 
+                              direction = "forward")
+```
+
+Again, by default `R` uses AIC as its quality metric when using the `step()` function. Also note that now the rows begin with a `+` which indicates addition of predictors to the current model from any step.
+
+```{r}
+hipcenter_mod_forw_bic = step(hipcenter_mod_start, 
+                              hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg, 
+                              direction = "forward", k = log(n))
+```
+
+We can make the same modification as last time to instead use BIC with forward selection.
+
+```{r}
+summary(hipcenter_mod)$adj.r.squared
+summary(hipcenter_mod_forw_aic)$adj.r.squared
+summary(hipcenter_mod_forw_bic)$adj.r.squared
+```
+
+We can compare the two selected models' Adjusted $R^2$ as well as their LOOCV RMSE. The results are very similar to those using backwards selection, although the models are not exactly the same.
+
+```{r}
+calc_loocv_rmse(hipcenter_mod)
+calc_loocv_rmse(hipcenter_mod_forw_aic)
+calc_loocv_rmse(hipcenter_mod_forw_bic)
+```
+
+### Stepwise Search
+
+Stepwise search checks going both backwards and forwards at every step. It considers the addition of any variable not currently in the model, as well as the removal of any variable currently in the model.
+
+Here we perform stepwise search using AIC as our metric. We start with the model `hipcenter ~ 1` and search up to `hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg`. Notice that at many of the steps, some row begin with `-`, while others begin with `+`.
+
+```{r}
+hipcenter_mod_both_aic = step(hipcenter_mod_start, 
+                              hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg, 
+                              direction = "both")
+```
+
+We could again instead use BIC as our metric.
+
+```{r}
+hipcenter_mod_both_bic = step(hipcenter_mod_start, 
+                              hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg, 
+                              direction = "both", k = log(n))
+```
+
+Adjusted $R^2$ and LOOCV RMSE comparisons are similar to backwards and forwards, which is not at all surprising, as some of the models selected are the same as before.
+
+```{r}
+summary(hipcenter_mod)$adj.r.squared
+summary(hipcenter_mod_both_aic)$adj.r.squared
+summary(hipcenter_mod_both_bic)$adj.r.squared
+```
+
+```{r}
+calc_loocv_rmse(hipcenter_mod)
+calc_loocv_rmse(hipcenter_mod_both_aic)
+calc_loocv_rmse(hipcenter_mod_both_bic)
+```
+
+### Exhaustive Search
+
+Backward, forward, and stepwise search are all useful, but do have an obvious issue. By not checking every possible model, sometimes they will miss the best possible model. With an extremely large number of predictors, sometimes this is necessary since checking every possible model would be rather time consuming, even with current computers.
+
+However, with a reasonably sized dataset, it isn't too difficult to check all possible models. To do so, we will use the `regsubsets()` function in the `R` package `leaps`.
+
+```{r}
+library(leaps)
+all_hipcenter_mod = summary(regsubsets(hipcenter ~ ., data = seatpos))
+```
+
+A few points about this line of code. First, note that we immediately use `summary()` and store those results. That is simply the intended use of `regsubsets()`. Second, inside of `regsubsets()` we specify the model `hipcenter ~ .`. This will be the largest model considered, that is the model using all first-order predictors, and `R` will check all possible subsets.
+
+We'll now look at the information stored in `all_hipcenter_mod`.
+
+```{r}
+all_hipcenter_mod$which
+```
+
+Using `$which` gives us the best model, according to RSS, for a model of each possible size, in this case ranging from one to eight predictors. For example the best model with four predictors ($p = 5$) would use `Age`, `HtShoes`, `Thigh`, and `Leg`.
+
+```{r}
+all_hipcenter_mod$rss
+```
+
+We can obtain the RSS for each of these models using `$rss`. Notice that these are decreasing since the models range from small to large.
+
+Now that we have the RSS for each of these models, it is rather easy to obtain AIC, BIC, and Adjusted $R^2$ since they are all a function of RSS. Also, since we have the models with the best RSS for each size, they will result in the models with the best AIC, BIC, and Adjusted $R^2$ for each size. Then by picking from those, we can find the overall best AIC, BIC, and Adjusted $R^2$.
+
+Conveniently, Adjusted $R^2$ is automatically calculated.
+
+```{r}
+all_hipcenter_mod$adjr2
+```
+
+To find which model has the highest Adjusted $R^2$ we can use the `which.max()` function.
+
+```{r}
+(best_r2_ind = which.max(all_hipcenter_mod$adjr2))
+```
+
+We can then extract the predictors of that model.
+
+```{r}
+all_hipcenter_mod$which[best_r2_ind, ]
+```
+
+We'll now calculate AIC and BIC for the each of the models with the best RSS. To do so, we will need both $n$ and the $p$ for the largest possible model.
+
+```{r}
+p = length(coef(hipcenter_mod))
+n = length(resid(hipcenter_mod))
+```
+
+We'll use the approximation of AIC which leaves of the constant term that is equal across all models.
+
+\[
+AIC \approx n\log\left(\frac{RSS}{n}\right) + 2p.
+\]
+
+Since we have the RSS of each model stored, this is easy to calculate.
+
+```{r}
+hipcenter_mod_aic = n * log(all_hipcenter_mod$rss / n) + 2 * (2:p)
+```
+
+We can then extract the predictors of the model with the best AIC.
+
+```{r}
+best_aic_ind = which.min(hipcenter_mod_aic)
+all_hipcenter_mod$which[best_aic_ind,]
+```
+
+Let's fit this model so we can compare to our previously chosen models using AIC and search procedures.
+
+```{r}
+hipcenter_mod_best_aic = lm(hipcenter ~ Age + Ht + Leg, data = seatpos)
+```
+
+The `extractAIC()` function will calculate the AIC approximation defined above for a fitted model.
+
+```{r}
+extractAIC(hipcenter_mod_best_aic)
+extractAIC(hipcenter_mod_back_aic)
+extractAIC(hipcenter_mod_forw_aic)
+extractAIC(hipcenter_mod_both_aic)
+```
+
+We see that two of the models chosen by search procedures have the best possible AIC, as they are the same model. This is however never guaranteed. We see that the model chosen using backwards selection does not achieve the smallest possible AIC.
+
+```{r}
+plot(hipcenter_mod_aic ~ I(2:p), ylab = "AIC", xlab = "p, number of parameters", 
+     pch = 20, col = "dodgerblue", type = "b", cex = 2)
+```
+
+We could easily repeat this process for BIC.
+
+\[
+BIC \approx n\log\left(\frac{RSS}{n}\right) + \log(n)p.
+\]
+
+```{r}
+hipcenter_mod_bic = n * log(all_hipcenter_mod$rss / n) + log(n) * (2:p)
+```
+
+```{r}
+which.min(hipcenter_mod_bic)
+all_hipcenter_mod$which[1,]
+```
+
+```{r}
+hipcenter_mod_best_bic = lm(hipcenter ~ Ht, data = seatpos)
+```
+
+```{r}
+extractAIC(hipcenter_mod_best_bic, k = log(n))
+extractAIC(hipcenter_mod_back_bic, k = log(n))
+extractAIC(hipcenter_mod_forw_bic, k = log(n))
+extractAIC(hipcenter_mod_both_bic, k = log(n))
+```
+
+## Higher Order Terms
+
+So far we have only allowed first-order terms in our models. Let's return to the `autompg` dataset to explore higher-order terms.
+
+```{r}
+autompg = read.table(
+  "http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data",
+  quote = "\"",
+  comment.char = "",
+  stringsAsFactors = FALSE)
+colnames(autompg) = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin", "name")
+autompg = subset(autompg, autompg$hp != "?")
+autompg = subset(autompg, autompg$name != "plymouth reliant")
+rownames(autompg) = paste(autompg$cyl, "cylinder", autompg$year, autompg$name)
+autompg$hp = as.numeric(autompg$hp)
+autompg$domestic = as.numeric(autompg$origin == 1)
+autompg = autompg[autompg$cyl != 5,]
+autompg = autompg[autompg$cyl != 3,]
+autompg$cyl = as.factor(autompg$cyl)
+autompg$domestic = as.factor(autompg$domestic)
+autompg = subset(autompg, select = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "domestic"))
+```
+
+```{r}
+str(autompg)
+```
+
+Recall that we have two factor variables, `cyl` and `domestic`. The `cyl` variable has three levels, while the `domestic` variable has only two. Thus the `cyl` variable will be coded using two dummy variables, while the `domestic` variable will only need one. We will pay attention to this later.
+
+```{r}
+pairs(autompg, col = "dodgerblue")
+```
+
+We'll use the `pairs()` plot to determine which variables may benefit from a quadratic relationship with the response. We'll also consider all possible two-way interactions. We won't consider any three-order or higher. For example, we won't consider the interaction between first-order terms and the added quadratic terms.
+
+So now, we'll fit this rather large model. We'll use a log-transformed response. Notice that `log(mpg) ~ . ^ 2` will automatically consider all first-order terms, as well as all two-way interactions. We use `I(var_name ^ 2)` to add quadratic terms for some variables. This generally works better than using `poly()` when performing variable selection.
+
+```{r}
+autompg_big_mod = lm(log(mpg) ~ . ^ 2 + I(disp ^ 2) + I(hp ^ 2) + I(wt ^ 2) + I(acc ^ 2), data = autompg)
+```
+
+We think it is rather unlikely that we truly need all of these terms. There are quite a few!
+
+```{r}
+length(coef(autompg_big_mod))
+```
+
+We'll try backwards search with both AIC and BIC to attempt to find a smaller, more reasonable model.
+
+```{r}
+autompg_mod_back_aic = step(autompg_big_mod, direction = "backward", trace = 0)
+```
+
+Notice that we used `trace = 0` in the function call. This suppress the output for each step, and simply stores the chosen model. This is useful, as this code would otherwise create a large amount of output. If we had viewed the output, which you can try on your own by removing `trace = 0`, we would see that `R` only considers the `cyl` variable as a single variable, despite the fact that it is coded using two dummy variables. So removing `cyl` would actually remove two parameters from the resulting model.
+
+You should also notice that `R` respects hierarchy when attempting to remove variables. That is, for example, `R` will not consider removing `hp` if `hp:disp` or `I(hp ^ 2)` are currently in the model.
+
+We also use BIC.
+
+```{r}
+n = length(resid(autompg_big_mod))
+autompg_mod_back_bic = step(autompg_big_mod, direction = "backward", k = log(n), trace = 0)
+```
+
+Looking at the coefficients of the two chosen models, we see they are still rather large.
+
+```{r}
+coef(autompg_mod_back_aic)
+coef(autompg_mod_back_bic)
+```
+
+However, they are much smaller than the original full model. Also notice that the resulting models respect hierarchy.
+
+```{r}
+length(coef(autompg_big_mod))
+length(coef(autompg_mod_back_aic))
+length(coef(autompg_mod_back_bic))
+```
+
+Calculating the LOOCV RMSE for each, we see that the model chosen using BIC performs the best. That means that it is both the best model for prediction, since it achieves the best LOOCV RMSE, but also the best model for explanation, as it is also the smallest.
+
+```{r}
+calc_loocv_rmse(autompg_big_mod)
+calc_loocv_rmse(autompg_mod_back_aic)
+calc_loocv_rmse(autompg_mod_back_bic)
+```
+
+## Explanation versus Prediction
+
+Throughout this chapter, we have attempted to find reasonably "small" models, which are good at **explaining** the relationship between the response and the predictors, that also have small errors which are thus good for making **predictions**.
+
+We'll further discuss the model `autompg_mod_back_bic` to better explain the difference between using models for *explaining* and *predicting*. This is the model fit to the `autompg` data that was chosen using Backwards Search and BIC, which obtained the lowest LOOCV RMSE of the models we considered.
+
+```{r}
+autompg_mod_back_bic
+```
+
+Notice this is a somewhat "large" model, which uses `r length(coef(autompg_mod_back_bic))` parameters, including several interaction terms. Do we care that this is a "large" model? The answer is, **it depends**.
+
+### Explanation
+
+Suppose we would like to use this model for explanation. Perhaps we are a car manufacturer trying to engineer a fuel efficient vehicle. If this is the case, we are interested in both what predictor variables are useful for explaining the car's fuel efficiency, as well as how those variables effect fuel efficiency. By understanding this relationship, we can use this knowledge to our advantage when designing a car.
+
+To explain a relationship, we are interested in keeping models as small as possible, since smaller models are easy to interpret. The fewer predictors the less considerations we need to make in our design process. Also the fewer interactions and polynomial terms, the easier it is to interpret any one parameter, since the parameter interpretations are conditional on which parameters are in the model.
+
+Note that *linear* models are rather interpretable to begin with. Later in your data analysis careers, you will see more complicated models that may fit data better, but are much harder, if not impossible to interpret. These models aren't very useful for explaining a relationship.
+
+To find small and interpretable models, we would use selection criterion that *explicitly* penalize larger models, such as AIC and BIC. In this case we still obtained a somewhat large model, but much smaller than the model we used to start the selection process.
+
+#### Correlation and Causation
+
+A word of caution when using a model to *explain* a relationship. There are two terms often used to describe a relationship between two variables: *causation* and *correlation*. [Correlation](https://xkcd.com/552/) is often also referred to as association.
+
+Just because two variable are correlated does not necessarily mean that one causes the other. For example, considering modeling `mpg` as only a function of `hp`.
+
+```{r}
+plot(mpg ~ hp, data = autompg, col = "dodgerblue", pch = 20, cex = 1.5)
+```
+
+Does an increase in horsepower cause a drop in fuel efficiency? Or, perhaps the causality is reversed and an increase in fuel efficiency cause a decrease in horsepower. Or, perhaps there is a third variable that explains both!
+
+The issue here is that we have **observational** data. With observational data, we can only detect associations. To speak with confidence about causality, we would need to run **experiments**.
+
+This is a concept that you should encounter often in your statistics education. For some further reading, and some related fallacies, see: [Wikipedia: Correlation does not imply causation](https://en.wikipedia.org/wiki/Correlation_does_not_imply_causation).
+
+### Prediction
+
+Suppose now instead of the manufacturer who would like to build a car, we are a consumer who wishes to purchase a new car. However this particular car is so new, it has not been rigorously tested, so we are unsure of what fuel efficiency to expect. (And, as skeptics, we don't trust what the manufacturer is telling us.)
+
+In this case, we would like to use the model to help *predict* the fuel efficiency of this car based on its attributes, which are the predictors of the model. The smaller the errors the model makes, the more confident we are in its prediction. Thus, to find models for prediction, we would use selection criterion that *implicitly* penalize larger models, such as LOOCV RMSE. So long as the model does not over-fit, we do not actually care how large the model becomes. Explaining the relationship between the variables is not our goal here, we simply want to know what kind of fuel efficiency we should expect!
+
+If we **only** care about prediction, we don't need to worry about correlation vs causation, and we don't need to worry about model assumptions. 
+
+If a variable is correlated with the response, it doesn't actually matter if it causes an effect on the response, it can still be useful for prediction. For example, in elementary school aged children their shoe size certainly doesn't *cause* them to read at a higher level, however we could very easily use shoe size to make a prediction about a child's reading ability. The larger their shoe size, the better they read. There's a lurking variable here though, their age! (Don't send your kids to school with size 14 shoes, it won't make them read better!)
+
+We also don't care about model assumptions. Least squares is least squares. For a specified model, it will find the values of the parameters which will minimize the squared error loss. Your results might be largely uninterpretable and useless for inference, but for prediction none of that matters.

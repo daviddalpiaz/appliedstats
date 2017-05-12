@@ -1,0 +1,692 @@
+# Transformations
+
+> "Give me a lever long enough and a fulcrum on which to place it, and I shall move the world."
+>
+> --- **Archimedes**
+
+After reading this chapter you will be able to:
+
+- Understand the concept of a variance stabilizing transformation.
+- Use transformations of the response to improve regression models.
+- Use polynomial terms as predictors to fit more flexible regression models.
+
+Last chapter we checked the assumptions of regression models and looked at ways to diagnose possible issues. This chapter we will use transformations of both response and predictor variables in order to correct issues with model diagnostics, and to also potentially simply make a model fit data better.
+
+## Response Transformation
+
+Let's look at some (fictional) salary data from the (fictional) company *Initech*. We will try to model `salary` as a function of `years` of experience. The data can be found in [`initech.csv`](data/initech.csv).
+
+```{r}
+initech = read.csv("data/initech.csv")
+```
+
+We first fit a simple linear model.
+
+```{r}
+initech_fit = lm(salary ~ years, data = initech)
+summary(initech_fit)
+```
+
+This model appears significant, but does it meet the model assumptions?
+
+```{r}
+plot(salary ~ years, data = initech, col = "dodgerblue", pch = 20, cex = 1.5)
+abline(initech_fit, col = "darkorange", lwd = 2)
+```
+
+Adding the fitted line to the plot, we see that the linear relationship appears correct.
+
+```{r}
+plot(fitted(initech_fit), resid(initech_fit), col = "dodgerblue",
+     pch = 20, cex = 1.5, xlab = "Fitted", ylab = "Residuals")
+abline(h = 0, lty = 2, col = "orange", lwd = 2)
+```
+
+However, from the fitted versus residuals plot it appears there is non-constant variance. Specifically, the variance increases as the fitted value increases.
+
+### Variance Stabilizing Transformations
+
+Recall the fitted value is our estimate of the mean at a particular value of $x$. Under our usual assumptions,
+
+\[
+  \epsilon_i \sim N(0,\sigma^2)
+\]
+
+and thus
+
+\[
+  Var[Y | X = x] = \sigma^2
+\]
+
+which is a constant value for any value of $x$.
+
+However, here we see that the variance is a function of the mean,
+
+\[
+  Var[Y | X = x] = h(\mu).
+\]
+
+In this case, $h$ is some increasing function.
+
+In order to correct for this, we would like to find some function of $Y$, $g(Y)$ such that,
+
+\[
+  Var[g(Y) | X = x] = c
+\]
+
+where $c$ is a constant that does not depend on $\mu$. A transformation that accomplishes this is called a **variance stabilizaing transformation.**
+
+A common variance stabilizing transformation (VST) when we see increasing variance in a fitted versus residuals plot is $\log(Y)$. Also, if the values of a variable range over more than one order of magnitude and the variable is *strictly positive*, then replacing the variable by its logarithm is likely to be helpful.
+
+A reminder, that for our purposes, $\log$ and $\ln$ are both the natural log. `R` uses `log` to mean the natural log, unless a different base is specified.
+
+We will now use a log transformed response for the *Initech* data,
+
+\[
+  \log(y_i) = \beta_0 + \beta_1 x_i + \epsilon_i.
+\]
+
+Note, if we re-scale the data from a log scale back to the original scale of the data, we now have
+
+\[
+  y_i = \exp(\beta_0 + \beta_1 x_i) \cdot \exp(\epsilon_i)
+\]
+
+which has the errors entering the model in a multiplicative fashion.
+
+Fitting this model in `R` requires only a minor modification to our formula specification.
+
+```{r}
+initech_fit_log = lm(log(salary) ~ years, data = initech)
+```
+
+Note that while `log(y)` is considered the new response variable, we do not actually create a new variable in `R`, but simply transform the variable inside the model formula.
+
+```{r}
+plot(log(salary) ~ years, data = initech, col = "dodgerblue", pch = 20, cex = 1.5)
+abline(initech_fit_log, col = "darkorange", lwd = 2)
+```
+
+Plotting the data on the transformed log scale and adding the fitted line, the relationship again appears linear, and we can already see that the variation about the fitted line looks constant.
+
+```{r}
+plot(salary ~ years, data = initech, col = "dodgerblue", pch = 20, cex = 1.5)
+curve(exp(initech_fit_log$coef[1] + initech_fit_log$coef[2] * x),
+      from = 0, to = 30, add = TRUE, col = "darkorange", lwd = 2)
+```
+
+By plotting the data on the original scale, and adding the fitted regression, we see an exponential relationship. However, this is still a *linear* model, since the new transformed response, $\log(y)$, is still a *linear* combination of the predictors.
+
+```{r}
+plot(fitted(initech_fit_log), resid(initech_fit_log), col = "dodgerblue",
+     pch = 20, cex = 1.5, xlab = "Fitted", ylab = "Residuals")
+abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
+```
+
+The fitted versus residuals plot looks much better. It appears the constant variance assumption is no longer violated.
+
+Comparing the RMSE using the original and transformed response, we also see that the log transformed model simply fits better, with a smaller average squared error.
+
+```{r}
+sqrt(mean(resid(initech_fit) ^ 2))
+sqrt(mean(resid(initech_fit_log) ^ 2))
+```
+
+But wait, that isn't fair, this difference is simply due to the different scales being used.
+
+```{r}
+sqrt(mean((initech$salary - fitted(initech_fit)) ^ 2))
+sqrt(mean((initech$salary - exp(fitted(initech_fit_log))) ^ 2))
+```
+
+Transforming the fitted values of the log model back to the data scale, we do indeed see that it fits better!
+
+```{r}
+summary(initech_fit_log)
+```
+
+Again, the transformed response is a *linear* combination of the predictors,
+
+\[
+  \log(\hat{y}) = \hat{\beta}_0 + \hat{\beta}_1 x  = 9.84 + 0.05x.
+\]
+
+But now, if we re-scale the data from a log scale back to the original scale of the data, we now have
+
+\[
+  \hat{y} = \exp(\hat{\beta}_0) \exp(\hat{\beta}_1 x) = \exp(9.84)\exp(0.05x).
+\]
+
+We see that for every one additional year of experience, average salary increases $\exp(0.05) = 1.051$ times. We are now multiplying, not adding.
+
+While using a $\log$ transform is possibly the most common response variable transformation, many others exist. We will now consider a family of transformations and choose the best from among them, which includes the $\log$ transform.
+
+### Box-Cox Transformations
+
+The Box-Cox method considers a family of transformations on strictly positive response variables,
+
+\[
+g_\lambda(y) = \left\{
+\begin{array}{lr}\displaystyle\frac{y^\lambda - 1}{\lambda} &  \lambda \neq 0\\
+        & \\
+       \log(y) &  \lambda = 0
+     \end{array}
+   \right.
+\]
+
+The $\lambda$ parameter is chosen by numerically maximizing the log-likelihood,
+
+\[
+  L(\lambda) = -\frac{n}{2}\log(RSS_\lambda / n) + (\lambda -1)\sum \log(y_i).
+\]
+
+A $100(1 - \alpha)\%$ confidence interval for $\lambda$ is,
+
+\[
+    \left\{ \lambda :  L(\lambda) > L(\hat{\lambda}) - \frac{1}{2}\chi_{1,\alpha}^2  \right\}   
+\]
+
+which `R` will plot for us to help quickly select an appropriate $\lambda$ value. We often choose a "nice" value from within the confidence interval, instead of the value of $\lambda$ that truly maximizes the likelihood.
+
+```{r}
+library(MASS)
+library(faraway)
+```
+
+Here we need the `MASS` package for the `boxcox()` function, and we will consider a couple of datasets from the `faraway` package.
+
+First we will use the `savings` dataset as an example of using the Box-Cox method to justify the use of no transformation. We fit an additive multiple regression model with `sr` as the response and each of the other variables as predictors.
+
+```{r}
+savings_model = lm(sr ~ ., data = savings)
+```
+
+We then use the `boxcox()` function to find the best transformation of the form considered by the Box-Cox method.
+
+```{r}
+boxcox(savings_model, plotit = TRUE)
+```
+
+`R` automatically plots the log-Likelihood as a function of possible $\lambda$ values. It indicates both the value that maximizes the log-likelihood, as well as a confidence interval for the $\lambda$ value that maximizes the log-likelihood.
+
+```{r}
+boxcox(savings_model, plotit = TRUE, lambda = seq(0.5, 1.5, by = 0.1))
+```
+
+Note that we can specify a range of $\lambda$ values to consider and thus be plotted. We often specify a range that is more visually interesting. Here we see that $\lambda = 1$ is both in the confidence interval, and is extremely close to the maximum. This suggests a transformation of the form
+
+\[
+\frac{y^\lambda - 1}{\lambda} = \frac{y^1 - 1}{1} = y - 1.
+\]
+
+This is essentially not a transformation. It would not change the variance or make the model fit better. By subtracting 1 from every value, we would only change the intercept of the model, and the resulting errors would be the same.
+
+```{r}
+plot(fitted(savings_model), resid(savings_model), col = "dodgerblue",
+     pch = 20, cex = 1.5, xlab = "Fitted", ylab = "Residuals")
+abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
+```
+
+Looking at a fitted versus residuals plot verifies that there likely are not any issue with the assumptions of this model, which Breusch-Pagan and Shapiro-Wilk tests verify.
+
+```{r, message = FALSE, warning = FALSE}
+library(lmtest)
+bptest(savings_model)
+shapiro.test(resid(savings_model))
+```
+
+Now we will use the `gala` dataset as an example of using the Box-Cox method to justify a transformation other than $\log$. We fit an additive multiple regression model with `Species` as the response and most of the other variables as predictors.
+
+```{r}
+gala_model = lm(Species ~ Area + Elevation + Nearest + Scruz + Adjacent, data = gala)
+```
+
+```{r}
+plot(fitted(gala_model), resid(gala_model), col = "dodgerblue",
+     pch = 20, cex = 1.5, xlab = "Fitted", ylab = "Residuals")
+abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
+```
+
+Even though there is not a lot of data for large fitted values, it still seems very clear that the constant variance assumption is violated.
+
+```{r}
+boxcox(gala_model, lambda = seq(-0.25, 0.75, by = 0.05), plotit = TRUE)
+```
+
+Using the Box-Cox method, we see that $\lambda = 0.3$ is both in the confidence interval, and is extremely close to the maximum, which suggests a transformation of the form
+
+\[
+\frac{y^\lambda - 1}{\lambda} = \frac{y^{0.3} - 1}{0.3}.
+\]
+
+We then fit a model with this transformation applied to the response.
+
+```{r}
+gala_model_cox = lm((((Species ^ 0.3) - 1) / 0.3) ~ Area + Elevation + Nearest + Scruz + Adjacent, data = gala)
+```
+
+```{r}
+plot(fitted(gala_model_cox), resid(gala_model_cox), col = "dodgerblue",
+     pch = 20, cex = 1.5, xlab = "Fitted", ylab = "Residuals")
+abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
+```
+
+The resulting fitted versus residuals plot looks much better!
+
+Lastly, we return to the `initech` data, and the `initech_fit` model we had used earlier. Recall, that this was the untransformed model, that we used a $\log$ transform to fix.
+
+```{r}
+boxcox(initech_fit)
+```
+
+Using the Box-Cox method, we see that $\lambda = 0$ is both in the interval, and extremely close to the maximum, which suggests a transformation of the form
+
+\[
+  \log(y).
+\]
+
+So the Box-Cox method justifies our previous choice of a $\log$ transform!
+
+## Predictor Transformation
+
+In addition to transformation of the response variable, we can also consider transformations of predictor variables. Sometimes these transformations can help with violation of model assumptions, and other times they can be used to simply fit a more flexible model.
+
+```{r, echo = FALSE}
+# read data frame from the web
+autompg = read.table(
+  "http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data",
+  quote = "\"",
+  comment.char = "",
+  stringsAsFactors = FALSE)
+# give the dataframe headers
+colnames(autompg) = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin", "name")
+# remove missing data, which is stored as "?"
+autompg = subset(autompg, autompg$hp != "?")
+# remove the plymouth reliant, as it causes some issues
+autompg = subset(autompg, autompg$name != "plymouth reliant")
+# give the dataset row names, based on the engine, year and name
+rownames(autompg) = paste(autompg$cyl, "cylinder", autompg$year, autompg$name)
+# remove the variable for name
+autompg = subset(autompg, select = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin"))
+# change horsepower from character to numeric
+autompg$hp = as.numeric(autompg$hp)
+# create a dummary variable for foreign vs domestic cars. domestic = 1.
+autompg$domestic = as.numeric(autompg$origin == 1)
+# remove 3 and 5 cylinder cars (which are very rare.)
+autompg = autompg[autompg$cyl != 5,]
+autompg = autompg[autompg$cyl != 3,]
+# the following line would verify the remaining cylinder possibilities are 4, 6, 8
+#unique(autompg$cyl)
+# change cyl to a factor variable
+autompg$cyl = as.factor(autompg$cyl)
+```
+
+```{r}
+str(autompg)
+```
+
+Recall the `autompg` dataset from the previous chapter. Here we will attempt to model `mpg` as a function of `hp`.
+
+```{r, fig.height = 4, fig.width = 8}
+par(mfrow = c(1, 2))
+plot(mpg ~ hp, data = autompg, col = "dodgerblue", pch = 20, cex = 1.5)
+mpg_hp = lm(mpg ~ hp, data = autompg)
+abline(mpg_hp, col = "darkorange", lwd = 2)
+plot(fitted(mpg_hp), resid(mpg_hp), col = "dodgerblue",
+     pch = 20, cex = 1.5, xlab = "Fitted", ylab = "Residuals")
+abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
+```
+
+We first attempt SLR, but we see a rather obvious pattern in the fitted versus residuals plot, which includes increasing variance, so we attempt a $\log$ transform of the response.
+
+```{r, fig.height = 4, fig.width = 8}
+par(mfrow = c(1, 2))
+plot(log(mpg) ~ hp, data = autompg, col = "dodgerblue", pch = 20, cex = 1.5)
+mpg_hp_log = lm(log(mpg) ~ hp, data = autompg)
+abline(mpg_hp_log, col = "darkorange", lwd = 2)
+plot(fitted(mpg_hp_log), resid(mpg_hp_log), col = "dodgerblue",
+     pch = 20, cex = 1.5, xlab = "Fitted", ylab = "Residuals")
+abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
+```
+
+After performing the $\log$ transform of the response, we still have some of the same issues with the fitted versus response. Now, we will try also $\log$ transforming the **predictor**.
+
+```{r, fig.height = 4, fig.width = 8}
+par(mfrow = c(1, 2))
+plot(log(mpg) ~ log(hp), data = autompg, col = "dodgerblue", pch = 20, cex = 1.5)
+mpg_hp_loglog = lm(log(mpg) ~ log(hp), data = autompg)
+abline(mpg_hp_loglog, col = "darkorange", lwd = 2)
+plot(fitted(mpg_hp_loglog), resid(mpg_hp_loglog), col = "dodgerblue",
+     pch = 20, cex = 1.5, xlab = "Fitted", ylab = "Residuals")
+abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
+```
+
+Here, our fitted versus residuals plot looks good.
+
+### Polynomials
+
+Another very common "transformation" of a predictor variable is the use of polynomial transformations. They are extremely useful as they allow for more flexible models, but do not change the units of the variables.
+
+It should come as no surprise that sales of a product are related to the advertising budget for the product, but there are diminishing returns. A company cannot always expect linear returns based on an increased advertising budget.
+
+Consider monthly data for the sales of *Initech* widgets, $y$, as a function of *Initech*'s advertising expenditure for said widget, $x$, both in ten thousand dollars. The data can be found in [`marketing.csv`](data/marketing.csv).
+
+```{r}
+marketing = read.csv("data/marketing.csv")
+```
+
+```{r}
+plot(sales ~ advert, data = marketing, 
+     xlab = "Advert Spending (in $100,00)", ylab = "Sales (in $100,00)",
+     pch = 20, cex = 2)
+```
+
+We would like to fit the model,
+
+\[
+  y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \epsilon_i
+\]
+
+where $\epsilon_i \sim N(0,\sigma^2)$ for $i = 1, 2, \cdots 21.$ 
+
+The response $y$ is now a **linear** function of "two" variables which now allows $y$ to be a non-linear function of the original single predictor $x$. We consider this a transformation, although we have actually in some sense added another predictor.
+
+Thus, our $X$ matrix is,
+
+\[
+  \begin{bmatrix}
+  1      & x_1 & x_1^2    \\
+  1      & x_2  & x_2^2   \\
+  1      & x_3  & x_3^2   \\
+  \ldots & \ldots & \ldots \\
+  1      & x_{n}  & x_{n}^2   \\
+  \end{bmatrix}
+\]
+
+We can then proceed to fit the model as we have in the past for multiple linear regression.
+
+\[
+\hat{\beta} = \left(  X^\top X  \right)^{-1}X^\top y.
+\]
+
+Our estimates will have the usual properties. The mean is still
+
+\[
+E[\hat{\beta}] = \beta,
+\]
+
+and variance
+
+\[
+Var[\hat{\beta}] = \sigma^2 \left(  X^\top X  \right)^{-1}.
+\]
+
+We also maintain the same distributional results
+
+\[
+\hat{\beta}_j \sim N\left(\beta_j, \sigma^2 C_{jj}  \right).
+\]
+
+```{r}
+mark_mod = lm(sales ~ advert, data = marketing)
+summary(mark_mod)
+```
+
+While the SLR model is significant, the fitted versus residuals plot would have a very clear pattern.
+
+```{r}
+mark_mod_poly2 = lm(sales ~ advert + I(advert ^ 2), data = marketing)
+summary(mark_mod_poly2)
+```
+
+To add the second order term we need to use the `I()` function in the model specification around our newly created predictor. We see that with the first order term in the model, the quadratic term is also significant.
+
+```{r}
+n = length(marketing$advert)
+X = cbind(rep(1, n), marketing$advert, marketing$advert ^ 2)
+t(X) %*% X
+solve(t(X) %*% X) %*% t(X) %*% marketing$sales
+```
+
+Here we verify the parameter estimates were found as we would expect.
+
+We could also add higher order terms, such as a third degree predictor. This is easy to do. Our $X$ matrix simply becomes larger again.
+
+\[
+  y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \beta_3 x_i^3 + \epsilon_i
+\]
+
+\[
+  \begin{bmatrix}
+  1      & x_1 & x_1^2  & x_1^3    \\
+  1      & x_2  & x_2^2  & x_2^3   \\
+  1      & x_3  & x_3^2  & x_3^3   \\
+  \ldots & \ldots & \ldots & \ldots \\
+  1      & x_{n}  & x_{n}^2  & x_{n}^3    \\
+  \end{bmatrix}
+\]
+
+```{r}
+mark_mod_poly3 = lm(sales ~ advert + I(advert ^ 2) + I(advert ^ 3), data = marketing)
+summary(mark_mod_poly3)
+```
+
+Now we see that with the first and second order terms in the model, the third order term is also significant. But does this make sense practically? The following plot should gives hints as to why it doesn't. (The model with the third order term doesn't have diminishing returns!)
+
+```{r}
+plot(sales ~ advert, data = marketing, 
+     xlab = "Advert Spending (in $100,00)", ylab = "Sales (in $100,00)",
+     pch = 20, cex = 2)
+abline(mark_mod, lty = 2, col = "green", lwd = 2)
+xplot = seq(0, 16, by = 0.01)
+lines(xplot, predict(mark_mod_poly2, newdata = data.frame(advert = xplot)),
+      col = "blue", lwd = 2)
+lines(xplot, predict(mark_mod_poly3, newdata = data.frame(advert = xplot)),
+      col = "red", lty = 3, lwd = 3)
+```
+
+The previous plot was made using base graphics in `R`. The next plot was made using the package [`ggplot2`](http://ggplot2.org/), an increasingly popular plotting method in `R`.
+
+```{r}
+library(ggplot2)
+ggplot(data = marketing, aes(x = advert, y = sales)) +
+  stat_smooth(method = "lm", se = FALSE, color = "green", formula = y ~ x) +
+  stat_smooth(method = "lm", se = FALSE, color = "blue", formula = y ~ x + I(x ^ 2)) +
+  stat_smooth(method = "lm", se = FALSE, color = "red", formula = y ~ x + I(x ^ 2)+ I(x ^ 3)) +
+  geom_point(colour = "black", size = 3)
+```
+
+Note we could fit a polynomial of an arbitrary order,
+
+\[
+  y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \cdots + \beta_{p-1}x_i^{p-1} + \epsilon_i
+\]
+
+However, we should be careful about over-fitting, since with a polynomial of degree one less than the number of observations, it is sometimes possible to fit a model perfectly.
+
+```{r}
+set.seed(1234)
+x = seq(0, 10)
+y = 3 + x + 4 * x ^ 2 + rnorm(11, 0, 20)
+plot(x, y, ylim = c(-300, 400), cex = 2, pch = 20)
+fit = lm(y ~ x + I(x ^ 2))
+#summary(fit)
+fit_perf = lm(y ~ x + I(x ^ 2) + I(x ^ 3) + I(x ^ 4) + I(x ^ 5) + I(x ^ 6)
+               + I(x ^ 7) + I(x ^ 8) + I(x ^ 9) + I(x ^ 10))
+summary(fit_perf)
+xplot = seq(0, 10, by = 0.1)
+lines(xplot, predict(fit, newdata = data.frame(x = xplot)),
+      col = "dodgerblue", lwd = 2, lty = 1)
+lines(xplot, predict(fit_perf, newdata = data.frame(x = xplot)),
+      col = "darkorange", lwd = 2, lty = 2)
+```
+
+Notice in the summary, `R` could not calculate standard errors. This is a result of being "out" of degrees of freedom. With 11 $\beta$ parameters and 11 data points, we use up all the degrees of freedom before we can estimate $\sigma$.
+
+In this example, the true relationship is quadratic, but the order 10 polynomial's fit is "perfect". Next chapter we will focus on the trade-off between goodness of fit (minimizing errors) and complexity of model.
+
+Suppose you work for an automobile manufacturer which makes a large luxury sedan. You would like to know how the car performs from a fuel efficiency standpoint when it is driven at various speeds. Instead of testing the car at every conceivable speed (which would be impossible) you create an experiment where the car is driven at speeds of interest in increments of 5 miles per hour.
+
+Our goal then, is to fit a model to this data in order to be able to predict fuel efficiency when driving at certain speeds. The data from this example can be found in [`fuel_econ.csv`](data/fuel_econ.csv).
+
+```{r}
+econ = read.csv("data/fuel_econ.csv")
+```
+
+In this example, we will be frequently looking a the fitted versus residuals plot, so we *should* write a function to make our life easier, but this is left as an exercise for homework.
+
+We will also be adding fitted curves to scatterplots repeatedly, so smartly we will write a function to do so.
+
+```{r}
+plot_econ_curve = function(model){
+  plot(mpg ~ mph, data = econ, xlab = "Speed (Miles per Hour)", 
+       ylab = "Fuel Efficiency (Miles per Gallon)", col = "dodgerblue", 
+       pch = 20, cex =2)
+  xplot = seq(10, 75, by = 0.1)
+  lines(xplot, predict(model, newdata = data.frame(mph = xplot)),
+        col = "darkorange", lwd = 2, lty = 1)
+}
+```
+
+So now we first fit a simple linear regression to this data.
+
+```{r}
+fit1 = lm(mpg ~ mph, data = econ)
+```
+
+```{r, fig.height = 4, fig.width = 8}
+par(mfrow = c(1, 2))
+plot_econ_curve(fit1)
+plot(fitted(fit1), resid(fit1), xlab = "Fitted", ylab = "Residuals", 
+     col = "dodgerblue", pch = 20, cex =2)
+  abline(h = 0, col = "darkorange", lwd = 2)
+```
+
+Pretty clearly we can do better. Yes fuel efficiency does increase as speed increases, but only up to a certain point.
+
+We will now add polynomial terms until we fit a suitable fit.
+
+```{r}
+fit2 = lm(mpg ~ mph + I(mph ^ 2), data = econ)
+summary(fit2)
+```
+
+```{r, fig.height = 4, fig.width = 8}
+par(mfrow = c(1, 2))
+plot_econ_curve(fit2)
+plot(fitted(fit2), resid(fit2), xlab = "Fitted", ylab = "Residuals", 
+     col = "dodgerblue", pch = 20, cex =2)
+  abline(h = 0, col = "darkorange", lwd = 2)
+```
+
+While this model clearly fits much better, and the second order term is significant, we still see a pattern in the fitted versus residuals plot which suggests higher order terms will help. Also, we would expect the curve to flatten as speed increases or decreases, not go sharply downward as we see here.
+
+```{r}
+fit3 = lm(mpg ~ mph + I(mph ^ 2) + I(mph ^ 3), data = econ)
+summary(fit3)
+```
+
+```{r, fig.height = 4, fig.width = 8}
+par(mfrow = c(1, 2))
+plot_econ_curve(fit3)
+plot(fitted(fit3), resid(fit3), xlab = "Fitted", ylab = "Residuals", 
+     col = "dodgerblue", pch = 20, cex =2)
+  abline(h = 0, col = "darkorange", lwd = 2)
+```
+
+Adding the third order term doesn't seem to help at all. The fitted curve hardly changes. This makes sense, since what we would like is for the curve to flatten at the extremes. For this we will need an even degree polynomial term.
+
+```{r}
+fit4 = lm(mpg ~ mph + I(mph ^ 2) + I(mph ^ 3) + I(mph ^ 4), data = econ)
+summary(fit4)
+```
+
+```{r, fig.height = 4, fig.width = 8}
+par(mfrow = c(1, 2))
+plot_econ_curve(fit4)
+plot(fitted(fit4), resid(fit4), xlab = "Fitted", ylab = "Residuals", 
+     col = "dodgerblue", pch = 20, cex =2)
+  abline(h = 0, col = "darkorange", lwd = 2)
+```
+
+Now we are making progress. The fourth order term is significant with the other terms in the model. Also we are starting to see what we expected for low and high speed. However, there still seems to be a bit of a pattern in the residuals, so we will again try more higher order terms. We will add the fifth and sixth together, since adding the fifth will be similar to adding the third.
+
+```{r}
+fit6 = lm(mpg ~ mph + I(mph ^ 2) + I(mph ^ 3) + I(mph ^ 4) + I(mph ^ 5) + I(mph^6), data = econ)
+summary(fit6)
+```
+
+```{r, fig.height = 4, fig.width = 8}
+par(mfrow = c(1, 2))
+plot_econ_curve(fit6)
+plot(fitted(fit6), resid(fit6), xlab = "Fitted", ylab = "Residuals", 
+     col = "dodgerblue", pch = 20, cex =2)
+  abline(h = 0, col = "darkorange", lwd = 2)
+```
+
+Again the sixth order term is significant with the other terms in the model and here we see less pattern in the residuals plot. Let's now test for which of the previous two models we prefer. We will test
+
+\[
+H_0: \beta_5 = \beta_6 = 0.
+\]
+
+```{r}
+anova(fit4, fit6)
+```
+
+So, this test does not reject the null hypothesis at a level of significance of $\alpha = 0.05$, however the p-value is still rather small, and the fitted versus residuals plot is much better for the model with the sixth order term. This makes the sixth order model a good choice. We could repeat this process one more time.
+
+```{r}
+fit8 = lm(mpg ~ mph + I(mph ^ 2) + I(mph ^ 3) + I(mph ^ 4) + I(mph ^ 5)
+          + I(mph ^ 6) + I(mph ^ 7) + I(mph ^ 8), data = econ)
+summary(fit8)
+```
+
+```{r, fig.height = 4, fig.width = 8}
+par(mfrow = c(1, 2))
+plot_econ_curve(fit8)
+plot(fitted(fit8), resid(fit8), xlab = "Fitted", ylab = "Residuals", 
+     col = "dodgerblue", pch = 20, cex =2)
+  abline(h = 0, col = "darkorange", lwd = 2)
+```
+
+```{r}
+summary(fit8)
+anova(fit6, fit8)
+```
+
+Here we would clearly stick with `fit6`. The eighth order term is not significant with the other terms in the model and the F-test does not reject.
+
+As an aside, be aware that there is a quicker way to specify a model with many higher order terms.
+
+```{r}
+fit6_alt = lm(mpg ~ poly(mph, 6), data = econ)
+all.equal(fitted(fit6), fitted(fit6_alt))
+```
+
+We first verify that this method produces the same fitted values. However, the estimated coefficients are different.
+
+```{r}
+coef(fit6)
+coef(fit6_alt)
+```
+
+This is because `poly()` uses *orthogonal polynimials*, which solves an issue we will discuss in the next chapter. 
+
+```{r}
+summary(fit6)
+summary(fit6_alt)
+```
+
+Notice though that the p-value for testing the degree 6 term is the same. Because of this, for the most part we can use these interchangeably.
+
+To use `poly()` to obtain the same results as using `I()` repeatedly, we would need to set `raw = TRUE`.
+
+```{r}
+fit6_alt2 = lm(mpg ~ poly(mph, 6, raw = TRUE), data = econ)
+coef(fit6_alt2)
+```
+
+We've now seen how to transform predictor and response variables. In this chapter we have mostly focused on using this in the context of fixing SLR models. However, these concepts can easily be used together with categorical variables and interactions to build larger, more flexible models. In the next chapter, we will discuss how to choose a good model from a collection of possible models.
+
+**Please note:** some data currently used in this chapter was used, changed, and passed around over the years in STAT 420 at UIUC. Its original sources, if they exist, are at this time unknown to the author. As a result, they should only be considered for use with STAT 420. Going forward they will likely be replaced with alternative sourceable data that illustrates the same concepts.
