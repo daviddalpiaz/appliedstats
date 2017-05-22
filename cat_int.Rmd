@@ -30,7 +30,14 @@ We will be interested in three of the variables: `mpg `, `hp`, and `am`.
 As we often do, we will start by plotting the data. We are interested in `mpg` as the response variable, and `hp` as a predictor.
 
 ```{r}
+plot(mpg ~ hp, data = mtcars, cex = 2)
+```
+
+Since we are also interested in the transmission type, we could also label the points accordingly.
+
+```{r}
 plot(mpg ~ hp, data = mtcars, col = am + 1, pch = am + 1, cex = 2)
+legend("topright", c("Automatic", "Manual"), col = c(1, 2), pch = c(1, 2))
 ```
 
 We used a common `R` "trick" when plotting this data. The `am` variable takes two possible values; `0` for automatic transmission, and `1` for manual transmissions. `R` can use numbers to represent colors, however the color for `0` is white. So we take the `am` vector and add `1` to it. Then observations with automatic transmissions are now represented by `1`, which is black in `R`, and manual transmission are represented by `2`, which is red in `R`. (Note, we are only adding `1` inside the call to `plot()`, we are not actually modifying the values stored in `am`.)
@@ -51,7 +58,8 @@ We then re-plot the data and add the fitted line to the plot.
 
 ```{r}
 plot(mpg ~ hp, data = mtcars, col = am + 1, pch = am + 1, cex = 2)
-abline(mpg_hp_slr, lwd = 2, col = "green")
+abline(mpg_hp_slr, lwd = 3, col = "grey")
+legend("topright", c("Automatic", "Manual"), col = c(1, 2), pch = c(1, 2))
 ```
 
 We should notice a pattern here. The red, manual observations largely fall above the line, while the black, automatic observations are mostly below the line. This means our model underestimates the fuel efficiency of manual transmissions, and overestimates the fuel efficiency of automatic transmissions. To correct for this, we will add a predictor to our model, namely, `am` as $x_2$.
@@ -126,6 +134,7 @@ Re-plotting the data, we use these slopes and intercepts to add the "two" fitted
 plot(mpg ~ hp, data = mtcars, col = am + 1, pch = am + 1, cex = 2)
 abline(int_auto, slope_auto, col = 1, lty = 1, lwd = 2) # add line for auto
 abline(int_manu, slope_manu, col = 2, lty = 2, lwd = 2) # add line for manual
+legend("topright", c("Automatic", "Manual"), col = c(1, 2), pch = c(1, 2))
 ```
 
 We notice right away that the points are no longer systematically incorrect. The red, manual observations vary about the red line in no particular pattern without underestimating the observations as before. The black, automatic points vary about the black line, also without an obvious pattern.
@@ -141,7 +150,7 @@ This is nothing new. Again, the math is the same as the multiple regression anal
 To obtain the test statistic and p-value for the $t$-test, we would use
 
 ```{r}
-summary(mpg_hp_add)$coef[3,]
+summary(mpg_hp_add)$coefficients["am",]
 ```
 
 To do the same for the $F$ test, we would use
@@ -236,6 +245,7 @@ slope_dom = coef(mpg_disp_add)[2]
 plot(mpg ~ disp, data = autompg, col = domestic + 1, pch = domestic + 1)
 abline(int_for, slope_for, col = 1, lty = 1, lwd = 2) # add line for foreign cars
 abline(int_dom, slope_dom, col = 2, lty = 2, lwd = 2) # add line for domestic cars
+legend("topright", c("Foreign", "Domestic"), pch = c(1, 2), col = c(1, 2))
 ```
 
 This is a model that allows for two *parallel* lines, meaning the `mpg` can be different on average between foreign and domestic cars of the same engine displacement, but the change in average `mpg` for an increase in displacement is the same for both. We can see this model isn't doing very well here. The red line fits the red points fairly well, but the black line isn't doing very well for the black points, it should clearly have a more negative slope. Essentially, we would like a model that allows for two different slopes.
@@ -331,8 +341,9 @@ Here we again calculate the slope and intercepts for the two lines for use in pl
 
 ```{r}
 plot(mpg ~ disp, data = autompg, col = domestic + 1, pch = domestic + 1)
-abline(int_for, slope_for, col = 1, lty = 1, lwd = 2) # add line for foreign cars
-abline(int_dom, slope_dom, col = 2, lty = 2, lwd = 2) # add line for domestic cars
+abline(int_for, slope_for, col = 1, lty = 1, lwd = 2) # line for foreign cars
+abline(int_dom, slope_dom, col = 2, lty = 2, lwd = 2) # line for domestic cars
+legend("topright", c("Foreign", "Domestic"), pch = c(1, 2), col = c(1, 2))
 ```
 
 We see that these lines fit the data much better, which matches the result of our tests.
@@ -598,10 +609,13 @@ int_8cyl = coef(mpg_disp_add_cyl)[1] + coef(mpg_disp_add_cyl)[4]
 
 slope_all_cyl = coef(mpg_disp_add_cyl)[2]
 
-plot(mpg ~ disp, data = autompg, col = cyl)
-abline(int_4cyl, slope_all_cyl, col = 1, lty = 1, lwd = 2)
-abline(int_6cyl, slope_all_cyl, col = 2, lty = 2, lwd = 2)
-abline(int_8cyl, slope_all_cyl, col = 3, lty = 3, lwd = 2)
+plot_colors = c("Darkorange", "Darkgrey", "Dodgerblue")
+plot(mpg ~ disp, data = autompg, col = plot_colors[cyl], pch = as.numeric(cyl))
+abline(int_4cyl, slope_all_cyl, col = plot_colors[1], lty = 1, lwd = 2)
+abline(int_6cyl, slope_all_cyl, col = plot_colors[2], lty = 2, lwd = 2)
+abline(int_8cyl, slope_all_cyl, col = plot_colors[3], lty = 3, lwd = 2)
+legend("topright", c("4 Cylinder", "6 Cylinder", "8 Cylinder"),
+       col = plot_colors, lty = c(1, 2, 3), pch = c(1, 2, 3))
 ```
 
 On this plot, we have
@@ -653,10 +667,13 @@ slope_4cyl = coef(mpg_disp_int_cyl)[2]
 slope_6cyl = coef(mpg_disp_int_cyl)[2] + coef(mpg_disp_int_cyl)[5]
 slope_8cyl = coef(mpg_disp_int_cyl)[2] + coef(mpg_disp_int_cyl)[6]
 
-plot(mpg ~ disp, data = autompg, col = cyl)
-abline(int_4cyl, slope_4cyl, col = 1, lty = 1, lwd = 2)
-abline(int_6cyl, slope_6cyl, col = 2, lty = 2, lwd = 2)
-abline(int_8cyl, slope_8cyl, col = 3, lty = 3, lwd = 2)
+plot_colors = c("Darkorange", "Darkgrey", "Dodgerblue")
+plot(mpg ~ disp, data = autompg, col = plot_colors[cyl], pch = as.numeric(cyl))
+abline(int_4cyl, slope_4cyl, col = plot_colors[1], lty = 1, lwd = 2)
+abline(int_6cyl, slope_6cyl, col = plot_colors[2], lty = 2, lwd = 2)
+abline(int_8cyl, slope_8cyl, col = plot_colors[3], lty = 3, lwd = 2)
+legend("topright", c("4 Cylinder", "6 Cylinder", "8 Cylinder"),
+       col = plot_colors, lty = c(1, 2, 3), pch = c(1, 2, 3))
 ```
 
 This looks much better! We can see that for medium displacement cars, 6 cylinder cars now perform better than 8 cylinder cars, which seems much more reasonable than before.
@@ -877,6 +894,7 @@ We fit the null model in `R` as `two_way_int_mod`, then use `anova()` to perform
 
 ```{r}
 two_way_int_mod = lm(mpg ~ disp * hp + disp * domestic + hp * domestic, data = autompg)
+#two_way_int_mod = lm(mpg ~ (disp + hp + domestic) ^ 2, data = autompg)
 anova(two_way_int_mod, big_model)
 ```
 

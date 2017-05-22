@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Applied Statistics with R</title>
   <meta name="description" content="Applied Statistics with <code>R</code>">
-  <meta name="generator" content="bookdown 0.3.21 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2017-05-18">
+<meta name="date" content="2017-05-22">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -439,7 +439,7 @@ xplot =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</
       <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">1</span>)
 <span class="kw">lines</span>(xplot, <span class="kw">predict</span>(fit_big, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">x =</span> xplot)),
       <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-494-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-495-1.png" width="672" /></p>
 <p>We can see that the solid blue curve models this data rather nicely. The dashed orange curve fits the points better, making smaller errors, however it is unlikely that it is correctly modeling the true relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. It is fitting the random noise. This is an example of <strong>overfitting</strong>.</p>
 <p>We see that the larger model indeed has a lower RMSE.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(<span class="kw">mean</span>(<span class="kw">resid</span>(fit_quad) ^<span class="st"> </span><span class="dv">2</span>))</code></pre></div>
@@ -483,7 +483,7 @@ xplot =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</
       <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">1</span>)
 <span class="kw">lines</span>(xplot, <span class="kw">predict</span>(fit_big_removed, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">x =</span> xplot)),
       <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-498-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-499-1.png" width="672" /></p>
 <p>We see that on average, the solid blue line for the quadratic model has similar errors as before. It has changed very slightly. However, the dashed orange line for the large model, has a huge error at the point that was removed and is much different that the previous fit.</p>
 <p>This is the purpose of cross-validation. By assessing how the model fits points that were not used to perform the regression, we get an idea of how well the model will work for future observations. It assess how well the model works in general, not simply on the observed data.</p>
 </div>
@@ -981,7 +981,7 @@ all_hipcenter_mod$which[best_aic_ind,]</code></pre></div>
 <p>We see that two of the models chosen by search procedures have the best possible AIC, as they are the same model. This is however never guaranteed. We see that the model chosen using backwards selection does not achieve the smallest possible AIC.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(hipcenter_mod_aic ~<span class="st"> </span><span class="kw">I</span>(<span class="dv">2</span>:p), <span class="dt">ylab =</span> <span class="st">&quot;AIC&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;p, number of parameters&quot;</span>, 
      <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">cex =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-526-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-527-1.png" width="672" /></p>
 <p>We could easily repeat this process for BIC.</p>
 <p><span class="math display">\[
 BIC \approx n\log\left(\frac{RSS}{n}\right) + \log(n)p.
@@ -1036,7 +1036,7 @@ autompg =<span class="st"> </span><span class="kw">subset</span>(autompg, <span 
 ##  $ domestic: Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 2 2 2 2 2 2 2 2 2 2 ...</code></pre>
 <p>Recall that we have two factor variables, <code>cyl</code> and <code>domestic</code>. The <code>cyl</code> variable has three levels, while the <code>domestic</code> variable has only two. Thus the <code>cyl</code> variable will be coded using two dummy variables, while the <code>domestic</code> variable will only need one. We will pay attention to this later.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pairs</span>(autompg, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-533-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-534-1.png" width="672" /></p>
 <p>We’ll use the <code>pairs()</code> plot to determine which variables may benefit from a quadratic relationship with the response. We’ll also consider all possible two-way interactions. We won’t consider any three-order or higher. For example, we won’t consider the interaction between first-order terms and the added quadratic terms.</p>
 <p>So now, we’ll fit this rather large model. We’ll use a log-transformed response. Notice that <code>log(mpg) ~ . ^ 2</code> will automatically consider all first-order terms, as well as all two-way interactions. We use <code>I(var_name ^ 2)</code> to add quadratic terms for some variables. This generally works better than using <code>poly()</code> when performing variable selection.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">autompg_big_mod =<span class="st"> </span><span class="kw">lm</span>(<span class="kw">log</span>(mpg) ~<span class="st"> </span>. ^<span class="st"> </span><span class="dv">2</span> +<span class="st"> </span><span class="kw">I</span>(disp ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(hp ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(wt ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(acc ^<span class="st"> </span><span class="dv">2</span>), <span class="dt">data =</span> autompg)</code></pre></div>
@@ -1115,7 +1115,7 @@ autompg_mod_back_bic =<span class="st"> </span><span class="kw">step</span>(auto
 <p>A word of caution when using a model to <em>explain</em> a relationship. There are two terms often used to describe a relationship between two variables: <em>causation</em> and <em>correlation</em>. <a href="https://xkcd.com/552/">Correlation</a> is often also referred to as association.</p>
 <p>Just because two variable are correlated does not necessarily mean that one causes the other. For example, considering modeling <code>mpg</code> as only a function of <code>hp</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(mpg ~<span class="st"> </span>hp, <span class="dt">data =</span> autompg, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-542-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-543-1.png" width="672" /></p>
 <p>Does an increase in horsepower cause a drop in fuel efficiency? Or, perhaps the causality is reversed and an increase in fuel efficiency cause a decrease in horsepower. Or, perhaps there is a third variable that explains both!</p>
 <p>The issue here is that we have <strong>observational</strong> data. With observational data, we can only detect associations. To speak with confidence about causality, we would need to run <strong>experiments</strong>.</p>
 <p>This is a concept that you should encounter often in your statistics education. For some further reading, and some related fallacies, see: <a href="https://en.wikipedia.org/wiki/Correlation_does_not_imply_causation">Wikipedia: Correlation does not imply causation</a>.</p>
