@@ -25,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2017-05-23">
+<meta name="date" content="2017-05-24">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -542,6 +542,13 @@ Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \epsilon,
 <li><span class="math inline">\(x_1\)</span> is <code>disp</code>, the displacement in cubic inches,</li>
 <li><span class="math inline">\(x_2\)</span> is <code>domestic</code> as described above, which is a dummy variable.</li>
 </ul>
+<p><span class="math display">\[
+x_2 =
+  \begin{cases}
+   1 &amp; \text{Domestic} \\
+   0 &amp; \text{Foreign}
+  \end{cases}
+\]</span></p>
 <p>We will fit this model, extract the slope and intercept for the “two lines,” plot the data and add the lines.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg_disp_add =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>disp +<span class="st"> </span>domestic, <span class="dt">data =</span> autompg)
 
