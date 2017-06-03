@@ -411,7 +411,7 @@ fit3 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> <
 <p>We will attempt to fit a model that predicts <code>hipcenter</code>. Two predictor variables are immediately interesting to us: <code>HtShoes</code> and <code>Ht</code>. We certainly expect a person’s height to be highly correlated to their height when wearing shoes. We’ll pay special attention to these two variables when fitting models.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(faraway)
 <span class="kw">pairs</span>(seatpos, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-462-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-463-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">round</span>(<span class="kw">cor</span>(seatpos), <span class="dv">2</span>)</code></pre></div>
 <pre><code>##             Age Weight HtShoes    Ht Seated   Arm Thigh   Leg hipcenter
 ## Age        1.00   0.08   -0.08 -0.09  -0.17  0.36  0.09 -0.04      0.21
@@ -506,7 +506,7 @@ fit3 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> <
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(hip_model), <span class="kw">fitted</span>(hip_model_noise), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,
      <span class="dt">xlab =</span> <span class="st">&quot;Predicted, Without Noise&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Predicted, With Noise&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-468-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-469-1.png" width="672" /></p>
 <p>We see that by plotting the predicted values using both models against each other, they are actually rather similar.</p>
 <p>Let’s now look at a smaller model,</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hip_model_small =<span class="st"> </span><span class="kw">lm</span>(hipcenter ~<span class="st"> </span>Age +<span class="st"> </span>Weight +<span class="st"> </span>Ht, <span class="dt">data =</span> seatpos)
@@ -564,7 +564,7 @@ fit3 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> <
 <span class="kw">abline</span>(<span class="dt">v =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
 <span class="kw">abline</span>(<span class="kw">lm</span>(<span class="kw">resid</span>(hip_model_small) ~<span class="st"> </span><span class="kw">resid</span>(ht_shoes_model_small)),
        <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-473-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-474-1.png" width="672" /></p>
 <p>Here the variable added plot shows almost no linear relationship. This tells us that adding <code>HtShoes</code> to the model would probably not be worthwhile. Since its variation is largely explained by the other predictors, adding it to the model will not do much to improve the model. However it will increase the variation of the estimates and make the model much harder to interpret.</p>
 <p>Had there been a strong linear relationship here, thus a large partial correlation coefficient, it would likely have been useful to add the additional predictor to the model.</p>
 <p>This trade off is mostly true in general. As a model gets more predictors, errors will get smaller and its <em>prediction</em> will be better, but it will be harder to interpret. This is why, if we are interested in <em>explaining</em> the relationship between the predictors and the response, we often want a model that fits well, but with a small number of predictors with little correlation.</p>
@@ -641,7 +641,7 @@ mse_good      =<span class="st"> </span><span class="kw">rep</span>(<span class=
      <span class="dt">main =</span> <span class="kw">expression</span>(<span class="st">&quot;Histogram of &quot;</span> *<span class="kw">hat</span>(beta)[<span class="dv">1</span>]*<span class="st"> &quot; without Collinearity&quot;</span>),
      <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">1</span>])
 )</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-484-1.png" width="768" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-485-1.png" width="768" /></p>
 <p>First, for <span class="math inline">\(\beta_1\)</span>, which has a true value of <span class="math inline">\(3\)</span>, we see that both with and without collinearity, the simulated values are centered near <span class="math inline">\(3\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(beta_hat_bad[,<span class="dv">2</span>])</code></pre></div>
 <pre><code>## [1] 2.969413</code></pre>
@@ -665,7 +665,7 @@ mse_good      =<span class="st"> </span><span class="kw">rep</span>(<span class=
      <span class="dt">main =</span> <span class="kw">expression</span>(<span class="st">&quot;Histogram of &quot;</span> *<span class="kw">hat</span>(beta)[<span class="dv">2</span>]*<span class="st"> &quot; without Collinearity&quot;</span>),
      <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">2</span>])
 )</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-487-1.png" width="768" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-488-1.png" width="768" /></p>
 <p>We see the same issues with <span class="math inline">\(\beta_2\)</span>. On average the estimates are correct, but the variance is again much larger with collinearity.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(beta_hat_bad[,<span class="dv">3</span>])</code></pre></div>
 <pre><code>## [1] 4.034139</code></pre>
@@ -688,7 +688,7 @@ mse_good      =<span class="st"> </span><span class="kw">rep</span>(<span class=
      <span class="dt">main =</span> <span class="st">&quot;MSE, without Collinearity&quot;</span>,
      <span class="dt">xlab =</span> <span class="st">&quot;MSE&quot;</span>
 )</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-490-1.png" width="768" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-491-1.png" width="768" /></p>
 <p>Interestingly, in both cases, the MSE is roughly the same on average. Again, this is because collinearity effects a model’s ability to <em>explain</em>, but not predict.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(mse_bad)</code></pre></div>
 <pre><code>## [1] 17.68559</code></pre>
