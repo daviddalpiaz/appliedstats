@@ -14,7 +14,20 @@ Last chapter we checked the assumptions of regression models and looked at ways 
 
 ## Response Transformation
 
-Let's look at some (fictional) salary data from the (fictional) company *Initech*. We will try to model `salary` as a function of `years` of experience. The data can be found in [`initech.csv`](data/initech.csv).
+Let's look at some (*fictional*) salary data from the (*fictional*) company *Initech*. We will try to model `salary` as a function of `years` of experience. The data can be found in [`initech.csv`](data/initech.csv).
+
+```{r, echo = FALSE}
+sim_initech = function(sample_size = 50) {
+  x = round(seq(1, 25, length.out = sample_size))
+  log_y = 10.5 + 0.08 * x + rnorm(n = sample_size, sd = 0.20)
+  y = round(exp(log_y))
+  data.frame(years = x, salary = y)
+}
+
+set.seed(420)
+initech = sim_initech(sample_size = 100)
+write.csv(initech, "data/initech.csv", row.names = FALSE)
+```
 
 ```{r}
 initech = read.csv("data/initech.csv")
@@ -55,7 +68,7 @@ Recall the fitted value is our estimate of the mean at a particular value of $x$
 and thus
 
 \[
-  Var[Y | X = x] = \sigma^2
+  \text{Var}[Y | X = x] = \sigma^2
 \]
 
 which is a constant value for any value of $x$.
@@ -63,7 +76,7 @@ which is a constant value for any value of $x$.
 However, here we see that the variance is a function of the mean,
 
 \[
-  Var[Y | X = x] = h(\mu).
+  \text{Var}[Y \mid X = x] = h(\text{E}[Y \mid X = x]).
 \]
 
 In this case, $h$ is some increasing function.
@@ -71,10 +84,10 @@ In this case, $h$ is some increasing function.
 In order to correct for this, we would like to find some function of $Y$, $g(Y)$ such that,
 
 \[
-  Var[g(Y) | X = x] = c
+  \text{Var}[g(Y) \mid X = x] = c
 \]
 
-where $c$ is a constant that does not depend on $\mu$. A transformation that accomplishes this is called a **variance stabilizaing transformation.**
+where $c$ is a constant that does not depend on the mean, $\text{E}[Y \mid X = x]$. A transformation that accomplishes this is called a **variance stabilizaing transformation.**
 
 A common variance stabilizing transformation (VST) when we see increasing variance in a fitted versus residuals plot is $\log(Y)$. Also, if the values of a variable range over more than one order of magnitude and the variable is *strictly positive*, then replacing the variable by its logarithm is likely to be helpful.
 
@@ -148,16 +161,16 @@ summary(initech_fit_log)
 Again, the transformed response is a *linear* combination of the predictors,
 
 \[
-  \log(\hat{y}) = \hat{\beta}_0 + \hat{\beta}_1 x  = 9.84 + 0.05x.
+  \log(\hat{y}(x)) = \hat{\beta}_0 + \hat{\beta}_1 x  = `r round(coef(initech_fit_log)[1], 3)` + `r round(coef(initech_fit_log)[2], 3)`x.
 \]
 
 But now, if we re-scale the data from a log scale back to the original scale of the data, we now have
 
 \[
-  \hat{y} = \exp(\hat{\beta}_0) \exp(\hat{\beta}_1 x) = \exp(9.84)\exp(0.05x).
+  \hat{y}(x) = \exp(\hat{\beta}_0) \exp(\hat{\beta}_1 x) = \exp(`r round(coef(initech_fit_log)[1], 3)`)\exp(`r round(coef(initech_fit_log)[2], 3)`x).
 \]
 
-We see that for every one additional year of experience, average salary increases $\exp(0.05) = 1.051$ times. We are now multiplying, not adding.
+We see that for every one additional year of experience, average salary increases $\exp(`r round(coef(initech_fit_log)[2], 3)`) = `r round(exp(round(coef(initech_fit_log)[2], 3)), 4)`$ times. We are now multiplying, not adding.
 
 While using a $\log$ transform is possibly the most common response variable transformation, many others exist. We will now consider a family of transformations and choose the best from among them, which includes the $\log$ transform.
 
@@ -418,7 +431,7 @@ E[\hat{\beta}] = \beta,
 and variance
 
 \[
-Var[\hat{\beta}] = \sigma^2 \left(  X^\top X  \right)^{-1}.
+\text{Var}[\hat{\beta}] = \sigma^2 \left(  X^\top X  \right)^{-1}.
 \]
 
 We also maintain the same distributional results
