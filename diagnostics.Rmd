@@ -34,13 +34,13 @@ Given data, we found the estimates for the $\beta$ parameters using
 We than noted that these estimates had mean
 
 \[
-E[\hat{\beta}] = \beta,
+\text{E}[\hat{\beta}] = \beta,
 \]
 
 and variance
 
 \[
-Var[\hat{\beta}] = \sigma^2 \left(  X^\top X  \right)^{-1}.
+\text{Var}[\hat{\beta}] = \sigma^2 \left(  X^\top X  \right)^{-1}.
 \]
 
 In particular, an individual parameter, say $\hat{\beta}_j$ had a normal distribution
@@ -110,40 +110,65 @@ If these assumptions are met, great! We can perform inference, **and it is valid
 
 ## Checking Assumptions
 
-We'll now look at a number of tools for checking the assumptions of a linear model.
+We'll now look at a number of tools for checking the assumptions of a linear model. To test these tools, we'll use data simulated from three models:
+
+\[
+\text{Model 1:} \quad Y = 3 + 5x + \epsilon, \quad \epsilon \sim N(0, 1)
+\]
+
+\[
+\text{Model 2:} \quad Y = 3 + 5x + \epsilon, \quad \epsilon \sim N(0, x^2)
+\]
+
+\[
+\text{Model 3:} \quad Y = 3 + 5x^2 + \epsilon, \quad \epsilon \sim N(0, 25)
+\]
+
+```{r}
+sim_1 = function(sample_size = 500) {
+  x = runif(n = sample_size) * 5
+  y = 3 + 5 * x + rnorm(n = sample_size, mean = 0, sd = 1)
+  data.frame(x, y)
+}
+
+sim_2 = function(sample_size = 500) {
+  x = runif(n = sample_size) * 5
+  y = 3 + 5 * x + rnorm(n = sample_size, mean = 0, sd = x)
+  data.frame(x, y)
+}
+
+sim_3 = function(sample_size = 500) {
+  x = runif(n = sample_size) * 5
+  y = 3 + 5 * x ^ 2 + rnorm(n = sample_size, mean = 0, sd = 5)
+  data.frame(x, y)
+}
+```
 
 ### Fitted versus Residuals Plot
 
 Probably our most useful tool will be a **Fitted versus Residuals Plot**. It will be useful for checking both the **linearity** and **constant variance** assumptions.
 
-First, let's consider a true SLR model,
-
-\[
-Y_i = 3 + 5x_i + \epsilon_i \quad \quad \epsilon_i \sim N(0, 1)
-\]
-
-This model does not violate any the assumptions, so we'll use this to see what a good fitted versus residuals plot should look like. First, we'll simulate observations from this model.
+Data generated from Model 1 above should not show any signs of violating assumptions, so we'll use this to see what a good fitted versus residuals plot should look like. First, we'll simulate observations from this model.
 
 ```{r}
-n = 500
 set.seed(42)
-sim_data = data.frame(x = runif(n) * 5, y = rep(0, n))
-sim_data$y = 3 + 5 * sim_data$x + rnorm(n, 0, 1)
-head(sim_data)
+sim_data_1 = sim_1()
+head(sim_data_1)
 ```
 
 We then fit the model and add the fitted line to a scatterplot.
 
 ```{r}
-plot(y ~ x, data = sim_data, col = "dodgerblue")
-fit1 = lm(y ~ x, data = sim_data)
-abline(fit1, col = "darkorange", lwd = 3)
+plot(y ~ x, data = sim_data_1, col = "dodgerblue", main = "Data from Model 1")
+fit_1 = lm(y ~ x, data = sim_data_1)
+abline(fit_1, col = "darkorange", lwd = 3)
 ```
 
 We now plot a fitted versus residuals plot. Note, this is residuals on the $y$-axis despite the ordering in the name. Sometimes you will see this called a residuals versus fitted, or residuals versus predicted plot.
 
 ```{r}
-plot(fitted(fit1), resid(fit1), col = "dodgerblue", xlab = "Fitted", ylab = "Residual")
+plot(fitted(fit_1), resid(fit_1), col = "dodgerblue", 
+     xlab = "Fitted", ylab = "Residuals", main = "Data from Model 1")
 abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
@@ -156,43 +181,45 @@ Here we see this is the case for both.
 
 To get a better idea of how a fitted versus residuals plot can be useful, we will simulate from models with violated assumptions.
 
-We'll first demonstrate a model with non-constant variance. In this case, the variance is larger for larger values of the predictor variable $x$.
+Model 2 is an example of non-constant variance. In this case, the variance is larger for larger values of the predictor variable $x$.
 
 ```{r}
-sim_data2 = sim_data
-sim_data2$y = 3 + 5 * sim_data2$x + rnorm(n, 0, sim_data2$x)
-fit2 = lm(y ~ x, data = sim_data2)
-plot(y ~ x, data = sim_data2, col = "dodgerblue")
-abline(fit2, col = "darkorange", lwd = 3)
+set.seed(42)
+sim_data_2 = sim_2()
+fit_2 = lm(y ~ x, data = sim_data_2)
+plot(y ~ x, data = sim_data_2, col = "dodgerblue", main = "Data from Model 2")
+abline(fit_2, col = "darkorange", lwd = 3)
 ```
 
-This actually is rather easy to see here by added the fitted line to a scatterplot. This is because we are only performing simple linear regression. With multiple regression, a fitted versus residuals plot is a necessity, since adding a fitted regression to a scatterplot isn't exactly possible.
+This actually is rather easy to see here by adding the fitted line to a scatterplot. This is because we are only performing simple linear regression. With multiple regression, a fitted versus residuals plot is a necessity, since adding a fitted regression to a scatterplot isn't exactly possible.
 
 ```{r}
-plot(fitted(fit2), resid(fit2), col = "dodgerblue", xlab = "Fitted", ylab = "Residual")
+plot(fitted(fit_2), resid(fit_2), col = "dodgerblue", 
+     xlab = "Fitted", ylab = "Residuals", main = "Data from Model 2")
 abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
 On the fitted versus residuals plot, we see two things very clearly. For any fitted value, the residuals seem roughly centered at 0. This is good! The linearity assumption is not violated. However, we also see very clearly, that for larger fitted values, the spread of the residuals is larger. This is bad! The constant variance assumption is violated here.
 
-Now we will demonstrate a model which does not meet the linearity assumption.
+Now we will demonstrate a model which does not meet the linearity assumption. Model 3 is an example of a model where $Y$ is not a linear combination of the predictors. In this case the predictor is $x$, but the model uses $x^2$. (We'll see later that this is something that a "linear" model can deal with. The fix is simple, just make $x^2$ a predictor!)
 
 ```{r}
-sim_data3 = sim_data
-sim_data3$y = 3 + 5 * sim_data3$x ^ 2 + rnorm(n, 0, 5)
-fit3 = lm(y ~ x, data = sim_data3)
-plot(y ~ x, data = sim_data3, col = "dodgerblue")
-abline(fit3, col = "darkorange", lwd = 3)
+set.seed(42)
+sim_data_3 = sim_3()
+fit_3 = lm(y ~ x, data = sim_data_3)
+plot(y ~ x, data = sim_data_3, col = "dodgerblue", main = "Data from Model 3")
+abline(fit_3, col = "darkorange", lwd = 3)
 ```
 
 Again, this is rather clear on the scatterplot, but again, we wouldn't be able to check this plot for multiple regression.
 
 ```{r}
-plot(fitted(fit3), resid(fit3), col = "dodgerblue", xlab = "Fitted", ylab = "Residual")
+plot(fitted(fit_3), resid(fit_3), col = "dodgerblue", 
+     xlab = "Fitted", ylab = "Residuals", main = "Data from Model 3")
 abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
-This time on the fitted versus residuals plot, for any fitted value, the spread of the residuals is about the same. However, they are not even close to centered at zero! At small and large fitted values the model is underestimating, while at medium fitted values, the model is overestimating. These are systematic errors, not random noise. So the constant variance assumption is met, but the linearity assumption is violated. Our model is simply wrong. We're trying to fit a line to a curve!
+This time on the fitted versus residuals plot, for any fitted value, the spread of the residuals is about the same. However, they are not even close to centered at zero! At small and large fitted values the model is underestimating, while at medium fitted values, the model is overestimating. These are systematic errors, not random noise. So the constant variance assumption is met, but the linearity assumption is violated. The form of our model is simply wrong. We're trying to fit a line to a curve!
 
 ### Breusch-Pagan Test
 
@@ -214,62 +241,65 @@ library(lmtest)
 
 Let's try it on the three models we fit above. Recall,
 
-- `fit1` had no violation of assumptions,
-- `fit2` violated the constant variance assumption, but not linearity,
-- `fit3` violated linearity, but not constant variance.
+- `fit_1` had no violation of assumptions,
+- `fit_2` violated the constant variance assumption, but not linearity,
+- `fit_3` violated linearity, but not constant variance.
 
 ```{r}
-bptest(fit1)
+bptest(fit_1)
 ```
 
-For `fit1` we see a large p-value, so we do not reject the null of homoscedasticity, which is what we would expect.
+For `fit_1` we see a large p-value, so we do not reject the null of homoscedasticity, which is what we would expect.
 
 ```{r}
-bptest(fit2)
+bptest(fit_2)
 ```
 
-For `fit2` we see a small p-value, so we reject the null of homoscedasticity. The constant variance assumption is violated. This matches our findings with a fitted versus residuals plot.
+For `fit_2` we see a small p-value, so we reject the null of homoscedasticity. The constant variance assumption is violated. This matches our findings with a fitted versus residuals plot.
 
 ```{r}
-bptest(fit3)
+bptest(fit_3)
 ```
 
-Lastly, for `fit3` we again see a large p-value, so we do not reject the null of homoscedasticity, which matches our findings with a fitted versus residuals plot.
+Lastly, for `fit_3` we again see a large p-value, so we do not reject the null of homoscedasticity, which matches our findings with a fitted versus residuals plot.
 
 ### Histograms
 
 We have a number of tools for assessing the normality assumption. The most obvious would be to make a histogram of the residuals. If it appears roughly normal, then we'll believe the errors could truly be normal.
 
-```{r}
+```{r, fig.height=5, fig.width=15}
 par(mfrow = c(1, 3))
-hist(resid(fit1),
+hist(resid(fit_1),
      xlab   = "Residuals",
-     main   = "Histogram of Residuals, fit1",
+     main   = "Histogram of Residuals, fit_1",
      col    = "darkorange",
-     border = "dodgerblue")
-hist(resid(fit2),
+     border = "dodgerblue",
+     breaks = 20)
+hist(resid(fit_2),
      xlab   = "Residuals",
-     main   = "Histogram of Residuals, fit2",
+     main   = "Histogram of Residuals, fit_2",
      col    = "darkorange",
-     border = "dodgerblue")
-hist(resid(fit3),
+     border = "dodgerblue",
+     breaks = 20)
+hist(resid(fit_3),
      xlab   = "Residuals",
-     main   = "Histogram of Residuals, fit3",
+     main   = "Histogram of Residuals, fit_3",
      col    = "darkorange",
-     border = "dodgerblue")
+     border = "dodgerblue",
+     breaks = 20)
 ```
 
-Above are histograms for each of the three regression we have been considering. Notice that the first, for `fit1` appears very normal. The third, for `fit3`, appears to be very non-normal. However `fit2` is not as clear. It does have a rough bell shape, however, it also has a very sharp peak. For this reason we will usually use more powerful tools such as **Q-Q plots** and the **Shapiro-Wilk test** for assessing the normality of errors.
+Above are histograms for each of the three regression we have been considering. Notice that the first, for `fit_1` appears very normal. The third, for `fit_3`, appears to be very non-normal. However `fit_2` is not as clear. It does have a rough bell shape, however, it also has a very sharp peak. For this reason we will usually use more powerful tools such as **Q-Q plots** and the **Shapiro-Wilk test** for assessing the normality of errors.
 
 ### Q-Q Plots
 
 Another visual method for assessing the normality of errors, which is more powerful than a histogram, is a normal quantile-quantile plot, or **Q-Q plot** for short.
 
-In `R` these are very easy to make. The `qqnorm()` function plots the points, and the `qqline()` function adds the necessary line. We create a Q-Q plot for the residuals of `fit1` to check if the errors could truly be normally distributed.
+In `R` these are very easy to make. The `qqnorm()` function plots the points, and the `qqline()` function adds the necessary line. We create a Q-Q plot for the residuals of `fit_1` to check if the errors could truly be normally distributed.
 
 ```{r}
-qqnorm(resid(fit1), main = "Normal Q-Q Plot, fit1", col = "dodgerblue")
-qqline(resid(fit1), col = "darkorange", lwd = 2)
+qqnorm(resid(fit_1), main = "Normal Q-Q Plot, fit_1", col = "dodgerblue")
+qqline(resid(fit_1), col = "darkorange", lwd = 2)
 ```
 
 In short, if the points of the plot do not closely follow a straight line, this would suggest that the data do not come from a normal distribution.
@@ -304,7 +334,7 @@ qq_plot = function(w) {
 
 We can then verify that it is essentially equivalent to using `qqnorm()` and `qqline()` in `R`. There are *slight* differences, but the general idea is the same.
 
-```{r}
+```{r, fig.height=5, fig.width=10}
 set.seed(420)
 x = rnorm(100, mean = 0 , sd = 1)
 par(mfrow = c(1, 2))
@@ -355,32 +385,32 @@ For a better understanding of which Q-Q plots are "good," repeat the simulations
 
 Returning to our three regressions, recall,
 
-- `fit1` had no violation of assumptions,
-- `fit2` violated the constant variance assumption, but not linearity,
-- `fit3` violated linearity, but not constant variance.
+- `fit_1` had no violation of assumptions,
+- `fit_2` violated the constant variance assumption, but not linearity,
+- `fit_3` violated linearity, but not constant variance.
 
 We'll now create a Q-Q plot for each to asses normality of errors.
 
 ```{r}
-qqnorm(resid(fit1), main = "Normal Q-Q Plot, fit1", col = "dodgerblue")
-qqline(resid(fit1), col = "darkorange", lwd = 2)
+qqnorm(resid(fit_1), main = "Normal Q-Q Plot, fit_1", col = "dodgerblue")
+qqline(resid(fit_1), col = "darkorange", lwd = 2)
 ```
 
-For `fit1`, we have a near perfect Q-Q plot. We would believe the errors follow a normal distribution.
+For `fit_1`, we have a near perfect Q-Q plot. We would believe the errors follow a normal distribution.
 
 ```{r}
-qqnorm(resid(fit2), main = "Normal Q-Q Plot, fit2", col = "dodgerblue")
-qqline(resid(fit2), col = "darkorange", lwd = 2)
+qqnorm(resid(fit_2), main = "Normal Q-Q Plot, fit_2", col = "dodgerblue")
+qqline(resid(fit_2), col = "darkorange", lwd = 2)
 ```
 
-For `fit2`, we have a suspect Q-Q plot. We would probably **not** believe the errors follow a normal distribution.
+For `fit_2`, we have a suspect Q-Q plot. We would probably **not** believe the errors follow a normal distribution.
 
 ```{r}
-qqnorm(resid(fit3), main = "Normal Q-Q Plot, fit3", col = "dodgerblue")
-qqline(resid(fit3), col = "darkorange", lwd = 2)
+qqnorm(resid(fit_3), main = "Normal Q-Q Plot, fit_3", col = "dodgerblue")
+qqline(resid(fit_3), col = "darkorange", lwd = 2)
 ```
 
-Lastly, for `fit3`, we again have a suspect Q-Q plot. We would probably **not** believe the errors follow a normal distribution.
+Lastly, for `fit_3`, we again have a suspect Q-Q plot. We would probably **not** believe the errors follow a normal distribution.
 
 ### Shapiro-Wilk Test
 
@@ -392,25 +422,24 @@ shapiro.test(rnorm(25))
 shapiro.test(rexp(25))
 ```
 
-
 This gives us the value of the test statistic and its p-value. The null hypothesis assumes the data follow a normal distribution, thus a small p-value indicates we believe there is only a small probability the data follow a normal distribution.
 
 For details, see: [Wikipedia: Shapiro–Wilk test.](https://en.wikipedia.org/wiki/Shapiro-Wilk_test)
 
-In the above examples, we see we fail to reject for the data sampled from normal, and reject on the non-normal data.
+In the above examples, we see we fail to reject for the data sampled from normal, and reject on the non-normal data, for any reasonable $\alpha$.
 
-Returning again to `fit1`, `fit2` and `fit3`, we see the result of running `shapiro.test()` on the residuals of each, returns a result for each that matches for decisions based on the Q-Q plots.
+Returning again to `fit_1`, `fit_2` and `fit_3`, we see the result of running `shapiro.test()` on the residuals of each, returns a result for each that matches for decisions based on the Q-Q plots.
 
 ```{r}
-shapiro.test(resid(fit1))
+shapiro.test(resid(fit_1))
 ```
 
 ```{r}
-shapiro.test(resid(fit2))
+shapiro.test(resid(fit_2))
 ```
 
 ```{r}
-shapiro.test(resid(fit3))
+shapiro.test(resid(fit_3))
 ```
 
 ## Unusual Observations
@@ -419,38 +448,51 @@ In addition to checking the assumptions of regression, we also look for any "unu
 
 The following three plots are inspired by an example from [Linear Models with R](http://www.maths.bath.ac.uk/~jjf23/LMR/).
 
-```{r}
+```{r unusual_obs_plot, fig.height = 5, fig.width = 15}
 par(mfrow = c(1, 3))
 set.seed(42)
-ex_data  = data.frame(x = 1:10, y = 10:1 + rnorm(10))
+ex_data  = data.frame(x = 1:10, 
+                      y = 10:1 + rnorm(n = 10))
 ex_model = lm(y ~ x, data = ex_data)
 
-# low leverage, yes outlier, small influence
-point1 = c(5.4, 11)
-model1 = lm(y ~ x, data = rbind(ex_data, point1))
-plot(y ~ x, data = rbind(ex_data, point1), cex = 1.5)
-points(x = point1[1], y = point1[2], pch = 4, cex = 5, col = "firebrick", lwd = 2)
+# low leverage, large residual, small influence
+point_1 = c(5.4, 11)
+ex_data_1 = rbind(ex_data, point_1)
+model_1 = lm(y ~ x, data = ex_data_1)
+plot(y ~ x, data = ex_data_1, cex = 2, pch = 20, col = "grey", 
+     main = "Low Leverage, Large Residual, Small Influence")
+points(x = point_1[1], y = point_1[2], pch = 1, cex = 4, col = "black", lwd = 2)
 abline(ex_model, col = "dodgerblue", lwd = 2)
-abline(model1, lty = 2, col = "darkorange", lwd = 2)
+abline(model_1, lty = 2, col = "darkorange", lwd = 2)
+legend("bottomleft", c("Original Data", "Added Point"), 
+       lty = c(1, 2), col = c("dodgerblue", "darkorange"))
 
-# high leverage, not outlier, low influence
-point2 = c(15, -4.1)
-model2 = lm(y ~ x, data = rbind(ex_data, point2))
-plot(y ~ x, data = rbind(ex_data, point2), cex = 1.5)
-points(x = point2[1], y = point2[2], pch = 4, cex = 5, col = "firebrick", lwd = 2)
+# high leverage, small residual, small influence
+point_2 = c(18, -5.7)
+ex_data_2 = rbind(ex_data, point_2)
+model_2 = lm(y ~ x, data = ex_data_2)
+plot(y ~ x, data = ex_data_2, cex = 2, pch = 20, col = "grey", 
+     main = "High Leverage, Small Residual, Small Influence")
+points(x = point_2[1], y = point_2[2], pch = 1, cex = 4, col = "black", lwd = 2)
 abline(ex_model, col = "dodgerblue", lwd = 2)
-abline(model2, lty = 2, col = "darkorange", lwd = 2)
+abline(model_2, lty = 2, col = "darkorange", lwd = 2)
+legend("bottomleft", c("Original Data", "Added Point"), 
+       lty = c(1, 2), col = c("dodgerblue", "darkorange"))
 
-# high leverage, yes outlier, large influence
-point3 = c(15, 5.1)
-model3 = lm(y ~ x, data = rbind(ex_data, point3))
-plot(y ~ x, data = rbind(ex_data, point3), cex = 1.5)
-points(x = point3[1], y = point3[2], pch = 4, cex = 5, col = "firebrick", lwd = 2)
+# high leverage, large residual, large influence
+point_3 = c(14, 5.1)
+ex_data_3 = rbind(ex_data, point_3)
+model_3 = lm(y ~ x, data = ex_data_3)
+plot(y ~ x, data = ex_data_3, cex = 2, pch = 20, col = "grey", ylim = c(-3, 12),
+     main = "High Leverage, Large Residual, Large Influence")
+points(x = point_3[1], y = point_3[2], pch = 1, cex = 4, col = "black", lwd = 2)
 abline(ex_model, col = "dodgerblue", lwd = 2)
-abline(model3, lty = 2, col = "darkorange", lwd = 2)
+abline(model_3, lty = 2, col = "darkorange", lwd = 2)
+legend("bottomleft", c("Original Data", "Added Point"), 
+       lty = c(1, 2), col = c("dodgerblue", "darkorange"))
 ```
 
-The blue solid line in each plot is the regression fitted to the 10 original data points stored in `ex_data`. The dashed orange line in each plot is the result of adding a single point to the original data in `ex_data`. This additional point is indicated by the large red "X" in each plot.
+The blue solid line in each plot is a regression fit to the 10 original data points stored in `ex_data`. The dashed orange line in each plot is the result of adding a single point to the original data in `ex_data`. This additional point is indicated by the circled point.
 
 The slope of the regression for the original ten points, the solid blue line, is given by:
 
@@ -461,7 +503,7 @@ coef(ex_model)[2]
 The added point in the first plot has a *small* effect on the slope, which becomes:
 
 ```{r}
-coef(model1)[2]
+coef(model_1)[2]
 ```
 
 We will say that this point has low leverage, is an outlier due to its large residual, but has small influence.
@@ -469,15 +511,15 @@ We will say that this point has low leverage, is an outlier due to its large res
 The added point in the second plot also has a *small* effect on the slope, which is:
 
 ```{r}
-coef(model2)[2]
+coef(model_2)[2]
 ```
 
-We will say that this point has high leverage, is not an outlier due to its small residual, and has small influence.
+We will say that this point has high leverage, is not an outlier due to its small residual, and has a very small influence.
 
 Lastly, the added point in the third plot has a *large* effect on the slope, which is now:
 
 ```{r}
-coef(model3)[2]
+coef(model_3)[2]
 ```
 
 This added point is influential. It both has high leverage, and is an outlier due to its large residual.
@@ -637,17 +679,17 @@ Notice that this point was the mean of both of the predictors.
 Returning to our three plots, each with an added point, we can calculate the leverages for each. Note that the 11th data point each time is the added data point.
 
 ```{r}
-hatvalues(model1)
-hatvalues(model2)
-hatvalues(model3)
+hatvalues(model_1)
+hatvalues(model_2)
+hatvalues(model_3)
 ```
 
 Are any of these large?
 
 ```{r}
-hatvalues(model1) > 2 * mean(hatvalues(model1))
-hatvalues(model2) > 2 * mean(hatvalues(model2))
-hatvalues(model3) > 2 * mean(hatvalues(model3))
+hatvalues(model_1) > 2 * mean(hatvalues(model_1))
+hatvalues(model_2) > 2 * mean(hatvalues(model_2))
+hatvalues(model_3) > 2 * mean(hatvalues(model_3))
 ```
 
 We see that in the second and third plots, the added point is a point of high leverage. Recall that only in the third plot did that have an influence on the regression. To understand why, we'll need to discuss outliers.
@@ -665,13 +707,13 @@ e = y - \hat{y} = Iy - Hy = (I - H) y
 Then, under the assumptions of linear regression,
 
 \[
-Var(e_i) = (1 - h_i) \sigma^2
+\text{Var}(e_i) = (1 - h_i) \sigma^2
 \]
 
 and thus estimating $\sigma^2$ with $s_e^2$ gives
 
 \[
-SE[e_i] = s_e \sqrt{(1 - h_i)}.
+\text{SE}[e_i] = s_e \sqrt{(1 - h_i)}.
 \]
 
 We can then look at the **standardized residual** for each observation, $i = 1, 2, \ldots n$,
@@ -687,25 +729,25 @@ We can use this fact to identify "large" residuals. For example, standardized re
 Returning again to our three plots, each with an added point, we can calculate the residuals and standardized residuals for each. Standardized residuals can be obtained in `R` by using `rstandard()` where we would normally use `resid()`.
 
 ```{r}
-resid(model1)
-rstandard(model1)
-rstandard(model1)[abs(rstandard(model1)) > 2]
+resid(model_1)
+rstandard(model_1)
+rstandard(model_1)[abs(rstandard(model_1)) > 2]
 ```
 
 In the first plot, we see that the 11th point, the added point, is a large standardized residual.
 
 ```{r}
-resid(model2)
-rstandard(model2)
-rstandard(model2)[abs(rstandard(model2)) > 2]
+resid(model_2)
+rstandard(model_2)
+rstandard(model_2)[abs(rstandard(model_2)) > 2]
 ```
 
 In the second plot, we see that there are no points with large standardized residuals.
 
 ```{r}
-resid(model3)
-rstandard(model3)
-rstandard(model3)[abs(rstandard(model3)) > 2]
+resid(model_3)
+rstandard(model_3)
+rstandard(model_3)[abs(rstandard(model_3)) > 2]
 ```
 
 In the last plot, we see that the 11th point, the added point, is a large standardized residual.
@@ -714,7 +756,7 @@ Recall that the added point in plots two and three were both high leverage, but 
 
 ### Influence
 
-As we have now seen in the three plots, some outliers only change the regression a small amount (plot one) and some outliers have a large effect on the regression (plot three). Observations that fall into the later category, points of *high leverage* **and** *large residual*, we will call **influential**.
+As we have now seen in the three plots, some outliers only change the regression a small amount (plot one) and some outliers have a large effect on the regression (plot three). Observations that fall into the later category, points with (some combination of) *high leverage* **and** *large residual*, we will call **influential**.
 
 A common measure of influence is **Cook's Distance**, which is defined as
 
@@ -724,7 +766,7 @@ A common measure of influence is **Cook's Distance**, which is defined as
 
 Notice that this is a function of both *leverage* and *standardized residuals*. 
 
-A Cook's Distance is considered large if 
+A Cook's Distance is often considered large if 
 
 \[
 D_i > \frac{4}{n}
@@ -734,38 +776,11 @@ and an observation with a large Cook's Distance is called influential. This is a
 
 The Cook's distance for each point of a regression can be calculated using `cooks.distance()` which is a default function in `R`. Let's look for influential points in the three plots we had been considering.
 
-```{r, echo = FALSE}
-par(mfrow = c(1, 3))
-set.seed(42)
-ex_data  = data.frame(x = 1:10, y = 10:1 + rnorm(10))
-ex_model = lm(y ~ x, data = ex_data)
+```{r, ref.label="unusual_obs_plot", fig.height = 5, fig.width = 15, echo = FALSE}
 
-# low leverage, yes outlier, small influence
-point1 = c(5.4, 11)
-model1 = lm(y ~ x, data = rbind(ex_data, point1))
-plot(y ~ x, data = rbind(ex_data, point1), cex = 1.5)
-points(x = point1[1], y = point1[2], pch = 4, cex = 5, col = "firebrick", lwd = 2)
-abline(ex_model, col = "dodgerblue", lwd = 2)
-abline(model1, lty = 2, col = "darkorange", lwd = 2)
-
-# high leverage, not outlier, low influence
-point2 = c(15, -4.1)
-model2 = lm(y ~ x, data = rbind(ex_data, point2))
-plot(y ~ x, data = rbind(ex_data, point2), cex = 1.5)
-points(x = point2[1], y = point2[2], pch = 4, cex = 5, col = "firebrick", lwd = 2)
-abline(ex_model, col = "dodgerblue", lwd = 2)
-abline(model2, lty = 2, col = "darkorange", lwd = 2)
-
-# high leverage, yes outlier, large influence
-point3 = c(15, 5.1)
-model3 = lm(y ~ x, data = rbind(ex_data, point3))
-plot(y ~ x, data = rbind(ex_data, point3), cex = 1.5)
-points(x = point3[1], y = point3[2], pch = 4, cex = 5, col = "firebrick", lwd = 2)
-abline(ex_model, col = "dodgerblue", lwd = 2)
-abline(model3, lty = 2, col = "darkorange", lwd = 2)
 ```
 
-Recall that the added points (large red "X") in each plot have different characteristics:
+Recall that the circled points in each plot have different characteristics:
 
 - Plot One: low leverage, large residual.
 - Plot Two: high leverage, small residual.
@@ -774,9 +789,9 @@ Recall that the added points (large red "X") in each plot have different charact
 We'll now directly check if each of these is influential.
 
 ```{r}
-cooks.distance(model1)[11] > 4 / length(cooks.distance(model1))
-cooks.distance(model2)[11] > 4 / length(cooks.distance(model2))
-cooks.distance(model3)[11] > 4 / length(cooks.distance(model3))
+cooks.distance(model_1)[11] > 4 / length(cooks.distance(model_1))
+cooks.distance(model_2)[11] > 4 / length(cooks.distance(model_2))
+cooks.distance(model_3)[11] > 4 / length(cooks.distance(model_3))
 ```
 
 And, as expected, the added point in the third plot, with high leverage and a large residual is considered influential!

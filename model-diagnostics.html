@@ -25,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2017-05-25">
+<meta name="date" content="2017-06-03">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -353,11 +353,11 @@ Y = X \beta + \epsilon.
 \]</span></p>
 <p>We than noted that these estimates had mean</p>
 <p><span class="math display">\[
-E[\hat{\beta}] = \beta,
+\text{E}[\hat{\beta}] = \beta,
 \]</span></p>
 <p>and variance</p>
 <p><span class="math display">\[
-Var[\hat{\beta}] = \sigma^2 \left(  X^\top X  \right)^{-1}.
+\text{Var}[\hat{\beta}] = \sigma^2 \left(  X^\top X  \right)^{-1}.
 \]</span></p>
 <p>In particular, an individual parameter, say <span class="math inline">\(\hat{\beta}_j\)</span> had a normal distribution</p>
 <p><span class="math display">\[
@@ -408,20 +408,40 @@ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)
 </div>
 <div id="checking-assumptions" class="section level2">
 <h2><span class="header-section-number">12.2</span> Checking Assumptions</h2>
-<p>We’ll now look at a number of tools for checking the assumptions of a linear model.</p>
+<p>We’ll now look at a number of tools for checking the assumptions of a linear model. To test these tools, we’ll use data simulated from three models:</p>
+<p><span class="math display">\[
+\text{Model 1:} \quad Y = 3 + 5x + \epsilon, \quad \epsilon \sim N(0, 1)
+\]</span></p>
+<p><span class="math display">\[
+\text{Model 2:} \quad Y = 3 + 5x + \epsilon, \quad \epsilon \sim N(0, x^2)
+\]</span></p>
+<p><span class="math display">\[
+\text{Model 3:} \quad Y = 3 + 5x^2 + \epsilon, \quad \epsilon \sim N(0, 25)
+\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_1 =<span class="st"> </span>function(<span class="dt">sample_size =</span> <span class="dv">500</span>) {
+  x =<span class="st"> </span><span class="kw">runif</span>(<span class="dt">n =</span> sample_size) *<span class="st"> </span><span class="dv">5</span>
+  y =<span class="st"> </span><span class="dv">3</span> +<span class="st"> </span><span class="dv">5</span> *<span class="st"> </span>x +<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> sample_size, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)
+  <span class="kw">data.frame</span>(x, y)
+}
+
+sim_2 =<span class="st"> </span>function(<span class="dt">sample_size =</span> <span class="dv">500</span>) {
+  x =<span class="st"> </span><span class="kw">runif</span>(<span class="dt">n =</span> sample_size) *<span class="st"> </span><span class="dv">5</span>
+  y =<span class="st"> </span><span class="dv">3</span> +<span class="st"> </span><span class="dv">5</span> *<span class="st"> </span>x +<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> sample_size, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> x)
+  <span class="kw">data.frame</span>(x, y)
+}
+
+sim_3 =<span class="st"> </span>function(<span class="dt">sample_size =</span> <span class="dv">500</span>) {
+  x =<span class="st"> </span><span class="kw">runif</span>(<span class="dt">n =</span> sample_size) *<span class="st"> </span><span class="dv">5</span>
+  y =<span class="st"> </span><span class="dv">3</span> +<span class="st"> </span><span class="dv">5</span> *<span class="st"> </span>x ^<span class="st"> </span><span class="dv">2</span> +<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> sample_size, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">5</span>)
+  <span class="kw">data.frame</span>(x, y)
+}</code></pre></div>
 <div id="fitted-versus-residuals-plot" class="section level3">
 <h3><span class="header-section-number">12.2.1</span> Fitted versus Residuals Plot</h3>
 <p>Probably our most useful tool will be a <strong>Fitted versus Residuals Plot</strong>. It will be useful for checking both the <strong>linearity</strong> and <strong>constant variance</strong> assumptions.</p>
-<p>First, let’s consider a true SLR model,</p>
-<p><span class="math display">\[
-Y_i = 3 + 5x_i + \epsilon_i \quad \quad \epsilon_i \sim N(0, 1)
-\]</span></p>
-<p>This model does not violate any the assumptions, so we’ll use this to see what a good fitted versus residuals plot should look like. First, we’ll simulate observations from this model.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n =<span class="st"> </span><span class="dv">500</span>
-<span class="kw">set.seed</span>(<span class="dv">42</span>)
-sim_data =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">runif</span>(n) *<span class="st"> </span><span class="dv">5</span>, <span class="dt">y =</span> <span class="kw">rep</span>(<span class="dv">0</span>, n))
-sim_data$y =<span class="st"> </span><span class="dv">3</span> +<span class="st"> </span><span class="dv">5</span> *<span class="st"> </span>sim_data$x +<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)
-<span class="kw">head</span>(sim_data)</code></pre></div>
+<p>Data generated from Model 1 above should not show any signs of violating assumptions, so we’ll use this to see what a good fitted versus residuals plot should look like. First, we’ll simulate observations from this model.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
+sim_data_1 =<span class="st"> </span><span class="kw">sim_1</span>()
+<span class="kw">head</span>(sim_data_1)</code></pre></div>
 <pre><code>##          x         y
 ## 1 4.574030 24.773995
 ## 2 4.685377 26.475936
@@ -430,14 +450,15 @@ sim_data$y =<span class="st"> </span><span class="dv">3</span> +<span class="st"
 ## 5 3.208728 20.341344
 ## 6 2.595480 14.943525</code></pre>
 <p>We then fit the model and add the fitted line to a scatterplot.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> sim_data, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-fit1 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> sim_data)
-<span class="kw">abline</span>(fit1, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-335-1.png" width="672" /></p>
-<p>We now plot a fitted versus residuals plot. Note, this is residuals on the <span class="math inline">\(y\)</span>-axis despite the ordering in the name. Sometimes you will see this called a residuals versus fitted, or residuals versus predicted plot.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(fit1), <span class="kw">resid</span>(fit1), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residual&quot;</span>)
-<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> sim_data_1, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Data from Model 1&quot;</span>)
+fit_1 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> sim_data_1)
+<span class="kw">abline</span>(fit_1, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-336-1.png" width="672" /></p>
+<p>We now plot a fitted versus residuals plot. Note, this is residuals on the <span class="math inline">\(y\)</span>-axis despite the ordering in the name. Sometimes you will see this called a residuals versus fitted, or residuals versus predicted plot.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(fit_1), <span class="kw">resid</span>(fit_1), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Data from Model 1&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-337-1.png" width="672" /></p>
 <p>We should look for two things in this plot.</p>
 <ul>
 <li>At any fitted value, the mean of the residuals should be roughly 0. If this is the case, the <em>linearity</em> assumption is valid. For this reason, we generally add a horizontal line at <span class="math inline">\(y = 0\)</span> to emphasize this point.</li>
@@ -445,30 +466,32 @@ fit1 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> <
 </ul>
 <p>Here we see this is the case for both.</p>
 <p>To get a better idea of how a fitted versus residuals plot can be useful, we will simulate from models with violated assumptions.</p>
-<p>We’ll first demonstrate a model with non-constant variance. In this case, the variance is larger for larger values of the predictor variable <span class="math inline">\(x\)</span>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_data2 =<span class="st"> </span>sim_data
-sim_data2$y =<span class="st"> </span><span class="dv">3</span> +<span class="st"> </span><span class="dv">5</span> *<span class="st"> </span>sim_data2$x +<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, sim_data2$x)
-fit2 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> sim_data2)
-<span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> sim_data2, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-<span class="kw">abline</span>(fit2, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-337-1.png" width="672" /></p>
-<p>This actually is rather easy to see here by added the fitted line to a scatterplot. This is because we are only performing simple linear regression. With multiple regression, a fitted versus residuals plot is a necessity, since adding a fitted regression to a scatterplot isn’t exactly possible.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(fit2), <span class="kw">resid</span>(fit2), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residual&quot;</span>)
-<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p>Model 2 is an example of non-constant variance. In this case, the variance is larger for larger values of the predictor variable <span class="math inline">\(x\)</span>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
+sim_data_2 =<span class="st"> </span><span class="kw">sim_2</span>()
+fit_2 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> sim_data_2)
+<span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> sim_data_2, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Data from Model 2&quot;</span>)
+<span class="kw">abline</span>(fit_2, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-338-1.png" width="672" /></p>
-<p>On the fitted versus residuals plot, we see two things very clearly. For any fitted value, the residuals seem roughly centered at 0. This is good! The linearity assumption is not violated. However, we also see very clearly, that for larger fitted values, the spread of the residuals is larger. This is bad! The constant variance assumption is violated here.</p>
-<p>Now we will demonstrate a model which does not meet the linearity assumption.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_data3 =<span class="st"> </span>sim_data
-sim_data3$y =<span class="st"> </span><span class="dv">3</span> +<span class="st"> </span><span class="dv">5</span> *<span class="st"> </span>sim_data3$x ^<span class="st"> </span><span class="dv">2</span> +<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">5</span>)
-fit3 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> sim_data3)
-<span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> sim_data3, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-<span class="kw">abline</span>(fit3, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-339-1.png" width="672" /></p>
-<p>Again, this is rather clear on the scatterplot, but again, we wouldn’t be able to check this plot for multiple regression.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(fit3), <span class="kw">resid</span>(fit3), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residual&quot;</span>)
+<p>This actually is rather easy to see here by adding the fitted line to a scatterplot. This is because we are only performing simple linear regression. With multiple regression, a fitted versus residuals plot is a necessity, since adding a fitted regression to a scatterplot isn’t exactly possible.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(fit_2), <span class="kw">resid</span>(fit_2), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Data from Model 2&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-339-1.png" width="672" /></p>
+<p>On the fitted versus residuals plot, we see two things very clearly. For any fitted value, the residuals seem roughly centered at 0. This is good! The linearity assumption is not violated. However, we also see very clearly, that for larger fitted values, the spread of the residuals is larger. This is bad! The constant variance assumption is violated here.</p>
+<p>Now we will demonstrate a model which does not meet the linearity assumption. Model 3 is an example of a model where <span class="math inline">\(Y\)</span> is not a linear combination of the predictors. In this case the predictor is <span class="math inline">\(x\)</span>, but the model uses <span class="math inline">\(x^2\)</span>. (We’ll see later that this is something that a “linear” model can deal with. The fix is simple, just make <span class="math inline">\(x^2\)</span> a predictor!)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
+sim_data_3 =<span class="st"> </span><span class="kw">sim_3</span>()
+fit_3 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> sim_data_3)
+<span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> sim_data_3, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Data from Model 3&quot;</span>)
+<span class="kw">abline</span>(fit_3, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-340-1.png" width="672" /></p>
-<p>This time on the fitted versus residuals plot, for any fitted value, the spread of the residuals is about the same. However, they are not even close to centered at zero! At small and large fitted values the model is underestimating, while at medium fitted values, the model is overestimating. These are systematic errors, not random noise. So the constant variance assumption is met, but the linearity assumption is violated. Our model is simply wrong. We’re trying to fit a line to a curve!</p>
+<p>Again, this is rather clear on the scatterplot, but again, we wouldn’t be able to check this plot for multiple regression.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(fit_3), <span class="kw">resid</span>(fit_3), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Data from Model 3&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-341-1.png" width="672" /></p>
+<p>This time on the fitted versus residuals plot, for any fitted value, the spread of the residuals is about the same. However, they are not even close to centered at zero! At small and large fitted values the model is underestimating, while at medium fitted values, the model is overestimating. These are systematic errors, not random noise. So the constant variance assumption is met, but the linearity assumption is violated. The form of our model is simply wrong. We’re trying to fit a line to a curve!</p>
 </div>
 <div id="breusch-pagan-test" class="section level3">
 <h3><span class="header-section-number">12.2.2</span> Breusch-Pagan Test</h3>
@@ -484,61 +507,64 @@ fit3 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> <
 <span class="kw">library</span>(lmtest)</code></pre></div>
 <p>Let’s try it on the three models we fit above. Recall,</p>
 <ul>
-<li><code>fit1</code> had no violation of assumptions,</li>
-<li><code>fit2</code> violated the constant variance assumption, but not linearity,</li>
-<li><code>fit3</code> violated linearity, but not constant variance.</li>
+<li><code>fit_1</code> had no violation of assumptions,</li>
+<li><code>fit_2</code> violated the constant variance assumption, but not linearity,</li>
+<li><code>fit_3</code> violated linearity, but not constant variance.</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bptest</span>(fit1)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bptest</span>(fit_1)</code></pre></div>
 <pre><code>## 
 ##  studentized Breusch-Pagan test
 ## 
-## data:  fit1
+## data:  fit_1
 ## BP = 1.0234, df = 1, p-value = 0.3117</code></pre>
-<p>For <code>fit1</code> we see a large p-value, so we do not reject the null of homoscedasticity, which is what we would expect.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bptest</span>(fit2)</code></pre></div>
+<p>For <code>fit_1</code> we see a large p-value, so we do not reject the null of homoscedasticity, which is what we would expect.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bptest</span>(fit_2)</code></pre></div>
 <pre><code>## 
 ##  studentized Breusch-Pagan test
 ## 
-## data:  fit2
-## BP = 72.325, df = 1, p-value &lt; 2.2e-16</code></pre>
-<p>For <code>fit2</code> we see a small p-value, so we reject the null of homoscedasticity. The constant variance assumption is violated. This matches our findings with a fitted versus residuals plot.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bptest</span>(fit3)</code></pre></div>
+## data:  fit_2
+## BP = 76.693, df = 1, p-value &lt; 2.2e-16</code></pre>
+<p>For <code>fit_2</code> we see a small p-value, so we reject the null of homoscedasticity. The constant variance assumption is violated. This matches our findings with a fitted versus residuals plot.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bptest</span>(fit_3)</code></pre></div>
 <pre><code>## 
 ##  studentized Breusch-Pagan test
 ## 
-## data:  fit3
-## BP = 0.24035, df = 1, p-value = 0.624</code></pre>
-<p>Lastly, for <code>fit3</code> we again see a large p-value, so we do not reject the null of homoscedasticity, which matches our findings with a fitted versus residuals plot.</p>
+## data:  fit_3
+## BP = 0.33466, df = 1, p-value = 0.5629</code></pre>
+<p>Lastly, for <code>fit_3</code> we again see a large p-value, so we do not reject the null of homoscedasticity, which matches our findings with a fitted versus residuals plot.</p>
 </div>
 <div id="histograms-1" class="section level3">
 <h3><span class="header-section-number">12.2.3</span> Histograms</h3>
 <p>We have a number of tools for assessing the normality assumption. The most obvious would be to make a histogram of the residuals. If it appears roughly normal, then we’ll believe the errors could truly be normal.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))
-<span class="kw">hist</span>(<span class="kw">resid</span>(fit1),
+<span class="kw">hist</span>(<span class="kw">resid</span>(fit_1),
      <span class="dt">xlab   =</span> <span class="st">&quot;Residuals&quot;</span>,
-     <span class="dt">main   =</span> <span class="st">&quot;Histogram of Residuals, fit1&quot;</span>,
+     <span class="dt">main   =</span> <span class="st">&quot;Histogram of Residuals, fit_1&quot;</span>,
      <span class="dt">col    =</span> <span class="st">&quot;darkorange&quot;</span>,
-     <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-<span class="kw">hist</span>(<span class="kw">resid</span>(fit2),
+     <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,
+     <span class="dt">breaks =</span> <span class="dv">20</span>)
+<span class="kw">hist</span>(<span class="kw">resid</span>(fit_2),
      <span class="dt">xlab   =</span> <span class="st">&quot;Residuals&quot;</span>,
-     <span class="dt">main   =</span> <span class="st">&quot;Histogram of Residuals, fit2&quot;</span>,
+     <span class="dt">main   =</span> <span class="st">&quot;Histogram of Residuals, fit_2&quot;</span>,
      <span class="dt">col    =</span> <span class="st">&quot;darkorange&quot;</span>,
-     <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-<span class="kw">hist</span>(<span class="kw">resid</span>(fit3),
+     <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,
+     <span class="dt">breaks =</span> <span class="dv">20</span>)
+<span class="kw">hist</span>(<span class="kw">resid</span>(fit_3),
      <span class="dt">xlab   =</span> <span class="st">&quot;Residuals&quot;</span>,
-     <span class="dt">main   =</span> <span class="st">&quot;Histogram of Residuals, fit3&quot;</span>,
+     <span class="dt">main   =</span> <span class="st">&quot;Histogram of Residuals, fit_3&quot;</span>,
      <span class="dt">col    =</span> <span class="st">&quot;darkorange&quot;</span>,
-     <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-345-1.png" width="672" /></p>
-<p>Above are histograms for each of the three regression we have been considering. Notice that the first, for <code>fit1</code> appears very normal. The third, for <code>fit3</code>, appears to be very non-normal. However <code>fit2</code> is not as clear. It does have a rough bell shape, however, it also has a very sharp peak. For this reason we will usually use more powerful tools such as <strong>Q-Q plots</strong> and the <strong>Shapiro-Wilk test</strong> for assessing the normality of errors.</p>
+     <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,
+     <span class="dt">breaks =</span> <span class="dv">20</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-346-1.png" width="1440" /></p>
+<p>Above are histograms for each of the three regression we have been considering. Notice that the first, for <code>fit_1</code> appears very normal. The third, for <code>fit_3</code>, appears to be very non-normal. However <code>fit_2</code> is not as clear. It does have a rough bell shape, however, it also has a very sharp peak. For this reason we will usually use more powerful tools such as <strong>Q-Q plots</strong> and the <strong>Shapiro-Wilk test</strong> for assessing the normality of errors.</p>
 </div>
 <div id="q-q-plots" class="section level3">
 <h3><span class="header-section-number">12.2.4</span> Q-Q Plots</h3>
 <p>Another visual method for assessing the normality of errors, which is more powerful than a histogram, is a normal quantile-quantile plot, or <strong>Q-Q plot</strong> for short.</p>
-<p>In <code>R</code> these are very easy to make. The <code>qqnorm()</code> function plots the points, and the <code>qqline()</code> function adds the necessary line. We create a Q-Q plot for the residuals of <code>fit1</code> to check if the errors could truly be normally distributed.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit1), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit1&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-<span class="kw">qqline</span>(<span class="kw">resid</span>(fit1), <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-346-1.png" width="672" /></p>
+<p>In <code>R</code> these are very easy to make. The <code>qqnorm()</code> function plots the points, and the <code>qqline()</code> function adds the necessary line. We create a Q-Q plot for the residuals of <code>fit_1</code> to check if the errors could truly be normally distributed.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_1), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit_1&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
+<span class="kw">qqline</span>(<span class="kw">resid</span>(fit_1), <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-347-1.png" width="672" /></p>
 <p>In short, if the points of the plot do not closely follow a straight line, this would suggest that the data do not come from a normal distribution.</p>
 <p>The calculations required to create the plot vary depending on the implementation, but essentially the <span class="math inline">\(y\)</span>-axis is the sorted data (observed, or sample quantiles), and the <span class="math inline">\(x\)</span>-axis is the values we would expect if the data did come from a normal distribution (theoretical quantiles).</p>
 <p>The <a href="http://en.wikipedia.org/wiki/Normal_probability_plot">Wikipedia page for Normal probability plots</a> gives details on how this is implemented in <code>R</code> if you are interested.</p>
@@ -569,7 +595,7 @@ x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</
 <span class="kw">qqnorm</span>(x, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 <span class="kw">qqline</span>(x, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)
 <span class="kw">qq_plot</span>(x)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-348-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-349-1.png" width="960" /></p>
 <p>To get a better idea of what “close to the line” means, we perform a number of simulations, and create Q-Q plots.</p>
 <p>First we simulate data from a normal distribution with different sample sizes, and each time create a Q-Q plot.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))
@@ -577,7 +603,7 @@ x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</
 <span class="kw">qq_plot</span>(<span class="kw">rnorm</span>(<span class="dv">10</span>))
 <span class="kw">qq_plot</span>(<span class="kw">rnorm</span>(<span class="dv">25</span>))
 <span class="kw">qq_plot</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>))</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-349-1.png" width="768" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-350-1.png" width="768" /></p>
 <p>Since this data <strong>is</strong> sampled from a normal distribution, these are all, by definition, good Q-Q plots. The points are “close to the line” and we would conclude that this data could have been sampled from a normal distribution. Notice in the first plot, one point is <em>somewhat</em> far from the line, but just one point, in combination with the small sample size, is not enough to make us worried. We see with the large sample size, all of the points are rather close to the line.</p>
 <p>Next, we simulate data from a <span class="math inline">\(t\)</span> distribution with a small degrees of freedom, for different sample sizes.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))
@@ -585,7 +611,7 @@ x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</
 <span class="kw">qq_plot</span>(<span class="kw">rt</span>(<span class="dv">10</span>, <span class="dt">df =</span> <span class="dv">4</span>))
 <span class="kw">qq_plot</span>(<span class="kw">rt</span>(<span class="dv">25</span>, <span class="dt">df =</span> <span class="dv">4</span>))
 <span class="kw">qq_plot</span>(<span class="kw">rt</span>(<span class="dv">100</span>, <span class="dt">df =</span> <span class="dv">4</span>))</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-350-1.png" width="768" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-351-1.png" width="768" /></p>
 <p>Recall, that as the degrees of freedom for a <span class="math inline">\(t\)</span> distribution become larger, the distribution becomes more and more similar to a normal. Here, using 4 degrees of freedom, we have a distribution that is somewhat normal, it is symmetrical and roughly bell-shaped, however it has “fat tails.” This presents itself clearly in the third panel. While many of the points are close to the line, at the edges, there are large discrepancies. This indicates that the values are to small (negative) or too large (positive) compared to what we would expect for a normal distribution. So for the sample size of <code>100</code>, we would conclude that that normality assumption is violated. (If these were residuals of a model.) For sample sizes of <code>10</code> and <code>25</code> we may be suspicious, but not entirely confident. Reading Q-Q plots, is a bit of an art, not completely a science.</p>
 <p>Next, we simulate data from an exponential distribution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))
@@ -593,28 +619,28 @@ x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</
 <span class="kw">qq_plot</span>(<span class="kw">rexp</span>(<span class="dv">10</span>))
 <span class="kw">qq_plot</span>(<span class="kw">rexp</span>(<span class="dv">25</span>))
 <span class="kw">qq_plot</span>(<span class="kw">rexp</span>(<span class="dv">100</span>))</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-351-1.png" width="768" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-352-1.png" width="768" /></p>
 <p>This is a distribution that is not very similar to a normal, so in all three cases, we see points that are far from the lines, so we would think that the normality assumption is violated.</p>
 <p>For a better understanding of which Q-Q plots are “good,” repeat the simulations above a number of times (without setting the seed) and pay attention to the differences between those that are simulated from normal, and those that are not. Also consider different samples sizes and distribution parameters.</p>
 <p>Returning to our three regressions, recall,</p>
 <ul>
-<li><code>fit1</code> had no violation of assumptions,</li>
-<li><code>fit2</code> violated the constant variance assumption, but not linearity,</li>
-<li><code>fit3</code> violated linearity, but not constant variance.</li>
+<li><code>fit_1</code> had no violation of assumptions,</li>
+<li><code>fit_2</code> violated the constant variance assumption, but not linearity,</li>
+<li><code>fit_3</code> violated linearity, but not constant variance.</li>
 </ul>
 <p>We’ll now create a Q-Q plot for each to asses normality of errors.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit1), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit1&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-<span class="kw">qqline</span>(<span class="kw">resid</span>(fit1), <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-352-1.png" width="672" /></p>
-<p>For <code>fit1</code>, we have a near perfect Q-Q plot. We would believe the errors follow a normal distribution.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit2), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit2&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-<span class="kw">qqline</span>(<span class="kw">resid</span>(fit2), <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_1), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit_1&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
+<span class="kw">qqline</span>(<span class="kw">resid</span>(fit_1), <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-353-1.png" width="672" /></p>
-<p>For <code>fit2</code>, we have a suspect Q-Q plot. We would probably <strong>not</strong> believe the errors follow a normal distribution.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit3), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit3&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-<span class="kw">qqline</span>(<span class="kw">resid</span>(fit3), <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p>For <code>fit_1</code>, we have a near perfect Q-Q plot. We would believe the errors follow a normal distribution.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_2), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit_2&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
+<span class="kw">qqline</span>(<span class="kw">resid</span>(fit_2), <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-354-1.png" width="672" /></p>
-<p>Lastly, for <code>fit3</code>, we again have a suspect Q-Q plot. We would probably <strong>not</strong> believe the errors follow a normal distribution.</p>
+<p>For <code>fit_2</code>, we have a suspect Q-Q plot. We would probably <strong>not</strong> believe the errors follow a normal distribution.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_3), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit_3&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
+<span class="kw">qqline</span>(<span class="kw">resid</span>(fit_3), <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-355-1.png" width="672" /></p>
+<p>Lastly, for <code>fit_3</code>, we again have a suspect Q-Q plot. We would probably <strong>not</strong> believe the errors follow a normal distribution.</p>
 </div>
 <div id="shapiro-wilk-test" class="section level3">
 <h3><span class="header-section-number">12.2.5</span> Shapiro-Wilk Test</h3>
@@ -634,26 +660,26 @@ x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</
 ## W = 0.71164, p-value = 0.0000105</code></pre>
 <p>This gives us the value of the test statistic and its p-value. The null hypothesis assumes the data follow a normal distribution, thus a small p-value indicates we believe there is only a small probability the data follow a normal distribution.</p>
 <p>For details, see: <a href="https://en.wikipedia.org/wiki/Shapiro-Wilk_test">Wikipedia: Shapiro–Wilk test.</a></p>
-<p>In the above examples, we see we fail to reject for the data sampled from normal, and reject on the non-normal data.</p>
-<p>Returning again to <code>fit1</code>, <code>fit2</code> and <code>fit3</code>, we see the result of running <code>shapiro.test()</code> on the residuals of each, returns a result for each that matches for decisions based on the Q-Q plots.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(fit1))</code></pre></div>
+<p>In the above examples, we see we fail to reject for the data sampled from normal, and reject on the non-normal data, for any reasonable <span class="math inline">\(\alpha\)</span>.</p>
+<p>Returning again to <code>fit_1</code>, <code>fit_2</code> and <code>fit_3</code>, we see the result of running <code>shapiro.test()</code> on the residuals of each, returns a result for each that matches for decisions based on the Q-Q plots.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(fit_1))</code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
-## data:  resid(fit1)
+## data:  resid(fit_1)
 ## W = 0.99858, p-value = 0.9622</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(fit2))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(fit_2))</code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
-## data:  resid(fit2)
-## W = 0.94799, p-value = 3.002e-12</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(fit3))</code></pre></div>
+## data:  resid(fit_2)
+## W = 0.93697, p-value = 1.056e-13</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(fit_3))</code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
-## data:  resid(fit3)
-## W = 0.97432, p-value = 0.000000109</code></pre>
+## data:  resid(fit_3)
+## W = 0.97643, p-value = 0.0000003231</code></pre>
 </div>
 </div>
 <div id="unusual-observations" class="section level2">
@@ -662,52 +688,65 @@ x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</
 <p>The following three plots are inspired by an example from <a href="http://www.maths.bath.ac.uk/~jjf23/LMR/">Linear Models with R</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))
 <span class="kw">set.seed</span>(<span class="dv">42</span>)
-ex_data  =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span>:<span class="dv">10</span>, <span class="dt">y =</span> <span class="dv">10</span>:<span class="dv">1</span> +<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>))
+ex_data  =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span>:<span class="dv">10</span>, 
+                      <span class="dt">y =</span> <span class="dv">10</span>:<span class="dv">1</span> +<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>))
 ex_model =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> ex_data)
 
-<span class="co"># low leverage, yes outlier, small influence</span>
-point1 =<span class="st"> </span><span class="kw">c</span>(<span class="fl">5.4</span>, <span class="dv">11</span>)
-model1 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> <span class="kw">rbind</span>(ex_data, point1))
-<span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> <span class="kw">rbind</span>(ex_data, point1), <span class="dt">cex =</span> <span class="fl">1.5</span>)
-<span class="kw">points</span>(<span class="dt">x =</span> point1[<span class="dv">1</span>], <span class="dt">y =</span> point1[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">4</span>, <span class="dt">cex =</span> <span class="dv">5</span>, <span class="dt">col =</span> <span class="st">&quot;firebrick&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="co"># low leverage, large residual, small influence</span>
+point_1 =<span class="st"> </span><span class="kw">c</span>(<span class="fl">5.4</span>, <span class="dv">11</span>)
+ex_data_1 =<span class="st"> </span><span class="kw">rbind</span>(ex_data, point_1)
+model_1 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> ex_data_1)
+<span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> ex_data_1, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, 
+     <span class="dt">main =</span> <span class="st">&quot;Low Leverage, Large Residual, Small Influence&quot;</span>)
+<span class="kw">points</span>(<span class="dt">x =</span> point_1[<span class="dv">1</span>], <span class="dt">y =</span> point_1[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">4</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">abline</span>(ex_model, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
-<span class="kw">abline</span>(model1, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="kw">abline</span>(model_1, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Original Data&quot;</span>, <span class="st">&quot;Added Point&quot;</span>), 
+       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;darkorange&quot;</span>))
 
-<span class="co"># high leverage, not outlier, low influence</span>
-point2 =<span class="st"> </span><span class="kw">c</span>(<span class="dv">15</span>, -<span class="fl">4.1</span>)
-model2 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> <span class="kw">rbind</span>(ex_data, point2))
-<span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> <span class="kw">rbind</span>(ex_data, point2), <span class="dt">cex =</span> <span class="fl">1.5</span>)
-<span class="kw">points</span>(<span class="dt">x =</span> point2[<span class="dv">1</span>], <span class="dt">y =</span> point2[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">4</span>, <span class="dt">cex =</span> <span class="dv">5</span>, <span class="dt">col =</span> <span class="st">&quot;firebrick&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="co"># high leverage, small residual, small influence</span>
+point_2 =<span class="st"> </span><span class="kw">c</span>(<span class="dv">18</span>, -<span class="fl">5.7</span>)
+ex_data_2 =<span class="st"> </span><span class="kw">rbind</span>(ex_data, point_2)
+model_2 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> ex_data_2)
+<span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> ex_data_2, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, 
+     <span class="dt">main =</span> <span class="st">&quot;High Leverage, Small Residual, Small Influence&quot;</span>)
+<span class="kw">points</span>(<span class="dt">x =</span> point_2[<span class="dv">1</span>], <span class="dt">y =</span> point_2[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">4</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">abline</span>(ex_model, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
-<span class="kw">abline</span>(model2, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="kw">abline</span>(model_2, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Original Data&quot;</span>, <span class="st">&quot;Added Point&quot;</span>), 
+       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;darkorange&quot;</span>))
 
-<span class="co"># high leverage, yes outlier, large influence</span>
-point3 =<span class="st"> </span><span class="kw">c</span>(<span class="dv">15</span>, <span class="fl">5.1</span>)
-model3 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> <span class="kw">rbind</span>(ex_data, point3))
-<span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> <span class="kw">rbind</span>(ex_data, point3), <span class="dt">cex =</span> <span class="fl">1.5</span>)
-<span class="kw">points</span>(<span class="dt">x =</span> point3[<span class="dv">1</span>], <span class="dt">y =</span> point3[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">4</span>, <span class="dt">cex =</span> <span class="dv">5</span>, <span class="dt">col =</span> <span class="st">&quot;firebrick&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="co"># high leverage, large residual, large influence</span>
+point_3 =<span class="st"> </span><span class="kw">c</span>(<span class="dv">14</span>, <span class="fl">5.1</span>)
+ex_data_3 =<span class="st"> </span><span class="kw">rbind</span>(ex_data, point_3)
+model_3 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> ex_data_3)
+<span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> ex_data_3, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(-<span class="dv">3</span>, <span class="dv">12</span>),
+     <span class="dt">main =</span> <span class="st">&quot;High Leverage, Large Residual, Large Influence&quot;</span>)
+<span class="kw">points</span>(<span class="dt">x =</span> point_3[<span class="dv">1</span>], <span class="dt">y =</span> point_3[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">4</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">abline</span>(ex_model, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
-<span class="kw">abline</span>(model3, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-359-1.png" width="672" /></p>
-<p>The blue solid line in each plot is the regression fitted to the 10 original data points stored in <code>ex_data</code>. The dashed orange line in each plot is the result of adding a single point to the original data in <code>ex_data</code>. This additional point is indicated by the large red “X” in each plot.</p>
+<span class="kw">abline</span>(model_3, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+<span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Original Data&quot;</span>, <span class="st">&quot;Added Point&quot;</span>), 
+       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;darkorange&quot;</span>))</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unusual_obs_plot-1.png" width="1440" /></p>
+<p>The blue solid line in each plot is a regression fit to the 10 original data points stored in <code>ex_data</code>. The dashed orange line in each plot is the result of adding a single point to the original data in <code>ex_data</code>. This additional point is indicated by the circled point.</p>
 <p>The slope of the regression for the original ten points, the solid blue line, is given by:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(ex_model)[<span class="dv">2</span>]</code></pre></div>
 <pre><code>##          x 
 ## -0.9696033</code></pre>
 <p>The added point in the first plot has a <em>small</em> effect on the slope, which becomes:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(model1)[<span class="dv">2</span>]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(model_1)[<span class="dv">2</span>]</code></pre></div>
 <pre><code>##          x 
 ## -0.9749534</code></pre>
 <p>We will say that this point has low leverage, is an outlier due to its large residual, but has small influence.</p>
 <p>The added point in the second plot also has a <em>small</em> effect on the slope, which is:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(model2)[<span class="dv">2</span>]</code></pre></div>
-<pre><code>##         x 
-## -1.018734</code></pre>
-<p>We will say that this point has high leverage, is not an outlier due to its small residual, and has small influence.</p>
-<p>Lastly, the added point in the third plot has a <em>large</em> effect on the slope, which is now:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(model3)[<span class="dv">2</span>]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(model_2)[<span class="dv">2</span>]</code></pre></div>
 <pre><code>##          x 
-## -0.5358609</code></pre>
+## -0.9507397</code></pre>
+<p>We will say that this point has high leverage, is not an outlier due to its small residual, and has a very small influence.</p>
+<p>Lastly, the added point in the third plot has a <em>large</em> effect on the slope, which is now:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(model_3)[<span class="dv">2</span>]</code></pre></div>
+<pre><code>##          x 
+## -0.5892241</code></pre>
 <p>This added point is influential. It both has high leverage, and is an outlier due to its large residual.</p>
 <p>We’ve now mentioned three new concepts: leverage, outliers, and influential points, each of which we will discuss in detail.</p>
 <div id="leverage" class="section level3">
@@ -827,29 +866,29 @@ lev_ex_2$y[<span class="dv">4</span>] =<span class="st"> </span><span class="dv"
 ## 4  7  3 14</code></pre>
 <p>Notice that this point was the mean of both of the predictors.</p>
 <p>Returning to our three plots, each with an added point, we can calculate the leverages for each. Note that the 11th data point each time is the added data point.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hatvalues</span>(model1)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hatvalues</span>(model_1)</code></pre></div>
 <pre><code>##          1          2          3          4          5          6          7 
 ## 0.33534597 0.23860732 0.16610842 0.11784927 0.09382988 0.09405024 0.11851036 
 ##          8          9         10         11 
 ## 0.16721022 0.24014985 0.33732922 0.09100926</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hatvalues</span>(model2)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hatvalues</span>(model_2)</code></pre></div>
 <pre><code>##          1          2          3          4          5          6          7 
-## 0.26574586 0.20662983 0.15966851 0.12486188 0.10220994 0.09171271 0.09337017 
+## 0.23238866 0.18663968 0.14979757 0.12186235 0.10283401 0.09271255 0.09149798 
 ##          8          9         10         11 
-## 0.10718232 0.13314917 0.17127072 0.54419890</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hatvalues</span>(model3)</code></pre></div>
+## 0.09919028 0.11578947 0.14129555 0.66599190</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hatvalues</span>(model_3)</code></pre></div>
 <pre><code>##          1          2          3          4          5          6          7 
-## 0.26574586 0.20662983 0.15966851 0.12486188 0.10220994 0.09171271 0.09337017 
+## 0.27852761 0.21411043 0.16319018 0.12576687 0.10184049 0.09141104 0.09447853 
 ##          8          9         10         11 
-## 0.10718232 0.13314917 0.17127072 0.54419890</code></pre>
+## 0.11104294 0.14110429 0.18466258 0.49386503</code></pre>
 <p>Are any of these large?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hatvalues</span>(model1) &gt;<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span><span class="kw">mean</span>(<span class="kw">hatvalues</span>(model1))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hatvalues</span>(model_1) &gt;<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span><span class="kw">mean</span>(<span class="kw">hatvalues</span>(model_1))</code></pre></div>
 <pre><code>##     1     2     3     4     5     6     7     8     9    10    11 
 ## FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hatvalues</span>(model2) &gt;<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span><span class="kw">mean</span>(<span class="kw">hatvalues</span>(model2))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hatvalues</span>(model_2) &gt;<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span><span class="kw">mean</span>(<span class="kw">hatvalues</span>(model_2))</code></pre></div>
 <pre><code>##     1     2     3     4     5     6     7     8     9    10    11 
 ## FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hatvalues</span>(model3) &gt;<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span><span class="kw">mean</span>(<span class="kw">hatvalues</span>(model3))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hatvalues</span>(model_3) &gt;<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span><span class="kw">mean</span>(<span class="kw">hatvalues</span>(model_3))</code></pre></div>
 <pre><code>##     1     2     3     4     5     6     7     8     9    10    11 
 ## FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE</code></pre>
 <p>We see that in the second and third plots, the added point is a point of high leverage. Recall that only in the third plot did that have an influence on the regression. To understand why, we’ll need to discuss outliers.</p>
@@ -863,11 +902,11 @@ e = y - \hat{y} = Iy - Hy = (I - H) y
 \]</span></p>
 <p>Then, under the assumptions of linear regression,</p>
 <p><span class="math display">\[
-Var(e_i) = (1 - h_i) \sigma^2
+\text{Var}(e_i) = (1 - h_i) \sigma^2
 \]</span></p>
 <p>and thus estimating <span class="math inline">\(\sigma^2\)</span> with <span class="math inline">\(s_e^2\)</span> gives</p>
 <p><span class="math display">\[
-SE[e_i] = s_e \sqrt{(1 - h_i)}.
+\text{SE}[e_i] = s_e \sqrt{(1 - h_i)}.
 \]</span></p>
 <p>We can then look at the <strong>standardized residual</strong> for each observation, <span class="math inline">\(i = 1, 2, \ldots n\)</span>,</p>
 <p><span class="math display">\[
@@ -876,78 +915,78 @@ r_i = \frac{e_i}{s_e\sqrt{1 - h_i}} \overset{approx}{\sim} N(\mu = 0, \sigma^ 2 
 <p>when <span class="math inline">\(n\)</span> is large.</p>
 <p>We can use this fact to identify “large” residuals. For example, standardized residuals greater than 2 in magnitude should only happen approximately 5 percent of the time.</p>
 <p>Returning again to our three plots, each with an added point, we can calculate the residuals and standardized residuals for each. Standardized residuals can be obtained in <code>R</code> by using <code>rstandard()</code> where we would normally use <code>resid()</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">resid</span>(model1)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">resid</span>(model_1)</code></pre></div>
 <pre><code>##          1          2          3          4          5          6          7 
 ##  0.4949887 -1.4657145 -0.5629345 -0.3182468 -0.5718877 -1.1073271  0.4852728 
 ##          8          9         10         11 
 ## -1.1459548  0.9420814 -1.1641029  4.4138254</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rstandard</span>(model1)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rstandard</span>(model_1)</code></pre></div>
 <pre><code>##          1          2          3          4          5          6          7 
 ##  0.3464701 -0.9585470 -0.3517802 -0.1933575 -0.3428264 -0.6638841  0.2949482 
 ##          8          9         10         11 
 ## -0.7165857  0.6167268 -0.8160389  2.6418234</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rstandard</span>(model1)[<span class="kw">abs</span>(<span class="kw">rstandard</span>(model1)) &gt;<span class="st"> </span><span class="dv">2</span>]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rstandard</span>(model_1)[<span class="kw">abs</span>(<span class="kw">rstandard</span>(model_1)) &gt;<span class="st"> </span><span class="dv">2</span>]</code></pre></div>
 <pre><code>##       11 
 ## 2.641823</code></pre>
 <p>In the first plot, we see that the 11th point, the added point, is a large standardized residual.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">resid</span>(model2)</code></pre></div>
-<pre><code>##          1          2          3          4          5          6          7 
-##  0.7820254 -1.1348974 -0.1883370  0.1001310 -0.1097294 -0.6013884  1.0349919 
-##          8          9         10         11 
-## -0.5524553  1.5793613 -0.4830427 -0.4266595</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rstandard</span>(model2)</code></pre></div>
-<pre><code>##          1          2          3          4          5          6          7 
-##  1.0653318 -1.4873251 -0.2398267  0.1249447 -0.1351833 -0.7365982  1.2688468 
-##          8          9         10         11 
-## -0.6825005  1.9801429 -0.6193932 -0.7377020</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rstandard</span>(model2)[<span class="kw">abs</span>(<span class="kw">rstandard</span>(model2)) &gt;<span class="st"> </span><span class="dv">2</span>]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">resid</span>(model_2)</code></pre></div>
+<pre><code>##           1           2           3           4           5           6 
+##  1.03288292 -0.95203397 -0.07346766  0.14700626 -0.13084829 -0.69050140 
+##           7           8           9          10          11 
+##  0.87788484 -0.77755647  1.28626601 -0.84413207  0.12449986</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rstandard</span>(model_2)</code></pre></div>
+<pre><code>##           1           2           3           4           5           6 
+##  1.41447023 -1.26655590 -0.09559792  0.18822094 -0.16574677 -0.86977220 
+##           7           8           9          10          11 
+##  1.10506546 -0.98294409  1.64121833 -1.09295417  0.25846620</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rstandard</span>(model_2)[<span class="kw">abs</span>(<span class="kw">rstandard</span>(model_2)) &gt;<span class="st"> </span><span class="dv">2</span>]</code></pre></div>
 <pre><code>## named numeric(0)</code></pre>
 <p>In the second plot, we see that there are no points with large standardized residuals.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">resid</span>(model3)</code></pre></div>
-<pre><code>##          1          2          3          4          5          6          7 
-##  2.5356166  0.1358208  0.5995083  0.4051034 -0.2876300 -1.2621619 -0.1086545 
-##          8          9         10         11 
-## -2.1789746 -0.5300310 -3.0753079  3.7667107</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rstandard</span>(model3)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">resid</span>(model_3)</code></pre></div>
 <pre><code>##           1           2           3           4           5           6 
-##  1.45289045  0.07486882  0.32110154  0.21261803 -0.14904562 -0.65024338 
+##  2.30296166 -0.04347087  0.47357980  0.33253808 -0.30683212 -1.22800087 
 ##           7           8           9          10          11 
-## -0.05602801 -1.13225246 -0.27951271 -1.65865000  2.73934714</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rstandard</span>(model3)[<span class="kw">abs</span>(<span class="kw">rstandard</span>(model3)) &gt;<span class="st"> </span><span class="dv">2</span>]</code></pre></div>
+## -0.02113027 -2.03808722 -0.33578039 -2.82769411  3.69191633</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rstandard</span>(model_3)</code></pre></div>
+<pre><code>##           1           2           3           4           5           6 
+##  1.41302755 -0.02555591  0.26980722  0.18535382 -0.16873216 -0.67141143 
+##           7           8           9          10          11 
+## -0.01157256 -1.12656475 -0.18882474 -1.63206526  2.70453408</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rstandard</span>(model_3)[<span class="kw">abs</span>(<span class="kw">rstandard</span>(model_3)) &gt;<span class="st"> </span><span class="dv">2</span>]</code></pre></div>
 <pre><code>##       11 
-## 2.739347</code></pre>
+## 2.704534</code></pre>
 <p>In the last plot, we see that the 11th point, the added point, is a large standardized residual.</p>
 <p>Recall that the added point in plots two and three were both high leverage, but now only the point in plot three has a large residual. We will now combine this information and discuss influence.</p>
 </div>
 <div id="influence" class="section level3">
 <h3><span class="header-section-number">12.3.3</span> Influence</h3>
-<p>As we have now seen in the three plots, some outliers only change the regression a small amount (plot one) and some outliers have a large effect on the regression (plot three). Observations that fall into the later category, points of <em>high leverage</em> <strong>and</strong> <em>large residual</em>, we will call <strong>influential</strong>.</p>
+<p>As we have now seen in the three plots, some outliers only change the regression a small amount (plot one) and some outliers have a large effect on the regression (plot three). Observations that fall into the later category, points with (some combination of) <em>high leverage</em> <strong>and</strong> <em>large residual</em>, we will call <strong>influential</strong>.</p>
 <p>A common measure of influence is <strong>Cook’s Distance</strong>, which is defined as</p>
 <p><span class="math display">\[
   D_i = \frac{1}{p}r_i^2\frac{h_i}{1-{h_i}}.
 \]</span></p>
 <p>Notice that this is a function of both <em>leverage</em> and <em>standardized residuals</em>.</p>
-<p>A Cook’s Distance is considered large if</p>
+<p>A Cook’s Distance is often considered large if</p>
 <p><span class="math display">\[
 D_i &gt; \frac{4}{n}
 \]</span></p>
 <p>and an observation with a large Cook’s Distance is called influential. This is again simply a heuristic, and not an exact rule.</p>
 <p>The Cook’s distance for each point of a regression can be calculated using <code>cooks.distance()</code> which is a default function in <code>R</code>. Let’s look for influential points in the three plots we had been considering.</p>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-379-1.png" width="672" /></p>
-<p>Recall that the added points (large red “X”) in each plot have different characteristics:</p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-379-1.png" width="1440" /></p>
+<p>Recall that the circled points in each plot have different characteristics:</p>
 <ul>
 <li>Plot One: low leverage, large residual.</li>
 <li>Plot Two: high leverage, small residual.</li>
 <li>Plot Three: high leverage, large residual.</li>
 </ul>
 <p>We’ll now directly check if each of these is influential.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cooks.distance</span>(model1)[<span class="dv">11</span>] &gt;<span class="st"> </span><span class="dv">4</span> /<span class="st"> </span><span class="kw">length</span>(<span class="kw">cooks.distance</span>(model1))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cooks.distance</span>(model_1)[<span class="dv">11</span>] &gt;<span class="st"> </span><span class="dv">4</span> /<span class="st"> </span><span class="kw">length</span>(<span class="kw">cooks.distance</span>(model_1))</code></pre></div>
 <pre><code>##    11 
 ## FALSE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cooks.distance</span>(model2)[<span class="dv">11</span>] &gt;<span class="st"> </span><span class="dv">4</span> /<span class="st"> </span><span class="kw">length</span>(<span class="kw">cooks.distance</span>(model2))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cooks.distance</span>(model_2)[<span class="dv">11</span>] &gt;<span class="st"> </span><span class="dv">4</span> /<span class="st"> </span><span class="kw">length</span>(<span class="kw">cooks.distance</span>(model_2))</code></pre></div>
 <pre><code>##    11 
 ## FALSE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cooks.distance</span>(model3)[<span class="dv">11</span>] &gt;<span class="st"> </span><span class="dv">4</span> /<span class="st"> </span><span class="kw">length</span>(<span class="kw">cooks.distance</span>(model3))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cooks.distance</span>(model_3)[<span class="dv">11</span>] &gt;<span class="st"> </span><span class="dv">4</span> /<span class="st"> </span><span class="kw">length</span>(<span class="kw">cooks.distance</span>(model_3))</code></pre></div>
 <pre><code>##   11 
 ## TRUE</code></pre>
 <p>And, as expected, the added point in the third plot, with high leverage and a large residual is considered influential!</p>
@@ -1071,7 +1110,7 @@ cd_mpg_hp_add[large_cd_mpg]</code></pre></div>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
 <script>
-require(["gitbook"], function(gitbook) {
+gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
 "github": false,
