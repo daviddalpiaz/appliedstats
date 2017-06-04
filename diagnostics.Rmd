@@ -159,7 +159,8 @@ head(sim_data_1)
 We then fit the model and add the fitted line to a scatterplot.
 
 ```{r}
-plot(y ~ x, data = sim_data_1, col = "dodgerblue", main = "Data from Model 1")
+plot(y ~ x, data = sim_data_1, col = "grey", pch = 20,
+     main = "Data from Model 1")
 fit_1 = lm(y ~ x, data = sim_data_1)
 abline(fit_1, col = "darkorange", lwd = 3)
 ```
@@ -167,7 +168,7 @@ abline(fit_1, col = "darkorange", lwd = 3)
 We now plot a fitted versus residuals plot. Note, this is residuals on the $y$-axis despite the ordering in the name. Sometimes you will see this called a residuals versus fitted, or residuals versus predicted plot.
 
 ```{r}
-plot(fitted(fit_1), resid(fit_1), col = "dodgerblue", 
+plot(fitted(fit_1), resid(fit_1), col = "grey", pch = 20,
      xlab = "Fitted", ylab = "Residuals", main = "Data from Model 1")
 abline(h = 0, col = "darkorange", lwd = 2)
 ```
@@ -187,14 +188,15 @@ Model 2 is an example of non-constant variance. In this case, the variance is la
 set.seed(42)
 sim_data_2 = sim_2()
 fit_2 = lm(y ~ x, data = sim_data_2)
-plot(y ~ x, data = sim_data_2, col = "dodgerblue", main = "Data from Model 2")
+plot(y ~ x, data = sim_data_2, col = "grey", pch = 20,
+     main = "Data from Model 2")
 abline(fit_2, col = "darkorange", lwd = 3)
 ```
 
 This actually is rather easy to see here by adding the fitted line to a scatterplot. This is because we are only performing simple linear regression. With multiple regression, a fitted versus residuals plot is a necessity, since adding a fitted regression to a scatterplot isn't exactly possible.
 
 ```{r}
-plot(fitted(fit_2), resid(fit_2), col = "dodgerblue", 
+plot(fitted(fit_2), resid(fit_2), col = "grey", pch = 20,
      xlab = "Fitted", ylab = "Residuals", main = "Data from Model 2")
 abline(h = 0, col = "darkorange", lwd = 2)
 ```
@@ -207,14 +209,15 @@ Now we will demonstrate a model which does not meet the linearity assumption. Mo
 set.seed(42)
 sim_data_3 = sim_3()
 fit_3 = lm(y ~ x, data = sim_data_3)
-plot(y ~ x, data = sim_data_3, col = "dodgerblue", main = "Data from Model 3")
+plot(y ~ x, data = sim_data_3, col = "grey", pch = 20,
+     main = "Data from Model 3")
 abline(fit_3, col = "darkorange", lwd = 3)
 ```
 
 Again, this is rather clear on the scatterplot, but again, we wouldn't be able to check this plot for multiple regression.
 
 ```{r}
-plot(fitted(fit_3), resid(fit_3), col = "dodgerblue", 
+plot(fitted(fit_3), resid(fit_3), col = "grey", pch = 20,
      xlab = "Fitted", ylab = "Residuals", main = "Data from Model 3")
 abline(h = 0, col = "darkorange", lwd = 2)
 ```
@@ -298,8 +301,8 @@ Another visual method for assessing the normality of errors, which is more power
 In `R` these are very easy to make. The `qqnorm()` function plots the points, and the `qqline()` function adds the necessary line. We create a Q-Q plot for the residuals of `fit_1` to check if the errors could truly be normally distributed.
 
 ```{r}
-qqnorm(resid(fit_1), main = "Normal Q-Q Plot, fit_1", col = "dodgerblue")
-qqline(resid(fit_1), col = "darkorange", lwd = 2)
+qqnorm(resid(fit_1), main = "Normal Q-Q Plot, fit_1", col = "grey")
+qqline(resid(fit_1), col = "dodgerblue", lwd = 2)
 ```
 
 In short, if the points of the plot do not closely follow a straight line, this would suggest that the data do not come from a normal distribution.
@@ -311,24 +314,24 @@ The [Wikipedia page for Normal probability plots](http://en.wikipedia.org/wiki/N
 Also, to get a better idea of how Q-Q plots work, here is a quick function which creates a Q-Q plot:
 
 ```{r}
-qq_plot = function(w) {
+qq_plot = function(e) {
 
-  n = length(w)
+  n = length(e)
   normal_quantiles = qnorm(((1:n) / (n + 1)))
 
   # plot theoretical verus observed quantiles
-  plot(normal_quantiles, sort(w),
+  plot(normal_quantiles, sort(e),
        xlab = c("Theoretical Quantiles"),
        ylab = c("Sample Quantiles"),
-       col = "dodgerblue")
+       col = "grey")
   title("Normal Q-Q Plot")
 
   ## calculate line through the first and third quartiles  
-  slope     = (quantile(w, 0.75) - quantile(w, 0.25)) / (qnorm(0.75) - qnorm(0.25))
-  intercept = quantile(w, 0.25) - slope * qnorm(0.25)
+  slope     = (quantile(e, 0.75) - quantile(e, 0.25)) / (qnorm(0.75) - qnorm(0.25))
+  intercept = quantile(e, 0.25) - slope * qnorm(0.25)
 
   # add to existing plot
-  abline(intercept, slope, lty = 2, lwd = 2, col = "darkorange")
+  abline(intercept, slope, lty = 2, lwd = 2, col = "dodgerblue")
 }
 ```
 
@@ -338,8 +341,8 @@ We can then verify that it is essentially equivalent to using `qqnorm()` and `qq
 set.seed(420)
 x = rnorm(100, mean = 0 , sd = 1)
 par(mfrow = c(1, 2))
-qqnorm(x, col = "dodgerblue")
-qqline(x, lty = 2, lwd = 2, col = "darkorange")
+qqnorm(x, col = "grey")
+qqline(x, lty = 2, lwd = 2, col = "dodgerblue")
 qq_plot(x)
 ```
 
@@ -347,7 +350,7 @@ To get a better idea of what "close to the line" means, we perform a number of s
 
 First we simulate data from a normal distribution with different sample sizes, and each time create a Q-Q plot.
 
-```{r, fig.height = 4, fig.width = 8}
+```{r, fig.height = 4, fig.width = 12}
 par(mfrow = c(1, 3))
 set.seed(420)
 qq_plot(rnorm(10))
@@ -359,7 +362,7 @@ Since this data **is** sampled from a normal distribution, these are all, by def
 
 Next, we simulate data from a $t$ distribution with a small degrees of freedom, for different sample sizes.
 
-```{r, fig.height = 4, fig.width = 8}
+```{r, fig.height = 4, fig.width = 12}
 par(mfrow = c(1, 3))
 set.seed(420)
 qq_plot(rt(10, df = 4))
@@ -371,7 +374,7 @@ Recall, that as the degrees of freedom for a $t$ distribution become larger, the
 
 Next, we simulate data from an exponential distribution.
 
-```{r, fig.height = 4, fig.width = 8}
+```{r, fig.height = 4, fig.width = 12}
 par(mfrow = c(1, 3))
 set.seed(420)
 qq_plot(rexp(10))
@@ -392,22 +395,22 @@ Returning to our three regressions, recall,
 We'll now create a Q-Q plot for each to asses normality of errors.
 
 ```{r}
-qqnorm(resid(fit_1), main = "Normal Q-Q Plot, fit_1", col = "dodgerblue")
-qqline(resid(fit_1), col = "darkorange", lwd = 2)
+qqnorm(resid(fit_1), main = "Normal Q-Q Plot, fit_1", col = "grey")
+qqline(resid(fit_1), col = "dodgerblue", lwd = 2)
 ```
 
 For `fit_1`, we have a near perfect Q-Q plot. We would believe the errors follow a normal distribution.
 
 ```{r}
-qqnorm(resid(fit_2), main = "Normal Q-Q Plot, fit_2", col = "dodgerblue")
-qqline(resid(fit_2), col = "darkorange", lwd = 2)
+qqnorm(resid(fit_2), main = "Normal Q-Q Plot, fit_2", col = "grey")
+qqline(resid(fit_2), col = "dodgerblue", lwd = 2)
 ```
 
 For `fit_2`, we have a suspect Q-Q plot. We would probably **not** believe the errors follow a normal distribution.
 
 ```{r}
-qqnorm(resid(fit_3), main = "Normal Q-Q Plot, fit_3", col = "dodgerblue")
-qqline(resid(fit_3), col = "darkorange", lwd = 2)
+qqnorm(resid(fit_3), main = "Normal Q-Q Plot, fit_3", col = "grey")
+qqline(resid(fit_3), col = "dodgerblue", lwd = 2)
 ```
 
 Lastly, for `fit_3`, we again have a suspect Q-Q plot. We would probably **not** believe the errors follow a normal distribution.
@@ -809,7 +812,9 @@ mpg_hp_add = lm(mpg ~ hp + am, data = mtcars)
 ```
 
 ```{r}
-plot(fitted(mpg_hp_add), resid(mpg_hp_add), col = "dodgerblue", xlab = "Fitted", ylab = "Residual")
+plot(fitted(mpg_hp_add), resid(mpg_hp_add), col = "grey", pch = 20,
+     xlab = "Fitted", ylab = "Residual", 
+     main = "mtcars: Fitted versus Residuals")
 abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
@@ -822,8 +827,8 @@ bptest(mpg_hp_add)
 The Breusch-Pagan test verifies this, at least for a small $\alpha$ value.
 
 ```{r}
-qqnorm(resid(mpg_hp_add), col = "dodgerblue")
-qqline(resid(mpg_hp_add), col = "darkorange", lwd = 2)
+qqnorm(resid(mpg_hp_add), col = "grey")
+qqline(resid(mpg_hp_add), col = "dodgerblue", lwd = 2)
 ```
 
 The Q-Q plot looks extremely good and the Shapiro-Wilk test agrees.
@@ -860,7 +865,9 @@ coef(mpg_hp_add)
 Since the diagnostics looked good, there isn't much need to worry about these two points, but let's see how much the coefficients change if we remove them.
 
 ```{r}
-mpg_hp_add_fix = lm(mpg ~ hp + am, data = mtcars, subset = cd_mpg_hp_add <= 4 / length(cd_mpg_hp_add))
+mpg_hp_add_fix = lm(mpg ~ hp + am, 
+                    data = mtcars, 
+                    subset = cd_mpg_hp_add <= 4 / length(cd_mpg_hp_add))
 coef(mpg_hp_add_fix)
 ```
 
@@ -916,8 +923,8 @@ big_model = lm(mpg ~ disp * hp * domestic, data = autompg)
 ```
 
 ```{r}
-qqnorm(resid(big_model), col = "dodgerblue")
-qqline(resid(big_model), col = "darkorange", lwd = 2)
+qqnorm(resid(big_model), col = "grey")
+qqline(resid(big_model), col = "dodgerblue", lwd = 2)
 shapiro.test(resid(big_model))
 ```
 
@@ -931,9 +938,11 @@ sum(big_mod_cd > 4 / length(big_mod_cd))
 Here, we find `r sum(big_mod_cd > 4 / length(big_mod_cd))`, so perhaps removing them will help!
 
 ```{r}
-big_model_fix = lm(mpg ~ disp * hp * domestic, data = autompg, subset = big_mod_cd < 4 / length(big_mod_cd))
-qqnorm(resid(big_model_fix), col = "dodgerblue")
-qqline(resid(big_model_fix), col = "darkorange", lwd = 2)
+big_model_fix = lm(mpg ~ disp * hp * domestic, 
+                   data = autompg, 
+                   subset = big_mod_cd < 4 / length(big_mod_cd))
+qqnorm(resid(big_model_fix), col = "grey")
+qqline(resid(big_model_fix), col = "dodgerblue", lwd = 2)
 shapiro.test(resid(big_model_fix))
 ```
 
