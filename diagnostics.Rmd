@@ -301,7 +301,7 @@ Another visual method for assessing the normality of errors, which is more power
 In `R` these are very easy to make. The `qqnorm()` function plots the points, and the `qqline()` function adds the necessary line. We create a Q-Q plot for the residuals of `fit_1` to check if the errors could truly be normally distributed.
 
 ```{r}
-qqnorm(resid(fit_1), main = "Normal Q-Q Plot, fit_1", col = "grey")
+qqnorm(resid(fit_1), main = "Normal Q-Q Plot, fit_1", col = "darkgrey")
 qqline(resid(fit_1), col = "dodgerblue", lwd = 2)
 ```
 
@@ -323,7 +323,7 @@ qq_plot = function(e) {
   plot(normal_quantiles, sort(e),
        xlab = c("Theoretical Quantiles"),
        ylab = c("Sample Quantiles"),
-       col = "grey")
+       col = "darkgrey")
   title("Normal Q-Q Plot")
 
   ## calculate line through the first and third quartiles  
@@ -341,7 +341,7 @@ We can then verify that it is essentially equivalent to using `qqnorm()` and `qq
 set.seed(420)
 x = rnorm(100, mean = 0 , sd = 1)
 par(mfrow = c(1, 2))
-qqnorm(x, col = "grey")
+qqnorm(x, col = "darkgrey")
 qqline(x, lty = 2, lwd = 2, col = "dodgerblue")
 qq_plot(x)
 ```
@@ -395,21 +395,21 @@ Returning to our three regressions, recall,
 We'll now create a Q-Q plot for each to asses normality of errors.
 
 ```{r}
-qqnorm(resid(fit_1), main = "Normal Q-Q Plot, fit_1", col = "grey")
+qqnorm(resid(fit_1), main = "Normal Q-Q Plot, fit_1", col = "darkgrey")
 qqline(resid(fit_1), col = "dodgerblue", lwd = 2)
 ```
 
 For `fit_1`, we have a near perfect Q-Q plot. We would believe the errors follow a normal distribution.
 
 ```{r}
-qqnorm(resid(fit_2), main = "Normal Q-Q Plot, fit_2", col = "grey")
+qqnorm(resid(fit_2), main = "Normal Q-Q Plot, fit_2", col = "darkgrey")
 qqline(resid(fit_2), col = "dodgerblue", lwd = 2)
 ```
 
 For `fit_2`, we have a suspect Q-Q plot. We would probably **not** believe the errors follow a normal distribution.
 
 ```{r}
-qqnorm(resid(fit_3), main = "Normal Q-Q Plot, fit_3", col = "grey")
+qqnorm(resid(fit_3), main = "Normal Q-Q Plot, fit_3", col = "darkgrey")
 qqline(resid(fit_3), col = "dodgerblue", lwd = 2)
 ```
 
@@ -827,7 +827,7 @@ bptest(mpg_hp_add)
 The Breusch-Pagan test verifies this, at least for a small $\alpha$ value.
 
 ```{r}
-qqnorm(resid(mpg_hp_add), col = "grey")
+qqnorm(resid(mpg_hp_add), col = "darkgrey")
 qqline(resid(mpg_hp_add), col = "dodgerblue", lwd = 2)
 ```
 
@@ -923,7 +923,7 @@ big_model = lm(mpg ~ disp * hp * domestic, data = autompg)
 ```
 
 ```{r}
-qqnorm(resid(big_model), col = "grey")
+qqnorm(resid(big_model), col = "darkgrey")
 qqline(resid(big_model), col = "dodgerblue", lwd = 2)
 shapiro.test(resid(big_model))
 ```
