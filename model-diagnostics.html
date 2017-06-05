@@ -25,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2017-06-03">
+<meta name="date" content="2017-06-05">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -450,12 +450,13 @@ sim_data_1 =<span class="st"> </span><span class="kw">sim_1</span>()
 ## 5 3.208728 20.341344
 ## 6 2.595480 14.943525</code></pre>
 <p>We then fit the model and add the fitted line to a scatterplot.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> sim_data_1, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Data from Model 1&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> sim_data_1, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Data from Model 1&quot;</span>)
 fit_1 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> sim_data_1)
 <span class="kw">abline</span>(fit_1, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-336-1.png" width="672" /></p>
 <p>We now plot a fitted versus residuals plot. Note, this is residuals on the <span class="math inline">\(y\)</span>-axis despite the ordering in the name. Sometimes you will see this called a residuals versus fitted, or residuals versus predicted plot.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(fit_1), <span class="kw">resid</span>(fit_1), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(fit_1), <span class="kw">resid</span>(fit_1), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,
      <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Data from Model 1&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-337-1.png" width="672" /></p>
@@ -470,11 +471,12 @@ fit_1 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
 sim_data_2 =<span class="st"> </span><span class="kw">sim_2</span>()
 fit_2 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> sim_data_2)
-<span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> sim_data_2, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Data from Model 2&quot;</span>)
+<span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> sim_data_2, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Data from Model 2&quot;</span>)
 <span class="kw">abline</span>(fit_2, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-338-1.png" width="672" /></p>
 <p>This actually is rather easy to see here by adding the fitted line to a scatterplot. This is because we are only performing simple linear regression. With multiple regression, a fitted versus residuals plot is a necessity, since adding a fitted regression to a scatterplot isn’t exactly possible.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(fit_2), <span class="kw">resid</span>(fit_2), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(fit_2), <span class="kw">resid</span>(fit_2), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,
      <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Data from Model 2&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-339-1.png" width="672" /></p>
@@ -483,11 +485,12 @@ fit_2 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
 sim_data_3 =<span class="st"> </span><span class="kw">sim_3</span>()
 fit_3 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> sim_data_3)
-<span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> sim_data_3, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Data from Model 3&quot;</span>)
+<span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> sim_data_3, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Data from Model 3&quot;</span>)
 <span class="kw">abline</span>(fit_3, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-340-1.png" width="672" /></p>
 <p>Again, this is rather clear on the scatterplot, but again, we wouldn’t be able to check this plot for multiple regression.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(fit_3), <span class="kw">resid</span>(fit_3), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(fit_3), <span class="kw">resid</span>(fit_3), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,
      <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Data from Model 3&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-341-1.png" width="672" /></p>
@@ -562,38 +565,38 @@ fit_3 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> 
 <h3><span class="header-section-number">12.2.4</span> Q-Q Plots</h3>
 <p>Another visual method for assessing the normality of errors, which is more powerful than a histogram, is a normal quantile-quantile plot, or <strong>Q-Q plot</strong> for short.</p>
 <p>In <code>R</code> these are very easy to make. The <code>qqnorm()</code> function plots the points, and the <code>qqline()</code> function adds the necessary line. We create a Q-Q plot for the residuals of <code>fit_1</code> to check if the errors could truly be normally distributed.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_1), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit_1&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-<span class="kw">qqline</span>(<span class="kw">resid</span>(fit_1), <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_1), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit_1&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)
+<span class="kw">qqline</span>(<span class="kw">resid</span>(fit_1), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-347-1.png" width="672" /></p>
 <p>In short, if the points of the plot do not closely follow a straight line, this would suggest that the data do not come from a normal distribution.</p>
 <p>The calculations required to create the plot vary depending on the implementation, but essentially the <span class="math inline">\(y\)</span>-axis is the sorted data (observed, or sample quantiles), and the <span class="math inline">\(x\)</span>-axis is the values we would expect if the data did come from a normal distribution (theoretical quantiles).</p>
 <p>The <a href="http://en.wikipedia.org/wiki/Normal_probability_plot">Wikipedia page for Normal probability plots</a> gives details on how this is implemented in <code>R</code> if you are interested.</p>
 <p>Also, to get a better idea of how Q-Q plots work, here is a quick function which creates a Q-Q plot:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qq_plot =<span class="st"> </span>function(w) {
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qq_plot =<span class="st"> </span>function(e) {
 
-  n =<span class="st"> </span><span class="kw">length</span>(w)
+  n =<span class="st"> </span><span class="kw">length</span>(e)
   normal_quantiles =<span class="st"> </span><span class="kw">qnorm</span>(((<span class="dv">1</span>:n) /<span class="st"> </span>(n +<span class="st"> </span><span class="dv">1</span>)))
 
   <span class="co"># plot theoretical verus observed quantiles</span>
-  <span class="kw">plot</span>(normal_quantiles, <span class="kw">sort</span>(w),
+  <span class="kw">plot</span>(normal_quantiles, <span class="kw">sort</span>(e),
        <span class="dt">xlab =</span> <span class="kw">c</span>(<span class="st">&quot;Theoretical Quantiles&quot;</span>),
        <span class="dt">ylab =</span> <span class="kw">c</span>(<span class="st">&quot;Sample Quantiles&quot;</span>),
-       <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
+       <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)
   <span class="kw">title</span>(<span class="st">&quot;Normal Q-Q Plot&quot;</span>)
 
   ## calculate line through the first and third quartiles  
-  slope     =<span class="st"> </span>(<span class="kw">quantile</span>(w, <span class="fl">0.75</span>) -<span class="st"> </span><span class="kw">quantile</span>(w, <span class="fl">0.25</span>)) /<span class="st"> </span>(<span class="kw">qnorm</span>(<span class="fl">0.75</span>) -<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.25</span>))
-  intercept =<span class="st"> </span><span class="kw">quantile</span>(w, <span class="fl">0.25</span>) -<span class="st"> </span>slope *<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.25</span>)
+  slope     =<span class="st"> </span>(<span class="kw">quantile</span>(e, <span class="fl">0.75</span>) -<span class="st"> </span><span class="kw">quantile</span>(e, <span class="fl">0.25</span>)) /<span class="st"> </span>(<span class="kw">qnorm</span>(<span class="fl">0.75</span>) -<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.25</span>))
+  intercept =<span class="st"> </span><span class="kw">quantile</span>(e, <span class="fl">0.25</span>) -<span class="st"> </span>slope *<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.25</span>)
 
   <span class="co"># add to existing plot</span>
-  <span class="kw">abline</span>(intercept, slope, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)
+  <span class="kw">abline</span>(intercept, slope, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 }</code></pre></div>
 <p>We can then verify that it is essentially equivalent to using <code>qqnorm()</code> and <code>qqline()</code> in <code>R</code>. There are <em>slight</em> differences, but the general idea is the same.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">420</span>)
 x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">0</span> , <span class="dt">sd =</span> <span class="dv">1</span>)
 <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
-<span class="kw">qqnorm</span>(x, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-<span class="kw">qqline</span>(x, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)
+<span class="kw">qqnorm</span>(x, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)
+<span class="kw">qqline</span>(x, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 <span class="kw">qq_plot</span>(x)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-349-1.png" width="960" /></p>
 <p>To get a better idea of what “close to the line” means, we perform a number of simulations, and create Q-Q plots.</p>
@@ -603,7 +606,7 @@ x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</
 <span class="kw">qq_plot</span>(<span class="kw">rnorm</span>(<span class="dv">10</span>))
 <span class="kw">qq_plot</span>(<span class="kw">rnorm</span>(<span class="dv">25</span>))
 <span class="kw">qq_plot</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>))</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-350-1.png" width="768" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-350-1.png" width="1152" /></p>
 <p>Since this data <strong>is</strong> sampled from a normal distribution, these are all, by definition, good Q-Q plots. The points are “close to the line” and we would conclude that this data could have been sampled from a normal distribution. Notice in the first plot, one point is <em>somewhat</em> far from the line, but just one point, in combination with the small sample size, is not enough to make us worried. We see with the large sample size, all of the points are rather close to the line.</p>
 <p>Next, we simulate data from a <span class="math inline">\(t\)</span> distribution with a small degrees of freedom, for different sample sizes.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))
@@ -611,7 +614,7 @@ x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</
 <span class="kw">qq_plot</span>(<span class="kw">rt</span>(<span class="dv">10</span>, <span class="dt">df =</span> <span class="dv">4</span>))
 <span class="kw">qq_plot</span>(<span class="kw">rt</span>(<span class="dv">25</span>, <span class="dt">df =</span> <span class="dv">4</span>))
 <span class="kw">qq_plot</span>(<span class="kw">rt</span>(<span class="dv">100</span>, <span class="dt">df =</span> <span class="dv">4</span>))</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-351-1.png" width="768" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-351-1.png" width="1152" /></p>
 <p>Recall, that as the degrees of freedom for a <span class="math inline">\(t\)</span> distribution become larger, the distribution becomes more and more similar to a normal. Here, using 4 degrees of freedom, we have a distribution that is somewhat normal, it is symmetrical and roughly bell-shaped, however it has “fat tails.” This presents itself clearly in the third panel. While many of the points are close to the line, at the edges, there are large discrepancies. This indicates that the values are to small (negative) or too large (positive) compared to what we would expect for a normal distribution. So for the sample size of <code>100</code>, we would conclude that that normality assumption is violated. (If these were residuals of a model.) For sample sizes of <code>10</code> and <code>25</code> we may be suspicious, but not entirely confident. Reading Q-Q plots, is a bit of an art, not completely a science.</p>
 <p>Next, we simulate data from an exponential distribution.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))
@@ -619,7 +622,7 @@ x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</
 <span class="kw">qq_plot</span>(<span class="kw">rexp</span>(<span class="dv">10</span>))
 <span class="kw">qq_plot</span>(<span class="kw">rexp</span>(<span class="dv">25</span>))
 <span class="kw">qq_plot</span>(<span class="kw">rexp</span>(<span class="dv">100</span>))</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-352-1.png" width="768" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-352-1.png" width="1152" /></p>
 <p>This is a distribution that is not very similar to a normal, so in all three cases, we see points that are far from the lines, so we would think that the normality assumption is violated.</p>
 <p>For a better understanding of which Q-Q plots are “good,” repeat the simulations above a number of times (without setting the seed) and pay attention to the differences between those that are simulated from normal, and those that are not. Also consider different samples sizes and distribution parameters.</p>
 <p>Returning to our three regressions, recall,</p>
@@ -629,16 +632,16 @@ x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</
 <li><code>fit_3</code> violated linearity, but not constant variance.</li>
 </ul>
 <p>We’ll now create a Q-Q plot for each to asses normality of errors.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_1), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit_1&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-<span class="kw">qqline</span>(<span class="kw">resid</span>(fit_1), <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_1), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit_1&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)
+<span class="kw">qqline</span>(<span class="kw">resid</span>(fit_1), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-353-1.png" width="672" /></p>
 <p>For <code>fit_1</code>, we have a near perfect Q-Q plot. We would believe the errors follow a normal distribution.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_2), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit_2&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-<span class="kw">qqline</span>(<span class="kw">resid</span>(fit_2), <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_2), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit_2&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)
+<span class="kw">qqline</span>(<span class="kw">resid</span>(fit_2), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-354-1.png" width="672" /></p>
 <p>For <code>fit_2</code>, we have a suspect Q-Q plot. We would probably <strong>not</strong> believe the errors follow a normal distribution.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_3), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit_3&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-<span class="kw">qqline</span>(<span class="kw">resid</span>(fit_3), <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_3), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit_3&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)
+<span class="kw">qqline</span>(<span class="kw">resid</span>(fit_3), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-355-1.png" width="672" /></p>
 <p>Lastly, for <code>fit_3</code>, we again have a suspect Q-Q plot. We would probably <strong>not</strong> believe the errors follow a normal distribution.</p>
 </div>
@@ -658,7 +661,7 @@ x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</
 ## 
 ## data:  rexp(25)
 ## W = 0.71164, p-value = 0.0000105</code></pre>
-<p>This gives us the value of the test statistic and its p-value. The null hypothesis assumes the data follow a normal distribution, thus a small p-value indicates we believe there is only a small probability the data follow a normal distribution.</p>
+<p>This gives us the value of the test statistic and its p-value. The null hypothesis assumes the data were sampled from a normal distribution, thus a small p-value indicates we believe there is only a small probability the data could have been sampled from a normal distribution.</p>
 <p>For details, see: <a href="https://en.wikipedia.org/wiki/Shapiro-Wilk_test">Wikipedia: Shapiro–Wilk test.</a></p>
 <p>In the above examples, we see we fail to reject for the data sampled from normal, and reject on the non-normal data, for any reasonable <span class="math inline">\(\alpha\)</span>.</p>
 <p>Returning again to <code>fit_1</code>, <code>fit_2</code> and <code>fit_3</code>, we see the result of running <code>shapiro.test()</code> on the residuals of each, returns a result for each that matches for decisions based on the Q-Q plots.</p>
@@ -999,7 +1002,9 @@ D_i &gt; \frac{4}{n}
 <p>Last chapter we fit an additive regression to the <code>mtcars</code> data with <code>mpg</code> as the response and <code>hp</code> and <code>am</code> as predictors. Let’s perform some diagnostics on this model.</p>
 <p>First, fit the model as we did last chapter.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg_hp_add =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>hp +<span class="st"> </span>am, <span class="dt">data =</span> mtcars)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(mpg_hp_add), <span class="kw">resid</span>(mpg_hp_add), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residual&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(mpg_hp_add), <span class="kw">resid</span>(mpg_hp_add), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,
+     <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residual&quot;</span>, 
+     <span class="dt">main =</span> <span class="st">&quot;mtcars: Fitted versus Residuals&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-382-1.png" width="672" /></p>
 <p>The fitted versus residuals plot looks good. We don’t see any obvious pattern, and the variance looks roughly constant. (Maybe a little larger for large fitted values, but not enough to worry about.)</p>
@@ -1010,8 +1015,8 @@ D_i &gt; \frac{4}{n}
 ## data:  mpg_hp_add
 ## BP = 7.5858, df = 2, p-value = 0.02253</code></pre>
 <p>The Breusch-Pagan test verifies this, at least for a small <span class="math inline">\(\alpha\)</span> value.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(mpg_hp_add), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-<span class="kw">qqline</span>(<span class="kw">resid</span>(mpg_hp_add), <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(mpg_hp_add), <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)
+<span class="kw">qqline</span>(<span class="kw">resid</span>(mpg_hp_add), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-384-1.png" width="672" /></p>
 <p>The Q-Q plot looks extremely good and the Shapiro-Wilk test agrees.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(mpg_hp_add))</code></pre></div>
@@ -1038,7 +1043,9 @@ cd_mpg_hp_add[large_cd_mpg]</code></pre></div>
 <pre><code>## (Intercept)          hp          am 
 ##  26.5849137  -0.0588878   5.2770853</code></pre>
 <p>Since the diagnostics looked good, there isn’t much need to worry about these two points, but let’s see how much the coefficients change if we remove them.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg_hp_add_fix =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>hp +<span class="st"> </span>am, <span class="dt">data =</span> mtcars, <span class="dt">subset =</span> cd_mpg_hp_add &lt;=<span class="st"> </span><span class="dv">4</span> /<span class="st"> </span><span class="kw">length</span>(cd_mpg_hp_add))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg_hp_add_fix =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>hp +<span class="st"> </span>am, 
+                    <span class="dt">data =</span> mtcars, 
+                    <span class="dt">subset =</span> cd_mpg_hp_add &lt;=<span class="st"> </span><span class="dv">4</span> /<span class="st"> </span><span class="kw">length</span>(cd_mpg_hp_add))
 <span class="kw">coef</span>(mpg_hp_add_fix)</code></pre></div>
 <pre><code>## (Intercept)          hp          am 
 ## 27.22190933 -0.06286249  4.29765867</code></pre>
@@ -1063,8 +1070,8 @@ cd_mpg_hp_add[large_cd_mpg]</code></pre></div>
 ##  $ origin  : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ domestic: num  1 1 1 1 1 1 1 1 1 1 ...</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">big_model =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>disp *<span class="st"> </span>hp *<span class="st"> </span>domestic, <span class="dt">data =</span> autompg)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(big_model), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-<span class="kw">qqline</span>(<span class="kw">resid</span>(big_model), <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(big_model), <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)
+<span class="kw">qqline</span>(<span class="kw">resid</span>(big_model), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-395-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(big_model))</code></pre></div>
 <pre><code>## 
@@ -1077,9 +1084,11 @@ cd_mpg_hp_add[large_cd_mpg]</code></pre></div>
 <span class="kw">sum</span>(big_mod_cd &gt;<span class="st"> </span><span class="dv">4</span> /<span class="st"> </span><span class="kw">length</span>(big_mod_cd))</code></pre></div>
 <pre><code>## [1] 31</code></pre>
 <p>Here, we find 31, so perhaps removing them will help!</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">big_model_fix =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>disp *<span class="st"> </span>hp *<span class="st"> </span>domestic, <span class="dt">data =</span> autompg, <span class="dt">subset =</span> big_mod_cd &lt;<span class="st"> </span><span class="dv">4</span> /<span class="st"> </span><span class="kw">length</span>(big_mod_cd))
-<span class="kw">qqnorm</span>(<span class="kw">resid</span>(big_model_fix), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-<span class="kw">qqline</span>(<span class="kw">resid</span>(big_model_fix), <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">big_model_fix =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>disp *<span class="st"> </span>hp *<span class="st"> </span>domestic, 
+                   <span class="dt">data =</span> autompg, 
+                   <span class="dt">subset =</span> big_mod_cd &lt;<span class="st"> </span><span class="dv">4</span> /<span class="st"> </span><span class="kw">length</span>(big_mod_cd))
+<span class="kw">qqnorm</span>(<span class="kw">resid</span>(big_model_fix), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>)
+<span class="kw">qqline</span>(<span class="kw">resid</span>(big_model_fix), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-397-1.png" width="672" /></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(big_model_fix))</code></pre></div>
 <pre><code>## 
