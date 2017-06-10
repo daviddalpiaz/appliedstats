@@ -33,6 +33,11 @@ write.csv(initech, "data/initech.csv", row.names = FALSE)
 initech = read.csv("data/initech.csv")
 ```
 
+```{r}
+plot(salary ~ years, data = initech, col = "grey", pch = 20, cex = 1.5,
+     main = "Salaries at Initech, By Seniority")
+```
+
 We first fit a simple linear model.
 
 ```{r}
@@ -43,16 +48,22 @@ summary(initech_fit)
 This model appears significant, but does it meet the model assumptions?
 
 ```{r}
-plot(salary ~ years, data = initech, col = "dodgerblue", pch = 20, cex = 1.5)
+plot(salary ~ years, data = initech, col = "grey", pch = 20, cex = 1.5,
+     main = "Salaries at Initech, By Seniority")
 abline(initech_fit, col = "darkorange", lwd = 2)
 ```
 
 Adding the fitted line to the plot, we see that the linear relationship appears correct.
 
-```{r}
-plot(fitted(initech_fit), resid(initech_fit), col = "dodgerblue",
-     pch = 20, cex = 1.5, xlab = "Fitted", ylab = "Residuals")
-abline(h = 0, lty = 2, col = "orange", lwd = 2)
+```{r, fig.height=5, fig.width=10}
+par(mfrow = c(1, 2))
+
+plot(fitted(initech_fit), resid(initech_fit), col = "grey", pch = 20,
+     xlab = "Fitted", ylab = "Residuals", main = "Fitted versus Residuals")
+abline(h = 0, col = "darkorange", lwd = 2)
+
+qqnorm(resid(initech_fit), main = "Normal Q-Q Plot", col = "darkgrey")
+qqline(resid(initech_fit), col = "dodgerblue", lwd = 2)
 ```
 
 However, from the fitted versus residuals plot it appears there is non-constant variance. Specifically, the variance increases as the fitted value increases.
@@ -62,7 +73,7 @@ However, from the fitted versus residuals plot it appears there is non-constant 
 Recall the fitted value is our estimate of the mean at a particular value of $x$. Under our usual assumptions,
 
 \[
-  \epsilon_i \sim N(0,\sigma^2)
+  \epsilon \sim N(0,\sigma^2)
 \]
 
 and thus
@@ -116,24 +127,31 @@ initech_fit_log = lm(log(salary) ~ years, data = initech)
 Note that while `log(y)` is considered the new response variable, we do not actually create a new variable in `R`, but simply transform the variable inside the model formula.
 
 ```{r}
-plot(log(salary) ~ years, data = initech, col = "dodgerblue", pch = 20, cex = 1.5)
+plot(log(salary) ~ years, data = initech, col = "grey", pch = 20, cex = 1.5,
+     main = "Salaries at Initech, By Seniority")
 abline(initech_fit_log, col = "darkorange", lwd = 2)
 ```
 
 Plotting the data on the transformed log scale and adding the fitted line, the relationship again appears linear, and we can already see that the variation about the fitted line looks constant.
 
 ```{r}
-plot(salary ~ years, data = initech, col = "dodgerblue", pch = 20, cex = 1.5)
+plot(salary ~ years, data = initech, col = "grey", pch = 20, cex = 1.5,
+     main = "Salaries at Initech, By Seniority")
 curve(exp(initech_fit_log$coef[1] + initech_fit_log$coef[2] * x),
       from = 0, to = 30, add = TRUE, col = "darkorange", lwd = 2)
 ```
 
 By plotting the data on the original scale, and adding the fitted regression, we see an exponential relationship. However, this is still a *linear* model, since the new transformed response, $\log(y)$, is still a *linear* combination of the predictors.
 
-```{r}
-plot(fitted(initech_fit_log), resid(initech_fit_log), col = "dodgerblue",
-     pch = 20, cex = 1.5, xlab = "Fitted", ylab = "Residuals")
-abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
+```{r, fig.height=5, fig.width=10}
+par(mfrow = c(1, 2))
+
+plot(fitted(initech_fit_log), resid(initech_fit_log), col = "grey", pch = 20,
+     xlab = "Fitted", ylab = "Residuals", main = "Fitted versus Residuals")
+abline(h = 0, col = "darkorange", lwd = 2)
+
+qqnorm(resid(initech_fit_log), main = "Normal Q-Q Plot", col = "darkgrey")
+qqline(resid(initech_fit_log), col = "dodgerblue", lwd = 2)
 ```
 
 The fitted versus residuals plot looks much better. It appears the constant variance assumption is no longer violated.
