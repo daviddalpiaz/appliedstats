@@ -404,13 +404,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>where <span class="math inline">\(c\)</span> is a constant that does not depend on the mean, <span class="math inline">\(\text{E}[Y \mid X = x]\)</span>. A transformation that accomplishes this is called a <strong>variance stabilizaing transformation.</strong></p>
 <p>A common variance stabilizing transformation (VST) when we see increasing variance in a fitted versus residuals plot is <span class="math inline">\(\log(Y)\)</span>. Also, if the values of a variable range over more than one order of magnitude and the variable is <em>strictly positive</em>, then replacing the variable by its logarithm is likely to be helpful.</p>
 <p>A reminder, that for our purposes, <span class="math inline">\(\log\)</span> and <span class="math inline">\(\ln\)</span> are both the natural log. <code>R</code> uses <code>log</code> to mean the natural log, unless a different base is specified.</p>
-<p>We will now use a log transformed response for the <em>Initech</em> data,</p>
+<p>We will now use a model with a log transformed response for the <em>Initech</em> data,</p>
 <p><span class="math display">\[
-  \log(y_i) = \beta_0 + \beta_1 x_i + \epsilon_i.
+  \log(Y_i) = \beta_0 + \beta_1 x_i + \epsilon_i.
 \]</span></p>
-<p>Note, if we re-scale the data from a log scale back to the original scale of the data, we now have</p>
+<p>Note, if we re-scale the model from a log scale back to the original scale of the data, we now have</p>
 <p><span class="math display">\[
-  y_i = \exp(\beta_0 + \beta_1 x_i) \cdot \exp(\epsilon_i)
+  Y_i = \exp(\beta_0 + \beta_1 x_i) \cdot \exp(\epsilon_i)
 \]</span></p>
 <p>which has the errors entering the model in a multiplicative fashion.</p>
 <p>Fitting this model in <code>R</code> requires only a minor modification to our formula specification.</p>
@@ -616,7 +616,7 @@ mpg_hp_loglog =<span class="st"> </span><span class="kw">lm</span>(<span class="
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-429-1.png" width="672" /></p>
 <p>We would like to fit the model,</p>
 <p><span class="math display">\[
-  y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \epsilon_i
+  Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \epsilon_i
 \]</span></p>
 <p>where <span class="math inline">\(\epsilon_i \sim N(0,\sigma^2)\)</span> for <span class="math inline">\(i = 1, 2, \cdots 21.\)</span></p>
 <p>The response <span class="math inline">\(y\)</span> is now a <strong>linear</strong> function of “two” variables which now allows <span class="math inline">\(y\)</span> to be a non-linear function of the original single predictor <span class="math inline">\(x\)</span>. We consider this a transformation, although we have actually in some sense added another predictor.</p>
@@ -704,7 +704,7 @@ X =<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">rep</
 <p>Here we verify the parameter estimates were found as we would expect.</p>
 <p>We could also add higher order terms, such as a third degree predictor. This is easy to do. Our <span class="math inline">\(X\)</span> matrix simply becomes larger again.</p>
 <p><span class="math display">\[
-  y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \beta_3 x_i^3 + \epsilon_i
+  Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \beta_3 x_i^3 + \epsilon_i
 \]</span></p>
 <p><span class="math display">\[
   \begin{bmatrix}
@@ -758,7 +758,7 @@ xplot =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-435-1.png" width="672" /></p>
 <p>Note we could fit a polynomial of an arbitrary order,</p>
 <p><span class="math display">\[
-  y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \cdots + \beta_{p-1}x_i^{p-1} + \epsilon_i
+  Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \cdots + \beta_{p-1}x_i^{p-1} + \epsilon_i
 \]</span></p>
 <p>However, we should be careful about over-fitting, since with a polynomial of degree one less than the number of observations, it is sometimes possible to fit a model perfectly.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
