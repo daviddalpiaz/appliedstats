@@ -317,7 +317,8 @@ Also, to get a better idea of how Q-Q plots work, here is a quick function which
 qq_plot = function(e) {
 
   n = length(e)
-  normal_quantiles = qnorm(((1:n) / (n + 1)))
+  normal_quantiles = qnorm(((1:n - 0.5) / n))
+  # normal_quantiles = qnorm(((1:n) / (n + 1)))
 
   # plot theoretical verus observed quantiles
   plot(normal_quantiles, sort(e),
@@ -326,7 +327,7 @@ qq_plot = function(e) {
        col = "darkgrey")
   title("Normal Q-Q Plot")
 
-  ## calculate line through the first and third quartiles  
+  # calculate line through the first and third quartiles
   slope     = (quantile(e, 0.75) - quantile(e, 0.25)) / (qnorm(0.75) - qnorm(0.25))
   intercept = quantile(e, 0.25) - slope * qnorm(0.25)
 
@@ -335,9 +336,9 @@ qq_plot = function(e) {
 }
 ```
 
-We can then verify that it is essentially equivalent to using `qqnorm()` and `qqline()` in `R`. There are *slight* differences, but the general idea is the same.
+We can then verify that it is essentially equivalent to using `qqnorm()` and `qqline()` in `R`.
 
-```{r, fig.height=5, fig.width=10}
+```{r, fig.height = 5, fig.width = 10}
 set.seed(420)
 x = rnorm(100, mean = 0 , sd = 1)
 par(mfrow = c(1, 2))
