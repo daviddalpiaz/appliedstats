@@ -25,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2017-06-10">
+<meta name="date" content="2017-06-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -575,7 +575,8 @@ fit_3 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">qq_plot =<span class="st"> </span>function(e) {
 
   n =<span class="st"> </span><span class="kw">length</span>(e)
-  normal_quantiles =<span class="st"> </span><span class="kw">qnorm</span>(((<span class="dv">1</span>:n) /<span class="st"> </span>(n +<span class="st"> </span><span class="dv">1</span>)))
+  normal_quantiles =<span class="st"> </span><span class="kw">qnorm</span>(((<span class="dv">1</span>:n -<span class="st"> </span><span class="fl">0.5</span>) /<span class="st"> </span>n))
+  <span class="co"># normal_quantiles = qnorm(((1:n) / (n + 1)))</span>
 
   <span class="co"># plot theoretical verus observed quantiles</span>
   <span class="kw">plot</span>(normal_quantiles, <span class="kw">sort</span>(e),
@@ -584,14 +585,14 @@ fit_3 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> 
        <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)
   <span class="kw">title</span>(<span class="st">&quot;Normal Q-Q Plot&quot;</span>)
 
-  ## calculate line through the first and third quartiles  
+  <span class="co"># calculate line through the first and third quartiles</span>
   slope     =<span class="st"> </span>(<span class="kw">quantile</span>(e, <span class="fl">0.75</span>) -<span class="st"> </span><span class="kw">quantile</span>(e, <span class="fl">0.25</span>)) /<span class="st"> </span>(<span class="kw">qnorm</span>(<span class="fl">0.75</span>) -<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.25</span>))
   intercept =<span class="st"> </span><span class="kw">quantile</span>(e, <span class="fl">0.25</span>) -<span class="st"> </span>slope *<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.25</span>)
 
   <span class="co"># add to existing plot</span>
   <span class="kw">abline</span>(intercept, slope, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 }</code></pre></div>
-<p>We can then verify that it is essentially equivalent to using <code>qqnorm()</code> and <code>qqline()</code> in <code>R</code>. There are <em>slight</em> differences, but the general idea is the same.</p>
+<p>We can then verify that it is essentially equivalent to using <code>qqnorm()</code> and <code>qqline()</code> in <code>R</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">420</span>)
 x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">0</span> , <span class="dt">sd =</span> <span class="dv">1</span>)
 <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
