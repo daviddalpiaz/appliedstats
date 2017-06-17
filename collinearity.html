@@ -505,57 +505,59 @@ hip_model_noise =<span class="st"> </span><span class="kw">lm</span>(hipcenter +
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-470-1.png" width="672" /></p>
 <p>We see that by plotting the predicted values using both models against each other, they are actually rather similar.</p>
 <p>Let’s now look at a smaller model,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hip_model_small =<span class="st"> </span><span class="kw">lm</span>(hipcenter ~<span class="st"> </span>Age +<span class="st"> </span>Weight +<span class="st"> </span>Ht, <span class="dt">data =</span> seatpos)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hip_model_small =<span class="st"> </span><span class="kw">lm</span>(hipcenter ~<span class="st"> </span>Age +<span class="st"> </span>Arm +<span class="st"> </span>Ht, <span class="dt">data =</span> seatpos)
 <span class="kw">summary</span>(hip_model_small)</code></pre></div>
 <pre><code>## 
 ## Call:
-## lm(formula = hipcenter ~ Age + Weight + Ht, data = seatpos)
+## lm(formula = hipcenter ~ Age + Arm + Ht, data = seatpos)
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -91.526 -23.005   2.164  24.950  53.982 
+## -82.347 -24.745  -0.094  23.555  58.314 
 ## 
 ## Coefficients:
-##               Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 528.297729 135.312947   3.904 0.000426 ***
-## Age           0.519504   0.408039   1.273 0.211593    
-## Weight        0.004271   0.311720   0.014 0.989149    
-## Ht           -4.211905   0.999056  -4.216 0.000174 ***
+##             Estimate Std. Error t value  Pr(&gt;|t|)    
+## (Intercept) 493.2491   101.0724   4.880 0.0000246 ***
+## Age           0.7988     0.5111   1.563   0.12735    
+## Arm          -2.9385     3.5210  -0.835   0.40979    
+## Ht           -3.4991     0.9954  -3.515   0.00127 ** 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 36.49 on 34 degrees of freedom
-## Multiple R-squared:  0.6562, Adjusted R-squared:  0.6258 
-## F-statistic: 21.63 on 3 and 34 DF,  p-value: 0.00000005125</code></pre>
+## Residual standard error: 36.12 on 34 degrees of freedom
+## Multiple R-squared:  0.6631, Adjusted R-squared:  0.6333 
+## F-statistic:  22.3 on 3 and 34 DF,  p-value: 0.00000003649</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">vif</span>(hip_model_small)</code></pre></div>
-<pre><code>##      Age   Weight       Ht 
-## 1.093018 3.457681 3.463303</code></pre>
+<pre><code>##      Age      Arm       Ht 
+## 1.749943 3.996766 3.508693</code></pre>
 <p>Immediately we see that multicollinearity isn’t an issue here.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(hip_model_small, hip_model)</code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
-## Model 1: hipcenter ~ Age + Weight + Ht
+## Model 1: hipcenter ~ Age + Arm + Ht
 ## Model 2: hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + 
 ##     Leg
 ##   Res.Df   RSS Df Sum of Sq      F Pr(&gt;F)
-## 1     34 45262                           
-## 2     29 41262  5    4000.3 0.5623 0.7279</code></pre>
+## 1     34 44354                           
+## 2     29 41262  5    3091.9 0.4346 0.8207</code></pre>
 <p>Also notice that using an <span class="math inline">\(F\)</span>-test to compare the two models, we would prefer the smaller model.</p>
-<p>We now investigate the effect of adding another variable to this smaller model. Specifically we want to look at adding the variable <code>HtShoes</code>. So now our possible predictors are <code>HtShoes</code>, <code>Age</code>, <code>Weight</code>, and <code>Ht</code>. Our response is still <code>hipcenter</code>.</p>
+<p>We now investigate the effect of adding another variable to this smaller model. Specifically we want to look at adding the variable <code>HtShoes</code>. So now our possible predictors are <code>HtShoes</code>, <code>Age</code>, <code>Arm</code>, and <code>Ht</code>. Our response is still <code>hipcenter</code>.</p>
 <p>To quantify this effect we will look at a <strong>variable added plot</strong> and a <strong>partial correlation coefficient</strong>. For both of these, we will look at the residuals of two models:</p>
 <ul>
 <li>Regressing the response (<code>hipcenter</code>) against all of the predictors except the predictor of interest (<code>HtShoes</code>).</li>
-<li>Regressing the predictor of interest (<code>HtShoes</code>) against the other predictors (<code>Age</code>, <code>Weight</code>, and <code>Ht</code>).</li>
+<li>Regressing the predictor of interest (<code>HtShoes</code>) against the other predictors (<code>Age</code>, <code>Arm</code>, and <code>Ht</code>).</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ht_shoes_model_small =<span class="st"> </span><span class="kw">lm</span>(HtShoes ~<span class="st"> </span>Age +<span class="st"> </span>Weight +<span class="st"> </span>Ht, <span class="dt">data =</span> seatpos)</code></pre></div>
-<p>So now, the residuals of <code>hip_model_small</code> give us the variation of <code>hipcenter</code> that is <em>unexplained</em> by <code>Age</code>, <code>Weight</code>, and <code>Ht</code>. Similarly, the residuals of <code>ht_shoes_model_small</code> give us the variation of <code>HtShoes</code> unexplained by <code>Age</code>, <code>Weight</code>, and <code>Ht</code>.</p>
-<p>The correlation of these two residuals gives us the <strong>partial correlation coefficient</strong> of <code>HtShoes</code> and <code>hipcenter</code> with the effects of <code>Age</code>, <code>Weight</code>, and <code>Ht</code> removed.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ht_shoes_model_small =<span class="st"> </span><span class="kw">lm</span>(HtShoes ~<span class="st"> </span>Age +<span class="st"> </span>Arm +<span class="st"> </span>Ht, <span class="dt">data =</span> seatpos)</code></pre></div>
+<p>So now, the residuals of <code>hip_model_small</code> give us the variation of <code>hipcenter</code> that is <em>unexplained</em> by <code>Age</code>, <code>Arm</code>, and <code>Ht</code>. Similarly, the residuals of <code>ht_shoes_model_small</code> give us the variation of <code>HtShoes</code> unexplained by <code>Age</code>, <code>Arm</code>, and <code>Ht</code>.</p>
+<p>The correlation of these two residuals gives us the <strong>partial correlation coefficient</strong> of <code>HtShoes</code> and <code>hipcenter</code> with the effects of <code>Age</code>, <code>Arm</code>, and <code>Ht</code> removed.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor</span>(<span class="kw">resid</span>(ht_shoes_model_small), <span class="kw">resid</span>(hip_model_small))</code></pre></div>
-<pre><code>## [1] -0.01650317</code></pre>
-<p>Since this value is small, close to zero, it means that the variation of <code>hipcenter</code> that is unexplained by <code>Age</code>, <code>Weight</code>, and <code>Ht</code> shows very little correlation with the variation of <code>HtShoes</code> that is not explained by <code>Age</code>, <code>Weight</code>, and <code>Ht</code>. Thus adding <code>HtShoes</code> to the model would likely be of little benefit.</p>
+<pre><code>## [1] -0.03311061</code></pre>
+<p>Since this value is small, close to zero, it means that the variation of <code>hipcenter</code> that is unexplained by <code>Age</code>, <code>Arm</code>, and <code>Ht</code> shows very little correlation with the variation of <code>HtShoes</code> that is not explained by <code>Age</code>, <code>Arm</code>, and <code>Ht</code>. Thus adding <code>HtShoes</code> to the model would likely be of little benefit.</p>
 <p>Similarly a <strong>variable added plot</strong> visualizes these residuals against each other. It is also helpful to regress the residuals of the response against the residuals of the predictor and add the regression line to the plot.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">resid</span>(hip_model_small) ~<span class="st"> </span><span class="kw">resid</span>(ht_shoes_model_small), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,
-     <span class="dt">xlab =</span> <span class="st">&quot;Residuals, Added Predictor&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals, Original Model&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">resid</span>(hip_model_small) ~<span class="st"> </span><span class="kw">resid</span>(ht_shoes_model_small), 
+     <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,
+     <span class="dt">xlab =</span> <span class="st">&quot;Residuals, Added Predictor&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="st">&quot;Residuals, Original Model&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
 <span class="kw">abline</span>(<span class="dt">v =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
 <span class="kw">abline</span>(<span class="kw">lm</span>(<span class="kw">resid</span>(hip_model_small) ~<span class="st"> </span><span class="kw">resid</span>(ht_shoes_model_small)),
