@@ -170,7 +170,7 @@ We see that by plotting the predicted values using both models against each othe
 Let's now look at a smaller model,
 
 ```{r}
-hip_model_small = lm(hipcenter ~ Age + Weight + Ht, data = seatpos)
+hip_model_small = lm(hipcenter ~ Age + Arm + Ht, data = seatpos)
 summary(hip_model_small)
 vif(hip_model_small)
 ```
@@ -183,32 +183,34 @@ anova(hip_model_small, hip_model)
 
 Also notice that using an $F$-test to compare the two models, we would prefer the smaller model.
 
-We now investigate the effect of adding another variable to this smaller model. Specifically we want to look at adding the variable `HtShoes`. So now our possible predictors are `HtShoes`, `Age`, `Weight`, and `Ht`. Our response is still `hipcenter`.
+We now investigate the effect of adding another variable to this smaller model. Specifically we want to look at adding the variable `HtShoes`. So now our possible predictors are `HtShoes`, `Age`, `Arm`, and `Ht`. Our response is still `hipcenter`.
 
 To quantify this effect we will look at a **variable added plot** and a **partial correlation coefficient**. For both of these, we will look at the residuals of two models:
 
 - Regressing the response (`hipcenter`) against all of the predictors except the predictor of interest (`HtShoes`).
-- Regressing the predictor of interest (`HtShoes`) against the other predictors (`Age`, `Weight`, and `Ht`).
+- Regressing the predictor of interest (`HtShoes`) against the other predictors (`Age`, `Arm`, and `Ht`).
 
 ```{r}
-ht_shoes_model_small = lm(HtShoes ~ Age + Weight + Ht, data = seatpos)
+ht_shoes_model_small = lm(HtShoes ~ Age + Arm + Ht, data = seatpos)
 ```
 
-So now, the residuals of `hip_model_small` give us the variation of `hipcenter` that is *unexplained* by `Age`, `Weight`, and `Ht`. Similarly, the residuals of `ht_shoes_model_small` give us the variation of `HtShoes` unexplained by `Age`, `Weight`, and `Ht`.
+So now, the residuals of `hip_model_small` give us the variation of `hipcenter` that is *unexplained* by `Age`, `Arm`, and `Ht`. Similarly, the residuals of `ht_shoes_model_small` give us the variation of `HtShoes` unexplained by `Age`, `Arm`, and `Ht`.
 
-The correlation of these two residuals gives us the **partial correlation coefficient** of `HtShoes` and `hipcenter` with the effects of `Age`, `Weight`, and `Ht` removed.
+The correlation of these two residuals gives us the **partial correlation coefficient** of `HtShoes` and `hipcenter` with the effects of `Age`, `Arm`, and `Ht` removed.
 
 ```{r}
 cor(resid(ht_shoes_model_small), resid(hip_model_small))
 ```
 
-Since this value is small, close to zero, it means that the variation of `hipcenter` that is unexplained by `Age`, `Weight`, and `Ht` shows very little correlation with the variation of `HtShoes` that is not explained by `Age`, `Weight`, and `Ht`. Thus adding `HtShoes` to the model would likely be of little benefit.
+Since this value is small, close to zero, it means that the variation of `hipcenter` that is unexplained by `Age`, `Arm`, and `Ht` shows very little correlation with the variation of `HtShoes` that is not explained by `Age`, `Arm`, and `Ht`. Thus adding `HtShoes` to the model would likely be of little benefit.
 
 Similarly a **variable added plot** visualizes these residuals against each other. It is also helpful to regress the residuals of the response against the residuals of the predictor and add the regression line to the plot.
 
 ```{r}
-plot(resid(hip_model_small) ~ resid(ht_shoes_model_small), col = "dodgerblue", pch = 20,
-     xlab = "Residuals, Added Predictor", ylab = "Residuals, Original Model")
+plot(resid(hip_model_small) ~ resid(ht_shoes_model_small), 
+     col = "dodgerblue", pch = 20,
+     xlab = "Residuals, Added Predictor", 
+     ylab = "Residuals, Original Model")
 abline(h = 0, lty = 2)
 abline(v = 0, lty = 2)
 abline(lm(resid(hip_model_small) ~ resid(ht_shoes_model_small)),
