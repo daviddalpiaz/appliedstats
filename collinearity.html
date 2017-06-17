@@ -569,7 +569,7 @@ hip_model_noise =<span class="st"> </span><span class="kw">lm</span>(hipcenter +
 </div>
 <div id="simulation-2" class="section level2">
 <h2><span class="header-section-number">14.3</span> Simulation</h2>
-<p>Here we simulate examples data with and without collinearity. We will note the difference in the distribution of the estimates of the <span class="math inline">\(\beta\)</span> parameters, in particular their variance. However, we will also notice the similarity in their <span class="math inline">\(MSE\)</span>.</p>
+<p>Here we simulate example data with and without collinearity. We will note the difference in the distribution of the estimates of the <span class="math inline">\(\beta\)</span> parameters, in particular their variance. However, we will also notice the similarity in their <span class="math inline">\(MSE\)</span>.</p>
 <p>We will use the model,</p>
 <p><span class="math display">\[
 Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \epsilon
@@ -586,52 +586,48 @@ num_sim     =<span class="st"> </span><span class="dv">2500</span></code></pre><
 <p>We’ll first consider the situation with a collinearity issue, so we manually create the two predictor variables.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x1 =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>)
 x2 =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">10</span>, <span class="dv">9</span>, <span class="dv">8</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(x1)</code></pre></div>
-<pre><code>## [1] 3.02765</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(x2)</code></pre></div>
-<pre><code>## [1] 3.02765</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">sd</span>(x1), <span class="kw">sd</span>(x2))</code></pre></div>
+<pre><code>## [1] 3.02765 3.02765</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor</span>(x1, x2)</code></pre></div>
 <pre><code>## [1] 0.9393939</code></pre>
 <p>Notice that they have extremely high correlation.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">true_line_bad =<span class="st"> </span>beta_0 +<span class="st"> </span>beta_1 *<span class="st"> </span>x1 +<span class="st"> </span>beta_2 *<span class="st"> </span>x2
-beta_hat_bad  =<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, num_sim, <span class="dv">3</span>)
+beta_hat_bad  =<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, num_sim, <span class="dv">2</span>)
 mse_bad       =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, num_sim)</code></pre></div>
 <p>We perform the simulation 2500 times, each time fitting a regression model, and storing the estimated coefficients and the MSE.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">for (s in <span class="dv">1</span>:num_sim) {
   y =<span class="st"> </span>true_line_bad +<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> sample_size, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> sigma)
   reg_out =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x1 +<span class="st"> </span>x2)
-  beta_hat_bad[s, ] =<span class="st"> </span><span class="kw">coef</span>(reg_out)
+  beta_hat_bad[s, ] =<span class="st"> </span><span class="kw">coef</span>(reg_out)[-<span class="dv">1</span>]
   mse_bad[s] =<span class="st"> </span><span class="kw">mean</span>(<span class="kw">resid</span>(reg_out) ^<span class="st"> </span><span class="dv">2</span>)
 }</code></pre></div>
 <p>Now we move to the situation without a collinearity issue, so we again manually create the two predictor variables.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">z1 =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>)
 z2 =<span class="st"> </span><span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">2</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">10</span>)</code></pre></div>
 <p>Notice that the standard deviations of each are the same as before, however, now the correlation is extremely close to 0.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(z1)</code></pre></div>
-<pre><code>## [1] 3.02765</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(z2)</code></pre></div>
-<pre><code>## [1] 3.02765</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">sd</span>(z1), <span class="kw">sd</span>(z2))</code></pre></div>
+<pre><code>## [1] 3.02765 3.02765</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cor</span>(z1, z2)</code></pre></div>
 <pre><code>## [1] 0.03030303</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">true_line_good =<span class="st"> </span>beta_0 +<span class="st"> </span>beta_1 *<span class="st"> </span>z1 +<span class="st"> </span>beta_2 *<span class="st"> </span>z2
-beta_hat_good  =<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, num_sim, <span class="dv">3</span>)
+beta_hat_good  =<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, num_sim, <span class="dv">2</span>)
 mse_good       =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, num_sim)</code></pre></div>
 <p>We then perform simulations and store the same results.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">for (s in <span class="dv">1</span>:num_sim) {
   y =<span class="st"> </span>true_line_good +<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> sample_size, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> sigma)
   reg_out =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>z1 +<span class="st"> </span>z2)
-  beta_hat_good[s, ] =<span class="st"> </span><span class="kw">coef</span>(reg_out)
+  beta_hat_good[s, ] =<span class="st"> </span><span class="kw">coef</span>(reg_out)[-<span class="dv">1</span>]
   mse_good[s] =<span class="st"> </span><span class="kw">mean</span>(<span class="kw">resid</span>(reg_out) ^<span class="st"> </span><span class="dv">2</span>)
 }</code></pre></div>
 <p>We’ll now investigate the differences.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
-<span class="kw">hist</span>(beta_hat_bad[, <span class="dv">2</span>],
+<span class="kw">hist</span>(beta_hat_bad[, <span class="dv">1</span>],
      <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>,
      <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,
      <span class="dt">main =</span> <span class="kw">expression</span>(<span class="st">&quot;Histogram of &quot;</span> *<span class="kw">hat</span>(beta)[<span class="dv">1</span>]*<span class="st"> &quot; with Collinearity&quot;</span>),
      <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">1</span>]),
      <span class="dt">breaks =</span> <span class="dv">20</span>)
-<span class="kw">hist</span>(beta_hat_good[, <span class="dv">2</span>],
+<span class="kw">hist</span>(beta_hat_good[, <span class="dv">1</span>],
      <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>,
      <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,
      <span class="dt">main =</span> <span class="kw">expression</span>(<span class="st">&quot;Histogram of &quot;</span> *<span class="kw">hat</span>(beta)[<span class="dv">1</span>]*<span class="st"> &quot; without Collinearity&quot;</span>),
@@ -639,23 +635,23 @@ mse_good       =<span class="st"> </span><span class="kw">rep</span>(<span class
      <span class="dt">breaks =</span> <span class="dv">20</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-486-1.png" width="1152" /></p>
 <p>First, for <span class="math inline">\(\beta_1\)</span>, which has a true value of <span class="math inline">\(3\)</span>, we see that both with and without collinearity, the simulated values are centered near <span class="math inline">\(3\)</span>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(beta_hat_bad[,<span class="dv">2</span>])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(beta_hat_bad[, <span class="dv">1</span>])</code></pre></div>
 <pre><code>## [1] 2.963325</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(beta_hat_good[,<span class="dv">2</span>])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(beta_hat_good[, <span class="dv">1</span>])</code></pre></div>
 <pre><code>## [1] 3.013414</code></pre>
 <p>The way the predictors were created, the <span class="math inline">\(S_{x_j x_j}\)</span> portion of the variance is the same for the predictors in both cases, but the variance is still much larger in the simulations performed with collinearity. The variance is so large in the collinear case, that sometimes the estimated coefficient for <span class="math inline">\(\beta_1\)</span> is negative!</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(beta_hat_bad[,<span class="dv">2</span>])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(beta_hat_bad[, <span class="dv">1</span>])</code></pre></div>
 <pre><code>## [1] 1.633294</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(beta_hat_good[,<span class="dv">2</span>])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(beta_hat_good[, <span class="dv">1</span>])</code></pre></div>
 <pre><code>## [1] 0.5484684</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
-<span class="kw">hist</span>(beta_hat_bad[, <span class="dv">3</span>],
+<span class="kw">hist</span>(beta_hat_bad[, <span class="dv">2</span>],
      <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>,
      <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,
      <span class="dt">main =</span> <span class="kw">expression</span>(<span class="st">&quot;Histogram of &quot;</span> *<span class="kw">hat</span>(beta)[<span class="dv">2</span>]*<span class="st"> &quot; with Collinearity&quot;</span>),
      <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">2</span>]),
      <span class="dt">breaks =</span> <span class="dv">20</span>)
-<span class="kw">hist</span>(beta_hat_good[, <span class="dv">3</span>],
+<span class="kw">hist</span>(beta_hat_good[, <span class="dv">2</span>],
      <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>,
      <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,
      <span class="dt">main =</span> <span class="kw">expression</span>(<span class="st">&quot;Histogram of &quot;</span> *<span class="kw">hat</span>(beta)[<span class="dv">2</span>]*<span class="st"> &quot; without Collinearity&quot;</span>),
@@ -663,13 +659,13 @@ mse_good       =<span class="st"> </span><span class="kw">rep</span>(<span class
      <span class="dt">breaks =</span> <span class="dv">20</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-489-1.png" width="1152" /></p>
 <p>We see the same issues with <span class="math inline">\(\beta_2\)</span>. On average the estimates are correct, but the variance is again much larger with collinearity.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(beta_hat_bad[,<span class="dv">3</span>])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(beta_hat_bad[, <span class="dv">2</span>])</code></pre></div>
 <pre><code>## [1] 4.025059</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(beta_hat_good[,<span class="dv">3</span>])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(beta_hat_good[, <span class="dv">2</span>])</code></pre></div>
 <pre><code>## [1] 4.004913</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(beta_hat_bad[,<span class="dv">3</span>])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(beta_hat_bad[, <span class="dv">2</span>])</code></pre></div>
 <pre><code>## [1] 1.642592</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(beta_hat_good[,<span class="dv">3</span>])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(beta_hat_good[, <span class="dv">2</span>])</code></pre></div>
 <pre><code>## [1] 0.5470381</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">hist</span>(mse_bad,

@@ -225,7 +225,7 @@ Next chapter we will learn about methods to find models that both fit well, but 
 
 ## Simulation
 
-Here we simulate examples data with and without collinearity. We will note the difference in the distribution of the estimates of the $\beta$ parameters, in particular their variance. However, we will also notice the similarity in their $MSE$.
+Here we simulate example data with and without collinearity. We will note the difference in the distribution of the estimates of the $\beta$ parameters, in particular their variance. However, we will also notice the similarity in their $MSE$.
 
 We will use the model,
 
@@ -258,8 +258,7 @@ x2 = c(1, 2, 3, 4, 5, 7, 6, 10, 9, 8)
 ```
 
 ```{r}
-sd(x1)
-sd(x2)
+c(sd(x1), sd(x2))
 cor(x1, x2)
 ```
 
@@ -267,7 +266,7 @@ Notice that they have extremely high correlation.
 
 ```{r}
 true_line_bad = beta_0 + beta_1 * x1 + beta_2 * x2
-beta_hat_bad  = matrix(0, num_sim, 3)
+beta_hat_bad  = matrix(0, num_sim, 2)
 mse_bad       = rep(0, num_sim)
 ```
 
@@ -277,7 +276,7 @@ We perform the simulation 2500 times, each time fitting a regression model, and 
 for (s in 1:num_sim) {
   y = true_line_bad + rnorm(n = sample_size, mean = 0, sd = sigma)
   reg_out = lm(y ~ x1 + x2)
-  beta_hat_bad[s, ] = coef(reg_out)
+  beta_hat_bad[s, ] = coef(reg_out)[-1]
   mse_bad[s] = mean(resid(reg_out) ^ 2)
 }
 ```
@@ -292,14 +291,13 @@ z2 = c(9, 2, 7, 4, 5, 6, 3, 8, 1, 10)
 Notice that the standard deviations of each are the same as before, however, now the correlation is extremely close to 0.
 
 ```{r}
-sd(z1)
-sd(z2)
+c(sd(z1), sd(z2))
 cor(z1, z2)
 ```
 
 ```{r}
 true_line_good = beta_0 + beta_1 * z1 + beta_2 * z2
-beta_hat_good  = matrix(0, num_sim, 3)
+beta_hat_good  = matrix(0, num_sim, 2)
 mse_good       = rep(0, num_sim)
 ```
 
@@ -309,7 +307,7 @@ We then perform simulations and store the same results.
 for (s in 1:num_sim) {
   y = true_line_good + rnorm(n = sample_size, mean = 0, sd = sigma)
   reg_out = lm(y ~ z1 + z2)
-  beta_hat_good[s, ] = coef(reg_out)
+  beta_hat_good[s, ] = coef(reg_out)[-1]
   mse_good[s] = mean(resid(reg_out) ^ 2)
 }
 ```
@@ -318,13 +316,13 @@ We'll now investigate the differences.
 
 ```{r, fig.width = 12, fig.height = 6}
 par(mfrow = c(1, 2))
-hist(beta_hat_bad[, 2],
+hist(beta_hat_bad[, 1],
      col = "darkorange",
      border = "dodgerblue",
      main = expression("Histogram of " *hat(beta)[1]* " with Collinearity"),
      xlab = expression(hat(beta)[1]),
      breaks = 20)
-hist(beta_hat_good[, 2],
+hist(beta_hat_good[, 1],
      col = "darkorange",
      border = "dodgerblue",
      main = expression("Histogram of " *hat(beta)[1]* " without Collinearity"),
@@ -335,26 +333,26 @@ hist(beta_hat_good[, 2],
 First, for $\beta_1$, which has a true value of $3$, we see that both with and without collinearity, the simulated values are centered near $3$.
 
 ```{r}
-mean(beta_hat_bad[,2])
-mean(beta_hat_good[,2])
+mean(beta_hat_bad[, 1])
+mean(beta_hat_good[, 1])
 ```
 
 The way the predictors were created, the $S_{x_j x_j}$ portion of the variance is the same for the predictors in both cases, but the variance is still much larger in the simulations performed with collinearity. The variance is so large in the collinear case, that sometimes the estimated coefficient for $\beta_1$ is negative! 
 
 ```{r}
-sd(beta_hat_bad[,2])
-sd(beta_hat_good[,2])
+sd(beta_hat_bad[, 1])
+sd(beta_hat_good[, 1])
 ```
 
 ```{r, fig.width = 12, fig.height = 6}
 par(mfrow = c(1, 2))
-hist(beta_hat_bad[, 3],
+hist(beta_hat_bad[, 2],
      col = "darkorange",
      border = "dodgerblue",
      main = expression("Histogram of " *hat(beta)[2]* " with Collinearity"),
      xlab = expression(hat(beta)[2]),
      breaks = 20)
-hist(beta_hat_good[, 3],
+hist(beta_hat_good[, 2],
      col = "darkorange",
      border = "dodgerblue",
      main = expression("Histogram of " *hat(beta)[2]* " without Collinearity"),
@@ -365,13 +363,13 @@ hist(beta_hat_good[, 3],
 We see the same issues with $\beta_2$. On average the estimates are correct, but the variance is again much larger with collinearity.
 
 ```{r}
-mean(beta_hat_bad[,3])
-mean(beta_hat_good[,3])
+mean(beta_hat_bad[, 2])
+mean(beta_hat_good[, 2])
 ```
 
 ```{r}
-sd(beta_hat_bad[,3])
-sd(beta_hat_good[,3])
+sd(beta_hat_bad[, 2])
+sd(beta_hat_good[, 2])
 ```
 
 ```{r, fig.width = 12, fig.height = 6}
