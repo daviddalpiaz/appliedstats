@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Applied Statistics with R</title>
+  <meta name="description" content="Applied Statistics with <code>R</code>">
+  <meta name="generator" content="bookdown 0.4 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Applied Statistics with R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://daviddalpiaz.github.io/appliedstats/" />
+  
+  
+  <meta name="github-repo" content="daviddalpiaz/appliedstats" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Applied Statistics with R" />
+  
+  
+  
+
+<meta name="author" content="David Dalpiaz">
+
+
+<meta name="date" content="2017-06-20">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="beyond.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Applied Statistics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i><b>1.1</b> About This Book</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#conventions"><i class="fa fa-check"></i><b>1.2</b> Conventions</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i><b>1.4</b> License</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>2</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#getting-started"><i class="fa fa-check"></i><b>2.1</b> Getting Started</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#basic-calculations"><i class="fa fa-check"></i><b>2.2</b> Basic Calculations</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#getting-help"><i class="fa fa-check"></i><b>2.3</b> Getting Help</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#installing-packages"><i class="fa fa-check"></i><b>2.4</b> Installing Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-and-programming.html"><a href="data-and-programming.html"><i class="fa fa-check"></i><b>3</b> Data and Programming</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-and-programming.html"><a href="data-and-programming.html#data-types"><i class="fa fa-check"></i><b>3.1</b> Data Types</a></li>
+<li class="chapter" data-level="3.2" data-path="data-and-programming.html"><a href="data-and-programming.html#data-structures"><i class="fa fa-check"></i><b>3.2</b> Data Structures</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="data-and-programming.html"><a href="data-and-programming.html#vectors"><i class="fa fa-check"></i><b>3.2.1</b> Vectors</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-and-programming.html"><a href="data-and-programming.html#vectorization"><i class="fa fa-check"></i><b>3.2.2</b> Vectorization</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data-and-programming.html"><a href="data-and-programming.html#logical-operators"><i class="fa fa-check"></i><b>3.2.3</b> Logical Operators</a></li>
+<li class="chapter" data-level="3.2.4" data-path="data-and-programming.html"><a href="data-and-programming.html#more-vectorization"><i class="fa fa-check"></i><b>3.2.4</b> More Vectorization</a></li>
+<li class="chapter" data-level="3.2.5" data-path="data-and-programming.html"><a href="data-and-programming.html#matrices"><i class="fa fa-check"></i><b>3.2.5</b> Matrices</a></li>
+<li class="chapter" data-level="3.2.6" data-path="data-and-programming.html"><a href="data-and-programming.html#lists"><i class="fa fa-check"></i><b>3.2.6</b> Lists</a></li>
+<li class="chapter" data-level="3.2.7" data-path="data-and-programming.html"><a href="data-and-programming.html#data-frames"><i class="fa fa-check"></i><b>3.2.7</b> Data Frames</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="data-and-programming.html"><a href="data-and-programming.html#programming-basics"><i class="fa fa-check"></i><b>3.3</b> Programming Basics</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="data-and-programming.html"><a href="data-and-programming.html#control-flow"><i class="fa fa-check"></i><b>3.3.1</b> Control Flow</a></li>
+<li class="chapter" data-level="3.3.2" data-path="data-and-programming.html"><a href="data-and-programming.html#functions"><i class="fa fa-check"></i><b>3.3.2</b> Functions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="summarizing-data.html"><a href="summarizing-data.html"><i class="fa fa-check"></i><b>4</b> Summarizing Data</a><ul>
+<li class="chapter" data-level="4.1" data-path="summarizing-data.html"><a href="summarizing-data.html#summary-statistics"><i class="fa fa-check"></i><b>4.1</b> Summary Statistics</a><ul>
+<li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#central-tendency"><i class="fa fa-check"></i>Central Tendency</a></li>
+<li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#spread"><i class="fa fa-check"></i>Spread</a></li>
+<li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical"><i class="fa fa-check"></i>Categorical</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="summarizing-data.html"><a href="summarizing-data.html#plotting"><i class="fa fa-check"></i><b>4.2</b> Plotting</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="summarizing-data.html"><a href="summarizing-data.html#histograms"><i class="fa fa-check"></i><b>4.2.1</b> Histograms</a></li>
+<li class="chapter" data-level="4.2.2" data-path="summarizing-data.html"><a href="summarizing-data.html#barplots"><i class="fa fa-check"></i><b>4.2.2</b> Barplots</a></li>
+<li class="chapter" data-level="4.2.3" data-path="summarizing-data.html"><a href="summarizing-data.html#boxplots"><i class="fa fa-check"></i><b>4.2.3</b> Boxplots</a></li>
+<li class="chapter" data-level="4.2.4" data-path="summarizing-data.html"><a href="summarizing-data.html#scatterplots"><i class="fa fa-check"></i><b>4.2.4</b> Scatterplots</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html"><i class="fa fa-check"></i><b>5</b> Probability and Statistics in <code>R</code></a><ul>
+<li class="chapter" data-level="5.1" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#probability-in-r"><i class="fa fa-check"></i><b>5.1</b> Probability in <code>R</code></a><ul>
+<li class="chapter" data-level="5.1.1" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#distributions"><i class="fa fa-check"></i><b>5.1.1</b> Distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#hypothesis-tests-in-r"><i class="fa fa-check"></i><b>5.2</b> Hypothesis Tests in <code>R</code></a><ul>
+<li class="chapter" data-level="5.2.1" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#one-sample-t-test-review"><i class="fa fa-check"></i><b>5.2.1</b> One Sample t-Test: Review</a></li>
+<li class="chapter" data-level="5.2.2" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#one-sample-t-test-example"><i class="fa fa-check"></i><b>5.2.2</b> One Sample t-Test: Example</a></li>
+<li class="chapter" data-level="5.2.3" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#two-sample-t-test-review"><i class="fa fa-check"></i><b>5.2.3</b> Two Sample t-Test: Review</a></li>
+<li class="chapter" data-level="5.2.4" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#two-sample-t-test-example"><i class="fa fa-check"></i><b>5.2.4</b> Two Sample t-Test: Example</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#simulation"><i class="fa fa-check"></i><b>5.3</b> Simulation</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#paired-differences"><i class="fa fa-check"></i><b>5.3.1</b> Paired Differences</a></li>
+<li class="chapter" data-level="5.3.2" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#distribution-of-a-sample-mean"><i class="fa fa-check"></i><b>5.3.2</b> Distribution of a Sample Mean</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="r-resources.html"><a href="r-resources.html"><i class="fa fa-check"></i><b>6</b> <code>R</code> Resources</a><ul>
+<li class="chapter" data-level="6.1" data-path="r-resources.html"><a href="r-resources.html#beginner-tutorials-and-references"><i class="fa fa-check"></i><b>6.1</b> Beginner Tutorials and References</a></li>
+<li class="chapter" data-level="6.2" data-path="r-resources.html"><a href="r-resources.html#intermediate-references"><i class="fa fa-check"></i><b>6.2</b> Intermediate References</a></li>
+<li class="chapter" data-level="6.3" data-path="r-resources.html"><a href="r-resources.html#advanced-references"><i class="fa fa-check"></i><b>6.3</b> Advanced References</a></li>
+<li class="chapter" data-level="6.4" data-path="r-resources.html"><a href="r-resources.html#rstudio-and-rmarkdown"><i class="fa fa-check"></i><b>6.4</b> RStudio and RMarkdown</a></li>
+<li class="chapter" data-level="6.5" data-path="r-resources.html"><a href="r-resources.html#rmarkdown-template"><i class="fa fa-check"></i><b>6.5</b> RMarkdown Template</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> Simple Linear Regression</a><ul>
+<li class="chapter" data-level="7.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#modeling"><i class="fa fa-check"></i><b>7.1</b> Modeling</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#simple-linear-regression-model"><i class="fa fa-check"></i><b>7.1.1</b> Simple Linear Regression Model</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#least-squares-approach"><i class="fa fa-check"></i><b>7.2</b> Least Squares Approach</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#making-predictions"><i class="fa fa-check"></i><b>7.2.1</b> Making Predictions</a></li>
+<li class="chapter" data-level="7.2.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#residuals"><i class="fa fa-check"></i><b>7.2.2</b> Residuals</a></li>
+<li class="chapter" data-level="7.2.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#variance-estimation"><i class="fa fa-check"></i><b>7.2.3</b> Variance Estimation</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#decomposition-of-variation"><i class="fa fa-check"></i><b>7.3</b> Decomposition of Variation</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#coefficient-of-determination"><i class="fa fa-check"></i><b>7.3.1</b> Coefficient of Determination</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#the-lm-function"><i class="fa fa-check"></i><b>7.4</b> The <code>lm</code> Function</a></li>
+<li class="chapter" data-level="7.5" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#maximum-likelihood-estimation-mle-approach"><i class="fa fa-check"></i><b>7.5</b> Maximum Likelihood Estimation (MLE) Approach</a></li>
+<li class="chapter" data-level="7.6" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#simulating-slr"><i class="fa fa-check"></i><b>7.6</b> Simulating SLR</a></li>
+<li class="chapter" data-level="7.7" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#history"><i class="fa fa-check"></i><b>7.7</b> History</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html"><i class="fa fa-check"></i><b>8</b> Inference for Simple Linear Regression</a><ul>
+<li class="chapter" data-level="8.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#gaussmarkov-theorem"><i class="fa fa-check"></i><b>8.1</b> Gauss–Markov Theorem</a></li>
+<li class="chapter" data-level="8.2" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#sampling-distributions"><i class="fa fa-check"></i><b>8.2</b> Sampling Distributions</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#simulating-sampling-distributions"><i class="fa fa-check"></i><b>8.2.1</b> Simulating Sampling Distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#standard-errors"><i class="fa fa-check"></i><b>8.3</b> Standard Errors</a></li>
+<li class="chapter" data-level="8.4" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-intervals-for-slope-and-intercept"><i class="fa fa-check"></i><b>8.4</b> Confidence Intervals for Slope and Intercept</a></li>
+<li class="chapter" data-level="8.5" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#hypothesis-tests"><i class="fa fa-check"></i><b>8.5</b> Hypothesis Tests</a></li>
+<li class="chapter" data-level="8.6" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#cars-example"><i class="fa fa-check"></i><b>8.6</b> <code>cars</code> Example</a><ul>
+<li class="chapter" data-level="8.6.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#tests-in-r"><i class="fa fa-check"></i><b>8.6.1</b> Tests in <code>R</code></a></li>
+<li class="chapter" data-level="8.6.2" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#significance-of-regression-t-test"><i class="fa fa-check"></i><b>8.6.2</b> Significance of Regression, t-Test</a></li>
+<li class="chapter" data-level="8.6.3" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-intervals-in-r"><i class="fa fa-check"></i><b>8.6.3</b> Confidence Intervals in <code>R</code></a></li>
+</ul></li>
+<li class="chapter" data-level="8.7" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-interval-for-mean-response"><i class="fa fa-check"></i><b>8.7</b> Confidence Interval for Mean Response</a></li>
+<li class="chapter" data-level="8.8" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#prediction-interval-for-new-observations"><i class="fa fa-check"></i><b>8.8</b> Prediction Interval for New Observations</a></li>
+<li class="chapter" data-level="8.9" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-and-prediction-bands"><i class="fa fa-check"></i><b>8.9</b> Confidence and Prediction Bands</a></li>
+<li class="chapter" data-level="8.10" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#significance-of-regression-f-test"><i class="fa fa-check"></i><b>8.10</b> Significance of Regression, F-Test</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html"><i class="fa fa-check"></i><b>9</b> Multiple Linear Regression</a><ul>
+<li class="chapter" data-level="9.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#matrix-approach-to-regression"><i class="fa fa-check"></i><b>9.1</b> Matrix Approach to Regression</a></li>
+<li class="chapter" data-level="9.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#sampling-distribution"><i class="fa fa-check"></i><b>9.2</b> Sampling Distribution</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#single-parameter-tests"><i class="fa fa-check"></i><b>9.2.1</b> Single Parameter Tests</a></li>
+<li class="chapter" data-level="9.2.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#confidence-intervals"><i class="fa fa-check"></i><b>9.2.2</b> Confidence Intervals</a></li>
+<li class="chapter" data-level="9.2.3" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#confidence-intervals-for-mean-response"><i class="fa fa-check"></i><b>9.2.3</b> Confidence Intervals for Mean Response</a></li>
+<li class="chapter" data-level="9.2.4" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#prediction-intervals"><i class="fa fa-check"></i><b>9.2.4</b> Prediction Intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#significance-of-regression"><i class="fa fa-check"></i><b>9.3</b> Significance of Regression</a></li>
+<li class="chapter" data-level="9.4" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#nested-models"><i class="fa fa-check"></i><b>9.4</b> Nested Models</a></li>
+<li class="chapter" data-level="9.5" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#simulation-1"><i class="fa fa-check"></i><b>9.5</b> Simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="model-building.html"><a href="model-building.html"><i class="fa fa-check"></i><b>10</b> Model Building</a><ul>
+<li class="chapter" data-level="10.1" data-path="model-building.html"><a href="model-building.html#family-form-and-fit"><i class="fa fa-check"></i><b>10.1</b> Family, Form, and Fit</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="model-building.html"><a href="model-building.html#fit"><i class="fa fa-check"></i><b>10.1.1</b> Fit</a></li>
+<li class="chapter" data-level="10.1.2" data-path="model-building.html"><a href="model-building.html#form"><i class="fa fa-check"></i><b>10.1.2</b> Form</a></li>
+<li class="chapter" data-level="10.1.3" data-path="model-building.html"><a href="model-building.html#family"><i class="fa fa-check"></i><b>10.1.3</b> Family</a></li>
+<li class="chapter" data-level="10.1.4" data-path="model-building.html"><a href="model-building.html#assumed-model-fitted-model"><i class="fa fa-check"></i><b>10.1.4</b> Assumed Model, Fitted Model</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="model-building.html"><a href="model-building.html#explanation-versus-prediction"><i class="fa fa-check"></i><b>10.2</b> Explanation versus Prediction</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="model-building.html"><a href="model-building.html#explanation"><i class="fa fa-check"></i><b>10.2.1</b> Explanation</a></li>
+<li class="chapter" data-level="10.2.2" data-path="model-building.html"><a href="model-building.html#prediction"><i class="fa fa-check"></i><b>10.2.2</b> Prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="model-building.html"><a href="model-building.html#summary"><i class="fa fa-check"></i><b>10.3</b> Summary</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html"><i class="fa fa-check"></i><b>11</b> Categorical Predictors and Interactions</a><ul>
+<li class="chapter" data-level="11.1" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#dummy-variables"><i class="fa fa-check"></i><b>11.1</b> Dummy Variables</a></li>
+<li class="chapter" data-level="11.2" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#interactions"><i class="fa fa-check"></i><b>11.2</b> Interactions</a></li>
+<li class="chapter" data-level="11.3" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#factor-variables"><i class="fa fa-check"></i><b>11.3</b> Factor Variables</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#factors-with-more-than-two-levels"><i class="fa fa-check"></i><b>11.3.1</b> Factors with More Than Two Levels</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#parameterization"><i class="fa fa-check"></i><b>11.4</b> Parameterization</a></li>
+<li class="chapter" data-level="11.5" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#building-larger-models"><i class="fa fa-check"></i><b>11.5</b> Building Larger Models</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i><b>12</b> Model Diagnostics</a><ul>
+<li class="chapter" data-level="12.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#model-assumptions"><i class="fa fa-check"></i><b>12.1</b> Model Assumptions</a></li>
+<li class="chapter" data-level="12.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#checking-assumptions"><i class="fa fa-check"></i><b>12.2</b> Checking Assumptions</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#fitted-versus-residuals-plot"><i class="fa fa-check"></i><b>12.2.1</b> Fitted versus Residuals Plot</a></li>
+<li class="chapter" data-level="12.2.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#breusch-pagan-test"><i class="fa fa-check"></i><b>12.2.2</b> Breusch-Pagan Test</a></li>
+<li class="chapter" data-level="12.2.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#histograms-1"><i class="fa fa-check"></i><b>12.2.3</b> Histograms</a></li>
+<li class="chapter" data-level="12.2.4" data-path="model-diagnostics.html"><a href="model-diagnostics.html#q-q-plots"><i class="fa fa-check"></i><b>12.2.4</b> Q-Q Plots</a></li>
+<li class="chapter" data-level="12.2.5" data-path="model-diagnostics.html"><a href="model-diagnostics.html#shapiro-wilk-test"><i class="fa fa-check"></i><b>12.2.5</b> Shapiro-Wilk Test</a></li>
+</ul></li>
+<li class="chapter" data-level="12.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#unusual-observations"><i class="fa fa-check"></i><b>12.3</b> Unusual Observations</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#leverage"><i class="fa fa-check"></i><b>12.3.1</b> Leverage</a></li>
+<li class="chapter" data-level="12.3.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#outliers"><i class="fa fa-check"></i><b>12.3.2</b> Outliers</a></li>
+<li class="chapter" data-level="12.3.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#influence"><i class="fa fa-check"></i><b>12.3.3</b> Influence</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="model-diagnostics.html"><a href="model-diagnostics.html#data-analysis-examples"><i class="fa fa-check"></i><b>12.4</b> Data Analysis Examples</a><ul>
+<li class="chapter" data-level="12.4.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#good-diagnostics"><i class="fa fa-check"></i><b>12.4.1</b> Good Diagnostics</a></li>
+<li class="chapter" data-level="12.4.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#suspect-diagnostics"><i class="fa fa-check"></i><b>12.4.2</b> Suspect Diagnostics</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="transformations.html"><a href="transformations.html"><i class="fa fa-check"></i><b>13</b> Transformations</a><ul>
+<li class="chapter" data-level="13.1" data-path="transformations.html"><a href="transformations.html#response-transformation"><i class="fa fa-check"></i><b>13.1</b> Response Transformation</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="transformations.html"><a href="transformations.html#variance-stabilizing-transformations"><i class="fa fa-check"></i><b>13.1.1</b> Variance Stabilizing Transformations</a></li>
+<li class="chapter" data-level="13.1.2" data-path="transformations.html"><a href="transformations.html#box-cox-transformations"><i class="fa fa-check"></i><b>13.1.2</b> Box-Cox Transformations</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="transformations.html"><a href="transformations.html#predictor-transformation"><i class="fa fa-check"></i><b>13.2</b> Predictor Transformation</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="transformations.html"><a href="transformations.html#polynomials"><i class="fa fa-check"></i><b>13.2.1</b> Polynomials</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="collinearity.html"><a href="collinearity.html"><i class="fa fa-check"></i><b>14</b> Collinearity</a><ul>
+<li class="chapter" data-level="14.1" data-path="collinearity.html"><a href="collinearity.html#exact-collinearity"><i class="fa fa-check"></i><b>14.1</b> Exact Collinearity</a></li>
+<li class="chapter" data-level="14.2" data-path="collinearity.html"><a href="collinearity.html#collinearity-1"><i class="fa fa-check"></i><b>14.2</b> Collinearity</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="collinearity.html"><a href="collinearity.html#variance-inflation-factor."><i class="fa fa-check"></i><b>14.2.1</b> Variance Inflation Factor.</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="collinearity.html"><a href="collinearity.html#simulation-2"><i class="fa fa-check"></i><b>14.3</b> Simulation</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html"><i class="fa fa-check"></i><b>15</b> Variable Selection and Model Building</a><ul>
+<li class="chapter" data-level="15.1" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#quality-criterion"><i class="fa fa-check"></i><b>15.1</b> Quality Criterion</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#akaike-information-criterion"><i class="fa fa-check"></i><b>15.1.1</b> Akaike Information Criterion</a></li>
+<li class="chapter" data-level="15.1.2" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#bayesian-information-criterion"><i class="fa fa-check"></i><b>15.1.2</b> Bayesian Information Criterion</a></li>
+<li class="chapter" data-level="15.1.3" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#adjusted-r-squared"><i class="fa fa-check"></i><b>15.1.3</b> Adjusted R-Squared</a></li>
+<li class="chapter" data-level="15.1.4" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#cross-validated-rmse"><i class="fa fa-check"></i><b>15.1.4</b> Cross-Validated RMSE</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#selection-procedures"><i class="fa fa-check"></i><b>15.2</b> Selection Procedures</a><ul>
+<li class="chapter" data-level="15.2.1" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#backward-search"><i class="fa fa-check"></i><b>15.2.1</b> Backward Search</a></li>
+<li class="chapter" data-level="15.2.2" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#forward-search"><i class="fa fa-check"></i><b>15.2.2</b> Forward Search</a></li>
+<li class="chapter" data-level="15.2.3" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#stepwise-search"><i class="fa fa-check"></i><b>15.2.3</b> Stepwise Search</a></li>
+<li class="chapter" data-level="15.2.4" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#exhaustive-search"><i class="fa fa-check"></i><b>15.2.4</b> Exhaustive Search</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#higher-order-terms"><i class="fa fa-check"></i><b>15.3</b> Higher Order Terms</a></li>
+<li class="chapter" data-level="15.4" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#explanation-versus-prediction-1"><i class="fa fa-check"></i><b>15.4</b> Explanation versus Prediction</a><ul>
+<li class="chapter" data-level="15.4.1" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#explanation-1"><i class="fa fa-check"></i><b>15.4.1</b> Explanation</a></li>
+<li class="chapter" data-level="15.4.2" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#prediction-1"><i class="fa fa-check"></i><b>15.4.2</b> Prediction</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="beyond.html"><a href="beyond.html"><i class="fa fa-check"></i><b>16</b> Beyond</a><ul>
+<li class="chapter" data-level="16.1" data-path="beyond.html"><a href="beyond.html#whats-next"><i class="fa fa-check"></i><b>16.1</b> What’s Next</a></li>
+<li class="chapter" data-level="16.2" data-path="beyond.html"><a href="beyond.html#rstudio"><i class="fa fa-check"></i><b>16.2</b> RStudio</a></li>
+<li class="chapter" data-level="16.3" data-path="beyond.html"><a href="beyond.html#tidy-data"><i class="fa fa-check"></i><b>16.3</b> Tidy Data</a></li>
+<li class="chapter" data-level="16.4" data-path="beyond.html"><a href="beyond.html#visualization"><i class="fa fa-check"></i><b>16.4</b> Visualization</a></li>
+<li class="chapter" data-level="16.5" data-path="beyond.html"><a href="beyond.html#web-applications"><i class="fa fa-check"></i><b>16.5</b> Web Applications</a></li>
+<li class="chapter" data-level="16.6" data-path="beyond.html"><a href="beyond.html#experimental-design"><i class="fa fa-check"></i><b>16.6</b> Experimental Design</a></li>
+<li class="chapter" data-level="16.7" data-path="beyond.html"><a href="beyond.html#machine-learning"><i class="fa fa-check"></i><b>16.7</b> Machine Learning</a><ul>
+<li class="chapter" data-level="16.7.1" data-path="beyond.html"><a href="beyond.html#deep-learning"><i class="fa fa-check"></i><b>16.7.1</b> Deep Learning</a></li>
+</ul></li>
+<li class="chapter" data-level="16.8" data-path="beyond.html"><a href="beyond.html#time-series"><i class="fa fa-check"></i><b>16.8</b> Time Series</a></li>
+<li class="chapter" data-level="16.9" data-path="beyond.html"><a href="beyond.html#bayesianism"><i class="fa fa-check"></i><b>16.9</b> Bayesianism</a></li>
+<li class="chapter" data-level="16.10" data-path="beyond.html"><a href="beyond.html#high-performance-computing"><i class="fa fa-check"></i><b>16.10</b> High Performance Computing</a></li>
+<li class="chapter" data-level="16.11" data-path="beyond.html"><a href="beyond.html#further-r-resources"><i class="fa fa-check"></i><b>16.11</b> Further <code>R</code> Resources</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="transformations-video.html"><a href="transformations-video.html"><i class="fa fa-check"></i><b>17</b> Transformations Video</a><ul>
+<li class="chapter" data-level="17.1" data-path="transformations-video.html"><a href="transformations-video.html#response-transformations"><i class="fa fa-check"></i><b>17.1</b> Response Transformations</a></li>
+<li class="chapter" data-level="17.2" data-path="transformations-video.html"><a href="transformations-video.html#predictor-transformations"><i class="fa fa-check"></i><b>17.2</b> Predictor Transformations</a><ul>
+<li class="chapter" data-level="17.2.1" data-path="transformations-video.html"><a href="transformations-video.html#a-quadratic-model"><i class="fa fa-check"></i><b>17.2.1</b> A Quadratic Model</a></li>
+<li class="chapter" data-level="17.2.2" data-path="transformations-video.html"><a href="transformations-video.html#overfitting-and-extrapolation"><i class="fa fa-check"></i><b>17.2.2</b> Overfitting and Extrapolation</a></li>
+<li class="chapter" data-level="17.2.3" data-path="transformations-video.html"><a href="transformations-video.html#comparing-polynomial-models"><i class="fa fa-check"></i><b>17.2.3</b> Comparing Polynomial Models</a></li>
+<li class="chapter" data-level="17.2.4" data-path="transformations-video.html"><a href="transformations-video.html#poly-function-and-orthogonal-polynomials"><i class="fa fa-check"></i><b>17.2.4</b> <code>poly()</code> Function and Orthogonal Polynomials</a></li>
+<li class="chapter" data-level="17.2.5" data-path="transformations-video.html"><a href="transformations-video.html#inhibit-function"><i class="fa fa-check"></i><b>17.2.5</b> Inhibit Function</a></li>
+<li class="chapter" data-level="17.2.6" data-path="transformations-video.html"><a href="transformations-video.html#data-example"><i class="fa fa-check"></i><b>17.2.6</b> Data Example</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/daviddalpiaz/appliedstats" target="blank">&copy; 2016 David Dalpiaz</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Applied Statistics with <code>R</code></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="transformations-video" class="section level1">
+<h1><span class="header-section-number">Chapter 17</span> Transformations Video</h1>
+<p>The following is code seen in videos for Week 8 for STAT 420 in the MCS-DS program. It will eventually be merged into the Transformations chapter of this book.</p>
+<div id="response-transformations" class="section level2">
+<h2><span class="header-section-number">17.1</span> Response Transformations</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">initech =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/initech.csv&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(salary ~<span class="st"> </span>years, <span class="dt">data =</span> initech, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Salaries at Initech, By Seniority&quot;</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-547-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">initech_fit =<span class="st"> </span><span class="kw">lm</span>(salary ~<span class="st"> </span>years, <span class="dt">data =</span> initech)
+<span class="kw">summary</span>(initech_fit)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = salary ~ years, data = initech)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -57225 -18104    241  15589  91332 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)     5302       5750   0.922    0.359    
+## years           8637        389  22.200   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 27360 on 98 degrees of freedom
+## Multiple R-squared:  0.8341, Adjusted R-squared:  0.8324 
+## F-statistic: 492.8 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(salary ~<span class="st"> </span>years, <span class="dt">data =</span> initech, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Salaries at Initech, By Seniority&quot;</span>)
+<span class="kw">abline</span>(initech_fit, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-549-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+
+<span class="kw">plot</span>(<span class="kw">fitted</span>(initech_fit), <span class="kw">resid</span>(initech_fit), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,
+     <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Fitted versus Residuals&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+
+<span class="kw">qqnorm</span>(<span class="kw">resid</span>(initech_fit), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)
+<span class="kw">qqline</span>(<span class="kw">resid</span>(initech_fit), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-550-1.png" width="960" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">initech_fit_log =<span class="st"> </span><span class="kw">lm</span>(<span class="kw">log</span>(salary) ~<span class="st"> </span>years, <span class="dt">data =</span> initech)</code></pre></div>
+<p><span class="math display">\[
+\log(Y_i) = \beta_0 + \beta_1 x_i + \epsilon_i
+\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">log</span>(salary) ~<span class="st"> </span>years, <span class="dt">data =</span> initech, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Salaries at Initech, By Seniority&quot;</span>)
+<span class="kw">abline</span>(initech_fit_log, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-552-1.png" width="672" /></p>
+<p><span class="math display">\[
+Y_i = \exp(\beta_0 + \beta_1 x_i) \cdot \exp(\epsilon_i)
+\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(salary ~<span class="st"> </span>years, <span class="dt">data =</span> initech, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Salaries at Initech, By Seniority&quot;</span>)
+<span class="kw">curve</span>(<span class="kw">exp</span>(initech_fit_log$coef[<span class="dv">1</span>] +<span class="st"> </span>initech_fit_log$coef[<span class="dv">2</span>] *<span class="st"> </span>x),
+      <span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">30</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-553-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+
+<span class="kw">plot</span>(<span class="kw">fitted</span>(initech_fit_log), <span class="kw">resid</span>(initech_fit_log), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,
+     <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Fitted versus Residuals&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+
+<span class="kw">qqnorm</span>(<span class="kw">resid</span>(initech_fit_log), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)
+<span class="kw">qqline</span>(<span class="kw">resid</span>(initech_fit_log), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-554-1.png" width="960" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(<span class="kw">mean</span>(<span class="kw">resid</span>(initech_fit) ^<span class="st"> </span><span class="dv">2</span>))</code></pre></div>
+<pre><code>## [1] 27080.16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(<span class="kw">mean</span>(<span class="kw">resid</span>(initech_fit_log) ^<span class="st"> </span><span class="dv">2</span>))</code></pre></div>
+<pre><code>## [1] 0.1934907</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(<span class="kw">mean</span>((initech$salary -<span class="st"> </span><span class="kw">fitted</span>(initech_fit)) ^<span class="st"> </span><span class="dv">2</span>))</code></pre></div>
+<pre><code>## [1] 27080.16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(<span class="kw">mean</span>((initech$salary -<span class="st"> </span><span class="kw">exp</span>(<span class="kw">fitted</span>(initech_fit_log))) ^<span class="st"> </span><span class="dv">2</span>))</code></pre></div>
+<pre><code>## [1] 24280.36</code></pre>
+</div>
+<div id="predictor-transformations" class="section level2">
+<h2><span class="header-section-number">17.2</span> Predictor Transformations</h2>
+<div id="a-quadratic-model" class="section level3">
+<h3><span class="header-section-number">17.2.1</span> A Quadratic Model</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_quad =<span class="st"> </span>function(<span class="dt">sample_size =</span> <span class="dv">500</span>) {
+  x =<span class="st"> </span><span class="kw">runif</span>(<span class="dt">n =</span> sample_size) *<span class="st"> </span><span class="dv">5</span>
+  y =<span class="st"> </span><span class="dv">3</span> +<span class="st"> </span><span class="dv">5</span> *<span class="st"> </span>x ^<span class="st"> </span><span class="dv">2</span> +<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> sample_size, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">5</span>)
+  <span class="kw">data.frame</span>(x, y)
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">314</span>)
+quad_data =<span class="st"> </span><span class="kw">sim_quad</span>(<span class="dt">sample_size =</span> <span class="dv">200</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lin_fit =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> quad_data)
+<span class="kw">summary</span>(lin_fit)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x, data = quad_data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -20.363  -7.550  -3.416   8.472  26.181 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -18.3271     1.5494  -11.83   &lt;2e-16 ***
+## x            24.8716     0.5343   46.55   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 10.79 on 198 degrees of freedom
+## Multiple R-squared:  0.9163, Adjusted R-squared:  0.9158 
+## F-statistic:  2167 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> quad_data, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Simulated Quadratic Data&quot;</span>)
+<span class="kw">abline</span>(lin_fit, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-560-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+
+<span class="kw">plot</span>(<span class="kw">fitted</span>(lin_fit), <span class="kw">resid</span>(lin_fit), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,
+     <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Fitted versus Residuals&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+
+<span class="kw">qqnorm</span>(<span class="kw">resid</span>(lin_fit), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)
+<span class="kw">qqline</span>(<span class="kw">resid</span>(lin_fit), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-561-1.png" width="960" /></p>
+<p><span class="math display">\[
+Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \epsilon_i
+\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">quad_fit =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x +<span class="st"> </span><span class="kw">I</span>(x^<span class="dv">2</span>), <span class="dt">data =</span> quad_data)
+<span class="kw">summary</span>(quad_fit)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x + I(x^2), data = quad_data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -11.4167  -3.0581   0.2297   3.1024  12.1256 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   3.0649     0.9577   3.200   0.0016 ** 
+## x            -0.5108     0.8637  -0.591   0.5549    
+## I(x^2)        5.0740     0.1667  30.433   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 4.531 on 197 degrees of freedom
+## Multiple R-squared:  0.9853, Adjusted R-squared:  0.9852 
+## F-statistic:  6608 on 2 and 197 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> quad_data, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Simulated Quadratic Data&quot;</span>)
+<span class="kw">curve</span>(quad_fit$coef[<span class="dv">1</span>] +<span class="st"> </span>quad_fit$coef[<span class="dv">2</span>] *<span class="st"> </span>x +<span class="st"> </span>quad_fit$coef[<span class="dv">3</span>] *<span class="st"> </span>x ^<span class="st"> </span><span class="dv">2</span>,
+      <span class="dt">from =</span> -<span class="dv">5</span>, <span class="dt">to =</span> <span class="dv">30</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-563-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+
+<span class="kw">plot</span>(<span class="kw">fitted</span>(quad_fit), <span class="kw">resid</span>(quad_fit), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,
+     <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Fitted versus Residuals&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+
+<span class="kw">qqnorm</span>(<span class="kw">resid</span>(quad_fit), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)
+<span class="kw">qqline</span>(<span class="kw">resid</span>(quad_fit), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-564-1.png" width="960" /></p>
+</div>
+<div id="overfitting-and-extrapolation" class="section level3">
+<h3><span class="header-section-number">17.2.2</span> Overfitting and Extrapolation</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_for_perf =<span class="st"> </span>function() {
+  x =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>)
+  y =<span class="st"> </span><span class="dv">3</span> +<span class="st"> </span>x -<span class="st"> </span><span class="dv">4</span> *<span class="st"> </span>x ^<span class="st"> </span><span class="dv">2</span> +<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">11</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">25</span>)
+  <span class="kw">data.frame</span>(x, y)
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
+data_for_perf =<span class="st"> </span><span class="kw">sim_for_perf</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit_correct =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">2</span>), <span class="dt">data =</span> data_for_perf)
+fit_perfect =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">3</span>) +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">4</span>) +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">5</span>) +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">6</span>) +<span class="st"> </span>
+<span class="st">                 </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">7</span>) +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">8</span>) +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">9</span>) +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">10</span>), 
+                 <span class="dt">data =</span> data_for_perf)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x_plot =<span class="st"> </span><span class="kw">seq</span>(-<span class="dv">5</span>, <span class="dv">15</span>, <span class="dt">by =</span> <span class="fl">0.1</span>)
+<span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> data_for_perf, <span class="dt">ylim =</span> <span class="kw">c</span>(-<span class="dv">450</span>, <span class="dv">100</span>), <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">pch =</span> <span class="dv">20</span>)
+<span class="kw">lines</span>(x_plot, <span class="kw">predict</span>(fit_correct, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">x =</span> x_plot)),
+      <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">1</span>)
+<span class="kw">lines</span>(x_plot, <span class="kw">predict</span>(fit_perfect, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">x =</span> x_plot)),
+      <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-568-1.png" width="768" /></p>
+</div>
+<div id="comparing-polynomial-models" class="section level3">
+<h3><span class="header-section-number">17.2.3</span> Comparing Polynomial Models</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sim_higher =<span class="st"> </span>function(<span class="dt">sample_size =</span> <span class="dv">250</span>) {
+  x =<span class="st"> </span><span class="kw">runif</span>(<span class="dt">n =</span> sample_size, <span class="dt">min =</span> -<span class="dv">1</span>, <span class="dt">max =</span> <span class="dv">1</span>) *<span class="st"> </span><span class="dv">2</span>
+  y =<span class="st"> </span><span class="dv">3</span> +<span class="st"> </span>-<span class="dv">6</span> *<span class="st"> </span>x ^<span class="st"> </span><span class="dv">2</span> +<span class="st"> </span><span class="dv">1</span> *<span class="st"> </span>x ^<span class="st"> </span><span class="dv">4</span> +<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> sample_size, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">3</span>)
+  <span class="kw">data.frame</span>(x, y)
+}</code></pre></div>
+<p><span class="math display">\[
+Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \epsilon_i
+\]</span></p>
+<p><span class="math display">\[
+Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \beta_3 x_i^3 + \beta_4 x_i^4 + \epsilon_i
+\]</span></p>
+<p><span class="math display">\[
+Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \beta_3 x_i^3 + \beta_4 x_i^4 + \beta_5 x_i^5 + \beta_6 x_i^6 + \epsilon_i
+\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
+data_higher =<span class="st"> </span><span class="kw">sim_higher</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> data_higher, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Simulated Quartic Data&quot;</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-571-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit_2 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span><span class="kw">poly</span>(x, <span class="dv">2</span>), <span class="dt">data =</span> data_higher)
+fit_4 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span><span class="kw">poly</span>(x, <span class="dv">4</span>), <span class="dt">data =</span> data_higher)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> data_higher, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>,
+     <span class="dt">main =</span> <span class="st">&quot;Simulated Quartic Data&quot;</span>)
+x_plot =<span class="st"> </span><span class="kw">seq</span>(-<span class="dv">5</span>, <span class="dv">5</span>, <span class="dt">by =</span> <span class="fl">0.05</span>)
+<span class="kw">lines</span>(x_plot, <span class="kw">predict</span>(fit_2, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">x =</span> x_plot)),
+      <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">1</span>)
+<span class="kw">lines</span>(x_plot, <span class="kw">predict</span>(fit_4, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">x =</span> x_plot)),
+      <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-573-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+
+<span class="kw">plot</span>(<span class="kw">fitted</span>(fit_2), <span class="kw">resid</span>(fit_2), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,
+     <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Fitted versus Residuals&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+
+<span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_2), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)
+<span class="kw">qqline</span>(<span class="kw">resid</span>(fit_2), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-574-1.png" width="960" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+
+<span class="kw">plot</span>(<span class="kw">fitted</span>(fit_4), <span class="kw">resid</span>(fit_4), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,
+     <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Fitted versus Residuals&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+
+<span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_4), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)
+<span class="kw">qqline</span>(<span class="kw">resid</span>(fit_4), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-575-1.png" width="960" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(fit_2, fit_4)</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: y ~ poly(x, 2)
+## Model 2: y ~ poly(x, 4)
+##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+## 1    247 2334.1                                  
+## 2    245 1912.6  2    421.51 26.997 2.536e-11 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit_6 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span><span class="kw">poly</span>(x, <span class="dv">6</span>), <span class="dt">data =</span> data_higher)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(fit_4, fit_6)</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: y ~ poly(x, 4)
+## Model 2: y ~ poly(x, 6)
+##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+## 1    245 1912.6                           
+## 2    243 1904.4  2    8.1889 0.5224 0.5937</code></pre>
+</div>
+<div id="poly-function-and-orthogonal-polynomials" class="section level3">
+<h3><span class="header-section-number">17.2.4</span> <code>poly()</code> Function and Orthogonal Polynomials</h3>
+<p><span class="math display">\[
+Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \beta_3 x_i^3 + \beta_4 x_i^4 + \epsilon_i
+\]</span></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit_4a =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span><span class="kw">poly</span>(x, <span class="dt">degree =</span> <span class="dv">4</span>), <span class="dt">data =</span> data_higher)
+fit_4b =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span><span class="kw">poly</span>(x, <span class="dt">degree =</span> <span class="dv">4</span>, <span class="dt">raw =</span> <span class="ot">TRUE</span>), <span class="dt">data =</span> data_higher)
+fit_4c =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x +<span class="st"> </span><span class="kw">I</span>(x^<span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(x^<span class="dv">3</span>) +<span class="st"> </span><span class="kw">I</span>(x^<span class="dv">4</span>), <span class="dt">data =</span> data_higher)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(fit_4a)</code></pre></div>
+<pre><code>##          (Intercept) poly(x, degree = 4)1 poly(x, degree = 4)2 
+##            -1.980036            -2.053929           -49.344752 
+## poly(x, degree = 4)3 poly(x, degree = 4)4 
+##             0.669874            20.519759</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(fit_4b)</code></pre></div>
+<pre><code>##                      (Intercept) poly(x, degree = 4, raw = TRUE)1 
+##                        2.9996256                       -0.3880250 
+## poly(x, degree = 4, raw = TRUE)2 poly(x, degree = 4, raw = TRUE)3 
+##                       -6.1511166                        0.1269046 
+## poly(x, degree = 4, raw = TRUE)4 
+##                        1.0282139</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(fit_4c)</code></pre></div>
+<pre><code>## (Intercept)           x      I(x^2)      I(x^3)      I(x^4) 
+##   2.9996256  -0.3880250  -6.1511166   0.1269046   1.0282139</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unname</span>(<span class="kw">coef</span>(fit_4a))</code></pre></div>
+<pre><code>## [1]  -1.980036  -2.053929 -49.344752   0.669874  20.519759</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unname</span>(<span class="kw">coef</span>(fit_4b))</code></pre></div>
+<pre><code>## [1]  2.9996256 -0.3880250 -6.1511166  0.1269046  1.0282139</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unname</span>(<span class="kw">coef</span>(fit_4c))</code></pre></div>
+<pre><code>## [1]  2.9996256 -0.3880250 -6.1511166  0.1269046  1.0282139</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(<span class="kw">fitted</span>(fit_4a),
+          <span class="kw">fitted</span>(fit_4b))</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all.equal</span>(<span class="kw">resid</span>(fit_4a),
+          <span class="kw">resid</span>(fit_4b))</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit_4a)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ poly(x, degree = 4), data = data_higher)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -7.6982 -2.0334  0.0042  1.9532  7.4626 
+## 
+## Coefficients:
+##                      Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)           -1.9800     0.1767 -11.205  &lt; 2e-16 ***
+## poly(x, degree = 4)1  -2.0539     2.7940  -0.735    0.463    
+## poly(x, degree = 4)2 -49.3448     2.7940 -17.661  &lt; 2e-16 ***
+## poly(x, degree = 4)3   0.6699     2.7940   0.240    0.811    
+## poly(x, degree = 4)4  20.5198     2.7940   7.344 3.06e-12 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.794 on 245 degrees of freedom
+## Multiple R-squared:  0.5993, Adjusted R-squared:  0.5928 
+## F-statistic: 91.61 on 4 and 245 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit_4c)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x + I(x^2) + I(x^3) + I(x^4), data = data_higher)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -7.6982 -2.0334  0.0042  1.9532  7.4626 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   2.9996     0.3315   9.048  &lt; 2e-16 ***
+## x            -0.3880     0.3828  -1.014    0.312    
+## I(x^2)       -6.1511     0.5049 -12.183  &lt; 2e-16 ***
+## I(x^3)        0.1269     0.1456   0.871    0.384    
+## I(x^4)        1.0282     0.1400   7.344 3.06e-12 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.794 on 245 degrees of freedom
+## Multiple R-squared:  0.5993, Adjusted R-squared:  0.5928 
+## F-statistic: 91.61 on 4 and 245 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div id="inhibit-function" class="section level3">
+<h3><span class="header-section-number">17.2.5</span> Inhibit Function</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(<span class="kw">lm</span>(y ~<span class="st"> </span>x +<span class="st"> </span>x ^<span class="st"> </span><span class="dv">2</span>, <span class="dt">data =</span> quad_data))</code></pre></div>
+<pre><code>## (Intercept)           x 
+##   -18.32715    24.87163</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(<span class="kw">lm</span>(y ~<span class="st"> </span>x +<span class="st"> </span><span class="kw">I</span>(x ^<span class="st"> </span><span class="dv">2</span>), <span class="dt">data =</span> quad_data))</code></pre></div>
+<pre><code>## (Intercept)           x      I(x^2) 
+##   3.0649446  -0.5108131   5.0739805</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(<span class="kw">lm</span>(y ~<span class="st"> </span>x +<span class="st"> </span>x:x, <span class="dt">data =</span> quad_data))</code></pre></div>
+<pre><code>## (Intercept)           x 
+##   -18.32715    24.87163</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(<span class="kw">lm</span>(y ~<span class="st"> </span>x *<span class="st"> </span>x, <span class="dt">data =</span> quad_data))</code></pre></div>
+<pre><code>## (Intercept)           x 
+##   -18.32715    24.87163</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(<span class="kw">lm</span>(y ~<span class="st"> </span>x ^<span class="st"> </span><span class="dv">2</span>, <span class="dt">data =</span> quad_data))</code></pre></div>
+<pre><code>## (Intercept)           x 
+##   -18.32715    24.87163</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(<span class="kw">lm</span>(y ~<span class="st"> </span>x +<span class="st"> </span>x ^<span class="st"> </span><span class="dv">2</span>, <span class="dt">data =</span> quad_data))</code></pre></div>
+<pre><code>## (Intercept)           x 
+##   -18.32715    24.87163</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(<span class="kw">lm</span>(y ~<span class="st"> </span><span class="kw">I</span>(x +<span class="st"> </span>x), <span class="dt">data =</span> quad_data))</code></pre></div>
+<pre><code>## (Intercept)    I(x + x) 
+##   -18.32715    12.43582</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(<span class="kw">lm</span>(y ~<span class="st"> </span>x +<span class="st"> </span>x, <span class="dt">data =</span> quad_data))</code></pre></div>
+<pre><code>## (Intercept)           x 
+##   -18.32715    24.87163</code></pre>
+</div>
+<div id="data-example" class="section level3">
+<h3><span class="header-section-number">17.2.6</span> Data Example</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pairs</span>(autompg)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-590-1.png" width="960" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg_hp =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>hp, <span class="dt">data =</span> autompg)
+
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+
+<span class="kw">plot</span>(mpg ~<span class="st"> </span>hp, <span class="dt">data =</span> autompg, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)
+<span class="kw">abline</span>(mpg_hp, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+
+<span class="kw">plot</span>(<span class="kw">fitted</span>(mpg_hp), <span class="kw">resid</span>(mpg_hp), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,
+     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-591-1.png" width="960" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg_hp_log =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>hp +<span class="st"> </span><span class="kw">I</span>(hp ^<span class="st"> </span><span class="dv">2</span>), <span class="dt">data =</span> autompg)
+
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+
+<span class="kw">plot</span>(mpg ~<span class="st"> </span>hp, <span class="dt">data =</span> autompg, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)
+xplot =<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(autompg$hp), <span class="kw">max</span>(autompg$hp), <span class="dt">by =</span> <span class="fl">0.1</span>)
+<span class="kw">lines</span>(xplot, <span class="kw">predict</span>(mpg_hp_log, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">hp =</span> xplot)),
+      <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">1</span>)
+
+<span class="kw">plot</span>(<span class="kw">fitted</span>(mpg_hp_log), <span class="kw">resid</span>(mpg_hp_log), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,
+     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-592-1.png" width="960" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg_hp_log =<span class="st"> </span><span class="kw">lm</span>(<span class="kw">log</span>(mpg) ~<span class="st"> </span>hp +<span class="st"> </span><span class="kw">I</span>(hp ^<span class="st"> </span><span class="dv">2</span>), <span class="dt">data =</span> autompg)
+
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+
+<span class="kw">plot</span>(<span class="kw">log</span>(mpg) ~<span class="st"> </span>hp, <span class="dt">data =</span> autompg, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)
+xplot =<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(autompg$hp), <span class="kw">max</span>(autompg$hp), <span class="dt">by =</span> <span class="fl">0.1</span>)
+<span class="kw">lines</span>(xplot, <span class="kw">predict</span>(mpg_hp_log, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">hp =</span> xplot)),
+      <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">1</span>)
+
+<span class="kw">plot</span>(<span class="kw">fitted</span>(mpg_hp_log), <span class="kw">resid</span>(mpg_hp_log), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,
+     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-593-1.png" width="960" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg_hp_loglog =<span class="st"> </span><span class="kw">lm</span>(<span class="kw">log</span>(mpg) ~<span class="st"> </span><span class="kw">log</span>(hp), <span class="dt">data =</span> autompg)
+
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">plot</span>(<span class="kw">log</span>(mpg) ~<span class="st"> </span><span class="kw">log</span>(hp), <span class="dt">data =</span> autompg, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)
+<span class="kw">abline</span>(mpg_hp_loglog, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
+
+<span class="kw">plot</span>(<span class="kw">fitted</span>(mpg_hp_loglog), <span class="kw">resid</span>(mpg_hp_loglog), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>,
+     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-594-1.png" width="960" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">big_model =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>disp *<span class="st"> </span>hp *<span class="st"> </span>domestic, <span class="dt">data =</span> autompg)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(big_model), <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)
+<span class="kw">qqline</span>(<span class="kw">resid</span>(big_model), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-596-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bigger_model =<span class="st"> </span><span class="kw">lm</span>(<span class="kw">log</span>(mpg) ~<span class="st"> </span>disp *<span class="st"> </span>hp *<span class="st"> </span>domestic +<span class="st"> </span>
+<span class="st">               </span><span class="kw">I</span>(disp ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(hp ^<span class="st"> </span><span class="dv">2</span>), <span class="dt">data =</span> autompg)
+<span class="kw">summary</span>(bigger_model)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = log(mpg) ~ disp * hp * domestic + I(disp^2) + I(hp^2), 
+##     data = autompg)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.40381 -0.08635 -0.01040  0.09995  0.71365 
+## 
+## Coefficients:
+##                      Estimate   Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       4.275696041  0.256435432  16.674   &lt;2e-16 ***
+## disp             -0.005289110  0.002564979  -2.062   0.0399 *  
+## hp               -0.007386162  0.003309347  -2.232   0.0262 *  
+## domestic         -0.249599488  0.278672623  -0.896   0.3710    
+## I(disp^2)         0.000008552  0.000004141   2.065   0.0396 *  
+## I(hp^2)          -0.000015649  0.000016791  -0.932   0.3519    
+## disp:hp           0.000026855  0.000030822   0.871   0.3842    
+## disp:domestic    -0.001101296  0.002526207  -0.436   0.6631    
+## hp:domestic       0.007559531  0.003688787   2.049   0.0411 *  
+## disp:hp:domestic -0.000023110  0.000026620  -0.868   0.3859    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.1507 on 373 degrees of freedom
+## Multiple R-squared:  0.8107, Adjusted R-squared:  0.8062 
+## F-statistic: 177.5 on 9 and 373 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(bigger_model), <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)
+<span class="kw">qqline</span>(<span class="kw">resid</span>(bigger_model), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-598-1.png" width="672" /></p>
+
+<div id="refs" class="references">
+
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="beyond.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/daviddalpiaz/appliedstats/edit/master/transformations-video.Rmd",
+"text": "Edit"
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
