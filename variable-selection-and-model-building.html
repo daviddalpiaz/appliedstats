@@ -351,7 +351,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>This chapter, we will discuss several <em>criteria</em> and <em>procedures</em> for choosing a “good” model from among a choice of many.</p>
 <div id="quality-criterion" class="section level2">
 <h2><span class="header-section-number">15.1</span> Quality Criterion</h2>
-<p>So far, we have seen criteria such as <span class="math inline">\(R^2\)</span> and <span class="math inline">\(\text{RMSE}\)</span> for assessing quality of fit. However, both of these have a fatal flaw. By increasing the size of a model, that is adding predictors, that can at worst not improve. It is impossible to add a predictor to a model and make <span class="math inline">\(R^2\)</span> or <span class="math inline">\(\text{RMSE}\)</span> worse. That means, if we were to use either of these to chose between models, we would <em>always</em> simply choose the larger model.</p>
+<p>So far, we have seen criteria such as <span class="math inline">\(R^2\)</span> and <span class="math inline">\(\text{RMSE}\)</span> for assessing quality of fit. However, both of these have a fatal flaw. By increasing the size of a model, that is adding predictors, that can at worst not improve. It is impossible to add a predictor to a model and make <span class="math inline">\(R^2\)</span> or <span class="math inline">\(\text{RMSE}\)</span> worse. That means, if we were to use either of these to chose between models, we would <em>always</em> simply choose the larger model. Eventually we would simply be fitting to noise.</p>
 <p>This suggests that we need a quality criteria that takes into account the size of the model, since our preference is for small models that still fit well. We are willing to sacrifice a small amount of goodness-of-fit for obtaining a smaller model. We will look at three criteria that do this explicitly: <span class="math inline">\(\text{AIC}\)</span>, <span class="math inline">\(\text{BIC}\)</span>, and Adjusted <span class="math inline">\(R^2\)</span>. We will also look at one, Cross-Validated <span class="math inline">\(\text{RMSE}\)</span>, which implicitly considers the size of the model.</p>
 <div id="akaike-information-criterion" class="section level3">
 <h3><span class="header-section-number">15.1.1</span> Akaike Information Criterion</h3>
@@ -388,15 +388,15 @@ n + n \log(2\pi)
 </div>
 <div id="bayesian-information-criterion" class="section level3">
 <h3><span class="header-section-number">15.1.2</span> Bayesian Information Criterion</h3>
-<p>The Bayesian Information Criterion, or <span class="math inline">\(\text{BIC}\)</span>, is similar to <span class="math inline">\(\text{AIC}\)</span>, but has a larger penalty. <span class="math inline">\(\text{BIC}\)</span> also quantifies the trade-off between a model which fits well and the number of model parameters, however for a reasonable sample size, generally picks a smaller model than <span class="math inline">\(\text{AIC}\)</span>. Again, for model selection use the model with the smallest <span class="math inline">\(\text{BIC}\)</span></p>
+<p>The Bayesian Information Criterion, or <span class="math inline">\(\text{BIC}\)</span>, is similar to <span class="math inline">\(\text{AIC}\)</span>, but has a larger penalty. <span class="math inline">\(\text{BIC}\)</span> also quantifies the trade-off between a model which fits well and the number of model parameters, however for a reasonable sample size, generally picks a smaller model than <span class="math inline">\(\text{AIC}\)</span>. Again, for model selection use the model with the smallest <span class="math inline">\(\text{BIC}\)</span>.</p>
 <p><span class="math display">\[
 \text{BIC} = -2 \log L(\boldsymbol{\hat{\beta}}, \hat{\sigma}^2) + \log(n) p = n + n\log(2\pi) + n\log\left(\frac{\text{RSS}}{n}\right) + \log(n)p.
 \]</span></p>
-<p>Notice that the AIC penalty was</p>
+<p>Notice that the <span class="math inline">\(\text{AIC}\)</span> penalty was</p>
 <p><span class="math display">\[
 2p,
 \]</span></p>
-<p>whereas for BIC, the penalty is</p>
+<p>whereas for <span class="math inline">\(\text{BIC}\)</span>, the penalty is</p>
 <p><span class="math display">\[
 \log(n) p.
 \]</span></p>
@@ -436,9 +436,9 @@ R_a^2 = 1 - \frac{\text{SSE}/(n-p)}{\text{SST}/(n-1)} = 1 - \left(  \frac{n-1}{n
 }</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">1234</span>)
 poly_data =<span class="st"> </span><span class="kw">make_poly_data</span>()</code></pre></div>
-<p>Here we have generated data which follows a quadratic pattern, specifically,</p>
+<p>Here we have generated data where the mean of <span class="math inline">\(Y\)</span> is a quadratic function of a single predictor <span class="math inline">\(x\)</span>, specifically,</p>
 <p><span class="math display">\[
-y = 3 + x + 4 x ^ 2 + \epsilon.
+Y = 3 + x + 4 x ^ 2 + \epsilon.
 \]</span></p>
 <p>We’ll now fit two models to this data, one which has the correct form, quadratic, and one that is large, which includes terms up to and including an eighth degree.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit_quad =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span><span class="kw">poly</span>(x, <span class="dt">degree =</span> <span class="dv">2</span>), <span class="dt">data =</span> poly_data)
@@ -452,7 +452,7 @@ xplot =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</
       <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-497-1.png" width="672" /></p>
 <p>We can see that the solid blue curve models this data rather nicely. The dashed orange curve fits the points better, making smaller errors, however it is unlikely that it is correctly modeling the true relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. It is fitting the random noise. This is an example of <strong>overfitting</strong>.</p>
-<p>We see that the larger model indeed has a lower RMSE.</p>
+<p>We see that the larger model indeed has a lower <span class="math inline">\(\text{RMSE}\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(<span class="kw">mean</span>(<span class="kw">resid</span>(fit_quad) ^<span class="st"> </span><span class="dv">2</span>))</code></pre></div>
 <pre><code>## [1] 17.61812</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(<span class="kw">mean</span>(<span class="kw">resid</span>(fit_big) ^<span class="st"> </span><span class="dv">2</span>))</code></pre></div>
@@ -472,10 +472,10 @@ xplot =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</
 <p>where <span class="math inline">\(\hat{\beta}_{[i]}\)</span> are the estimated coefficients when the <span class="math inline">\(i\)</span>th observation is removed from the dataset.</p>
 <p>In general, to perform this calculation, we would be required to fit the model <span class="math inline">\(n\)</span> times, once with each possible observation removed. However, for leave-one-out cross-validation and linear models, the equation can be rewritten as</p>
 <p><span class="math display">\[
-\text{CV(RMSE)}_n = \sqrt{\frac{1}{n}\sum_{i=1}^n [e_{i}/(1-h_{i})]^2,}
+\text{CV(RMSE)}_n = \sqrt{\frac{1}{n}\sum_{i=1}^n [e_{i}/(1-h_{i})]^2},
 \]</span></p>
-<p>where <span class="math inline">\(h_i\)</span> are the leverages and <span class="math inline">\(e_i\)</span> are the usual residuals. This is great, because now we can obtain the LOOCV RMSE by fitting only one model! In practice 5 or 10 fold cross-validation are much more popular. For example, in 5-fold cross-validation, the model is fit 5 times, each time leaving out a fifth of the data, then predicting on those values. We’ll leave in-depth examination of cross-validation to a machine learning course, and simply use LOOCV here.</p>
-<p>Let’s calculate LOOCV <span class="math inline">\(\text{RMSE}\)</span> for both models, then discuss <em>why</em> we want to do so. We first write a function which calculates the LOOCV RMSE as defined using the shortcut formula for linear models.</p>
+<p>where <span class="math inline">\(h_i\)</span> are the leverages and <span class="math inline">\(e_i\)</span> are the usual residuals. This is great, because now we can obtain the LOOCV <span class="math inline">\(\text{RMSE}\)</span> by fitting only one model! In practice 5 or 10 fold cross-validation are much more popular. For example, in 5-fold cross-validation, the model is fit 5 times, each time leaving out a fifth of the data, then predicting on those values. We’ll leave in-depth examination of cross-validation to a machine learning course, and simply use LOOCV here.</p>
+<p>Let’s calculate LOOCV <span class="math inline">\(\text{RMSE}\)</span> for both models, then discuss <em>why</em> we want to do so. We first write a function which calculates the LOOCV <span class="math inline">\(\text{RMSE}\)</span> as defined using the shortcut formula for linear models.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">calc_loocv_rmse =<span class="st"> </span>function(model) {
   <span class="kw">sqrt</span>(<span class="kw">mean</span>((<span class="kw">resid</span>(model) /<span class="st"> </span>(<span class="dv">1</span> -<span class="st"> </span><span class="kw">hatvalues</span>(model))) ^<span class="st"> </span><span class="dv">2</span>))
 }</code></pre></div>
@@ -592,7 +592,7 @@ hipcenter_mod =<span class="st"> </span><span class="kw">lm</span>(hipcenter ~<s
 <p>At each “step”, <code>R</code> reports the current model, its <span class="math inline">\(\text{AIC}\)</span>, and the possible steps with their <span class="math inline">\(\text{RSS}\)</span> and more importantly <span class="math inline">\(\text{AIC}\)</span>.</p>
 <p>In this example, at the first step, the current model is <code>hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg</code> which has an AIC of <code>283.62</code>. Note that when <code>R</code> is calculating this value, it is using <code>extractAIC()</code>, which uses the expression</p>
 <p><span class="math display">\[
-AIC \approx n\log\left(\frac{\text{RSS}}{n}\right) + 2p,
+\text{AIC} \approx n\log\left(\frac{\text{RSS}}{n}\right) + 2p,
 \]</span></p>
 <p>which we quickly verify.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">extractAIC</span>(hipcenter_mod) <span class="co"># returns both p and AIC</span></code></pre></div>
@@ -603,7 +603,7 @@ AIC \approx n\log\left(\frac{\text{RSS}}{n}\right) + 2p,
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n *<span class="st"> </span><span class="kw">log</span>(<span class="kw">mean</span>(<span class="kw">resid</span>(hipcenter_mod) ^<span class="st"> </span><span class="dv">2</span>)) +<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span><span class="dv">9</span></code></pre></div>
 <pre><code>## [1] 283.624</code></pre>
 <p>Returning to the first step, <code>R</code> then gives us a row which shows the effect of deleting each of the current predictors. The <code>-</code> signs at the beginning of each row indicates we are considering removing a predictor. There is also a row with <code>&lt;none&gt;</code> which is a row for keeping the current model. Notice that this row has the smallest <span class="math inline">\(\text{RSS}\)</span>, as it is the largest model.</p>
-<p>We see that every row above <code>&lt;none&gt;</code> has a smaller <span class="math inline">\(\text{AIC}\)</span> than the row for <code>&lt;none&gt;</code> with the one at the top, <code>Ht</code>, giving the lowest AIC. Thus we remove <code>Ht</code> from the model, and continue the process.</p>
+<p>We see that every row above <code>&lt;none&gt;</code> has a smaller <span class="math inline">\(\text{AIC}\)</span> than the row for <code>&lt;none&gt;</code> with the one at the top, <code>Ht</code>, giving the lowest <span class="math inline">\(\text{AIC}\)</span>. Thus we remove <code>Ht</code> from the model, and continue the process.</p>
 <p>Notice, in the second step, we start with the model <code>hipcenter ~ Age + Weight + HtShoes + Seated + Arm + Thigh + Leg</code> and the variable <code>Ht</code> is no longer considered.</p>
 <p>We continue the process until we reach the model <code>hipcenter ~ Age + HtShoes + Leg</code>. At this step, the row for <code>&lt;none&gt;</code> tops the list, as removing any additional variable will not improve the <span class="math inline">\(\text{AIC}\)</span> This is the model which is stored in <code>hipcenter_mod_back_aic</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(hipcenter_mod_back_aic)</code></pre></div>
@@ -722,9 +722,10 @@ hipcenter_mod_back_bic =<span class="st"> </span><span class="kw">step</span>(hi
 <h3><span class="header-section-number">15.2.2</span> Forward Search</h3>
 <p>Forward selection is the exact opposite of backwards selection. Here we tell <code>R</code> to start with a model using no predictors, that is <code>hipcenter ~ 1</code>, then at each step <code>R</code> will attempt to add a predictor until it finds a good model or reaches <code>hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hipcenter_mod_start =<span class="st"> </span><span class="kw">lm</span>(hipcenter ~<span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> seatpos)
-hipcenter_mod_forw_aic =<span class="st"> </span><span class="kw">step</span>(hipcenter_mod_start, 
-                              hipcenter ~<span class="st"> </span>Age +<span class="st"> </span>Weight +<span class="st"> </span>HtShoes +<span class="st"> </span>Ht +<span class="st"> </span>Seated +<span class="st"> </span>Arm +<span class="st"> </span>Thigh +<span class="st"> </span>Leg, 
-                              <span class="dt">direction =</span> <span class="st">&quot;forward&quot;</span>)</code></pre></div>
+hipcenter_mod_forw_aic =<span class="st"> </span><span class="kw">step</span>(
+  hipcenter_mod_start, 
+  <span class="dt">scope =</span> hipcenter ~<span class="st"> </span>Age +<span class="st"> </span>Weight +<span class="st"> </span>HtShoes +<span class="st"> </span>Ht +<span class="st"> </span>Seated +<span class="st"> </span>Arm +<span class="st"> </span>Thigh +<span class="st"> </span>Leg, 
+  <span class="dt">direction =</span> <span class="st">&quot;forward&quot;</span>)</code></pre></div>
 <pre><code>## Start:  AIC=311.71
 ## hipcenter ~ 1
 ## 
@@ -775,9 +776,10 @@ hipcenter_mod_forw_aic =<span class="st"> </span><span class="kw">step</span>(hi
 ## + Weight   1     46.83 41891 276.20
 ## + HtShoes  1     13.38 41925 276.23</code></pre>
 <p>Again, by default <code>R</code> uses <span class="math inline">\(\text{AIC}\)</span> as its quality metric when using the <code>step()</code> function. Also note that now the rows begin with a <code>+</code> which indicates addition of predictors to the current model from any step.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hipcenter_mod_forw_bic =<span class="st"> </span><span class="kw">step</span>(hipcenter_mod_start, 
-                              hipcenter ~<span class="st"> </span>Age +<span class="st"> </span>Weight +<span class="st"> </span>HtShoes +<span class="st"> </span>Ht +<span class="st"> </span>Seated +<span class="st"> </span>Arm +<span class="st"> </span>Thigh +<span class="st"> </span>Leg, 
-                              <span class="dt">direction =</span> <span class="st">&quot;forward&quot;</span>, <span class="dt">k =</span> <span class="kw">log</span>(n))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hipcenter_mod_forw_bic =<span class="st"> </span><span class="kw">step</span>(
+  hipcenter_mod_start, 
+  <span class="dt">scope =</span> hipcenter ~<span class="st"> </span>Age +<span class="st"> </span>Weight +<span class="st"> </span>HtShoes +<span class="st"> </span>Ht +<span class="st"> </span>Seated +<span class="st"> </span>Arm +<span class="st"> </span>Thigh +<span class="st"> </span>Leg, 
+  <span class="dt">direction =</span> <span class="st">&quot;forward&quot;</span>, <span class="dt">k =</span> <span class="kw">log</span>(n))</code></pre></div>
 <pre><code>## Start:  AIC=313.35
 ## hipcenter ~ 1
 ## 
@@ -823,68 +825,17 @@ hipcenter_mod_forw_aic =<span class="st"> </span><span class="kw">step</span>(hi
 <h3><span class="header-section-number">15.2.3</span> Stepwise Search</h3>
 <p>Stepwise search checks going both backwards and forwards at every step. It considers the addition of any variable not currently in the model, as well as the removal of any variable currently in the model.</p>
 <p>Here we perform stepwise search using <span class="math inline">\(\text{AIC}\)</span> as our metric. We start with the model <code>hipcenter ~ 1</code> and search up to <code>hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg</code>. Notice that at many of the steps, some row begin with <code>-</code>, while others begin with <code>+</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hipcenter_mod_both_aic =<span class="st"> </span><span class="kw">step</span>(hipcenter_mod_start, 
-                              hipcenter ~<span class="st"> </span>Age +<span class="st"> </span>Weight +<span class="st"> </span>HtShoes +<span class="st"> </span>Ht +<span class="st"> </span>Seated +<span class="st"> </span>Arm +<span class="st"> </span>Thigh +<span class="st"> </span>Leg, 
-                              <span class="dt">direction =</span> <span class="st">&quot;both&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hipcenter_mod_both_aic =<span class="st"> </span><span class="kw">step</span>(
+  hipcenter_mod_start, 
+  <span class="dt">scopre =</span> hipcenter ~<span class="st"> </span>Age +<span class="st"> </span>Weight +<span class="st"> </span>HtShoes +<span class="st"> </span>Ht +<span class="st"> </span>Seated +<span class="st"> </span>Arm +<span class="st"> </span>Thigh +<span class="st"> </span>Leg, 
+  <span class="dt">direction =</span> <span class="st">&quot;both&quot;</span>)</code></pre></div>
 <pre><code>## Start:  AIC=311.71
-## hipcenter ~ 1
-## 
-##           Df Sum of Sq    RSS    AIC
-## + Ht       1     84023  47616 275.07
-## + HtShoes  1     83534  48105 275.45
-## + Leg      1     81568  50071 276.98
-## + Seated   1     70392  61247 284.63
-## + Weight   1     53975  77664 293.66
-## + Thigh    1     46010  85629 297.37
-## + Arm      1     45065  86574 297.78
-## &lt;none&gt;                 131639 311.71
-## + Age      1      5541 126098 312.07
-## 
-## Step:  AIC=275.07
-## hipcenter ~ Ht
-## 
-##           Df Sum of Sq    RSS    AIC
-## + Leg      1      2781  44835 274.78
-## &lt;none&gt;                  47616 275.07
-## + Age      1      2354  45262 275.14
-## + Weight   1       196  47420 276.91
-## + Seated   1       102  47514 276.99
-## + Arm      1        76  47540 277.01
-## + HtShoes  1        26  47590 277.05
-## + Thigh    1         5  47611 277.06
-## - Ht       1     84023 131639 311.71
-## 
-## Step:  AIC=274.78
-## hipcenter ~ Ht + Leg
-## 
-##           Df Sum of Sq   RSS    AIC
-## + Age      1    2896.6 41938 274.24
-## &lt;none&gt;                 44835 274.78
-## - Leg      1    2781.1 47616 275.07
-## + Arm      1     522.7 44312 276.33
-## + Weight   1     445.1 44390 276.40
-## + HtShoes  1      34.1 44801 276.75
-## + Thigh    1      33.0 44802 276.75
-## + Seated   1       1.1 44834 276.78
-## - Ht       1    5236.3 50071 276.98
-## 
-## Step:  AIC=274.24
-## hipcenter ~ Ht + Leg + Age
-## 
-##           Df Sum of Sq   RSS    AIC
-## &lt;none&gt;                 41938 274.24
-## - Age      1    2896.6 44835 274.78
-## - Leg      1    3324.2 45262 275.14
-## - Ht       1    4238.3 46176 275.90
-## + Thigh    1     372.7 41565 275.90
-## + Arm      1     257.1 41681 276.01
-## + Seated   1     121.3 41817 276.13
-## + Weight   1      46.8 41891 276.20
-## + HtShoes  1      13.4 41925 276.23</code></pre>
+## hipcenter ~ 1</code></pre>
 <p>We could again instead use <span class="math inline">\(\text{BIC}\)</span> as our metric.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hipcenter_mod_both_bic =<span class="st"> </span><span class="kw">step</span>(hipcenter_mod_start, 
-                              hipcenter ~<span class="st"> </span>Age +<span class="st"> </span>Weight +<span class="st"> </span>HtShoes +<span class="st"> </span>Ht +<span class="st"> </span>Seated +<span class="st"> </span>Arm +<span class="st"> </span>Thigh +<span class="st"> </span>Leg, 
-                              <span class="dt">direction =</span> <span class="st">&quot;both&quot;</span>, <span class="dt">k =</span> <span class="kw">log</span>(n))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hipcenter_mod_both_bic =<span class="st"> </span><span class="kw">step</span>(
+  hipcenter_mod_start, 
+  <span class="dt">scope =</span> hipcenter ~<span class="st"> </span>Age +<span class="st"> </span>Weight +<span class="st"> </span>HtShoes +<span class="st"> </span>Ht +<span class="st"> </span>Seated +<span class="st"> </span>Arm +<span class="st"> </span>Thigh +<span class="st"> </span>Leg, 
+  <span class="dt">direction =</span> <span class="st">&quot;both&quot;</span>, <span class="dt">k =</span> <span class="kw">log</span>(n))</code></pre></div>
 <pre><code>## Start:  AIC=313.35
 ## hipcenter ~ 1
 ## 
@@ -916,13 +867,13 @@ hipcenter_mod_forw_aic =<span class="st"> </span><span class="kw">step</span>(hi
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(hipcenter_mod)$adj.r.squared</code></pre></div>
 <pre><code>## [1] 0.6000855</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(hipcenter_mod_both_aic)$adj.r.squared</code></pre></div>
-<pre><code>## [1] 0.6533055</code></pre>
+<pre><code>## [1] 0</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(hipcenter_mod_both_bic)$adj.r.squared</code></pre></div>
 <pre><code>## [1] 0.6282374</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calc_loocv_rmse</span>(hipcenter_mod)</code></pre></div>
 <pre><code>## [1] 44.44564</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calc_loocv_rmse</span>(hipcenter_mod_both_aic)</code></pre></div>
-<pre><code>## [1] 37.62516</code></pre>
+<pre><code>## [1] 60.44806</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calc_loocv_rmse</span>(hipcenter_mod_both_bic)</code></pre></div>
 <pre><code>## [1] 37.2511</code></pre>
 </div>
@@ -948,7 +899,7 @@ all_hipcenter_mod =<span class="st"> </span><span class="kw">summary</span>(<spa
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">all_hipcenter_mod$rss</code></pre></div>
 <pre><code>## [1] 47615.79 44834.69 41938.09 41485.01 41313.00 41277.90 41266.80 41261.78</code></pre>
 <p>We can obtain the <span class="math inline">\(\text{RSS}\)</span> for each of these models using <code>$rss</code>. Notice that these are decreasing since the models range from small to large.</p>
-<p>Now that we have the <span class="math inline">\(\text{RSS}\)</span> for each of these models, it is rather easy to obtain AIC, BIC, and Adjusted <span class="math inline">\(R^2\)</span> since they are all a function of <span class="math inline">\(\text{RSS}\)</span> Also, since we have the models with the best <span class="math inline">\(\text{RSS}\)</span> for each size, they will result in the models with the best <span class="math inline">\(\text{AIC}\)</span>, <span class="math inline">\(\text{BIC}\)</span>, and Adjusted <span class="math inline">\(R^2\)</span> for each size. Then by picking from those, we can find the overall best <span class="math inline">\(\text{AIC}\)</span>, <span class="math inline">\(\text{BIC}\)</span>, and Adjusted <span class="math inline">\(R^2\)</span>.</p>
+<p>Now that we have the <span class="math inline">\(\text{RSS}\)</span> for each of these models, it is rather easy to obtain <span class="math inline">\(\text{AIC}\)</span>, <span class="math inline">\(\text{BIC}\)</span>, and Adjusted <span class="math inline">\(R^2\)</span> since they are all a function of <span class="math inline">\(\text{RSS}\)</span> Also, since we have the models with the best <span class="math inline">\(\text{RSS}\)</span> for each size, they will result in the models with the best <span class="math inline">\(\text{AIC}\)</span>, <span class="math inline">\(\text{BIC}\)</span>, and Adjusted <span class="math inline">\(R^2\)</span> for each size. Then by picking from those, we can find the overall best <span class="math inline">\(\text{AIC}\)</span>, <span class="math inline">\(\text{BIC}\)</span>, and Adjusted <span class="math inline">\(R^2\)</span>.</p>
 <p>Conveniently, Adjusted <span class="math inline">\(R^2\)</span> is automatically calculated.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">all_hipcenter_mod$adjr2</code></pre></div>
 <pre><code>## [1] 0.6282374 0.6399496 0.6533055 0.6466586 0.6371276 0.6257403 0.6133690
@@ -988,10 +939,11 @@ all_hipcenter_mod$which[best_aic_ind,]</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">extractAIC</span>(hipcenter_mod_forw_aic)</code></pre></div>
 <pre><code>## [1]   4.0000 274.2418</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">extractAIC</span>(hipcenter_mod_both_aic)</code></pre></div>
-<pre><code>## [1]   4.0000 274.2418</code></pre>
+<pre><code>## [1]   1.0000 311.7088</code></pre>
 <p>We see that two of the models chosen by search procedures have the best possible <span class="math inline">\(\text{AIC}\)</span>, as they are the same model. This is however never guaranteed. We see that the model chosen using backwards selection does not achieve the smallest possible <span class="math inline">\(\text{AIC}\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(hipcenter_mod_aic ~<span class="st"> </span><span class="kw">I</span>(<span class="dv">2</span>:p), <span class="dt">ylab =</span> <span class="st">&quot;AIC&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;p, number of parameters&quot;</span>, 
-     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">cex =</span> <span class="dv">2</span>)</code></pre></div>
+     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">cex =</span> <span class="dv">2</span>,
+     <span class="dt">main =</span> <span class="st">&quot;AIC vs Model Complexity&quot;</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-529-1.png" width="672" /></p>
 <p>We could easily repeat this process for <span class="math inline">\(\text{BIC}\)</span>.</p>
 <p><span class="math display">\[
@@ -1024,7 +976,8 @@ all_hipcenter_mod$which[best_aic_ind,]</code></pre></div>
   <span class="dt">quote =</span> <span class="st">&quot;</span><span class="ch">\&quot;</span><span class="st">&quot;</span>,
   <span class="dt">comment.char =</span> <span class="st">&quot;&quot;</span>,
   <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
-<span class="kw">colnames</span>(autompg) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;mpg&quot;</span>, <span class="st">&quot;cyl&quot;</span>, <span class="st">&quot;disp&quot;</span>, <span class="st">&quot;hp&quot;</span>, <span class="st">&quot;wt&quot;</span>, <span class="st">&quot;acc&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;origin&quot;</span>, <span class="st">&quot;name&quot;</span>)
+<span class="kw">colnames</span>(autompg) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;mpg&quot;</span>, <span class="st">&quot;cyl&quot;</span>, <span class="st">&quot;disp&quot;</span>, <span class="st">&quot;hp&quot;</span>, <span class="st">&quot;wt&quot;</span>, <span class="st">&quot;acc&quot;</span>, 
+                      <span class="st">&quot;year&quot;</span>, <span class="st">&quot;origin&quot;</span>, <span class="st">&quot;name&quot;</span>)
 autompg =<span class="st"> </span><span class="kw">subset</span>(autompg, autompg$hp !=<span class="st"> &quot;?&quot;</span>)
 autompg =<span class="st"> </span><span class="kw">subset</span>(autompg, autompg$name !=<span class="st"> &quot;plymouth reliant&quot;</span>)
 <span class="kw">rownames</span>(autompg) =<span class="st"> </span><span class="kw">paste</span>(autompg$cyl, <span class="st">&quot;cylinder&quot;</span>, autompg$year, autompg$name)
@@ -1034,7 +987,8 @@ autompg =<span class="st"> </span>autompg[autompg$cyl !=<span class="st"> </span
 autompg =<span class="st"> </span>autompg[autompg$cyl !=<span class="st"> </span><span class="dv">3</span>,]
 autompg$cyl =<span class="st"> </span><span class="kw">as.factor</span>(autompg$cyl)
 autompg$domestic =<span class="st"> </span><span class="kw">as.factor</span>(autompg$domestic)
-autompg =<span class="st"> </span><span class="kw">subset</span>(autompg, <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot;mpg&quot;</span>, <span class="st">&quot;cyl&quot;</span>, <span class="st">&quot;disp&quot;</span>, <span class="st">&quot;hp&quot;</span>, <span class="st">&quot;wt&quot;</span>, <span class="st">&quot;acc&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;domestic&quot;</span>))</code></pre></div>
+autompg =<span class="st"> </span><span class="kw">subset</span>(autompg, <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot;mpg&quot;</span>, <span class="st">&quot;cyl&quot;</span>, <span class="st">&quot;disp&quot;</span>, <span class="st">&quot;hp&quot;</span>, 
+                                     <span class="st">&quot;wt&quot;</span>, <span class="st">&quot;acc&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;domestic&quot;</span>))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(autompg)</code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    383 obs. of  8 variables:
 ##  $ mpg     : num  18 15 18 16 17 15 14 14 14 15 ...
@@ -1047,20 +1001,23 @@ autompg =<span class="st"> </span><span class="kw">subset</span>(autompg, <span 
 ##  $ domestic: Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 2 2 2 2 2 2 2 2 2 2 ...</code></pre>
 <p>Recall that we have two factor variables, <code>cyl</code> and <code>domestic</code>. The <code>cyl</code> variable has three levels, while the <code>domestic</code> variable has only two. Thus the <code>cyl</code> variable will be coded using two dummy variables, while the <code>domestic</code> variable will only need one. We will pay attention to this later.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pairs</span>(autompg, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)</code></pre></div>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-536-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-536-1.png" width="768" /></p>
 <p>We’ll use the <code>pairs()</code> plot to determine which variables may benefit from a quadratic relationship with the response. We’ll also consider all possible two-way interactions. We won’t consider any three-order or higher. For example, we won’t consider the interaction between first-order terms and the added quadratic terms.</p>
 <p>So now, we’ll fit this rather large model. We’ll use a log-transformed response. Notice that <code>log(mpg) ~ . ^ 2</code> will automatically consider all first-order terms, as well as all two-way interactions. We use <code>I(var_name ^ 2)</code> to add quadratic terms for some variables. This generally works better than using <code>poly()</code> when performing variable selection.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">autompg_big_mod =<span class="st"> </span><span class="kw">lm</span>(<span class="kw">log</span>(mpg) ~<span class="st"> </span>. ^<span class="st"> </span><span class="dv">2</span> +<span class="st"> </span><span class="kw">I</span>(disp ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(hp ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(wt ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(acc ^<span class="st"> </span><span class="dv">2</span>), <span class="dt">data =</span> autompg)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">autompg_big_mod =<span class="st"> </span><span class="kw">lm</span>(
+  <span class="kw">log</span>(mpg) ~<span class="st"> </span>. ^<span class="st"> </span><span class="dv">2</span> +<span class="st"> </span><span class="kw">I</span>(disp ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(hp ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(wt ^<span class="st"> </span><span class="dv">2</span>) +<span class="st"> </span><span class="kw">I</span>(acc ^<span class="st"> </span><span class="dv">2</span>), 
+  <span class="dt">data =</span> autompg)</code></pre></div>
 <p>We think it is rather unlikely that we truly need all of these terms. There are quite a few!</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw">coef</span>(autompg_big_mod))</code></pre></div>
 <pre><code>## [1] 40</code></pre>
-<p>We’ll try backwards search with both AIC and BIC to attempt to find a smaller, more reasonable model.</p>
+<p>We’ll try backwards search with both <span class="math inline">\(\text{AIC}\)</span> and <span class="math inline">\(\text{BIC}\)</span> to attempt to find a smaller, more reasonable model.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">autompg_mod_back_aic =<span class="st"> </span><span class="kw">step</span>(autompg_big_mod, <span class="dt">direction =</span> <span class="st">&quot;backward&quot;</span>, <span class="dt">trace =</span> <span class="dv">0</span>)</code></pre></div>
 <p>Notice that we used <code>trace = 0</code> in the function call. This suppress the output for each step, and simply stores the chosen model. This is useful, as this code would otherwise create a large amount of output. If we had viewed the output, which you can try on your own by removing <code>trace = 0</code>, we would see that <code>R</code> only considers the <code>cyl</code> variable as a single variable, despite the fact that it is coded using two dummy variables. So removing <code>cyl</code> would actually remove two parameters from the resulting model.</p>
 <p>You should also notice that <code>R</code> respects hierarchy when attempting to remove variables. That is, for example, <code>R</code> will not consider removing <code>hp</code> if <code>hp:disp</code> or <code>I(hp ^ 2)</code> are currently in the model.</p>
 <p>We also use <span class="math inline">\(\text{BIC}\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n =<span class="st"> </span><span class="kw">length</span>(<span class="kw">resid</span>(autompg_big_mod))
-autompg_mod_back_bic =<span class="st"> </span><span class="kw">step</span>(autompg_big_mod, <span class="dt">direction =</span> <span class="st">&quot;backward&quot;</span>, <span class="dt">k =</span> <span class="kw">log</span>(n), <span class="dt">trace =</span> <span class="dv">0</span>)</code></pre></div>
+autompg_mod_back_bic =<span class="st"> </span><span class="kw">step</span>(autompg_big_mod, <span class="dt">direction =</span> <span class="st">&quot;backward&quot;</span>, 
+                            <span class="dt">k =</span> <span class="kw">log</span>(n), <span class="dt">trace =</span> <span class="dv">0</span>)</code></pre></div>
 <p>Looking at the coefficients of the two chosen models, we see they are still rather large.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(autompg_mod_back_aic)</code></pre></div>
 <pre><code>##      (Intercept)             cyl6             cyl8             disp 
@@ -1100,7 +1057,7 @@ autompg_mod_back_bic =<span class="st"> </span><span class="kw">step</span>(auto
 <div id="explanation-versus-prediction-1" class="section level2">
 <h2><span class="header-section-number">15.4</span> Explanation versus Prediction</h2>
 <p>Throughout this chapter, we have attempted to find reasonably “small” models, which are good at <strong>explaining</strong> the relationship between the response and the predictors, that also have small errors which are thus good for making <strong>predictions</strong>.</p>
-<p>We’ll further discuss the model <code>autompg_mod_back_bic</code> to better explain the difference between using models for <em>explaining</em> and <em>predicting</em>. This is the model fit to the <code>autompg</code> data that was chosen using Backwards Search and BIC, which obtained the lowest LOOCV <span class="math inline">\(\text{RMSE}\)</span> of the models we considered.</p>
+<p>We’ll further discuss the model <code>autompg_mod_back_bic</code> to better explain the difference between using models for <em>explaining</em> and <em>predicting</em>. This is the model fit to the <code>autompg</code> data that was chosen using Backwards Search and <span class="math inline">\(\text{BIC}\)</span>, which obtained the lowest LOOCV <span class="math inline">\(\text{RMSE}\)</span> of the models we considered.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">autompg_mod_back_bic</code></pre></div>
 <pre><code>## 
 ## Call:

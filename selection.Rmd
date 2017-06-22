@@ -16,7 +16,7 @@ This chapter, we will discuss several *criteria* and *procedures* for choosing a
 
 ## Quality Criterion
 
-So far, we have seen criteria such as $R^2$ and $\text{RMSE}$ for assessing quality of fit. However, both of these have a fatal flaw. By increasing the size of a model, that is adding predictors, that can at worst not improve. It is impossible to add a predictor to a model and make $R^2$ or $\text{RMSE}$ worse. That means, if we were to use either of these to chose between models, we would *always* simply choose the larger model.
+So far, we have seen criteria such as $R^2$ and $\text{RMSE}$ for assessing quality of fit. However, both of these have a fatal flaw. By increasing the size of a model, that is adding predictors, that can at worst not improve. It is impossible to add a predictor to a model and make $R^2$ or $\text{RMSE}$ worse. That means, if we were to use either of these to chose between models, we would *always* simply choose the larger model. Eventually we would simply be fitting to noise.
 
 This suggests that we need a quality criteria that takes into account the size of the model, since our preference is for small models that still fit well. We are willing to sacrifice a small amount of goodness-of-fit for obtaining a smaller model. We will look at three criteria that do this explicitly: $\text{AIC}$, $\text{BIC}$, and Adjusted $R^2$. We will also look at one, Cross-Validated $\text{RMSE}$, which implicitly considers the size of the model.
 
@@ -72,19 +72,19 @@ is a sufficient expression, as $n + n \log(2\pi)$ is the same across all models 
 
 ### Bayesian Information Criterion
 
-The Bayesian Information Criterion, or $\text{BIC}$, is similar to $\text{AIC}$, but has a larger penalty. $\text{BIC}$ also quantifies the trade-off between a model which fits well and the number of model parameters, however for a reasonable sample size, generally picks a smaller model than $\text{AIC}$. Again, for model selection use the model with the smallest $\text{BIC}$
+The Bayesian Information Criterion, or $\text{BIC}$, is similar to $\text{AIC}$, but has a larger penalty. $\text{BIC}$ also quantifies the trade-off between a model which fits well and the number of model parameters, however for a reasonable sample size, generally picks a smaller model than $\text{AIC}$. Again, for model selection use the model with the smallest $\text{BIC}$.
 
 \[
 \text{BIC} = -2 \log L(\boldsymbol{\hat{\beta}}, \hat{\sigma}^2) + \log(n) p = n + n\log(2\pi) + n\log\left(\frac{\text{RSS}}{n}\right) + \log(n)p.
 \]
 
-Notice that the AIC penalty was
+Notice that the $\text{AIC}$ penalty was
 
 \[
 2p,
 \]
 
-whereas for BIC, the penalty is 
+whereas for $\text{BIC}$, the penalty is 
 
 \[
 \log(n) p.
@@ -145,10 +145,10 @@ set.seed(1234)
 poly_data = make_poly_data()
 ```
 
-Here we have generated data which follows a quadratic pattern, specifically,
+Here we have generated data where the mean of $Y$ is a quadratic function of a single predictor $x$, specifically,
 
 \[
-y = 3 + x + 4 x ^ 2 + \epsilon.
+Y = 3 + x + 4 x ^ 2 + \epsilon.
 \]
 
 We'll now fit two models to this data, one which has the correct form, quadratic, and one that is large, which includes terms up to and including an eighth degree.
@@ -171,7 +171,7 @@ lines(xplot, predict(fit_big, newdata = data.frame(x = xplot)),
 
 We can see that the solid blue curve models this data rather nicely. The dashed orange curve fits the points better, making smaller errors, however it is unlikely that it is correctly modeling the true relationship between $x$ and $y$. It is fitting the random noise. This is an example of **overfitting**.
 
-We see that the larger model indeed has a lower RMSE.
+We see that the larger model indeed has a lower $\text{RMSE}$.
 
 ```{r}
 sqrt(mean(resid(fit_quad) ^ 2))
@@ -201,12 +201,12 @@ where $\hat{\beta}_{[i]}$ are the estimated coefficients when the $i$th observat
 In general, to perform this calculation, we would be required to fit the model $n$ times, once with each possible observation removed. However, for leave-one-out cross-validation and linear models, the equation can be rewritten as
 
 \[
-\text{CV(RMSE)}_n = \sqrt{\frac{1}{n}\sum_{i=1}^n [e_{i}/(1-h_{i})]^2,}
+\text{CV(RMSE)}_n = \sqrt{\frac{1}{n}\sum_{i=1}^n [e_{i}/(1-h_{i})]^2},
 \]
 
-where $h_i$ are the leverages and $e_i$ are the usual residuals. This is great, because now we can obtain the LOOCV RMSE by fitting only one model! In practice 5 or 10 fold cross-validation are much more popular. For example, in 5-fold cross-validation, the model is fit 5 times, each time leaving out a fifth of the data, then predicting on those values. We'll leave in-depth examination of cross-validation to a machine learning course, and simply use LOOCV here.
+where $h_i$ are the leverages and $e_i$ are the usual residuals. This is great, because now we can obtain the LOOCV $\text{RMSE}$ by fitting only one model! In practice 5 or 10 fold cross-validation are much more popular. For example, in 5-fold cross-validation, the model is fit 5 times, each time leaving out a fifth of the data, then predicting on those values. We'll leave in-depth examination of cross-validation to a machine learning course, and simply use LOOCV here.
 
-Let's calculate LOOCV $\text{RMSE}$ for both models, then discuss *why* we want to do so. We first write a function which calculates the LOOCV RMSE as defined using the shortcut formula for linear models.
+Let's calculate LOOCV $\text{RMSE}$ for both models, then discuss *why* we want to do so. We first write a function which calculates the LOOCV $\text{RMSE}$ as defined using the shortcut formula for linear models.
 
 ```{r}
 calc_loocv_rmse = function(model) {
@@ -274,7 +274,7 @@ At each "step", `R` reports the current model, its $\text{AIC}$, and the possibl
 In this example, at the first step, the current model is `hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg` which has an AIC of `283.62`. Note that when `R` is calculating this value, it is using `extractAIC()`, which uses the expression
 
 \[
-AIC \approx n\log\left(\frac{\text{RSS}}{n}\right) + 2p,
+\text{AIC} \approx n\log\left(\frac{\text{RSS}}{n}\right) + 2p,
 \]
 
 which we quickly verify.
@@ -288,7 +288,7 @@ n * log(mean(resid(hipcenter_mod) ^ 2)) + 2 * 9
 
 Returning to the first step, `R` then gives us a row which shows the effect of deleting each of the current predictors. The `-` signs at the beginning of each row indicates we are considering removing a predictor. There is also a row with `<none>` which is a row for keeping the current model. Notice that this row has the smallest $\text{RSS}$, as it is the largest model.
 
-We see that every row above `<none>` has a smaller $\text{AIC}$ than the row for `<none>` with the one at the top, `Ht`, giving the lowest AIC. Thus we remove `Ht` from the model, and continue the process.
+We see that every row above `<none>` has a smaller $\text{AIC}$ than the row for `<none>` with the one at the top, `Ht`, giving the lowest $\text{AIC}$. Thus we remove `Ht` from the model, and continue the process.
 
 Notice, in the second step, we start with the model `hipcenter ~ Age + Weight + HtShoes + Seated + Arm + Thigh + Leg` and the variable `Ht` is no longer considered.
 
@@ -339,17 +339,19 @@ Forward selection is the exact opposite of backwards selection. Here we tell `R`
 
 ```{r}
 hipcenter_mod_start = lm(hipcenter ~ 1, data = seatpos)
-hipcenter_mod_forw_aic = step(hipcenter_mod_start, 
-                              hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg, 
-                              direction = "forward")
+hipcenter_mod_forw_aic = step(
+  hipcenter_mod_start, 
+  scope = hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg, 
+  direction = "forward")
 ```
 
 Again, by default `R` uses $\text{AIC}$ as its quality metric when using the `step()` function. Also note that now the rows begin with a `+` which indicates addition of predictors to the current model from any step.
 
 ```{r}
-hipcenter_mod_forw_bic = step(hipcenter_mod_start, 
-                              hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg, 
-                              direction = "forward", k = log(n))
+hipcenter_mod_forw_bic = step(
+  hipcenter_mod_start, 
+  scope = hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg, 
+  direction = "forward", k = log(n))
 ```
 
 We can make the same modification as last time to instead use $\text{BIC}$ with forward selection.
@@ -375,17 +377,19 @@ Stepwise search checks going both backwards and forwards at every step. It consi
 Here we perform stepwise search using $\text{AIC}$ as our metric. We start with the model `hipcenter ~ 1` and search up to `hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg`. Notice that at many of the steps, some row begin with `-`, while others begin with `+`.
 
 ```{r}
-hipcenter_mod_both_aic = step(hipcenter_mod_start, 
-                              hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg, 
-                              direction = "both")
+hipcenter_mod_both_aic = step(
+  hipcenter_mod_start, 
+  scopre = hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg, 
+  direction = "both")
 ```
 
 We could again instead use $\text{BIC}$ as our metric.
 
 ```{r}
-hipcenter_mod_both_bic = step(hipcenter_mod_start, 
-                              hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg, 
-                              direction = "both", k = log(n))
+hipcenter_mod_both_bic = step(
+  hipcenter_mod_start, 
+  scope = hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg, 
+  direction = "both", k = log(n))
 ```
 
 Adjusted $R^2$ and LOOCV $\text{RMSE}$ comparisons are similar to backwards and forwards, which is not at all surprising, as some of the models selected are the same as before.
@@ -429,7 +433,7 @@ all_hipcenter_mod$rss
 
 We can obtain the $\text{RSS}$ for each of these models using `$rss`. Notice that these are decreasing since the models range from small to large.
 
-Now that we have the $\text{RSS}$ for each of these models, it is rather easy to obtain AIC, BIC, and Adjusted $R^2$ since they are all a function of $\text{RSS}$ Also, since we have the models with the best $\text{RSS}$ for each size, they will result in the models with the best $\text{AIC}$, $\text{BIC}$, and Adjusted $R^2$ for each size. Then by picking from those, we can find the overall best $\text{AIC}$, $\text{BIC}$, and Adjusted $R^2$.
+Now that we have the $\text{RSS}$ for each of these models, it is rather easy to obtain $\text{AIC}$, $\text{BIC}$, and Adjusted $R^2$ since they are all a function of $\text{RSS}$ Also, since we have the models with the best $\text{RSS}$ for each size, they will result in the models with the best $\text{AIC}$, $\text{BIC}$, and Adjusted $R^2$ for each size. Then by picking from those, we can find the overall best $\text{AIC}$, $\text{BIC}$, and Adjusted $R^2$.
 
 Conveniently, Adjusted $R^2$ is automatically calculated.
 
@@ -494,7 +498,8 @@ We see that two of the models chosen by search procedures have the best possible
 
 ```{r}
 plot(hipcenter_mod_aic ~ I(2:p), ylab = "AIC", xlab = "p, number of parameters", 
-     pch = 20, col = "dodgerblue", type = "b", cex = 2)
+     pch = 20, col = "dodgerblue", type = "b", cex = 2,
+     main = "AIC vs Model Complexity")
 ```
 
 We could easily repeat this process for $\text{BIC}$.
@@ -533,7 +538,8 @@ autompg = read.table(
   quote = "\"",
   comment.char = "",
   stringsAsFactors = FALSE)
-colnames(autompg) = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin", "name")
+colnames(autompg) = c("mpg", "cyl", "disp", "hp", "wt", "acc", 
+                      "year", "origin", "name")
 autompg = subset(autompg, autompg$hp != "?")
 autompg = subset(autompg, autompg$name != "plymouth reliant")
 rownames(autompg) = paste(autompg$cyl, "cylinder", autompg$year, autompg$name)
@@ -543,7 +549,8 @@ autompg = autompg[autompg$cyl != 5,]
 autompg = autompg[autompg$cyl != 3,]
 autompg$cyl = as.factor(autompg$cyl)
 autompg$domestic = as.factor(autompg$domestic)
-autompg = subset(autompg, select = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "domestic"))
+autompg = subset(autompg, select = c("mpg", "cyl", "disp", "hp", 
+                                     "wt", "acc", "year", "domestic"))
 ```
 
 ```{r}
@@ -552,7 +559,7 @@ str(autompg)
 
 Recall that we have two factor variables, `cyl` and `domestic`. The `cyl` variable has three levels, while the `domestic` variable has only two. Thus the `cyl` variable will be coded using two dummy variables, while the `domestic` variable will only need one. We will pay attention to this later.
 
-```{r}
+```{r, fig.height=8, fig.width=8}
 pairs(autompg, col = "dodgerblue")
 ```
 
@@ -561,7 +568,9 @@ We'll use the `pairs()` plot to determine which variables may benefit from a qua
 So now, we'll fit this rather large model. We'll use a log-transformed response. Notice that `log(mpg) ~ . ^ 2` will automatically consider all first-order terms, as well as all two-way interactions. We use `I(var_name ^ 2)` to add quadratic terms for some variables. This generally works better than using `poly()` when performing variable selection.
 
 ```{r}
-autompg_big_mod = lm(log(mpg) ~ . ^ 2 + I(disp ^ 2) + I(hp ^ 2) + I(wt ^ 2) + I(acc ^ 2), data = autompg)
+autompg_big_mod = lm(
+  log(mpg) ~ . ^ 2 + I(disp ^ 2) + I(hp ^ 2) + I(wt ^ 2) + I(acc ^ 2), 
+  data = autompg)
 ```
 
 We think it is rather unlikely that we truly need all of these terms. There are quite a few!
@@ -570,7 +579,7 @@ We think it is rather unlikely that we truly need all of these terms. There are 
 length(coef(autompg_big_mod))
 ```
 
-We'll try backwards search with both AIC and BIC to attempt to find a smaller, more reasonable model.
+We'll try backwards search with both $\text{AIC}$ and $\text{BIC}$ to attempt to find a smaller, more reasonable model.
 
 ```{r}
 autompg_mod_back_aic = step(autompg_big_mod, direction = "backward", trace = 0)
@@ -584,7 +593,8 @@ We also use $\text{BIC}$.
 
 ```{r}
 n = length(resid(autompg_big_mod))
-autompg_mod_back_bic = step(autompg_big_mod, direction = "backward", k = log(n), trace = 0)
+autompg_mod_back_bic = step(autompg_big_mod, direction = "backward", 
+                            k = log(n), trace = 0)
 ```
 
 Looking at the coefficients of the two chosen models, we see they are still rather large.
@@ -614,7 +624,7 @@ calc_loocv_rmse(autompg_mod_back_bic)
 
 Throughout this chapter, we have attempted to find reasonably "small" models, which are good at **explaining** the relationship between the response and the predictors, that also have small errors which are thus good for making **predictions**.
 
-We'll further discuss the model `autompg_mod_back_bic` to better explain the difference between using models for *explaining* and *predicting*. This is the model fit to the `autompg` data that was chosen using Backwards Search and BIC, which obtained the lowest LOOCV $\text{RMSE}$ of the models we considered.
+We'll further discuss the model `autompg_mod_back_bic` to better explain the difference between using models for *explaining* and *predicting*. This is the model fit to the `autompg` data that was chosen using Backwards Search and $\text{BIC}$, which obtained the lowest LOOCV $\text{RMSE}$ of the models we considered.
 
 ```{r}
 autompg_mod_back_bic
