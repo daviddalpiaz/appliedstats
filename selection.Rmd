@@ -16,66 +16,66 @@ This chapter, we will discuss several *criteria* and *procedures* for choosing a
 
 ## Quality Criterion
 
-So far, we have seen criteria such as $R^2$ and RMSE for assessing quality of fit. However, both of these have a fatal flaw. By increasing the size of a model, that is adding predictors, that can at worst not improve. It is impossible to add a predictor to a model and make $R^2$ or RMSE worse. That means, if we were to use either of these to chose between models, we would *always* simply choose the larger model.
+So far, we have seen criteria such as $R^2$ and $\text{RMSE}$ for assessing quality of fit. However, both of these have a fatal flaw. By increasing the size of a model, that is adding predictors, that can at worst not improve. It is impossible to add a predictor to a model and make $R^2$ or $\text{RMSE}$ worse. That means, if we were to use either of these to chose between models, we would *always* simply choose the larger model.
 
-This suggests that we need a quality criteria that takes into account the size of the model, since our preference is for small models that still fit well. We are willing to sacrifice a small amount of goodness-of-fit for obtaining a smaller model. We will look at three criteria that do this explicitly: AIC, BIC and Adjusted $R^2$. We will also look at one, Cross-Validated RMSE, which implicitly considers the size of the model.
+This suggests that we need a quality criteria that takes into account the size of the model, since our preference is for small models that still fit well. We are willing to sacrifice a small amount of goodness-of-fit for obtaining a smaller model. We will look at three criteria that do this explicitly: $\text{AIC}$, $\text{BIC}$, and Adjusted $R^2$. We will also look at one, Cross-Validated $\text{RMSE}$, which implicitly considers the size of the model.
 
 ### Akaike Information Criterion
 
-The first criteria we will discuss is the Akaike Information Criterion, or AIC for short. (Note that, when *Akaike* first introduced this metric, it was simply called *An* Information Criterion. The *A* has changed meaning over the years.)
+The first criteria we will discuss is the Akaike Information Criterion, or $\text{AIC}$ for short. (Note that, when *Akaike* first introduced this metric, it was simply called *An* Information Criterion. The *A* has changed meaning over the years.)
 
 Recall, the maximized log-likelihood of a regression model can be written as
 
 \[
-\log L(\boldsymbol{\hat{\beta}}) = -\frac{n}{2}\log(2\pi) - \frac{n}{2}\log\left(\frac{RSS}{n}\right) - \frac{n}{2},
+\log L(\boldsymbol{\hat{\beta}}, \hat{\sigma}^2) = -\frac{n}{2}\log(2\pi) - \frac{n}{2}\log\left(\frac{\text{RSS}}{n}\right) - \frac{n}{2},
 \]
 
-where $RSS = \sum_{i=1}^n (y_i - \hat{y}_i) ^ 2$ and $\hat{\beta}$ was chosen to maximize the likelihood.
+where $\text{RSS} = \sum_{i=1}^n (y_i - \hat{y}_i) ^ 2$ and $\boldsymbol{\hat{\beta}}$ and $\hat{\sigma}^2$ were chosen to maximize the likelihood.
 
-Then we can define AIC as
+Then we can define $\text{AIC}$ as
 
 \[
-AIC = -2 \log L(\boldsymbol{\hat{\beta}}) + 2p = n + n \log(2\pi) + n \log\left(\frac{RSS}{n}\right) + 2p,
+\text{AIC} = -2 \log L(\boldsymbol{\hat{\beta}}, \hat{\sigma}^2) + 2p = n + n \log(2\pi) + n \log\left(\frac{\text{RSS}}{n}\right) + 2p,
 \]
 
-which is a measure of quality of the model. The smaller the AIC, the better. To see why, let's talk about the two main components of AIC, the **likelihood** (which measures goodness-of-fit) and the **penalty** (which is a function of the size of the model).
+which is a measure of quality of the model. The smaller the $\text{AIC}$, the better. To see why, let's talk about the two main components of $\text{AIC}$, the **likelihood** (which measures goodness-of-fit) and the **penalty** (which is a function of the size of the model).
 
-The likelihood portion of AIC is given by
+The likelihood portion of $\text{AIC}$ is given by
 
 \[
--2 \log L(\boldsymbol{\hat{\beta}}) = n + n \log(2\pi) + n \log\left(\frac{RSS}{n}\right).
+-2 \log L(\boldsymbol{\hat{\beta}}, \hat{\sigma}^2) = n + n \log(2\pi) + n \log\left(\frac{\text{RSS}}{n}\right).
 \]
 
-For the sake of comparing models, the only term here that will change is $n \log\left(\frac{RSS}{n}\right)$, which is function of $RSS$. The 
+For the sake of comparing models, the only term here that will change is $n \log\left(\frac{\text{RSS}}{n}\right)$, which is function of $\text{RSS}$. The 
 
 \[
 n + n \log(2\pi)
 \]
 
-terms will be constant across all models applied to the same data. So, when a model fits well, that is, has a low $RSS$, then this likelihood component will be small.
+terms will be constant across all models applied to the same data. So, when a model fits well, that is, has a low $\text{RSS}$, then this likelihood component will be small.
 
-Similarly, we can discuss the penalty component of AIC which is,
+Similarly, we can discuss the penalty component of $\text{AIC}$ which is,
 
 \[
 2p,
 \]
 
-where $p$ is the number of $\beta$ parameters in the model. We call this a penalty, because it is large when $p$ is large, but we are seeking to find a small AIC.
+where $p$ is the number of $\beta$ parameters in the model. We call this a penalty, because it is large when $p$ is large, but we are seeking to find a small $\text{AIC}$
 
-Thus, a good model, that is one with a small AIC, will have a good balance between fitting well, and using a small number of parameters. For comparing models
+Thus, a good model, that is one with a small $\text{AIC}$, will have a good balance between fitting well, and using a small number of parameters. For comparing models
 
 \[
-AIC \approx n\log\left(\frac{RSS}{n}\right) + 2p
+\text{AIC} \approx n\log\left(\frac{\text{RSS}}{n}\right) + 2p
 \]
 
 is a sufficient expression, as $n + n \log(2\pi)$ is the same across all models for any particular dataset.
 
 ### Bayesian Information Criterion
 
-The Bayesian Information Criterion, or BIC, is similar to AIC, but has a larger penalty. BIC also quantifies the trade-off between a model which fits well and the number of model parameters, however for a reasonable sample size, generally picks a smaller model than AIC. Again, for model selection use the model with the smallest BIC.
+The Bayesian Information Criterion, or $\text{BIC}$, is similar to $\text{AIC}$, but has a larger penalty. $\text{BIC}$ also quantifies the trade-off between a model which fits well and the number of model parameters, however for a reasonable sample size, generally picks a smaller model than $\text{AIC}$. Again, for model selection use the model with the smallest $\text{BIC}$
 
 \[
-BIC = -2 \log L(\boldsymbol{\hat{\beta}}) + \log(n) p = n + n\log(2\pi) + n\log\left(\frac{RSS}{n}\right) + \log(n)p.
+\text{BIC} = -2 \log L(\boldsymbol{\hat{\beta}}, \hat{\sigma}^2) + \log(n) p = n + n\log(2\pi) + n\log\left(\frac{\text{RSS}}{n}\right) + \log(n)p.
 \]
 
 Notice that the AIC penalty was
@@ -90,7 +90,7 @@ whereas for BIC, the penalty is
 \log(n) p.
 \]
 
-So, for any dataset where $log(n) > 2$ the BIC penalty will be larger than the AIC penalty, thus BIC will likely prefer a smaller model.  
+So, for any dataset where $log(n) > 2$ the $\text{BIC}$ penalty will be larger than the $\text{AIC}$ penalty, thus $\text{BIC}$ will likely prefer a smaller model.  
 
 Note that, sometimes the penalty is considered a general expression of the form
 
@@ -98,12 +98,12 @@ Note that, sometimes the penalty is considered a general expression of the form
 k \cdot p.
 \]
 
-Then, for AIC $k = 2$, and for BIC $k = \log(n)$.
+Then, for $\text{AIC}$ $k = 2$, and for $\text{BIC}$ $k = \log(n)$.
 
 For comparing models
 
 \[
-BIC \approx n\log\left(\frac{RSS}{n}\right) + \log(n)p
+\text{BIC} \approx n\log\left(\frac{\text{RSS}}{n}\right) + \log(n)p
 \]
 
 is again a sufficient expression, as $n + n \log(2\pi)$ is the same across all models for any particular dataset.
@@ -113,13 +113,13 @@ is again a sufficient expression, as $n + n \log(2\pi)$ is the same across all m
 Recall,
 
 \[
-R^2 = 1 - \frac{SSE}{SST} = 1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2}.
+R^2 = 1 - \frac{\text{SSE}}{\text{SST}} = 1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2}.
 \]
 
 We now define
 
 \[
-R_a^2 = 1 - \frac{SSE/(n-p)}{SST/(n-1)} = 1 - \left(  \frac{n-1}{n-p} \right)(1-R^2)
+R_a^2 = 1 - \frac{\text{SSE}/(n-p)}{\text{SST}/(n-1)} = 1 - \left(  \frac{n-1}{n-p} \right)(1-R^2)
 \]
 
 which we call the Adjusted $R^2$.
@@ -206,7 +206,7 @@ In general, to perform this calculation, we would be required to fit the model $
 
 where $h_i$ are the leverages and $e_i$ are the usual residuals. This is great, because now we can obtain the LOOCV RMSE by fitting only one model! In practice 5 or 10 fold cross-validation are much more popular. For example, in 5-fold cross-validation, the model is fit 5 times, each time leaving out a fifth of the data, then predicting on those values. We'll leave in-depth examination of cross-validation to a machine learning course, and simply use LOOCV here.
 
-Let's calculate LOOCV RMSE for both models, then discuss *why* we want to do so. We first write a function which calculates the LOOCV RMSE as defined using the shortcut formula for linear models.
+Let's calculate LOOCV $\text{RMSE}$ for both models, then discuss *why* we want to do so. We first write a function which calculates the LOOCV RMSE as defined using the shortcut formula for linear models.
 
 ```{r}
 calc_loocv_rmse = function(model) {
@@ -221,7 +221,7 @@ calc_loocv_rmse(fit_quad)
 calc_loocv_rmse(fit_big)
 ```
 
-Now we see that the quadratic model has a much smaller LOOCV RMSE, so we would prefer this quadratic model. This is because the large model has *severely* over-fit the data. By leaving a single data point out and fitting the large model, the resulting fit is much different than the fit using all of the data. For example, let's leave out the third data point and fit both models, then plot the result.
+Now we see that the quadratic model has a much smaller LOOCV $\text{RMSE}$, so we would prefer this quadratic model. This is because the large model has *severely* over-fit the data. By leaving a single data point out and fitting the large model, the resulting fit is much different than the fit using all of the data. For example, let's leave out the third data point and fit both models, then plot the result.
 
 ```{r}
 fit_quad_removed = lm(y ~ poly(x, degree = 2), data = poly_data[-3, ])
@@ -261,7 +261,7 @@ If we had 10 or more predictors, we would already be considering over 1000 model
 
 ### Backward Search
 
-Backward selection procedures start with all possible predictors in the model, then considers how deleting a single predictor will effect a chosen metric. Let's try this on the `seatpos` data. We will use the `step()` function in `R` which by default uses AIC as its metric of choice.
+Backward selection procedures start with all possible predictors in the model, then considers how deleting a single predictor will effect a chosen metric. Let's try this on the `seatpos` data. We will use the `step()` function in `R` which by default uses $\text{AIC}$ as its metric of choice.
 
 ```{r}
 hipcenter_mod_back_aic = step(hipcenter_mod, direction = "backward")
@@ -269,12 +269,12 @@ hipcenter_mod_back_aic = step(hipcenter_mod, direction = "backward")
 
 We start with the model `hipcenter ~ .`, which is otherwise known as `hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg`. `R` will then repeatedly attempt to delete a predictor until it stops, or reaches the model `hipcenter ~ 1`, which contains no predictors.
 
-At each "step", `R` reports the current model, its AIC, and the possible steps with their RSS and more importantly AIC.
+At each "step", `R` reports the current model, its $\text{AIC}$, and the possible steps with their $\text{RSS}$ and more importantly $\text{AIC}$.
 
 In this example, at the first step, the current model is `hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg` which has an AIC of `283.62`. Note that when `R` is calculating this value, it is using `extractAIC()`, which uses the expression
 
 \[
-AIC \approx n\log\left(\frac{RSS}{n}\right) + 2p,
+AIC \approx n\log\left(\frac{\text{RSS}}{n}\right) + 2p,
 \]
 
 which we quickly verify.
@@ -286,26 +286,26 @@ n = length(resid(hipcenter_mod))
 n * log(mean(resid(hipcenter_mod) ^ 2)) + 2 * 9
 ```
 
-Returning to the first step, `R` then gives us a row which shows the effect of deleting each of the current predictors. The `-` signs at the beginning of each row indicates we are considering removing a predictor. There is also a row with `<none>` which is a row for keeping the current model. Notice that this row has the smallest RSS, as it is the largest model.
+Returning to the first step, `R` then gives us a row which shows the effect of deleting each of the current predictors. The `-` signs at the beginning of each row indicates we are considering removing a predictor. There is also a row with `<none>` which is a row for keeping the current model. Notice that this row has the smallest $\text{RSS}$, as it is the largest model.
 
-We see that every row above `<none>` has a smaller AIC than the row for `<none>` with the one at the top, `Ht`, giving the lowest AIC. Thus we remove `Ht` from the model, and continue the process.
+We see that every row above `<none>` has a smaller $\text{AIC}$ than the row for `<none>` with the one at the top, `Ht`, giving the lowest AIC. Thus we remove `Ht` from the model, and continue the process.
 
 Notice, in the second step, we start with the model `hipcenter ~ Age + Weight + HtShoes + Seated + Arm + Thigh + Leg` and the variable `Ht` is no longer considered.
 
-We continue the process until we reach the model `hipcenter ~ Age + HtShoes + Leg`. At this step, the row for `<none>` tops the list, as removing any additional variable will not improve the AIC. This is the model which is stored in `hipcenter_mod_back_aic`.
+We continue the process until we reach the model `hipcenter ~ Age + HtShoes + Leg`. At this step, the row for `<none>` tops the list, as removing any additional variable will not improve the $\text{AIC}$ This is the model which is stored in `hipcenter_mod_back_aic`.
 
 ```{r}
 coef(hipcenter_mod_back_aic)
 ```
 
-We could also search through the possible models in a backwards fashion using BIC. To do so, we again use the `step()` function, but now specify `k = log(n)`, where `n` stores the number of observations in the data.
+We could also search through the possible models in a backwards fashion using $\text{BIC}$. To do so, we again use the `step()` function, but now specify `k = log(n)`, where `n` stores the number of observations in the data.
 
 ```{r}
 n = length(resid(hipcenter_mod))
 hipcenter_mod_back_bic = step(hipcenter_mod, direction = "backward", k = log(n))
 ```
 
-The procedure is exactly the same, except at each step we look to improve the BIC, which `R` still labels AIC in the output.
+The procedure is exactly the same, except at each step we look to improve the $\text{BIC}$, which `R` still labels $\text{AIC}$ in the output.
 
 The variable `hipcenter_mod_back_bic` stores the model chosen by this procedure.
 
@@ -313,7 +313,7 @@ The variable `hipcenter_mod_back_bic` stores the model chosen by this procedure.
 coef(hipcenter_mod_back_bic)
 ```
 
-We note that this model is *smaller*, has fewer predictors, than the model chosen by AIC, which is what we would expect. Also note that while both models are different, neither uses both `Ht` and `HtShoes` which are extremely correlated.
+We note that this model is *smaller*, has fewer predictors, than the model chosen by $\text{AIC}$, which is what we would expect. Also note that while both models are different, neither uses both `Ht` and `HtShoes` which are extremely correlated.
 
 We can use information from the `summary()` function to compare their Adjusted $R^2$ values. Note that either selected model performs better than the original full model.
 
@@ -323,7 +323,7 @@ summary(hipcenter_mod_back_aic)$adj.r.squared
 summary(hipcenter_mod_back_bic)$adj.r.squared
 ```
 
-We can also calculate the LOOCV RMSE for both selected models, as well as the full model.
+We can also calculate the LOOCV $\text{RMSE}$ for both selected models, as well as the full model.
 
 ```{r}
 calc_loocv_rmse(hipcenter_mod)
@@ -331,7 +331,7 @@ calc_loocv_rmse(hipcenter_mod_back_aic)
 calc_loocv_rmse(hipcenter_mod_back_bic)
 ```
 
-We see that we would prefer the model chosen via BIC if using LOOCV RMSE as our metric.
+We see that we would prefer the model chosen via $\text{BIC}$ if using LOOCV $\text{RMSE}$ as our metric.
 
 ### Forward Search
 
@@ -344,7 +344,7 @@ hipcenter_mod_forw_aic = step(hipcenter_mod_start,
                               direction = "forward")
 ```
 
-Again, by default `R` uses AIC as its quality metric when using the `step()` function. Also note that now the rows begin with a `+` which indicates addition of predictors to the current model from any step.
+Again, by default `R` uses $\text{AIC}$ as its quality metric when using the `step()` function. Also note that now the rows begin with a `+` which indicates addition of predictors to the current model from any step.
 
 ```{r}
 hipcenter_mod_forw_bic = step(hipcenter_mod_start, 
@@ -352,7 +352,7 @@ hipcenter_mod_forw_bic = step(hipcenter_mod_start,
                               direction = "forward", k = log(n))
 ```
 
-We can make the same modification as last time to instead use BIC with forward selection.
+We can make the same modification as last time to instead use $\text{BIC}$ with forward selection.
 
 ```{r}
 summary(hipcenter_mod)$adj.r.squared
@@ -360,7 +360,7 @@ summary(hipcenter_mod_forw_aic)$adj.r.squared
 summary(hipcenter_mod_forw_bic)$adj.r.squared
 ```
 
-We can compare the two selected models' Adjusted $R^2$ as well as their LOOCV RMSE. The results are very similar to those using backwards selection, although the models are not exactly the same.
+We can compare the two selected models' Adjusted $R^2$ as well as their LOOCV $\text{RMSE}$ The results are very similar to those using backwards selection, although the models are not exactly the same.
 
 ```{r}
 calc_loocv_rmse(hipcenter_mod)
@@ -372,7 +372,7 @@ calc_loocv_rmse(hipcenter_mod_forw_bic)
 
 Stepwise search checks going both backwards and forwards at every step. It considers the addition of any variable not currently in the model, as well as the removal of any variable currently in the model.
 
-Here we perform stepwise search using AIC as our metric. We start with the model `hipcenter ~ 1` and search up to `hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg`. Notice that at many of the steps, some row begin with `-`, while others begin with `+`.
+Here we perform stepwise search using $\text{AIC}$ as our metric. We start with the model `hipcenter ~ 1` and search up to `hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg`. Notice that at many of the steps, some row begin with `-`, while others begin with `+`.
 
 ```{r}
 hipcenter_mod_both_aic = step(hipcenter_mod_start, 
@@ -380,7 +380,7 @@ hipcenter_mod_both_aic = step(hipcenter_mod_start,
                               direction = "both")
 ```
 
-We could again instead use BIC as our metric.
+We could again instead use $\text{BIC}$ as our metric.
 
 ```{r}
 hipcenter_mod_both_bic = step(hipcenter_mod_start, 
@@ -388,7 +388,7 @@ hipcenter_mod_both_bic = step(hipcenter_mod_start,
                               direction = "both", k = log(n))
 ```
 
-Adjusted $R^2$ and LOOCV RMSE comparisons are similar to backwards and forwards, which is not at all surprising, as some of the models selected are the same as before.
+Adjusted $R^2$ and LOOCV $\text{RMSE}$ comparisons are similar to backwards and forwards, which is not at all surprising, as some of the models selected are the same as before.
 
 ```{r}
 summary(hipcenter_mod)$adj.r.squared
@@ -421,15 +421,15 @@ We'll now look at the information stored in `all_hipcenter_mod`.
 all_hipcenter_mod$which
 ```
 
-Using `$which` gives us the best model, according to RSS, for a model of each possible size, in this case ranging from one to eight predictors. For example the best model with four predictors ($p = 5$) would use `Age`, `HtShoes`, `Thigh`, and `Leg`.
+Using `$which` gives us the best model, according to $\text{RSS}$, for a model of each possible size, in this case ranging from one to eight predictors. For example the best model with four predictors ($p = 5$) would use `Age`, `HtShoes`, `Thigh`, and `Leg`.
 
 ```{r}
 all_hipcenter_mod$rss
 ```
 
-We can obtain the RSS for each of these models using `$rss`. Notice that these are decreasing since the models range from small to large.
+We can obtain the $\text{RSS}$ for each of these models using `$rss`. Notice that these are decreasing since the models range from small to large.
 
-Now that we have the RSS for each of these models, it is rather easy to obtain AIC, BIC, and Adjusted $R^2$ since they are all a function of RSS. Also, since we have the models with the best RSS for each size, they will result in the models with the best AIC, BIC, and Adjusted $R^2$ for each size. Then by picking from those, we can find the overall best AIC, BIC, and Adjusted $R^2$.
+Now that we have the $\text{RSS}$ for each of these models, it is rather easy to obtain AIC, BIC, and Adjusted $R^2$ since they are all a function of $\text{RSS}$ Also, since we have the models with the best $\text{RSS}$ for each size, they will result in the models with the best $\text{AIC}$, $\text{BIC}$, and Adjusted $R^2$ for each size. Then by picking from those, we can find the overall best $\text{AIC}$, $\text{BIC}$, and Adjusted $R^2$.
 
 Conveniently, Adjusted $R^2$ is automatically calculated.
 
@@ -449,39 +449,39 @@ We can then extract the predictors of that model.
 all_hipcenter_mod$which[best_r2_ind, ]
 ```
 
-We'll now calculate AIC and BIC for the each of the models with the best RSS. To do so, we will need both $n$ and the $p$ for the largest possible model.
+We'll now calculate $\text{AIC}$ and $\text{BIC}$ for the each of the models with the best $\text{RSS}$. To do so, we will need both $n$ and the $p$ for the largest possible model.
 
 ```{r}
 p = length(coef(hipcenter_mod))
 n = length(resid(hipcenter_mod))
 ```
 
-We'll use the approximation of AIC which leaves of the constant term that is equal across all models.
+We'll use the approximation of $\text{AIC}$ which leaves of the constant term that is equal across all models.
 
 \[
-AIC \approx n\log\left(\frac{RSS}{n}\right) + 2p.
+\text{AIC} \approx n\log\left(\frac{\text{RSS}}{n}\right) + 2p.
 \]
 
-Since we have the RSS of each model stored, this is easy to calculate.
+Since we have the $\text{RSS}$ of each model stored, this is easy to calculate.
 
 ```{r}
 hipcenter_mod_aic = n * log(all_hipcenter_mod$rss / n) + 2 * (2:p)
 ```
 
-We can then extract the predictors of the model with the best AIC.
+We can then extract the predictors of the model with the best $\text{AIC}$.
 
 ```{r}
 best_aic_ind = which.min(hipcenter_mod_aic)
 all_hipcenter_mod$which[best_aic_ind,]
 ```
 
-Let's fit this model so we can compare to our previously chosen models using AIC and search procedures.
+Let's fit this model so we can compare to our previously chosen models using $\text{AIC}$ and search procedures.
 
 ```{r}
 hipcenter_mod_best_aic = lm(hipcenter ~ Age + Ht + Leg, data = seatpos)
 ```
 
-The `extractAIC()` function will calculate the AIC approximation defined above for a fitted model.
+The `extractAIC()` function will calculate the $\text{AIC}$ approximation defined above for a fitted model.
 
 ```{r}
 extractAIC(hipcenter_mod_best_aic)
@@ -490,17 +490,17 @@ extractAIC(hipcenter_mod_forw_aic)
 extractAIC(hipcenter_mod_both_aic)
 ```
 
-We see that two of the models chosen by search procedures have the best possible AIC, as they are the same model. This is however never guaranteed. We see that the model chosen using backwards selection does not achieve the smallest possible AIC.
+We see that two of the models chosen by search procedures have the best possible $\text{AIC}$, as they are the same model. This is however never guaranteed. We see that the model chosen using backwards selection does not achieve the smallest possible $\text{AIC}$.
 
 ```{r}
 plot(hipcenter_mod_aic ~ I(2:p), ylab = "AIC", xlab = "p, number of parameters", 
      pch = 20, col = "dodgerblue", type = "b", cex = 2)
 ```
 
-We could easily repeat this process for BIC.
+We could easily repeat this process for $\text{BIC}$.
 
 \[
-BIC \approx n\log\left(\frac{RSS}{n}\right) + \log(n)p.
+\text{BIC} \approx n\log\left(\frac{\text{RSS}}{n}\right) + \log(n)p.
 \]
 
 ```{r}
@@ -580,7 +580,7 @@ Notice that we used `trace = 0` in the function call. This suppress the output f
 
 You should also notice that `R` respects hierarchy when attempting to remove variables. That is, for example, `R` will not consider removing `hp` if `hp:disp` or `I(hp ^ 2)` are currently in the model.
 
-We also use BIC.
+We also use $\text{BIC}$.
 
 ```{r}
 n = length(resid(autompg_big_mod))
@@ -602,7 +602,7 @@ length(coef(autompg_mod_back_aic))
 length(coef(autompg_mod_back_bic))
 ```
 
-Calculating the LOOCV RMSE for each, we see that the model chosen using BIC performs the best. That means that it is both the best model for prediction, since it achieves the best LOOCV RMSE, but also the best model for explanation, as it is also the smallest.
+Calculating the LOOCV $\text{RMSE}$ for each, we see that the model chosen using $\text{BIC}$ performs the best. That means that it is both the best model for prediction, since it achieves the best LOOCV $\text{RMSE}$, but also the best model for explanation, as it is also the smallest.
 
 ```{r}
 calc_loocv_rmse(autompg_big_mod)
@@ -614,7 +614,7 @@ calc_loocv_rmse(autompg_mod_back_bic)
 
 Throughout this chapter, we have attempted to find reasonably "small" models, which are good at **explaining** the relationship between the response and the predictors, that also have small errors which are thus good for making **predictions**.
 
-We'll further discuss the model `autompg_mod_back_bic` to better explain the difference between using models for *explaining* and *predicting*. This is the model fit to the `autompg` data that was chosen using Backwards Search and BIC, which obtained the lowest LOOCV RMSE of the models we considered.
+We'll further discuss the model `autompg_mod_back_bic` to better explain the difference between using models for *explaining* and *predicting*. This is the model fit to the `autompg` data that was chosen using Backwards Search and BIC, which obtained the lowest LOOCV $\text{RMSE}$ of the models we considered.
 
 ```{r}
 autompg_mod_back_bic
@@ -652,7 +652,7 @@ This is a concept that you should encounter often in your statistics education. 
 
 Suppose now instead of the manufacturer who would like to build a car, we are a consumer who wishes to purchase a new car. However this particular car is so new, it has not been rigorously tested, so we are unsure of what fuel efficiency to expect. (And, as skeptics, we don't trust what the manufacturer is telling us.)
 
-In this case, we would like to use the model to help *predict* the fuel efficiency of this car based on its attributes, which are the predictors of the model. The smaller the errors the model makes, the more confident we are in its prediction. Thus, to find models for prediction, we would use selection criterion that *implicitly* penalize larger models, such as LOOCV RMSE. So long as the model does not over-fit, we do not actually care how large the model becomes. Explaining the relationship between the variables is not our goal here, we simply want to know what kind of fuel efficiency we should expect!
+In this case, we would like to use the model to help *predict* the fuel efficiency of this car based on its attributes, which are the predictors of the model. The smaller the errors the model makes, the more confident we are in its prediction. Thus, to find models for prediction, we would use selection criterion that *implicitly* penalize larger models, such as LOOCV $\text{RMSE}$. So long as the model does not over-fit, we do not actually care how large the model becomes. Explaining the relationship between the variables is not our goal here, we simply want to know what kind of fuel efficiency we should expect!
 
 If we **only** care about prediction, we don't need to worry about correlation vs causation, and we don't need to worry about model assumptions. 
 
