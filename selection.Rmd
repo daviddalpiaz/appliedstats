@@ -283,7 +283,7 @@ which we quickly verify.
 extractAIC(hipcenter_mod) # returns both p and AIC
 n = length(resid(hipcenter_mod))
 (p = length(coef(hipcenter_mod)))
-n * log(mean(resid(hipcenter_mod) ^ 2)) + 2 * 9
+n * log(mean(resid(hipcenter_mod) ^ 2)) + 2 * p
 ```
 
 Returning to the first step, `R` then gives us a row which shows the effect of deleting each of the current predictors. The `-` signs at the beginning of each row indicates we are considering removing a predictor. There is also a row with `<none>` which is a row for keeping the current model. Notice that this row has the smallest $\text{RSS}$, as it is the largest model.
@@ -379,7 +379,7 @@ Here we perform stepwise search using $\text{AIC}$ as our metric. We start with 
 ```{r}
 hipcenter_mod_both_aic = step(
   hipcenter_mod_start, 
-  scopre = hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg, 
+  scope = hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg, 
   direction = "both")
 ```
 

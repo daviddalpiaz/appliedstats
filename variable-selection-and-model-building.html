@@ -25,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2017-06-22">
+<meta name="date" content="2017-06-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -600,7 +600,7 @@ hipcenter_mod =<span class="st"> </span><span class="kw">lm</span>(hipcenter ~<s
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n =<span class="st"> </span><span class="kw">length</span>(<span class="kw">resid</span>(hipcenter_mod))
 (<span class="dt">p =</span> <span class="kw">length</span>(<span class="kw">coef</span>(hipcenter_mod)))</code></pre></div>
 <pre><code>## [1] 9</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n *<span class="st"> </span><span class="kw">log</span>(<span class="kw">mean</span>(<span class="kw">resid</span>(hipcenter_mod) ^<span class="st"> </span><span class="dv">2</span>)) +<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span><span class="dv">9</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n *<span class="st"> </span><span class="kw">log</span>(<span class="kw">mean</span>(<span class="kw">resid</span>(hipcenter_mod) ^<span class="st"> </span><span class="dv">2</span>)) +<span class="st"> </span><span class="dv">2</span> *<span class="st"> </span>p</code></pre></div>
 <pre><code>## [1] 283.624</code></pre>
 <p>Returning to the first step, <code>R</code> then gives us a row which shows the effect of deleting each of the current predictors. The <code>-</code> signs at the beginning of each row indicates we are considering removing a predictor. There is also a row with <code>&lt;none&gt;</code> which is a row for keeping the current model. Notice that this row has the smallest <span class="math inline">\(\text{RSS}\)</span>, as it is the largest model.</p>
 <p>We see that every row above <code>&lt;none&gt;</code> has a smaller <span class="math inline">\(\text{AIC}\)</span> than the row for <code>&lt;none&gt;</code> with the one at the top, <code>Ht</code>, giving the lowest <span class="math inline">\(\text{AIC}\)</span>. Thus we remove <code>Ht</code> from the model, and continue the process.</p>
@@ -827,10 +827,63 @@ hipcenter_mod_forw_aic =<span class="st"> </span><span class="kw">step</span>(
 <p>Here we perform stepwise search using <span class="math inline">\(\text{AIC}\)</span> as our metric. We start with the model <code>hipcenter ~ 1</code> and search up to <code>hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg</code>. Notice that at many of the steps, some row begin with <code>-</code>, while others begin with <code>+</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hipcenter_mod_both_aic =<span class="st"> </span><span class="kw">step</span>(
   hipcenter_mod_start, 
-  <span class="dt">scopre =</span> hipcenter ~<span class="st"> </span>Age +<span class="st"> </span>Weight +<span class="st"> </span>HtShoes +<span class="st"> </span>Ht +<span class="st"> </span>Seated +<span class="st"> </span>Arm +<span class="st"> </span>Thigh +<span class="st"> </span>Leg, 
+  <span class="dt">scope =</span> hipcenter ~<span class="st"> </span>Age +<span class="st"> </span>Weight +<span class="st"> </span>HtShoes +<span class="st"> </span>Ht +<span class="st"> </span>Seated +<span class="st"> </span>Arm +<span class="st"> </span>Thigh +<span class="st"> </span>Leg, 
   <span class="dt">direction =</span> <span class="st">&quot;both&quot;</span>)</code></pre></div>
 <pre><code>## Start:  AIC=311.71
-## hipcenter ~ 1</code></pre>
+## hipcenter ~ 1
+## 
+##           Df Sum of Sq    RSS    AIC
+## + Ht       1     84023  47616 275.07
+## + HtShoes  1     83534  48105 275.45
+## + Leg      1     81568  50071 276.98
+## + Seated   1     70392  61247 284.63
+## + Weight   1     53975  77664 293.66
+## + Thigh    1     46010  85629 297.37
+## + Arm      1     45065  86574 297.78
+## &lt;none&gt;                 131639 311.71
+## + Age      1      5541 126098 312.07
+## 
+## Step:  AIC=275.07
+## hipcenter ~ Ht
+## 
+##           Df Sum of Sq    RSS    AIC
+## + Leg      1      2781  44835 274.78
+## &lt;none&gt;                  47616 275.07
+## + Age      1      2354  45262 275.14
+## + Weight   1       196  47420 276.91
+## + Seated   1       102  47514 276.99
+## + Arm      1        76  47540 277.01
+## + HtShoes  1        26  47590 277.05
+## + Thigh    1         5  47611 277.06
+## - Ht       1     84023 131639 311.71
+## 
+## Step:  AIC=274.78
+## hipcenter ~ Ht + Leg
+## 
+##           Df Sum of Sq   RSS    AIC
+## + Age      1    2896.6 41938 274.24
+## &lt;none&gt;                 44835 274.78
+## - Leg      1    2781.1 47616 275.07
+## + Arm      1     522.7 44312 276.33
+## + Weight   1     445.1 44390 276.40
+## + HtShoes  1      34.1 44801 276.75
+## + Thigh    1      33.0 44802 276.75
+## + Seated   1       1.1 44834 276.78
+## - Ht       1    5236.3 50071 276.98
+## 
+## Step:  AIC=274.24
+## hipcenter ~ Ht + Leg + Age
+## 
+##           Df Sum of Sq   RSS    AIC
+## &lt;none&gt;                 41938 274.24
+## - Age      1    2896.6 44835 274.78
+## - Leg      1    3324.2 45262 275.14
+## - Ht       1    4238.3 46176 275.90
+## + Thigh    1     372.7 41565 275.90
+## + Arm      1     257.1 41681 276.01
+## + Seated   1     121.3 41817 276.13
+## + Weight   1      46.8 41891 276.20
+## + HtShoes  1      13.4 41925 276.23</code></pre>
 <p>We could again instead use <span class="math inline">\(\text{BIC}\)</span> as our metric.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hipcenter_mod_both_bic =<span class="st"> </span><span class="kw">step</span>(
   hipcenter_mod_start, 
@@ -867,13 +920,13 @@ hipcenter_mod_forw_aic =<span class="st"> </span><span class="kw">step</span>(
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(hipcenter_mod)$adj.r.squared</code></pre></div>
 <pre><code>## [1] 0.6000855</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(hipcenter_mod_both_aic)$adj.r.squared</code></pre></div>
-<pre><code>## [1] 0</code></pre>
+<pre><code>## [1] 0.6533055</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(hipcenter_mod_both_bic)$adj.r.squared</code></pre></div>
 <pre><code>## [1] 0.6282374</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calc_loocv_rmse</span>(hipcenter_mod)</code></pre></div>
 <pre><code>## [1] 44.44564</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calc_loocv_rmse</span>(hipcenter_mod_both_aic)</code></pre></div>
-<pre><code>## [1] 60.44806</code></pre>
+<pre><code>## [1] 37.62516</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">calc_loocv_rmse</span>(hipcenter_mod_both_bic)</code></pre></div>
 <pre><code>## [1] 37.2511</code></pre>
 </div>
@@ -939,7 +992,7 @@ all_hipcenter_mod$which[best_aic_ind,]</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">extractAIC</span>(hipcenter_mod_forw_aic)</code></pre></div>
 <pre><code>## [1]   4.0000 274.2418</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">extractAIC</span>(hipcenter_mod_both_aic)</code></pre></div>
-<pre><code>## [1]   1.0000 311.7088</code></pre>
+<pre><code>## [1]   4.0000 274.2418</code></pre>
 <p>We see that two of the models chosen by search procedures have the best possible <span class="math inline">\(\text{AIC}\)</span>, as they are the same model. This is however never guaranteed. We see that the model chosen using backwards selection does not achieve the smallest possible <span class="math inline">\(\text{AIC}\)</span>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(hipcenter_mod_aic ~<span class="st"> </span><span class="kw">I</span>(<span class="dv">2</span>:p), <span class="dt">ylab =</span> <span class="st">&quot;AIC&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;p, number of parameters&quot;</span>, 
      <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">cex =</span> <span class="dv">2</span>,
