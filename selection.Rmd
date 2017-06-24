@@ -65,7 +65,7 @@ where $p$ is the number of $\beta$ parameters in the model. We call this a penal
 Thus, a good model, that is one with a small $\text{AIC}$, will have a good balance between fitting well, and using a small number of parameters. For comparing models
 
 \[
-\text{AIC} \approx n\log\left(\frac{\text{RSS}}{n}\right) + 2p
+\text{AIC} = n\log\left(\frac{\text{RSS}}{n}\right) + 2p
 \]
 
 is a sufficient expression, as $n + n \log(2\pi)$ is the same across all models for any particular dataset.
@@ -103,7 +103,7 @@ Then, for $\text{AIC}$ $k = 2$, and for $\text{BIC}$ $k = \log(n)$.
 For comparing models
 
 \[
-\text{BIC} \approx n\log\left(\frac{\text{RSS}}{n}\right) + \log(n)p
+\text{BIC} = n\log\left(\frac{\text{RSS}}{n}\right) + \log(n)p
 \]
 
 is again a sufficient expression, as $n + n \log(2\pi)$ is the same across all models for any particular dataset.
@@ -274,7 +274,7 @@ At each "step", `R` reports the current model, its $\text{AIC}$, and the possibl
 In this example, at the first step, the current model is `hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg` which has an AIC of `283.62`. Note that when `R` is calculating this value, it is using `extractAIC()`, which uses the expression
 
 \[
-\text{AIC} \approx n\log\left(\frac{\text{RSS}}{n}\right) + 2p,
+\text{AIC} = n\log\left(\frac{\text{RSS}}{n}\right) + 2p,
 \]
 
 which we quickly verify.
@@ -460,10 +460,10 @@ p = length(coef(hipcenter_mod))
 n = length(resid(hipcenter_mod))
 ```
 
-We'll use the approximation of $\text{AIC}$ which leaves of the constant term that is equal across all models.
+We'll use the form of $\text{AIC}$ which leaves out the constant term that is equal across all models.
 
 \[
-\text{AIC} \approx n\log\left(\frac{\text{RSS}}{n}\right) + 2p.
+\text{AIC} = n\log\left(\frac{\text{RSS}}{n}\right) + 2p.
 \]
 
 Since we have the $\text{RSS}$ of each model stored, this is easy to calculate.
@@ -485,7 +485,7 @@ Let's fit this model so we can compare to our previously chosen models using $\t
 hipcenter_mod_best_aic = lm(hipcenter ~ Age + Ht + Leg, data = seatpos)
 ```
 
-The `extractAIC()` function will calculate the $\text{AIC}$ approximation defined above for a fitted model.
+The `extractAIC()` function will calculate the $\text{AIC}$ defined above for a fitted model.
 
 ```{r}
 extractAIC(hipcenter_mod_best_aic)
@@ -505,7 +505,7 @@ plot(hipcenter_mod_aic ~ I(2:p), ylab = "AIC", xlab = "p, number of parameters",
 We could easily repeat this process for $\text{BIC}$.
 
 \[
-\text{BIC} \approx n\log\left(\frac{\text{RSS}}{n}\right) + \log(n)p.
+\text{BIC} = n\log\left(\frac{\text{RSS}}{n}\right) + \log(n)p.
 \]
 
 ```{r}
