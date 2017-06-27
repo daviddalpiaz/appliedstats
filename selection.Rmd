@@ -181,7 +181,7 @@ sqrt(mean(resid(fit_big) ^ 2))
 To correct for this, we will introduce cross-validation. We define the leave-one-out cross-validated RMSE to be
 
 \[
-\text{CV(RMSE)}_n = \sqrt{\frac{1}{n} \sum_{i=1}^n e_{[i]}^2}.
+\text{RMSE}_{\text{LOOCV}} = \sqrt{\frac{1}{n} \sum_{i=1}^n e_{[i]}^2}.
 \]
 
 The $e_{[i]}$ are the residual for the $i$th observation, when that observation is **not** used to fit the model.
@@ -196,12 +196,12 @@ That is, the fitted value is calculated as
 \hat{y}_{[i]} = x_i ^ \top \hat{\beta}_{[i]}
 \]
 
-where $\hat{\beta}_{[i]}$ are the estimated coefficients when the $i$th observation is removed from the dataset. 
+where $\hat{\beta}_{[i]}$ are the estimated coefficients when the $i$th observation is removed from the dataset.
 
 In general, to perform this calculation, we would be required to fit the model $n$ times, once with each possible observation removed. However, for leave-one-out cross-validation and linear models, the equation can be rewritten as
 
 \[
-\text{CV(RMSE)}_n = \sqrt{\frac{1}{n}\sum_{i=1}^n [e_{i}/(1-h_{i})]^2},
+\text{RMSE}_{\text{LOOCV}} = \sqrt{\frac{1}{n}\sum_{i=1}^n \left(\frac{e_{i}}{1-h_{i}}\right)^2},
 \]
 
 where $h_i$ are the leverages and $e_i$ are the usual residuals. This is great, because now we can obtain the LOOCV $\text{RMSE}$ by fitting only one model! In practice 5 or 10 fold cross-validation are much more popular. For example, in 5-fold cross-validation, the model is fit 5 times, each time leaving out a fifth of the data, then predicting on those values. We'll leave in-depth examination of cross-validation to a machine learning course, and simply use LOOCV here.

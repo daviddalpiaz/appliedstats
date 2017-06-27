@@ -25,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2017-06-26">
+<meta name="date" content="2017-06-27">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -459,7 +459,7 @@ xplot =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</
 <pre><code>## [1] 10.4197</code></pre>
 <p>To correct for this, we will introduce cross-validation. We define the leave-one-out cross-validated RMSE to be</p>
 <p><span class="math display">\[
-\text{CV(RMSE)}_n = \sqrt{\frac{1}{n} \sum_{i=1}^n e_{[i]}^2}.
+\text{RMSE}_{\text{LOOCV}} = \sqrt{\frac{1}{n} \sum_{i=1}^n e_{[i]}^2}.
 \]</span></p>
 <p>The <span class="math inline">\(e_{[i]}\)</span> are the residual for the <span class="math inline">\(i\)</span>th observation, when that observation is <strong>not</strong> used to fit the model.</p>
 <p><span class="math display">\[
@@ -472,7 +472,7 @@ xplot =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</
 <p>where <span class="math inline">\(\hat{\beta}_{[i]}\)</span> are the estimated coefficients when the <span class="math inline">\(i\)</span>th observation is removed from the dataset.</p>
 <p>In general, to perform this calculation, we would be required to fit the model <span class="math inline">\(n\)</span> times, once with each possible observation removed. However, for leave-one-out cross-validation and linear models, the equation can be rewritten as</p>
 <p><span class="math display">\[
-\text{CV(RMSE)}_n = \sqrt{\frac{1}{n}\sum_{i=1}^n [e_{i}/(1-h_{i})]^2},
+\text{RMSE}_{\text{LOOCV}} = \sqrt{\frac{1}{n}\sum_{i=1}^n \left(\frac{e_{i}}{1-h_{i}}\right)^2},
 \]</span></p>
 <p>where <span class="math inline">\(h_i\)</span> are the leverages and <span class="math inline">\(e_i\)</span> are the usual residuals. This is great, because now we can obtain the LOOCV <span class="math inline">\(\text{RMSE}\)</span> by fitting only one model! In practice 5 or 10 fold cross-validation are much more popular. For example, in 5-fold cross-validation, the model is fit 5 times, each time leaving out a fifth of the data, then predicting on those values. We’ll leave in-depth examination of cross-validation to a machine learning course, and simply use LOOCV here.</p>
 <p>Let’s calculate LOOCV <span class="math inline">\(\text{RMSE}\)</span> for both models, then discuss <em>why</em> we want to do so. We first write a function which calculates the LOOCV <span class="math inline">\(\text{RMSE}\)</span> as defined using the shortcut formula for linear models.</p>
