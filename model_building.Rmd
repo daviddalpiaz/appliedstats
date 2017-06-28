@@ -288,7 +288,7 @@ set.seed(42)
 n = 30
 beta_0 = 1
 beta_1 = 0.5
-sigma = 3
+sigma = 1.5
 x = runif(n, 0, 10)
 xplot = seq(-1, 11, by = 0.1)
 
@@ -301,7 +301,7 @@ sim_slr = function(n, x, beta_0 = 10, beta_1 = 5, sigma = 1) {
 sim_data = sim_slr(n = n, x = x, beta_0 = beta_0, beta_1 = beta_1, sigma = sigma)
 
 sim_fit_1 = lm(response ~ predictor, data = sim_data)
-sim_fit_2 = lm(response ~ poly(predictor, 7), data = sim_data)
+sim_fit_2 = lm(response ~ poly(predictor, 8), data = sim_data)
 
 
 rmse = function(actual, predicted) {
@@ -325,7 +325,7 @@ plot(response ~ predictor, data = sim_data,
      xlab = "Predictor", ylab = "Response",
      main = "Simulated Train Data",
      pch  = 20, cex  = 3, col = "darkgrey",
-     xlim = c(-1, 11), ylim = c(-6, 11))
+     xlim = c(-1, 11), ylim = c(-4, 9))
 abline(sim_fit_1, lwd = 3, col = "dodgerblue")
 lines(xplot, predict(sim_fit_2, newdata = data.frame(predictor = xplot)),
       lwd = 3, lty = 2, col = "darkorange")
@@ -334,24 +334,15 @@ plot(response ~ predictor, data = sim_data_new,
      xlab = "Predictor", ylab = "Response",
      main = "Simulated Test Data",
      pch  = 20, cex  = 3, col = "darkgrey",
-     xlim = c(-1, 11), ylim = c(-6, 11))
+     xlim = c(-1, 11), ylim = c(-4, 9))
 abline(sim_fit_1, lwd = 3, col = "dodgerblue")
 lines(xplot, predict(sim_fit_2, newdata = data.frame(predictor = xplot)),
       lwd = 3, lty = 2, col = "darkorange")
-
-# plot(response ~ predictor, data = rbind(sim_data, sim_data_new),
-#      xlab = "Predictor", ylab = "Response",
-#      main = "Simulated Test Data",
-#      pch  = 20, cex  = 3, col = "darkgrey",
-#      xlim = c(-1, 11), ylim = c(-6, 11))
-# abline(sim_fit_1, lwd = 3, col = "dodgerblue")
-# lines(xplot, predict(sim_fit_2, newdata = data.frame(predictor = xplot)),
-#       lwd = 3, lty = 2, col = "darkorange")
 ```
 
 The left panel shows the data that was used to fit the two models. Clearly the "complex" model fits the data much better. The right panel shows additional data that was simulated in the same manner as the original data. Here we see that the "simple" model fits much better. The dashed orange line almost seems random.
 
-| Model   | Train                                           | Test                                                              |
+| Model   | **Train** RMSE                                  | **Test** RMSE                                                     |
 |---------|-------------------------------------------------|-------------------------------------------------------------------|
 | Simple  | `r rmse(sim_data$response, predict(sim_fit_1))` | `r rmse(sim_data_new$response, predict(sim_fit_1, sim_data_new))` |
 | Complex | `r rmse(sim_data$response, predict(sim_fit_2))` | `r rmse(sim_data_new$response, predict(sim_fit_2, sim_data_new))` |
