@@ -342,10 +342,10 @@ lines(xplot, predict(sim_fit_2, newdata = data.frame(predictor = xplot)),
 
 The left panel shows the data that was used to fit the two models. Clearly the "complex" model fits the data much better. The right panel shows additional data that was simulated in the same manner as the original data. Here we see that the "simple" model fits much better. The dashed orange line almost seems random.
 
-| Model   | **Train** RMSE                                  | **Test** RMSE                                                     |
-|---------|-------------------------------------------------|-------------------------------------------------------------------|
-| Simple  | `r rmse(sim_data$response, predict(sim_fit_1))` | `r rmse(sim_data_new$response, predict(sim_fit_1, sim_data_new))` |
-| Complex | `r rmse(sim_data$response, predict(sim_fit_2))` | `r rmse(sim_data_new$response, predict(sim_fit_2, sim_data_new))` |
+| Model   | **Train** RMSE                                            | **Test** RMSE                                                               |
+|---------|-----------------------------------------------------------|-----------------------------------------------------------------------------|
+| Simple  | `r round(rmse(sim_data$response, predict(sim_fit_1)), 2)` | `r round(rmse(sim_data_new$response, predict(sim_fit_1, sim_data_new)), 2)` |
+| Complex | `r round(rmse(sim_data$response, predict(sim_fit_2)), 2)` | `r round(rmse(sim_data_new$response, predict(sim_fit_2, sim_data_new)), 2)` |
 
 The more "complex", wiggly, model fits the training data much better as it has a much lower train RMSE. However, we see that the "simple" model fits the test data much better, with a much lower test RMSE. This means that the complex model has *overfit* the data, and we prefer the simple model. When choosing a model for prediction, we prefer a model that predicts unseen data.
 
