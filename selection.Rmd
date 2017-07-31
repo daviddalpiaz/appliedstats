@@ -18,7 +18,7 @@ This chapter, we will discuss several *criteria* and *procedures* for choosing a
 
 So far, we have seen criteria such as $R^2$ and $\text{RMSE}$ for assessing quality of fit. However, both of these have a fatal flaw. By increasing the size of a model, that is adding predictors, that can at worst not improve. It is impossible to add a predictor to a model and make $R^2$ or $\text{RMSE}$ worse. That means, if we were to use either of these to chose between models, we would *always* simply choose the larger model. Eventually we would simply be fitting to noise.
 
-This suggests that we need a quality criteria that takes into account the size of the model, since our preference is for small models that still fit well. We are willing to sacrifice a small amount of goodness-of-fit for obtaining a smaller model. We will look at three criteria that do this explicitly: $\text{AIC}$, $\text{BIC}$, and Adjusted $R^2$. We will also look at one, Cross-Validated $\text{RMSE}$, which implicitly considers the size of the model.
+This suggests that we need a quality criteria that takes into account the size of the model, since our preference is for small models that still fit well. We are willing to sacrifice a small amount of "goodness-of-fit" for obtaining a smaller model. (Here we use "goodness-of-fit" to simply mean how far the data is from the model, the smaller the errors the better. Often in statistics, goodness-of-fit can have a more precise meaning.) We will look at three criteria that do this explicitly: $\text{AIC}$, $\text{BIC}$, and Adjusted $R^2$. We will also look at one, Cross-Validated $\text{RMSE}$, which implicitly considers the size of the model.
 
 ### Akaike Information Criterion
 
@@ -38,7 +38,7 @@ Then we can define $\text{AIC}$ as
 \text{AIC} = -2 \log L(\boldsymbol{\hat{\beta}}, \hat{\sigma}^2) + 2p = n + n \log(2\pi) + n \log\left(\frac{\text{RSS}}{n}\right) + 2p,
 \]
 
-which is a measure of quality of the model. The smaller the $\text{AIC}$, the better. To see why, let's talk about the two main components of $\text{AIC}$, the **likelihood** (which measures goodness-of-fit) and the **penalty** (which is a function of the size of the model).
+which is a measure of quality of the model. The smaller the $\text{AIC}$, the better. To see why, let's talk about the two main components of $\text{AIC}$, the **likelihood** (which measures "goodness-of-fit"") and the **penalty** (which is a function of the size of the model).
 
 The likelihood portion of $\text{AIC}$ is given by
 
