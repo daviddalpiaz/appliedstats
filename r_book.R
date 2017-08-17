@@ -7,4 +7,3 @@ if(length(inst_pkgs)) install.packages(inst_pkgs)
 
 # Dynamically load packages
 pkgs_loaded = lapply(load_pkgs, require, character.only = TRUE)
-
