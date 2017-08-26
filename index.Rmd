@@ -15,9 +15,16 @@ favicon: "favicon.gif"
 ---
 
 ```{r setup, echo = FALSE, message = FALSE, warning = FALSE}
-require(knitr)
-read_chunk('r_book.R')
+# require(knitr)
+# read_chunk('r_book.R')
 options(width = 80, scipen = 4)
+lapply(
+  c("ggplot2", "devtools", "zoo", "plot3D", "lmtest", "faraway", "leaps", 
+    "broom", "readr", "ElemStatLearn", "kernlab"), 
+  function(pkg) {
+    if (system.file(package = pkg) == '') install.packages(pkg)
+  }
+)
 ```
 
 # Introduction
