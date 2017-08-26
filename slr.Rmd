@@ -12,6 +12,7 @@ After reading this chapter you will be able to:
 - Interpret regression coefficients and statistics in the context of real-world problems.
 - Use a regression model to make predictions.
 
+
 ## Modeling
 
 Let's consider a simple example of how the speed of a car affects its stopping distance, that is, how far it travels before it comes to a stop. To examine this relationship, we will use the `cars` dataset which, is a default `R` dataset. Thus, we don't need to load a package first; it is immediately available.
@@ -207,6 +208,7 @@ $$
 $$
 
 This last option is called the method of **least squares**. It is essentially the de-facto method for fitting a line to data. (You may have even seen it before in a linear algebra course.) Its popularity is largely due to the fact that it is mathematically "easy." (Which was important historically, as computers are a modern contraption.) It is also very popular because many relationships are well approximated by a linear function.
+
 
 ##  Least Squares Approach
 
@@ -465,6 +467,7 @@ s_e
 
 This tells us that our estimates of mean stopping distance are "typically" off by `r round(s_e, 2)` feet.
 
+
 ##  Decomposition of Variation
 
 We can re-express $y_i - \bar{y}$, which measures the deviation of an observation from the sample mean, in the following way,
@@ -647,6 +650,7 @@ plot_unexp_dev(plot_data)
 plot_total_dev(plot_data)
 plot_total_dev_prop(plot_data)
 ```
+
 
 ## The `lm` Function
 
@@ -884,6 +888,7 @@ $$
 
 In the next chapter, we will discuss in detail the difference between these two estimates, which involves biasedness.
 
+
 ## Simulating SLR
 
 We return again to more examples of simulation. This will be a common theme! 
@@ -995,6 +1000,30 @@ legend("topright", c("Estimate", "Truth"), lty = c(1, 2), lwd = 2,
        col = c("darkorange", "dodgerblue"))
 ```
 
+
 ## History
 
 For some brief background on the history of linear regression, see ["Galton, Pearson, and the Peas: A Brief History of Linear Regression for Statistics Instructors"](http://www.amstat.org/publications/jse/v9n3/stanton.html) from the [Journal of Statistics Education](http://www.amstat.org/publications/jse/) as well as the [Wikipedia page on the history of regression analysis](https://en.wikipedia.org/wiki/Regression_analysis#History) and lastly the article for [regression to the mean](https://en.wikipedia.org/wiki/Regression_toward_the_mean) which details the origins of the term "regression."
+
+
+## RMarkdown
+
+The RMarkdown file for this chapter can be found [**here**](slr.Rmd). The file was created using `R` version `r paste0(version$major, "." ,version$minor)` and the following packages:
+
+- Base Packages, Attached
+
+```{r, echo = FALSE}
+sessionInfo()$basePkgs
+```
+
+- Additional Packages, Attached
+
+```{r, echo = FALSE}
+names(sessionInfo()$otherPkgs)
+```
+
+- Additional Packages, Not Attached
+
+```{r, echo = FALSE}
+names(sessionInfo()$loadedOnly)
+```
