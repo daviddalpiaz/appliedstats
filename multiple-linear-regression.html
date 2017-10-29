@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Applied Statistics with R</title>
   <meta name="description" content="Applied Statistics with <code>R</code>">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.5.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2017-09-17">
+<meta name="date" content="2017-10-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1024,7 +1024,7 @@ full_mpg_model =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span c
 ## Residual standard error: 3.431 on 387 degrees of freedom
 ## Multiple R-squared:  0.8082, Adjusted R-squared:  0.8072 
 ## F-statistic: 815.6 on 2 and 387 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>Notice that the value reported in the row for <code>F-statistic</code> is indeed the <span class="math inline">\(F\)</span> test statistic for the significance of the regression test, and additionally it reports the two relevant degrees of freedom.</p>
+<p>Notice that the value reported in the row for <code>F-statistic</code> is indeed the <span class="math inline">\(F\)</span> test statistic for the significance of regression test, and additionally it reports the two relevant degrees of freedom.</p>
 <p>Also, note that none of the individual <span class="math inline">\(t\)</span>-tests are equivalent to the <span class="math inline">\(F\)</span>-test as they were in SLR. This equivalence only holds for SLR because the individual test for <span class="math inline">\(\beta_1\)</span> is the same as testing for all non-intercept parameters, since there is only one.</p>
 <p>We can also verify the sums of squares and degrees of freedom directly in <code>R</code>. You should match these to the table from <code>R</code> and use this to match <code>R</code>’s output to the written table above.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># SSReg</span>
@@ -1048,7 +1048,7 @@ full_mpg_model =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span c
 </div>
 <div id="nested-models" class="section level2">
 <h2><span class="header-section-number">9.4</span> Nested Models</h2>
-<p>The significance of the regression test is actually a special case of testing what we will call <strong>nested models</strong>. More generally we can compare two models, where one model is “nested” inside the other, meaning one model contains a subset of the predictors from only the larger model.</p>
+<p>The significance of regression test is actually a special case of testing what we will call <strong>nested models</strong>. More generally we can compare two models, where one model is “nested” inside the other, meaning one model contains a subset of the predictors from only the larger model.</p>
 <p>Consider the following full model,</p>
 <p><span class="math display">\[
 Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{(p-1)} x_{i(p-1)} + \epsilon_i

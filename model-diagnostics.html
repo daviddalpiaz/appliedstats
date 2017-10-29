@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Applied Statistics with R</title>
   <meta name="description" content="Applied Statistics with <code>R</code>">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.5.4 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2017-09-17">
+<meta name="date" content="2017-10-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -661,7 +661,7 @@ x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</
 <li><code>fit_2</code> violated the constant variance assumption, but not linearity,</li>
 <li><code>fit_3</code> violated linearity, but not constant variance.</li>
 </ul>
-<p>We’ll now create a Q-Q plot for each to asses normality of errors.</p>
+<p>We’ll now create a Q-Q plot for each to assess normality of errors.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_1), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit_1&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)
 <span class="kw">qqline</span>(<span class="kw">resid</span>(fit_1), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-356-1.png" width="672" /></p>
@@ -721,7 +721,7 @@ x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</
 <p>The following three plots are inspired by an example from <a href="http://www.maths.bath.ac.uk/~jjf23/LMR/">Linear Models with R</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))
 <span class="kw">set.seed</span>(<span class="dv">42</span>)
-ex_data  =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span>:<span class="dv">10</span>, 
+ex_data  =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span>:<span class="dv">10</span>,
                       <span class="dt">y =</span> <span class="dv">10</span>:<span class="dv">1</span> +<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>))
 ex_model =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> ex_data)
 
@@ -729,24 +729,24 @@ ex_model =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st
 point_1 =<span class="st"> </span><span class="kw">c</span>(<span class="fl">5.4</span>, <span class="dv">11</span>)
 ex_data_1 =<span class="st"> </span><span class="kw">rbind</span>(ex_data, point_1)
 model_1 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> ex_data_1)
-<span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> ex_data_1, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, 
+<span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> ex_data_1, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>,
      <span class="dt">main =</span> <span class="st">&quot;Low Leverage, Large Residual, Small Influence&quot;</span>)
 <span class="kw">points</span>(<span class="dt">x =</span> point_1[<span class="dv">1</span>], <span class="dt">y =</span> point_1[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">4</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">abline</span>(ex_model, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">abline</span>(model_1, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
-<span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Original Data&quot;</span>, <span class="st">&quot;Added Point&quot;</span>), 
+<span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Original Data&quot;</span>, <span class="st">&quot;Added Point&quot;</span>),
        <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;darkorange&quot;</span>))
 
 <span class="co"># high leverage, small residual, small influence</span>
 point_2 =<span class="st"> </span><span class="kw">c</span>(<span class="dv">18</span>, -<span class="fl">5.7</span>)
 ex_data_2 =<span class="st"> </span><span class="kw">rbind</span>(ex_data, point_2)
 model_2 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> ex_data_2)
-<span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> ex_data_2, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, 
+<span class="kw">plot</span>(y ~<span class="st"> </span>x, <span class="dt">data =</span> ex_data_2, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>,
      <span class="dt">main =</span> <span class="st">&quot;High Leverage, Small Residual, Small Influence&quot;</span>)
 <span class="kw">points</span>(<span class="dt">x =</span> point_2[<span class="dv">1</span>], <span class="dt">y =</span> point_2[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">4</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">abline</span>(ex_model, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">abline</span>(model_2, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
-<span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Original Data&quot;</span>, <span class="st">&quot;Added Point&quot;</span>), 
+<span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Original Data&quot;</span>, <span class="st">&quot;Added Point&quot;</span>),
        <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;darkorange&quot;</span>))
 
 <span class="co"># high leverage, large residual, large influence</span>
@@ -758,7 +758,7 @@ model_3 =<span class="st"> </span><span class="kw">lm</span>(y ~<span class="st"
 <span class="kw">points</span>(<span class="dt">x =</span> point_3[<span class="dv">1</span>], <span class="dt">y =</span> point_3[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">4</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">abline</span>(ex_model, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">abline</span>(model_3, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
-<span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Original Data&quot;</span>, <span class="st">&quot;Added Point&quot;</span>), 
+<span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Original Data&quot;</span>, <span class="st">&quot;Added Point&quot;</span>),
        <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;darkorange&quot;</span>))</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unusual_obs_plot-1.png" width="1440" /></p>
 <p>The blue solid line in each plot is a regression fit to the 10 original data points stored in <code>ex_data</code>. The dashed orange line in each plot is the result of adding a single point to the original data in <code>ex_data</code>. This additional point is indicated by the circled point.</p>
@@ -1033,7 +1033,7 @@ D_i &gt; \frac{4}{n}
 <p>First, fit the model as we did last chapter.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg_hp_add =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>hp +<span class="st"> </span>am, <span class="dt">data =</span> mtcars)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">fitted</span>(mpg_hp_add), <span class="kw">resid</span>(mpg_hp_add), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,
-     <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residual&quot;</span>, 
+     <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residual&quot;</span>,
      <span class="dt">main =</span> <span class="st">&quot;mtcars: Fitted versus Residuals&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-385-1.png" width="672" /></p>
@@ -1073,8 +1073,8 @@ cd_mpg_hp_add[large_cd_mpg]</code></pre></div>
 <pre><code>## (Intercept)          hp          am 
 ##  26.5849137  -0.0588878   5.2770853</code></pre>
 <p>Since the diagnostics looked good, there isn’t much need to worry about these two points, but let’s see how much the coefficients change if we remove them.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg_hp_add_fix =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>hp +<span class="st"> </span>am, 
-                    <span class="dt">data =</span> mtcars, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mpg_hp_add_fix =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>hp +<span class="st"> </span>am,
+                    <span class="dt">data =</span> mtcars,
                     <span class="dt">subset =</span> cd_mpg_hp_add &lt;=<span class="st"> </span><span class="dv">4</span> /<span class="st"> </span><span class="kw">length</span>(cd_mpg_hp_add))
 <span class="kw">coef</span>(mpg_hp_add_fix)</code></pre></div>
 <pre><code>## (Intercept)          hp          am 
@@ -1114,8 +1114,8 @@ cd_mpg_hp_add[large_cd_mpg]</code></pre></div>
 <span class="kw">sum</span>(big_mod_cd &gt;<span class="st"> </span><span class="dv">4</span> /<span class="st"> </span><span class="kw">length</span>(big_mod_cd))</code></pre></div>
 <pre><code>## [1] 31</code></pre>
 <p>Here, we find 31, so perhaps removing them will help!</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">big_model_fix =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>disp *<span class="st"> </span>hp *<span class="st"> </span>domestic, 
-                   <span class="dt">data =</span> autompg, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">big_model_fix =<span class="st"> </span><span class="kw">lm</span>(mpg ~<span class="st"> </span>disp *<span class="st"> </span>hp *<span class="st"> </span>domestic,
+                   <span class="dt">data =</span> autompg,
                    <span class="dt">subset =</span> big_mod_cd &lt;<span class="st"> </span><span class="dv">4</span> /<span class="st"> </span><span class="kw">length</span>(big_mod_cd))
 <span class="kw">qqnorm</span>(<span class="kw">resid</span>(big_model_fix), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>)
 <span class="kw">qqline</span>(<span class="kw">resid</span>(big_model_fix), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
