@@ -173,7 +173,7 @@ plot(fitted(fit_1), resid(fit_1), col = "grey", pch = 20,
 abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
-We should look for two things in this plot. 
+We should look for two things in this plot.
 
 - At any fitted value, the mean of the residuals should be roughly 0. If this is the case, the *linearity* assumption is valid. For this reason, we generally add a horizontal line at $y = 0$ to emphasize this point.
 - At every fitted value, the spread of the residuals should be roughly the same. If this is the case, the *constant variance* assumption is valid.
@@ -393,7 +393,7 @@ Returning to our three regressions, recall,
 - `fit_2` violated the constant variance assumption, but not linearity,
 - `fit_3` violated linearity, but not constant variance.
 
-We'll now create a Q-Q plot for each to asses normality of errors.
+We'll now create a Q-Q plot for each to assess normality of errors.
 
 ```{r}
 qqnorm(resid(fit_1), main = "Normal Q-Q Plot, fit_1", col = "darkgrey")
@@ -455,7 +455,7 @@ The following three plots are inspired by an example from [Linear Models with R]
 ```{r unusual_obs_plot, fig.height = 5, fig.width = 15}
 par(mfrow = c(1, 3))
 set.seed(42)
-ex_data  = data.frame(x = 1:10, 
+ex_data  = data.frame(x = 1:10,
                       y = 10:1 + rnorm(n = 10))
 ex_model = lm(y ~ x, data = ex_data)
 
@@ -463,24 +463,24 @@ ex_model = lm(y ~ x, data = ex_data)
 point_1 = c(5.4, 11)
 ex_data_1 = rbind(ex_data, point_1)
 model_1 = lm(y ~ x, data = ex_data_1)
-plot(y ~ x, data = ex_data_1, cex = 2, pch = 20, col = "grey", 
+plot(y ~ x, data = ex_data_1, cex = 2, pch = 20, col = "grey",
      main = "Low Leverage, Large Residual, Small Influence")
 points(x = point_1[1], y = point_1[2], pch = 1, cex = 4, col = "black", lwd = 2)
 abline(ex_model, col = "dodgerblue", lwd = 2)
 abline(model_1, lty = 2, col = "darkorange", lwd = 2)
-legend("bottomleft", c("Original Data", "Added Point"), 
+legend("bottomleft", c("Original Data", "Added Point"),
        lty = c(1, 2), col = c("dodgerblue", "darkorange"))
 
 # high leverage, small residual, small influence
 point_2 = c(18, -5.7)
 ex_data_2 = rbind(ex_data, point_2)
 model_2 = lm(y ~ x, data = ex_data_2)
-plot(y ~ x, data = ex_data_2, cex = 2, pch = 20, col = "grey", 
+plot(y ~ x, data = ex_data_2, cex = 2, pch = 20, col = "grey",
      main = "High Leverage, Small Residual, Small Influence")
 points(x = point_2[1], y = point_2[2], pch = 1, cex = 4, col = "black", lwd = 2)
 abline(ex_model, col = "dodgerblue", lwd = 2)
 abline(model_2, lty = 2, col = "darkorange", lwd = 2)
-legend("bottomleft", c("Original Data", "Added Point"), 
+legend("bottomleft", c("Original Data", "Added Point"),
        lty = c(1, 2), col = c("dodgerblue", "darkorange"))
 
 # high leverage, large residual, large influence
@@ -492,7 +492,7 @@ plot(y ~ x, data = ex_data_3, cex = 2, pch = 20, col = "grey", ylim = c(-3, 12),
 points(x = point_3[1], y = point_3[2], pch = 1, cex = 4, col = "black", lwd = 2)
 abline(ex_model, col = "dodgerblue", lwd = 2)
 abline(model_3, lty = 2, col = "darkorange", lwd = 2)
-legend("bottomleft", c("Original Data", "Added Point"), 
+legend("bottomleft", c("Original Data", "Added Point"),
        lty = c(1, 2), col = c("dodgerblue", "darkorange"))
 ```
 
@@ -582,7 +582,7 @@ What is a value of $h_i$ that would be considered large? There is no exact answe
 h_i > 2 \bar{h}
 \]
 
-we say that observation $i$ has large leverage. Here, 
+we say that observation $i$ has large leverage. Here,
 
 \[
 \bar{h} = \frac{\sum_{i = 1}^n h_i}{n} = \frac{p}{n}.
@@ -768,9 +768,9 @@ A common measure of influence is **Cook's Distance**, which is defined as
   D_i = \frac{1}{p}r_i^2\frac{h_i}{1-{h_i}}.
 \]
 
-Notice that this is a function of both *leverage* and *standardized residuals*. 
+Notice that this is a function of both *leverage* and *standardized residuals*.
 
-A Cook's Distance is often considered large if 
+A Cook's Distance is often considered large if
 
 \[
 D_i > \frac{4}{n}
@@ -814,7 +814,7 @@ mpg_hp_add = lm(mpg ~ hp + am, data = mtcars)
 
 ```{r}
 plot(fitted(mpg_hp_add), resid(mpg_hp_add), col = "grey", pch = 20,
-     xlab = "Fitted", ylab = "Residual", 
+     xlab = "Fitted", ylab = "Residual",
      main = "mtcars: Fitted versus Residuals")
 abline(h = 0, col = "darkorange", lwd = 2)
 ```
@@ -866,8 +866,8 @@ coef(mpg_hp_add)
 Since the diagnostics looked good, there isn't much need to worry about these two points, but let's see how much the coefficients change if we remove them.
 
 ```{r}
-mpg_hp_add_fix = lm(mpg ~ hp + am, 
-                    data = mtcars, 
+mpg_hp_add_fix = lm(mpg ~ hp + am,
+                    data = mtcars,
                     subset = cd_mpg_hp_add <= 4 / length(cd_mpg_hp_add))
 coef(mpg_hp_add_fix)
 ```
@@ -939,8 +939,8 @@ sum(big_mod_cd > 4 / length(big_mod_cd))
 Here, we find `r sum(big_mod_cd > 4 / length(big_mod_cd))`, so perhaps removing them will help!
 
 ```{r}
-big_model_fix = lm(mpg ~ disp * hp * domestic, 
-                   data = autompg, 
+big_model_fix = lm(mpg ~ disp * hp * domestic,
+                   data = autompg,
                    subset = big_mod_cd < 4 / length(big_mod_cd))
 qqnorm(resid(big_model_fix), col = "grey")
 qqline(resid(big_model_fix), col = "dodgerblue", lwd = 2)
