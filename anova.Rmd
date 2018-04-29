@@ -1,9 +1,10 @@
----
-output: html_document
----
-<!-- In the future, this may be placed before regression, so the idea of discussing numeric predictors is not needed. The idea of a predictor may not have been introduced, so the focus should be on groups. -->
-
 # Analysis of Variance
+
+**Chapter Status:** This chapter should be considered optional for a first reading of this text. Its inclusion is mostly for the benefit of some courses that use the text. Additionally, this chapter is currently somewhat underdeveloped compared to the rest of the text. If you are interested in contributing, you can find several lines marked "TODO" in the source. Pull requests encouraged!
+
+```{r anova_opts, include = FALSE}
+knitr::opts_chunk$set(cache = TRUE, autodep = TRUE, fig.align = "center")
+```
 
 <style type="text/css">
 .table {
@@ -15,7 +16,7 @@ output: html_document
 }
 </style>
 
-This chapter, which currently lives at the end of the text, are notes specific to the Fall 2016 run of STAT 420 for the MCS-DS program.
+<!-- TODO: use kable styling instead of custom CSS -->
 
 > "To find out what happens when you change something, it is necessary to change it."
 >
@@ -123,9 +124,7 @@ With a big enough sample size, we could make an effect size of say, four minutes
 boxplot(sleep ~ group, data = melatonin, col = 5:6)
 ```
 
-```{r, echo = FALSE, eval = FALSE}
-other parametarization, explain identify
-```
+<!-- TODO: other parametarization, explain identify -->
 
 ## One-Way ANOVA
 
@@ -276,11 +275,9 @@ plot_anova = function(n = 20, mu_a = 0, mu_b = 0, mu_c = 0, sigma = 1) {
 }
 ```
 
-```{r, echo = FALSE, eval = FALSE}
-This should be a Shiny app.
-Should output entire ANOVA table.
-Do with ggplot2 and custom boxplots with show min, sd, mean, sd, max
-```
+<!-- TODO: This should be a Shiny app. -->
+<!-- TODO: Should output entire ANOVA table. -->
+<!-- TODO: Do with ggplot2 and custom boxplots with show min, sd, mean, sd, max -->
 
 ```{r, echo = FALSE, eval = FALSE}
 library(manipulate)
@@ -785,11 +782,9 @@ summary(aov(time ~ poison * treat, data = rats))
 
 Using a significance level of $\alpha = 0.05$, we see that the interaction is not significant. Within the additive model, both factors are significant, so we select the additive model.
 
-```{r, echo = FALSE, eval = FALSE}
-- TODO: mention no replication, interaction issue
-- TODO: correct if int is not significant?
-- TODO: here we pick the full additive model
-```
+<!-- - TODO: mention no replication, interaction issue -->
+<!-- - TODO: correct if int is not significant? -->
+<!-- - TODO: here we pick the full additive model -->
 
 Within the additive model, we could do further testing about the main effects.
 
@@ -798,7 +793,7 @@ TukeyHSD(aov(time ~ poison + treat, data = rats))
 ```
 
 ```{r, echo = FALSE, eval = FALSE}
-# future hw qusetions
+# future hw qusetion?
 # rate of dying = 1 / time
 # change anything? does result change?
 #plot(aov(1 / time ~ poison * treat, data = rats))
@@ -821,15 +816,12 @@ summary(aov(breaks ~ wool * tension, data = warpbreaks))
 
 Using an $\alpha$ of $0.05$ the ANOVA test finds that the interaction is significant, so we use the interaction model here.
 
-```{r, echo = FALSE, eval = FALSE}
-two-way calculation details in an appendix
-```
+<!-- TODO: two-way calculation details in an appendix -->
 
 ```{r, echo = FALSE, eval = FALSE}
 TukeyHSD(aov(breaks ~ wool * tension, data = warpbreaks))
 ```
 
-```{r, echo = FALSE, eval = FALSE}
-George Casella - Statistical Design
-```
+## `R` Markdown
 
+The `R` Markdown file for this chapter can be found [**here**](anova.Rmd). The file was created using `R` version `r paste0(version$major, "." ,version$minor)`.
