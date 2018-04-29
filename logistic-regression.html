@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Applied Statistics with R</title>
   <meta name="description" content="Applied Statistics with <code>R</code>">
-  <meta name="generator" content="bookdown 0.5.4 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7.8 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2017-10-29">
+<meta name="date" content="2018-04-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1105,16 +1105,16 @@ tibble::<span class="kw">as.tibble</span>(spam)</code></pre></div>
 <pre><code>## # A tibble: 4,601 x 58
 ##     make address   all num3d   our  over remove internet order  mail receive
 ##  * &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
-##  1  0.00    0.64  0.64     0  0.32  0.00   0.00     0.00  0.00  0.00    0.00
-##  2  0.21    0.28  0.50     0  0.14  0.28   0.21     0.07  0.00  0.94    0.21
-##  3  0.06    0.00  0.71     0  1.23  0.19   0.19     0.12  0.64  0.25    0.38
-##  4  0.00    0.00  0.00     0  0.63  0.00   0.31     0.63  0.31  0.63    0.31
-##  5  0.00    0.00  0.00     0  0.63  0.00   0.31     0.63  0.31  0.63    0.31
-##  6  0.00    0.00  0.00     0  1.85  0.00   0.00     1.85  0.00  0.00    0.00
-##  7  0.00    0.00  0.00     0  1.92  0.00   0.00     0.00  0.00  0.64    0.96
-##  8  0.00    0.00  0.00     0  1.88  0.00   0.00     1.88  0.00  0.00    0.00
-##  9  0.15    0.00  0.46     0  0.61  0.00   0.30     0.00  0.92  0.76    0.76
-## 10  0.06    0.12  0.77     0  0.19  0.32   0.38     0.00  0.06  0.00    0.00
+##  1  0       0.64  0.64     0  0.32  0      0        0     0     0       0   
+##  2  0.21    0.28  0.5      0  0.14  0.28   0.21     0.07  0     0.94    0.21
+##  3  0.06    0     0.71     0  1.23  0.19   0.19     0.12  0.64  0.25    0.38
+##  4  0       0     0        0  0.63  0      0.31     0.63  0.31  0.63    0.31
+##  5  0       0     0        0  0.63  0      0.31     0.63  0.31  0.63    0.31
+##  6  0       0     0        0  1.85  0      0        1.85  0     0       0   
+##  7  0       0     0        0  1.92  0      0        0     0     0.64    0.96
+##  8  0       0     0        0  1.88  0      0        1.88  0     0       0   
+##  9  0.15    0     0.46     0  0.61  0      0.3      0     0.92  0.76    0.76
+## 10  0.06    0.12  0.77     0  0.19  0.32   0.38     0     0.06  0       0   
 ## # ... with 4,591 more rows, and 47 more variables: will &lt;dbl&gt;, people &lt;dbl&gt;,
 ## #   report &lt;dbl&gt;, addresses &lt;dbl&gt;, free &lt;dbl&gt;, business &lt;dbl&gt;, email &lt;dbl&gt;,
 ## #   you &lt;dbl&gt;, credit &lt;dbl&gt;, your &lt;dbl&gt;, font &lt;dbl&gt;, num000 &lt;dbl&gt;, money &lt;dbl&gt;,
@@ -1125,7 +1125,7 @@ tibble::<span class="kw">as.tibble</span>(spam)</code></pre></div>
 ## #   edu &lt;dbl&gt;, table &lt;dbl&gt;, conference &lt;dbl&gt;, charSemicolon &lt;dbl&gt;,
 ## #   charRoundbracket &lt;dbl&gt;, charSquarebracket &lt;dbl&gt;, charExclamation &lt;dbl&gt;,
 ## #   charDollar &lt;dbl&gt;, charHash &lt;dbl&gt;, capitalAve &lt;dbl&gt;, capitalLong &lt;dbl&gt;,
-## #   capitalTotal &lt;dbl&gt;, type &lt;fctr&gt;</code></pre>
+## #   capitalTotal &lt;dbl&gt;, type &lt;fct&gt;</code></pre>
 <p>This dataset, created in the late 1990s at Hewlett-Packard Labs, contains 4601 emails, of which 1813 are considered spam. The remaining are not spam. (Which for simplicity, we might call, ham.) Additional details can be obtained by using <code>?spam</code> of by visiting the <a href="https://archive.ics.uci.edu/ml/datasets/spambase">UCI Machine Learning Repository</a>.</p>
 <p>The response variable, <code>type</code>, is a <strong>factor</strong> with levels that label each email as <code>spam</code> or <code>nonspam</code>. When fitting models, <code>nonspam</code> will be the reference level, <span class="math inline">\(Y = 0\)</span>, as it comes first alphabetically.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is.factor</span>(spam$type)</code></pre></div>
@@ -1328,10 +1328,11 @@ gitbook.start({
 "facebook": true,
 "twitter": true,
 "google": false,
+"linkedin": false,
 "weibo": false,
 "instapper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -1342,7 +1343,7 @@ gitbook.start({
 "link": "https://github.com/daviddalpiaz/appliedstats/edit/master/logistic.Rmd",
 "text": "Edit"
 },
-"download": null,
+"download": ["applied_statistics.pdf"],
 "toc": {
 "collapse": "section"
 }
@@ -1355,9 +1356,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
