@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Applied Statistics with R</title>
   <meta name="description" content="Applied Statistics with <code>R</code>">
-  <meta name="generator" content="bookdown 0.7.10 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.7.11 and GitBook 2.6.7">
 
   <meta property="og:title" content="Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -25,7 +25,7 @@
 <meta name="author" content="David Dalpiaz">
 
 
-<meta name="date" content="2018-05-18">
+<meta name="date" content="2018-05-22">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -467,7 +467,7 @@ x</code></pre>
 <p>As an aside, there is a long history of the assignment operator in <code>R</code>, partially due to the keys available on the <a href="https://twitter.com/kwbroman/status/747829864091127809">keyboards of the creators of the <code>S</code> language.</a> (Which preceded <code>R</code>.) For simplicity we will use <code>=</code>, but know that often you will see <code>&lt;-</code> as the assignment operator.</p>
 <p>The pros and cons of these two are well beyond the scope of this book, but know that for our purposes you will have no issue if you simply use <code>=</code>. If you are interested in the weird cases where the difference matters, check out <a href="http://www.burns-stat.com/documents/books/the-r-inferno/">The R Inferno</a>.</p>
 <p>If you wish to use <code>&lt;-</code>, you will still need to use <code>=</code>, however only for argument passing. Some users like to keep assignment (<code>&lt;-</code>) and argument passing (<code>=</code>) separate. No matter what you choose, the more important thing is that you <strong>stay consistent</strong>. Also, if working on a larger collaborative project, you should use whatever style is already in place.</p>
-<p>Because vectors must contains elements that are all the same type, <code>R</code> will automatically coerce to a single type when attempting to create a vector that combines multiple types.</p>
+<p>Because vectors must contain elements that are all the same type, <code>R</code> will automatically coerce to a single type when attempting to create a vector that combines multiple types.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="dv">42</span>, <span class="st">&quot;Statistics&quot;</span>, <span class="ot">TRUE</span>)</code></pre>
 <pre><code>## [1] &quot;42&quot;         &quot;Statistics&quot; &quot;TRUE&quot;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="dv">42</span>, <span class="ot">TRUE</span>)</code></pre>
@@ -1311,11 +1311,11 @@ x</code></pre>
 <p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the output of the final line of the body is what is returned by the function. In this case the function returns the vector stored in the variable <code>result</code>.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</code></pre>
-<pre><code>##  [1]  4.3113051 -1.3524214 -1.1772816  1.1572947 -4.9544796 -9.5348299
-##  [7] -0.1539005  0.2413127  3.2897278  1.6854403</code></pre>
+<pre><code>##  [1]  9.6721469 -2.4163339 -2.4886421  6.2427169  4.0807864 -2.4818592
+##  [7]  1.8668970 -0.6573977  9.5898796  5.3126986</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)</code></pre>
-<pre><code>##  [1]  1.2225833 -0.1734357 -0.1302665  0.4451696 -1.0612860 -2.1902698
-##  [7]  0.1219808  0.2193946  0.9707806  0.5753492</code></pre>
+<pre><code>##  [1]  1.4111586 -1.0974618 -1.1124673  0.6994779  0.2508307 -1.1110597
+##  [7] -0.2085991 -0.7324446  1.3940863  0.5064791</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
 <pre class="sourceCode r"><code class="sourceCode r">standardize =<span class="st"> </span><span class="cf">function</span>(x) {
   (x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x)
@@ -1352,14 +1352,14 @@ s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2
   (<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>n) <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)
 }</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_var</span>(test_sample)</code></pre>
-<pre><code>## [1] 16.4597</code></pre>
+<pre><code>## [1] 23.22061</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">FALSE</span>)</code></pre>
-<pre><code>## [1] 16.4597</code></pre>
+<pre><code>## [1] 23.22061</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(test_sample)</code></pre>
-<pre><code>## [1] 16.4597</code></pre>
+<pre><code>## [1] 23.22061</code></pre>
 <p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built in function <code>var()</code>. Finally, let’s examine the biased estimate of <span class="math inline">\(\sigma^2\)</span>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">TRUE</span>)</code></pre>
-<pre><code>## [1] 14.81373</code></pre>
+<pre><code>## [1] 20.89855</code></pre>
 
 </div>
 </div>
