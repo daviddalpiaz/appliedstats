@@ -69,7 +69,7 @@ $$
 Y = f(X) + \epsilon.
 $$
 
-The function $f$ describes the functional relationship between the two variables, and the $\epsilon$ term is used to account for error. This indicates that if we plug in a given value of $X$ as input, our output is a value of $Y$, within a certain range of error. You could think of this a number of ways:
+The function $f$ describes the functional relationship between the two variables, and the $\epsilon$ term (epsilon) is used to account for error. This indicates that if we plug in a given value of $X$ as input, our output is a value of $Y$, within a certain range of error. You could think of this a number of ways:
 
 - Response = Prediction + Error
 - Response = Signal + Noise
@@ -79,7 +79,7 @@ The function $f$ describes the functional relationship between the two variables
 
 What sort of function should we use for $f(X)$ for the `cars` data?
 
-We could try to model the data with a horizontal line. That is, the model for $y$ does not depend on the value of $x$. (Some function $f(X) = c$.) In the plot below, we see this doesn't seem to do a very good job. Many of the data points are very far from the orange line representing $c$. This is an example of **underfitting**. The obvious fix is to make the function $f(X)$ actually depend on $x$.
+We could try to model the data with a horizontal line. That is, the model for $y$ does not depend on the value of $x$ and is a constant. (Some function $f(X) = c$.) The plot below shows that this doesn't do a very good job. Many of the data points are far from away the orange line representing $c$. This is an example of **underfitting**. The obvious fix is to make the function $f(X)$ actually depend on $x$.
 
 ```{r underfit_plot, echo = FALSE}
 plot(dist ~ speed, data = cars,
@@ -93,7 +93,7 @@ underfit_model = lm(dist ~ 1, data = cars)
 abline(underfit_model, lwd = 3, col = "darkorange")
 ```
 
-We could also try to model the data with a very "wiggly" function that tries to go through as many of the data points as possible. This also doesn't seem to work very well. The stopping distance for a speed of 5 mph shouldn't be off the chart! (Even in 1920.) This is an example of **overfitting**. (Note that in this example no function will go through every point, since there are some $x$ values that have several possible $y$ values in the data.)
+We could also try to model the data with a very "wiggly" function that tries to go through as many of the data points as possible. This also doesn't work very well. The stopping distance for a speed of 5 mph shouldn't be off the chart! (Even in 1920.) This is an example of **overfitting**. (Note that in this example no function will go through every point, since there are some $x$ values that have several possible $y$ values in the data.)
 
 ```{r overfit_plot, echo = FALSE}
 overfit_model = lm(dist ~ poly(speed, 18), data = cars)
@@ -108,7 +108,7 @@ plot(dist ~ speed, data = cars,
 lines(x, predict(overfit_model, data.frame(speed = x)), lwd = 2, col = "darkorange")
 ```
 
-Lastly, we could try to model the data with a well chosen line rather than one of the two extremes previously attempted. The line on the plot below seems to summarize the relationship between stopping distance and speed quite well. As speed increases, the distance required to come to a stop increases. There is still some variation about this line, but it seems to capture the overall trend.
+Lastly, we could try to model the data with a well chosen line rather than one of the two extremes previously attempted. The line on the plot below summarizes the relationship between stopping distance and speed quite well. As speed increases, the distance required to come to a stop increases. There is still some variation about this line, but it seems to capture the overall trend.
 
 ```{r goodfit_plot, echo = FALSE}
 stop_dist_model = lm(dist ~ speed, data = cars)
@@ -841,7 +841,7 @@ $$
 L(\beta_0, \beta_1, \sigma^2) = \left(\frac{1}{\sqrt{2 \pi \sigma^2}}\right)^n \exp{\left[-\frac{1}{2 \sigma^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2\right]}
 $$
 
-Then, as is often the case when finding MLEs, for mathematical convenience we will take the natural logarithm of the likelihood function since log is a monotonically increasing function. Then we will proceed to maximize the log-likelihood, and the resulting estimates will be the same as if we had not taken the log.
+Then, as is often the case when finding MLEs, for mathematical convenience we will take the natural logarithm of the likelihood function. Taking the log lets us break up a product of terms into a sum of terms. A sum of terms is easy to differentiate and therefore find the maximum. Since log is a monotonically increasing function, maximizing the log-likelihood results in the same estimate as if we had not taken the log.
 
 $$
 \log L(\beta_0, \beta_1, \sigma^2) = -\frac{n}{2}\log(2 \pi) - \frac{n}{2}\log(\sigma^2) - \frac{1}{2 \sigma^2} \sum_{i = 1}^{n} (y_i - \beta_0 - \beta_1 x_i)^2
