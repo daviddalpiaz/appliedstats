@@ -22,7 +22,6 @@
   
   
 
-<meta name="author" content="David Dalpiaz">
 
 
 <meta name="date" content="2018-05-24">
@@ -414,7 +413,7 @@ Y \mid {\bf X} = {\bf x} \sim N(\beta_0 + \beta_1x_1 + \ldots + \beta_{p - 1}x_{
 <p>Now we’ll allow for two modifications of this situation, which will let us use linear models in many more situations. Instead of using a normal distribution for the response, we’ll allow for other distributions. Also, instead of the mean being a linear combination of the predictors, it can be some function of a linear combination of the predictors.</p>
 <p>In <em>general</em>, a generalized linear model has three parts:</p>
 <ul>
-<li>A <strong>distribution</strong> of the response conditioned on the predictors. (Technically this distribution needs to be from the <a href="https://en.wikipedia.org/wiki/Exponential_family">exponential family</a> of distributions.)</li>
+<li>A <strong>distribution</strong> of the response conditioned on the predictors. (Technically this distribution needs to be from the <a href="https://en.wikipedia.org/wiki/Exponential_family" target="_blank">exponential family</a> of distributions.)</li>
 <li>A <strong>linear combination</strong> of the <span class="math inline">\(p - 1\)</span> predictors, <span class="math inline">\(\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots + \beta_{p - 1} x_{p - 1}\)</span>, which we write as <span class="math inline">\(\eta({\bf x})\)</span>. That is,</li>
 </ul>
 <p><span class="math display">\[\eta({\bf x}) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots  + \beta_{p - 1} x_{p - 1}\]</span></p>
@@ -525,11 +524,11 @@ P[Y = 0 \mid {\bf X} = {\bf x}] = 1 - p({\bf x})
 <p><span class="math display">\[
 \frac{p({\bf x})}{1 - p({\bf x})} = \frac{P[Y = 1 \mid {\bf X} = {\bf x}]}{P[Y = 0 \mid {\bf X} = {\bf x}]}
 \]</span></p>
-<p>Essentially, the log odds are the <a href="https://en.wikipedia.org/wiki/Logit">logit</a> transform applied to <span class="math inline">\(p({\bf x})\)</span>.</p>
+<p>Essentially, the log odds are the <a href="https://en.wikipedia.org/wiki/Logit" target="_blank">logit</a> transform applied to <span class="math inline">\(p({\bf x})\)</span>.</p>
 <p><span class="math display">\[
 \text{logit}(x) = \log\left(\frac{x}{1 - x}\right)
 \]</span></p>
-<p>It will also be useful to define the inverse logit, otherwise known as the “logistic” or <a href="https://en.wikipedia.org/wiki/Sigmoid_function">sigmoid</a> function.</p>
+<p>It will also be useful to define the inverse logit, otherwise known as the “logistic” or <a href="https://en.wikipedia.org/wiki/Sigmoid_function" target="_blank">sigmoid</a> function.</p>
 <p><span class="math display">\[
 \text{logit}^{-1}(x) = \frac{e^x}{1 + e^{x}} = \frac{1}{1 + e^{-x}}
 \]</span></p>
@@ -593,7 +592,7 @@ L(\boldsymbol{{\beta}}) = \prod_{i : y_i = 1}^{} \frac{e^{\beta_0 + \beta_1 x_{i
 <p>for all observations, then the MLE is not unique. Such data is said to be separable.</p>
 <p>This, and similar numeric issues related to estimated probabilities near 0 or 1, will return a warning in <code>R</code>:</p>
 <pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
-<p>When this happens, the model is still “fit,” but there are consequences, namely, the estimated coefficients are highly suspect. This is an issue when then trying to interpret the model. When this happens, the model will often still be useful for creating a classifier, which will be discussed later. However, it is still subject to the usual evaluations for classifiers to determine how well it is performing. For details, see <a href="https://link.springer.com/content/pdf/10.1007/978-1-4757-2719-7_7.pdf">Modern Applied Statistics with S-PLUS, Chapter 7</a>.</p>
+<p>When this happens, the model is still “fit,” but there are consequences, namely, the estimated coefficients are highly suspect. This is an issue when then trying to interpret the model. When this happens, the model will often still be useful for creating a classifier, which will be discussed later. However, it is still subject to the usual evaluations for classifiers to determine how well it is performing. For details, see <a href="https://link.springer.com/content/pdf/10.1007/978-1-4757-2719-7_7.pdf" target="_blank">Modern Applied Statistics with S-PLUS, Chapter 7</a>.</p>
 </div>
 <div id="simulation-examples" class="section level3">
 <h3><span class="header-section-number">17.2.2</span> Simulation Examples</h3>
@@ -1091,7 +1090,7 @@ eta_hat</code></pre>
 ## Number of Fisher Scoring iterations: 5</code></pre>
 <p>Based on the <span class="math inline">\(z\)</span>-test seen in the above summary, this interaction is significant. The effect of LDL on probability of CHD is different depending on family history.</p>
 <p>You have probably noticed that the output from <code>summary()</code> is very similar to that of ordinary linear regression. One difference, is the “deviance” being reported. The <code>Null deviance</code> is the deviance for the null model, that is, a model with no predictors. The <code>Residual deviance</code> is the deviance for the mode that was fit.</p>
-<p><a href="https://en.wikipedia.org/wiki/Deviance_(statistics)"><strong>Deviance</strong></a> compares the model to a saturated model. (Without repeated observations, a saturated model is a model that fits perfectly, using a parameter for each observation.) Essentially, deviance is a generalized <em>residual sum of squared</em> for GLMs. Like RSS, deviance decreased as the model complexity increases.</p>
+<p><a href="https://en.wikipedia.org/wiki/Deviance_(statistics)%7Btarget=%22_blank%22%7D"><strong>Deviance</strong></a> compares the model to a saturated model. (Without repeated observations, a saturated model is a model that fits perfectly, using a parameter for each observation.) Essentially, deviance is a generalized <em>residual sum of squared</em> for GLMs. Like RSS, deviance decreased as the model complexity increases.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">deviance</span>(chd_mod_ldl)</code></pre>
 <pre><code>## [1] 564.2788</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">deviance</span>(chd_mod_selected)</code></pre>
@@ -1168,7 +1167,7 @@ tibble<span class="op">::</span><span class="kw">as.tibble</span>(spam)</code></
 ## #   charRoundbracket &lt;dbl&gt;, charSquarebracket &lt;dbl&gt;, charExclamation &lt;dbl&gt;,
 ## #   charDollar &lt;dbl&gt;, charHash &lt;dbl&gt;, capitalAve &lt;dbl&gt;, capitalLong &lt;dbl&gt;,
 ## #   capitalTotal &lt;dbl&gt;, type &lt;fct&gt;</code></pre>
-<p>This dataset, created in the late 1990s at Hewlett-Packard Labs, contains 4601 emails, of which 1813 are considered spam. The remaining are not spam. (Which for simplicity, we might call, ham.) Additional details can be obtained by using <code>?spam</code> of by visiting the <a href="https://archive.ics.uci.edu/ml/datasets/spambase">UCI Machine Learning Repository</a>.</p>
+<p>This dataset, created in the late 1990s at Hewlett-Packard Labs, contains 4601 emails, of which 1813 are considered spam. The remaining are not spam. (Which for simplicity, we might call, ham.) Additional details can be obtained by using <code>?spam</code> of by visiting the <a href="https://archive.ics.uci.edu/ml/datasets/spambase" target="_blank">UCI Machine Learning Repository</a>.</p>
 <p>The response variable, <code>type</code>, is a <strong>factor</strong> with levels that label each email as <code>spam</code> or <code>nonspam</code>. When fitting models, <code>nonspam</code> will be the reference level, <span class="math inline">\(Y = 0\)</span>, as it comes first alphabetically.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is.factor</span>(spam<span class="op">$</span>type)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
@@ -1281,7 +1280,7 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 <pre><code>## [1] 0.08275479</code></pre>
 <p>This seems like a decent classifier…</p>
 <p>However, are all errors created equal? In this case, absolutely note. The 137 non-spam emails that were marked as spam (false positives) are a problem. We can’t allow important information, say, a job offer, miss our inbox and get sent to the spam folder. On the other hand, the 161 spam email that would make it to an inbox (false negatives) are easily dealt with, just delete them.</p>
-<p>Instead of simply evaluating a classifier based on its misclassification rate (or accuracy), we’ll define two additional metrics, sensitivity and specificity. Note that this are simply two of many more metrics that can be considered. The <a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity">Wikipedia page for sensitivity_and_specificity</a> details a large number of metrics that can be derived form a confusion matrix.</p>
+<p>Instead of simply evaluating a classifier based on its misclassification rate (or accuracy), we’ll define two additional metrics, sensitivity and specificity. Note that this are simply two of many more metrics that can be considered. The <a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity" target="_blank">Wikipedia page for sensitivity_and_specificity</a> details a large number of metrics that can be derived form a confusion matrix.</p>
 <p><strong>Sensitivity</strong> is essentially the true positive rate. So when sensitivity if high, the number of false negatives is low.</p>
 <p><span class="math display">\[
 \text{Sens} = \text{True Positive Rate} = \frac{\text{TP}}{\text{P}} = \frac{\text{TP}}{\text{TP + FN}}
@@ -1338,8 +1337,8 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_spec</span>(conf_mat_<span class="dv">90</span>)</code></pre>
 <pre><code>## [1] 0.9693644</code></pre>
 <p>While this is far fewer false positives, is it acceptable though? Still probably not. Also, don’t forget, this would actually be a terrible spam detector today since this is based on data from a very different era of the internet, for a very specific set of people. Spam has changed a lot since 90s! (Ironically, machine learning is probably partially to blame.)</p>
-<p>This chapter has provided a rather quick introduction to classification, and thus, machine learning. For a more complete coverage of machine learning, <a href="http://www-bcf.usc.edu/~gareth/ISL/">An Introduction to Statistical Learning</a> is a highly recommended resource. Additionally, <a href="https://daviddalpiaz.github.io/r4sl/"><code>R</code> for Statistical Learning</a> has been written as a supplement which provides additional detail on how to perform these methods using <code>R</code>. The <a href="https://daviddalpiaz.github.io/r4sl/classification-overview.html">classification</a> and <a href="https://daviddalpiaz.github.io/r4sl/logistic-regression.html">logistic regression</a> chapters might be useful.</p>
-<p>We should note that the code to perform classification using logistic regression is presented in a way that illustrates the concepts to the reader. In practice, you may to prefer to use a more general machine learning pipeline such as <a href="http://topepo.github.io/caret/index.html"><code>caret</code></a> in <code>R</code>. This will streamline processes for creating predictions and generating evaluation metrics.</p>
+<p>This chapter has provided a rather quick introduction to classification, and thus, machine learning. For a more complete coverage of machine learning, <a href="http://www-bcf.usc.edu/~gareth/ISL/" target="_blank">An Introduction to Statistical Learning</a> is a highly recommended resource. Additionally, <a href="https://daviddalpiaz.github.io/r4sl/" target="_blank"><code>R</code> for Statistical Learning</a> has been written as a supplement which provides additional detail on how to perform these methods using <code>R</code>. The <a href="https://daviddalpiaz.github.io/r4sl/classification-overview.html" target="_blank">classification</a> and <a href="https://daviddalpiaz.github.io/r4sl/logistic-regression.html" target="_blank">logistic regression</a> chapters might be useful.</p>
+<p>We should note that the code to perform classification using logistic regression is presented in a way that illustrates the concepts to the reader. In practice, you may to prefer to use a more general machine learning pipeline such as <a href="http://topepo.github.io/caret/index.html" target="_blank"><code>caret</code></a> in <code>R</code>. This will streamline processes for creating predictions and generating evaluation metrics.</p>
 
 </div>
 </div>

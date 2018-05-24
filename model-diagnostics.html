@@ -22,7 +22,6 @@
   
   
 
-<meta name="author" content="David Dalpiaz">
 
 
 <meta name="date" content="2018-05-24">
@@ -569,7 +568,7 @@ fit_<span class="dv">3</span> =<span class="st"> </span><span class="kw">lm</spa
 <div id="breusch-pagan-test" class="section level3">
 <h3><span class="header-section-number">13.2.2</span> Breusch-Pagan Test</h3>
 <p>Constant variance is often called <strong>homoscedasticity</strong>. Conversely, non-constant variance is called <strong>heteroscedasticity</strong>. We’ve seen how we can use a fitted versus residuals plot to look for these attributes.</p>
-<p>While a fitted versus residuals plot can give us an idea about homoscedasticity, sometimes we would prefer a more formal test. There are many tests for constant variance, but here we will present one, the <a href="https://en.wikipedia.org/wiki/Breusch%E2%80%93Pagan_test"><strong>Breusch-Pagan Test</strong></a>. The exact details of the test will omitted here, but importantly the null and alternative can be considered to be,</p>
+<p>While a fitted versus residuals plot can give us an idea about homoscedasticity, sometimes we would prefer a more formal test. There are many tests for constant variance, but here we will present one, the <a href="https://en.wikipedia.org/wiki/Breusch%E2%80%93Pagan_test" target="_blank"><strong>Breusch-Pagan Test</strong></a>. The exact details of the test will omitted here, but importantly the null and alternative can be considered to be,</p>
 <ul>
 <li><span class="math inline">\(H_0\)</span>: Homoscedasticity. The errors have constant variance about the true model.</li>
 <li><span class="math inline">\(H_1\)</span>: Heteroscedasticity. The errors have non-constant variance about the true model.</li>
@@ -640,7 +639,7 @@ fit_<span class="dv">3</span> =<span class="st"> </span><span class="kw">lm</spa
 <p><img src="applied_statistics_files/figure-html/unnamed-chunk-393-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>In short, if the points of the plot do not closely follow a straight line, this would suggest that the data do not come from a normal distribution.</p>
 <p>The calculations required to create the plot vary depending on the implementation, but essentially the <span class="math inline">\(y\)</span>-axis is the sorted data (observed, or sample quantiles), and the <span class="math inline">\(x\)</span>-axis is the values we would expect if the data did come from a normal distribution (theoretical quantiles).</p>
-<p>The <a href="http://en.wikipedia.org/wiki/Normal_probability_plot">Wikipedia page for Normal probability plots</a> gives details on how this is implemented in <code>R</code> if you are interested.</p>
+<p>The <a href="http://en.wikipedia.org/wiki/Normal_probability_plot" target="_blank">Wikipedia page for Normal probability plots</a> gives details on how this is implemented in <code>R</code> if you are interested.</p>
 <p>Also, to get a better idea of how Q-Q plots work, here is a quick function which creates a Q-Q plot:</p>
 <pre class="sourceCode r"><code class="sourceCode r">qq_plot =<span class="st"> </span><span class="cf">function</span>(e) {
 
@@ -733,7 +732,7 @@ x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</
 ## data:  rexp(25)
 ## W = 0.71164, p-value = 0.0000105</code></pre>
 <p>This gives us the value of the test statistic and its p-value. The null hypothesis assumes the data were sampled from a normal distribution, thus a small p-value indicates we believe there is only a small probability the data could have been sampled from a normal distribution.</p>
-<p>For details, see: <a href="https://en.wikipedia.org/wiki/Shapiro-Wilk_test">Wikipedia: Shapiro–Wilk test.</a></p>
+<p>For details, see: <a href="https://en.wikipedia.org/wiki/Shapiro-Wilk_test" target="_blank">Wikipedia: Shapiro–Wilk test.</a></p>
 <p>In the above examples, we see we fail to reject for the data sampled from normal, and reject on the non-normal data, for any reasonable <span class="math inline">\(\alpha\)</span>.</p>
 <p>Returning again to <code>fit_1</code>, <code>fit_2</code> and <code>fit_3</code>, we see the result of running <code>shapiro.test()</code> on the residuals of each, returns a result for each that matches for decisions based on the Q-Q plots.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(fit_<span class="dv">1</span>))</code></pre>
@@ -759,7 +758,7 @@ x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</
 <div id="unusual-observations" class="section level2">
 <h2><span class="header-section-number">13.3</span> Unusual Observations</h2>
 <p>In addition to checking the assumptions of regression, we also look for any “unusual observations” in the data. Often a small number of data points can have an extremely large influence on a regression, sometimes so much so that the regression assumptions are violated as a result of these points.</p>
-<p>The following three plots are inspired by an example from <a href="http://www.maths.bath.ac.uk/~jjf23/LMR/">Linear Models with R</a>.</p>
+<p>The following three plots are inspired by an example from <a href="http://www.maths.bath.ac.uk/~jjf23/LMR/" target="_blank">Linear Models with R</a>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))
 <span class="kw">set.seed</span>(<span class="dv">42</span>)
 ex_data  =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,
