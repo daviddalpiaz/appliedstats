@@ -23,7 +23,7 @@ Now we'll allow for two modifications of this situation, which will let us use l
 
 In *general*, a generalized linear model has three parts:
 
-- A **distribution** of the response conditioned on the predictors. (Technically this distribution needs to be from the [exponential family](https://en.wikipedia.org/wiki/Exponential_family) of distributions.)
+- A **distribution** of the response conditioned on the predictors. (Technically this distribution needs to be from the [exponential family](https://en.wikipedia.org/wiki/Exponential_family){target="_blank"} of distributions.)
 - A **linear combination** of the $p - 1$ predictors, $\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots  + \beta_{p - 1} x_{p - 1}$, which we write as $\eta({\bf x})$. That is,  
 
 $$\eta({\bf x}) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \ldots  + \beta_{p - 1} x_{p - 1}$$
@@ -97,13 +97,13 @@ $$
 \frac{p({\bf x})}{1 - p({\bf x})} = \frac{P[Y = 1 \mid {\bf X} = {\bf x}]}{P[Y = 0 \mid {\bf X} = {\bf x}]}
 $$
 
-Essentially, the log odds are the [logit](https://en.wikipedia.org/wiki/Logit) transform applied to $p({\bf x})$.
+Essentially, the log odds are the [logit](https://en.wikipedia.org/wiki/Logit){target="_blank"} transform applied to $p({\bf x})$.
 
 $$
 \text{logit}(x) = \log\left(\frac{x}{1 - x}\right)
 $$
 
-It will also be useful to define the inverse logit, otherwise known as the "logistic" or [sigmoid](https://en.wikipedia.org/wiki/Sigmoid_function) function.
+It will also be useful to define the inverse logit, otherwise known as the "logistic" or [sigmoid](https://en.wikipedia.org/wiki/Sigmoid_function){target="_blank"} function.
 
 $$
 \text{logit}^{-1}(x) = \frac{e^x}{1 + e^{x}} = \frac{1}{1 + e^{-x}}
@@ -198,7 +198,7 @@ This, and similar numeric issues related to estimated probabilities near 0 or 1,
 message("Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred")
 ```
 
-When this happens, the model is still "fit," but there are consequences, namely, the estimated coefficients are highly suspect. This is an issue when then trying to interpret the model. When this happens, the model will often still be useful for creating a classifier, which will be discussed later. However, it is still subject to the usual evaluations for classifiers to determine how well it is performing. For details, see [Modern Applied Statistics with S-PLUS, Chapter 7](https://link.springer.com/content/pdf/10.1007/978-1-4757-2719-7_7.pdf).
+When this happens, the model is still "fit," but there are consequences, namely, the estimated coefficients are highly suspect. This is an issue when then trying to interpret the model. When this happens, the model will often still be useful for creating a classifier, which will be discussed later. However, it is still subject to the usual evaluations for classifiers to determine how well it is performing. For details, see [Modern Applied Statistics with S-PLUS, Chapter 7](https://link.springer.com/content/pdf/10.1007/978-1-4757-2719-7_7.pdf){target="_blank"}.
 
 ### Simulation Examples
 
@@ -683,7 +683,7 @@ Based on the $z$-test seen in the above summary, this interaction is significant
 
 You have probably noticed that the output from `summary()` is very similar to that of ordinary linear regression. One difference, is the "deviance" being reported. The `Null deviance` is the deviance for the null model, that is, a model with no predictors. The `Residual deviance` is the deviance for the mode that was fit.
 
-[**Deviance**](https://en.wikipedia.org/wiki/Deviance_(statistics)) compares the model to a saturated model. (Without repeated observations, a saturated model is a model that fits perfectly, using a parameter for each observation.) Essentially, deviance is a generalized *residual sum of squared* for GLMs. Like RSS, deviance decreased as the model complexity increases.
+[**Deviance**](https://en.wikipedia.org/wiki/Deviance_(statistics){target="_blank"}) compares the model to a saturated model. (Without repeated observations, a saturated model is a model that fits perfectly, using a parameter for each observation.) Essentially, deviance is a generalized *residual sum of squared* for GLMs. Like RSS, deviance decreased as the model complexity increases.
 
 ```{r}
 deviance(chd_mod_ldl)
@@ -747,7 +747,7 @@ data("spam")
 tibble::as.tibble(spam)
 ```
 
-This dataset, created in the late 1990s at Hewlett-Packard Labs, contains 4601 emails, of which 1813 are considered spam. The remaining are not spam. (Which for simplicity, we might call, ham.) Additional details can be obtained by using `?spam` of by visiting the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/spambase). 
+This dataset, created in the late 1990s at Hewlett-Packard Labs, contains 4601 emails, of which 1813 are considered spam. The remaining are not spam. (Which for simplicity, we might call, ham.) Additional details can be obtained by using `?spam` of by visiting the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/spambase){target="_blank"}. 
 
 The response variable, `type`, is a **factor** with levels that label each email as `spam` or `nonspam`. When fitting models, `nonspam` will be the reference level, $Y = 0$, as it comes first alphabetically.
 
@@ -910,7 +910,7 @@ This seems like a decent classifier...
 
 However, are all errors created equal? In this case, absolutely note. The 137 non-spam emails that were marked as spam (false positives) are a problem. We can't allow important information, say, a job offer, miss our inbox and get sent to the spam folder. On the other hand, the 161 spam email that would make it to an inbox (false negatives) are easily dealt with, just delete them.
 
-Instead of simply evaluating a classifier based on its misclassification rate (or accuracy), we'll define two additional metrics, sensitivity and specificity. Note that this are simply two of many more metrics that can be considered. The [Wikipedia page for sensitivity_and_specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity) details a large number of metrics that can be derived form a confusion matrix.
+Instead of simply evaluating a classifier based on its misclassification rate (or accuracy), we'll define two additional metrics, sensitivity and specificity. Note that this are simply two of many more metrics that can be considered. The [Wikipedia page for sensitivity_and_specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity){target="_blank"} details a large number of metrics that can be derived form a confusion matrix.
 
 **Sensitivity** is essentially the true positive rate. So when sensitivity if high, the number of false negatives is low.
 
@@ -997,6 +997,6 @@ get_spec(conf_mat_90)
 
 While this is far fewer false positives, is it acceptable though? Still probably not. Also, don't forget, this would actually be a terrible spam detector today since this is based on data from a very different era of the internet, for a very specific set of people. Spam has changed a lot since 90s! (Ironically, machine learning is probably partially to blame.)
 
-This chapter has provided a rather quick introduction to classification, and thus, machine learning. For a more complete coverage of machine learning, [An Introduction to Statistical Learning](http://www-bcf.usc.edu/~gareth/ISL/) is a highly recommended resource. Additionally, [`R` for Statistical Learning](https://daviddalpiaz.github.io/r4sl/) has been written as a supplement which provides additional detail on how to perform these methods using `R`. The [classification](https://daviddalpiaz.github.io/r4sl/classification-overview.html) and [logistic regression](https://daviddalpiaz.github.io/r4sl/logistic-regression.html) chapters might be useful.
+This chapter has provided a rather quick introduction to classification, and thus, machine learning. For a more complete coverage of machine learning, [An Introduction to Statistical Learning](http://www-bcf.usc.edu/~gareth/ISL/){target="_blank"} is a highly recommended resource. Additionally, [`R` for Statistical Learning](https://daviddalpiaz.github.io/r4sl/){target="_blank"} has been written as a supplement which provides additional detail on how to perform these methods using `R`. The [classification](https://daviddalpiaz.github.io/r4sl/classification-overview.html){target="_blank"} and [logistic regression](https://daviddalpiaz.github.io/r4sl/logistic-regression.html){target="_blank"} chapters might be useful.
 
-We should note that the code to perform classification using logistic regression is presented in a way that illustrates the concepts to the reader. In practice, you may to prefer to use a more general machine learning pipeline such as [`caret`](http://topepo.github.io/caret/index.html) in `R`. This will streamline processes for creating predictions and generating evaluation metrics.
+We should note that the code to perform classification using logistic regression is presented in a way that illustrates the concepts to the reader. In practice, you may to prefer to use a more general machine learning pipeline such as [`caret`](http://topepo.github.io/caret/index.html){target="_blank"} in `R`. This will streamline processes for creating predictions and generating evaluation metrics.
