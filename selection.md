@@ -177,7 +177,7 @@ lines(xplot, predict(fit_big, newdata = data.frame(x = xplot)),
 
 
 
-\begin{center}\includegraphics{selection_files/figure-latex/unnamed-chunk-4-1} \end{center}
+\begin{center}\includegraphics{selection_files/figure-latex/unnamed-chunk-5-1} \end{center}
 
 We can see that the solid blue curve models this data rather nicely. The dashed orange curve fits the points better, making smaller errors, however it is unlikely that it is correctly modeling the true relationship between $x$ and $y$. It is fitting the random noise. This is an example of **overfitting**.
 
@@ -273,7 +273,7 @@ lines(xplot, predict(fit_big_removed, newdata = data.frame(x = xplot)),
 
 
 
-\begin{center}\includegraphics{selection_files/figure-latex/unnamed-chunk-8-1} \end{center}
+\begin{center}\includegraphics{selection_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 We see that on average, the solid blue line for the quadratic model has similar errors as before. It has changed very slightly. However, the dashed orange line for the large model, has a huge error at the point that was removed and is much different that the previous fit.
 
@@ -1107,7 +1107,7 @@ plot(hipcenter_mod_aic ~ I(2:p), ylab = "AIC", xlab = "p, number of parameters",
 
 
 
-\begin{center}\includegraphics{selection_files/figure-latex/unnamed-chunk-36-1} \end{center}
+\begin{center}\includegraphics{selection_files/figure-latex/unnamed-chunk-37-1} \end{center}
 
 We could easily repeat this process for $\text{BIC}$.
 
@@ -1230,7 +1230,7 @@ pairs(autompg, col = "dodgerblue")
 
 
 
-\begin{center}\includegraphics{selection_files/figure-latex/unnamed-chunk-43-1} \end{center}
+\begin{center}\includegraphics{selection_files/figure-latex/unnamed-chunk-44-1} \end{center}
 
 We'll use the `pairs()` plot to determine which variables may benefit from a quadratic relationship with the response. We'll also consider all possible two-way interactions. We won't consider any three-order or higher. For example, we won't consider the interaction between first-order terms and the added quadratic terms.
 
@@ -1410,7 +1410,7 @@ plot(mpg ~ hp, data = autompg, col = "dodgerblue", pch = 20, cex = 1.5)
 
 
 
-\begin{center}\includegraphics{selection_files/figure-latex/unnamed-chunk-52-1} \end{center}
+\begin{center}\includegraphics{selection_files/figure-latex/unnamed-chunk-53-1} \end{center}
 
 Does an increase in horsepower cause a drop in fuel efficiency? Or, perhaps the causality is reversed and an increase in fuel efficiency cause a decrease in horsepower. Or, perhaps there is a third variable that explains both!
 

@@ -162,7 +162,7 @@ pairs(seatpos, col = "dodgerblue")
 
 
 
-\begin{center}\includegraphics{collinearity_files/figure-latex/unnamed-chunk-8-1} \end{center}
+\begin{center}\includegraphics{collinearity_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 ```r
 round(cor(seatpos), 2)
@@ -324,7 +324,7 @@ abline(a = 0, b = 1, col = "darkorange", lwd = 2)
 
 
 
-\begin{center}\includegraphics{collinearity_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\begin{center}\includegraphics{collinearity_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
 We see that by plotting the predicted values using both models against each other, they are actually rather similar. 
 
@@ -431,7 +431,7 @@ abline(lm(resid(hip_model_small) ~ resid(ht_shoes_model_small)),
 
 
 
-\begin{center}\includegraphics{collinearity_files/figure-latex/unnamed-chunk-19-1} \end{center}
+\begin{center}\includegraphics{collinearity_files/figure-latex/unnamed-chunk-20-1} \end{center}
 
 Here the variable added plot shows almost no linear relationship. This tells us that adding `HtShoes` to the model would probably not be worthwhile. Since its variation is largely explained by the other predictors, adding it to the model will not do much to improve the model. However it will increase the variation of the estimates and make the model much harder to interpret.
 
@@ -583,7 +583,7 @@ hist(beta_hat_good[, 1],
 
 
 
-\begin{center}\includegraphics{collinearity_files/figure-latex/unnamed-chunk-30-1} \end{center}
+\begin{center}\includegraphics{collinearity_files/figure-latex/unnamed-chunk-31-1} \end{center}
 
 First, for $\beta_1$, which has a true value of $3$, we see that both with and without collinearity, the simulated values are centered near $3$.
 
@@ -642,7 +642,7 @@ hist(beta_hat_good[, 2],
 
 
 
-\begin{center}\includegraphics{collinearity_files/figure-latex/unnamed-chunk-33-1} \end{center}
+\begin{center}\includegraphics{collinearity_files/figure-latex/unnamed-chunk-34-1} \end{center}
 
 We see the same issues with $\beta_2$. On average the estimates are correct, but the variance is again much larger with collinearity.
 
@@ -697,7 +697,7 @@ hist(mse_good,
 
 
 
-\begin{center}\includegraphics{collinearity_files/figure-latex/unnamed-chunk-36-1} \end{center}
+\begin{center}\includegraphics{collinearity_files/figure-latex/unnamed-chunk-37-1} \end{center}
 
 Interestingly, in both cases, the MSE is roughly the same on average. Again, this is because collinearity effects a model's ability to *explain*, but not predict.
 

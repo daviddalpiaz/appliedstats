@@ -162,7 +162,7 @@ boxplot(sleep ~ group, data = melatonin, col = 5:6)
 
 
 
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-5-1} \end{center}
+\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-6-1} \end{center}
 
 <!-- TODO: other parametarization, explain identify -->
 
@@ -278,7 +278,7 @@ Let's see what this looks like in a few situations. In each of the following exa
 First, consider $\mu_A = -5, \mu_B = 0, \mu_C = 5$ with $\sigma = 1$.
 
 
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-8-1} \end{center}
+\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 The left panel shows the three normal distributions we are sampling from. The ticks along the $x$-axis show the randomly sampled observations. The right panel, re-displays only the sampled values in a boxplot. Note that the mid-line of the boxes is usually the sample median. These boxplots have been modified to use the sample mean.
 
@@ -292,7 +292,7 @@ As a result, we we obtain a *large* test statistic, thus *small* p-value.
 Now consider $\mu_A = 0, \mu_B = 0, \mu_C = 0$ with $\sigma = 1$. That is, equal means for the groups.
 
 
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-9-1} \end{center}
+\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-10-1} \end{center}
 
 Here the sample means vary only a tiny bit around the overall sample mean. Within the groups there is variability, this time much larger than the variability of the sample means.
 
@@ -306,7 +306,7 @@ The next two examples show different means, with different levels of noise. Noti
 - $\mu_A = -1, \mu_B = 0, \mu_C = 1, \sigma = 1$
 
 
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-10-1} \end{center}
+\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 - $F = 16.4879492$
 - $\text{p-value} = 2.2378806\times 10^{-6}$
@@ -317,7 +317,7 @@ Above, there isn't obvious separation between the groups like the first example,
 - $n_i = 20$ for each group.
 
 
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-11-1} \end{center}
+\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
 - $F = 4.6256472$
 - $\text{p-value} = 0.0137529$
@@ -348,7 +348,7 @@ plot(coag ~ diet, data = coagulation, col = 2:5)
 
 
 
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-12-1} \end{center}
+\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 We first load the data and create the relevant boxplot. The plot alone suggests a difference of means. The `aov()` function is used to obtain the relevant sums of squares. Using the `summary()` function on the output from `aov()` creates the desired ANOVA table. (Without the unneeded row for total.)
 
@@ -486,7 +486,7 @@ curve(df(x, df1 = 4 - 1, df2 = 40 - 4), col = "darkorange", add = TRUE, lwd = 2)
 
 
 
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-16-1} \end{center}
+\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 ### Power
 
@@ -705,7 +705,7 @@ plot(TukeyHSD(coag_aov, conf.level = 0.95))
 
 
 
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-24-1} \end{center}
+\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-25-1} \end{center}
 
 The creator of this method, [John Tukey](https://en.wikipedia.org/wiki/John_Tukey){target="_blank"}, is an important figure in the history of data science. He essentially [predicted the rise of data science over 50 years ago](https://projecteuclid.org/euclid.aoms/1177704711){target="_blank"}. For some retrospective thoughts on those 50 years, see [this paper from David Donoho](http://courses.csail.mit.edu/18.337/2015/docs/50YearsDataScience.pdf){target="_blank"}.
 
@@ -819,7 +819,7 @@ with(rats, interaction.plot(treat, poison, time, lwd = 2, col = 1:3))
 
 
 
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-26-1} \end{center}
+\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-27-1} \end{center}
 
 If there is not interaction, thus an additive model, we would expect to see parallel lines. That would mean, when we change the level of one factor, there can be an effect on the response. However, the difference between the levels of the other factor should still be the same.
 
@@ -1128,7 +1128,7 @@ with(warpbreaks, interaction.plot(tension, wool, breaks, lwd = 2, col = 2:3))
 
 
 
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-41-1} \end{center}
+\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-42-1} \end{center}
 
 Either plot makes it rather clear that the `wool` and `tensions` factors interact.
 
@@ -1155,4 +1155,8 @@ Using an $\alpha$ of $0.05$ the ANOVA test finds that the interaction is signifi
 
 ## `R` Markdown
 
-The `R` Markdown file for this chapter can be found [**here**](anova.Rmd). The file was created using `R` version 3.5.0.
+The `R` Markdown file for this chapter can be found here:
+
+- [`anova.Rmd`](anova.Rmd){target="_blank"}
+
+The file was created using `R` version `3.5.0`.

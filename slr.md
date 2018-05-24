@@ -88,7 +88,7 @@ plot(dist ~ speed, data = cars,
 
 
 
-\begin{center}\includegraphics{slr_files/figure-latex/unnamed-chunk-5-1} \end{center}
+\begin{center}\includegraphics{slr_files/figure-latex/unnamed-chunk-6-1} \end{center}
 
 Let's now define some terminology. We have pairs of data, $(x_i, y_i)$, for $i = 1, 2, \ldots n$, where $n$ is the sample size of the dataset.
 
@@ -694,14 +694,14 @@ For the `cars` example, we calculate $R^2 = 0.65$. We then say that $65\%$ of th
 The following plots visually demonstrate the three "sums of squares" for a simulated dataset which has $R^2 = 0.92$ which is a somewhat high value. Notice in the final plot, that the orange arrows account for a larger proportion of the total arrow.
 
 
-\begin{center}\includegraphics{slr_files/figure-latex/unnamed-chunk-26-1} \end{center}
+\begin{center}\includegraphics{slr_files/figure-latex/unnamed-chunk-27-1} \end{center}
 
 
 
 The next plots again visually demonstrate the three "sums of squares," this time for a simulated dataset which has $R^2 = 0.19$. Notice in the final plot, that now the blue arrows account for a larger proportion of the total arrow.
 
 
-\begin{center}\includegraphics{slr_files/figure-latex/unnamed-chunk-28-1} \end{center}
+\begin{center}\includegraphics{slr_files/figure-latex/unnamed-chunk-29-1} \end{center}
 
 
 ## The `lm` Function
@@ -763,7 +763,7 @@ abline(stop_dist_model, lwd = 3, col = "darkorange")
 
 
 
-\begin{center}\includegraphics{slr_files/figure-latex/unnamed-chunk-32-1} \end{center}
+\begin{center}\includegraphics{slr_files/figure-latex/unnamed-chunk-33-1} \end{center}
 
 The `abline()` function is used to add lines of the form $a + bx$ to a plot. (Hence **`ab`**`line`.) When we give it `stop_dist_model` as an argument, it automatically extracts the regression coefficient estimates ($\hat{\beta}_0$ and $\hat{\beta}_1$) and uses them as the slope and intercept of the line. Here we also use `lwd` to modify the width of the line, as well as `col` to modify the color of the line.
 
@@ -1234,7 +1234,7 @@ abline(sim_fit)
 
 
 
-\begin{center}\includegraphics{slr_files/figure-latex/unnamed-chunk-50-1} \end{center}
+\begin{center}\includegraphics{slr_files/figure-latex/unnamed-chunk-51-1} \end{center}
 
 We should say here, that we're being sort of lazy, and not the good kinda of lazy that could be considered efficient. Any time you simulate data, you should consider doing two things: writing a function, and storing the data in a data frame.
 
@@ -1307,7 +1307,7 @@ legend("topright", c("Estimate", "Truth"), lty = c(1, 2), lwd = 2,
 
 
 
-\begin{center}\includegraphics{slr_files/figure-latex/unnamed-chunk-55-1} \end{center}
+\begin{center}\includegraphics{slr_files/figure-latex/unnamed-chunk-56-1} \end{center}
 
 
 ## History

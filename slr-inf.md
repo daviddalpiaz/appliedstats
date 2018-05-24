@@ -86,7 +86,7 @@ abline(stop_dist_model, lwd = 5, col = "darkorange")
 
 
 
-\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-2-1} \end{center}
+\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-3-1} \end{center}
 
 To get started, we'll note that there is another equivalent expression for $S_{xy}$ which we did not see last chapter,
 
@@ -377,7 +377,7 @@ curve(dnorm(x, mean = beta_1, sd = sqrt(var_beta_1_hat)),
 
 
 
-\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-8-1} \end{center}
+\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 We then repeat the process for $\hat{\beta}_0$.
 
@@ -424,7 +424,7 @@ curve(dnorm(x, mean = beta_0, sd = sqrt(var_beta_0_hat)),
 
 
 
-\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-10-1} \end{center}
+\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 In this simulation study, we have only simulated a finite number of samples. To truly verify the distributional results, we would need to observe an infinite number of samples. However, the following plot should make it clear that if we continued simulating, the empirical results would get closer and closer to what we should expect.
 
@@ -440,7 +440,7 @@ abline(h = 6, col = "darkorange", lwd = 2)
 
 
 
-\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-11-1} \end{center}
+\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
 ```r
 par(mar = c(5, 5, 1, 1)) # adjusted plot margins, otherwise the "hat" does not display
@@ -453,7 +453,7 @@ abline(h = 3, col = "darkorange", lwd = 2)
 
 
 
-\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-11-2} \end{center}
+\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-12-2} \end{center}
 
 ## Standard Errors
 
@@ -573,7 +573,7 @@ legend("topright", title = "Distributions",
 
 
 
-\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-12-1} \end{center}
+\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 ## Confidence Intervals for Slope and Intercept
 
@@ -861,7 +861,7 @@ Again, that test is seen in the output from `summary()`,
 With this extremely low p-value, we would reject the null hypothesis at any reasonable $\alpha$ level, say for example $\alpha = 0.01$. So we say there is a significant **linear** relationship between speed and stopping distance. Notice that we emphasize **linear**.
 
 
-\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-20-1} \end{center}
+\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 In this plot of simulated data, we see a clear relationship between $x$ and $y$, however it is not a linear relationship. If we fit a line to this data, it is very flat. The resulting test for $H_0: \beta_1 = 0$ vs $H_1: \beta_1 \neq 0$ gives a large p-value, in this case $0.7564548$, so we would fail to reject and say that there is no significant linear relationship between $x$ and $y$. We will see later how to fit a curve to this data using a "linear" model, but for now, realize that testing $H_0: \beta_1 = 0$ vs $H_1: \beta_1 \neq 0$ can only detect straight line relationships.
 
@@ -1062,7 +1062,7 @@ points(mean(cars$speed), mean(cars$dist), pch = "+", cex = 3)
 
 
 
-\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-26-1} \end{center}
+\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-27-1} \end{center}
 
 Some things to notice:
 

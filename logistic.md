@@ -313,7 +313,7 @@ legend("topleft", c("Ordinary", "Logistic", "Data"), lty = c(1, 2, 0),
 
 
 
-\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-7-1} \end{center}
+\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
 Since we only have a single predictor variable, we are able to graphically show this situation. First, note that the data, is plotted using black dots. The response `y` only takes values `0` and `1`.
 
@@ -399,7 +399,7 @@ legend("bottomleft", c("Estimated Probability", "Data"), lty = c(2, 0),
 
 
 
-\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-11-1} \end{center}
+\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
 We see that this time, as $x$ increases, $p({\bf x})$ decreases.
 
@@ -452,7 +452,7 @@ legend("bottomleft", c("Prob", "Data"), lty = c(2, 0),
 
 
 
-\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-15-1} \end{center}
+\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-16-1} \end{center}
 
 ## Working with Logistic Regression
 
@@ -603,7 +603,7 @@ curve(predict(chd_mod_ldl, data.frame(ldl = x), type = "response"),
 
 
 
-\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-18-1} \end{center}
+\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
 As before, we plot the data in addition to the estimated probabilities. Note that we have "jittered" the data to make it easier to visualize, but the data do only take values `0` and `1`.
 
