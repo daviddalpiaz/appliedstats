@@ -452,7 +452,7 @@ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \epsilon_i, \qquad i = 1, 2, \
 <li><span class="math inline">\(x_{i2}\)</span> as the model year (<code>year</code>) of the <span class="math inline">\(i\)</span>th car.</li>
 </ul>
 <p>The picture below will visualize what we would like to accomplish. The data points <span class="math inline">\((x_{i1}, x_{i2}, y_i)\)</span> now exist in 3-dimensional space, so instead of fitting a line to the data, we will fit a plane. (We’ll soon move to higher dimensions, so this will be the last example that is easy to visualize and think about this way.)</p>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-240-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="mlr_files/figure-html/unnamed-chunk-3-1.png" width="576" /></p>
 <p>How do we find such a plane? Well, we would like a plane that is as close as possible to the data points. That is, we would like it to minimize the errors it is making. How will we define these errors? Squared distance of course! So, we would like to minimize</p>
 <p><span class="math display">\[
 f(\beta_0, \beta_1, \beta_2) = \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2}))^2
@@ -658,10 +658,10 @@ e     =<span class="st"> </span>y <span class="op">-</span><span class="st"> </s
 ## -8.852 -2.292 -0.100  2.039 14.325 
 ## 
 ## Coefficients:
-##                Estimate  Std. Error t value Pr(&gt;|t|)    
-## (Intercept) -14.6376419   4.0233914  -3.638 0.000312 ***
-## wt           -0.0066349   0.0002149 -30.881  &lt; 2e-16 ***
-## year          0.7614020   0.0497266  15.312  &lt; 2e-16 ***
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -1.464e+01  4.023e+00  -3.638 0.000312 ***
+## wt          -6.635e-03  2.149e-04 -30.881  &lt; 2e-16 ***
+## year         7.614e-01  4.973e-02  15.312  &lt; 2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -857,7 +857,7 @@ new_cars</code></pre>
 <p>As are the years of each of the new cars.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(year <span class="op">~</span><span class="st"> </span>wt, <span class="dt">data =</span> autompg, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)
 <span class="kw">points</span>(new_cars, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">cex =</span> <span class="dv">3</span>, <span class="dt">pch =</span> <span class="st">&quot;X&quot;</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-252-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="mlr_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>However, we have to consider weight and year together now. And based on the above plot, one of the new cars is within the “blob” of observed values, while the other, the car from 1981 weighing 5000 pounds, is noticeably outside of the observed values. This is a hidden extrapolation which you should be aware of when using multiple regression.</p>
 <p>Shifting gears back to the new data pair that can be reasonably estimated, we do a quick verification of some of the mathematics in <code>R</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r">x0 =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3500</span>, <span class="dv">76</span>)
@@ -1054,10 +1054,10 @@ full_mpg_model =<span class="st"> </span><span class="kw">lm</span>(mpg <span cl
 ## -8.852 -2.292 -0.100  2.039 14.325 
 ## 
 ## Coefficients:
-##                Estimate  Std. Error t value Pr(&gt;|t|)    
-## (Intercept) -14.6376419   4.0233914  -3.638 0.000312 ***
-## wt           -0.0066349   0.0002149 -30.881  &lt; 2e-16 ***
-## year          0.7614020   0.0497266  15.312  &lt; 2e-16 ***
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -1.464e+01  4.023e+00  -3.638 0.000312 ***
+## wt          -6.635e-03  2.149e-04 -30.881  &lt; 2e-16 ***
+## year         7.614e-01  4.973e-02  15.312  &lt; 2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -1223,7 +1223,7 @@ C =<span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</sp
 y        =<span class="st"> </span>beta_<span class="dv">0</span> <span class="op">+</span><span class="st"> </span>beta_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>beta_<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>eps
 sim_data =<span class="st"> </span><span class="kw">data.frame</span>(x1, x2, y)</code></pre>
 <p>Plotting this data and fitting the regression produces the following plot.</p>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-266-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p><img src="mlr_files/figure-html/unnamed-chunk-29-1.png" width="576" /></p>
 <p>We then calculate</p>
 <p><span class="math display">\[
 \hat{\beta} = \left(  X^\top X  \right)^{-1}X^\top y.
@@ -1297,7 +1297,7 @@ beta_hat_<span class="dv">2</span> =<span class="st"> </span><span class="kw">re
      <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">2</span>]), <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 <span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> beta_<span class="dv">2</span>, <span class="dt">sd =</span> <span class="kw">sqrt</span>(sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>C[<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>])), 
       <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-276-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="mlr_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
 <p>This looks good! The simulation-based histogram appears to be Normal with mean 6 and spread of about 0.15 as you measure from center to inflection point. That matches really well with the sampling distribution of <span class="math inline">\(\hat{\beta}_2 \sim N\left(\mu = 6, \sigma^2 = 0.0236438 \right)\)</span>.</p>
 <p>One last check, we verify the <span class="math inline">\(68 - 95 - 99.7\)</span> rule.</p>
 <pre class="sourceCode r"><code class="sourceCode r">sd_bh2 =<span class="st"> </span><span class="kw">sqrt</span>(sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>C[<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>])

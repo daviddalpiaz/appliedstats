@@ -428,8 +428,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] 11.79982</code></pre>
 <p>Lastly, to generate a random sample of size <code>n = 10</code>, use:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</code></pre>
-<pre><code>##  [1] -7.0569601 -4.9132126 -5.7191309 -1.8100379 -1.9730409  4.8093816
-##  [7]  7.5033358  0.2817771  3.4336374 -1.2077822</code></pre>
+<pre><code>##  [1]  7.5105239 -3.1863388  9.8784069 -2.8642942 -1.3080228  0.2673913
+##  [7]  6.5747319 -7.7063597  7.3849998 -0.8431532</code></pre>
 <p>These functions exist for many other distributions, including but not limited to:</p>
 <table>
 <thead>
@@ -737,7 +737,7 @@ differences =<span class="st"> </span><span class="kw">rep</span>(<span class="d
   x2 =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">25</span>, <span class="dt">mean =</span> <span class="dv">5</span>, <span class="dt">sd =</span> <span class="dv">2</span>)
   differences[s] =<span class="st"> </span><span class="kw">mean</span>(x1) <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x2)
 }</code></pre>
-<p>To estimate <span class="math inline">\(P(0 &lt; D &lt; 2)\)</span> we will find the proportion of values of <span class="math inline">\(d_s\)</span> (among the 10000 values of <span class="math inline">\(d_s\)</span> generated) that are between 0 and 2.</p>
+<p>To estimate <span class="math inline">\(P(0 &lt; D &lt; 2)\)</span> we will find the proportion of values of <span class="math inline">\(d_s\)</span> (among the 10^{4} values of <span class="math inline">\(d_s\)</span> generated) that are between 0 and 2.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(<span class="dv">0</span> <span class="op">&lt;</span><span class="st"> </span>differences <span class="op">&amp;</span><span class="st"> </span>differences <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span>)</code></pre>
 <pre><code>## [1] 0.9222</code></pre>
 <p>Recall that above we derived the distribution of <span class="math inline">\(D\)</span> to be <span class="math inline">\(N(\mu = 1, \sigma^2 = 0.32)\)</span></p>
@@ -747,7 +747,7 @@ differences =<span class="st"> </span><span class="kw">rep</span>(<span class="d
      <span class="dt">xlab   =</span> <span class="st">&quot;Simulated Values of D&quot;</span>,
      <span class="dt">col    =</span> <span class="st">&quot;dodgerblue&quot;</span>,
      <span class="dt">border =</span> <span class="st">&quot;darkorange&quot;</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-142-1.png" width="672" /></p>
+<p><img src="prob-and-stat_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 <p>Also the sample mean and variance are very close to to what we would expect.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(differences)</code></pre>
 <pre><code>## [1] 1.001423</code></pre>
@@ -792,7 +792,7 @@ x_bars      =<span class="st"> </span><span class="kw">rep</span>(<span class="d
 <pre class="sourceCode r"><code class="sourceCode r">x_bar_hist =<span class="st"> </span><span class="kw">hist</span>(x_bars, <span class="dt">breaks =</span> <span class="dv">50</span>, 
                   <span class="dt">main =</span> <span class="st">&quot;Histogram of Sample Means&quot;</span>,
                   <span class="dt">xlab =</span> <span class="st">&quot;Sample Means&quot;</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-148-1.png" width="672" /></p>
+<p><img src="prob-and-stat_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
 <p>Now we will compare sample statistics from the empirical distribution with their known values based on the parent distribution.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="kw">mean</span>(x_bars), mu)</code></pre>
 <pre><code>## [1] 10.00008 10.00000</code></pre>
@@ -812,7 +812,7 @@ x_bars      =<span class="st"> </span><span class="kw">rep</span>(<span class="d
 x_bar_hist =<span class="st"> </span><span class="kw">hist</span>(x_bars, <span class="dt">breaks =</span> <span class="dv">50</span>, <span class="dt">col =</span> shading,
                   <span class="dt">main =</span> <span class="st">&quot;Histogram of Sample Means, Two Standard Deviations&quot;</span>,
                   <span class="dt">xlab =</span> <span class="st">&quot;Sample Means&quot;</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-153-1.png" width="672" /></p>
+<p><img src="prob-and-stat_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 
 </div>
 </div>

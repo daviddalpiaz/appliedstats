@@ -508,7 +508,7 @@ xplot =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</
       <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">1</span>)
 <span class="kw">lines</span>(xplot, <span class="kw">predict</span>(fit_big, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">x =</span> xplot)),
       <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-593-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="selection_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>We can see that the solid blue curve models this data rather nicely. The dashed orange curve fits the points better, making smaller errors, however it is unlikely that it is correctly modeling the true relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. It is fitting the random noise. This is an example of <strong>overfitting</strong>.</p>
 <p>We see that the larger model indeed has a lower <span class="math inline">\(\text{RMSE}\)</span>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(<span class="kw">mean</span>(<span class="kw">resid</span>(fit_quad) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>))</code></pre>
@@ -552,7 +552,7 @@ xplot =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</
       <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">1</span>)
 <span class="kw">lines</span>(xplot, <span class="kw">predict</span>(fit_big_removed, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">x =</span> xplot)),
       <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-597-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="selection_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>We see that on average, the solid blue line for the quadratic model has similar errors as before. It has changed very slightly. However, the dashed orange line for the large model, has a huge error at the point that was removed and is much different that the previous fit.</p>
 <p>This is the purpose of cross-validation. By assessing how the model fits points that were not used to perform the regression, we get an idea of how well the model will work for future observations. It assess how well the model works in general, not simply on the observed data.</p>
 </div>
@@ -563,10 +563,10 @@ xplot =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(faraway)
 hipcenter_mod =<span class="st"> </span><span class="kw">lm</span>(hipcenter <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> seatpos)
 <span class="kw">coef</span>(hipcenter_mod)</code></pre>
-<pre><code>##  (Intercept)          Age       Weight      HtShoes           Ht       Seated 
-## 436.43212823   0.77571620   0.02631308  -2.69240774   0.60134458   0.53375170 
-##          Arm        Thigh          Leg 
-##  -1.32806864  -1.14311888  -6.43904627</code></pre>
+<pre><code>##  (Intercept)          Age       Weight      HtShoes           Ht 
+## 436.43212823   0.77571620   0.02631308  -2.69240774   0.60134458 
+##       Seated          Arm        Thigh          Leg 
+##   0.53375170  -1.32806864  -1.14311888  -6.43904627</code></pre>
 <p>Let’s return to the <code>seatpos</code> data from the <code>faraway</code> package. Now, let’s consider only models with first order terms, thus no interactions and no polynomials. There are <em>eight</em> predictors in this model. So if we consider all possible models, ranging from using 0 predictors, to all eight predictors, there are</p>
 <p><span class="math display">\[
 \sum_{k = 0}^{p - 1} {{p - 1} \choose {k}} = 2 ^ {p - 1} = 2 ^ 8 = 256
@@ -1055,7 +1055,7 @@ all_hipcenter_mod<span class="op">$</span>which[best_aic_ind,]</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(hipcenter_mod_aic <span class="op">~</span><span class="st"> </span><span class="kw">I</span>(<span class="dv">2</span><span class="op">:</span>p), <span class="dt">ylab =</span> <span class="st">&quot;AIC&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;p, number of parameters&quot;</span>, 
      <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">cex =</span> <span class="dv">2</span>,
      <span class="dt">main =</span> <span class="st">&quot;AIC vs Model Complexity&quot;</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-625-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="selection_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
 <p>We could easily repeat this process for <span class="math inline">\(\text{BIC}\)</span>.</p>
 <p><span class="math display">\[
 \text{BIC} = n\log\left(\frac{\text{RSS}}{n}\right) + \log(n)p.
@@ -1112,7 +1112,7 @@ autompg =<span class="st"> </span><span class="kw">subset</span>(autompg, <span 
 ##  $ domestic: Factor w/ 2 levels &quot;0&quot;,&quot;1&quot;: 2 2 2 2 2 2 2 2 2 2 ...</code></pre>
 <p>Recall that we have two factor variables, <code>cyl</code> and <code>domestic</code>. The <code>cyl</code> variable has three levels, while the <code>domestic</code> variable has only two. Thus the <code>cyl</code> variable will be coded using two dummy variables, while the <code>domestic</code> variable will only need one. We will pay attention to this later.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pairs</span>(autompg, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-632-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="selection_files/figure-html/unnamed-chunk-43-1.png" width="768" /></p>
 <p>We’ll use the <code>pairs()</code> plot to determine which variables may benefit from a quadratic relationship with the response. We’ll also consider all possible two-way interactions. We won’t consider any three-order or higher. For example, we won’t consider the interaction between first-order terms and the added quadratic terms.</p>
 <p>So now, we’ll fit this rather large model. We’ll use a log-transformed response. Notice that <code>log(mpg) ~ . ^ 2</code> will automatically consider all first-order terms, as well as all two-way interactions. We use <code>I(var_name ^ 2)</code> to add quadratic terms for some variables. This generally works better than using <code>poly()</code> when performing variable selection.</p>
 <pre class="sourceCode r"><code class="sourceCode r">autompg_big_mod =<span class="st"> </span><span class="kw">lm</span>(
@@ -1131,25 +1131,21 @@ autompg_mod_back_bic =<span class="st"> </span><span class="kw">step</span>(auto
                             <span class="dt">k =</span> <span class="kw">log</span>(n), <span class="dt">trace =</span> <span class="dv">0</span>)</code></pre>
 <p>Looking at the coefficients of the two chosen models, we see they are still rather large.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(autompg_mod_back_aic)</code></pre>
-<pre><code>##      (Intercept)             cyl6             cyl8             disp 
-##  3.6718839511472 -0.1602563336333 -0.8581644338393 -0.0093719707873 
-##               hp               wt              acc             year 
-##  0.0229353409493 -0.0003064496949 -0.1393888479750 -0.0019663606344 
-##        domestic1          I(hp^2)         cyl6:acc         cyl8:acc 
-##  0.9369323953411 -0.0000149766900  0.0072202979695  0.0504191492217 
-##          disp:wt        disp:year           hp:acc          hp:year 
-##  0.0000005797816  0.0000949376953 -0.0005062294609 -0.0001838985017 
-##         acc:year    acc:domestic1   year:domestic1 
-##  0.0023456252781 -0.0237246840975 -0.0073327246317</code></pre>
+<pre><code>##    (Intercept)           cyl6           cyl8           disp             hp 
+##   3.671884e+00  -1.602563e-01  -8.581644e-01  -9.371971e-03   2.293534e-02 
+##             wt            acc           year      domestic1        I(hp^2) 
+##  -3.064497e-04  -1.393888e-01  -1.966361e-03   9.369324e-01  -1.497669e-05 
+##       cyl6:acc       cyl8:acc        disp:wt      disp:year         hp:acc 
+##   7.220298e-03   5.041915e-02   5.797816e-07   9.493770e-05  -5.062295e-04 
+##        hp:year       acc:year  acc:domestic1 year:domestic1 
+##  -1.838985e-04   2.345625e-03  -2.372468e-02  -7.332725e-03</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(autompg_mod_back_bic)</code></pre>
-<pre><code>##      (Intercept)             cyl6             cyl8             disp 
-##  4.6578470390516 -0.1086165018406 -0.7611630775038 -0.0016093164199 
-##               hp               wt              acc             year 
-##  0.0026212660296 -0.0002635971659 -0.1670601021732 -0.0104564626969 
-##        domestic1         cyl6:acc         cyl8:acc          disp:wt 
-##  0.3341578960873  0.0043154925327  0.0461009496981  0.0000004102804 
-##           hp:acc         acc:year    acc:domestic1 
-## -0.0003386261424  0.0025001372156 -0.0219329407492</code></pre>
+<pre><code>##   (Intercept)          cyl6          cyl8          disp            hp 
+##  4.657847e+00 -1.086165e-01 -7.611631e-01 -1.609316e-03  2.621266e-03 
+##            wt           acc          year     domestic1      cyl6:acc 
+## -2.635972e-04 -1.670601e-01 -1.045646e-02  3.341579e-01  4.315493e-03 
+##      cyl8:acc       disp:wt        hp:acc      acc:year acc:domestic1 
+##  4.610095e-02  4.102804e-07 -3.386261e-04  2.500137e-03 -2.193294e-02</code></pre>
 <p>However, they are much smaller than the original full model. Also notice that the resulting models respect hierarchy.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw">coef</span>(autompg_big_mod))</code></pre>
 <pre><code>## [1] 40</code></pre>
@@ -1177,11 +1173,11 @@ autompg_mod_back_bic =<span class="st"> </span><span class="kw">step</span>(auto
 ## 
 ## Coefficients:
 ##   (Intercept)           cyl6           cyl8           disp             hp  
-##  4.6578470391  -0.1086165018  -0.7611630775  -0.0016093164   0.0026212660  
+##     4.658e+00     -1.086e-01     -7.612e-01     -1.609e-03      2.621e-03  
 ##            wt            acc           year      domestic1       cyl6:acc  
-## -0.0002635972  -0.1670601022  -0.0104564627   0.3341578961   0.0043154925  
+##    -2.636e-04     -1.671e-01     -1.046e-02      3.342e-01      4.315e-03  
 ##      cyl8:acc        disp:wt         hp:acc       acc:year  acc:domestic1  
-##  0.0461009497   0.0000004103  -0.0003386261   0.0025001372  -0.0219329407</code></pre>
+##     4.610e-02      4.103e-07     -3.386e-04      2.500e-03     -2.193e-02</code></pre>
 <p>Notice this is a somewhat “large” model, which uses 15 parameters, including several interaction terms. Do we care that this is a “large” model? The answer is, <strong>it depends</strong>.</p>
 <div id="explanation-1" class="section level3">
 <h3><span class="header-section-number">16.4.1</span> Explanation</h3>
@@ -1194,7 +1190,7 @@ autompg_mod_back_bic =<span class="st"> </span><span class="kw">step</span>(auto
 <p>A word of caution when using a model to <em>explain</em> a relationship. There are two terms often used to describe a relationship between two variables: <em>causation</em> and <em>correlation</em>. <a href="https://xkcd.com/552/" target="_blank">Correlation</a> is often also referred to as association.</p>
 <p>Just because two variable are correlated does not necessarily mean that one causes the other. For example, considering modeling <code>mpg</code> as only a function of <code>hp</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> autompg, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-641-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="selection_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
 <p>Does an increase in horsepower cause a drop in fuel efficiency? Or, perhaps the causality is reversed and an increase in fuel efficiency cause a decrease in horsepower. Or, perhaps there is a third variable that explains both!</p>
 <p>The issue here is that we have <strong>observational</strong> data. With observational data, we can only detect associations. To speak with confidence about causality, we would need to run <strong>experiments</strong>.</p>
 <p>This is a concept that you should encounter often in your statistics education. For some further reading, and some related fallacies, see: <a href="https://en.wikipedia.org/wiki/Correlation_does_not_imply_causation" target="_blank">Wikipedia: Correlation does not imply causation</a>.</p>

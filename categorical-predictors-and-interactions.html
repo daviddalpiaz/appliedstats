@@ -452,11 +452,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>As we often do, we will start by plotting the data. We are interested in <code>mpg</code> as the response variable, and <code>hp</code> as a predictor.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> mtcars, <span class="dt">cex =</span> <span class="dv">2</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-284-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="cat_int_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>Since we are also interested in the transmission type, we could also label the points accordingly.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> mtcars, <span class="dt">col =</span> am <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">pch =</span> am <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">2</span>)
 <span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Automatic&quot;</span>, <span class="st">&quot;Manual&quot;</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-285-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="cat_int_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>We used a common <code>R</code> “trick” when plotting this data. The <code>am</code> variable takes two possible values; <code>0</code> for automatic transmission, and <code>1</code> for manual transmissions. <code>R</code> can use numbers to represent colors, however the color for <code>0</code> is white. So we take the <code>am</code> vector and add <code>1</code> to it. Then observations with automatic transmissions are now represented by <code>1</code>, which is black in <code>R</code>, and manual transmission are represented by <code>2</code>, which is red in <code>R</code>. (Note, we are only adding <code>1</code> inside the call to <code>plot()</code>, we are not actually modifying the values stored in <code>am</code>.)</p>
 <p>We now fit the SLR model</p>
 <p><span class="math display">\[
@@ -468,7 +468,7 @@ Y = \beta_0 + \beta_1 x_1 + \epsilon,
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> mtcars, <span class="dt">col =</span> am <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">pch =</span> am <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">2</span>)
 <span class="kw">abline</span>(mpg_hp_slr, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>)
 <span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Automatic&quot;</span>, <span class="st">&quot;Manual&quot;</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-287-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="cat_int_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>We should notice a pattern here. The red, manual observations largely fall above the line, while the black, automatic observations are mostly below the line. This means our model underestimates the fuel efficiency of manual transmissions, and overestimates the fuel efficiency of automatic transmissions. To correct for this, we will add a predictor to our model, namely, <code>am</code> as <span class="math inline">\(x_2\)</span>.</p>
 <p>Our new model is</p>
 <p><span class="math display">\[
@@ -522,7 +522,7 @@ slope_manu =<span class="st"> </span><span class="kw">coef</span>(mpg_hp_add)[<s
 <span class="kw">abline</span>(int_auto, slope_auto, <span class="dt">col =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="co"># add line for auto</span>
 <span class="kw">abline</span>(int_manu, slope_manu, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="co"># add line for manual</span>
 <span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Automatic&quot;</span>, <span class="st">&quot;Manual&quot;</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-291-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="cat_int_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>We notice right away that the points are no longer systematically incorrect. The red, manual observations vary about the red line in no particular pattern without underestimating the observations as before. The black, automatic points vary about the black line, also without an obvious pattern.</p>
 <p>They say a picture is worth a thousand words, but as a statistician, sometimes a picture is worth an entire analysis. The above picture makes it plainly obvious that <span class="math inline">\(\beta_2\)</span> is significant, but let’s verify mathematically. Essentially we would like to test:</p>
 <p><span class="math display">\[
@@ -531,17 +531,17 @@ H_0: \beta_2 = 0 \quad \text{vs} \quad H_1: \beta_2 \neq 0.
 <p>This is nothing new. Again, the math is the same as the multiple regression analyses we have seen before. We could perform either a <span class="math inline">\(t\)</span> or <span class="math inline">\(F\)</span> test here. The only difference is a slight change in interpretation. We could think of this as testing a model with a single line (<span class="math inline">\(H_0\)</span>) against a model that allows two lines (<span class="math inline">\(H_1\)</span>).</p>
 <p>To obtain the test statistic and p-value for the <span class="math inline">\(t\)</span>-test, we would use</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(mpg_hp_add)<span class="op">$</span>coefficients[<span class="st">&quot;am&quot;</span>,]</code></pre>
-<pre><code>##      Estimate    Std. Error       t value      Pr(&gt;|t|) 
-## 5.27708530818 1.07954057578 4.88826953480 0.00003460318</code></pre>
+<pre><code>##     Estimate   Std. Error      t value     Pr(&gt;|t|) 
+## 5.277085e+00 1.079541e+00 4.888270e+00 3.460318e-05</code></pre>
 <p>To do the same for the <span class="math inline">\(F\)</span> test, we would use</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(mpg_hp_slr, mpg_hp_add)</code></pre>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: mpg ~ hp
 ## Model 2: mpg ~ hp + am
-##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
-## 1     30 447.67                                  
-## 2     29 245.44  1    202.24 23.895 0.0000346 ***
+##   Res.Df    RSS Df Sum of Sq      F   Pr(&gt;F)    
+## 1     30 447.67                                 
+## 2     29 245.44  1    202.24 23.895 3.46e-05 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Notice that these are indeed testing the same thing, as the p-values are exactly equal. (And the <span class="math inline">\(F\)</span> test statistic is the <span class="math inline">\(t\)</span> test statistic squared.)</p>
@@ -631,7 +631,7 @@ slope_dom =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_add)[<
 <span class="kw">abline</span>(int_for, slope_for, <span class="dt">col =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="co"># add line for foreign cars</span>
 <span class="kw">abline</span>(int_dom, slope_dom, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="co"># add line for domestic cars</span>
 <span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Foreign&quot;</span>, <span class="st">&quot;Domestic&quot;</span>), <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-296-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="cat_int_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>This is a model that allows for two <em>parallel</em> lines, meaning the <code>mpg</code> can be different on average between foreign and domestic cars of the same engine displacement, but the change in average <code>mpg</code> for an increase in displacement is the same for both. We can see this model isn’t doing very well here. The red line fits the red points fairly well, but the black line isn’t doing very well for the black points, it should clearly have a more negative slope. Essentially, we would like a model that allows for two different slopes.</p>
 <p>Consider the following model,</p>
 <p><span class="math display">\[
@@ -718,7 +718,7 @@ slope_dom =<span class="st"> </span><span class="kw">coef</span>(mpg_disp_int)[<
 <span class="kw">abline</span>(int_for, slope_for, <span class="dt">col =</span> <span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="co"># line for foreign cars</span>
 <span class="kw">abline</span>(int_dom, slope_dom, <span class="dt">col =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) <span class="co"># line for domestic cars</span>
 <span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Foreign&quot;</span>, <span class="st">&quot;Domestic&quot;</span>), <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-304-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="cat_int_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <p>We see that these lines fit the data much better, which matches the result of our tests.</p>
 <p>So far we have only seen interaction between a categorical variable (<code>domestic</code>) and a numerical variable (<code>disp</code>). While this is easy to visualize, since it allows for different slopes for two lines, it is not the only type of interaction we can use in a model. We can also consider interactions between two numerical variables.</p>
 <p>Consider the model,</p>
@@ -749,11 +749,11 @@ mpg_disp_int_hp =<span class="st"> </span><span class="kw">lm</span>(mpg <span c
 ## -10.7849  -2.3104  -0.5699   2.1453  17.9211 
 ## 
 ## Coefficients:
-##                Estimate  Std. Error t value Pr(&gt;|t|)    
-## (Intercept) 52.40819978  1.52272673   34.42   &lt;2e-16 ***
-## disp        -0.10017377  0.00663825  -15.09   &lt;2e-16 ***
-## hp          -0.21981997  0.01986944  -11.06   &lt;2e-16 ***
-## disp:hp      0.00056583  0.00005165   10.96   &lt;2e-16 ***
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  5.241e+01  1.523e+00   34.42   &lt;2e-16 ***
+## disp        -1.002e-01  6.638e-03  -15.09   &lt;2e-16 ***
+## hp          -2.198e-01  1.987e-02  -11.06   &lt;2e-16 ***
+## disp:hp      5.658e-04  5.165e-05   10.96   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -783,7 +783,7 @@ H_0: \beta_3 = 0.
 <li><span class="math inline">\(\hat{\beta}_0 = 52.4081998\)</span> is the estimated average <code>mpg</code> for a car with 0 <code>disp</code> and 0 <code>hp</code>.</li>
 <li><span class="math inline">\(\hat{\beta}_1 = -0.1001738\)</span> is the estimated change in average <code>mpg</code> for an increase in 1 <code>disp</code>, <strong>for a car with 0 <code>hp</code></strong>.</li>
 <li><span class="math inline">\(\hat{\beta}_2 = -0.21982\)</span> is the estimated change in average <code>mpg</code> for an increase in 1 <code>hp</code>, <strong>for a car with 0 <code>disp</code></strong>.</li>
-<li><span class="math inline">\(\hat{\beta}_3 = 0.0005658\)</span> is an estimate of the modification to the change in average <code>mpg</code> for an increase in <code>disp</code>, for a car of a certain <code>hp</code> (or vice versa).</li>
+<li><span class="math inline">\(\hat{\beta}_3 = 5.658269\times 10^{-4}\)</span> is an estimate of the modification to the change in average <code>mpg</code> for an increase in <code>disp</code>, for a car of a certain <code>hp</code> (or vice versa).</li>
 </ul>
 <p>That last coefficient needs further explanation. Recall the rearrangement we made earlier</p>
 <p><span class="math display">\[
@@ -791,16 +791,16 @@ Y = \beta_0 + (\beta_1 + \beta_3 x_2) x_1 + \beta_2 x_2 + \epsilon.
 \]</span></p>
 <p>So, our estimate for <span class="math inline">\(\beta_1 + \beta_3 x_2\)</span>, is <span class="math inline">\(\hat{\beta}_1 + \hat{\beta}_3 x_2\)</span>, which in this case is</p>
 <p><span class="math display">\[
--0.1001738 + 0.0005658 x_2.
+-0.1001738 + 5.658269\times 10^{-4} x_2.
 \]</span></p>
-<p>This says that, for an increase of one <code>disp</code> we see an estimated change in average <code>mpg</code> of <span class="math inline">\(-0.1001738 + 0.0005658 x_2\)</span>. So how <code>disp</code> and <code>mpg</code> are related, depends on the <code>hp</code> of the car.</p>
+<p>This says that, for an increase of one <code>disp</code> we see an estimated change in average <code>mpg</code> of <span class="math inline">\(-0.1001738 + 5.658269\times 10^{-4} x_2\)</span>. So how <code>disp</code> and <code>mpg</code> are related, depends on the <code>hp</code> of the car.</p>
 <p>So for a car with 50 <code>hp</code>, the estimated change in average <code>mpg</code> for an increase of one <code>disp</code> is</p>
 <p><span class="math display">\[
--0.1001738 + 0.0005658 \cdot 50 = -0.0718824
+-0.1001738 + 5.658269\times 10^{-4} \cdot 50 = -0.0718824
 \]</span></p>
 <p>And for a car with 350 <code>hp</code>, the estimated change in average <code>mpg</code> for an increase of one <code>disp</code> is</p>
 <p><span class="math display">\[
--0.1001738 + 0.0005658 \cdot 350 = 0.0978657
+-0.1001738 + 5.658269\times 10^{-4} \cdot 350 = 0.0978657
 \]</span></p>
 <p>Notice the sign changed!</p>
 </div>
@@ -865,8 +865,10 @@ Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_1 x_2 + \epsilon,
 ## lm(formula = mpg ~ disp * origin, data = autompg)
 ## 
 ## Coefficients:
-##        (Intercept)                disp       originforeign  disp:originforeign  
-##           33.47937            -0.05441            12.57547            -0.10252</code></pre>
+##        (Intercept)                disp       originforeign  
+##           33.47937            -0.05441            12.57547  
+## disp:originforeign  
+##           -0.10252</code></pre>
 <p>It seems that it doesn’t produce the same results. Right away we notice that the intercept is different, as is the the coefficient in front of <code>disp</code>. We also notice that the remaining two coefficients are of the same magnitude as their respective counterparts using the domestic variable, but with a different sign. Why is this happening?</p>
 <p>It turns out, that by using a factor variable, <code>R</code> is automatically creating a dummy variable for us. However, it is not the dummy variable that we had originally used ourselves.</p>
 <p><code>R</code> is fitting the model</p>
@@ -963,7 +965,7 @@ plot_colors =<span class="st"> </span><span class="kw">c</span>(<span class="st"
 <span class="kw">abline</span>(int_8cyl, slope_all_cyl, <span class="dt">col =</span> plot_colors[<span class="dv">3</span>], <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;4 Cylinder&quot;</span>, <span class="st">&quot;6 Cylinder&quot;</span>, <span class="st">&quot;8 Cylinder&quot;</span>),
        <span class="dt">col =</span> plot_colors, <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-318-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="cat_int_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
 <p>On this plot, we have</p>
 <ul>
 <li>4 Cylinder: orange dots, solid orange line.</li>
@@ -978,8 +980,10 @@ plot_colors =<span class="st"> </span><span class="kw">c</span>(<span class="st"
 ## lm(formula = mpg ~ disp * cyl, data = autompg)
 ## 
 ## Coefficients:
-## (Intercept)         disp         cyl6         cyl8    disp:cyl6    disp:cyl8  
-##    43.59052     -0.13069    -13.20026    -20.85706      0.08299      0.10817</code></pre>
+## (Intercept)         disp         cyl6         cyl8    disp:cyl6  
+##    43.59052     -0.13069    -13.20026    -20.85706      0.08299  
+##   disp:cyl8  
+##     0.10817</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># could also use mpg ~ disp + cyl + disp:cyl</span></code></pre>
 <p><code>R</code> has again chosen to use 4 cylinder cars as the reference level, but this also now has an effect on the interaction terms. <code>R</code> has fit the model.</p>
 <p><span class="math display">\[
@@ -1015,7 +1019,7 @@ plot_colors =<span class="st"> </span><span class="kw">c</span>(<span class="st"
 <span class="kw">abline</span>(int_8cyl, slope_8cyl, <span class="dt">col =</span> plot_colors[<span class="dv">3</span>], <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)
 <span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;4 Cylinder&quot;</span>, <span class="st">&quot;6 Cylinder&quot;</span>, <span class="st">&quot;8 Cylinder&quot;</span>),
        <span class="dt">col =</span> plot_colors, <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">pch =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-320-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="cat_int_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 <p>This looks much better! We can see that for medium displacement cars, 6 cylinder cars now perform better than 8 cylinder cars, which seems much more reasonable than before.</p>
 <p>To completely justify the interaction model (i.e., a unique slope for each <code>cyl</code> level) compared to the additive model (single slope), we can perform an <span class="math inline">\(F\)</span>-test. Notice first, that there is no <span class="math inline">\(t\)</span>-test that will be able to do this since the difference between the two models is not a single parameter.</p>
 <p>We will test,</p>
@@ -1153,8 +1157,10 @@ Y = \mu_1 v_1 + \mu_2 v_2 + \mu_3 v_3 + \beta_1 x v_1 + \beta_2 x v_2 + \beta_3 
 ## lm(formula = mpg ~ disp * cyl, data = autompg)
 ## 
 ## Coefficients:
-## (Intercept)         disp         cyl6         cyl8    disp:cyl6    disp:cyl8  
-##    43.59052     -0.13069    -13.20026    -20.85706      0.08299      0.10817</code></pre>
+## (Intercept)         disp         cyl6         cyl8    disp:cyl6  
+##    43.59052     -0.13069    -13.20026    -20.85706      0.08299  
+##   disp:cyl8  
+##     0.10817</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span><span class="dv">0</span> <span class="op">+</span><span class="st"> </span>cyl <span class="op">+</span><span class="st"> </span>disp <span class="op">:</span><span class="st"> </span>cyl, <span class="dt">data =</span> autompg)</code></pre>
 <pre><code>## 
 ## Call:
@@ -1238,15 +1244,15 @@ Y = \beta_0 + \beta_2 x_2 + \beta_3 x_3 + \beta_6 x_2 x_3 + (\beta_1 + \beta_4 x
 ## -11.9410  -2.2147  -0.4008   1.9430  18.4094 
 ## 
 ## Coefficients:
-##                     Estimate  Std. Error t value  Pr(&gt;|t|)    
-## (Intercept)       60.6457838   6.6000851   9.189   &lt; 2e-16 ***
-## disp              -0.1415870   0.0634395  -2.232    0.0262 *  
-## hp                -0.3544717   0.0812261  -4.364 0.0000165 ***
-## domestic         -12.5718884   7.0643505  -1.780    0.0759 .  
-## disp:hp            0.0013690   0.0006727   2.035    0.0426 *  
-## disp:domestic      0.0493298   0.0640046   0.771    0.4414    
-## hp:domestic        0.1851530   0.0870881   2.126    0.0342 *  
-## disp:hp:domestic  -0.0009163   0.0006768  -1.354    0.1766    
+##                    Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       6.065e+01  6.600e+00   9.189  &lt; 2e-16 ***
+## disp             -1.416e-01  6.344e-02  -2.232   0.0262 *  
+## hp               -3.545e-01  8.123e-02  -4.364 1.65e-05 ***
+## domestic         -1.257e+01  7.064e+00  -1.780   0.0759 .  
+## disp:hp           1.369e-03  6.727e-04   2.035   0.0426 *  
+## disp:domestic     4.933e-02  6.400e-02   0.771   0.4414    
+## hp:domestic       1.852e-01  8.709e-02   2.126   0.0342 *  
+## disp:hp:domestic -9.163e-04  6.768e-04  -1.354   0.1766    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 

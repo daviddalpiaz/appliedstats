@@ -679,7 +679,7 @@ fit_glm =<span class="st"> </span><span class="kw">glm</span>(y <span class="op"
       <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
 <span class="kw">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Ordinary&quot;</span>, <span class="st">&quot;Logistic&quot;</span>, <span class="st">&quot;Data&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>), 
        <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">20</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-648-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="logistic_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>Since we only have a single predictor variable, we are able to graphically show this situation. First, note that the data, is plotted using black dots. The response <code>y</code> only takes values <code>0</code> and <code>1</code>.</p>
 <p>Next, we need to discuss the two added lines to the plot. The first, the solid orange line, is the fitted ordinary linear regression.</p>
 <p>The dashed blue curve is the estimated logistic regression. It is helpful to realize that we are not plotting an estimate of <span class="math inline">\(Y\)</span> for either. (Sometimes it might seem that way with ordinary linear regression, but that isn’t what is happening.) For both, we are plotting <span class="math inline">\(\hat{\text{E}}[Y \mid {\bf X} = {\bf x}]\)</span>, the estimated mean, which for a binary response happens to be an estimate of <span class="math inline">\(P[Y = 1 \mid {\bf X} = {\bf x}]\)</span>.</p>
@@ -725,7 +725,7 @@ example_data =<span class="st"> </span><span class="kw">sim_logistic_data</span>
       <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
 <span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Estimated Probability&quot;</span>, <span class="st">&quot;Data&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">0</span>), 
        <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">20</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-652-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="logistic_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <p>We see that this time, as <span class="math inline">\(x\)</span> increases, <span class="math inline">\(p({\bf x})\)</span> decreases.</p>
 <p>Now let’s look at an example where the estimated probability doesn’t always simply increase or decrease. Much like ordinary linear regression, the linear combination of predictors can contain transformations of predictors (in this case a quadratic term) and interactions.</p>
 <pre class="sourceCode r"><code class="sourceCode r">sim_quadratic_logistic_data =<span class="st"> </span><span class="cf">function</span>(<span class="dt">sample_size =</span> <span class="dv">25</span>) {
@@ -754,7 +754,7 @@ example_data =<span class="st"> </span><span class="kw">sim_quadratic_logistic_d
       <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
 <span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Prob&quot;</span>, <span class="st">&quot;Data&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">0</span>), 
        <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">20</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-656-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="logistic_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 </div>
 </div>
 <div id="working-with-logistic-regression" class="section level2">
@@ -935,7 +935,7 @@ D \overset{\text{approx}}{\sim} \chi^2_{k}
      <span class="dt">ylab =</span> <span class="st">&quot;Probability of CHD&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Low Density Lipoprotein Cholesterol&quot;</span>)
 <span class="kw">curve</span>(<span class="kw">predict</span>(chd_mod_ldl, <span class="kw">data.frame</span>(<span class="dt">ldl =</span> x), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>), 
       <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-659-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="logistic_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <p>As before, we plot the data in addition to the estimated probabilities. Note that we have “jittered” the data to make it easier to visualize, but the data do only take values <code>0</code> and <code>1</code>.</p>
 <p>As we would expect, this plot indicates that as <code>ldl</code> increases, so does the probability of <code>chd</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(<span class="kw">summary</span>(chd_mod_ldl))</code></pre>
@@ -1131,29 +1131,30 @@ C^B({\bf x}) = \underset{k}{\mathrm{argmax}} \ P[Y = k \mid {\bf X = x}].
 <span class="kw">data</span>(<span class="st">&quot;spam&quot;</span>)
 tibble<span class="op">::</span><span class="kw">as.tibble</span>(spam)</code></pre>
 <pre><code>## # A tibble: 4,601 x 58
-##     make address   all num3d   our  over remove internet order  mail receive
-##  * &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
-##  1  0       0.64  0.64     0  0.32  0      0        0     0     0       0   
-##  2  0.21    0.28  0.5      0  0.14  0.28   0.21     0.07  0     0.94    0.21
-##  3  0.06    0     0.71     0  1.23  0.19   0.19     0.12  0.64  0.25    0.38
-##  4  0       0     0        0  0.63  0      0.31     0.63  0.31  0.63    0.31
-##  5  0       0     0        0  0.63  0      0.31     0.63  0.31  0.63    0.31
-##  6  0       0     0        0  1.85  0      0        1.85  0     0       0   
-##  7  0       0     0        0  1.92  0      0        0     0     0.64    0.96
-##  8  0       0     0        0  1.88  0      0        1.88  0     0       0   
-##  9  0.15    0     0.46     0  0.61  0      0.3      0     0.92  0.76    0.76
-## 10  0.06    0.12  0.77     0  0.19  0.32   0.38     0     0.06  0       0   
-## # ... with 4,591 more rows, and 47 more variables: will &lt;dbl&gt;, people &lt;dbl&gt;,
-## #   report &lt;dbl&gt;, addresses &lt;dbl&gt;, free &lt;dbl&gt;, business &lt;dbl&gt;, email &lt;dbl&gt;,
-## #   you &lt;dbl&gt;, credit &lt;dbl&gt;, your &lt;dbl&gt;, font &lt;dbl&gt;, num000 &lt;dbl&gt;, money &lt;dbl&gt;,
-## #   hp &lt;dbl&gt;, hpl &lt;dbl&gt;, george &lt;dbl&gt;, num650 &lt;dbl&gt;, lab &lt;dbl&gt;, labs &lt;dbl&gt;,
-## #   telnet &lt;dbl&gt;, num857 &lt;dbl&gt;, data &lt;dbl&gt;, num415 &lt;dbl&gt;, num85 &lt;dbl&gt;,
-## #   technology &lt;dbl&gt;, num1999 &lt;dbl&gt;, parts &lt;dbl&gt;, pm &lt;dbl&gt;, direct &lt;dbl&gt;,
-## #   cs &lt;dbl&gt;, meeting &lt;dbl&gt;, original &lt;dbl&gt;, project &lt;dbl&gt;, re &lt;dbl&gt;,
-## #   edu &lt;dbl&gt;, table &lt;dbl&gt;, conference &lt;dbl&gt;, charSemicolon &lt;dbl&gt;,
-## #   charRoundbracket &lt;dbl&gt;, charSquarebracket &lt;dbl&gt;, charExclamation &lt;dbl&gt;,
-## #   charDollar &lt;dbl&gt;, charHash &lt;dbl&gt;, capitalAve &lt;dbl&gt;, capitalLong &lt;dbl&gt;,
-## #   capitalTotal &lt;dbl&gt;, type &lt;fct&gt;</code></pre>
+##     make address   all num3d   our  over remove internet order  mail
+##  * &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1  0       0.64  0.64     0  0.32  0      0        0     0     0   
+##  2  0.21    0.28  0.5      0  0.14  0.28   0.21     0.07  0     0.94
+##  3  0.06    0     0.71     0  1.23  0.19   0.19     0.12  0.64  0.25
+##  4  0       0     0        0  0.63  0      0.31     0.63  0.31  0.63
+##  5  0       0     0        0  0.63  0      0.31     0.63  0.31  0.63
+##  6  0       0     0        0  1.85  0      0        1.85  0     0   
+##  7  0       0     0        0  1.92  0      0        0     0     0.64
+##  8  0       0     0        0  1.88  0      0        1.88  0     0   
+##  9  0.15    0     0.46     0  0.61  0      0.3      0     0.92  0.76
+## 10  0.06    0.12  0.77     0  0.19  0.32   0.38     0     0.06  0   
+## # ... with 4,591 more rows, and 48 more variables: receive &lt;dbl&gt;,
+## #   will &lt;dbl&gt;, people &lt;dbl&gt;, report &lt;dbl&gt;, addresses &lt;dbl&gt;, free &lt;dbl&gt;,
+## #   business &lt;dbl&gt;, email &lt;dbl&gt;, you &lt;dbl&gt;, credit &lt;dbl&gt;, your &lt;dbl&gt;,
+## #   font &lt;dbl&gt;, num000 &lt;dbl&gt;, money &lt;dbl&gt;, hp &lt;dbl&gt;, hpl &lt;dbl&gt;,
+## #   george &lt;dbl&gt;, num650 &lt;dbl&gt;, lab &lt;dbl&gt;, labs &lt;dbl&gt;, telnet &lt;dbl&gt;,
+## #   num857 &lt;dbl&gt;, data &lt;dbl&gt;, num415 &lt;dbl&gt;, num85 &lt;dbl&gt;, technology &lt;dbl&gt;,
+## #   num1999 &lt;dbl&gt;, parts &lt;dbl&gt;, pm &lt;dbl&gt;, direct &lt;dbl&gt;, cs &lt;dbl&gt;,
+## #   meeting &lt;dbl&gt;, original &lt;dbl&gt;, project &lt;dbl&gt;, re &lt;dbl&gt;, edu &lt;dbl&gt;,
+## #   table &lt;dbl&gt;, conference &lt;dbl&gt;, charSemicolon &lt;dbl&gt;,
+## #   charRoundbracket &lt;dbl&gt;, charSquarebracket &lt;dbl&gt;,
+## #   charExclamation &lt;dbl&gt;, charDollar &lt;dbl&gt;, charHash &lt;dbl&gt;,
+## #   capitalAve &lt;dbl&gt;, capitalLong &lt;dbl&gt;, capitalTotal &lt;dbl&gt;, type &lt;fct&gt;</code></pre>
 <p>This dataset, created in the late 1990s at Hewlett-Packard Labs, contains 4601 emails, of which 1813 are considered spam. The remaining are not spam. (Which for simplicity, we might call, ham.) Additional details can be obtained by using <code>?spam</code> of by visiting the <a href="https://archive.ics.uci.edu/ml/datasets/spambase" target="_blank">UCI Machine Learning Repository</a>.</p>
 <p>The response variable, <code>type</code>, is a <strong>factor</strong> with levels that label each email as <code>spam</code> or <code>nonspam</code>. When fitting models, <code>nonspam</code> will be the reference level, <span class="math inline">\(Y = 0\)</span>, as it comes first alphabetically.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is.factor</span>(spam<span class="op">$</span>type)</code></pre>

@@ -434,7 +434,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
      <span class="dt">pch  =</span> <span class="dv">20</span>,
      <span class="dt">cex  =</span> <span class="dv">2</span>,
      <span class="dt">col  =</span> <span class="st">&quot;grey&quot;</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-158-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="slr_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Let’s now define some terminology. We have pairs of data, <span class="math inline">\((x_i, y_i)\)</span>, for <span class="math inline">\(i = 1, 2, \ldots n\)</span>, where <span class="math inline">\(n\)</span> is the sample size of the dataset.</p>
 <p>We use <span class="math inline">\(i\)</span> as an index, simply for notation. We use <span class="math inline">\(x_i\)</span> as the <strong>predictor</strong> (explanatory) variable. The predictor variable is used to help <em>predict</em> or explain the <strong>response</strong> (target, outcome) variable, <span class="math inline">\(y_i\)</span>.</p>
 <p>Other texts may use the term independent variable instead of predictor and dependent variable in place of response. However, those monikers imply mathematical characteristics that might not be true. While these other terms are not incorrect, independence is already a strictly defined concept in probability. For example, when trying to predict a person’s weight given their height, would it be accurate to say that height is independent of weight? Certainly not, but that is an unintended implication of saying “independent variable.” We prefer to stay away from this nomenclature.</p>
@@ -453,11 +453,11 @@ Y = f(X) + \epsilon.
 </ul>
 <p>What sort of function should we use for <span class="math inline">\(f(X)\)</span> for the <code>cars</code> data?</p>
 <p>We could try to model the data with a horizontal line. That is, the model for <span class="math inline">\(y\)</span> does not depend on the value of <span class="math inline">\(x\)</span>. (Some function <span class="math inline">\(f(X) = c\)</span>.) In the plot below, we see this doesn’t seem to do a very good job. Many of the data points are very far from the orange line representing <span class="math inline">\(c\)</span>. This is an example of <strong>underfitting</strong>. The obvious fix is to make the function <span class="math inline">\(f(X)\)</span> actually depend on <span class="math inline">\(x\)</span>.</p>
-<p><img src="applied_statistics_files/figure-html/underfit_plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="slr_files/figure-html/underfit_plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We could also try to model the data with a very “wiggly” function that tries to go through as many of the data points as possible. This also doesn’t seem to work very well. The stopping distance for a speed of 5 mph shouldn’t be off the chart! (Even in 1920.) This is an example of <strong>overfitting</strong>. (Note that in this example no function will go through every point, since there are some <span class="math inline">\(x\)</span> values that have several possible <span class="math inline">\(y\)</span> values in the data.)</p>
-<p><img src="applied_statistics_files/figure-html/overfit_plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="slr_files/figure-html/overfit_plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Lastly, we could try to model the data with a well chosen line rather than one of the two extremes previously attempted. The line on the plot below seems to summarize the relationship between stopping distance and speed quite well. As speed increases, the distance required to come to a stop increases. There is still some variation about this line, but it seems to capture the overall trend.</p>
-<p><img src="applied_statistics_files/figure-html/goodfit_plot-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="slr_files/figure-html/goodfit_plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>With this in mind, we would like to restrict our choice of <span class="math inline">\(f(X)\)</span> to <em>linear</em> functions of <span class="math inline">\(X\)</span>. We will write our model using <span class="math inline">\(\beta_1\)</span> for the slope, and <span class="math inline">\(\beta_0\)</span> for the intercept,</p>
 <p><span class="math display">\[
 Y = \beta_0 + \beta_1 X + \epsilon.
@@ -771,9 +771,9 @@ R2</code></pre>
 <pre><code>## [1] 0.6510794</code></pre>
 <p>For the <code>cars</code> example, we calculate <span class="math inline">\(R^2 = 0.65\)</span>. We then say that <span class="math inline">\(65\%\)</span> of the observed variability in stopping distance is explained by the linear relationship with speed.</p>
 <p>The following plots visually demonstrate the three “sums of squares” for a simulated dataset which has <span class="math inline">\(R^2 = 0.92\)</span> which is a somewhat high value. Notice in the final plot, that the orange arrows account for a larger proportion of the total arrow.</p>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-179-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="slr_files/figure-html/unnamed-chunk-26-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>The next plots again visually demonstrate the three “sums of squares,” this time for a simulated dataset which has <span class="math inline">\(R^2 = 0.19\)</span>. Notice in the final plot, that now the blue arrows account for a larger proportion of the total arrow.</p>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-181-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p><img src="slr_files/figure-html/unnamed-chunk-28-1.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="the-lm-function" class="section level2">
@@ -804,7 +804,7 @@ R2</code></pre>
      <span class="dt">cex  =</span> <span class="dv">2</span>,
      <span class="dt">col  =</span> <span class="st">&quot;grey&quot;</span>)
 <span class="kw">abline</span>(stop_dist_model, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-185-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="slr_files/figure-html/unnamed-chunk-32-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The <code>abline()</code> function is used to add lines of the form <span class="math inline">\(a + bx\)</span> to a plot. (Hence <strong><code>ab</code></strong><code>line</code>.) When we give it <code>stop_dist_model</code> as an argument, it automatically extracts the regression coefficient estimates (<span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>) and uses them as the slope and intercept of the line. Here we also use <code>lwd</code> to modify the width of the line, as well as <code>col</code> to modify the color of the line.</p>
 <p>The “thing” that is returned by the <code>lm()</code> function is actually an object of class <code>lm</code> which is a list. The exact details of this are unimportant unless you are seriously interested in the inner-workings of <code>R</code>, but know that we can determine the names of the elements of the list using the <code>names()</code> command.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(stop_dist_model)</code></pre>
@@ -813,58 +813,64 @@ R2</code></pre>
 ##  [9] &quot;xlevels&quot;       &quot;call&quot;          &quot;terms&quot;         &quot;model&quot;</code></pre>
 <p>We can then use this information to, for example, access the residuals using the <code>$</code> operator.</p>
 <pre class="sourceCode r"><code class="sourceCode r">stop_dist_model<span class="op">$</span>residuals</code></pre>
-<pre><code>##          1          2          3          4          5          6          7 
-##   3.849460  11.849460  -5.947766  12.052234   2.119825  -7.812584  -3.744993 
-##          8          9         10         11         12         13         14 
-##   4.255007  12.255007  -8.677401   2.322599 -15.609810  -9.609810  -5.609810 
-##         15         16         17         18         19         20         21 
-##  -1.609810  -7.542219   0.457781   0.457781  12.457781 -11.474628  -1.474628 
-##         22         23         24         25         26         27         28 
-##  22.525372  42.525372 -21.407036 -15.407036  12.592964 -13.339445  -5.339445 
-##         29         30         31         32         33         34         35 
-## -17.271854  -9.271854   0.728146 -11.204263   2.795737  22.795737  30.795737 
-##         36         37         38         39         40         41         42 
-## -21.136672 -11.136672  10.863328 -29.069080 -13.069080  -9.069080  -5.069080 
-##         43         44         45         46         47         48         49 
-##   2.930920  -2.933898 -18.866307  -6.798715  15.201285  16.201285  43.201285 
-##         50 
-##   4.268876</code></pre>
+<pre><code>##          1          2          3          4          5          6 
+##   3.849460  11.849460  -5.947766  12.052234   2.119825  -7.812584 
+##          7          8          9         10         11         12 
+##  -3.744993   4.255007  12.255007  -8.677401   2.322599 -15.609810 
+##         13         14         15         16         17         18 
+##  -9.609810  -5.609810  -1.609810  -7.542219   0.457781   0.457781 
+##         19         20         21         22         23         24 
+##  12.457781 -11.474628  -1.474628  22.525372  42.525372 -21.407036 
+##         25         26         27         28         29         30 
+## -15.407036  12.592964 -13.339445  -5.339445 -17.271854  -9.271854 
+##         31         32         33         34         35         36 
+##   0.728146 -11.204263   2.795737  22.795737  30.795737 -21.136672 
+##         37         38         39         40         41         42 
+## -11.136672  10.863328 -29.069080 -13.069080  -9.069080  -5.069080 
+##         43         44         45         46         47         48 
+##   2.930920  -2.933898 -18.866307  -6.798715  15.201285  16.201285 
+##         49         50 
+##  43.201285   4.268876</code></pre>
 <p>Another way to access stored information in <code>stop_dist_model</code> are the <code>coef()</code>, <code>resid()</code>, and <code>fitted()</code> functions. These return the coefficients, residuals, and fitted values, respectively.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(stop_dist_model)</code></pre>
 <pre><code>## (Intercept)       speed 
 ##  -17.579095    3.932409</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">resid</span>(stop_dist_model)</code></pre>
-<pre><code>##          1          2          3          4          5          6          7 
-##   3.849460  11.849460  -5.947766  12.052234   2.119825  -7.812584  -3.744993 
-##          8          9         10         11         12         13         14 
-##   4.255007  12.255007  -8.677401   2.322599 -15.609810  -9.609810  -5.609810 
-##         15         16         17         18         19         20         21 
-##  -1.609810  -7.542219   0.457781   0.457781  12.457781 -11.474628  -1.474628 
-##         22         23         24         25         26         27         28 
-##  22.525372  42.525372 -21.407036 -15.407036  12.592964 -13.339445  -5.339445 
-##         29         30         31         32         33         34         35 
-## -17.271854  -9.271854   0.728146 -11.204263   2.795737  22.795737  30.795737 
-##         36         37         38         39         40         41         42 
-## -21.136672 -11.136672  10.863328 -29.069080 -13.069080  -9.069080  -5.069080 
-##         43         44         45         46         47         48         49 
-##   2.930920  -2.933898 -18.866307  -6.798715  15.201285  16.201285  43.201285 
-##         50 
-##   4.268876</code></pre>
+<pre><code>##          1          2          3          4          5          6 
+##   3.849460  11.849460  -5.947766  12.052234   2.119825  -7.812584 
+##          7          8          9         10         11         12 
+##  -3.744993   4.255007  12.255007  -8.677401   2.322599 -15.609810 
+##         13         14         15         16         17         18 
+##  -9.609810  -5.609810  -1.609810  -7.542219   0.457781   0.457781 
+##         19         20         21         22         23         24 
+##  12.457781 -11.474628  -1.474628  22.525372  42.525372 -21.407036 
+##         25         26         27         28         29         30 
+## -15.407036  12.592964 -13.339445  -5.339445 -17.271854  -9.271854 
+##         31         32         33         34         35         36 
+##   0.728146 -11.204263   2.795737  22.795737  30.795737 -21.136672 
+##         37         38         39         40         41         42 
+## -11.136672  10.863328 -29.069080 -13.069080  -9.069080  -5.069080 
+##         43         44         45         46         47         48 
+##   2.930920  -2.933898 -18.866307  -6.798715  15.201285  16.201285 
+##         49         50 
+##  43.201285   4.268876</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fitted</span>(stop_dist_model)</code></pre>
-<pre><code>##         1         2         3         4         5         6         7         8 
-## -1.849460 -1.849460  9.947766  9.947766 13.880175 17.812584 21.744993 21.744993 
-##         9        10        11        12        13        14        15        16 
-## 21.744993 25.677401 25.677401 29.609810 29.609810 29.609810 29.609810 33.542219 
-##        17        18        19        20        21        22        23        24 
-## 33.542219 33.542219 33.542219 37.474628 37.474628 37.474628 37.474628 41.407036 
-##        25        26        27        28        29        30        31        32 
-## 41.407036 41.407036 45.339445 45.339445 49.271854 49.271854 49.271854 53.204263 
-##        33        34        35        36        37        38        39        40 
-## 53.204263 53.204263 53.204263 57.136672 57.136672 57.136672 61.069080 61.069080 
-##        41        42        43        44        45        46        47        48 
-## 61.069080 61.069080 61.069080 68.933898 72.866307 76.798715 76.798715 76.798715 
-##        49        50 
-## 76.798715 80.731124</code></pre>
+<pre><code>##         1         2         3         4         5         6         7 
+## -1.849460 -1.849460  9.947766  9.947766 13.880175 17.812584 21.744993 
+##         8         9        10        11        12        13        14 
+## 21.744993 21.744993 25.677401 25.677401 29.609810 29.609810 29.609810 
+##        15        16        17        18        19        20        21 
+## 29.609810 33.542219 33.542219 33.542219 33.542219 37.474628 37.474628 
+##        22        23        24        25        26        27        28 
+## 37.474628 37.474628 41.407036 41.407036 41.407036 45.339445 45.339445 
+##        29        30        31        32        33        34        35 
+## 49.271854 49.271854 49.271854 53.204263 53.204263 53.204263 53.204263 
+##        36        37        38        39        40        41        42 
+## 57.136672 57.136672 57.136672 61.069080 61.069080 61.069080 61.069080 
+##        43        44        45        46        47        48        49 
+## 61.069080 68.933898 72.866307 76.798715 76.798715 76.798715 76.798715 
+##        50 
+## 80.731124</code></pre>
 <p>An <code>R</code> function that is useful in many situations is <code>summary()</code>. We see that when it is called on our model, it returns a good deal of information. By the end of the course, you will know what every value here is used for. For now, you should immediately notice the coefficient estimates, and you may recognize the <span class="math inline">\(R^2\)</span> value we saw earlier.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(stop_dist_model)</code></pre>
 <pre><code>## 
@@ -919,53 +925,59 @@ s_e = \text{RSE} = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 \]</span></p>
 <p>Or we could calculate the fitted value for each of the original data points. We can simply supply the original data frame, <code>cars</code>, since it contains a variables called <code>speed</code> which has the values we would like to predict at.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(stop_dist_model, <span class="dt">newdata =</span> cars)</code></pre>
-<pre><code>##         1         2         3         4         5         6         7         8 
-## -1.849460 -1.849460  9.947766  9.947766 13.880175 17.812584 21.744993 21.744993 
-##         9        10        11        12        13        14        15        16 
-## 21.744993 25.677401 25.677401 29.609810 29.609810 29.609810 29.609810 33.542219 
-##        17        18        19        20        21        22        23        24 
-## 33.542219 33.542219 33.542219 37.474628 37.474628 37.474628 37.474628 41.407036 
-##        25        26        27        28        29        30        31        32 
-## 41.407036 41.407036 45.339445 45.339445 49.271854 49.271854 49.271854 53.204263 
-##        33        34        35        36        37        38        39        40 
-## 53.204263 53.204263 53.204263 57.136672 57.136672 57.136672 61.069080 61.069080 
-##        41        42        43        44        45        46        47        48 
-## 61.069080 61.069080 61.069080 68.933898 72.866307 76.798715 76.798715 76.798715 
-##        49        50 
-## 76.798715 80.731124</code></pre>
+<pre><code>##         1         2         3         4         5         6         7 
+## -1.849460 -1.849460  9.947766  9.947766 13.880175 17.812584 21.744993 
+##         8         9        10        11        12        13        14 
+## 21.744993 21.744993 25.677401 25.677401 29.609810 29.609810 29.609810 
+##        15        16        17        18        19        20        21 
+## 29.609810 33.542219 33.542219 33.542219 33.542219 37.474628 37.474628 
+##        22        23        24        25        26        27        28 
+## 37.474628 37.474628 41.407036 41.407036 41.407036 45.339445 45.339445 
+##        29        30        31        32        33        34        35 
+## 49.271854 49.271854 49.271854 53.204263 53.204263 53.204263 53.204263 
+##        36        37        38        39        40        41        42 
+## 57.136672 57.136672 57.136672 61.069080 61.069080 61.069080 61.069080 
+##        43        44        45        46        47        48        49 
+## 61.069080 68.933898 72.866307 76.798715 76.798715 76.798715 76.798715 
+##        50 
+## 80.731124</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># predict(stop_dist_model, newdata = data.frame(speed = cars$speed))</span></code></pre>
 <p>This is actually equivalent to simply calling <code>predict()</code> on <code>stop_dist_model</code> without a second argument.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(stop_dist_model)</code></pre>
-<pre><code>##         1         2         3         4         5         6         7         8 
-## -1.849460 -1.849460  9.947766  9.947766 13.880175 17.812584 21.744993 21.744993 
-##         9        10        11        12        13        14        15        16 
-## 21.744993 25.677401 25.677401 29.609810 29.609810 29.609810 29.609810 33.542219 
-##        17        18        19        20        21        22        23        24 
-## 33.542219 33.542219 33.542219 37.474628 37.474628 37.474628 37.474628 41.407036 
-##        25        26        27        28        29        30        31        32 
-## 41.407036 41.407036 45.339445 45.339445 49.271854 49.271854 49.271854 53.204263 
-##        33        34        35        36        37        38        39        40 
-## 53.204263 53.204263 53.204263 57.136672 57.136672 57.136672 61.069080 61.069080 
-##        41        42        43        44        45        46        47        48 
-## 61.069080 61.069080 61.069080 68.933898 72.866307 76.798715 76.798715 76.798715 
-##        49        50 
-## 76.798715 80.731124</code></pre>
+<pre><code>##         1         2         3         4         5         6         7 
+## -1.849460 -1.849460  9.947766  9.947766 13.880175 17.812584 21.744993 
+##         8         9        10        11        12        13        14 
+## 21.744993 21.744993 25.677401 25.677401 29.609810 29.609810 29.609810 
+##        15        16        17        18        19        20        21 
+## 29.609810 33.542219 33.542219 33.542219 33.542219 37.474628 37.474628 
+##        22        23        24        25        26        27        28 
+## 37.474628 37.474628 41.407036 41.407036 41.407036 45.339445 45.339445 
+##        29        30        31        32        33        34        35 
+## 49.271854 49.271854 49.271854 53.204263 53.204263 53.204263 53.204263 
+##        36        37        38        39        40        41        42 
+## 57.136672 57.136672 57.136672 61.069080 61.069080 61.069080 61.069080 
+##        43        44        45        46        47        48        49 
+## 61.069080 68.933898 72.866307 76.798715 76.798715 76.798715 76.798715 
+##        50 
+## 80.731124</code></pre>
 <p>Note that then in this case, this is the same as using <code>fitted()</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">fitted</span>(stop_dist_model)</code></pre>
-<pre><code>##         1         2         3         4         5         6         7         8 
-## -1.849460 -1.849460  9.947766  9.947766 13.880175 17.812584 21.744993 21.744993 
-##         9        10        11        12        13        14        15        16 
-## 21.744993 25.677401 25.677401 29.609810 29.609810 29.609810 29.609810 33.542219 
-##        17        18        19        20        21        22        23        24 
-## 33.542219 33.542219 33.542219 37.474628 37.474628 37.474628 37.474628 41.407036 
-##        25        26        27        28        29        30        31        32 
-## 41.407036 41.407036 45.339445 45.339445 49.271854 49.271854 49.271854 53.204263 
-##        33        34        35        36        37        38        39        40 
-## 53.204263 53.204263 53.204263 57.136672 57.136672 57.136672 61.069080 61.069080 
-##        41        42        43        44        45        46        47        48 
-## 61.069080 61.069080 61.069080 68.933898 72.866307 76.798715 76.798715 76.798715 
-##        49        50 
-## 76.798715 80.731124</code></pre>
+<pre><code>##         1         2         3         4         5         6         7 
+## -1.849460 -1.849460  9.947766  9.947766 13.880175 17.812584 21.744993 
+##         8         9        10        11        12        13        14 
+## 21.744993 21.744993 25.677401 25.677401 29.609810 29.609810 29.609810 
+##        15        16        17        18        19        20        21 
+## 29.609810 33.542219 33.542219 33.542219 33.542219 37.474628 37.474628 
+##        22        23        24        25        26        27        28 
+## 37.474628 37.474628 41.407036 41.407036 41.407036 45.339445 45.339445 
+##        29        30        31        32        33        34        35 
+## 49.271854 49.271854 49.271854 53.204263 53.204263 53.204263 53.204263 
+##        36        37        38        39        40        41        42 
+## 57.136672 57.136672 57.136672 61.069080 61.069080 61.069080 61.069080 
+##        43        44        45        46        47        48        49 
+## 61.069080 68.933898 72.866307 76.798715 76.798715 76.798715 76.798715 
+##        50 
+## 80.731124</code></pre>
 </div>
 <div id="maximum-likelihood-estimation-mle-approach" class="section level2">
 <h2><span class="header-section-number">7.5</span> Maximum Likelihood Estimation (MLE) Approach</h2>
@@ -1074,7 +1086,7 @@ epsilon =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt"
 <p>And look at that, they aren’t too far from the true parameters we specified!</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y_vals <span class="op">~</span><span class="st"> </span>x_vals)
 <span class="kw">abline</span>(sim_fit)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-203-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="slr_files/figure-html/unnamed-chunk-50-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We should say here, that we’re being sort of lazy, and not the good kinda of lazy that could be considered efficient. Any time you simulate data, you should consider doing two things: writing a function, and storing the data in a data frame.</p>
 <p>The function below, <code>sim_slr()</code>, can be used for the same task as above, but is much more flexible. Notice that we provide <code>x</code> to the function, instead of generating <code>x</code> inside the function. In the SLR model, the <span class="math inline">\(x_i\)</span> are considered known values. That is, they are not random, so we do not assume a distribution for the <span class="math inline">\(x_i\)</span>. Because of this, we will repeatedly use the same <code>x</code> values across all simulations.</p>
 <pre class="sourceCode r"><code class="sourceCode r">sim_slr =<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">beta_0 =</span> <span class="dv">10</span>, <span class="dt">beta_1 =</span> <span class="dv">5</span>, <span class="dt">sigma =</span> <span class="dv">1</span>) {
@@ -1112,7 +1124,7 @@ sim_data =<span class="st"> </span><span class="kw">sim_slr</span>(<span class="
 <span class="kw">abline</span>(beta_<span class="dv">0</span>, beta_<span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 <span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Estimate&quot;</span>, <span class="st">&quot;Truth&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">lwd =</span> <span class="dv">2</span>,
        <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>))</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-208-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="slr_files/figure-html/unnamed-chunk-55-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="history" class="section level2">
 <h2><span class="header-section-number">7.7</span> History</h2>

@@ -499,7 +499,7 @@ H_0: \mu_C = \mu_T \quad \text{vs} \quad H_1: \mu_C \neq \mu_T
 <p>Here we see that the subjects in the melatonin group sleep an average of about 1.5 hours longer than the control group. An hour and a half of sleep is certainly important!</p>
 <p>With a big enough sample size, we could make an effect size of say, four minutes statistically significant. Is it worth taking a pill every night to get an extra four minutes of sleep? (Probably not.)</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(sleep <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> melatonin, <span class="dt">col =</span> <span class="dv">5</span><span class="op">:</span><span class="dv">6</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-338-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="anova_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 <!-- TODO: other parametarization, explain identify -->
 </div>
 <div id="one-way-anova" class="section level2">
@@ -605,7 +605,7 @@ SSW = \sum_{i = i}^{g} \sum_{j = 1}^{n_i} (y_{ij} - \bar{y}_i)^2 = \sum_{i = i}^
 <!-- TODO: Do with ggplot2 and custom boxplots with show min, sd, mean, sd, max -->
 <p>Let’s see what this looks like in a few situations. In each of the following examples, we’ll consider sampling 20 observations (<span class="math inline">\(n_i = 20\)</span>) from three populations (groups).</p>
 <p>First, consider <span class="math inline">\(\mu_A = -5, \mu_B = 0, \mu_C = 5\)</span> with <span class="math inline">\(\sigma = 1\)</span>.</p>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-341-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="anova_files/figure-html/unnamed-chunk-8-1.png" width="960" style="display: block; margin: auto;" /></p>
 <p>The left panel shows the three normal distributions we are sampling from. The ticks along the <span class="math inline">\(x\)</span>-axis show the randomly sampled observations. The right panel, re-displays only the sampled values in a boxplot. Note that the mid-line of the boxes is usually the sample median. These boxplots have been modified to use the sample mean.</p>
 <p>Here the sample means vary a lot around the overall sample mean, which is the solid grey line on the right panel. Within the groups there is variability, but it is still obvious that the sample means are very different.</p>
 <p>As a result, we we obtain a <em>large</em> test statistic, thus <em>small</em> p-value.</p>
@@ -614,7 +614,7 @@ SSW = \sum_{i = i}^{g} \sum_{j = 1}^{n_i} (y_{ij} - \bar{y}_i)^2 = \sum_{i = i}^
 <li><span class="math inline">\(\text{p-value} = 1.6349862\times 10^{-33}\)</span></li>
 </ul>
 <p>Now consider <span class="math inline">\(\mu_A = 0, \mu_B = 0, \mu_C = 0\)</span> with <span class="math inline">\(\sigma = 1\)</span>. That is, equal means for the groups.</p>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-342-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="anova_files/figure-html/unnamed-chunk-9-1.png" width="960" style="display: block; margin: auto;" /></p>
 <p>Here the sample means vary only a tiny bit around the overall sample mean. Within the groups there is variability, this time much larger than the variability of the sample means.</p>
 <p>As a result, we we obtain a <em>small</em> test statistic, thus <em>large</em> p-value.</p>
 <ul>
@@ -625,17 +625,17 @@ SSW = \sum_{i = i}^{g} \sum_{j = 1}^{n_i} (y_{ij} - \bar{y}_i)^2 = \sum_{i = i}^
 <ul>
 <li><span class="math inline">\(\mu_A = -1, \mu_B = 0, \mu_C = 1, \sigma = 1\)</span></li>
 </ul>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-343-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="anova_files/figure-html/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>
 <ul>
 <li><span class="math inline">\(F = 16.4879492\)</span></li>
-<li><span class="math inline">\(\text{p-value} = 0.0000022\)</span></li>
+<li><span class="math inline">\(\text{p-value} = 2.2378806\times 10^{-6}\)</span></li>
 </ul>
 <p>Above, there isn’t obvious separation between the groups like the first example, but it is still obvious the means are different. Below, there is more noise. Visually it is somewhat hard to tell, but the test still suggests a difference of means. (At an <span class="math inline">\(\alpha\)</span> of 0.05.)</p>
 <ul>
 <li><span class="math inline">\(\mu_A = -1, \mu_B = 0, \mu_C = 1, \sigma = 2\)</span></li>
 <li><span class="math inline">\(n_i = 20\)</span> for each group.</li>
 </ul>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-344-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="anova_files/figure-html/unnamed-chunk-11-1.png" width="960" style="display: block; margin: auto;" /></p>
 <ul>
 <li><span class="math inline">\(F = 4.6256472\)</span></li>
 <li><span class="math inline">\(\text{p-value} = 0.0137529\)</span></li>
@@ -650,7 +650,7 @@ H_0: \mu_A = \mu_B = \mu_C = \mu_D
 <span class="kw">names</span>(coagulation)</code></pre>
 <pre><code>## [1] &quot;coag&quot; &quot;diet&quot;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(coag <span class="op">~</span><span class="st"> </span>diet, <span class="dt">data =</span> coagulation, <span class="dt">col =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">5</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-345-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="anova_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We first load the data and create the relevant boxplot. The plot alone suggests a difference of means. The <code>aov()</code> function is used to obtain the relevant sums of squares. Using the <code>summary()</code> function on the output from <code>aov()</code> creates the desired ANOVA table. (Without the unneeded row for total.)</p>
 <pre class="sourceCode r"><code class="sourceCode r">coag_aov =<span class="st"> </span><span class="kw">aov</span>(coag <span class="op">~</span><span class="st"> </span>diet, <span class="dt">data =</span> coagulation)
 coag_aov</code></pre>
@@ -665,9 +665,9 @@ coag_aov</code></pre>
 ## Residual standard error: 2.366432
 ## Estimated effects may be unbalanced</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(coag_aov)</code></pre>
-<pre><code>##             Df Sum Sq Mean Sq F value    Pr(&gt;F)    
-## diet         3    228    76.0   13.57 0.0000466 ***
-## Residuals   20    112     5.6                      
+<pre><code>##             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+## diet         3    228    76.0   13.57 4.66e-05 ***
+## Residuals   20    112     5.6                     
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Were we to run this experiment, we would have pre-specified a significance level. However, notice that the p-value of this test is incredibly low, so using any reasonable significance level we would reject the null hypothesis. Thus we believe the diets had an effect on blood coagulation time.</p>
@@ -732,7 +732,7 @@ sim_anova =<span class="st"> </span><span class="cf">function</span>(<span class
 f_stats =<span class="st"> </span><span class="kw">replicate</span>(<span class="dt">n =</span> <span class="dv">5000</span>, <span class="kw">sim_anova</span>(<span class="dt">stat =</span> <span class="ot">TRUE</span>))
 <span class="kw">hist</span>(f_stats, <span class="dt">breaks =</span> <span class="dv">100</span>, <span class="dt">prob =</span> <span class="ot">TRUE</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Empirical Distribution of F&quot;</span>)
 <span class="kw">curve</span>(<span class="kw">df</span>(x, <span class="dt">df1 =</span> <span class="dv">4</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">df2 =</span> <span class="dv">40</span> <span class="op">-</span><span class="st"> </span><span class="dv">4</span>), <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-349-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="anova_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="power" class="section level3">
 <h3><span class="header-section-number">12.3.3</span> Power</h3>
@@ -781,10 +781,10 @@ f_stats =<span class="st"> </span><span class="kw">replicate</span>(<span class=
 ## 
 ## data:  coag and diet 
 ## 
-##   A       B       C       
-## B 0.00380 -       -       
-## C 0.00018 0.15878 -       
-## D 1.00000 0.00086 0.000023
+##   A       B       C      
+## B 0.00380 -       -      
+## C 0.00018 0.15878 -      
+## D 1.00000 0.00086 2.3e-05
 ## 
 ## P value adjustment method: none</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># pairwise.t.test(coagulation$coag, coagulation$diet, p.adj = &quot;none&quot;)</span></code></pre>
@@ -852,7 +852,7 @@ f_stats =<span class="st"> </span><span class="kw">replicate</span>(<span class=
 <p>Based on these results, we see no difference between <code>A</code> and <code>D</code> as well as <code>B</code> and <code>C</code>. All other pairwise comparisons are significant. If you return to the original boxplot, these results should not be surprising.</p>
 <p>Also, nicely, we can easily produce a plot of these confidence intervals.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="kw">TukeyHSD</span>(coag_aov, <span class="dt">conf.level =</span> <span class="fl">0.95</span>))</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-357-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="anova_files/figure-html/unnamed-chunk-24-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The creator of this method, <a href="https://en.wikipedia.org/wiki/John_Tukey" target="_blank">John Tukey</a>, is an important figure in the history of data science. He essentially <a href="https://projecteuclid.org/euclid.aoms/1177704711" target="_blank">predicted the rise of data science over 50 years ago</a>. For some retrospective thoughts on those 50 years, see <a href="http://courses.csail.mit.edu/18.337/2015/docs/50YearsDataScience.pdf" target="_blank">this paper from David Donoho</a>.</p>
 </div>
 <div id="two-way-anova" class="section level2">
@@ -1012,7 +1012,7 @@ y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}.
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">with</span>(rats, <span class="kw">interaction.plot</span>(poison, treat, time, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>))
 <span class="kw">with</span>(rats, <span class="kw">interaction.plot</span>(treat, poison, time, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>))</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-359-1.png" width="1440" style="display: block; margin: auto;" /></p>
+<p><img src="anova_files/figure-html/unnamed-chunk-26-1.png" width="1440" style="display: block; margin: auto;" /></p>
 <p>If there is not interaction, thus an additive model, we would expect to see parallel lines. That would mean, when we change the level of one factor, there can be an effect on the response. However, the difference between the levels of the other factor should still be the same.</p>
 <p>The obvious indication of interaction would be lines that cross while heading in different directions. Here we don’t see that, but the lines aren’t strictly parallel, and there is some overlap on the right panel. However, is this interaction effect significant?</p>
 <p>Let’s fit each of the possible models, then investigate their estimates for each of the group means.</p>
@@ -1330,11 +1330,11 @@ H_0: \text{ All }\alpha_{i} = 0. \quad \text{vs} \quad H_1: \text{ Not all } \al
 <p class="caption">Model Hierarchy</p>
 </div>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">aov</span>(time <span class="op">~</span><span class="st"> </span>poison <span class="op">*</span><span class="st"> </span>treat, <span class="dt">data =</span> rats))</code></pre>
-<pre><code>##              Df Sum Sq Mean Sq F value      Pr(&gt;F)    
-## poison        2 1.0330  0.5165  23.222 0.000000333 ***
-## treat         3 0.9212  0.3071  13.806 0.000003777 ***
-## poison:treat  6 0.2501  0.0417   1.874       0.112    
-## Residuals    36 0.8007  0.0222                        
+<pre><code>##              Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+## poison        2 1.0330  0.5165  23.222 3.33e-07 ***
+## treat         3 0.9212  0.3071  13.806 3.78e-06 ***
+## poison:treat  6 0.2501  0.0417   1.874    0.112    
+## Residuals    36 0.8007  0.0222                     
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Using a significance level of <span class="math inline">\(\alpha = 0.05\)</span>, we see that the interaction is not significant. Within the additive model, both factors are significant, so we select the additive model.</p>
@@ -1366,7 +1366,7 @@ H_0: \text{ All }\alpha_{i} = 0. \quad \text{vs} \quad H_1: \text{ Not all } \al
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">with</span>(warpbreaks, <span class="kw">interaction.plot</span>(wool, tension, breaks, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>))
 <span class="kw">with</span>(warpbreaks, <span class="kw">interaction.plot</span>(tension, wool, breaks, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>))</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-374-1.png" width="1440" style="display: block; margin: auto;" /></p>
+<p><img src="anova_files/figure-html/unnamed-chunk-41-1.png" width="1440" style="display: block; margin: auto;" /></p>
 <p>Either plot makes it rather clear that the <code>wool</code> and <code>tensions</code> factors interact.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">aov</span>(breaks <span class="op">~</span><span class="st"> </span>wool <span class="op">*</span><span class="st"> </span>tension, <span class="dt">data =</span> warpbreaks))</code></pre>
 <pre><code>##              Df Sum Sq Mean Sq F value   Pr(&gt;F)    

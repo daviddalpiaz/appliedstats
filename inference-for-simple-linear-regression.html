@@ -455,7 +455,7 @@ s_e = \text{RSE} = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
      <span class="dt">cex  =</span> <span class="dv">2</span>,
      <span class="dt">col  =</span> <span class="st">&quot;grey&quot;</span>)
 <span class="kw">abline</span>(stop_dist_model, <span class="dt">lwd =</span> <span class="dv">5</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-210-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="slr-inf_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>To get started, we’ll note that there is another equivalent expression for <span class="math inline">\(S_{xy}\)</span> which we did not see last chapter,</p>
 <p><span class="math display">\[
 S_{xy}= \sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y}) = \sum_{i = 1}^{n}(x_i - \bar{x}) y_i.
@@ -632,7 +632,7 @@ beta_<span class="dv">1</span>_hats =<span class="st"> </span><span class="kw">r
      <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">1</span>]), <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 <span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> beta_<span class="dv">1</span>, <span class="dt">sd =</span> <span class="kw">sqrt</span>(var_beta_<span class="dv">1</span>_hat)), 
       <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-216-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="slr-inf_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>We then repeat the process for <span class="math inline">\(\hat{\beta}_0\)</span>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(beta_<span class="dv">0</span>_hats) <span class="co"># empirical mean</span></code></pre>
 <pre><code>## [1] 3.001147</code></pre>
@@ -646,7 +646,7 @@ beta_<span class="dv">1</span>_hats =<span class="st"> </span><span class="kw">r
      <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">0</span>]), <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 <span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> beta_<span class="dv">0</span>, <span class="dt">sd =</span> <span class="kw">sqrt</span>(var_beta_<span class="dv">0</span>_hat)),
       <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-218-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="slr-inf_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>In this simulation study, we have only simulated a finite number of samples. To truly verify the distributional results, we would need to observe an infinite number of samples. However, the following plot should make it clear that if we continued simulating, the empirical results would get closer and closer to what we should expect.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="co"># adjusted plot margins, otherwise the &quot;hat&quot; does not display</span>
 <span class="kw">plot</span>(<span class="kw">cumsum</span>(beta_<span class="dv">1</span>_hats) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(beta_<span class="dv">1</span>_hats)), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">5.95</span>, <span class="fl">6.05</span>),
@@ -654,14 +654,14 @@ beta_<span class="dv">1</span>_hats =<span class="st"> </span><span class="kw">r
      <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;Empirical Mean of &quot;</span> <span class="op">~</span><span class="st"> </span><span class="kw">hat</span>(beta)[<span class="dv">1</span>]),
      <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">6</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-219-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="slr-inf_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="co"># adjusted plot margins, otherwise the &quot;hat&quot; does not display</span>
 <span class="kw">plot</span>(<span class="kw">cumsum</span>(beta_<span class="dv">0</span>_hats) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(beta_<span class="dv">0</span>_hats)), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">2.95</span>, <span class="fl">3.05</span>),
      <span class="dt">xlab =</span> <span class="st">&quot;Number of Simulations&quot;</span>,
      <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;Empirical Mean of &quot;</span> <span class="op">~</span><span class="st"> </span><span class="kw">hat</span>(beta)[<span class="dv">0</span>]),
      <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-219-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="slr-inf_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
 </div>
 </div>
 <div id="standard-errors" class="section level2">
@@ -747,7 +747,7 @@ x =<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span
 <span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Distributions&quot;</span>,
        <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;t, df = 1&quot;</span>, <span class="st">&quot;t, df = 10&quot;</span>, <span class="st">&quot;Standard Normal&quot;</span>), 
        <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty=</span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-220-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="slr-inf_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 </div>
 <div id="confidence-intervals-for-slope-and-intercept" class="section level2">
 <h2><span class="header-section-number">8.4</span> Confidence Intervals for Slope and Intercept</h2>
@@ -920,7 +920,7 @@ Y_i = \beta_0 + \epsilon_i.
 \text{p-value} = 1.4898365\times 10^{-12}.
 \]</span></p>
 <p>With this extremely low p-value, we would reject the null hypothesis at any reasonable <span class="math inline">\(\alpha\)</span> level, say for example <span class="math inline">\(\alpha = 0.01\)</span>. So we say there is a significant <strong>linear</strong> relationship between speed and stopping distance. Notice that we emphasize <strong>linear</strong>.</p>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-228-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="slr-inf_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <p>In this plot of simulated data, we see a clear relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, however it is not a linear relationship. If we fit a line to this data, it is very flat. The resulting test for <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs <span class="math inline">\(H_1: \beta_1 \neq 0\)</span> gives a large p-value, in this case <span class="math inline">\(0.7564548\)</span>, so we would fail to reject and say that there is no significant linear relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. We will see later how to fit a curve to this data using a “linear” model, but for now, realize that testing <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs <span class="math inline">\(H_1: \beta_1 \neq 0\)</span> can only detect straight line relationships.</p>
 </div>
 <div id="confidence-intervals-in-r" class="section level3">
@@ -1053,7 +1053,7 @@ dist_pi_band =<span class="st"> </span><span class="kw">predict</span>(stop_dist
 <span class="kw">lines</span>(speed_grid, dist_pi_band[,<span class="st">&quot;lwr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">3</span>)
 <span class="kw">lines</span>(speed_grid, dist_pi_band[,<span class="st">&quot;upr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">3</span>)
 <span class="kw">points</span>(<span class="kw">mean</span>(cars<span class="op">$</span>speed), <span class="kw">mean</span>(cars<span class="op">$</span>dist), <span class="dt">pch =</span> <span class="st">&quot;+&quot;</span>, <span class="dt">cex =</span> <span class="dv">3</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-234-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="slr-inf_files/figure-html/unnamed-chunk-26-1.png" width="960" /></p>
 <p>Some things to notice:</p>
 <ul>
 <li>We use the <code>ylim</code> argument to stretch the <span class="math inline">\(y\)</span>-axis of the plot, since the bands extend further than the points.</li>
