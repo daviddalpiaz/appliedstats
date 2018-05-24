@@ -53,7 +53,7 @@ If you wish to use `<-`, you will still need to use `=`, however only for argume
 
 Because vectors must contain elements that are all the same type, `R` will automatically coerce to a single type when attempting to create a vector that combines multiple types.
 
-```{r}
+```{r results = 'hold'}
 c(42, "Statistics", TRUE)
 c(42, TRUE)
 ```
@@ -111,7 +111,9 @@ c(x, rep(seq(1, 9, 2), 3), c(1, 2, 3), 42, 2:4)
 
 The length of a vector can be obtained with the `length()` function.
 
-```{r}
+```{r results = 'hold'}
+x = c(1, 3, 5, 7, 8, 9)
+y = 1:100
 length(x)
 length(y)
 ```
@@ -120,35 +122,32 @@ length(y)
 
 To subset a vector, we use square brackets, `[]`. 
 
-```{r}
-x
+```{r results = 'hold'}
+x = c(1, 3, 5, 7, 8, 9)
 x[1]
 x[3]
 ```
 
-We see that `x[1]` returns the first element, and `x[3]` returns the third element.
+We see that `x[1]` returns the first element, and `x[3]` returns the third element.  We can also exclude certain indexes, in this case the second element.
 
 ```{r}
+x = c(1, 3, 5, 7, 8, 9)
 x[-2]
-```
-
-We can also exclude certain indexes, in this case the second element.
-
-```{r}
-x[1:3]
-x[c(1,3,4)]
 ```
 
 Lastly we see that we can subset based on a vector of indices.
 
-All of the above are subsetting a vector using a vector of indexes. (Remember a single number is still a vector.) We could instead use a vector of logical values.
-
-```{r}
-z = c(TRUE, TRUE, FALSE, TRUE, TRUE, FALSE)
-z
+```{r, results = 'hold'}
+x = c(1, 3, 5, 7, 8, 9)
+x[1:3]
+x[c(1,3,4)]
 ```
 
+All of the above are subsetting a vector using a vector of indexes. (Remember a single number is still a vector.) We could instead use a vector of logical values. This can be used to subset a vector.
+
 ```{r}
+x = c(1, 3, 5, 7, 8, 9)
+z = c(TRUE, TRUE, FALSE, TRUE, TRUE, FALSE)
 x[z]
 ```
 
@@ -156,17 +155,40 @@ x[z]
 
 One of the biggest strengths of `R` is its use of vectorized operations. (Frequently the lack of understanding of this concept leads of a belief that `R` is *slow*. `R` is not the fastest language, but it has a reputation for being slower than it really is.)
 
+We can add 1 to every element of a vector.
+
 ```{r}
 x = 1:10
 x + 1
+```
+
+We can multiply every element of a vector by 2.
+
+```{r}
+x = 1:10
 2 * x
+```
+
+We can exponentiate 2 by ever element. 
+
+```{r}
+x = 1:10
 2 ^ x
-sqrt(x)
+```
+
+We see that when a function like `log()` is called on a vector `x`, a vector is returned which has applied the natural log to each element of the vector  `x`.
+
+```{r}
+x = 1:10
 log(x)
 ```
 
-We see that when a function like `log()` is called on a vector `x`, a vector is returned which has applied the function to each element of the vector  `x`.
+Another such function is `sqrt()`.
 
+```{r}
+x = 1:10
+sqrt(x)
+```
 
 ### Logical Operators
 
@@ -182,93 +204,175 @@ We see that when a function like `log()` is called on a vector `x`, a vector is 
 | `x | y`  | `x` or `y`                       | `(3 > 42) | TRUE`      | `r (3 > 42) | TRUE`      |
 | `x & y`  | `x` and `y`                      | `(3 < 4) & ( 42 > 13)` | `r (3 < 4) & ( 42 > 13)` |
 
-In `R`, logical operators are vectorized. 
+In `R`, logical operators are vectorized. The following operation returns a logical that is `TRUE` for elements that are greater than 3.
 
 ```{r}
 x = c(1, 3, 5, 7, 8, 9)
+x > 3
 ```
 
+The following returns a logical that is `TRUE` for elements that are less than 3.
+
 ```{r}
-x > 3
+x = c(1, 3, 5, 7, 8, 9)
 x < 3
+```
+
+The following returns a logical that is `TRUE` for elements that are equal to 3.
+
+```{r}
+x = c(1, 3, 5, 7, 8, 9)
 x == 3
+```
+
+The following returns a logical that is `TRUE` for elements that are not equal to 3.
+
+```{r}
+x = c(1, 3, 5, 7, 8, 9)
 x != 3
 ```
 
-```{r}
+We can also combine logical vectors with boolean operators.
+
+```{r results = 'hold'}
 x == 3 & x != 3
 x == 3 | x != 3
 ```
 
 This is extremely useful for subsetting.
 
-```{r}
+```{r results = 'hold'}
+x = c(1, 3, 5, 7, 8, 9)
 x[x > 3]
 x[x != 3]
 ```
 
-- TODO: coercion
+If you call a function with the wrong type, R will attempt to convert it to the correct type and continue. This process is known as **type coercion**. For example, suppose we wanted to know the number of entries greater than three in the vector `x`.
 
 ```{r}
+x = c(1, 3, 5, 7, 8, 9)
 sum(x > 3)
-as.numeric(x > 3)
 ```
 
-Here we see that using the `sum()` function on a vector of logical `TRUE` and `FALSE` values that is the result of `x > 3` results in a numeric result. `R` is first automatically coercing the logical to numeric where `TRUE` is `1` and `FALSE` is `0`. This coercion from logical to numeric happens for most mathematical operations.
+Here we see that using the `sum()` function on a vector of logical `TRUE` and `FALSE` values that is the result of `x > 3` results in a numeric result. `R` is first automatically coercing the logical to numeric where `TRUE` is `1` and `FALSE` is `0`. This coercion from logical to numeric happens for most mathematical operations. Under the hood, something akin to the following is happening.
 
 ```{r}
-which(x > 3)
-x[which(x > 3)]
+x = c(1, 3, 5, 7, 8, 9)
+temp = as.numeric(x > 3)
+sum(temp)
+```
 
+The `which` function is useful for extracting out all of the index values from a vector where a logical evaluates to `TRUE`. 
+
+```{r}
+x = c(1, 3, 5, 7, 8, 9)
+which(x > 3)
+```
+
+These indicies can, in turn, be used to lookup values in the original vector.
+
+```{r}
+x = c(1, 3, 5, 7, 8, 9)
+x[which(x > 3)]
+```
+
+Often times we want to know the largest element in a vector. The `max` function is useful for that.
+
+```{r}
+x = c(1, 3, 5, 7, 8, 9)
 max(x)
+```
+
+This can be combined with `which` to find index where the maximum value occurs.
+
+```{r}
+x = c(1, 3, 5, 7, 8, 9)
 which(x == max(x))
+```
+
+Alternatively, the `which.max` returns the index with the maximum value straight away.
+
+```{r}
+x = c(1, 3, 5, 7, 8, 9)
 which.max(x)
 ```
 
+Similar functions `min` and `which.min` are also available.
+
 ### More Vectorization
+
+In addition to coercing arguments to the right type, `R` also expands vectors to the correct length. We have seen this already. For example, the following operations are equivalent.
+
+```{r results = 'hold'}
+x = c(1, 3, 5, 7, 8, 9)
+x + 2
+x + c(2, 2, 2, 2, 2, 2)
+x + rep(2, 6)
+```
+
+These operations are also equivalent.
+
+```{r results = 'hold'}
+x = c(1, 3, 5, 7, 8, 9)
+x > 3
+x > c(3, 3, 3, 3, 3, 3)
+x > rep(3, 6)
+```
+
+What about when the vector lengths are different? `R` handles this too but issues a warning when the lengths are not multiples of one another.
 
 ```{r}
 x = c(1, 3, 5, 7, 8, 9)
 y = 1:100
-```
-
-```{r}
-x + 2
-x + rep(2, 6)
-```
-
-```{r}
-x > 3
-x > rep(3, 6)
-```
-
-```{r}
 x + y
+```
+
+Again, the warning is because of the lengths of the vectors being used are not multiples of one another.
+
+```{r results = 'hold'}
 length(x)
 length(y)
 length(y) / length(x)
+```
+
+Likewise, this will generate a warning.
+
+```{r}
 (x + y) - y
 ```
 
+If the lengths are multiples of each other, no warning is issued. For example:
+
 ```{r}
+x = c(1, 3, 5, 7, 8, 9)
 y = 1:60
 x + y
+```
+
+No warning because `y` is an even multiple of `x`.
+
+```{r}
 length(y) / length(x)
 ```
 
+The expansion can happen on both the left-hand side and right-hand side of the operation.
+
 ```{r}
+x = c(1, 3, 5, 7, 8, 9)
+y = 1:60
 rep(x, 10) + y
 ```
 
-```{r}
+Using the `all` or `identical` functions we can check that, indeed, both left-hand side expansion and right-hand side expansion are the same.
+
+```{r results = 'hold'}
+x = c(1, 3, 5, 7, 8, 9)
+y = 1:60
 all(x + y == rep(x, 10) + y)
 identical(x + y, rep(x, 10) + y)
 ```
 
-```{r}
-# ?any
-# ?all.equal
-```
+The `any` and `all.equal` functions will also be useful to have in our toolbox. The former returns `TRUE` if *any* of the elements evaluate to `TRUE` in a vector. The latter checks the equivalence of two vector but leaves room for some numerical error in the form of an optional `tolerance` parameter. 
 
 ### Matrices
 
@@ -278,7 +382,6 @@ Matrices can be created using the `matrix` function.
 
 ```{r}
 x = 1:9
-x
 X = matrix(x, nrow = 3, ncol = 3)
 X
 ```
@@ -321,15 +424,19 @@ X[2, c(1, 3)]
 
 Matrices can also be created by combining vectors as columns, using `cbind`, or combining vectors as rows, using `rbind`.
 
-```{r}
+```{r results = 'hold'}
 x = 1:9
 rev(x)
 rep(1, 9)
 ```
 
+Here we bind by row.
+
 ```{r}
 rbind(x, rev(x), rep(1, 9))
 ```
+
+Here we bind by column.
 
 ```{r}
 cbind(col_1 = x, col_2 = rev(x), col_3 = rep(1, 9))
@@ -342,10 +449,8 @@ When using `rbind` and `cbind` you can specify "argument" names that will be use
 ```{r}
 x = 1:9
 y = 9:1
-X = matrix(x, 3, 3)
-Y = matrix(y, 3, 3)
-X
-Y
+(X = matrix(x, 3, 3))
+(Y = matrix(y, 3, 3))
 ```
 
 ```{r}
@@ -654,7 +759,7 @@ mpg$hwy
 
 We can use the `dim()`, `nrow()` and `ncol()` functions to obtain information about the dimension of the data frame.
 
-```{r}
+```{r results = 'hold'}
 dim(mpg)
 nrow(mpg)
 ncol(mpg)
@@ -807,7 +912,7 @@ power_of_num = function(num, power = 2) {
 
 Let's look at a number of ways that we could run this function to perform the operation `10^2` resulting in `100`.
 
-```{r}
+```{r results = 'hold'}
 power_of_num(10)
 power_of_num(10, 2)
 power_of_num(num = 10, power = 2)
@@ -848,7 +953,7 @@ get_var = function(x, biased = FALSE) {
 }
 ```
 
-```{r}
+```{r results = 'hold'}
 get_var(test_sample)
 get_var(test_sample, biased = FALSE)
 var(test_sample)
