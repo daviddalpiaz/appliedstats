@@ -1,5 +1,9 @@
 # Variable Selection and Model Building
 
+```{r selection_opts, include = FALSE}
+knitr::opts_chunk$set(cache = TRUE, autodep = TRUE, fig.align = "center")
+```
+
 > "Choose well. Your choice is brief, and yet endless."
 >
 > --- **Johann Wolfgang von Goethe**
@@ -669,3 +673,11 @@ If we **only** care about prediction, we don't need to worry about correlation v
 If a variable is correlated with the response, it doesn't actually matter if it causes an effect on the response, it can still be useful for prediction. For example, in elementary school aged children their shoe size certainly doesn't *cause* them to read at a higher level, however we could very easily use shoe size to make a prediction about a child's reading ability. The larger their shoe size, the better they read. There's a lurking variable here though, their age! (Don't send your kids to school with size 14 shoes, it won't make them read better!)
 
 We also don't care about model assumptions. Least squares is least squares. For a specified model, it will find the values of the parameters which will minimize the squared error loss. Your results might be largely uninterpretable and useless for inference, but for prediction none of that matters.
+
+## `R` Markdown
+
+The `R` Markdown file for this chapter can be found here:
+
+- [`selection.Rmd`](selection.Rmd){target="_blank"}
+
+The file was created using `R` version ``r paste0(version$major, "." ,version$minor)``.

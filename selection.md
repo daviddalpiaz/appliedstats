@@ -1,5 +1,7 @@
 # Variable Selection and Model Building
 
+
+
 > "Choose well. Your choice is brief, and yet endless."
 >
 > --- **Johann Wolfgang von Goethe**
@@ -173,7 +175,9 @@ lines(xplot, predict(fit_big, newdata = data.frame(x = xplot)),
       col = "darkorange", lwd = 2, lty = 2)
 ```
 
-![](selection_files/figure-latex/unnamed-chunk-4-1.pdf)<!-- --> 
+
+
+\begin{center}\includegraphics{selection_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 We can see that the solid blue curve models this data rather nicely. The dashed orange curve fits the points better, making smaller errors, however it is unlikely that it is correctly modeling the true relationship between $x$ and $y$. It is fitting the random noise. This is an example of **overfitting**.
 
@@ -267,7 +271,9 @@ lines(xplot, predict(fit_big_removed, newdata = data.frame(x = xplot)),
       col = "darkorange", lwd = 2, lty = 2)
 ```
 
-![](selection_files/figure-latex/unnamed-chunk-8-1.pdf)<!-- --> 
+
+
+\begin{center}\includegraphics{selection_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
 We see that on average, the solid blue line for the quadratic model has similar errors as before. It has changed very slightly. However, the dashed orange line for the large model, has a huge error at the point that was removed and is much different that the previous fit.
 
@@ -1099,7 +1105,9 @@ plot(hipcenter_mod_aic ~ I(2:p), ylab = "AIC", xlab = "p, number of parameters",
      main = "AIC vs Model Complexity")
 ```
 
-![](selection_files/figure-latex/unnamed-chunk-36-1.pdf)<!-- --> 
+
+
+\begin{center}\includegraphics{selection_files/figure-latex/unnamed-chunk-36-1} \end{center}
 
 We could easily repeat this process for $\text{BIC}$.
 
@@ -1220,7 +1228,9 @@ Recall that we have two factor variables, `cyl` and `domestic`. The `cyl` variab
 pairs(autompg, col = "dodgerblue")
 ```
 
-![](selection_files/figure-latex/unnamed-chunk-43-1.pdf)<!-- --> 
+
+
+\begin{center}\includegraphics{selection_files/figure-latex/unnamed-chunk-43-1} \end{center}
 
 We'll use the `pairs()` plot to determine which variables may benefit from a quadratic relationship with the response. We'll also consider all possible two-way interactions. We won't consider any three-order or higher. For example, we won't consider the interaction between first-order terms and the added quadratic terms.
 
@@ -1398,7 +1408,9 @@ Just because two variable are correlated does not necessarily mean that one caus
 plot(mpg ~ hp, data = autompg, col = "dodgerblue", pch = 20, cex = 1.5)
 ```
 
-![](selection_files/figure-latex/unnamed-chunk-52-1.pdf)<!-- --> 
+
+
+\begin{center}\includegraphics{selection_files/figure-latex/unnamed-chunk-52-1} \end{center}
 
 Does an increase in horsepower cause a drop in fuel efficiency? Or, perhaps the causality is reversed and an increase in fuel efficiency cause a decrease in horsepower. Or, perhaps there is a third variable that explains both!
 
@@ -1417,3 +1429,11 @@ If we **only** care about prediction, we don't need to worry about correlation v
 If a variable is correlated with the response, it doesn't actually matter if it causes an effect on the response, it can still be useful for prediction. For example, in elementary school aged children their shoe size certainly doesn't *cause* them to read at a higher level, however we could very easily use shoe size to make a prediction about a child's reading ability. The larger their shoe size, the better they read. There's a lurking variable here though, their age! (Don't send your kids to school with size 14 shoes, it won't make them read better!)
 
 We also don't care about model assumptions. Least squares is least squares. For a specified model, it will find the values of the parameters which will minimize the squared error loss. Your results might be largely uninterpretable and useless for inference, but for prediction none of that matters.
+
+## `R` Markdown
+
+The `R` Markdown file for this chapter can be found here:
+
+- [`selection.Rmd`](selection.Rmd){target="_blank"}
+
+The file was created using `R` version `3.5.0`.

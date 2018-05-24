@@ -1,5 +1,7 @@
 # Logistic Regression
 
+
+
 **Note to current readers:** This chapter is slightly less tested than previous chapters. Please do not hesitate to report any errors, or suggest sections that need better explanation! Also, as a result, this material is more likely to receive edits.
 
 After reading this chapter you will be able to:
@@ -309,7 +311,9 @@ legend("topleft", c("Ordinary", "Logistic", "Data"), lty = c(1, 2, 0),
        pch = c(NA, NA, 20), lwd = 2, col = c("darkorange", "dodgerblue", "black"))
 ```
 
-![](logistic_files/figure-latex/unnamed-chunk-7-1.pdf)<!-- --> 
+
+
+\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
 Since we only have a single predictor variable, we are able to graphically show this situation. First, note that the data, is plotted using black dots. The response `y` only takes values `0` and `1`.
 
@@ -393,7 +397,9 @@ legend("bottomleft", c("Estimated Probability", "Data"), lty = c(2, 0),
        pch = c(NA, 20), lwd = 2, col = c("dodgerblue", "black"))
 ```
 
-![](logistic_files/figure-latex/unnamed-chunk-11-1.pdf)<!-- --> 
+
+
+\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 We see that this time, as $x$ increases, $p({\bf x})$ decreases.
 
@@ -444,7 +450,9 @@ legend("bottomleft", c("Prob", "Data"), lty = c(2, 0),
        pch = c(NA, 20), lwd = 2, col = c("dodgerblue", "black"))
 ```
 
-![](logistic_files/figure-latex/unnamed-chunk-15-1.pdf)<!-- --> 
+
+
+\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-15-1} \end{center}
 
 ## Working with Logistic Regression
 
@@ -593,7 +601,9 @@ curve(predict(chd_mod_ldl, data.frame(ldl = x), type = "response"),
       add = TRUE, col = "dodgerblue", lty = 2)
 ```
 
-![](logistic_files/figure-latex/unnamed-chunk-18-1.pdf)<!-- --> 
+
+
+\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
 As before, we plot the data in addition to the estimated probabilities. Note that we have "jittered" the data to make it easier to visualize, but the data do only take values `0` and `1`.
 
@@ -1390,3 +1400,11 @@ While this is far fewer false positives, is it acceptable though? Still probably
 This chapter has provided a rather quick introduction to classification, and thus, machine learning. For a more complete coverage of machine learning, [An Introduction to Statistical Learning](http://www-bcf.usc.edu/~gareth/ISL/){target="_blank"} is a highly recommended resource. Additionally, [`R` for Statistical Learning](https://daviddalpiaz.github.io/r4sl/){target="_blank"} has been written as a supplement which provides additional detail on how to perform these methods using `R`. The [classification](https://daviddalpiaz.github.io/r4sl/classification-overview.html){target="_blank"} and [logistic regression](https://daviddalpiaz.github.io/r4sl/logistic-regression.html){target="_blank"} chapters might be useful.
 
 We should note that the code to perform classification using logistic regression is presented in a way that illustrates the concepts to the reader. In practice, you may to prefer to use a more general machine learning pipeline such as [`caret`](http://topepo.github.io/caret/index.html){target="_blank"} in `R`. This will streamline processes for creating predictions and generating evaluation metrics.
+
+## `R` Markdown
+
+The `R` Markdown file for this chapter can be found here:
+
+- [`logistic.Rmd`](logistic.Rmd){target="_blank"}
+
+The file was created using `R` version `3.5.0`.

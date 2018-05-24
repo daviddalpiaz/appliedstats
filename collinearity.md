@@ -1,5 +1,7 @@
 # Collinearity
 
+
+
 > "If I look confused it is because I am thinking."
 >
 > --- **Samuel Goldwyn**
@@ -158,7 +160,9 @@ library(faraway)
 pairs(seatpos, col = "dodgerblue")
 ```
 
-![](collinearity_files/figure-latex/unnamed-chunk-8-1.pdf)<!-- --> 
+
+
+\begin{center}\includegraphics{collinearity_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
 ```r
 round(cor(seatpos), 2)
@@ -318,7 +322,9 @@ plot(fitted(hip_model), fitted(hip_model_noise), col = "dodgerblue", pch = 20,
 abline(a = 0, b = 1, col = "darkorange", lwd = 2)
 ```
 
-![](collinearity_files/figure-latex/unnamed-chunk-14-1.pdf)<!-- --> 
+
+
+\begin{center}\includegraphics{collinearity_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
 We see that by plotting the predicted values using both models against each other, they are actually rather similar. 
 
@@ -423,7 +429,9 @@ abline(lm(resid(hip_model_small) ~ resid(ht_shoes_model_small)),
        col = "darkorange", lwd = 2)
 ```
 
-![](collinearity_files/figure-latex/unnamed-chunk-19-1.pdf)<!-- --> 
+
+
+\begin{center}\includegraphics{collinearity_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
 Here the variable added plot shows almost no linear relationship. This tells us that adding `HtShoes` to the model would probably not be worthwhile. Since its variation is largely explained by the other predictors, adding it to the model will not do much to improve the model. However it will increase the variation of the estimates and make the model much harder to interpret.
 
@@ -573,7 +581,9 @@ hist(beta_hat_good[, 1],
      breaks = 20)
 ```
 
-![](collinearity_files/figure-latex/unnamed-chunk-30-1.pdf)<!-- --> 
+
+
+\begin{center}\includegraphics{collinearity_files/figure-latex/unnamed-chunk-30-1} \end{center}
 
 First, for $\beta_1$, which has a true value of $3$, we see that both with and without collinearity, the simulated values are centered near $3$.
 
@@ -630,7 +640,9 @@ hist(beta_hat_good[, 2],
      breaks = 20)
 ```
 
-![](collinearity_files/figure-latex/unnamed-chunk-33-1.pdf)<!-- --> 
+
+
+\begin{center}\includegraphics{collinearity_files/figure-latex/unnamed-chunk-33-1} \end{center}
 
 We see the same issues with $\beta_2$. On average the estimates are correct, but the variance is again much larger with collinearity.
 
@@ -683,7 +695,9 @@ hist(mse_good,
      xlab = "MSE")
 ```
 
-![](collinearity_files/figure-latex/unnamed-chunk-36-1.pdf)<!-- --> 
+
+
+\begin{center}\includegraphics{collinearity_files/figure-latex/unnamed-chunk-36-1} \end{center}
 
 Interestingly, in both cases, the MSE is roughly the same on average. Again, this is because collinearity effects a model's ability to *explain*, but not predict.
 
@@ -703,3 +717,11 @@ mean(mse_good)
 ```
 ## [1] 17.70513
 ```
+
+## `R` Markdown
+
+The `R` Markdown file for this chapter can be found here:
+
+- [`collinearity.Rmd`](collinearity.Rmd){target="_blank"}
+
+The file was created using `R` version `3.5.0`.

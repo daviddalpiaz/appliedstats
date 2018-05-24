@@ -320,6 +320,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="15.2.1" data-path="collinearity.html"><a href="collinearity.html#variance-inflation-factor."><i class="fa fa-check"></i><b>15.2.1</b> Variance Inflation Factor.</a></li>
 </ul></li>
 <li class="chapter" data-level="15.3" data-path="collinearity.html"><a href="collinearity.html#simulation-2"><i class="fa fa-check"></i><b>15.3</b> Simulation</a></li>
+<li class="chapter" data-level="15.4" data-path="collinearity.html"><a href="collinearity.html#r-markdown-3"><i class="fa fa-check"></i><b>15.4</b> <code>R</code> Markdown</a></li>
 </ul></li>
 <li class="chapter" data-level="16" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html"><i class="fa fa-check"></i><b>16</b> Variable Selection and Model Building</a><ul>
 <li class="chapter" data-level="16.1" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#quality-criterion"><i class="fa fa-check"></i><b>16.1</b> Quality Criterion</a><ul>
@@ -339,6 +340,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="16.4.1" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#explanation-1"><i class="fa fa-check"></i><b>16.4.1</b> Explanation</a></li>
 <li class="chapter" data-level="16.4.2" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#prediction-1"><i class="fa fa-check"></i><b>16.4.2</b> Prediction</a></li>
 </ul></li>
+<li class="chapter" data-level="16.5" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#r-markdown-4"><i class="fa fa-check"></i><b>16.5</b> <code>R</code> Markdown</a></li>
 </ul></li>
 <li class="chapter" data-level="17" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>17</b> Logistic Regression</a><ul>
 <li class="chapter" data-level="17.1" data-path="logistic-regression.html"><a href="logistic-regression.html#generalized-linear-models"><i class="fa fa-check"></i><b>17.1</b> Generalized Linear Models</a></li>
@@ -357,6 +359,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="17.4.1" data-path="logistic-regression.html"><a href="logistic-regression.html#spam-example"><i class="fa fa-check"></i><b>17.4.1</b> <code>spam</code> Example</a></li>
 <li class="chapter" data-level="17.4.2" data-path="logistic-regression.html"><a href="logistic-regression.html#evaluating-classifiers"><i class="fa fa-check"></i><b>17.4.2</b> Evaluating Classifiers</a></li>
 </ul></li>
+<li class="chapter" data-level="17.5" data-path="logistic-regression.html"><a href="logistic-regression.html#r-markdown-5"><i class="fa fa-check"></i><b>17.5</b> <code>R</code> Markdown</a></li>
 </ul></li>
 <li class="chapter" data-level="18" data-path="beyond.html"><a href="beyond.html"><i class="fa fa-check"></i><b>18</b> Beyond</a><ul>
 <li class="chapter" data-level="18.1" data-path="beyond.html"><a href="beyond.html#whats-next"><i class="fa fa-check"></i><b>18.1</b> What’s Next</a></li>
@@ -680,7 +683,7 @@ fit_glm =<span class="st"> </span><span class="kw">glm</span>(y <span class="op"
       <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
 <span class="kw">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Ordinary&quot;</span>, <span class="st">&quot;Logistic&quot;</span>, <span class="st">&quot;Data&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>), 
        <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">20</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</code></pre>
-<p><img src="logistic_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="logistic_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Since we only have a single predictor variable, we are able to graphically show this situation. First, note that the data, is plotted using black dots. The response <code>y</code> only takes values <code>0</code> and <code>1</code>.</p>
 <p>Next, we need to discuss the two added lines to the plot. The first, the solid orange line, is the fitted ordinary linear regression.</p>
 <p>The dashed blue curve is the estimated logistic regression. It is helpful to realize that we are not plotting an estimate of <span class="math inline">\(Y\)</span> for either. (Sometimes it might seem that way with ordinary linear regression, but that isn’t what is happening.) For both, we are plotting <span class="math inline">\(\hat{\text{E}}[Y \mid {\bf X} = {\bf x}]\)</span>, the estimated mean, which for a binary response happens to be an estimate of <span class="math inline">\(P[Y = 1 \mid {\bf X} = {\bf x}]\)</span>.</p>
@@ -726,7 +729,7 @@ example_data =<span class="st"> </span><span class="kw">sim_logistic_data</span>
       <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
 <span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Estimated Probability&quot;</span>, <span class="st">&quot;Data&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">0</span>), 
        <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">20</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</code></pre>
-<p><img src="logistic_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="logistic_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We see that this time, as <span class="math inline">\(x\)</span> increases, <span class="math inline">\(p({\bf x})\)</span> decreases.</p>
 <p>Now let’s look at an example where the estimated probability doesn’t always simply increase or decrease. Much like ordinary linear regression, the linear combination of predictors can contain transformations of predictors (in this case a quadratic term) and interactions.</p>
 <pre class="sourceCode r"><code class="sourceCode r">sim_quadratic_logistic_data =<span class="st"> </span><span class="cf">function</span>(<span class="dt">sample_size =</span> <span class="dv">25</span>) {
@@ -755,7 +758,7 @@ example_data =<span class="st"> </span><span class="kw">sim_quadratic_logistic_d
       <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
 <span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Prob&quot;</span>, <span class="st">&quot;Data&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">0</span>), 
        <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">20</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</code></pre>
-<p><img src="logistic_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="logistic_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="working-with-logistic-regression" class="section level2">
@@ -936,7 +939,7 @@ D \overset{\text{approx}}{\sim} \chi^2_{k}
      <span class="dt">ylab =</span> <span class="st">&quot;Probability of CHD&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Low Density Lipoprotein Cholesterol&quot;</span>)
 <span class="kw">curve</span>(<span class="kw">predict</span>(chd_mod_ldl, <span class="kw">data.frame</span>(<span class="dt">ldl =</span> x), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>), 
       <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre>
-<p><img src="logistic_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="logistic_files/figure-html/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>As before, we plot the data in addition to the estimated probabilities. Note that we have “jittered” the data to make it easier to visualize, but the data do only take values <code>0</code> and <code>1</code>.</p>
 <p>As we would expect, this plot indicates that as <code>ldl</code> increases, so does the probability of <code>chd</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(<span class="kw">summary</span>(chd_mod_ldl))</code></pre>
@@ -1328,8 +1331,16 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 <p>While this is far fewer false positives, is it acceptable though? Still probably not. Also, don’t forget, this would actually be a terrible spam detector today since this is based on data from a very different era of the internet, for a very specific set of people. Spam has changed a lot since 90s! (Ironically, machine learning is probably partially to blame.)</p>
 <p>This chapter has provided a rather quick introduction to classification, and thus, machine learning. For a more complete coverage of machine learning, <a href="http://www-bcf.usc.edu/~gareth/ISL/" target="_blank">An Introduction to Statistical Learning</a> is a highly recommended resource. Additionally, <a href="https://daviddalpiaz.github.io/r4sl/" target="_blank"><code>R</code> for Statistical Learning</a> has been written as a supplement which provides additional detail on how to perform these methods using <code>R</code>. The <a href="https://daviddalpiaz.github.io/r4sl/classification-overview.html" target="_blank">classification</a> and <a href="https://daviddalpiaz.github.io/r4sl/logistic-regression.html" target="_blank">logistic regression</a> chapters might be useful.</p>
 <p>We should note that the code to perform classification using logistic regression is presented in a way that illustrates the concepts to the reader. In practice, you may to prefer to use a more general machine learning pipeline such as <a href="http://topepo.github.io/caret/index.html" target="_blank"><code>caret</code></a> in <code>R</code>. This will streamline processes for creating predictions and generating evaluation metrics.</p>
-
 </div>
+</div>
+<div id="r-markdown-5" class="section level2">
+<h2><span class="header-section-number">17.5</span> <code>R</code> Markdown</h2>
+<p>The <code>R</code> Markdown file for this chapter can be found here:</p>
+<ul>
+<li><a href="logistic.Rmd" target="_blank"><code>logistic.Rmd</code></a></li>
+</ul>
+<p>The file was created using <code>R</code> version <code>3.5.0</code>.</p>
+
 </div>
 </div>
             </section>
