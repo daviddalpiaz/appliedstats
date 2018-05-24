@@ -1,5 +1,9 @@
 # Inference for Simple Linear Regression
 
+```{r slr_inf_opts, include = FALSE}
+knitr::opts_chunk$set(cache = TRUE, autodep = TRUE, fig.align = "center")
+```
+
 > "There are three types of lies: lies, damn lies, and statistics."
 >
 > --- **Benjamin Disraeli**
@@ -272,7 +276,7 @@ num_samples = 10000
 beta_0_hats = rep(0, num_samples)
 beta_1_hats = rep(0, num_samples)
 
-for(i in 1:num_samples) {
+for (i in 1:num_samples) {
   eps = rnorm(sample_size, mean = 0, sd = sigma)
   y   = beta_0 + beta_1 * x + eps
   
@@ -450,7 +454,7 @@ lines(x, dt(x, df = 10), lty = 2, lwd = 2, col = "dodgerblue")
 # add legend
 legend("topright", title = "Distributions",
        legend = c("t, df = 1", "t, df = 10", "Standard Normal"), 
-       lwd = 2, lty=c(3, 2, 1), col = c("darkorange", "dodgerblue", "black"))
+       lwd = 2, lty = c(3, 2, 1), col = c("darkorange", "dodgerblue", "black"))
 ```
 
 ## Confidence Intervals for Slope and Intercept
@@ -924,3 +928,11 @@ The model statement `lm(dist ~ 1, data = cars)` applies the model $Y_i = \beta_0
 The model statement `lm(dist ~ speed, data = cars)` applies the model $Y_i = \beta_0 + \beta_1 x_i + \epsilon_i$.
 
 We can then think of this usage of `anova()` as directly comparing the two models. (Notice we get the same p-value again.)
+
+## `R` Markdown
+
+The `R` Markdown file for this chapter can be found here:
+
+- [`slr-inf.Rmd`](slr-inf.Rmd){target="_blank"}
+
+The file was created using `R` version ``r paste0(version$major, "." ,version$minor)``.
