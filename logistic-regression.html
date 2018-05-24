@@ -210,7 +210,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.5" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#maximum-likelihood-estimation-mle-approach"><i class="fa fa-check"></i><b>7.5</b> Maximum Likelihood Estimation (MLE) Approach</a></li>
 <li class="chapter" data-level="7.6" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#simulating-slr"><i class="fa fa-check"></i><b>7.6</b> Simulating SLR</a></li>
 <li class="chapter" data-level="7.7" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#history"><i class="fa fa-check"></i><b>7.7</b> History</a></li>
-<li class="chapter" data-level="7.8" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#rmarkdown"><i class="fa fa-check"></i><b>7.8</b> RMarkdown</a></li>
+<li class="chapter" data-level="7.8" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#r-markdown"><i class="fa fa-check"></i><b>7.8</b> <code>R</code> Markdown</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html"><i class="fa fa-check"></i><b>8</b> Inference for Simple Linear Regression</a><ul>
 <li class="chapter" data-level="8.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#gaussmarkov-theorem"><i class="fa fa-check"></i><b>8.1</b> Gauss–Markov Theorem</a></li>
@@ -274,7 +274,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="12.4" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#post-hoc-testing"><i class="fa fa-check"></i><b>12.4</b> Post Hoc Testing</a></li>
 <li class="chapter" data-level="12.5" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#two-way-anova"><i class="fa fa-check"></i><b>12.5</b> Two-Way ANOVA</a></li>
-<li class="chapter" data-level="12.6" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#r-markdown"><i class="fa fa-check"></i><b>12.6</b> <code>R</code> Markdown</a></li>
+<li class="chapter" data-level="12.6" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#r-markdown-1"><i class="fa fa-check"></i><b>12.6</b> <code>R</code> Markdown</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i><b>13</b> Model Diagnostics</a><ul>
 <li class="chapter" data-level="13.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#model-assumptions"><i class="fa fa-check"></i><b>13.1</b> Model Assumptions</a></li>
@@ -679,7 +679,7 @@ fit_glm =<span class="st"> </span><span class="kw">glm</span>(y <span class="op"
       <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
 <span class="kw">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Ordinary&quot;</span>, <span class="st">&quot;Logistic&quot;</span>, <span class="st">&quot;Data&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>), 
        <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">20</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-651-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-648-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Since we only have a single predictor variable, we are able to graphically show this situation. First, note that the data, is plotted using black dots. The response <code>y</code> only takes values <code>0</code> and <code>1</code>.</p>
 <p>Next, we need to discuss the two added lines to the plot. The first, the solid orange line, is the fitted ordinary linear regression.</p>
 <p>The dashed blue curve is the estimated logistic regression. It is helpful to realize that we are not plotting an estimate of <span class="math inline">\(Y\)</span> for either. (Sometimes it might seem that way with ordinary linear regression, but that isn’t what is happening.) For both, we are plotting <span class="math inline">\(\hat{\text{E}}[Y \mid {\bf X} = {\bf x}]\)</span>, the estimated mean, which for a binary response happens to be an estimate of <span class="math inline">\(P[Y = 1 \mid {\bf X} = {\bf x}]\)</span>.</p>
@@ -725,7 +725,7 @@ example_data =<span class="st"> </span><span class="kw">sim_logistic_data</span>
       <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
 <span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Estimated Probability&quot;</span>, <span class="st">&quot;Data&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">0</span>), 
        <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">20</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-655-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-652-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We see that this time, as <span class="math inline">\(x\)</span> increases, <span class="math inline">\(p({\bf x})\)</span> decreases.</p>
 <p>Now let’s look at an example where the estimated probability doesn’t always simply increase or decrease. Much like ordinary linear regression, the linear combination of predictors can contain transformations of predictors (in this case a quadratic term) and interactions.</p>
 <pre class="sourceCode r"><code class="sourceCode r">sim_quadratic_logistic_data =<span class="st"> </span><span class="cf">function</span>(<span class="dt">sample_size =</span> <span class="dv">25</span>) {
@@ -754,7 +754,7 @@ example_data =<span class="st"> </span><span class="kw">sim_quadratic_logistic_d
       <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
 <span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Prob&quot;</span>, <span class="st">&quot;Data&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">0</span>), 
        <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">20</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-659-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-656-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="working-with-logistic-regression" class="section level2">
@@ -832,16 +832,8 @@ D \overset{\text{approx}}{\sim} \chi^2_{k}
 <h3><span class="header-section-number">17.3.4</span> <code>SAheart</code> Example</h3>
 <p>To illustrate the use of logistic regression, we will use the <code>SAheart</code> dataset from the <code>ElemStatLearn</code> package.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages(&quot;ElemStatLearn&quot;)</span>
-<span class="kw">library</span>(ElemStatLearn)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;ElemStatLearn&#39;</code></pre>
-<pre><code>## The following object is masked _by_ &#39;.GlobalEnv&#39;:
-## 
-##     marketing</code></pre>
-<pre><code>## The following objects are masked from &#39;package:faraway&#39;:
-## 
-##     ozone, prostate</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;SAheart&quot;</span>)</code></pre>
+<span class="kw">library</span>(ElemStatLearn)
+<span class="kw">data</span>(<span class="st">&quot;SAheart&quot;</span>)</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -943,7 +935,7 @@ D \overset{\text{approx}}{\sim} \chi^2_{k}
      <span class="dt">ylab =</span> <span class="st">&quot;Probability of CHD&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Low Density Lipoprotein Cholesterol&quot;</span>)
 <span class="kw">curve</span>(<span class="kw">predict</span>(chd_mod_ldl, <span class="kw">data.frame</span>(<span class="dt">ldl =</span> x), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>), 
       <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-662-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-659-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>As before, we plot the data in addition to the estimated probabilities. Note that we have “jittered” the data to make it easier to visualize, but the data do only take values <code>0</code> and <code>1</code>.</p>
 <p>As we would expect, this plot indicates that as <code>ldl</code> increases, so does the probability of <code>chd</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(<span class="kw">summary</span>(chd_mod_ldl))</code></pre>
@@ -1135,13 +1127,8 @@ C^B({\bf x}) = \underset{k}{\mathrm{argmax}} \ P[Y = k \mid {\bf X = x}].
 <h3><span class="header-section-number">17.4.1</span> <code>spam</code> Example</h3>
 <p>To illustrate the use of logistic regression as a classifier, we will use the <code>spam</code> dataset from the <code>kernlab</code> package.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages(&quot;kernlab&quot;)</span>
-<span class="kw">library</span>(kernlab)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;kernlab&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
-## 
-##     alpha</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;spam&quot;</span>)
+<span class="kw">library</span>(kernlab)
+<span class="kw">data</span>(<span class="st">&quot;spam&quot;</span>)
 tibble<span class="op">::</span><span class="kw">as.tibble</span>(spam)</code></pre>
 <pre><code>## # A tibble: 4,601 x 58
 ##     make address   all num3d   our  over remove internet order  mail receive

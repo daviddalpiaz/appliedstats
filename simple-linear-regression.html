@@ -210,7 +210,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.5" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#maximum-likelihood-estimation-mle-approach"><i class="fa fa-check"></i><b>7.5</b> Maximum Likelihood Estimation (MLE) Approach</a></li>
 <li class="chapter" data-level="7.6" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#simulating-slr"><i class="fa fa-check"></i><b>7.6</b> Simulating SLR</a></li>
 <li class="chapter" data-level="7.7" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#history"><i class="fa fa-check"></i><b>7.7</b> History</a></li>
-<li class="chapter" data-level="7.8" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#rmarkdown"><i class="fa fa-check"></i><b>7.8</b> RMarkdown</a></li>
+<li class="chapter" data-level="7.8" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#r-markdown"><i class="fa fa-check"></i><b>7.8</b> <code>R</code> Markdown</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html"><i class="fa fa-check"></i><b>8</b> Inference for Simple Linear Regression</a><ul>
 <li class="chapter" data-level="8.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#gaussmarkov-theorem"><i class="fa fa-check"></i><b>8.1</b> Gauss–Markov Theorem</a></li>
@@ -274,7 +274,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="12.4" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#post-hoc-testing"><i class="fa fa-check"></i><b>12.4</b> Post Hoc Testing</a></li>
 <li class="chapter" data-level="12.5" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#two-way-anova"><i class="fa fa-check"></i><b>12.5</b> Two-Way ANOVA</a></li>
-<li class="chapter" data-level="12.6" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#r-markdown"><i class="fa fa-check"></i><b>12.6</b> <code>R</code> Markdown</a></li>
+<li class="chapter" data-level="12.6" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#r-markdown-1"><i class="fa fa-check"></i><b>12.6</b> <code>R</code> Markdown</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i><b>13</b> Model Diagnostics</a><ul>
 <li class="chapter" data-level="13.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#model-assumptions"><i class="fa fa-check"></i><b>13.1</b> Model Assumptions</a></li>
@@ -434,7 +434,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
      <span class="dt">pch  =</span> <span class="dv">20</span>,
      <span class="dt">cex  =</span> <span class="dv">2</span>,
      <span class="dt">col  =</span> <span class="st">&quot;grey&quot;</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-158-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-158-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Let’s now define some terminology. We have pairs of data, <span class="math inline">\((x_i, y_i)\)</span>, for <span class="math inline">\(i = 1, 2, \ldots n\)</span>, where <span class="math inline">\(n\)</span> is the sample size of the dataset.</p>
 <p>We use <span class="math inline">\(i\)</span> as an index, simply for notation. We use <span class="math inline">\(x_i\)</span> as the <strong>predictor</strong> (explanatory) variable. The predictor variable is used to help <em>predict</em> or explain the <strong>response</strong> (target, outcome) variable, <span class="math inline">\(y_i\)</span>.</p>
 <p>Other texts may use the term independent variable instead of predictor and dependent variable in place of response. However, those monikers imply mathematical characteristics that might not be true. While these other terms are not incorrect, independence is already a strictly defined concept in probability. For example, when trying to predict a person’s weight given their height, would it be accurate to say that height is independent of weight? Certainly not, but that is an unintended implication of saying “independent variable.” We prefer to stay away from this nomenclature.</p>
@@ -453,11 +453,11 @@ Y = f(X) + \epsilon.
 </ul>
 <p>What sort of function should we use for <span class="math inline">\(f(X)\)</span> for the <code>cars</code> data?</p>
 <p>We could try to model the data with a horizontal line. That is, the model for <span class="math inline">\(y\)</span> does not depend on the value of <span class="math inline">\(x\)</span>. (Some function <span class="math inline">\(f(X) = c\)</span>.) In the plot below, we see this doesn’t seem to do a very good job. Many of the data points are very far from the orange line representing <span class="math inline">\(c\)</span>. This is an example of <strong>underfitting</strong>. The obvious fix is to make the function <span class="math inline">\(f(X)\)</span> actually depend on <span class="math inline">\(x\)</span>.</p>
-<p><img src="applied_statistics_files/figure-html/underfit_plot-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/underfit_plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We could also try to model the data with a very “wiggly” function that tries to go through as many of the data points as possible. This also doesn’t seem to work very well. The stopping distance for a speed of 5 mph shouldn’t be off the chart! (Even in 1920.) This is an example of <strong>overfitting</strong>. (Note that in this example no function will go through every point, since there are some <span class="math inline">\(x\)</span> values that have several possible <span class="math inline">\(y\)</span> values in the data.)</p>
-<p><img src="applied_statistics_files/figure-html/overfit_plot-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/overfit_plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Lastly, we could try to model the data with a well chosen line rather than one of the two extremes previously attempted. The line on the plot below seems to summarize the relationship between stopping distance and speed quite well. As speed increases, the distance required to come to a stop increases. There is still some variation about this line, but it seems to capture the overall trend.</p>
-<p><img src="applied_statistics_files/figure-html/goodfit_plot-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/goodfit_plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>With this in mind, we would like to restrict our choice of <span class="math inline">\(f(X)\)</span> to <em>linear</em> functions of <span class="math inline">\(X\)</span>. We will write our model using <span class="math inline">\(\beta_1\)</span> for the slope, and <span class="math inline">\(\beta_0\)</span> for the intercept,</p>
 <p><span class="math display">\[
 Y = \beta_0 + \beta_1 X + \epsilon.
@@ -491,7 +491,7 @@ Y_i \mid X_i \sim N(\beta_0 + \beta_1 x_i, \sigma^2)
 <p>This is visually displayed in the image below. We see that for any value <span class="math inline">\(x\)</span>, the expected value of <span class="math inline">\(Y\)</span> is <span class="math inline">\(\beta_0 + \beta_1 x\)</span>. At each value of <span class="math inline">\(x\)</span>, <span class="math inline">\(Y\)</span> has the same variance <span class="math inline">\(\sigma^2\)</span>.</p>
 <div class="figure">
 <img src="images/model.jpg" alt="Simple Linear Regression Model Introductory Statistics (Shafer and Zhang), UC David Stat Wiki" />
-<p class="caption">Simple Linear Regression Model <a href="http://statwiki.ucdavis.edu/Textbook_Maps/General_Statistics/Map%3A_Introductory_Statistics_(Shafer_and_Zhang)%7Btarget=%22_blank%22%7D/10%3A_Correlation_and_Regression/10.3_Modelling_Linear_Relationships_with_Randomness_Present">Introductory Statistics (Shafer and Zhang), UC David Stat Wiki</a></p>
+<p class="caption">Simple Linear Regression Model <a href="http://statwiki.ucdavis.edu/Textbook_Maps/General_Statistics/Map%3A_Introductory_Statistics_(Shafer_and_Zhang)/10%3A_Correlation_and_Regression/10.3_Modelling_Linear_Relationships_with_Randomness_Present" target="_blank">Introductory Statistics (Shafer and Zhang), UC David Stat Wiki</a></p>
 </div>
 <p>Often, we directly talk about the assumptions that this model makes. They can be cleverly shortened to <strong>LINE</strong>.</p>
 <ul>
@@ -771,9 +771,9 @@ R2</code></pre>
 <pre><code>## [1] 0.6510794</code></pre>
 <p>For the <code>cars</code> example, we calculate <span class="math inline">\(R^2 = 0.65\)</span>. We then say that <span class="math inline">\(65\%\)</span> of the observed variability in stopping distance is explained by the linear relationship with speed.</p>
 <p>The following plots visually demonstrate the three “sums of squares” for a simulated dataset which has <span class="math inline">\(R^2 = 0.92\)</span> which is a somewhat high value. Notice in the final plot, that the orange arrows account for a larger proportion of the total arrow.</p>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-179-1.png" width="1152" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-179-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>The next plots again visually demonstrate the three “sums of squares,” this time for a simulated dataset which has <span class="math inline">\(R^2 = 0.19\)</span>. Notice in the final plot, that now the blue arrows account for a larger proportion of the total arrow.</p>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-181-1.png" width="1152" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-181-1.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="the-lm-function" class="section level2">
@@ -804,7 +804,7 @@ R2</code></pre>
      <span class="dt">cex  =</span> <span class="dv">2</span>,
      <span class="dt">col  =</span> <span class="st">&quot;grey&quot;</span>)
 <span class="kw">abline</span>(stop_dist_model, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-185-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-185-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The <code>abline()</code> function is used to add lines of the form <span class="math inline">\(a + bx\)</span> to a plot. (Hence <strong><code>ab</code></strong><code>line</code>.) When we give it <code>stop_dist_model</code> as an argument, it automatically extracts the regression coefficient estimates (<span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>) and uses them as the slope and intercept of the line. Here we also use <code>lwd</code> to modify the width of the line, as well as <code>col</code> to modify the color of the line.</p>
 <p>The “thing” that is returned by the <code>lm()</code> function is actually an object of class <code>lm</code> which is a list. The exact details of this are unimportant unless you are seriously interested in the inner-workings of <code>R</code>, but know that we can determine the names of the elements of the list using the <code>names()</code> command.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(stop_dist_model)</code></pre>
@@ -1074,7 +1074,7 @@ epsilon =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt"
 <p>And look at that, they aren’t too far from the true parameters we specified!</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y_vals <span class="op">~</span><span class="st"> </span>x_vals)
 <span class="kw">abline</span>(sim_fit)</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-203-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-203-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We should say here, that we’re being sort of lazy, and not the good kinda of lazy that could be considered efficient. Any time you simulate data, you should consider doing two things: writing a function, and storing the data in a data frame.</p>
 <p>The function below, <code>sim_slr()</code>, can be used for the same task as above, but is much more flexible. Notice that we provide <code>x</code> to the function, instead of generating <code>x</code> inside the function. In the SLR model, the <span class="math inline">\(x_i\)</span> are considered known values. That is, they are not random, so we do not assume a distribution for the <span class="math inline">\(x_i\)</span>. Because of this, we will repeatedly use the same <code>x</code> values across all simulations.</p>
 <pre class="sourceCode r"><code class="sourceCode r">sim_slr =<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">beta_0 =</span> <span class="dv">10</span>, <span class="dt">beta_1 =</span> <span class="dv">5</span>, <span class="dt">sigma =</span> <span class="dv">1</span>) {
@@ -1112,34 +1112,19 @@ sim_data =<span class="st"> </span><span class="kw">sim_slr</span>(<span class="
 <span class="kw">abline</span>(beta_<span class="dv">0</span>, beta_<span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 <span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Estimate&quot;</span>, <span class="st">&quot;Truth&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">lwd =</span> <span class="dv">2</span>,
        <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>))</code></pre>
-<p><img src="applied_statistics_files/figure-html/unnamed-chunk-208-1.png" width="672" /></p>
+<p><img src="applied_statistics_files/figure-html/unnamed-chunk-208-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="history" class="section level2">
 <h2><span class="header-section-number">7.7</span> History</h2>
 <p>For some brief background on the history of linear regression, see <a href="http://www.amstat.org/publications/jse/v9n3/stanton.html" target="_blank">“Galton, Pearson, and the Peas: A Brief History of Linear Regression for Statistics Instructors”</a> from the <a href="http://www.amstat.org/publications/jse/" target="_blank">Journal of Statistics Education</a> as well as the <a href="https://en.wikipedia.org/wiki/Regression_analysis#History" target="_blank">Wikipedia page on the history of regression analysis</a> and lastly the article for <a href="https://en.wikipedia.org/wiki/Regression_toward_the_mean" target="_blank">regression to the mean</a> which details the origins of the term “regression.”</p>
 </div>
-<div id="rmarkdown" class="section level2">
-<h2><span class="header-section-number">7.8</span> RMarkdown</h2>
-<p>The RMarkdown file for this chapter can be found <a href="slr.Rmd"><strong>here</strong></a>. The file was created using <code>R</code> version 3.5.0 and the following packages:</p>
+<div id="r-markdown" class="section level2">
+<h2><span class="header-section-number">7.8</span> <code>R</code> Markdown</h2>
+<p>The <code>R</code> Markdown file for this chapter can be found here:</p>
 <ul>
-<li>Base Packages, Attached</li>
+<li><a href="slr.Rmd" target="_blank"><code>slr.Rmd</code></a></li>
 </ul>
-<pre><code>## [1] &quot;stats&quot;     &quot;graphics&quot;  &quot;grDevices&quot; &quot;utils&quot;     &quot;datasets&quot;  &quot;methods&quot;  
-## [7] &quot;base&quot;</code></pre>
-<ul>
-<li>Additional Packages, Attached</li>
-</ul>
-<pre><code>## [1] &quot;tibble&quot;  &quot;readr&quot;   &quot;ggplot2&quot;</code></pre>
-<ul>
-<li>Additional Packages, Not Attached</li>
-</ul>
-<pre><code>##  [1] &quot;Rcpp&quot;       &quot;rstudioapi&quot; &quot;knitr&quot;      &quot;magrittr&quot;   &quot;hms&quot;       
-##  [6] &quot;munsell&quot;    &quot;colorspace&quot; &quot;R6&quot;         &quot;rlang&quot;      &quot;stringr&quot;   
-## [11] &quot;plyr&quot;       &quot;tools&quot;      &quot;grid&quot;       &quot;gtable&quot;     &quot;xfun&quot;      
-## [16] &quot;utf8&quot;       &quot;cli&quot;        &quot;htmltools&quot;  &quot;assertthat&quot; &quot;yaml&quot;      
-## [21] &quot;lazyeval&quot;   &quot;rprojroot&quot;  &quot;digest&quot;     &quot;crayon&quot;     &quot;bookdown&quot;  
-## [26] &quot;evaluate&quot;   &quot;rmarkdown&quot;  &quot;stringi&quot;    &quot;compiler&quot;   &quot;pillar&quot;    
-## [31] &quot;scales&quot;     &quot;backports&quot;  &quot;pkgconfig&quot;</code></pre>
+<p>The file was created using <code>R</code> version <code>3.5.0</code>.</p>
 
 </div>
 </div>
