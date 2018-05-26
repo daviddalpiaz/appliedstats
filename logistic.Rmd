@@ -23,7 +23,7 @@ $$
 Y \mid {\bf X} = {\bf x} \sim N(\beta_0 + \beta_1x_1 + \ldots + \beta_{p - 1}x_{p - 1}, \ \sigma^2)
 $$
 
-Now we'll allow for two modifications of this situation, which will let us use linear models in many more situations. Instead of using a normal distribution for the response, we'll allow for other distributions. Also, instead of the mean being a linear combination of the predictors, it can be some function of a linear combination of the predictors.
+Now we'll allow for two modifications of this situation, which will let us use linear models in many more situations. Instead of using a normal distribution for the response conditioned on the predictors, we'll allow for other distributions. Also, instead of the conditional mean being a linear combination of the predictors, it can be some function of a linear combination of the predictors.
 
 In *general*, a generalized linear model has three parts:
 
@@ -104,13 +104,13 @@ $$
 Essentially, the log odds are the [logit](https://en.wikipedia.org/wiki/Logit){target="_blank"} transform applied to $p({\bf x})$.
 
 $$
-\text{logit}(x) = \log\left(\frac{x}{1 - x}\right)
+\text{logit}(\xi) = \log\left(\frac{\xi}{1 - \xi}\right)
 $$
 
 It will also be useful to define the inverse logit, otherwise known as the "logistic" or [sigmoid](https://en.wikipedia.org/wiki/Sigmoid_function){target="_blank"} function.
 
 $$
-\text{logit}^{-1}(x) = \frac{e^x}{1 + e^{x}} = \frac{1}{1 + e^{-x}}
+\text{logit}^{-1}(\xi) = \frac{e^\xi}{1 + e^{\xi}} = \frac{1}{1 + e^{-\xi}}
 $$
 
 Note that for $x \in (-\infty, \infty))$, this function outputs values between 0 and 1.
@@ -133,6 +133,8 @@ With logistic regression, which uses the Bernoulli distribution, we only need to
 $$
 \log\left(\frac{p({\bf x})}{1 - p({\bf x})}\right) = \beta_0 + \beta_1 x_1 + \ldots  + \beta_{q} x_{q}
 $$
+
+So even though we introduced ordinary linear regression first, in some ways, logistic regression is actually simpler.
 
 ### Fitting Logistic Regression
 
@@ -178,9 +180,9 @@ $$
 L(\boldsymbol{{\beta}}) = \prod_{i : y_i = 1}^{} \frac{e^{\beta_0 + \beta_1 x_{i1} + \cdots + \beta_{p-1} x_{i(p-1)}}}{1 + e^{\beta_0 + \beta_1 x_{i1} + \cdots + \beta_{p-1} x_{i(p-1)}}} \prod_{j : y_j = 0}^{} \frac{1}{1 + e^{\beta_0 + \beta_1 x_{j1} + \cdots + \beta_{p-1} x_{j(p-1)}}}
 $$
 
-Unfortunately, unlike ordinary linear regression, there is no analytical solution to this maximization. Instead, it will need to be solved numerically. Fortunately, `R` will take care of this for us using an iteratively reweighted least squares algorithm. (We'll leave the details for a machine learning or optimization course, which would likely also discuss alternative optimization strategies.)
+Unfortunately, unlike ordinary linear regression, there is no analytical solution for this maximization problem. Instead, it will need to be solved numerically. Fortunately, `R` will take care of this for us using an iteratively reweighted least squares algorithm. (We'll leave the details for a machine learning or optimization course, which would likely also discuss alternative optimization strategies.)
 
-### Fitting Issues {-}
+### Fitting Issues
 
 We should note that, if there exists some $\beta^*$ such that
 
@@ -247,7 +249,7 @@ example_data = sim_logistic_data()
 head(example_data)
 ```
 
-After simulating a dataset, we'll then fit both ordinary linear regression and logistic regression. Notice that currently the responses variable `y` is a numeric variable that only takes values `0` and `1`. Later we'll see that we can also fit logistic regression when the response is a factor variable with only two levels. (Generally, have a factor response is preferred, but having a dummy response allows use to make the comparison to using ordinary linear regression.)
+After simulating a dataset, we'll then fit both ordinary linear regression and logistic regression. Notice that currently the responses variable `y` is a numeric variable that only takes values `0` and `1`. Later we'll see that we can also fit logistic regression when the response is a factor variable with only two levels. (Generally, having a factor response is preferred, but having a dummy response allows use to make the comparison to using ordinary linear regression.)
 
 ```{r}
 # ordinary linear regression
@@ -267,7 +269,7 @@ In a lot of ways, `lm()` is just a more specific version of `glm()`. For example
 glm(y ~ x, data = example_data)
 ```
 
-would actually fit the ordinary linear regression that we have seen in the past. By default, `glm()` uses `family = gaussian` argument. That is, we're fitting a GLM with a normally distribution response and the identity function as the link.
+would actually fit the ordinary linear regression that we have seen in the past. By default, `glm()` uses `family = gaussian` argument. That is, we're fitting a GLM with a normally distributed response and the identity function as the link.
 
 The `family` argument to `glm()` actually specifies both the distribution and the link function. If not made explicit, the link function is chosen to be the **canonical link function**, which is essentially the most mathematical convenient link function. See `?glm` and `?family` for details. For example, the following code explicitly specifies the link function which was previously used by default.
 
@@ -281,14 +283,15 @@ Making predictions with an object of type  `glm` is slightly different than maki
 | `type`             | Returned |
 |--------------------|----------|
 | `"link"` [default] | $\hat{\eta}({\bf x}) = \log\left(\frac{\hat{p}({\bf x})}{1 - \hat{p}({\bf x})}\right)$ |
-| `"response"`       | $\hat{p}({\bf x})$                                                                     |
+| `"response"`       | $\hat{p}({\bf x}) = \frac{e^{\hat{\eta}({\bf x})}}{1 + e^{\hat{\eta}({\bf x})}} = \frac{1}{1 + e^{-\hat{\eta}({\bf x})}}$                                                                     |
 
-That is, `type = "link"` will get you the log odds, while `type = "link"` will return $P[Y = 1 \mid {\bf X} = {\bf x}]$ for each observation.
+That is, `type = "link"` will get you the log odds, while `type = "response"` will return the estimated mean, in this case, $P[Y = 1 \mid {\bf X} = {\bf x}]$ for each observation.
 
 ```{r}
 plot(y ~ x, data = example_data, 
      pch = 20, ylab = "Estimated Probability", 
      main = "Ordinary vs Logistic Regression")
+grid()
 abline(fit_lm, col = "darkorange")
 curve(predict(fit_glm, data.frame(x), type = "response"), 
       add = TRUE, col = "dodgerblue", lty = 2)
@@ -316,7 +319,7 @@ $$
 \log\left(\frac{\hat{p}({\bf x})}{1 - \hat{p}({\bf x})}\right) = -2.3 + 3.7 x
 $$
 
-Because we're not directly estimating the mean, but instead a function of the mean, we need to be careful with our interpretation of $\hat{\beta}_1 = 3.7$. This means that, for a one unit increase in $x$, the log odds change (in this case increase) by $3.7$. Also, since $\hat{\beta}_1$ is positive, as we increase $x$ we also increase $p({\bf x})$. To see how much, we have to consider the inverse logistic function.
+Because we're not directly estimating the mean, but instead a function of the mean, we need to be careful with our interpretation of $\hat{\beta}_1 = 3.7$. This means that, for a one unit increase in $x$, the log odds change (in this case increase) by $3.7$. Also, since $\hat{\beta}_1$ is positive, as we increase $x$ we also increase $\hat{p}({\bf x})$. To see how much, we have to consider the inverse logistic function.
 
 For example, we have:
 
@@ -363,13 +366,14 @@ fit_glm = glm(y ~ x, data = example_data, family = binomial)
 plot(y ~ x, data = example_data, 
      pch = 20, ylab = "Estimated Probability", 
      main = "Logistic Regression, Decreasing Probability")
+grid()
 curve(predict(fit_glm, data.frame(x), type = "response"), 
       add = TRUE, col = "dodgerblue", lty = 2)
 legend("bottomleft", c("Estimated Probability", "Data"), lty = c(2, 0), 
        pch = c(NA, 20), lwd = 2, col = c("dodgerblue", "black"))
 ```
 
-We see that this time, as $x$ increases, $p({\bf x})$ decreases.
+We see that this time, as $x$ increases, $\hat{p}({\bf x})$ decreases.
 
 Now let's look at an example where the estimated probability doesn't always simply increase or decrease. Much like ordinary linear regression, the linear combination of predictors can contain transformations of predictors (in this case a quadratic term) and interactions.
 
@@ -408,6 +412,7 @@ fit_glm = glm(y ~ x + I(x^2), data = example_data, family = binomial)
 plot(y ~ x, data = example_data, 
      pch = 20, ylab = "Estimated Probability", 
      main = "Logistic Regression, Quadratic Relationship")
+grid()
 curve(predict(fit_glm, data.frame(x), type = "response"), 
       add = TRUE, col = "dodgerblue", lty = 2)
 legend("bottomleft", c("Prob", "Data"), lty = c(2, 0), 
@@ -426,7 +431,7 @@ working with logistic regression is very similar. Many of the things we did with
 
 - Testing for a single $\beta$ parameter
 - Testing for a set of $\beta$ parameters
-- Formula specification in `R`.
+- Formula specification in `R`
 - Interpreting parameters and estimates
 - Confidence intervals for parameters
 - Confidence intervals for mean response
@@ -466,7 +471,7 @@ $$
 z = \frac{\hat{\beta}_j - \beta_j}{\text{SE}[\hat{\beta}_j]} \overset{\text{approx}}{\sim} N(0, 1)
 $$
 
-but now we are performing a $z$-test, as the test statistics follows an approximate standard normal distribution, *provided we have a large enough sample*. (The $t$-test for ordinary linear regression, assuming the assumptions were correct, had an exact distribution for any sample size.)
+but now we are performing a $z$-test, as the test statistic is approximated by a standard normal distribution, *provided we have a large enough sample*. (The $t$-test for ordinary linear regression, assuming the assumptions were correct, had an exact distribution for any sample size.)
 
 We'll skip some of the exact details of the calculations, as `R` will obtain the standard error for us. The use of this test will be extremely similar to the $t$-test for ordinary linear regression. Essentially the only thing that changes is the distribution of the test statistic.
 
@@ -494,6 +499,8 @@ $$
 H_0: \beta_q = \beta_{q+1} = \cdots = \beta_{p - 1} = 0.
 $$
 
+This implies that the reduced modesl is nested inside the full model.
+
 We then define a test statistic, $D$,
 
 $$
@@ -506,7 +513,7 @@ $$
 D \overset{\text{approx}}{\sim} \chi^2_{k}
 $$
 
-where $k = p - q$, the different in number of parameters of the two models.
+where $k = p - q$, the difference in number of parameters of the two models.
 
 This test, which we will call the **Likelihood-Ratio Test**, will be the analogue to the ANOVA $F$-test for logistic regression. Interestingly, to perform the Likelihood-Ratio Test, we'll actually again use the `anova()` function in `R`!.
 
@@ -526,7 +533,7 @@ data("SAheart")
 knitr::kable(head(SAheart))
 ```
 
-This data comes from a retrospective sample of males in a heart-disease high-risk region of the Western Cape, South Africa. The `chd` variables, which we will use as a response, indicates whether or not coronary heart disease is present in an individual. Note that this is coded as a numeric `0` / `1` variable. Using this as a response with `glm()` it is important to indicate `family = binomial`, otherwise ordinary linear regression will be fit. Later, we will see the use of a factor variable response, which is actually preferred, as you cannot accidentally fit ordinary linear regression.
+This data comes from a retrospective sample of males in a heart-disease high-risk region of the Western Cape, South Africa. The `chd` variable, which we will use as a response, indicates whether or not coronary heart disease is present in an individual. Note that this is coded as a numeric `0` / `1` variable. Using this as a response with `glm()` it is important to indicate `family = binomial`, otherwise ordinary linear regression will be fit. Later, we will see the use of a factor variable response, which is actually preferred, as you cannot accidentally fit ordinary linear regression.
 
 The predictors are various measurements for each individual, many related to heart health. For example `sbp`, systolic blood pressure, and `ldl`, low density lipoprotein cholesterol. For full details, use `?SAheart`.
 
@@ -540,6 +547,7 @@ $$
 chd_mod_ldl = glm(chd ~ ldl, data = SAheart, family = binomial)
 plot(jitter(chd, factor = 0.1) ~ ldl, data = SAheart, pch = 20, 
      ylab = "Probability of CHD", xlab = "Low Density Lipoprotein Cholesterol")
+grid()
 curve(predict(chd_mod_ldl, data.frame(ldl = x), type = "response"), 
       add = TRUE, col = "dodgerblue", lty = 2)
 ```
@@ -558,7 +566,7 @@ $$
 H_0: \beta_{\texttt{ldl}} = 0
 $$
 
-we use the `summary()` function as we have done so many times before. Like the $t$-test for ordinary linear regression, this returns the estimate of the parameter, its standard error, the relevant test statistic ($z$), and its p-value. Here we have an incredibly low p-value, so we reject the null hypothesis. `ldl` appears to be a significant predictor.
+we use the `summary()` function as we have done so many times before. Like the $t$-test for ordinary linear regression, this returns the estimate of the parameter, its standard error, the relevant test statistic ($z$), and its p-value. Here we have an incredibly low p-value, so we reject the null hypothesis. The `ldl` variable appears to be a significant predictor.
 
 When fitting logistic regression, we can use the same formula syntax as ordinary linear regression. So, to fit an additive model using all available predictors, we use:
 
@@ -593,7 +601,7 @@ chd_mod_selected = step(chd_mod_additive, trace = 0)
 coef(chd_mod_selected)
 ```
 
-We could again compare this model to the additive model.
+We could again compare this model to the additive models.
 
 $$
 H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{adiposity}} = \beta_{\texttt{obesity}} = \beta_{\texttt{alcohol}} = 0
@@ -654,7 +662,7 @@ eta_hat = predict(chd_mod_selected, new_obs, se.fit = TRUE, type = "link")
 eta_hat
 ```
 
-By setting `se.fit = TRUE`, `R` also computes $\text{SE}[\hat{\eta}]$.
+By setting `se.fit = TRUE`, `R` also computes $\text{SE}[\hat{\eta}({\bf x})]$.
 
 ```{r}
 z_crit = round(qnorm(0.975), 2)
@@ -760,7 +768,7 @@ is.factor(spam$type)
 levels(spam$type)
 ```
 
-Many of the predictors (often called features in machine learning) as engineered based on the emails. For example, `charDollar` is the number of times an email contains the `$` character. Some variables are highly specific to this dataset, for example `george` and `num650`. (The name and area code for one of the researchers whose emails were used.) We should keep in mind that this dataset was created based on emails send to academic type researcher in the 1990s. Any results we derive probably won't generalize to modern emails for the general public.
+Many of the predictors (often called features in machine learning) are engineered based on the emails. For example, `charDollar` is the number of times an email contains the `$` character. Some variables are highly specific to this dataset, for example `george` and `num650`. (The name and area code for one of the researchers whose emails were used.) We should keep in mind that this dataset was created based on emails send to academic type researcher in the 1990s. Any results we derive probably won't generalize to modern emails for the general public.
 
 To get started, we'll first test-train split the data.
 
@@ -775,13 +783,17 @@ spam_tst = spam[-spam_idx, ]
 We've used a somewhat small train set relative to the total size of the dataset. In practice it should likely be larger, but this is simply to keep training time low for illustration and rendering of this document.
 
 ```{r, message = FALSE, warning = FALSE}
-fit_caps = glm(type ~ capitalTotal, data = spam_trn, family = binomial)
-fit_selected = glm(type ~ edu + money + capitalTotal + charDollar, data = spam_trn, family = binomial)
-fit_additive = glm(type ~ ., data = spam_trn, family = binomial)
-fit_over = glm(type ~ capitalTotal * (.), data = spam_trn, family = binomial, maxit = 50)
+fit_caps = glm(type ~ capitalTotal, 
+               data = spam_trn, family = binomial)
+fit_selected = glm(type ~ edu + money + capitalTotal + charDollar, 
+                   data = spam_trn, family = binomial)
+fit_additive = glm(type ~ ., 
+                   data = spam_trn, family = binomial)
+fit_over = glm(type ~ capitalTotal * (.), 
+               data = spam_trn, family = binomial, maxit = 50)
 ```
 
-We'll fit four logistic regression, each more complex than the previous. Note that we're suppressing two warnings. The first we briefly mentioned previously.
+We'll fit four logistic regressions, each more complex than the previous. Note that we're suppressing two warnings. The first we briefly mentioned previously.
 
 ```{r, echo = FALSE}
 message("Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred")
@@ -873,8 +885,12 @@ make_conf_mat = function(predicted, actual) {
 Let's explicitly store the predicted values of our classifier on the test dataset.
 
 ```{r}
-spam_tst_pred = ifelse(predict(fit_additive, spam_tst) > 0, "spam", "nonspam")
-spam_tst_pred = ifelse(predict(fit_additive, spam_tst, type = "response") > 0.5, "spam", "nonspam")
+spam_tst_pred = ifelse(predict(fit_additive, spam_tst) > 0, 
+                       "spam", 
+                       "nonspam")
+spam_tst_pred = ifelse(predict(fit_additive, spam_tst, type = "response") > 0.5, 
+                       "spam", 
+                       "nonspam")
 ```
 
 The previous two lines of code produce the same output, that is the same predictions, since
@@ -904,7 +920,7 @@ Next, we can see that using the classifier create from `fit_additive`, only a to
 mean(spam_tst_pred == spam_tst$type)
 ```
 
-In order words, the test misclassification is
+In other words, the test misclassification is
 
 ```{r}
 mean(spam_tst_pred != spam_tst$type)
@@ -914,7 +930,7 @@ This seems like a decent classifier...
 
 However, are all errors created equal? In this case, absolutely note. The 137 non-spam emails that were marked as spam (false positives) are a problem. We can't allow important information, say, a job offer, miss our inbox and get sent to the spam folder. On the other hand, the 161 spam email that would make it to an inbox (false negatives) are easily dealt with, just delete them.
 
-Instead of simply evaluating a classifier based on its misclassification rate (or accuracy), we'll define two additional metrics, sensitivity and specificity. Note that this are simply two of many more metrics that can be considered. The [Wikipedia page for sensitivity_and_specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity){target="_blank"} details a large number of metrics that can be derived form a confusion matrix.
+Instead of simply evaluating a classifier based on its misclassification rate (or accuracy), we'll define two additional metrics, sensitivity and specificity. Note that this are simply two of many more metrics that can be considered. The [Wikipedia page for sensitivity and specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity){target="_blank"} details a large number of metrics that can be derived form a confusion matrix.
 
 **Sensitivity** is essentially the true positive rate. So when sensitivity if high, the number of false negatives is low.
 
@@ -964,7 +980,9 @@ Additionally, if we change the cutoff to improve sensitivity, we'll decrease spe
 First let's see what happens when we lower the cutoff from $0.5$ to $0.1$ to create a new classifier, and thus new predictions.
 
 ```{r}
-spam_tst_pred_10 = ifelse(predict(fit_additive, spam_tst, type = "response") > 0.1, "spam", "nonspam")
+spam_tst_pred_10 = ifelse(predict(fit_additive, spam_tst, type = "response") > 0.1, 
+                          "spam", 
+                          "nonspam")
 ```
 
 This is essentially *decreasing* the threshold for an email to be labeled as spam, so far *more* emails will be labeled as spam. We see that in the following confusion matrix.
@@ -983,7 +1001,9 @@ get_spec(conf_mat_10)
 This classifier, using $0.1$ instead of $0.5$ has a higher sensitivity, but a much lower specificity. Clearly, we should have moved the cutoff in the other direction. Let's try $0.9$.
 
 ```{r}
-spam_tst_pred_90 = ifelse(predict(fit_additive, spam_tst, type = "response") > 0.9, "spam", "nonspam")
+spam_tst_pred_90 = ifelse(predict(fit_additive, spam_tst, type = "response") > 0.9, 
+                          "spam", 
+                          "nonspam")
 ```
 
 This is essentially *increasing* the threshold for an email to be labeled as spam, so far *fewer* emails will be labeled as spam. Again, we see that in the following confusion matrix.
@@ -992,7 +1012,7 @@ This is essentially *increasing* the threshold for an email to be labeled as spa
 (conf_mat_90 = make_conf_mat(predicted = spam_tst_pred_90, actual = spam_tst$type))
 ```
 
-This is the results we're looking for. We have far fewer false positives. While sensitivity is greatly reduced, specificity has gone up.
+This is the result we're looking for. We have far fewer false positives. While sensitivity is greatly reduced, specificity has gone up.
 
 ```{r}
 get_sens(conf_mat_90)
