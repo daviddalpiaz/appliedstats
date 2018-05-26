@@ -351,8 +351,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="17.1" data-path="logistic-regression.html"><a href="logistic-regression.html#generalized-linear-models"><i class="fa fa-check"></i><b>17.1</b> Generalized Linear Models</a></li>
 <li class="chapter" data-level="17.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-response"><i class="fa fa-check"></i><b>17.2</b> Binary Response</a><ul>
 <li class="chapter" data-level="17.2.1" data-path="logistic-regression.html"><a href="logistic-regression.html#fitting-logistic-regression"><i class="fa fa-check"></i><b>17.2.1</b> Fitting Logistic Regression</a></li>
-<li class="chapter" data-level="" data-path="logistic-regression.html"><a href="logistic-regression.html#fitting-issues"><i class="fa fa-check"></i>Fitting Issues</a></li>
-<li class="chapter" data-level="17.2.2" data-path="logistic-regression.html"><a href="logistic-regression.html#simulation-examples"><i class="fa fa-check"></i><b>17.2.2</b> Simulation Examples</a></li>
+<li class="chapter" data-level="17.2.2" data-path="logistic-regression.html"><a href="logistic-regression.html#fitting-issues"><i class="fa fa-check"></i><b>17.2.2</b> Fitting Issues</a></li>
+<li class="chapter" data-level="17.2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#simulation-examples"><i class="fa fa-check"></i><b>17.2.3</b> Simulation Examples</a></li>
 </ul></li>
 <li class="chapter" data-level="17.3" data-path="logistic-regression.html"><a href="logistic-regression.html#working-with-logistic-regression"><i class="fa fa-check"></i><b>17.3</b> Working with Logistic Regression</a><ul>
 <li class="chapter" data-level="17.3.1" data-path="logistic-regression.html"><a href="logistic-regression.html#testing-with-glms"><i class="fa fa-check"></i><b>17.3.1</b> Testing with GLMs</a></li>
@@ -419,7 +419,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[
 Y \mid {\bf X} = {\bf x} \sim N(\beta_0 + \beta_1x_1 + \ldots + \beta_{p - 1}x_{p - 1}, \ \sigma^2)
 \]</span></p>
-<p>Now we’ll allow for two modifications of this situation, which will let us use linear models in many more situations. Instead of using a normal distribution for the response, we’ll allow for other distributions. Also, instead of the mean being a linear combination of the predictors, it can be some function of a linear combination of the predictors.</p>
+<p>Now we’ll allow for two modifications of this situation, which will let us use linear models in many more situations. Instead of using a normal distribution for the response conditioned on the predictors, we’ll allow for other distributions. Also, instead of the conditional mean being a linear combination of the predictors, it can be some function of a linear combination of the predictors.</p>
 <p>In <em>general</em>, a generalized linear model has three parts:</p>
 <ul>
 <li>A <strong>distribution</strong> of the response conditioned on the predictors. (Technically this distribution needs to be from the <a href="https://en.wikipedia.org/wiki/Exponential_family" target="_blank">exponential family</a> of distributions.)</li>
@@ -535,11 +535,11 @@ P[Y = 0 \mid {\bf X} = {\bf x}] = 1 - p({\bf x})
 \]</span></p>
 <p>Essentially, the log odds are the <a href="https://en.wikipedia.org/wiki/Logit" target="_blank">logit</a> transform applied to <span class="math inline">\(p({\bf x})\)</span>.</p>
 <p><span class="math display">\[
-\text{logit}(x) = \log\left(\frac{x}{1 - x}\right)
+\text{logit}(\xi) = \log\left(\frac{\xi}{1 - \xi}\right)
 \]</span></p>
 <p>It will also be useful to define the inverse logit, otherwise known as the “logistic” or <a href="https://en.wikipedia.org/wiki/Sigmoid_function" target="_blank">sigmoid</a> function.</p>
 <p><span class="math display">\[
-\text{logit}^{-1}(x) = \frac{e^x}{1 + e^{x}} = \frac{1}{1 + e^{-x}}
+\text{logit}^{-1}(\xi) = \frac{e^\xi}{1 + e^{\xi}} = \frac{1}{1 + e^{-\xi}}
 \]</span></p>
 <p>Note that for <span class="math inline">\(x \in (-\infty, \infty))\)</span>, this function outputs values between 0 and 1.</p>
 <p>Students often ask, where is the error term? The answer is that its something that is specific to the normal model. First notice that the model with the error term,</p>
@@ -555,6 +555,7 @@ Y \mid {\bf X} = {\bf x} \sim N(\beta_0 + \beta_1x_1 + \ldots + \beta_qx_q, \ \s
 <p><span class="math display">\[
 \log\left(\frac{p({\bf x})}{1 - p({\bf x})}\right) = \beta_0 + \beta_1 x_1 + \ldots  + \beta_{q} x_{q}
 \]</span></p>
+<p>So even though we introduced ordinary linear regression first, in some ways, logistic regression is actually simpler.</p>
 <div id="fitting-logistic-regression" class="section level3">
 <h3><span class="header-section-number">17.2.1</span> Fitting Logistic Regression</h3>
 <p>With <span class="math inline">\(n\)</span> observations, we write the model indexed with <span class="math inline">\(i\)</span> to note that it is being applied to each observation.</p>
@@ -586,10 +587,10 @@ L(\boldsymbol{{\beta}}) = \prod_{i : y_i = 1}^{n} p({\bf x_i}) \prod_{j : y_j = 
 <p><span class="math display">\[
 L(\boldsymbol{{\beta}}) = \prod_{i : y_i = 1}^{} \frac{e^{\beta_0 + \beta_1 x_{i1} + \cdots + \beta_{p-1} x_{i(p-1)}}}{1 + e^{\beta_0 + \beta_1 x_{i1} + \cdots + \beta_{p-1} x_{i(p-1)}}} \prod_{j : y_j = 0}^{} \frac{1}{1 + e^{\beta_0 + \beta_1 x_{j1} + \cdots + \beta_{p-1} x_{j(p-1)}}}
 \]</span></p>
-<p>Unfortunately, unlike ordinary linear regression, there is no analytical solution to this maximization. Instead, it will need to be solved numerically. Fortunately, <code>R</code> will take care of this for us using an iteratively reweighted least squares algorithm. (We’ll leave the details for a machine learning or optimization course, which would likely also discuss alternative optimization strategies.)</p>
+<p>Unfortunately, unlike ordinary linear regression, there is no analytical solution for this maximization problem. Instead, it will need to be solved numerically. Fortunately, <code>R</code> will take care of this for us using an iteratively reweighted least squares algorithm. (We’ll leave the details for a machine learning or optimization course, which would likely also discuss alternative optimization strategies.)</p>
 </div>
-<div id="fitting-issues" class="section level3 unnumbered">
-<h3>Fitting Issues</h3>
+<div id="fitting-issues" class="section level3">
+<h3><span class="header-section-number">17.2.2</span> Fitting Issues</h3>
 <p>We should note that, if there exists some <span class="math inline">\(\beta^*\)</span> such that</p>
 <p><span class="math display">\[
 {\bf x_i}^{\top} \boldsymbol{{\beta}^*} &gt; 0 \implies y_i = 1
@@ -604,7 +605,7 @@ L(\boldsymbol{{\beta}}) = \prod_{i : y_i = 1}^{} \frac{e^{\beta_0 + \beta_1 x_{i
 <p>When this happens, the model is still “fit,” but there are consequences, namely, the estimated coefficients are highly suspect. This is an issue when then trying to interpret the model. When this happens, the model will often still be useful for creating a classifier, which will be discussed later. However, it is still subject to the usual evaluations for classifiers to determine how well it is performing. For details, see <a href="https://link.springer.com/content/pdf/10.1007/978-1-4757-2719-7_7.pdf" target="_blank">Modern Applied Statistics with S-PLUS, Chapter 7</a>.</p>
 </div>
 <div id="simulation-examples" class="section level3">
-<h3><span class="header-section-number">17.2.2</span> Simulation Examples</h3>
+<h3><span class="header-section-number">17.2.3</span> Simulation Examples</h3>
 <pre class="sourceCode r"><code class="sourceCode r">sim_logistic_data =<span class="st"> </span><span class="cf">function</span>(<span class="dt">sample_size =</span> <span class="dv">25</span>, <span class="dt">beta_0 =</span> <span class="dv">-2</span>, <span class="dt">beta_1 =</span> <span class="dv">3</span>) {
   x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> sample_size)
   eta =<span class="st"> </span>beta_<span class="dv">0</span> <span class="op">+</span><span class="st"> </span>beta_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x
@@ -640,7 +641,7 @@ example_data =<span class="st"> </span><span class="kw">sim_logistic_data</span>
 ## 4 1  1.5952808
 ## 5 0  0.3295078
 ## 6 0 -0.8204684</code></pre>
-<p>After simulating a dataset, we’ll then fit both ordinary linear regression and logistic regression. Notice that currently the responses variable <code>y</code> is a numeric variable that only takes values <code>0</code> and <code>1</code>. Later we’ll see that we can also fit logistic regression when the response is a factor variable with only two levels. (Generally, have a factor response is preferred, but having a dummy response allows use to make the comparison to using ordinary linear regression.)</p>
+<p>After simulating a dataset, we’ll then fit both ordinary linear regression and logistic regression. Notice that currently the responses variable <code>y</code> is a numeric variable that only takes values <code>0</code> and <code>1</code>. Later we’ll see that we can also fit logistic regression when the response is a factor variable with only two levels. (Generally, having a factor response is preferred, but having a dummy response allows use to make the comparison to using ordinary linear regression.)</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># ordinary linear regression</span>
 fit_lm  =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data)
 <span class="co"># logistic regression</span>
@@ -652,7 +653,7 @@ fit_glm =<span class="st"> </span><span class="kw">glm</span>(y <span class="op"
 </ul>
 <p>In a lot of ways, <code>lm()</code> is just a more specific version of <code>glm()</code>. For example</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data)</code></pre>
-<p>would actually fit the ordinary linear regression that we have seen in the past. By default, <code>glm()</code> uses <code>family = gaussian</code> argument. That is, we’re fitting a GLM with a normally distribution response and the identity function as the link.</p>
+<p>would actually fit the ordinary linear regression that we have seen in the past. By default, <code>glm()</code> uses <code>family = gaussian</code> argument. That is, we’re fitting a GLM with a normally distributed response and the identity function as the link.</p>
 <p>The <code>family</code> argument to <code>glm()</code> actually specifies both the distribution and the link function. If not made explicit, the link function is chosen to be the <strong>canonical link function</strong>, which is essentially the most mathematical convenient link function. See <code>?glm</code> and <code>?family</code> for details. For example, the following code explicitly specifies the link function which was previously used by default.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># more detailed call to glm for logistic regression</span>
 fit_glm =<span class="st"> </span><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>))</code></pre>
@@ -675,14 +676,15 @@ fit_glm =<span class="st"> </span><span class="kw">glm</span>(y <span class="op"
 </tr>
 <tr class="even">
 <td><code>&quot;response&quot;</code></td>
-<td><span class="math inline">\(\hat{p}({\bf x})\)</span></td>
+<td><span class="math inline">\(\hat{p}({\bf x}) = \frac{e^{\hat{\eta}({\bf x})}}{1 + e^{\hat{\eta}({\bf x})}} = \frac{1}{1 + e^{-\hat{\eta}({\bf x})}}\)</span></td>
 </tr>
 </tbody>
 </table>
-<p>That is, <code>type = &quot;link&quot;</code> will get you the log odds, while <code>type = &quot;link&quot;</code> will return <span class="math inline">\(P[Y = 1 \mid {\bf X} = {\bf x}]\)</span> for each observation.</p>
+<p>That is, <code>type = &quot;link&quot;</code> will get you the log odds, while <code>type = &quot;response&quot;</code> will return the estimated mean, in this case, <span class="math inline">\(P[Y = 1 \mid {\bf X} = {\bf x}]\)</span> for each observation.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data, 
      <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">ylab =</span> <span class="st">&quot;Estimated Probability&quot;</span>, 
      <span class="dt">main =</span> <span class="st">&quot;Ordinary vs Logistic Regression&quot;</span>)
+<span class="kw">grid</span>()
 <span class="kw">abline</span>(fit_lm, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)
 <span class="kw">curve</span>(<span class="kw">predict</span>(fit_glm, <span class="kw">data.frame</span>(x), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>), 
       <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
@@ -701,7 +703,7 @@ fit_glm =<span class="st"> </span><span class="kw">glm</span>(y <span class="op"
 <p><span class="math display">\[
 \log\left(\frac{\hat{p}({\bf x})}{1 - \hat{p}({\bf x})}\right) = -2.3 + 3.7 x
 \]</span></p>
-<p>Because we’re not directly estimating the mean, but instead a function of the mean, we need to be careful with our interpretation of <span class="math inline">\(\hat{\beta}_1 = 3.7\)</span>. This means that, for a one unit increase in <span class="math inline">\(x\)</span>, the log odds change (in this case increase) by <span class="math inline">\(3.7\)</span>. Also, since <span class="math inline">\(\hat{\beta}_1\)</span> is positive, as we increase <span class="math inline">\(x\)</span> we also increase <span class="math inline">\(p({\bf x})\)</span>. To see how much, we have to consider the inverse logistic function.</p>
+<p>Because we’re not directly estimating the mean, but instead a function of the mean, we need to be careful with our interpretation of <span class="math inline">\(\hat{\beta}_1 = 3.7\)</span>. This means that, for a one unit increase in <span class="math inline">\(x\)</span>, the log odds change (in this case increase) by <span class="math inline">\(3.7\)</span>. Also, since <span class="math inline">\(\hat{\beta}_1\)</span> is positive, as we increase <span class="math inline">\(x\)</span> we also increase <span class="math inline">\(\hat{p}({\bf x})\)</span>. To see how much, we have to consider the inverse logistic function.</p>
 <p>For example, we have:</p>
 <p><span class="math display">\[
 \hat{P}[Y = 1 \mid X = -0.5] = \frac{e^{-2.3 + 3.7 \cdot (-0.5)}}{1 + e^{-2.3 + 3.7 \cdot (-0.5)}} \approx 0.016
@@ -730,12 +732,13 @@ example_data =<span class="st"> </span><span class="kw">sim_logistic_data</span>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data, 
      <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">ylab =</span> <span class="st">&quot;Estimated Probability&quot;</span>, 
      <span class="dt">main =</span> <span class="st">&quot;Logistic Regression, Decreasing Probability&quot;</span>)
+<span class="kw">grid</span>()
 <span class="kw">curve</span>(<span class="kw">predict</span>(fit_glm, <span class="kw">data.frame</span>(x), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>), 
       <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
 <span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Estimated Probability&quot;</span>, <span class="st">&quot;Data&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">0</span>), 
        <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">20</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</code></pre>
 <p><img src="logistic_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>We see that this time, as <span class="math inline">\(x\)</span> increases, <span class="math inline">\(p({\bf x})\)</span> decreases.</p>
+<p>We see that this time, as <span class="math inline">\(x\)</span> increases, <span class="math inline">\(\hat{p}({\bf x})\)</span> decreases.</p>
 <p>Now let’s look at an example where the estimated probability doesn’t always simply increase or decrease. Much like ordinary linear regression, the linear combination of predictors can contain transformations of predictors (in this case a quadratic term) and interactions.</p>
 <pre class="sourceCode r"><code class="sourceCode r">sim_quadratic_logistic_data =<span class="st"> </span><span class="cf">function</span>(<span class="dt">sample_size =</span> <span class="dv">25</span>) {
   x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> sample_size)
@@ -759,6 +762,7 @@ example_data =<span class="st"> </span><span class="kw">sim_quadratic_logistic_d
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data, 
      <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">ylab =</span> <span class="st">&quot;Estimated Probability&quot;</span>, 
      <span class="dt">main =</span> <span class="st">&quot;Logistic Regression, Quadratic Relationship&quot;</span>)
+<span class="kw">grid</span>()
 <span class="kw">curve</span>(<span class="kw">predict</span>(fit_glm, <span class="kw">data.frame</span>(x), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>), 
       <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
 <span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Prob&quot;</span>, <span class="st">&quot;Data&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">0</span>), 
@@ -776,7 +780,7 @@ example_data =<span class="st"> </span><span class="kw">sim_quadratic_logistic_d
 <ul>
 <li>Testing for a single <span class="math inline">\(\beta\)</span> parameter</li>
 <li>Testing for a set of <span class="math inline">\(\beta\)</span> parameters</li>
-<li>Formula specification in <code>R</code>.</li>
+<li>Formula specification in <code>R</code></li>
 <li>Interpreting parameters and estimates</li>
 <li>Confidence intervals for parameters</li>
 <li>Confidence intervals for mean response</li>
@@ -806,7 +810,7 @@ H_0: \beta_j = 0 \quad \text{vs} \quad H_1: \beta_j \neq 0
 <p><span class="math display">\[
 z = \frac{\hat{\beta}_j - \beta_j}{\text{SE}[\hat{\beta}_j]} \overset{\text{approx}}{\sim} N(0, 1)
 \]</span></p>
-<p>but now we are performing a <span class="math inline">\(z\)</span>-test, as the test statistics follows an approximate standard normal distribution, <em>provided we have a large enough sample</em>. (The <span class="math inline">\(t\)</span>-test for ordinary linear regression, assuming the assumptions were correct, had an exact distribution for any sample size.)</p>
+<p>but now we are performing a <span class="math inline">\(z\)</span>-test, as the test statistic is approximated by a standard normal distribution, <em>provided we have a large enough sample</em>. (The <span class="math inline">\(t\)</span>-test for ordinary linear regression, assuming the assumptions were correct, had an exact distribution for any sample size.)</p>
 <p>We’ll skip some of the exact details of the calculations, as <code>R</code> will obtain the standard error for us. The use of this test will be extremely similar to the <span class="math inline">\(t\)</span>-test for ordinary linear regression. Essentially the only thing that changes is the distribution of the test statistic.</p>
 </div>
 <div id="likelihood-ratio-test" class="section level3">
@@ -825,6 +829,7 @@ z = \frac{\hat{\beta}_j - \beta_j}{\text{SE}[\hat{\beta}_j]} \overset{\text{appr
 <p><span class="math display">\[
 H_0: \beta_q = \beta_{q+1} = \cdots = \beta_{p - 1} = 0.
 \]</span></p>
+<p>This implies that the reduced modesl is nested inside the full model.</p>
 <p>We then define a test statistic, <span class="math inline">\(D\)</span>,</p>
 <p><span class="math display">\[
 D = -2 \log \left( \frac{L(\boldsymbol{\hat{\beta}_{\text{Null}}})} {L(\boldsymbol{\hat{\beta}_{\text{Full}}})} \right) = 2 \log \left( \frac{L(\boldsymbol{\hat{\beta}_{\text{Full}}})} {L(\boldsymbol{\hat{\beta}_{\text{Null}}})} \right) = 2 \left( \ell(\hat{\beta}_{\text{Full}}) - \ell(\hat{\beta}_{\text{Null}})\right)
@@ -833,7 +838,7 @@ D = -2 \log \left( \frac{L(\boldsymbol{\hat{\beta}_{\text{Null}}})} {L(\boldsymb
 <p><span class="math display">\[
 D \overset{\text{approx}}{\sim} \chi^2_{k}
 \]</span></p>
-<p>where <span class="math inline">\(k = p - q\)</span>, the different in number of parameters of the two models.</p>
+<p>where <span class="math inline">\(k = p - q\)</span>, the difference in number of parameters of the two models.</p>
 <p>This test, which we will call the <strong>Likelihood-Ratio Test</strong>, will be the analogue to the ANOVA <span class="math inline">\(F\)</span>-test for logistic regression. Interestingly, to perform the Likelihood-Ratio Test, we’ll actually again use the <code>anova()</code> function in <code>R</code>!.</p>
 <p>The Likelihood-Ratio Test is actually a rather general test, however, here we have presented a specific application to nested logistic regression models.</p>
 </div>
@@ -933,7 +938,7 @@ D \overset{\text{approx}}{\sim} \chi^2_{k}
 </tr>
 </tbody>
 </table>
-<p>This data comes from a retrospective sample of males in a heart-disease high-risk region of the Western Cape, South Africa. The <code>chd</code> variables, which we will use as a response, indicates whether or not coronary heart disease is present in an individual. Note that this is coded as a numeric <code>0</code> / <code>1</code> variable. Using this as a response with <code>glm()</code> it is important to indicate <code>family = binomial</code>, otherwise ordinary linear regression will be fit. Later, we will see the use of a factor variable response, which is actually preferred, as you cannot accidentally fit ordinary linear regression.</p>
+<p>This data comes from a retrospective sample of males in a heart-disease high-risk region of the Western Cape, South Africa. The <code>chd</code> variable, which we will use as a response, indicates whether or not coronary heart disease is present in an individual. Note that this is coded as a numeric <code>0</code> / <code>1</code> variable. Using this as a response with <code>glm()</code> it is important to indicate <code>family = binomial</code>, otherwise ordinary linear regression will be fit. Later, we will see the use of a factor variable response, which is actually preferred, as you cannot accidentally fit ordinary linear regression.</p>
 <p>The predictors are various measurements for each individual, many related to heart health. For example <code>sbp</code>, systolic blood pressure, and <code>ldl</code>, low density lipoprotein cholesterol. For full details, use <code>?SAheart</code>.</p>
 <p>We’ll begin by attempting to model the probability of coronary heart disease based on low density lipoprotein cholesterol. That is, we will fit the model</p>
 <p><span class="math display">\[
@@ -942,6 +947,7 @@ D \overset{\text{approx}}{\sim} \chi^2_{k}
 <pre class="sourceCode r"><code class="sourceCode r">chd_mod_ldl =<span class="st"> </span><span class="kw">glm</span>(chd <span class="op">~</span><span class="st"> </span>ldl, <span class="dt">data =</span> SAheart, <span class="dt">family =</span> binomial)
 <span class="kw">plot</span>(<span class="kw">jitter</span>(chd, <span class="dt">factor =</span> <span class="fl">0.1</span>) <span class="op">~</span><span class="st"> </span>ldl, <span class="dt">data =</span> SAheart, <span class="dt">pch =</span> <span class="dv">20</span>, 
      <span class="dt">ylab =</span> <span class="st">&quot;Probability of CHD&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Low Density Lipoprotein Cholesterol&quot;</span>)
+<span class="kw">grid</span>()
 <span class="kw">curve</span>(<span class="kw">predict</span>(chd_mod_ldl, <span class="kw">data.frame</span>(<span class="dt">ldl =</span> x), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>), 
       <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</code></pre>
 <p><img src="logistic_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -955,7 +961,7 @@ D \overset{\text{approx}}{\sim} \chi^2_{k}
 <p><span class="math display">\[
 H_0: \beta_{\texttt{ldl}} = 0
 \]</span></p>
-<p>we use the <code>summary()</code> function as we have done so many times before. Like the <span class="math inline">\(t\)</span>-test for ordinary linear regression, this returns the estimate of the parameter, its standard error, the relevant test statistic (<span class="math inline">\(z\)</span>), and its p-value. Here we have an incredibly low p-value, so we reject the null hypothesis. <code>ldl</code> appears to be a significant predictor.</p>
+<p>we use the <code>summary()</code> function as we have done so many times before. Like the <span class="math inline">\(t\)</span>-test for ordinary linear regression, this returns the estimate of the parameter, its standard error, the relevant test statistic (<span class="math inline">\(z\)</span>), and its p-value. Here we have an incredibly low p-value, so we reject the null hypothesis. The <code>ldl</code> variable appears to be a significant predictor.</p>
 <p>When fitting logistic regression, we can use the same formula syntax as ordinary linear regression. So, to fit an additive model using all available predictors, we use:</p>
 <pre class="sourceCode r"><code class="sourceCode r">chd_mod_additive =<span class="st"> </span><span class="kw">glm</span>(chd <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> SAheart, <span class="dt">family =</span> binomial)</code></pre>
 <p>We can then use the likelihood-ratio test to compare the two model. Specifically, we are testing</p>
@@ -985,7 +991,7 @@ H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{tobacco}} = \beta_{\texttt{adiposity}
 ##    -6.44644451     0.08037533     0.16199164     0.90817526     0.03711521 
 ##            age 
 ##     0.05046038</code></pre>
-<p>We could again compare this model to the additive model.</p>
+<p>We could again compare this model to the additive models.</p>
 <p><span class="math display">\[
 H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{adiposity}} = \beta_{\texttt{obesity}} = \beta_{\texttt{alcohol}} = 0
 \]</span></p>
@@ -1046,7 +1052,7 @@ eta_hat</code></pre>
 ## 
 ## $residual.scale
 ## [1] 1</code></pre>
-<p>By setting <code>se.fit = TRUE</code>, <code>R</code> also computes <span class="math inline">\(\text{SE}[\hat{\eta}]\)</span>.</p>
+<p>By setting <code>se.fit = TRUE</code>, <code>R</code> also computes <span class="math inline">\(\text{SE}[\hat{\eta}({\bf x})]\)</span>.</p>
 <pre class="sourceCode r"><code class="sourceCode r">z_crit =<span class="st"> </span><span class="kw">round</span>(<span class="kw">qnorm</span>(<span class="fl">0.975</span>), <span class="dv">2</span>)
 <span class="kw">round</span>(z_crit, <span class="dv">2</span>)</code></pre>
 <pre><code>## [1] 1.96</code></pre>
@@ -1170,7 +1176,7 @@ tibble<span class="op">::</span><span class="kw">as.tibble</span>(spam)</code></
 <pre><code>## [1] TRUE</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">levels</span>(spam<span class="op">$</span>type)</code></pre>
 <pre><code>## [1] &quot;nonspam&quot; &quot;spam&quot;</code></pre>
-<p>Many of the predictors (often called features in machine learning) as engineered based on the emails. For example, <code>charDollar</code> is the number of times an email contains the <code>$</code> character. Some variables are highly specific to this dataset, for example <code>george</code> and <code>num650</code>. (The name and area code for one of the researchers whose emails were used.) We should keep in mind that this dataset was created based on emails send to academic type researcher in the 1990s. Any results we derive probably won’t generalize to modern emails for the general public.</p>
+<p>Many of the predictors (often called features in machine learning) are engineered based on the emails. For example, <code>charDollar</code> is the number of times an email contains the <code>$</code> character. Some variables are highly specific to this dataset, for example <code>george</code> and <code>num650</code>. (The name and area code for one of the researchers whose emails were used.) We should keep in mind that this dataset was created based on emails send to academic type researcher in the 1990s. Any results we derive probably won’t generalize to modern emails for the general public.</p>
 <p>To get started, we’ll first test-train split the data.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
 <span class="co"># spam_idx = sample(nrow(spam), round(nrow(spam) / 2))</span>
@@ -1178,11 +1184,15 @@ spam_idx =<span class="st"> </span><span class="kw">sample</span>(<span class="k
 spam_trn =<span class="st"> </span>spam[spam_idx, ]
 spam_tst =<span class="st"> </span>spam[<span class="op">-</span>spam_idx, ]</code></pre>
 <p>We’ve used a somewhat small train set relative to the total size of the dataset. In practice it should likely be larger, but this is simply to keep training time low for illustration and rendering of this document.</p>
-<pre class="sourceCode r"><code class="sourceCode r">fit_caps =<span class="st"> </span><span class="kw">glm</span>(type <span class="op">~</span><span class="st"> </span>capitalTotal, <span class="dt">data =</span> spam_trn, <span class="dt">family =</span> binomial)
-fit_selected =<span class="st"> </span><span class="kw">glm</span>(type <span class="op">~</span><span class="st"> </span>edu <span class="op">+</span><span class="st"> </span>money <span class="op">+</span><span class="st"> </span>capitalTotal <span class="op">+</span><span class="st"> </span>charDollar, <span class="dt">data =</span> spam_trn, <span class="dt">family =</span> binomial)
-fit_additive =<span class="st"> </span><span class="kw">glm</span>(type <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> spam_trn, <span class="dt">family =</span> binomial)
-fit_over =<span class="st"> </span><span class="kw">glm</span>(type <span class="op">~</span><span class="st"> </span>capitalTotal <span class="op">*</span><span class="st"> </span>(.), <span class="dt">data =</span> spam_trn, <span class="dt">family =</span> binomial, <span class="dt">maxit =</span> <span class="dv">50</span>)</code></pre>
-<p>We’ll fit four logistic regression, each more complex than the previous. Note that we’re suppressing two warnings. The first we briefly mentioned previously.</p>
+<pre class="sourceCode r"><code class="sourceCode r">fit_caps =<span class="st"> </span><span class="kw">glm</span>(type <span class="op">~</span><span class="st"> </span>capitalTotal, 
+               <span class="dt">data =</span> spam_trn, <span class="dt">family =</span> binomial)
+fit_selected =<span class="st"> </span><span class="kw">glm</span>(type <span class="op">~</span><span class="st"> </span>edu <span class="op">+</span><span class="st"> </span>money <span class="op">+</span><span class="st"> </span>capitalTotal <span class="op">+</span><span class="st"> </span>charDollar, 
+                   <span class="dt">data =</span> spam_trn, <span class="dt">family =</span> binomial)
+fit_additive =<span class="st"> </span><span class="kw">glm</span>(type <span class="op">~</span><span class="st"> </span>., 
+                   <span class="dt">data =</span> spam_trn, <span class="dt">family =</span> binomial)
+fit_over =<span class="st"> </span><span class="kw">glm</span>(type <span class="op">~</span><span class="st"> </span>capitalTotal <span class="op">*</span><span class="st"> </span>(.), 
+               <span class="dt">data =</span> spam_trn, <span class="dt">family =</span> binomial, <span class="dt">maxit =</span> <span class="dv">50</span>)</code></pre>
+<p>We’ll fit four logistic regressions, each more complex than the previous. Note that we’re suppressing two warnings. The first we briefly mentioned previously.</p>
 <pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
 <p>Note that, when we receive this warning, we should be highly suspicious of the parameter estimates.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(fit_selected)</code></pre>
@@ -1249,8 +1259,12 @@ I(y_i \neq \hat{C}(x)) =
   <span class="kw">table</span>(<span class="dt">predicted =</span> predicted, <span class="dt">actual =</span> actual)
 }</code></pre>
 <p>Let’s explicitly store the predicted values of our classifier on the test dataset.</p>
-<pre class="sourceCode r"><code class="sourceCode r">spam_tst_pred =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_additive, spam_tst) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;spam&quot;</span>, <span class="st">&quot;nonspam&quot;</span>)
-spam_tst_pred =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_additive, spam_tst, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>, <span class="st">&quot;spam&quot;</span>, <span class="st">&quot;nonspam&quot;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">spam_tst_pred =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_additive, spam_tst) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, 
+                       <span class="st">&quot;spam&quot;</span>, 
+                       <span class="st">&quot;nonspam&quot;</span>)
+spam_tst_pred =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_additive, spam_tst, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>, 
+                       <span class="st">&quot;spam&quot;</span>, 
+                       <span class="st">&quot;nonspam&quot;</span>)</code></pre>
 <p>The previous two lines of code produce the same output, that is the same predictions, since</p>
 <p><span class="math display">\[
 \eta({\bf x}) = 0 \iff p({\bf x}) = 0.5
@@ -1272,12 +1286,12 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 <p>Next, we can see that using the classifier create from <code>fit_additive</code>, only a total of <span class="math inline">\(137 + 161 = 298\)</span> from the total of 3601 email in the test set are misclassified. Overall, the accuracy in the test set it</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(spam_tst_pred <span class="op">==</span><span class="st"> </span>spam_tst<span class="op">$</span>type)</code></pre>
 <pre><code>## [1] 0.9172452</code></pre>
-<p>In order words, the test misclassification is</p>
+<p>In other words, the test misclassification is</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(spam_tst_pred <span class="op">!=</span><span class="st"> </span>spam_tst<span class="op">$</span>type)</code></pre>
 <pre><code>## [1] 0.08275479</code></pre>
 <p>This seems like a decent classifier…</p>
 <p>However, are all errors created equal? In this case, absolutely note. The 137 non-spam emails that were marked as spam (false positives) are a problem. We can’t allow important information, say, a job offer, miss our inbox and get sent to the spam folder. On the other hand, the 161 spam email that would make it to an inbox (false negatives) are easily dealt with, just delete them.</p>
-<p>Instead of simply evaluating a classifier based on its misclassification rate (or accuracy), we’ll define two additional metrics, sensitivity and specificity. Note that this are simply two of many more metrics that can be considered. The <a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity" target="_blank">Wikipedia page for sensitivity_and_specificity</a> details a large number of metrics that can be derived form a confusion matrix.</p>
+<p>Instead of simply evaluating a classifier based on its misclassification rate (or accuracy), we’ll define two additional metrics, sensitivity and specificity. Note that this are simply two of many more metrics that can be considered. The <a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity" target="_blank">Wikipedia page for sensitivity and specificity</a> details a large number of metrics that can be derived form a confusion matrix.</p>
 <p><strong>Sensitivity</strong> is essentially the true positive rate. So when sensitivity if high, the number of false negatives is low.</p>
 <p><span class="math display">\[
 \text{Sens} = \text{True Positive Rate} = \frac{\text{TP}}{\text{P}} = \frac{\text{TP}}{\text{TP + FN}}
@@ -1308,7 +1322,9 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 \]</span></p>
 <p>Additionally, if we change the cutoff to improve sensitivity, we’ll decrease specificity, and vice versa.</p>
 <p>First let’s see what happens when we lower the cutoff from <span class="math inline">\(0.5\)</span> to <span class="math inline">\(0.1\)</span> to create a new classifier, and thus new predictions.</p>
-<pre class="sourceCode r"><code class="sourceCode r">spam_tst_pred_<span class="dv">10</span> =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_additive, spam_tst, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.1</span>, <span class="st">&quot;spam&quot;</span>, <span class="st">&quot;nonspam&quot;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">spam_tst_pred_<span class="dv">10</span> =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_additive, spam_tst, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.1</span>, 
+                          <span class="st">&quot;spam&quot;</span>, 
+                          <span class="st">&quot;nonspam&quot;</span>)</code></pre>
 <p>This is essentially <em>decreasing</em> the threshold for an email to be labeled as spam, so far <em>more</em> emails will be labeled as spam. We see that in the following confusion matrix.</p>
 <pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">conf_mat_10 =</span> <span class="kw">make_conf_mat</span>(<span class="dt">predicted =</span> spam_tst_pred_<span class="dv">10</span>, <span class="dt">actual =</span> spam_tst<span class="op">$</span>type))</code></pre>
 <pre><code>##          actual
@@ -1321,14 +1337,16 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_spec</span>(conf_mat_<span class="dv">10</span>)</code></pre>
 <pre><code>## [1] 0.7562872</code></pre>
 <p>This classifier, using <span class="math inline">\(0.1\)</span> instead of <span class="math inline">\(0.5\)</span> has a higher sensitivity, but a much lower specificity. Clearly, we should have moved the cutoff in the other direction. Let’s try <span class="math inline">\(0.9\)</span>.</p>
-<pre class="sourceCode r"><code class="sourceCode r">spam_tst_pred_<span class="dv">90</span> =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_additive, spam_tst, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.9</span>, <span class="st">&quot;spam&quot;</span>, <span class="st">&quot;nonspam&quot;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">spam_tst_pred_<span class="dv">90</span> =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_additive, spam_tst, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.9</span>, 
+                          <span class="st">&quot;spam&quot;</span>, 
+                          <span class="st">&quot;nonspam&quot;</span>)</code></pre>
 <p>This is essentially <em>increasing</em> the threshold for an email to be labeled as spam, so far <em>fewer</em> emails will be labeled as spam. Again, we see that in the following confusion matrix.</p>
 <pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">conf_mat_90 =</span> <span class="kw">make_conf_mat</span>(<span class="dt">predicted =</span> spam_tst_pred_<span class="dv">90</span>, <span class="dt">actual =</span> spam_tst<span class="op">$</span>type))</code></pre>
 <pre><code>##          actual
 ## predicted nonspam spam
 ##   nonspam    2120  447
 ##   spam         67  967</code></pre>
-<p>This is the results we’re looking for. We have far fewer false positives. While sensitivity is greatly reduced, specificity has gone up.</p>
+<p>This is the result we’re looking for. We have far fewer false positives. While sensitivity is greatly reduced, specificity has gone up.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sens</span>(conf_mat_<span class="dv">90</span>)</code></pre>
 <pre><code>## [1] 0.6838755</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_spec</span>(conf_mat_<span class="dv">90</span>)</code></pre>
