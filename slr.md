@@ -177,7 +177,7 @@ $$
 
 This is visually displayed in the image below. We see that for any value $x$, the expected value of $Y$ is $\beta_0 + \beta_1 x$. At each value of $x$, $Y$ has the same variance $\sigma^2$.
 
-![Simple Linear Regression Model [Introductory Statistics (Shafer and Zhang), UC David Stat Wiki](http://statwiki.ucdavis.edu/Textbook_Maps/General_Statistics/Map%3A_Introductory_Statistics_(Shafer_and_Zhang)/10%3A_Correlation_and_Regression/10.3_Modelling_Linear_Relationships_with_Randomness_Present){target="_blank"}](images/model.jpg)
+![Simple Linear Regression Model [Introductory Statistics (Shafer and Zhang), UC Davis Stat Wiki](http://statwiki.ucdavis.edu/Textbook_Maps/General_Statistics/Map%3A_Introductory_Statistics_(Shafer_and_Zhang)/10%3A_Correlation_and_Regression/10.3_Modelling_Linear_Relationships_with_Randomness_Present){target="_blank"}](images/model.jpg)
 
 Often, we directly talk about the assumptions that this model makes. They can be cleverly shortened to **LINE**.  
 
