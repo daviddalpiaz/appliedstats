@@ -238,9 +238,11 @@ $$
 Another way to write this, which is better matches the function we're using to simulate the data:
 
 $$
-Y_i \sim \text{Bern}(p_i) \\
-p_i = p({\bf x_i}) = \frac{1}{1 + e^{-\eta({\bf x_i})}} \\
-\eta({\bf x_i}) = -2 + 3 x_i
+\begin{aligned}
+Y_i &\sim \text{Bern}(p_i) \\
+p_i &= p({\bf x_i}) = \frac{1}{1 + e^{-\eta({\bf x_i})}} \\
+\eta({\bf x_i}) &= -2 + 3 x_i
+\end{aligned}
 $$
 
 
@@ -369,9 +371,11 @@ $$
 Again, we could re-write this to better match the function we're using to simulate the data:
 
 $$
-Y_i \sim \text{Bern}(p_i) \\
-p_i = p({\bf x_i}) = \frac{1}{1 + e^{-\eta({\bf x_i})}} \\
-\eta({\bf x_i}) = 1 + -4 x_i
+\begin{aligned}
+Y_i &\sim \text{Bern}(p_i) \\
+p_i &= p({\bf x_i}) = \frac{1}{1 + e^{-\eta({\bf x_i})}} \\
+\eta({\bf x_i}) &= 1 + -4 x_i
+\end{aligned}
 $$
 
 In this model, as $x$ increases, the log odds decrease.
@@ -427,9 +431,11 @@ $$
 Again, we could re-write this to better match the function we're using to simulate the data:
 
 $$
-Y_i \sim \text{Bern}(p_i) \\
-p_i = p({\bf x_i}) = \frac{1}{1 + e^{-\eta({\bf x_i})}} \\
-\eta({\bf x_i}) = -1.5 + x_i^2
+\begin{aligned}
+Y_i &\sim \text{Bern}(p_i) \\
+p_i &= p({\bf x_i}) = \frac{1}{1 + e^{-\eta({\bf x_i})}} \\
+\eta({\bf x_i}) &= -1.5 + x_i^2
+\end{aligned}
 $$
 
 
