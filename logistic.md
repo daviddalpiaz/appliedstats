@@ -40,11 +40,11 @@ The following table summarizes three examples of a generalized linear model:
 
 |                 |Linear Regression | Poisson Regression | Logistic Regression |
 |-----------------|------------------|--------------------|---------------------|
-| **Distribution of ** $Y \mid {\bf X} = {\bf x}$ | $N(\mu({\bf x}), \sigma^2)$    | $\text{Pois}(\lambda({\bf x}))$          | $\text{Bern}(p({\bf x}))$                                              |
+| $Y \mid {\bf X} = {\bf x}$ | $N(\mu({\bf x}), \sigma^2)$    | $\text{Pois}(\lambda({\bf x}))$          | $\text{Bern}(p({\bf x}))$                                              |
 | **Distribution Name**                           | Normal                         | Poisson                                  | Bernoulli (Binomial)                                                   |
 | $\text{E}[Y \mid {\bf X} = {\bf x}]$            | $\mu({\bf x})$                 | $\lambda({\bf x})$                       | $p({\bf x})$                                                           |
 | **Support**                                     | Real: $(-\infty, \infty)$      | Integer: $0, 1, 2, \ldots$               | Integer: $0, 1$                                                        |
-| **Usage**                                       | Numeric Data                   | Count (Integer) Data                     | Binary (Class: Yes/No) Data                                            |
+| **Usage**                                       | Numeric Data                   | Count (Integer) Data                     | Binary (Class ) Data                                            |
 | **Link Name**                                   | Identity                       | Log                                      | Logit                                                                  |
 | **Link Function**                               | $\eta({\bf x}) = \mu({\bf x})$ | $\eta({\bf x}) = \log(\lambda({\bf x}))$ | $\eta({\bf x}) = \log \left(\frac{p({\bf x})}{1 - p({\bf x})} \right)$          |
 | **Mean Function**                               | $\mu({\bf x}) = \eta({\bf x})$ | $\lambda({\bf x}) = e^{\eta({\bf x})}$   | $p({\bf x}) = \frac{e^{\eta({\bf x})}}{1 + e^{\eta({\bf x})}} = \frac{1}{1 + e^{-\eta({\bf x})}}$ |
