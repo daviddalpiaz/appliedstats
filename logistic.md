@@ -431,7 +431,7 @@ Now let's look at an example where the estimated probability doesn't always simp
 ```r
 sim_quadratic_logistic_data = function(sample_size = 25) {
   x = rnorm(n = sample_size)
-  eta = -1.5 + x ^ 2
+  eta = -1.5 + 0.5 * x + x ^ 2
   p = 1 / (1 + exp(-eta))
   y = rbinom(n = sample_size, size = 1, prob = p)
   data.frame(y, x)
@@ -439,7 +439,7 @@ sim_quadratic_logistic_data = function(sample_size = 25) {
 ```
 
 $$
-\log\left(\frac{p({\bf x})}{1 - p({\bf x})}\right) = -1.5 + x^2.
+\log\left(\frac{p({\bf x})}{1 - p({\bf x})}\right) = -1.5 + 0.5x + x^2.
 $$
 
 Again, we could re-write this to better match the function we're using to simulate the data:
@@ -448,7 +448,7 @@ $$
 \begin{aligned}
 Y_i \mid {\bf X_i} = {\bf x_i} &\sim \text{Bern}(p_i) \\
 p_i &= p({\bf x_i}) = \frac{1}{1 + e^{-\eta({\bf x_i})}} \\
-\eta({\bf x_i}) &= -1.5 + x_i^2
+\eta({\bf x_i}) &= -1.5 + 0.5x_i + x_i^2
 \end{aligned}
 $$
 
@@ -471,7 +471,7 @@ plot(y ~ x, data = example_data,
 grid()
 curve(predict(fit_glm, data.frame(x), type = "response"), 
       add = TRUE, col = "dodgerblue", lty = 2)
-legend("bottomleft", c("Prob", "Data"), lty = c(2, 0), 
+legend("left", c("Prob", "Data"), lty = c(2, 0), 
        pch = c(NA, 20), lwd = 2, col = c("dodgerblue", "black"))
 ```
 
