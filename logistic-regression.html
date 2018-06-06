@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-06-05">
+<meta name="date" content="2018-06-06">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -513,6 +513,13 @@ Y \mid {\bf X} = {\bf x} \sim N(\beta_0 + \beta_1x_1 + \ldots + \beta_{p - 1}x_{
 <div id="binary-response" class="section level2">
 <h2><span class="header-section-number">17.2</span> Binary Response</h2>
 <p>To illustrate the use of a GLM we’ll focus on the case of binary responses variable coded using <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>. In practice, these <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>s will code for two classes such as yes/no, cat/dog, sick/healthy, etc.</p>
+<p><span class="math display">\[
+Y = 
+\begin{cases} 
+      1 &amp; \text{yes} \\
+      0 &amp; \text{no} 
+\end{cases}
+\]</span></p>
 <p>First, we define some notation that we will use throughout.</p>
 <p><span class="math display">\[
 p({\bf x}) = P[Y = 1 \mid {\bf X} = {\bf x}]
@@ -556,6 +563,10 @@ Y \mid {\bf X} = {\bf x} \sim N(\beta_0 + \beta_1x_1 + \ldots + \beta_qx_q, \ \s
 \log\left(\frac{p({\bf x})}{1 - p({\bf x})}\right) = \beta_0 + \beta_1 x_1 + \ldots  + \beta_{q} x_{q}
 \]</span></p>
 <p>So even though we introduced ordinary linear regression first, in some ways, logistic regression is actually simpler.</p>
+<p>Note that appling the inverse logit transformation allow us to obtain an expression for <span class="math inline">\(p({\bf x})\)</span>.</p>
+<p><span class="math display">\[
+p({\bf x}) = P[Y = 1 \mid {\bf X} = {\bf x}] = \frac{e^{\beta_0 + \beta_1 x_{1} + \cdots + \beta_{p-1} x_{(p-1)}}}{1 + e^{\beta_0 + \beta_1 x_{1} + \cdots + \beta_{p-1} x_{(p-1)}}}
+\]</span></p>
 <div id="fitting-logistic-regression" class="section level3">
 <h3><span class="header-section-number">17.2.1</span> Fitting Logistic Regression</h3>
 <p>With <span class="math inline">\(n\)</span> observations, we write the model indexed with <span class="math inline">\(i\)</span> to note that it is being applied to each observation.</p>

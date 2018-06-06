@@ -71,6 +71,14 @@ $$
 
 To illustrate the use of a GLM we'll focus on the case of binary responses variable coded using $0$ and $1$. In practice, these $0$ and $1$s will code for two classes such as yes/no, cat/dog, sick/healthy, etc.
 
+$$
+Y = 
+\begin{cases} 
+      1 & \text{yes} \\
+      0 & \text{no} 
+\end{cases}
+$$
+
 First, we define some notation that we will use throughout.
 
 $$
@@ -135,6 +143,12 @@ $$
 $$
 
 So even though we introduced ordinary linear regression first, in some ways, logistic regression is actually simpler.
+
+Note that appling the inverse logit transformation allow us to obtain an expression for $p({\bf x})$.
+
+$$
+p({\bf x}) = P[Y = 1 \mid {\bf X} = {\bf x}] = \frac{e^{\beta_0 + \beta_1 x_{1} + \cdots + \beta_{p-1} x_{(p-1)}}}{1 + e^{\beta_0 + \beta_1 x_{1} + \cdots + \beta_{p-1} x_{(p-1)}}}
+$$
 
 ### Fitting Logistic Regression
 
