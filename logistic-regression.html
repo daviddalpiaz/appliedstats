@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-06-06">
+<meta name="date" content="2018-06-07">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -359,6 +359,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="17.3.2" data-path="logistic-regression.html"><a href="logistic-regression.html#wald-test"><i class="fa fa-check"></i><b>17.3.2</b> Wald Test</a></li>
 <li class="chapter" data-level="17.3.3" data-path="logistic-regression.html"><a href="logistic-regression.html#likelihood-ratio-test"><i class="fa fa-check"></i><b>17.3.3</b> Likelihood-Ratio Test</a></li>
 <li class="chapter" data-level="17.3.4" data-path="logistic-regression.html"><a href="logistic-regression.html#saheart-example"><i class="fa fa-check"></i><b>17.3.4</b> <code>SAheart</code> Example</a></li>
+<li class="chapter" data-level="17.3.5" data-path="logistic-regression.html"><a href="logistic-regression.html#confidence-intervals-1"><i class="fa fa-check"></i><b>17.3.5</b> Confidence Intervals</a></li>
+<li class="chapter" data-level="17.3.6" data-path="logistic-regression.html"><a href="logistic-regression.html#confidence-intervals-for-mean-response-1"><i class="fa fa-check"></i><b>17.3.6</b> Confidence Intervals for Mean Response</a></li>
+<li class="chapter" data-level="17.3.7" data-path="logistic-regression.html"><a href="logistic-regression.html#formula-syntax"><i class="fa fa-check"></i><b>17.3.7</b> Formula Syntax</a></li>
+<li class="chapter" data-level="17.3.8" data-path="logistic-regression.html"><a href="logistic-regression.html#deviance"><i class="fa fa-check"></i><b>17.3.8</b> Deviance</a></li>
 </ul></li>
 <li class="chapter" data-level="17.4" data-path="logistic-regression.html"><a href="logistic-regression.html#classification"><i class="fa fa-check"></i><b>17.4</b> Classification</a><ul>
 <li class="chapter" data-level="17.4.1" data-path="logistic-regression.html"><a href="logistic-regression.html#spam-example"><i class="fa fa-check"></i><b>17.4.1</b> <code>spam</code> Example</a></li>
@@ -563,7 +567,7 @@ Y \mid {\bf X} = {\bf x} \sim N(\beta_0 + \beta_1x_1 + \ldots + \beta_qx_q, \ \s
 \log\left(\frac{p({\bf x})}{1 - p({\bf x})}\right) = \beta_0 + \beta_1 x_1 + \ldots  + \beta_{q} x_{q}
 \]</span></p>
 <p>So even though we introduced ordinary linear regression first, in some ways, logistic regression is actually simpler.</p>
-<p>Note that appling the inverse logit transformation allow us to obtain an expression for <span class="math inline">\(p({\bf x})\)</span>.</p>
+<p>Note that applying the inverse logit transformation allow us to obtain an expression for <span class="math inline">\(p({\bf x})\)</span>.</p>
 <p><span class="math display">\[
 p({\bf x}) = P[Y = 1 \mid {\bf X} = {\bf x}] = \frac{e^{\beta_0 + \beta_1 x_{1} + \cdots + \beta_{p-1} x_{(p-1)}}}{1 + e^{\beta_0 + \beta_1 x_{1} + \cdots + \beta_{p-1} x_{(p-1)}}}
 \]</span></p>
@@ -846,7 +850,7 @@ z = \frac{\hat{\beta}_j - \beta_j}{\text{SE}[\hat{\beta}_j]} \overset{\text{appr
 <p><span class="math display">\[
 H_0: \beta_q = \beta_{q+1} = \cdots = \beta_{p - 1} = 0.
 \]</span></p>
-<p>This implies that the reduced modesl is nested inside the full model.</p>
+<p>This implies that the reduced model is nested inside the full model.</p>
 <p>We then define a test statistic, <span class="math inline">\(D\)</span>,</p>
 <p><span class="math display">\[
 D = -2 \log \left( \frac{L(\boldsymbol{\hat{\beta}_{\text{Null}}})} {L(\boldsymbol{\hat{\beta}_{\text{Full}}})} \right) = 2 \log \left( \frac{L(\boldsymbol{\hat{\beta}_{\text{Full}}})} {L(\boldsymbol{\hat{\beta}_{\text{Null}}})} \right) = 2 \left( \ell(\hat{\beta}_{\text{Full}}) - \ell(\hat{\beta}_{\text{Null}})\right)
@@ -1022,6 +1026,9 @@ H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{adiposity}} = \beta_{\texttt{obesity}
 ## 1       456     475.69                     
 ## 2       452     472.14  4   3.5455    0.471</code></pre>
 <p>Here it seems that we would prefer the selected model.</p>
+</div>
+<div id="confidence-intervals-1" class="section level3">
+<h3><span class="header-section-number">17.3.5</span> Confidence Intervals</h3>
 <p>We can create confidence intervals for the <span class="math inline">\(\beta\)</span> parameters using the <code>confint()</code> function as we did with ordinary linear regression.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">confint</span>(chd_mod_selected, <span class="dt">level =</span> <span class="fl">0.99</span>)</code></pre>
 <pre><code>## Waiting for profiling to be done...</code></pre>
@@ -1032,7 +1039,15 @@ H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{adiposity}} = \beta_{\texttt{obesity}
 ## famhistPresent  0.330033483  1.49603366
 ## typea           0.006408724  0.06932612
 ## age             0.024847330  0.07764277</code></pre>
-<p>Confidence intervals for the mean response require some additional thought. With a large enough sample, we have</p>
+<p>Note that we could create intervals by rearranging the results of the Wald test to obtain the Wald confidence interval. This would be given by</p>
+<p><span class="math display">\[
+\hat{\beta}_j \pm z_{\alpha/2} \cdot \text{SE}[\hat{\beta}_j].
+\]</span></p>
+<p>However, <code>R</code> is using a slightly different approach based on a concept called the profile likelihood. (The details of which we will omit.) Ultimately the intervals reported will be similar, but the method used by <code>R</code> is more common in practice, probably at least partially because it is the default approach in <code>R</code>. Check to see how intervals using the formula above compare to those from the output of <code>confint()</code>. (Or, note that using <code>confint.default()</code> will return the results of calculating the Wald confidence interval.)</p>
+</div>
+<div id="confidence-intervals-for-mean-response-1" class="section level3">
+<h3><span class="header-section-number">17.3.6</span> Confidence Intervals for Mean Response</h3>
+<p>Confidence intervals for the mean response require some additional thought. With a “large enough” sample, we have</p>
 <p><span class="math display">\[
 \frac{\hat{\eta}({\bf x}) - \eta({\bf x})}{\text{SE}[\hat{\eta}({\bf x})]} \overset{\text{approx}}{\sim} N(0, 1)
 \]</span></p>
@@ -1069,7 +1084,7 @@ eta_hat</code></pre>
 ## 
 ## $residual.scale
 ## [1] 1</code></pre>
-<p>By setting <code>se.fit = TRUE</code>, <code>R</code> also computes <span class="math inline">\(\text{SE}[\hat{\eta}({\bf x})]\)</span>.</p>
+<p>By setting <code>se.fit = TRUE</code>, <code>R</code> also computes <span class="math inline">\(\text{SE}[\hat{\eta}({\bf x})]\)</span>. Note that we used <code>type = &quot;link&quot;</code>, but this is actually a default value. We added it here to stress that the output from <code>predict()</code> will be the value of the link function.</p>
 <pre class="sourceCode r"><code class="sourceCode r">z_crit =<span class="st"> </span><span class="kw">round</span>(<span class="kw">qnorm</span>(<span class="fl">0.975</span>), <span class="dv">2</span>)
 <span class="kw">round</span>(z_crit, <span class="dv">2</span>)</code></pre>
 <pre><code>## [1] 1.96</code></pre>
@@ -1080,6 +1095,12 @@ eta_hat</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">boot<span class="op">::</span><span class="kw">inv.logit</span>(eta_hat<span class="op">$</span>fit <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>z_crit <span class="op">*</span><span class="st"> </span>eta_hat<span class="op">$</span>se.fit)</code></pre>
 <pre><code>## [1] 0.6841792 0.9157570</code></pre>
 <p>Notice, as we would expect, the bounds of this interval are both between 0 and 1. Also, since both bounds of the interval for <span class="math inline">\(\eta({\bf x})\)</span> are positive, both bounds of the interval for <span class="math inline">\(p({\bf x})\)</span> are greater than 0.5.</p>
+</div>
+<div id="formula-syntax" class="section level3">
+<h3><span class="header-section-number">17.3.7</span> Formula Syntax</h3>
+<p>Without really thinking about it, we’ve been using our previous knowledge of <code>R</code>’s model formula syntax to fit logistic regression.</p>
+<div id="interactions-1" class="section level4">
+<h4><span class="header-section-number">17.3.7.1</span> Interactions</h4>
 <p>Let’s add an interaction between LDL and family history for the model we selected.</p>
 <pre class="sourceCode r"><code class="sourceCode r">chd_mod_interaction =<span class="st"> </span><span class="kw">glm</span>(chd <span class="op">~</span><span class="st"> </span>tobacco <span class="op">+</span><span class="st"> </span>ldl <span class="op">+</span><span class="st"> </span>famhist <span class="op">+</span><span class="st"> </span>typea <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>ldl<span class="op">:</span>famhist, 
                           <span class="dt">data =</span> SAheart, <span class="dt">family =</span> binomial)
@@ -1112,8 +1133,62 @@ eta_hat</code></pre>
 ## AIC: 480.9
 ## 
 ## Number of Fisher Scoring iterations: 5</code></pre>
-<p>Based on the <span class="math inline">\(z\)</span>-test seen in the above summary, this interaction is significant. The effect of LDL on probability of CHD is different depending on family history.</p>
-<p>You have probably noticed that the output from <code>summary()</code> is very similar to that of ordinary linear regression. One difference, is the “deviance” being reported. The <code>Null deviance</code> is the deviance for the null model, that is, a model with no predictors. The <code>Residual deviance</code> is the deviance for the mode that was fit.</p>
+<p>Based on the <span class="math inline">\(z\)</span>-test seen in the above summary, this interaction is significant. The effect of LDL on the probability of CHD is different depending on family history.</p>
+</div>
+<div id="polynomial-terms" class="section level4">
+<h4><span class="header-section-number">17.3.7.2</span> Polynomial Terms</h4>
+<p>Let’s take the previous model, and now add a polynomial term.</p>
+<pre class="sourceCode r"><code class="sourceCode r">chd_mod_int_quad =<span class="st"> </span><span class="kw">glm</span>(chd <span class="op">~</span><span class="st"> </span>tobacco <span class="op">+</span><span class="st"> </span>ldl <span class="op">+</span><span class="st"> </span>famhist <span class="op">+</span><span class="st"> </span>typea <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>ldl<span class="op">:</span>famhist <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(ldl<span class="op">^</span><span class="dv">2</span>),
+                       <span class="dt">data =</span> SAheart, <span class="dt">family =</span> binomial)
+<span class="kw">summary</span>(chd_mod_int_quad)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = chd ~ tobacco + ldl + famhist + typea + age + ldl:famhist + 
+##     I(ldl^2), family = binomial, data = SAheart)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.8470  -0.7923  -0.4414   0.9169   2.4916  
+## 
+## Coefficients:
+##                     Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)        -5.748983   1.067452  -5.386 7.22e-08 ***
+## tobacco             0.085046   0.026301   3.234  0.00122 ** 
+## ldl                -0.000253   0.216917  -0.001  0.99907    
+## famhistPresent     -0.779759   0.632197  -1.233  0.21742    
+## typea               0.036906   0.012406   2.975  0.00293 ** 
+## age                 0.051505   0.010365   4.969 6.73e-07 ***
+## I(ldl^2)            0.001321   0.015133   0.087  0.93043    
+## ldl:famhistPresent  0.335716   0.119248   2.815  0.00487 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 596.11  on 461  degrees of freedom
+## Residual deviance: 466.89  on 454  degrees of freedom
+## AIC: 482.89
+## 
+## Number of Fisher Scoring iterations: 5</code></pre>
+<p>Unsurprisingly, since this additional transformed variable wasn’t intelligently chosen, it is not significant. However, this does allow us to stress the fact that the syntax notation that we had been using with <code>lm()</code> works basically exactly the same for <code>glm()</code>, however now we understand that this is specifying the linear combination of predictions, <span class="math inline">\(\eta({\bf x})\)</span>.</p>
+<p>That is, the above fits the model</p>
+<p><span class="math display">\[
+\log\left(\frac{p({\bf x})}{1 - p({\bf x})}\right) = 
+\beta_0 +
+\beta_{1}x_{\texttt{alcohol}} +
+\beta_{2}x_{\texttt{ldl}} +
+\beta_{3}x_{\texttt{famhist}} +
+\beta_{4}x_{\texttt{typea}} +
+\beta_{5}x_{\texttt{age}} +
+\beta_{6}x_{\texttt{ldl}}x_{\texttt{famhist}} +
+\beta_{7}x_{\texttt{ldl}}^2
+\]</span></p>
+<p>You may have realized this before we actually explicitly wrote it down!</p>
+</div>
+</div>
+<div id="deviance" class="section level3">
+<h3><span class="header-section-number">17.3.8</span> Deviance</h3>
+<p>You have probably noticed that the output from <code>summary()</code> is also very similar to that of ordinary linear regression. One difference, is the “deviance” being reported. The <code>Null deviance</code> is the deviance for the null model, that is, a model with no predictors. The <code>Residual deviance</code> is the deviance for the mode that was fit.</p>
 <p><a href="https://en.wikipedia.org/wiki/Deviance_(statistics)%7Btarget=%22_blank%22%7D"><strong>Deviance</strong></a> compares the model to a saturated model. (Without repeated observations, a saturated model is a model that fits perfectly, using a parameter for each observation.) Essentially, deviance is a generalized <em>residual sum of squared</em> for GLMs. Like RSS, deviance decreased as the model complexity increases.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">deviance</span>(chd_mod_ldl)</code></pre>
 <pre><code>## [1] 564.2788</code></pre>
@@ -1121,9 +1196,7 @@ eta_hat</code></pre>
 <pre><code>## [1] 475.6856</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">deviance</span>(chd_mod_additive)</code></pre>
 <pre><code>## [1] 472.14</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">deviance</span>(chd_mod_interaction)</code></pre>
-<pre><code>## [1] 466.8952</code></pre>
-<p>Note that the first three models above are nested, and we see that deviance does decrease as the model size becomes larger. So while a lower deviance is better, if the model becomes too big, it may be overfitting. Note that <code>R</code> also outputs AIC in the summary, which will penalize according to model size, to prevent overfitting.</p>
+<p>Note that these are nested, and we see that deviance does decrease as the model size becomes larger. So while a lower deviance is better, if the model becomes too big, it may be overfitting. Note that <code>R</code> also outputs AIC in the summary, which will penalize according to model size, to prevent overfitting.</p>
 </div>
 </div>
 <div id="classification" class="section level2">

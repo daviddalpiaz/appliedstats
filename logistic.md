@@ -142,7 +142,7 @@ $$
 
 So even though we introduced ordinary linear regression first, in some ways, logistic regression is actually simpler.
 
-Note that appling the inverse logit transformation allow us to obtain an expression for $p({\bf x})$.
+Note that applying the inverse logit transformation allow us to obtain an expression for $p({\bf x})$.
 
 $$
 p({\bf x}) = P[Y = 1 \mid {\bf X} = {\bf x}] = \frac{e^{\beta_0 + \beta_1 x_{1} + \cdots + \beta_{p-1} x_{(p-1)}}}{1 + e^{\beta_0 + \beta_1 x_{1} + \cdots + \beta_{p-1} x_{(p-1)}}}
@@ -559,7 +559,7 @@ $$
 H_0: \beta_q = \beta_{q+1} = \cdots = \beta_{p - 1} = 0.
 $$
 
-This implies that the reduced modesl is nested inside the full model.
+This implies that the reduced model is nested inside the full model.
 
 We then define a test statistic, $D$,
 
@@ -741,6 +741,8 @@ anova(chd_mod_selected, chd_mod_additive, test = "LRT")
 
 Here it seems that we would prefer the selected model.
 
+### Confidence Intervals
+
 We can create confidence intervals for the $\beta$ parameters using the `confint()` function as we did with ordinary linear regression.
 
 
@@ -762,7 +764,17 @@ confint(chd_mod_selected, level = 0.99)
 ## age             0.024847330  0.07764277
 ```
 
-Confidence intervals for the mean response require some additional thought. With a large enough sample, we have
+Note that we could create intervals by rearranging the results of the Wald test to obtain the Wald confidence interval. This would be given by
+
+$$
+\hat{\beta}_j \pm z_{\alpha/2} \cdot \text{SE}[\hat{\beta}_j].
+$$
+
+However, `R` is using a slightly different approach based on a concept called the profile likelihood. (The details of which we will omit.) Ultimately the intervals reported will be similar, but the method used by `R` is more common in practice, probably at least partially because it is the default approach in `R`. Check to see how intervals using the formula above compare to those from the output of `confint()`. (Or, note that using `confint.default()` will return the results of calculating the Wald confidence interval.)
+
+### Confidence Intervals for Mean Response
+
+Confidence intervals for the mean response require some additional thought. With a "large enough" sample, we have
 
 $$
 \frac{\hat{\eta}({\bf x}) - \eta({\bf x})}{\text{SE}[\hat{\eta}({\bf x})]} \overset{\text{approx}}{\sim} N(0, 1)
@@ -819,7 +831,7 @@ eta_hat
 ## [1] 1
 ```
 
-By setting `se.fit = TRUE`, `R` also computes $\text{SE}[\hat{\eta}({\bf x})]$.
+By setting `se.fit = TRUE`, `R` also computes $\text{SE}[\hat{\eta}({\bf x})]$. Note that we used `type = "link"`, but this is actually a default value. We added it here to stress that the output from `predict()` will be the value of the link function.
 
 
 ```r
@@ -854,6 +866,12 @@ boot::inv.logit(eta_hat$fit + c(-1, 1) * z_crit * eta_hat$se.fit)
 ```
 
 Notice, as we would expect, the bounds of this interval are both between 0 and 1. Also, since both bounds of the interval for $\eta({\bf x})$ are positive, both bounds of the interval for $p({\bf x})$ are greater than 0.5.
+
+### Formula Syntax
+
+Without really thinking about it, we've been using our previous knowledge of `R`'s model formula syntax to fit logistic regression. 
+
+#### Interactions
 
 Let's add an interaction between LDL and family history for the model we selected.
 
@@ -895,9 +913,72 @@ summary(chd_mod_interaction)
 ## Number of Fisher Scoring iterations: 5
 ```
 
-Based on the $z$-test seen in the above summary, this interaction is significant. The effect of LDL on probability of CHD is different depending on family history.
+Based on the $z$-test seen in the above summary, this interaction is significant. The effect of LDL on the probability of CHD is different depending on family history.
 
-You have probably noticed that the output from `summary()` is very similar to that of ordinary linear regression. One difference, is the "deviance" being reported. The `Null deviance` is the deviance for the null model, that is, a model with no predictors. The `Residual deviance` is the deviance for the mode that was fit.
+#### Polynomial Terms
+
+Let's take the previous model, and now add a polynomial term.
+
+
+```r
+chd_mod_int_quad = glm(chd ~ tobacco + ldl + famhist + typea + age + ldl:famhist + I(ldl^2),
+                       data = SAheart, family = binomial)
+summary(chd_mod_int_quad)
+```
+
+```
+## 
+## Call:
+## glm(formula = chd ~ tobacco + ldl + famhist + typea + age + ldl:famhist + 
+##     I(ldl^2), family = binomial, data = SAheart)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.8470  -0.7923  -0.4414   0.9169   2.4916  
+## 
+## Coefficients:
+##                     Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)        -5.748983   1.067452  -5.386 7.22e-08 ***
+## tobacco             0.085046   0.026301   3.234  0.00122 ** 
+## ldl                -0.000253   0.216917  -0.001  0.99907    
+## famhistPresent     -0.779759   0.632197  -1.233  0.21742    
+## typea               0.036906   0.012406   2.975  0.00293 ** 
+## age                 0.051505   0.010365   4.969 6.73e-07 ***
+## I(ldl^2)            0.001321   0.015133   0.087  0.93043    
+## ldl:famhistPresent  0.335716   0.119248   2.815  0.00487 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 596.11  on 461  degrees of freedom
+## Residual deviance: 466.89  on 454  degrees of freedom
+## AIC: 482.89
+## 
+## Number of Fisher Scoring iterations: 5
+```
+
+Unsurprisingly, since this additional transformed variable wasn't intelligently chosen, it is not significant. However, this does allow us to stress the fact that the syntax notation that we had been using with `lm()` works basically exactly the same for `glm()`, however now we understand that this is specifying the linear combination of predictions, $\eta({\bf x})$.
+
+That is, the above fits the model
+
+$$
+\log\left(\frac{p({\bf x})}{1 - p({\bf x})}\right) = 
+\beta_0 +
+\beta_{1}x_{\texttt{alcohol}} +
+\beta_{2}x_{\texttt{ldl}} +
+\beta_{3}x_{\texttt{famhist}} +
+\beta_{4}x_{\texttt{typea}} +
+\beta_{5}x_{\texttt{age}} +
+\beta_{6}x_{\texttt{ldl}}x_{\texttt{famhist}} +
+\beta_{7}x_{\texttt{ldl}}^2
+$$
+
+You may have realized this before we actually explicitly wrote it down!
+
+### Deviance
+
+You have probably noticed that the output from `summary()` is also very similar to that of ordinary linear regression. One difference, is the "deviance" being reported. The `Null deviance` is the deviance for the null model, that is, a model with no predictors. The `Residual deviance` is the deviance for the mode that was fit.
 
 [**Deviance**](https://en.wikipedia.org/wiki/Deviance_(statistics){target="_blank"}) compares the model to a saturated model. (Without repeated observations, a saturated model is a model that fits perfectly, using a parameter for each observation.) Essentially, deviance is a generalized *residual sum of squared* for GLMs. Like RSS, deviance decreased as the model complexity increases.
 
@@ -926,15 +1007,7 @@ deviance(chd_mod_additive)
 ## [1] 472.14
 ```
 
-```r
-deviance(chd_mod_interaction)
-```
-
-```
-## [1] 466.8952
-```
-
-Note that the first three models above are nested, and we see that deviance does decrease as the model size becomes larger. So while a lower deviance is better, if the model becomes too big, it may be overfitting. Note that `R` also outputs AIC in the summary, which will penalize according to model size, to prevent overfitting.
+Note that these are nested, and we see that deviance does decrease as the model size becomes larger. So while a lower deviance is better, if the model becomes too big, it may be overfitting. Note that `R` also outputs AIC in the summary, which will penalize according to model size, to prevent overfitting.
 
 ## Classification
 
