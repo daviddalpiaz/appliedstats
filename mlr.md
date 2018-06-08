@@ -1118,7 +1118,7 @@ anova(null_mpg_model, full_mpg_model)
 ## 2    383 4530.5  4     26.18 0.5533 0.6967
 ```
 
-Here we have used the formula `mpg ~ .` to define to full model. This is the same as the commented out line. Specifically, this a common shortcut in `R` which reads, "model `mpg` as the response with each of the remaining variables in the data frame as predictors."
+Here we have used the formula `mpg ~ .` to define to full model. This is the same as the commented out line. Specifically, this is a common shortcut in `R` which reads, "model `mpg` as the response with each of the remaining variables in the data frame as predictors."
 
 Here we see that the value of the $F$ statistic is 0.553, and the p-value is very large, so we fail to reject the null hypothesis at any reasonable $\alpha$ and say that none of `cyl`, `disp`, `hp`, and `acc` are significant with `wt` and `year` already in the model.
 
