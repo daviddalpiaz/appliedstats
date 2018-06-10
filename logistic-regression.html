@@ -1305,13 +1305,13 @@ fit_over =<span class="st"> </span><span class="kw">glm</span>(type <span class=
 <h3><span class="header-section-number">17.4.2</span> Evaluating Classifiers</h3>
 <p>The metric we’ll be most interested in for evaluating the overall performance of a classifier is the <strong>misclassification rate</strong>. (Sometimes, instead accuracy is reported, which is instead the proportion of correction classifications, so both metrics serve the same purpose.)</p>
 <p><span class="math display">\[
-\text{Misclass}(\hat{C}, \text{Data}) = \frac{1}{n}\sum_{i = 1}^{n}I(y_i \neq \hat{C}(\bf x_i))
+\text{Misclass}(\hat{C}, \text{Data}) = \frac{1}{n}\sum_{i = 1}^{n}I(y_i \neq \hat{C}({\bf x_i}))
 \]</span></p>
 <p><span class="math display">\[
-I(y_i \neq \hat{C}(x)) = 
+I(y_i \neq \hat{C}({\bf x_i})) = 
 \begin{cases} 
-  0 &amp; y_i = \hat{C}(x) \\
-  1 &amp; y_i \neq \hat{C}(x) \\
+  0 &amp; y_i = \hat{C}({\bf x_i}) \\
+  1 &amp; y_i \neq \hat{C}({\bf x_i}) \\
 \end{cases}
 \]</span></p>
 <p>When using this metric on the training data, it will have the same issues as RSS did for ordinary linear regression, that is, it will only go down.</p>
