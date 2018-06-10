@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-06-08">
+<meta name="date" content="2018-06-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1213,6 +1213,14 @@ p({\bf x}) = P[Y = 1 \mid {\bf X} = {\bf x}]
 <p>With this information, classifying observations based on the values of the predictors is actually extremely easy. Simply classify an observation to the class (<span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>) with the larger probability. In general, this result is called the <strong>Bayes Classifier</strong>,</p>
 <p><span class="math display">\[
 C^B({\bf x}) = \underset{k}{\mathrm{argmax}} \ P[Y = k \mid {\bf X = x}].
+\]</span></p>
+<p>For a binary response, that is,</p>
+<p><span class="math display">\[
+\hat{C}(\bf x) = 
+\begin{cases} 
+      1 &amp; p({\bf x}) &gt; 0.5 \\
+      0 &amp; p({\bf x}) \leq 0.5 
+\end{cases}
 \]</span></p>
 <p>Simply put, the Bayes classifier (not to be confused with the Naive Bayes Classifier) minimizes the probability of misclassification by classifying each observation to the class with the highest probability. Unfortunately, in practice, we won’t know the necessary probabilities to directly use the Bayes classifier. Instead we’ll have to use estimated probabilities. So to create a classifier that seeks to minimize misclassifications, we would use,</p>
 <p><span class="math display">\[
