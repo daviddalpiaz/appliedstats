@@ -1390,7 +1390,7 @@ get_sens = function(conf_mat) {
 }
 ```
 
-**Specificity** is essentially the true negative rate. So when sensitivity if high, the number of false positives is low.
+**Specificity** is essentially the true negative rate. So when Specificity if high, the number of false positives is low.
 
 $$
 \text{Spec} = \text{True Negative Rate} = \frac{\text{TN}}{\text{N}} = \frac{\text{TN}}{\text{TN + FP}}
