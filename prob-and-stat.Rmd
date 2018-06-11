@@ -89,17 +89,17 @@ Suppose $x_{i} \sim \mathrm{N}(\mu,\sigma^{2})$ and we want to test $H_{0}: \mu 
 
 Assuming $\sigma$ is unknown, we use the one-sample Student's $t$ test statistic:
 
-\[
+$$
 t = \frac{\bar{x}-\mu_{0}}{s/\sqrt{n}} \sim t_{n-1},
-\]
+$$
 
 where $\bar{x} = \displaystyle\frac{\sum_{i=1}^{n}x_{i}}{n}$ and $s = \sqrt{\displaystyle\frac{1}{n - 1}\sum_{i=1}^{n}(x_i - \bar{x})^2}$.
 
 A $100(1 - \alpha)$\% confidence interval for $\mu$ is given by,
 
-\[
+$$
 \bar{x} \pm t_{n-1}(\alpha/2)\frac{s}{\sqrt{n}}
-\]
+$$
 
 where $t_{n-1}(\alpha/2)$ is the critical value such that $P\left(t>t_{n-1}(\alpha/2)\right) = \alpha/2$ for $n-1$ degrees of freedom.
 
@@ -115,9 +115,9 @@ The company that makes *Captain Crisp* cereal claims that the average weight of 
 
 To test $H_{0}: \mu \geq 16$ versus $H_{1}: \mu < 16$, the test statistic is
 
-\[
+$$
 t = \frac{\bar{x} - \mu_{0}}{s / \sqrt{n}}
-\]
+$$
 
 The sample mean $\bar{x}$ and the sample standard deviation $s$ can be easily computed using `R`. We also create variables which store the hypothesized mean and the sample size.
 
@@ -139,9 +139,9 @@ Under the null hypothesis, the test statistic has a $t$ distribution with $n - 1
 
 To complete the test, we need to obtain the p-value of the test. Since this is a one-sided test with a less-than alternative, we need the area to the left of `r t` for a $t$ distribution with `r n - 1` degrees of freedom. That is,
 
-\[
+$$
 P(t_{`r n - 1`} < `r t`)
-\]
+$$
 
 ```{r}
 pt(t, df = n - 1)
@@ -190,9 +190,9 @@ qt(0.975, df = 8)
 
 So, the 95\% CI for the mean weight of a cereal box is calculated by plugging into the formula,
 
-\[
+$$
 \bar{x} \pm t_{n-1}(\alpha/2) \frac{s}{\sqrt{n}}
-\]
+$$
 
 ```{r}
 c(mean(capt_crisp$weight) - qt(0.975, df = 8) * sd(capt_crisp$weight) / sqrt(9),
@@ -207,17 +207,17 @@ Want to test $H_{0}: \mu_{x} - \mu_{y} = \mu_{0}$ versus $H_{1}: \mu_{x} - \mu_{
 
 Assuming $\sigma$ is unknown, use the two-sample Student's $t$ test statistic:
 
-\[
+$$
 t = \frac{(\bar{x} - \bar{y})-\mu_{0}}{s_{p}\sqrt{\frac{1}{n}+\frac{1}{m}}} \sim t_{n+m-2},
-\]
+$$
 
 where $\displaystyle\bar{x}=\frac{\sum_{i=1}^{n}x_{i}}{n}$, $\displaystyle\bar{y}=\frac{\sum_{i=1}^{m}y_{i}}{m}$, and $s_p^2 = \displaystyle\frac{(n-1)s_x^2+(m-1)s_y^2}{n+m-2}$.
 
 A $100(1-\alpha)$\% CI for $\mu_{x}-\mu_{y}$ is given by
 
-\[
+$$
 (\bar{x} - \bar{y}) \pm t_{n+m-2}(\alpha/2) \left(s_{p}\textstyle\sqrt{\frac{1}{n}+\frac{1}{m}}\right),
-\]
+$$
 
 where $t_{n+m-2}(\alpha/2)$ is the critical value such that $P\left(t>t_{n+m-2}(\alpha/2)\right)=\alpha/2$.
 
@@ -250,9 +250,9 @@ s_y   = sd(y)
 
 We can then calculate the pooled standard deviation.
 
-\[
+$$
 s_{p} = \sqrt{\frac{(n-1)s_{x}^{2}+(m-1)s_{y}^{2}}{n+m-2}}
-\]
+$$
 
 ```{r}
 s_p = sqrt(((n - 1) * s_x ^ 2 + (m - 1) * s_y ^ 2) / (n + m - 2))
@@ -260,9 +260,9 @@ s_p = sqrt(((n - 1) * s_x ^ 2 + (m - 1) * s_y ^ 2) / (n + m - 2))
 
 Thus, the relevant $t$ test statistic is given by
 
-\[
+$$
 t = \frac{(\bar{x}-\bar{y})-\mu_{0}}{s_{p}\sqrt{\frac{1}{n}+\frac{1}{m}}}.
-\]
+$$
 
 ```{r}
 t = ((x_bar - y_bar) - 0) / (s_p * sqrt(1 / n + 1 / m))
@@ -271,9 +271,9 @@ t
 
 Note that $t \sim t_{n + m - 2} = t_{`r n + m - 2`}$, so we can calculate the p-value, which is
 
-\[
+$$
 P(t_{`r n + m - 2`} > `r t`).
-\]
+$$
 
 ```{r}
 1 - pt(t, df = n + m - 2)
@@ -324,56 +324,56 @@ One of the biggest strengths of `R` is its ability to carry out simulations usin
 
 Consider the model:
 
-\[
+$$
 \begin{split}
 X_{11}, X_{12}, \ldots, X_{1n} \sim N(\mu_1,\sigma^2)\\
 X_{21}, X_{22}, \ldots, X_{2n} \sim N(\mu_2,\sigma^2)
 \end{split}
-\]
+$$
 
 Assume that $\mu_1 = 6$, $\mu_2 = 5$, $\sigma^2 = 4$ and $n = 25$.
 
 Let
 
-\[
+$$
 \begin{aligned}
 \bar{X}_1 &= \displaystyle\frac{1}{n}\sum_{i=1}^{n}X_{1i}\\
 \bar{X}_2 &= \displaystyle\frac{1}{n}\sum_{i=1}^{n}X_{2i}\\
 D &= \bar{X}_1 - \bar{X}_2.
 \end{aligned}
-\]
+$$
 
 Suppose we would like to calculate $P(0 < D < 2)$. First we will need to obtain the distribution of $D$.
 
 Recall,
 
-\[
+$$
 \bar{X}_1 \sim N\left(\mu_1,\frac{\sigma^2}{n}\right)
-\]
+$$
 
 and
 
-\[
+$$
 \bar{X}_2 \sim N\left(\mu_2,\frac{\sigma^2}{n}\right).
-\]
+$$
 
 Then, 
 
-\[
+$$
 D = \bar{X}_1 - \bar{X}_2 \sim N\left(\mu_1-\mu_2, \frac{\sigma^2}{n} + \frac{\sigma^2}{n}\right) = N\left(6-5, \frac{4}{25} + \frac{4}{25}\right).
-\]
+$$
 
 So, 
 
-\[
+$$
 D \sim N(\mu = 1, \sigma^2 = 0.32).
-\]
+$$
 
 Thus,
 
-\[
+$$
 P(0 < D < 2) = P(D < 2) - P(D < 0).
-\]
+$$
 
 This can then be calculated using `R` without a need to first standardize, or use a table.
 
@@ -455,27 +455,27 @@ For another example of simulation, we will simulate observations from a Poisson 
 
 Recall, if
 
-\[
+$$
 X \sim Pois(\mu)
-\]
+$$
 
 then
 
-\[
+$$
 E[X] = \mu
-\]
+$$
 
 and
 
-\[
+$$
 Var[X] = \mu.
-\]
+$$
 
 Also, recall that for a random variable $X$ with finite mean $\mu$ and finite variance $\sigma^2$, the central limit theorem tells us that the mean, $\bar{X}$ of a random sample of size $n$ is approximately normal for *large* values of $n$. Specifically, as $n \to \infty$,
 
-\[
+$$
 \bar{X} \overset{d}{\to} N\left(\mu, \frac{\sigma^2}{n}\right).
-\]
+$$
 
 The following verifies this result for a Poisson distribution with $\mu = 10$ and a sample size of $n = 50$.
 

@@ -30,47 +30,47 @@ The first criteria we will discuss is the Akaike Information Criterion, or $\tex
 
 Recall, the maximized log-likelihood of a regression model can be written as
 
-\[
+$$
 \log L(\boldsymbol{\hat{\beta}}, \hat{\sigma}^2) = -\frac{n}{2}\log(2\pi) - \frac{n}{2}\log\left(\frac{\text{RSS}}{n}\right) - \frac{n}{2},
-\]
+$$
 
 where $\text{RSS} = \sum_{i=1}^n (y_i - \hat{y}_i) ^ 2$ and $\boldsymbol{\hat{\beta}}$ and $\hat{\sigma}^2$ were chosen to maximize the likelihood.
 
 Then we can define $\text{AIC}$ as
 
-\[
+$$
 \text{AIC} = -2 \log L(\boldsymbol{\hat{\beta}}, \hat{\sigma}^2) + 2p = n + n \log(2\pi) + n \log\left(\frac{\text{RSS}}{n}\right) + 2p,
-\]
+$$
 
 which is a measure of quality of the model. The smaller the $\text{AIC}$, the better. To see why, let's talk about the two main components of $\text{AIC}$, the **likelihood** (which measures "goodness-of-fit") and the **penalty** (which is a function of the size of the model).
 
 The likelihood portion of $\text{AIC}$ is given by
 
-\[
+$$
 -2 \log L(\boldsymbol{\hat{\beta}}, \hat{\sigma}^2) = n + n \log(2\pi) + n \log\left(\frac{\text{RSS}}{n}\right).
-\]
+$$
 
 For the sake of comparing models, the only term here that will change is $n \log\left(\frac{\text{RSS}}{n}\right)$, which is function of $\text{RSS}$. The 
 
-\[
+$$
 n + n \log(2\pi)
-\]
+$$
 
 terms will be constant across all models applied to the same data. So, when a model fits well, that is, has a low $\text{RSS}$, then this likelihood component will be small.
 
 Similarly, we can discuss the penalty component of $\text{AIC}$ which is,
 
-\[
+$$
 2p,
-\]
+$$
 
 where $p$ is the number of $\beta$ parameters in the model. We call this a penalty, because it is large when $p$ is large, but we are seeking to find a small $\text{AIC}$
 
 Thus, a good model, that is one with a small $\text{AIC}$, will have a good balance between fitting well, and using a small number of parameters. For comparing models
 
-\[
+$$
 \text{AIC} = n\log\left(\frac{\text{RSS}}{n}\right) + 2p
-\]
+$$
 
 is a sufficient expression, as $n + n \log(2\pi)$ is the same across all models for any particular dataset.
 
@@ -78,37 +78,37 @@ is a sufficient expression, as $n + n \log(2\pi)$ is the same across all models 
 
 The Bayesian Information Criterion, or $\text{BIC}$, is similar to $\text{AIC}$, but has a larger penalty. $\text{BIC}$ also quantifies the trade-off between a model which fits well and the number of model parameters, however for a reasonable sample size, generally picks a smaller model than $\text{AIC}$. Again, for model selection use the model with the smallest $\text{BIC}$.
 
-\[
+$$
 \text{BIC} = -2 \log L(\boldsymbol{\hat{\beta}}, \hat{\sigma}^2) + \log(n) p = n + n\log(2\pi) + n\log\left(\frac{\text{RSS}}{n}\right) + \log(n)p.
-\]
+$$
 
 Notice that the $\text{AIC}$ penalty was
 
-\[
+$$
 2p,
-\]
+$$
 
 whereas for $\text{BIC}$, the penalty is 
 
-\[
+$$
 \log(n) p.
-\]
+$$
 
 So, for any dataset where $log(n) > 2$ the $\text{BIC}$ penalty will be larger than the $\text{AIC}$ penalty, thus $\text{BIC}$ will likely prefer a smaller model.  
 
 Note that, sometimes the penalty is considered a general expression of the form
 
-\[
+$$
 k \cdot p.
-\]
+$$
 
 Then, for $\text{AIC}$ $k = 2$, and for $\text{BIC}$ $k = \log(n)$.
 
 For comparing models
 
-\[
+$$
 \text{BIC} = n\log\left(\frac{\text{RSS}}{n}\right) + \log(n)p
-\]
+$$
 
 is again a sufficient expression, as $n + n \log(2\pi)$ is the same across all models for any particular dataset.
 
@@ -116,15 +116,15 @@ is again a sufficient expression, as $n + n \log(2\pi)$ is the same across all m
 
 Recall,
 
-\[
+$$
 R^2 = 1 - \frac{\text{SSE}}{\text{SST}} = 1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2}.
-\]
+$$
 
 We now define
 
-\[
+$$
 R_a^2 = 1 - \frac{\text{SSE}/(n-p)}{\text{SST}/(n-1)} = 1 - \left(  \frac{n-1}{n-p} \right)(1-R^2)
-\]
+$$
 
 which we call the Adjusted $R^2$.
 
@@ -151,9 +151,9 @@ poly_data = make_poly_data()
 
 Here we have generated data where the mean of $Y$ is a quadratic function of a single predictor $x$, specifically,
 
-\[
+$$
 Y = 3 + x + 4 x ^ 2 + \epsilon.
-\]
+$$
 
 We'll now fit two models to this data, one which has the correct form, quadratic, and one that is large, which includes terms up to and including an eighth degree.
 
@@ -184,29 +184,29 @@ sqrt(mean(resid(fit_big) ^ 2))
 
 To correct for this, we will introduce cross-validation. We define the leave-one-out cross-validated RMSE to be
 
-\[
+$$
 \text{RMSE}_{\text{LOOCV}} = \sqrt{\frac{1}{n} \sum_{i=1}^n e_{[i]}^2}.
-\]
+$$
 
 The $e_{[i]}$ are the residual for the $i$th observation, when that observation is **not** used to fit the model.
 
-\[
+$$
 e_{[i]} = y_{i} - \hat{y}_{[i]}
-\]
+$$
 
 That is, the fitted value is calculated as
 
-\[
+$$
 \hat{y}_{[i]} = \boldsymbol{x}_i ^ \top \hat{\beta}_{[i]}
-\]
+$$
 
 where $\hat{\beta}_{[i]}$ are the estimated coefficients when the $i$th observation is removed from the dataset.
 
 In general, to perform this calculation, we would be required to fit the model $n$ times, once with each possible observation removed. However, for leave-one-out cross-validation and linear models, the equation can be rewritten as
 
-\[
+$$
 \text{RMSE}_{\text{LOOCV}} = \sqrt{\frac{1}{n}\sum_{i=1}^n \left(\frac{e_{i}}{1-h_{i}}\right)^2},
-\]
+$$
 
 where $h_i$ are the leverages and $e_i$ are the usual residuals. This is great, because now we can obtain the LOOCV $\text{RMSE}$ by fitting only one model! In practice 5 or 10 fold cross-validation are much more popular. For example, in 5-fold cross-validation, the model is fit 5 times, each time leaving out a fifth of the data, then predicting on those values. We'll leave in-depth examination of cross-validation to a machine learning course, and simply use LOOCV here.
 
@@ -255,9 +255,9 @@ coef(hipcenter_mod)
 
 Let's return to the `seatpos` data from the `faraway` package. Now, let's consider only models with first order terms, thus no interactions and no polynomials. There are *eight* predictors in this model. So if we consider all possible models, ranging from using 0 predictors, to all eight predictors, there are 
 
-\[
+$$
 \sum_{k = 0}^{p - 1} {{p - 1} \choose {k}} = 2 ^ {p - 1} = 2 ^ 8 = 256
-\]
+$$
 
 possible models.
 
@@ -277,9 +277,9 @@ At each "step", `R` reports the current model, its $\text{AIC}$, and the possibl
 
 In this example, at the first step, the current model is `hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg` which has an AIC of `283.62`. Note that when `R` is calculating this value, it is using `extractAIC()`, which uses the expression
 
-\[
+$$
 \text{AIC} = n\log\left(\frac{\text{RSS}}{n}\right) + 2p,
-\]
+$$
 
 which we quickly verify.
 
@@ -466,9 +466,9 @@ n = length(resid(hipcenter_mod))
 
 We'll use the form of $\text{AIC}$ which leaves out the constant term that is equal across all models.
 
-\[
+$$
 \text{AIC} = n\log\left(\frac{\text{RSS}}{n}\right) + 2p.
-\]
+$$
 
 Since we have the $\text{RSS}$ of each model stored, this is easy to calculate.
 
@@ -508,9 +508,9 @@ plot(hipcenter_mod_aic ~ I(2:p), ylab = "AIC", xlab = "p, number of parameters",
 
 We could easily repeat this process for $\text{BIC}$.
 
-\[
+$$
 \text{BIC} = n\log\left(\frac{\text{RSS}}{n}\right) + \log(n)p.
-\]
+$$
 
 ```{r}
 hipcenter_mod_bic = n * log(all_hipcenter_mod$rss / n) + log(n) * (2:p)

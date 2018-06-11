@@ -78,31 +78,31 @@ However, from the fitted versus residuals plot it appears there is non-constant 
 
 Recall the fitted value is our estimate of the mean at a particular value of $x$. Under our usual assumptions,
 
-\[
+$$
   \epsilon \sim N(0,\sigma^2)
-\]
+$$
 
 and thus
 
-\[
+$$
   \text{Var}[Y | X = x] = \sigma^2
-\]
+$$
 
 which is a constant value for any value of $x$.
 
 However, here we see that the variance is a function of the mean,
 
-\[
+$$
   \text{Var}[Y \mid X = x] = h(\text{E}[Y \mid X = x]).
-\]
+$$
 
 In this case, $h$ is some increasing function.
 
 In order to correct for this, we would like to find some function of $Y$, $g(Y)$ such that,
 
-\[
+$$
   \text{Var}[g(Y) \mid X = x] = c
-\]
+$$
 
 where $c$ is a constant that does not depend on the mean, $\text{E}[Y \mid X = x]$. A transformation that accomplishes this is called a **variance stabilizaing transformation.**
 
@@ -112,15 +112,15 @@ A reminder, that for our purposes, $\log$ and $\ln$ are both the natural log. `R
 
 We will now use a model with a log transformed response for the *Initech* data,
 
-\[
+$$
   \log(Y_i) = \beta_0 + \beta_1 x_i + \epsilon_i.
-\]
+$$
 
 Note, if we re-scale the model from a log scale back to the original scale of the data, we now have
 
-\[
+$$
   Y_i = \exp(\beta_0 + \beta_1 x_i) \cdot \exp(\epsilon_i)
-\]
+$$
 
 which has the errors entering the model in a multiplicative fashion.
 
@@ -184,15 +184,15 @@ summary(initech_fit_log)
 
 Again, the transformed response is a *linear* combination of the predictors,
 
-\[
+$$
   \log(\hat{y}(x)) = \hat{\beta}_0 + \hat{\beta}_1 x  = `r round(coef(initech_fit_log)[1], 3)` + `r round(coef(initech_fit_log)[2], 3)`x.
-\]
+$$
 
 But now, if we re-scale the data from a log scale back to the original scale of the data, we now have
 
-\[
+$$
   \hat{y}(x) = \exp(\hat{\beta}_0) \exp(\hat{\beta}_1 x) = \exp(`r round(coef(initech_fit_log)[1], 3)`)\exp(`r round(coef(initech_fit_log)[2], 3)`x).
-\]
+$$
 
 We see that for every one additional year of experience, average salary increases $\exp(`r round(coef(initech_fit_log)[2], 3)`) = `r round(exp(round(coef(initech_fit_log)[2], 3)), 4)`$ times. We are now multiplying, not adding.
 
@@ -202,26 +202,26 @@ While using a $\log$ transform is possibly the most common response variable tra
 
 The Box-Cox method considers a family of transformations on strictly positive response variables,
 
-\[
+$$
 g_\lambda(y) = \left\{
 \begin{array}{lr}\displaystyle\frac{y^\lambda - 1}{\lambda} &  \lambda \neq 0\\
         & \\
        \log(y) &  \lambda = 0
      \end{array}
    \right.
-\]
+$$
 
 The $\lambda$ parameter is chosen by numerically maximizing the log-likelihood,
 
-\[
+$$
   L(\lambda) = -\frac{n}{2}\log(RSS_\lambda / n) + (\lambda -1)\sum \log(y_i).
-\]
+$$
 
 A $100(1 - \alpha)\%$ confidence interval for $\lambda$ is,
 
-\[
+$$
     \left\{ \lambda :  L(\lambda) > L(\hat{\lambda}) - \frac{1}{2}\chi_{1,\alpha}^2  \right\}   
-\]
+$$
 
 which `R` will plot for us to help quickly select an appropriate $\lambda$ value. We often choose a "nice" value from within the confidence interval, instead of the value of $\lambda$ that truly maximizes the likelihood.
 
@@ -252,9 +252,9 @@ boxcox(savings_model, plotit = TRUE, lambda = seq(0.5, 1.5, by = 0.1))
 
 Note that we can specify a range of $\lambda$ values to consider and thus be plotted. We often specify a range that is more visually interesting. Here we see that $\lambda = 1$ is both in the confidence interval, and is extremely close to the maximum. This suggests a transformation of the form
 
-\[
+$$
 \frac{y^\lambda - 1}{\lambda} = \frac{y^1 - 1}{1} = y - 1.
-\]
+$$
 
 This is essentially not a transformation. It would not change the variance or make the model fit better. By subtracting 1 from every value, we would only change the intercept of the model, and the resulting errors would be the same.
 
@@ -292,9 +292,9 @@ boxcox(gala_model, lambda = seq(-0.25, 0.75, by = 0.05), plotit = TRUE)
 
 Using the Box-Cox method, we see that $\lambda = 0.3$ is both in the confidence interval, and is extremely close to the maximum, which suggests a transformation of the form
 
-\[
+$$
 \frac{y^\lambda - 1}{\lambda} = \frac{y^{0.3} - 1}{0.3}.
-\]
+$$
 
 We then fit a model with this transformation applied to the response.
 
@@ -318,9 +318,9 @@ boxcox(initech_fit)
 
 Using the Box-Cox method, we see that $\lambda = 0$ is both in the interval, and extremely close to the maximum, which suggests a transformation of the form
 
-\[
+$$
   \log(y).
-\]
+$$
 
 So the Box-Cox method justifies our previous choice of a $\log$ transform!
 
@@ -420,9 +420,9 @@ plot(sales ~ advert, data = marketing,
 
 We would like to fit the model,
 
-\[
+$$
   Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \epsilon_i
-\]
+$$
 
 where $\epsilon_i \sim N(0,\sigma^2)$ for $i = 1, 2, \cdots 21.$ 
 
@@ -430,7 +430,7 @@ The response $y$ is now a **linear** function of "two" variables which now allow
 
 Thus, our $X$ matrix is,
 
-\[
+$$
   \begin{bmatrix}
   1      & x_1 & x_1^2    \\[3pt]
   1      & x_2  & x_2^2   \\[3pt]
@@ -438,31 +438,31 @@ Thus, our $X$ matrix is,
   \vdots & \vdots & \vdots \\[3pt]
   1      & x_{n}  & x_{n}^2   \\
   \end{bmatrix}
-\]
+$$
 
 We can then proceed to fit the model as we have in the past for multiple linear regression.
 
-\[
+$$
 \hat{\beta} = \left(  X^\top X  \right)^{-1}X^\top y.
-\]
+$$
 
 Our estimates will have the usual properties. The mean is still
 
-\[
+$$
 E[\hat{\beta}] = \beta,
-\]
+$$
 
 and variance
 
-\[
+$$
 \text{Var}[\hat{\beta}] = \sigma^2 \left(  X^\top X  \right)^{-1}.
-\]
+$$
 
 We also maintain the same distributional results
 
-\[
+$$
 \hat{\beta}_j \sim N\left(\beta_j, \sigma^2 C_{jj}  \right).
-\]
+$$
 
 ```{r}
 mark_mod = lm(sales ~ advert, data = marketing)
@@ -489,11 +489,11 @@ Here we verify the parameter estimates were found as we would expect.
 
 We could also add higher order terms, such as a third degree predictor. This is easy to do. Our $X$ matrix simply becomes larger again.
 
-\[
+$$
   Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \beta_3 x_i^3 + \epsilon_i
-\]
+$$
 
-\[
+$$
   \begin{bmatrix}
   1      & x_1 & x_1^2  & x_1^3    \\[3pt]
   1      & x_2  & x_2^2  & x_2^3   \\[3pt]
@@ -501,7 +501,7 @@ We could also add higher order terms, such as a third degree predictor. This is 
   \vdots & \vdots & \vdots & \vdots \\[3pt]
   1      & x_{n}  & x_{n}^2  & x_{n}^3    \\
   \end{bmatrix}
-\]
+$$
 
 ```{r}
 mark_mod_poly3 = lm(sales ~ advert + I(advert ^ 2) + I(advert ^ 3), data = marketing)
@@ -535,9 +535,9 @@ ggplot(data = marketing, aes(x = advert, y = sales)) +
 
 Note we could fit a polynomial of an arbitrary order,
 
-\[
+$$
   Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \cdots + \beta_{p-1}x_i^{p-1} + \epsilon_i
-\]
+$$
 
 However, we should be careful about over-fitting, since with a polynomial of degree one less than the number of observations, it is sometimes possible to fit a model perfectly.
 
@@ -663,9 +663,9 @@ plot(fitted(fit6), resid(fit6), xlab = "Fitted", ylab = "Residuals",
 
 Again the sixth order term is significant with the other terms in the model and here we see less pattern in the residuals plot. Let's now test for which of the previous two models we prefer. We will test
 
-\[
+$$
 H_0: \beta_5 = \beta_6 = 0.
-\]
+$$
 
 ```{r}
 anova(fit4, fit6)

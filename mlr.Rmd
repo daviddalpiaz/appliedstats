@@ -18,9 +18,9 @@ After reading this chapter you will be able to:
 
 The last two chapters we saw how to fit a model that assumed a linear relationship between a response variable and a single predictor variable. Specifically, we defined the simple linear regression model,
 
-\[
+$$
 Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
-\]
+$$
 
 where $\epsilon_i \sim N(0, \sigma^2)$.
 
@@ -59,9 +59,9 @@ We will once again discuss a dataset with information about cars. [This dataset]
 
 For now we will focus on using two variables, `wt` and `year`, as predictor variables. That is, we would like to model the fuel efficiency (`mpg`) of a car as a function of its weight (`wt`) and model year (`year`). To do so, we will define the following linear model,
 
-\[
+$$
 Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \epsilon_i, \qquad i = 1, 2, \ldots, n
-\]
+$$
 
 where $\epsilon_i \sim N(0, \sigma^2)$. In this notation we will define:
 
@@ -98,29 +98,29 @@ scatter3D(x, y, z, pch = 19, cex = 2, col = gg.col(1000), lighting = TRUE,
 
 How do we find such a plane? Well, we would like a plane that is as close as possible to the data points. That is, we would like it to minimize the errors it is making. How will we define these errors? Squared distance of course! So, we would like to minimize
 
-\[
+$$
 f(\beta_0, \beta_1, \beta_2) = \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2}))^2
-\]
+$$
 
 with respect to $\beta_0$, $\beta_1$, and $\beta_2$. How do we do so? It is another straightforward multivariate calculus problem. All we have done is add an extra variable since we did this last time. So again, we take a derivative with respect to each of $\beta_0$, $\beta_1$, and $\beta_2$ and set them equal to zero, then solve the resulting system of equations. That is,
 
-\[
+$$
 \begin{aligned}
 \frac{\partial f}{\partial \beta_0} &= 0 \\
 \frac{\partial f}{\partial \beta_1} &= 0 \\
 \frac{\partial f}{\partial \beta_2} &= 0
 \end{aligned}
-\]
+$$
 
 After doing so, we will once again obtain the **normal equations.**
 
-\[
+$$
 \begin{aligned}
 n \beta_0 + \beta_1 \sum_{i = 1}^{n} x_{i1} + \beta_2 \sum_{i = 1}^{n} x_{i2} &= \sum_{i = 1}^{n} y_i  \\
 \beta_0 \sum_{i = 1}^{n} x_{i1} + \beta_1 \sum_{i = 1}^{n} x_{i1}^2 + \beta_2 \sum_{i = 1}^{n} x_{i1}x_{i2} &= \sum_{i = 1}^{n} x_{i1}y_i \\
 \beta_0 \sum_{i = 1}^{n} x_{i2} + \beta_1 \sum_{i = 1}^{n} x_{i1}x_{i2} + \beta_2 \sum_{i = 1}^{n} x_{i2}^2 &= \sum_{i = 1}^{n} x_{i2}y_i
 \end{aligned}
-\]
+$$
 
 We now have three equations and three variables, which we could solve, or we could simply let `R` solve for us.
 
@@ -129,9 +129,9 @@ mpg_model = lm(mpg ~ wt + year, data = autompg)
 coef(mpg_model)
 ```
 
-\[
+$$
 \hat{y} = `r coef(mpg_model)[1]` + `r coef(mpg_model)[2]` x_1 + `r coef(mpg_model)[3]` x_2
-\]
+$$
 
 Here we have once again fit our model using `lm()`, however we have introduced a new syntactical element. The formula `mpg ~ wt + year` now reads: "model the response variable `mpg` as a linear function of `wt` and `year`". That is, it will estimate an intercept, as well as slope coefficients for `wt` and `year`. We then extract these as we have done before using `coef()`.
 
@@ -147,15 +147,15 @@ Lastly, $\hat{\beta}_2 = `r coef(mpg_model)[3]`$ is our estimate for $\beta_2$, 
 
 In our above example we used two predictor variables, but it will only take a little more work to allow for an arbitrary number of predictor variables and derive their coefficient estimates. We can consider the model,
 
-\[
+$$
 Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)} + \epsilon_i, \qquad i = 1, 2, \ldots, n
-\]
+$$
 
 where $\epsilon_i \sim N(0, \sigma^2)$. In this model, there are $p - 1$ predictor variables, $x_1, x_2, \cdots, x_{p-1}$. There are a total of $p$ $\beta$-parameters and a single parameter $\sigma^2$ for the variance of the errors. (It should be noted that almost as often, authors will use $p$ as the number of predictors, making the total number of $\beta$ parameters $p+1$. This is always something you should be aware of when reading about multiple regression. There is not a standard that is used most often.)
 
 If we were to stack together the $n$ linear equations that represent each $Y_i$ into a column vector, we get the following.
 
-\[
+$$
 \begin{bmatrix}
 Y_1   \\
 Y_2   \\
@@ -183,13 +183,13 @@ Y_n   \\
 \vdots\\
 \epsilon_n   \\
 \end{bmatrix}
-\]
+$$
 
-\[
+$$
 Y = X \beta + \epsilon
-\]
+$$
 
-\[
+$$
 Y = \begin{bmatrix} Y_1 \\ Y_2 \\ \vdots\\ Y_n \end{bmatrix}, \quad
 X = \begin{bmatrix}
 1      & x_{11}    & x_{12}    & \cdots & x_{1(p-1)} \\
@@ -205,23 +205,23 @@ X = \begin{bmatrix}
 \beta_{p-1} \\
 \end{bmatrix}, \quad
 \epsilon = \begin{bmatrix} \epsilon_1 \\ \epsilon_2 \\ \vdots\\ \epsilon_n \end{bmatrix}
-\]
+$$
 
 So now with data,
 
-\[
+$$
 y = \begin{bmatrix} y_1 \\ y_2 \\ \vdots\\ y_n \end{bmatrix}
-\]
+$$
 
 Just as before, we can estimate $\beta$ by minimizing,
 
-\[
+$$
 f(\beta_0, \beta_1, \beta_2, \cdots, \beta_{p-1}) = \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)}))^2,
-\]
+$$
 
 which would require taking $p$ derivatives, which result in following **normal equations**.
 
-\[
+$$
 \begin{bmatrix}
 n                           & \sum_{i = 1}^{n} x_{i1}           & \sum_{i = 1}^{n} x_{i2}           & \cdots & \sum_{i = 1}^{n} x_{i(p-1)}       \\
 \sum_{i = 1}^{n} x_{i1}     & \sum_{i = 1}^{n} x_{i1}^2         & \sum_{i = 1}^{n} x_{i1}x_{i2}     & \cdots & \sum_{i = 1}^{n} x_{i1}x_{i(p-1)} \\
@@ -241,19 +241,19 @@ n                           & \sum_{i = 1}^{n} x_{i1}           & \sum_{i = 1}^{
 \vdots \\
 \sum_{i = 1}^{n} x_{i(p-1)}y_i \\
 \end{bmatrix}
-\]
+$$
 
 The normal equations can be written much more succinctly in matrix notation,
 
-\[
+$$
 X^\top X \beta = X^\top y.
-\]
+$$
 
 We can then solve this expression by multiplying both sides by the inverse of $X^\top X$, which exists, provided the columns of $X$ are linearly independent. Then as always, we denote our solution with a hat.
 
-\[
+$$
 \hat{\beta} = \left(  X^\top X  \right)^{-1}X^\top y
-\]
+$$
 
 To verify that this is what `R` has done for us in the case of two predictors, we create an $X$ matrix. Note that the first column is all 1s, and the remaining columns contain the data.
 
@@ -267,59 +267,59 @@ y = autompg$mpg
 coef(mpg_model)
 ```
 
-\[
+$$
 \hat{\beta} = \begin{bmatrix}
 `r beta_hat[1]`    \\
 `r beta_hat[2]`    \\
 `r beta_hat[3]`    \\
 \end{bmatrix}
-\]
+$$
 
 In our new notation, the fitted values can be written
 
-\[
+$$
 \hat{y} = X \hat{\beta}.
-\]
+$$
 
-\[
+$$
 \hat{y} = \begin{bmatrix} \hat{y}_1 \\ \hat{y}_2 \\ \vdots\\ \hat{y}_n \end{bmatrix}
-\]
+$$
 
 Then, we can create a vector for the residual values,
 
-\[
+$$
 e 
 = \begin{bmatrix} e_1 \\ e_2 \\ \vdots\\ e_n \end{bmatrix} 
 = \begin{bmatrix} y_1 \\ y_2 \\ \vdots\\ y_n \end{bmatrix} - \begin{bmatrix} \hat{y}_1 \\ \hat{y}_2 \\ \vdots\\ \hat{y}_n \end{bmatrix}.
-\]
+$$
 
 And lastly, we can update our estimate for $\sigma^2$.
 
-\[
+$$
 s_e^2 = \frac{\sum_{i=1}^n (y_i - \hat{y}_i)^2}{n - p} = \frac{e^\top e}{n-p}
-\]
+$$
 
 Recall, we like this estimate because it is unbiased, that is,
 
-\[
+$$
 \text{E}[s_e^2] = \sigma^2
-\]
+$$
 
 Note that the change from the SLR estimate to now is in the denominator. Specifically we now divide by $n - p$ instead of $n - 2$. Or actually, we should note that in the case of SLR, there are two $\beta$ parameters and thus $p = 2$. 
 
 Also note that if we fit the model $Y_i = \beta + \epsilon_i$ that $\hat{y} = \bar{y}$ and $p = 1$ and $s_e^2$ would become
 
-\[
+$$
 s_e^2 = \frac{\sum_{i=1}^n (y_i - \bar{y})^2}{n - 1}
-\]
+$$
 
 which is likely the very first sample standard deviation you saw in a mathematical statistics class. The same reason for $n - 1$ in this case, that we estimated one parameter, so we lose one degree of freedom. Now, in general, we are estimating $p$ parameters, the $\beta$ parameters, so we lose $p$ degrees of freedom.
 
 Also, recall that most often we will be interested in $s_e$, the residual standard error as `R` calls it,
 
-\[
+$$
 s_e = \sqrt{\frac{\sum_{i=1}^n (y_i - \hat{y}_i)^2}{n - p}}.
-\]
+$$
 
 In `R`, we could directly access $s_e$ for a fitted model, as we have seen before.
 
@@ -350,60 +350,60 @@ The derivation of the sampling distribution of $\hat{\beta}$ involves the [multi
 
 Our goal now is to obtain the distribution of the $\hat{\beta}$ vector,
 
-\[
+$$
 \hat{\beta} = \begin{bmatrix}
 \hat{\beta}_0 \\
 \hat{\beta}_1 \\
 \hat{\beta}_2 \\
 \vdots \\
 \hat{\beta}_{p-1} \end{bmatrix}
-\]
+$$
 
 Recall from last time that when discussing sampling distributions, we now consider $\hat{\beta}$ to be a random vector, thus we use $Y$ instead of the data vector $y$.
 
-\[
+$$
 \hat{\beta} = \left(  X^\top X  \right)^{-1}X^\top Y
-\]
+$$
 
 Then it is a consequence of the multivariate normal distribution that,
 
-\[
+$$
 \hat{\beta} \sim N\left(\beta, \sigma^2 \left(X^\top X\right)^{-1}  \right).
-\]
+$$
 
 We then have
 
-\[
+$$
 \text{E}[\hat{\beta}] = \beta
-\]
+$$
 
 and for any $\hat{\beta}_j$ we have
 
-\[
+$$
 \text{E}[\hat{\beta}_j] = \beta_j.
-\]
+$$
 
 We also have
 
-\[
+$$
 \text{Var}[\hat{\beta}] = \sigma^2 \left(  X^\top X  \right)^{-1}
-\]
+$$
 
 and for any $\hat{\beta}_j$ we have
 
-\[
+$$
 \text{Var}[\hat{\beta}_j] = \sigma^2 C_{jj}
-\]
+$$
 
 where 
 
-\[
+$$
 C = \left(X^\top X\right)^{-1}
-\]
+$$
 
 and the elements of $C$ are denoted
 
-\[
+$$
 C = \begin{bmatrix}
 C_{00}     & C_{01}     & C_{02}     & \cdots & C_{0(p-1)}     \\
 C_{10}     & C_{11}     & C_{12}     & \cdots & C_{1(p-1)}     \\
@@ -411,33 +411,33 @@ C_{20}     & C_{21}     & C_{22}     & \cdots & C_{2(p-1)}     \\
 \vdots     & \vdots     & \vdots     &        & \vdots         \\
 C_{(p-1)0} & C_{(p-1)1} & C_{(p-1)2} & \cdots & C_{(p-1)(p-1)} \\
 \end{bmatrix}.
-\]
+$$
 
 Essentially, the diagonal elements correspond to the $\beta$ vector.
 
 Then the standard error for the $\hat{\beta}$ vector is given by
 
-\[
+$$
 \text{SE}[\hat{\beta}] = s_e \sqrt{\left(  X^\top X  \right)^{-1}}
-\]
+$$
 
 and for a particular $\hat{\beta}_j$
 
-\[
+$$
 \text{SE}[\hat{\beta}_j] = s_e \sqrt{C_{jj}}.
-\]
+$$
 
 Lastly, each of the $\hat{\beta}_j$ follows a normal distribution,
 
-\[
+$$
 \hat{\beta}_j \sim N\left(\beta_j, \sigma^2 C_{jj}  \right).
-\]
+$$
 
 thus
 
-\[
+$$
 \frac{\hat{\beta}_j - \beta_j}{s_e \sqrt{C_{jj}}} \sim t_{n-p}.
-\]
+$$
 
 Now that we have the necessary distributional results, we can move on to perform tests and make interval estimates.
 
@@ -445,29 +445,29 @@ Now that we have the necessary distributional results, we can move on to perform
 
 The first test we will see is a test for a single $\beta_j$.
 
-\[
+$$
 H_0: \beta_j = 0 \quad \text{vs} \quad H_1: \beta_j \neq 0
-\]
+$$
 
 Again, the test statistic takes the form
 
-\[
+$$
 \text{TS} = \frac{\text{EST} - \text{HYP}}{\text{SE}}.
-\]
+$$
 
 In particular,
 
-\[
+$$
 t = \frac{\hat{\beta}_j - \beta_j}{\text{SE}[\hat{\beta}_j]} = \frac{\hat{\beta}_j-0}{s_e\sqrt{C_{jj}}},
-\]
+$$
 
 which, under the null hypothesis, follows a $t$ distribution with $n - p$ degrees of freedom.
 
 Recall our model for `mpg`, 
 
-\[
+$$
 Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \epsilon_i, \qquad i = 1, 2, \ldots, n
-\]
+$$
 
 where $\epsilon_i \sim N(0, \sigma^2)$. 
 
@@ -476,9 +476,9 @@ where $\epsilon_i \sim N(0, \sigma^2)$.
 
 Then the test
 
-\[
+$$
 H_0: \beta_1 = 0 \quad \text{vs} \quad H_1: \beta_1 \neq 0
-\]
+$$
 
 can be found in the `summary()` output, in particular:
 
@@ -499,21 +499,21 @@ This is important. We are not simply testing whether or not there is a relations
 
 Since $\hat{\beta}_j$ is our estimate for $\beta_j$ and we have
 
-\[
+$$
 \text{E}[\hat{\beta}_j] = \beta_j
-\]
+$$
 
 as well as the standard error,
 
-\[
+$$
 \text{SE}[\hat{\beta}_j] = s_e\sqrt{C_{jj}}
-\]
+$$
 
 and the sampling distribution of $\hat{\beta}_j$ is Normal, then we can easily construct confidence intervals for each of the $\hat{\beta}_j$.
 
-\[
+$$
 \hat{\beta}_j \pm t_{\alpha/2, n - p} \cdot s_e\sqrt{C_{jj}}
-\]
+$$
 
 We can find these in `R` using the same method as before. Now there will simply be additional rows for the additional $\beta$.
 
@@ -525,7 +525,7 @@ confint(mpg_model, level = 0.99)
 
 As we saw in SLR, we can create confidence intervals for the mean response, that is, an interval estimate for $\text{E}[Y \mid X = x]$. In SLR, the mean of $Y$ was only dependent on a single value $x$. Now, in multiple regression, $\text{E}[Y \mid X = x]$ is dependent on the value of each of the predictors, so we define the vector $x_0$ to be, 
 
-\[
+$$
 x_{0} = \begin{bmatrix}
 1 \\
 x_{01} \\
@@ -533,37 +533,37 @@ x_{02} \\
 \vdots \\
 x_{0(p-1)} \\
 \end{bmatrix}.
-\]
+$$
 
 Then our estimate of $\text{E}[Y \mid X = x_0]$ for a set of values $x_0$ is given by
 
-\[
+$$
 \begin{aligned}
 \hat{y}(x_0) &= x_{0}^\top\hat{\beta} \\
 &= \hat{\beta}_0 + \hat{\beta}_1 x_{01} + \hat{\beta}_2 x_{02} + \cdots + \hat{\beta}_{p-1} x_{0(p-1)}.
 \end{aligned}
-\]
+$$
 
 As with SLR, this is an unbiased estimate.
 
-\[
+$$
 \begin{aligned}
 \text{E}[\hat{y}(x_0)] &= x_{0}^\top\beta \\
 &= \beta_0 + \beta_1 x_{01} + \beta_2 x_{02} + \cdots + \beta_{p-1} x_{0(p-1)}
 \end{aligned}
-\]
+$$
 
 To make an interval estimate, we will also need its standard error.
 
-\[
+$$
 \text{SE}[\hat{y}(x_0)] = s_e \sqrt{x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
-\]
+$$
 
 Putting it all together, we obtain a confidence interval for the mean response.
 
-\[
+$$
 \hat{y}(x_0) \pm t_{\alpha/2, n - p} \cdot s_e \sqrt{x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
-\]
+$$
 
 The math has changed a bit, but the process in `R` remains almost identical. Here, we create a data frame for two additional cars. One car that weighs 3500 pounds produced in 1976, as well as a second car that weighs 5000 pounds which was produced in 1981.
 
@@ -610,23 +610,23 @@ x0 = c(1, 3500, 76)
 x0 %*% beta_hat
 ```
 
-\[
+$$
 x_{0} = \begin{bmatrix}
 1    \\
 3500 \\
 76   \\
 \end{bmatrix}
-\]
+$$
 
-\[
+$$
 \hat{\beta} = \begin{bmatrix}
 `r beta_hat[1]`    \\
 `r beta_hat[2]`    \\
 `r beta_hat[3]`    \\
 \end{bmatrix}
-\]
+$$
 
-\[
+$$
 \hat{y}(x_0)  = x_{0}^\top\hat{\beta} = 
 \begin{bmatrix}
 1    &
@@ -638,7 +638,7 @@ x_{0} = \begin{bmatrix}
 `r beta_hat[2]`    \\
 `r beta_hat[3]`    \\
 \end{bmatrix}= `r x0 %*% beta_hat`
-\]
+$$
 
 Also note that, using a particular value for $x_0$, we can essentially extract certain $\hat{\beta}_j$ values.
 
@@ -656,31 +656,31 @@ As with SLR, creating prediction intervals involves one slight change to the sta
 
 Here we use $\hat{y}(x_0)$ to estimate $Y_0$, a new observation of $Y$ at the predictor vector $x_0$.
 
-\[
+$$
 \begin{aligned}
 \hat{y}(x_0) &= x_{0}^\top\hat{\beta} \\
 &= \hat{\beta}_0 + \hat{\beta}_1 x_{01} + \hat{\beta}_2 x_{02} + \cdots + \hat{\beta}_{p-1} x_{0(p-1)}
 \end{aligned}
-\]
+$$
 
-\[
+$$
 \begin{aligned}
 \text{E}[\hat{y}(x_0)] &= x_{0}^\top\beta \\
 &= \beta_0 + \beta_1 x_{01} + \beta_2 x_{02} + \cdots + \beta_{p-1} x_{0(p-1)}
 \end{aligned}
-\]
+$$
 
 As we did with SLR, we need to account for the additional variability of an observation about its mean.
 
-\[
+$$
 \text{SE}[\hat{y}(x_0) + \epsilon] = s_e \sqrt{1 + x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
-\]
+$$
 
 Then we arrive at our updated prediction interval for MLR.
 
-\[
+$$
 \hat{y}(x_0) \pm t_{\alpha/2, n - p} \cdot s_e \sqrt{1 + x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
-\]
+$$
 
 ```{r}
 new_cars
@@ -691,15 +691,15 @@ predict(mpg_model, newdata = new_cars, interval = "prediction", level = 0.99)
 
 The decomposition of variation that we had seen in SLR still holds for MLR.
 
-\[
+$$
 \sum_{i=1}^{n}(y_i - \bar{y})^2 = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2
-\]
+$$
 
 That is,
 
-\[
+$$
 \text{SST} = \text{SSReg} + \text{SSE}.
-\]
+$$
 
 This means that, we can still calculate $R^2$ in the same manner as before, which `R` continues to do automatically.
 
@@ -711,33 +711,33 @@ The interpretation changes slightly as compared to SLR. In this MLR case, we say
 
 In multiple regression, the significance of regression test is
 
-\[
+$$
 H_0: \beta_1 = \beta_2 = \cdots = \beta_{p - 1} = 0.
-\]
+$$
 
 Here, we see that the null hypothesis sets all of the $\beta_j$ equal to 0, *except* the intercept, $\beta_0$. We could then say that the null model, or "model under the null hypothesis" is
 
-\[
+$$
 Y_i = \beta_0 + \epsilon_i.
-\]
+$$
 
 This is a model where the *regression* is insignificant. **None** of the predictors have a significant linear relationship with the response. Notationally, we will denote the fitted values of this model as $\hat{y}_{0i}$, which in this case happens to be:
 
-\[
+$$
 \hat{y}_{0i} = \bar{y}.
-\]
+$$
 
 The alternative hypothesis here is that at least one of the $\beta_j$ from the null hypothesis is not 0.
 
-\[
+$$
 H_1: \text{At least one of } \beta_j \neq 0, j = 1, 2, \cdots, (p-1)
-\]
+$$
 
 We could then say that the full model, or "model under the alternative hypothesis" is
 
-\[
+$$
 Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{(p-1)} x_{i(p-1)} + \epsilon_i
-\]
+$$
 
 This is a model where the regression is significant. **At least one** of the predictors has a significant linear relationship with the response. There is some linear relationship between $y$ and the predictors, $x_1, x_2, \ldots, x_{p - 1}$.
 
@@ -753,15 +753,15 @@ To develop the $F$ test for the significance of the regression, we will arrange 
 
 In summary, the $F$ statistic is
 
-\[
+$$
 F = \frac{\sum_{i=1}^{n}(\hat{y}_{1i} - \bar{y})^2 / (p - 1)}{\sum_{i=1}^{n}(y_i - \hat{y}_{1i})^2 / (n - p)},
-\]
+$$
 
 and the p-value is calculated as
 
-\[
+$$
 P(F_{p-1, n-p} > F)
-\]
+$$
 
 since we reject for large values of $F$. A large value of the statistic corresponds to a large portion of the variance being explained by the regression. Here $F_{p-1, n-p}$ represents a random variable which follows an $F$ distribution with $p - 1$ and $n - p$ degrees of freedom.
 
@@ -813,25 +813,25 @@ The significance of regression test is actually a special case of testing what w
 
 Consider the following full model,
 
-\[
+$$
 Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{(p-1)} x_{i(p-1)} + \epsilon_i
-\]
+$$
 
 This model has $p - 1$ predictors, for a total of $p$ $\beta$-parameters. We will denote the fitted values of this model as $\hat{y}_{1i}$.
 
 Let the null model be
 
-\[
+$$
 Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{(q-1)} x_{i(q-1)} + \epsilon_i
-\]
+$$
 
 where $q < p$. This model has $q - 1$ predictors, for a total of $q$ $\beta$-parameters. We will denote the fitted values of this model as $\hat{y}_{0i}$.
 
 The difference between these two models can be codified by the null hypothesis of a test.
 
-\[
+$$
 H_0: \beta_q = \beta_{q+1} = \cdots = \beta_{p - 1} = 0.
-\]
+$$
 
 Specifically, the $\beta$-parameters from the full model that are not in the null model are zero. The resulting model, which is nested, is the null model.
 
@@ -843,9 +843,9 @@ We can then perform this test using an $F$-test, which is the result of the foll
 | Full   | $\sum_{i=1}^{n}(y_i - \hat{y}_{1i})^2$          | $n - p$ | $\text{SSE}   / (n - p)$ |             |
 | Null   | $\sum_{i=1}^{n}(y_i - \hat{y}_{0i})^2$          | $n - q$ |                   |             |
 
-\[
+$$
 F = \frac{\sum_{i=1}^{n}(\hat{y}_{1i} - \hat{y}_{0i})^2 / (p - q)}{\sum_{i=1}^{n}(y_i - \hat{y}_{1i})^2 / (n - p)}.
-\]
+$$
 
 Notice that the row for "Diff" compares the sum of the squared differences of the fitted values. The degrees of freedom is then the difference of the number of $\beta$-parameters estimated between the two models.
 
@@ -862,9 +862,9 @@ We'll continue to use `mpg` as the response, but now we will consider two differ
 
 Note that these are nested models, as the null model contains a subset of the predictors from the full model, and no additional predictors. Both models have an intercept $\beta_0$ as well as a coefficient in front of each of the predictors. We could then write the null hypothesis for comparing these two models as,
 
-\[
+$$
 H_0: \beta_{\texttt{cyl}} = \beta_{\texttt{disp}} = \beta_{\texttt{hp}} = \beta_{\texttt{acc}} = 0
-\]
+$$
 
 The alternative is simply that at least one of the $\beta_{j}$ from the null is not 0.
 
@@ -902,9 +902,9 @@ length(resid(null_mpg_model)) - length(coef(null_mpg_model))
 
 Since we ignored the derivation of certain results, we will again use simulation to convince ourselves of some of the above results. In particular, we will simulate samples of size `n = 100` from the model
 
-\[
+$$
 Y_i = 5 + -2 x_{i1} + 6 x_{i2} + \epsilon_i, \qquad i = 1, 2, \ldots, n
-\]
+$$
 
 where $\epsilon_i \sim N(0, \sigma^2 = 16)$. Here we have two predictors, so $p = 3$.
 
@@ -963,9 +963,9 @@ scatter3D(x1, x2, y, pch = 20, cex = 2, col = gg.col(1000), lighting = TRUE,
 
 We then calculate
 
-\[
+$$
 \hat{\beta} = \left(  X^\top X  \right)^{-1}X^\top y.
-\]
+$$
 
 ```{r}
 (beta_hat = C %*% t(X) %*% y)
@@ -995,19 +995,19 @@ So far so good. Everything checks out. Now we will finally simulate from this mo
 
 We expect $\hat{\beta}_2$ to follow a normal distribution,
 
-\[
+$$
 \hat{\beta}_2 \sim N\left(\beta_2, \sigma^2 C_{22}  \right).
-\]
+$$
 
 In this case,
 
-\[
+$$
 \hat{\beta}_2 \sim N\left(\mu = `r beta_2`, \sigma^2 = `r sigma^2` \times `r C[2+1, 2+1]` = `r sigma^2 * C[2+1, 2+1]`  \right).
-\]
+$$
 
-\[
+$$
 \hat{\beta}_2 \sim N\left(\mu = `r beta_2`, \sigma^2 = `r sigma^2 * C[2+1, 2+1]`  \right).
-\]
+$$
 
 Note that $C_{22}$ corresponds to the element in the **third** row and **third** column since $\beta_2$ is the **third** parameter in the model and because `R` is indexed starting at `1`. However, we index the $C$ matrix starting at `0` to match the diagonal elements to the corresponding $\beta_j$.
 
@@ -1039,9 +1039,9 @@ beta_2
 
 We also see that the variance of the simulated values is close to the true variance of $\hat{\beta}_2$.
 
-\[
+$$
 \text{Var}[\hat{\beta}_2] = \sigma^2 \cdot C_{22} = `r sigma^2` \times `r C[2+1, 2+1]` = `r sigma^2 * C[2+1, 2+1]`
-\]
+$$
 
 ```{r}
 var(beta_hat_2)

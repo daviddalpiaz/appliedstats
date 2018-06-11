@@ -19,59 +19,59 @@ After reading this chapter you will be able to:
 
 Recall the multiple linear regression model that we have defined.
 
-\[
+$$
 Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)} + \epsilon_i, \qquad i = 1, 2, \ldots, n.
-\]
+$$
 
 Using matrix notation, this model can be written much more succinctly as
 
-\[
+$$
 Y = X \beta + \epsilon.
-\]
+$$
 
 Given data, we found the estimates for the $\beta$ parameters using
 
-\[
+$$
 \hat{\beta} = \left(  X^\top X  \right)^{-1}X^\top y.
-\]
+$$
 
 We than noted that these estimates had mean
 
-\[
+$$
 \text{E}[\hat{\beta}] = \beta,
-\]
+$$
 
 and variance
 
-\[
+$$
 \text{Var}[\hat{\beta}] = \sigma^2 \left(  X^\top X  \right)^{-1}.
-\]
+$$
 
 In particular, an individual parameter, say $\hat{\beta}_j$ had a normal distribution
 
-\[
+$$
 \hat{\beta}_j \sim N\left(\beta_j, \sigma^2 C_{jj}  \right)
-\]
+$$
 
 where $C$ was the matrix defined as
 
-\[
+$$
 C = \left(X^\top X\right)^{-1}.
-\]
+$$
 
 We then used this fact to define
 
-\[
+$$
 \frac{\hat{\beta}_j - \beta_j}{s_e \sqrt{C_{jj}}} \sim t_{n-p},
-\]
+$$
 
 which we used to perform hypothesis testing.
 
 So far we have looked at various metrics such as RMSE, RSE and $R^2$ to determine how well our model fit our data. Each of these in some way considers the expression
 
-\[
+$$
 \sum_{i = 1}^n (y_i - \hat{y}_i)^2.
-\]
+$$
 
 So, essentially each of these looks at how close the data points are to the model. However is that all we care about?
 
@@ -83,9 +83,9 @@ Are these issues that we care about? If all we would like to do is predict, poss
 
 Technically, the assumptions of the model are encoded directly in a model statement such as,
 
-\[
+$$
 Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)} + \epsilon_i
-\]
+$$
 
 where $\epsilon_i \sim N(0, \sigma^2).$
 
@@ -98,15 +98,15 @@ Often, the **assumptions of linear regression**, are stated as,
 
 The linearity assumption is encoded as
 
-\[
+$$
 \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)},
-\]
+$$
 
 while the remaining three, are all encoded in
 
-\[
+$$
 \epsilon_i \sim N(0, \sigma^2),
-\]
+$$
 
 since the $\epsilon_i$ are $iid$ normal random variables with constant variance.
 
@@ -116,17 +116,17 @@ If these assumptions are met, great! We can perform inference, **and it is valid
 
 We'll now look at a number of tools for checking the assumptions of a linear model. To test these tools, we'll use data simulated from three models:
 
-\[
+$$
 \text{Model 1:} \quad Y = 3 + 5x + \epsilon, \quad \epsilon \sim N(0, 1)
-\]
+$$
 
-\[
+$$
 \text{Model 2:} \quad Y = 3 + 5x + \epsilon, \quad \epsilon \sim N(0, x^2)
-\]
+$$
 
-\[
+$$
 \text{Model 3:} \quad Y = 3 + 5x^2 + \epsilon, \quad \epsilon \sim N(0, 25)
-\]
+$$
 
 ```{r}
 sim_1 = function(sample_size = 500) {
@@ -540,35 +540,35 @@ A data point with high **leverage**, is a data point that *could* have a large i
 
 Recall that,
 
-\[
+$$
 \hat{\beta} = \left(X^\top X \right)^{-1} X^\top y.
-\]
+$$
 
 Thus,
 
-\[
+$$
 \hat{y} = X \hat{\beta}   = X \left(X^\top X \right)^{-1} X^\top y
-\]
+$$
 
 Now we define,
 
-\[
+$$
 H = X \left(X^\top X\right)^{-1} X^\top
-\]
+$$
 
 which we will refer to as the *hat matrix*. The hat matrix is used to project onto the subspace spanned by the columns of $X$. It is also simply known as a projection matrix.
 
 The hat matrix, is a matrix that takes the original $y$ values, and adds a hat!
 
-\[
+$$
 \hat{y} = H y
-\]
+$$
 
 The diagonal elements of this matrix are called the **leverages**
 
-\[
+$$
 H_{ii} = h_i,
-\]
+$$
 
 where $h_i$ is the leverage for the $i$th observation.
 
@@ -576,27 +576,27 @@ Large values of $h_i$ indicate extreme values in $X$, which may influence regres
 
 Here, $p$ the number of $\beta$s  is also the trace (and rank) of the hat matrix.
 
-\[
+$$
 \sum_{i = 1}^n h_i = p
-\]
+$$
 
 What is a value of $h_i$ that would be considered large? There is no exact answer to this question. A common heuristic would be to compare each leverage to two times the average leverage. A leverage larger than this is considered an observation to be aware of. That is, if
 
-\[
+$$
 h_i > 2 \bar{h}
-\]
+$$
 
 we say that observation $i$ has large leverage. Here,
 
-\[
+$$
 \bar{h} = \frac{\sum_{i = 1}^n h_i}{n} = \frac{p}{n}.
-\]
+$$
 
 For simple linear regression, the leverage for each point is given by
 
-\[
+$$
 h_i = \frac{1}{n} + \frac{(x_i - \bar{x})^2}{S_{xx}}.
-\]
+$$
 
 This expression should be familiar. (Think back to inference for SLR.) It suggests that the large leverages occur when $x$ values are far from their mean. Recall that the regression goes through the point $(\bar{x},\bar{y})$.
 
@@ -708,27 +708,27 @@ Outliers are points which do not fit the model well. They may or may not have a 
 
 Note,
 
-\[
+$$
 e = y - \hat{y} = Iy - Hy = (I - H) y
-\]
+$$
 
 Then, under the assumptions of linear regression,
 
-\[
+$$
 \text{Var}(e_i) = (1 - h_i) \sigma^2
-\]
+$$
 
 and thus estimating $\sigma^2$ with $s_e^2$ gives
 
-\[
+$$
 \text{SE}[e_i] = s_e \sqrt{(1 - h_i)}.
-\]
+$$
 
 We can then look at the **standardized residual** for each observation, $i = 1, 2, \ldots n$,
 
-\[
+$$
 r_i = \frac{e_i}{s_e\sqrt{1 - h_i}} \overset{approx}{\sim} N(\mu = 0, \sigma^ 2 = 1)
-\]
+$$
 
 when $n$ is large.
 
@@ -768,17 +768,17 @@ As we have now seen in the three plots, some outliers only change the regression
 
 A common measure of influence is **Cook's Distance**, which is defined as
 
-\[
+$$
   D_i = \frac{1}{p}r_i^2\frac{h_i}{1-{h_i}}.
-\]
+$$
 
 Notice that this is a function of both *leverage* and *standardized residuals*.
 
 A Cook's Distance is often considered large if
 
-\[
+$$
 D_i > \frac{4}{n}
-\]
+$$
 
 and an observation with a large Cook's Distance is called influential. This is again simply a heuristic, and not an exact rule.
 

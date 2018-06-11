@@ -16,30 +16,30 @@ After reading this chapter you will be able to:
 
 Last chapter we defined the simple linear regression model,
 
-\[
+$$
 Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
-\]
+$$
 
 where $\epsilon_i \sim N(0, \sigma^2)$. We then used observations $(x_i, y_i)$, for $i = 1, 2, \ldots n$, to find values of $\beta_0$ and $\beta_1$ which minimized
 
-\[
+$$
 f(\beta_0, \beta_1) = \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2.
-\]
+$$
 
 We called these values $\hat{\beta}_0$ and $\hat{\beta}_1$, which we found to be
 
-\[
+$$
 \begin{aligned}
 \hat{\beta}_1 &= \frac{S_{xy}}{S_{xx}} = \frac{\sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i = 1}^{n}(x_i - \bar{x})^2}\\
 \hat{\beta}_0 &= \bar{y} - \hat{\beta}_1 \bar{x}.
 \end{aligned}
-\]
+$$
 
 We also estimated $\sigma ^2$ using $s_e^2$. In other words, we found that $s_e$ is an estimate of $\sigma$, where;
 
-\[
+$$
 s_e = \text{RSE} = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
-\]
+$$
 
 which we also called $\text{RSE}$, for "Residual Standard Error."
 
@@ -65,9 +65,9 @@ abline(stop_dist_model, lwd = 5, col = "darkorange")
 
 To get started, we'll note that there is another equivalent expression for $S_{xy}$ which we did not see last chapter,
 
-\[
+$$
 S_{xy}= \sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y}) = \sum_{i = 1}^{n}(x_i - \bar{x}) y_i.
-\]
+$$
 
 This may be a surprising equivalence. (Maybe try to prove it.) However, it will be useful for illustrating concepts in this chapter.
 
@@ -75,12 +75,12 @@ Note that, $\hat{\beta}_1$ is a **sample statistic** when calculated with observ
 
 However, in this chapter it will often be convenient to use both $\hat{\beta}_1$ and $\hat{\beta}_0$ as **random variables**, that is, we have not yet observed the values for each $Y_i$. When this is the case, we will use a slightly different notation, substituting in capital $Y_i$ for lower case $y_i$.
 
-\[
+$$
 \begin{aligned}
 \hat{\beta}_1 &= \frac{\sum_{i = 1}^{n}(x_i - \bar{x}) Y_i}{\sum_{i = 1}^{n}(x_i - \bar{x})^2} \\
 \hat{\beta}_0 &= \bar{Y} - \hat{\beta}_1 \bar{x}
 \end{aligned}
-\]
+$$
 
 Last chapter we argued that these estimates of unknown model parameters $\beta_0$ and $\beta_1$ were good because we obtained them by minimizing errors. We will now discuss the Gauss–Markov theorem which takes this idea further, showing that these estimates are actually the "best" estimates, from a certain point of view.
 
@@ -94,9 +94,9 @@ We will now discuss *linear*, *unbiased*, and *best* as is relates to these esti
 
 Recall, in the SLR setup that the $x_i$ values are considered fixed and known quantities. Then a **linear** estimate is one which can be written as a linear combination of the $Y_i$. In the case of $\hat{\beta}_1$ we see
 
-\[
+$$
 \hat{\beta}_1 = \frac{\sum_{i = 1}^{n}(x_i - \bar{x}) Y_i}{\sum_{i = 1}^{n}(x_i - \bar{x})^2} = \sum_{i = 1}^n k_i Y_i = k_1 Y_1 + k_2 Y_2 + \cdots k_n Y_n
-\]
+$$
 
 where $k_i = \displaystyle\frac{(x_i - \bar{x})}{\sum_{i = 1}^{n}(x_i - \bar{x})^2}$.
 
@@ -108,12 +108,12 @@ Now that we know our estimates are *linear*, how good are these estimates? One m
 
 In the case of the regression estimates, we have,
 
-\[
+$$
 \begin{aligned}
 \text{E}[\hat{\beta}_0] &= \beta_0 \\
 \text{E}[\hat{\beta}_1] &= \beta_1.
 \end{aligned}
-\]
+$$
 
 This tells us that, when the conditions of the SLR model are met, on average our estimates will be correct. However, as we saw last chapter when simulating from the SLR model, that does not mean that each individual estimate will be correct. Only that, if we repeated the process an infinite number of times, on average the estimate would be correct.
 
@@ -123,32 +123,32 @@ Now, if we restrict ourselves to both *linear* and *unbiased* estimates, how do 
 
 First note that it is very easy to create an estimate for $\beta_1$ that has very low variance, but is not unbiased. For example, define:
 
-\[
+$$
 \hat{\theta}_{BAD} = 5.
-\]
+$$
 
 Then, since $\hat{\theta}_{BAD}$ is a constant value,
 
-\[
+$$
 \text{Var}[\hat{\theta}_{BAD}] = 0.
-\]
+$$
 
 However since,
 
-\[
+$$
 \text{E}[\hat{\theta}_{BAD}] = 5
-\]
+$$
 
 we say that $\hat{\theta}_{BAD}$ is a biased estimator unless $\beta_1 = 5$, which we would not know ahead of time. For this reason, it is a terrible estimate (unless by chance $\beta_1 = 5$) even though it has the smallest possible variance. This is part of the reason we restrict ourselves to *unbiased* estimates. What good is an estimate, if it estimates the wrong quantity?
 
 So now, the natural question is, what are the variances of $\hat{\beta}_0$ and $\hat{\beta}_1$? They are,
 
-\[
+$$
 \begin{aligned}
 \text{Var}[\hat{\beta}_0] &= \sigma^2 \left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right) \\
 \text{Var}[\hat{\beta}_1] &= \frac{\sigma^2}{S_{xx}}.
 \end{aligned}
-\]
+$$
 
 These quantify the variability of the estimates due to random chance during sampling. Are these "the best"? Are these variances as small as we can possibility get? You'll just have to take our word for it that they are because showing that this is true is beyond the scope of this course.
 
@@ -162,30 +162,30 @@ Then, putting all of the above together, we arrive at the distributions of $\hat
 
 For $\hat{\beta}_1$ we say,
 
-\[
+$$
 \hat{\beta}_1 = \frac{S_{xy}}{S_{xx}} 
 = \frac{\sum_{i = 1}^{n}(x_i - \bar{x}) Y_i}{\sum_{i = 1}^{n}(x_i - \bar{x})^2}
 \sim N\left(  \beta_1, \ \frac{\sigma^2}{\sum_{i = 1}^{n}(x_i - \bar{x})^2} \right).
-\]
+$$
 
 Or more succinctly,
 
-\[
+$$
 \hat{\beta}_1 \sim N\left(  \beta_1, \frac{\sigma^2}{S_{xx}} \right).
-\]
+$$
 
 And for $\hat{\beta}_0$,
 
-\[
+$$
 \hat{\beta}_0 = \bar{Y} - \hat{\beta}_1 \bar{x} 
 \sim N\left(  \beta_0, \ \frac{\sigma^2 \sum_{i = 1}^{n}x_i^2}{n \sum_{i = 1}^{n}(x_i - \bar{x})^2} \right).
-\]
+$$
 
 Or more succinctly,
 
-\[
+$$
 \hat{\beta}_0 \sim N\left(  \beta_0, \sigma^2 \left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right) \right)
-\]
+$$
 
 At this point we have neglected to prove a number of these results. Instead of working through the tedious derivations of these sampling distributions, we will instead justify these results to ourselves using simulation.
 
@@ -195,9 +195,9 @@ A note to current readers: These derivations and proofs may be added to an appen
 
 To verify the above results, we will simulate samples of size $n = 100$ from the model
 
-\[
+$$
 Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
-\]
+$$
 
 where $\epsilon_i \sim N(0, \sigma^2).$ In this case, the parameters are known to be:
 
@@ -207,15 +207,15 @@ where $\epsilon_i \sim N(0, \sigma^2).$ In this case, the parameters are known t
 
 Then, based on the above, we should find that
 
-\[
+$$
 \hat{\beta}_1 \sim N\left(  \beta_1, \frac{\sigma^2}{S_{xx}} \right)
-\]
+$$
 
 and
 
-\[
+$$
 \hat{\beta}_0 \sim N\left(  \beta_0, \sigma^2 \left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right) \right).
-\]
+$$
 
 First we need to decide ahead of time what our $x$ values will be for this simulation, since the $x$ values in SLR are also considered known quantities. The choice of $x$ values is arbitrary. Here we also set a seed for randomization, and calculate $S_{xx}$ which we will need going forward.
 
@@ -241,33 +241,33 @@ With this information, we know the sampling distributions should be:
 (var_beta_0_hat = sigma ^ 2 * (1 / sample_size + mean(x) ^ 2 / Sxx))
 ```
 
-\[
+$$
 \hat{\beta}_1 \sim N(  `r beta_1`, `r var_beta_1_hat`)
-\]
+$$
 
 and
 
-\[
+$$
 \hat{\beta}_0 \sim N(  `r beta_0`, `r var_beta_0_hat`).
-\]
+$$
 
 That is,
 
-\[
+$$
 \begin{aligned}
 \text{E}[\hat{\beta}_1] &= `r beta_1` \\
 \text{Var}[\hat{\beta}_1] &= `r var_beta_1_hat`
 \end{aligned}
-\]
+$$
 
 and
 
-\[
+$$
 \begin{aligned}
 \text{E}[\hat{\beta}_0] &= `r beta_0` \\
 \text{Var}[\hat{\beta}_0] &= `r var_beta_0_hat`.
 \end{aligned}
-\]
+$$
 
 We now simulate data from this model 10,000 times. Note this may not be the most `R` way of doing the simulation. We perform the simulation in this manner in an attempt at clarity. For example, we could have used the `sim_slr()` function from the previous chapter. We also simply store variables in the global environment instead of creating a data frame for each new simulated dataset.
 
@@ -346,84 +346,84 @@ abline(h = 3, col = "darkorange", lwd = 2)
 
 So now we believe the two distributional results,
 
-\[
+$$
 \begin{aligned}
 \hat{\beta}_0 &\sim N\left(  \beta_0, \sigma^2 \left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right) \right) \\
 \hat{\beta}_1 &\sim N\left(  \beta_1, \frac{\sigma^2}{S_{xx}} \right).
 \end{aligned}
-\]
+$$
 
 Then by standardizing these results we find that
 
-\[
+$$
 \frac{\hat{\beta}_0 - \beta_0}{\text{SD}[\hat{\beta}_0]} \sim N(0, 1)
-\]
+$$
 
 and
 
-\[
+$$
 \frac{\hat{\beta}_1 - \beta_1}{\text{SD}[\hat{\beta}_1]} \sim N(0, 1)
-\]
+$$
 
 where
 
-\[
+$$
 \text{SD}[\hat{\beta}_0] = \sigma\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}
-\]
+$$
 
 and
 
-\[
+$$
 \text{SD}[\hat{\beta}_1] = \frac{\sigma}{\sqrt{S_{xx}}}.
-\]
+$$
 
 Since we don't know $\sigma$ in practice, we will have to estimate it using $s_e$, which we plug into our existing expression for the standard deviations of our estimates.
 
 These two new expressions are called **standard errors** which are the *estimated* standard deviations of the sampling distributions.
 
-\[
+$$
 \text{SE}[\hat{\beta}_0] = s_e\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}
-\]
+$$
 
-\[
+$$
 \text{SE}[\hat{\beta}_1] = \frac{s_e}{\sqrt{S_{xx}}}
-\]
+$$
 
 Now if we divide by the standard error, instead of the standard deviation, we obtain the following results which will allow us to make confidence intervals and perform hypothesis testing.
 
-\[
+$$
 \frac{\hat{\beta}_0 - \beta_0}{\text{SE}[\hat{\beta}_0]} \sim t_{n-2}
-\]
+$$
 
-\[
+$$
 \frac{\hat{\beta}_1 - \beta_1}{\text{SE}[\hat{\beta}_1]} \sim t_{n-2}
-\]
+$$
 
 To see this, first note that,
 
-\[
+$$
 \frac{\text{RSS}}{\sigma^2} = \frac{(n-2)s_e^2}{\sigma^2} \sim \chi_{n-2}^2.
-\]
+$$
 
 Also recall that a random variable $T$ defined as,
 
-\[
+$$
 T = \frac{Z}{\sqrt{\frac{\chi_{d}^2}{d}}}
-\]
+$$
 
 follows a $t$ distribution with $d$ degrees of freedom, where $\chi_{d}^2$ is a $\chi^2$ random variable with $d$ degrees of freedom.
 
 We write,
 
-\[
+$$
 T \sim t_d
-\]
+$$
 
 to say that the random variable $T$ follows a $t$ distribution with $d$ degrees of freedom.
 
 Then we use the classic trick of "multiply by 1" and some rearranging to arrive at
 
-\[
+$$
 \begin{aligned}
 \frac{\hat{\beta}_1 - \beta_1}{\text{SE}[\hat{\beta}_1]} 
 &= \frac{\hat{\beta}_1 - \beta_1}{s_e / \sqrt{S_{xx}}} \\
@@ -434,7 +434,7 @@ Then we use the classic trick of "multiply by 1" and some rearranging to arrive 
 \sim \frac{Z}{\sqrt{\frac{\chi_{n-2}^2}{n-2}}}
 \sim t_{n-2}
 \end{aligned}
-\]
+$$
 
 where $Z \sim N(0,1)$.
 
@@ -461,29 +461,29 @@ legend("topright", title = "Distributions",
 
 Recall that confidence intervals for means often take the form:
 
-\[
+$$
 \text{EST} \pm \text{CRIT} \cdot \text{SE}
-\]
+$$
 
 or
 
-\[
+$$
 \text{EST} \pm \text{MARGIN}
-\]
+$$
 
 where $\text{EST}$ is an estimate for the parameter of interest, $\text{SE}$ is the standard error of the estimate, and $\text{MARGIN} = \text{CRIT} \cdot \text{SE}$.
 
 Then, for $\beta_0$ and $\beta_1$ we can create confidence intervals using
 
-\[
+$$
 \hat{\beta}_0 \pm t_{\alpha/2, n - 2} \cdot \text{SE}[\hat{\beta}_0] \quad \quad \quad \hat{\beta}_0 \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{\frac{1}{n}+\frac{\bar{x}^2}{S_{xx}}}
-\]
+$$
 
 and
 
-\[
+$$
 \hat{\beta}_1 \pm t_{\alpha/2, n - 2} \cdot \text{SE}[\hat{\beta}_1]  \quad \quad \quad \hat{\beta}_1 \pm t_{\alpha/2, n - 2} \cdot \frac{s_e}{\sqrt{S_{xx}}}
-\]
+$$
 
 where $t_{\alpha/2, n - 2}$ is the critical value such that $P(t_{n-2} > t_{\alpha/2, n - 2}) = \alpha/2$.
 
@@ -495,37 +495,37 @@ where $t_{\alpha/2, n - 2}$ is the critical value such that $P(t_{n-2} > t_{\alp
 
 Recall that a test statistic ($\text{TS}$) for testing means often take the form:
 
-\[
+$$
 \text{TS} = \frac{\text{EST} - \text{HYP}}{\text{SE}}
-\]
+$$
 
 where $\text{EST}$ is an estimate for the parameter of interest, $\text{HYP}$ is a hypothesized value of the parameter, and $\text{SE}$ is the standard error of the estimate.
 
 So, to test
 
-\[
+$$
 H_0: \beta_0 = \beta_{00} \quad \text{vs} \quad H_1: \beta_0 \neq \beta_{00}
-\]
+$$
 
 we use the test statistic
 
-\[
+$$
 t = \frac{\hat{\beta}_0 - \beta_{00}}{\text{SE}[\hat{\beta}_0]} = \frac{\hat{\beta}_0-\beta_{00}}{s_e\sqrt{\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}}}
-\]
+$$
 
 which, under the null hypothesis, follows a $t$ distribution with $n - 2$ degrees of freedom. We use $\beta_{00}$ to denote the hypothesized value of $\beta_0$.
 
 Similarly, to test
 
-\[
+$$
 H_0: \beta_1 = \beta_{10} \quad \text{vs} \quad H_1: \beta_1 \neq \beta_{10}
-\]
+$$
 
 we use the test statistic
 
-\[
+$$
 t = \frac{\hat{\beta}_1-\beta_{10}}{\text{SE}[\hat{\beta}_1]} = \frac{\hat{\beta}_1-\beta_{10}}{s_e / \sqrt{S_{xx}}}
-\]
+$$
 
 which again, under the null hypothesis, follows a $t$ distribution with $n - 2$ degrees of freedom. We now use $\beta_{10}$ to denote the hypothesized value of $\beta_1$.
 
@@ -549,15 +549,15 @@ summary(stop_dist_model)$coefficients
 
 The `names()` function tells us what information is available, and then we use the `$` operator and `coefficients` to extract the information we are interested in. Two values here should be immediately familiar.
 
-\[
+$$
 \hat{\beta}_0 = `r summary(stop_dist_model)$coefficients[1,1]`
-\]
+$$
 
 and
 
-\[
+$$
 \hat{\beta}_1 = `r summary(stop_dist_model)$coefficients[2,1]`
-\]
+$$
 
 which are our estimates for the model parameters $\beta_0$ and $\beta_1$.
 
@@ -569,27 +569,27 @@ summary(stop_dist_model)$coefficients[2,]
 
 Again, the first value, `Estimate` is
 
-\[
+$$
 \hat{\beta}_1 = `r summary(stop_dist_model)$coefficients[2,1]`.
-\]
+$$
 
 The second value, `Std. Error`, is the standard error of $\hat{\beta}_1$,
 
-\[
+$$
 \text{SE}[\hat{\beta}_1] = \frac{s_e}{\sqrt{S_{xx}}} = `r summary(stop_dist_model)$coefficients[2,2]`.
-\]
+$$
 
 The third value, `t value`, is the value of the test statistic for testing $H_0: \beta_1 = 0$ vs $H_1: \beta_1 \neq 0$,
 
-\[
+$$
 t = \frac{\hat{\beta}_1-0}{\text{SE}[\hat{\beta}_1]} = \frac{\hat{\beta}_1-0}{s_e / \sqrt{S_{xx}}} = `r summary(stop_dist_model)$coefficients[2,3]`.
-\]
+$$
 
 Lastly, `Pr(>|t|)`, gives us the p-value of that test.
 
-\[
+$$
 \text{p-value} = `r summary(stop_dist_model)$coefficients[2,4]`
-\]
+$$
 
 Note here, we are specifically testing whether or not $\beta_1 = 0$. 
 
@@ -633,21 +633,21 @@ We pause to discuss the **significance of regression** test. First, note that ba
 
 However, one very specific test,
 
-\[
+$$
 H_0: \beta_1 = 0 \quad \text{vs} \quad H_1: \beta_1 \neq 0
-\]
+$$
 
 is used most often. Let's think about this test in terms of the simple linear regression model,
 
-\[
+$$
 Y_i = \beta_0 + \beta_1 x_i + \epsilon_i.
-\]
+$$
 
 If we assume the null hypothesis is true, then $\beta_1 = 0$ and we have the model,
 
-\[
+$$
 Y_i = \beta_0 + \epsilon_i.
-\]
+$$
 
 In this model, the response does **not** depend on the predictor. So then we could think of this test in the following way,
 
@@ -661,9 +661,9 @@ For the `cars` example,
 
 Again, that test is seen in the output from `summary()`, 
 
-\[
+$$
 \text{p-value} = `r summary(stop_dist_model)$coefficients[2,4]`.
-\]
+$$
 
 With this extremely low p-value, we would reject the null hypothesis at any reasonable $\alpha$ level, say for example $\alpha = 0.01$. So we say there is a significant **linear** relationship between speed and stopping distance. Notice that we emphasize **linear**.
 
@@ -728,45 +728,45 @@ In addition to confidence intervals for $\beta_0$ and $\beta_1$, there are two o
 
 In this situation we use $\hat{y}(x)$ as our estimate of $E[Y \mid X = x]$. We modify our notation slightly to make it clear that the the predicted value is a function of the $x$ value.
 
-\[
+$$
 \hat{y}(x) = \hat{\beta}_0 + \hat{\beta}_1 x
-\]
+$$
 
 Recall that,
 
-\[
+$$
 \text{E}[Y \mid X = x] = \beta_0 + \beta_1 x.
-\]
+$$
 
 Thus, $\hat{y}(x)$ is a good estimate since it is unbiased:
 
-\[
+$$
 \text{E}[\hat{y}(x)] = \beta_0 + \beta_1 x.
-\]
+$$
 
 We could then derive,
 
-\[
+$$
 \text{Var}[\hat{y}(x)] = \sigma^2 \left(\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right).
-\]
+$$
 
 Like the other estimates we have seen, $\hat{y}(x)$ also follows a normal distribution. Since $\hat{\beta}_0$ and $\hat{\beta}_1$ are linear combinations of normal random variables, $\hat{y}(x)$ is as well.
 
-\[
+$$
 \hat{y}(x) \sim N \left(\beta_0 + \beta_1 x, \sigma^2 \left(\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right) \right)
-\]
+$$
 
 And lastly, since we need to estimate this variance, we arrive at the standard error of our estimate,
 
-\[
+$$
 \text{SE}[\hat{y}(x)] = s_e \sqrt{\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}.
-\]
+$$
 
 We can then use this to find the confidence interval for the mean response,
 
-\[
+$$
 \hat{y}(x) \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}
-\]
+$$
 
 To find confidence intervals for the mean response using `R`, we use the `predict()` function. We give the function our fitted model as well as new data, stored as a data frame. (This is important, so that `R` knows the name of the predictor variable.) Here, we are finding the confidence interval for the mean stopping distance when a car is travelling 5 miles per hour and when a car is travelling 21 miles per hour.
 
@@ -782,27 +782,27 @@ Sometimes we would like an interval estimate for a new observation, $Y$, for a p
 
 Our best guess for a new observation is still $\hat{y}(x)$. The estimated mean is still the best prediction we can make. The difference is in the amount of variability. We know that observations will vary about the true regression line according to a $N(0, \sigma^2)$ distribution. Because of this we add an extra factor of $\sigma^2$ to our estimate's variability in order to account for the variability of observations about the regression line.
 
-\[
+$$
 \begin{aligned}
 \text{Var}[\hat{y}(x) + \epsilon] &= \text{Var}[\hat{y}(x)] + \text{Var}[\epsilon] \\[2ex]
 &= \sigma^2 \left(\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right) + \sigma^2 \\[2ex]
 &= \sigma^2 \left(1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right)
 \end{aligned}
-\]
+$$
 
-\[
+$$
 \hat{y}(x) + \epsilon \sim N \left(\beta_0 + \beta_1 x, \ \sigma^2 \left(1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}\right) \right)
-\]
+$$
 
-\[
+$$
 \text{SE}[\hat{y}(x) + \epsilon] = s_e \sqrt{1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}
-\]
+$$
 
 We can then find a **prediction interval** using,
 
-\[
+$$
 \hat{y}(x) \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}.
-\]
+$$
 
 To calculate this for a set of points in `R` notice there is only a minor change in syntax from finding a confidence interval for the mean response.
 
@@ -857,15 +857,15 @@ In the case of simple linear regression, the $t$ test for the significance of th
 
 Recall from last chapter the decomposition of variance we saw before calculating $R^2$,
 
-\[
+$$
 \sum_{i=1}^{n}(y_i - \bar{y})^2 = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2,
-\]
+$$
 
 or, in short,
 
-\[
+$$
 \text{SST} = \text{SSReg} + \text{SSE}.
-\]
+$$
 
 To develop the $F$ test, we will arrange this information in an **ANOVA** table,
 
@@ -877,29 +877,29 @@ To develop the $F$ test, we will arrange this information in an **ANOVA** table,
 
 ANOVA, or Analysis of Variance will be a concept we return to often in this course. For now, we will focus on the results of the table, which is the $F$ statistic,
 
-\[
+$$
 F = \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2 / 1}{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2 / (n - 2)} \sim F_{1, n - 2}
-\]
+$$
 
 which follows an $F$ distribution with degrees of freedom $1$ and $n - 2$ under the null hypothesis. An $F$ distribution is a continuous distribution which takes only positive values and has two parameters, which are the two degrees of freedom.
 
 Recall, in the significance of the regression test, $Y$ does **not** depend on $x$ in the null hypothesis.
 
-\[
+$$
 H_0: \beta_1 = 0 \quad \quad Y_i = \beta_0 + \epsilon_i
-\]
+$$
 
 While in the alternative hypothesis $Y$ may depend on $x$.
 
-\[
+$$
 H_1: \beta_1 \neq 0 \quad \quad Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
-\]
+$$
 
 We can use the $F$ statistic to perform this test.
 
-\[
+$$
 F = \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2 / 1}{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2 / (n - 2)}
-\]
+$$
 
 In particular, we will reject the null when the $F$ statistic is large, that is, when there is a low probability that the observations could have come from the null model by chance. We will let `R` calculate the p-value for us.
 

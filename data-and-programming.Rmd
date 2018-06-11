@@ -426,9 +426,9 @@ When this is the case, the `%*%` operator is used to calculate the **dot product
 
 The dot product of vectors $\boldsymbol{a} = \lbrack a_1, a_2, \cdots a_n \rbrack$ and $\boldsymbol{b} = \lbrack b_1, b_2, \cdots b_n \rbrack$ is defined to be
 
-\[
+$$
 \boldsymbol{a} \cdot \boldsymbol{b} = \sum_{i = 1}^{n} a_i b_i = a_1 b_1 + a_2 b_2 + \cdots a_n b_n.
-\]
+$$
 
 ```{r}
 a_vec %*% b_vec # inner product
@@ -466,15 +466,15 @@ tcrossprod(a_vec, b_vec)  # outer product
 
 These functions could be very useful later. When used with matrices $X$ and $Y$ as arguments, it calculates
 
-\[
+$$
 X^\top Y.
-\]
+$$
 
 When dealing with linear models, the calculation
 
-\[
+$$
 X^\top X
-\]
+$$
 
 is used repeatedly.
 
@@ -761,9 +761,9 @@ An **argument** is a variable which is used in the body of the function. Specify
 
 We can also write our own functions in `R`. For example, we often like to "standardize" variables, that is, subtracting the sample mean, and dividing by the sample standard deviation.
 
-\[
+$$
 \frac{x - \bar{x}}{s}
-\]
+$$
 
 In `R` we would write a function to do this. When writing a function, there are three thing you must do.
 
@@ -831,15 +831,15 @@ To further illustrate a function with a default argument, we will write a functi
 
 By default, is will calculate the unbiased estimate of $\sigma^2$, which we will call $s^2$.
 
-\[
+$$
 s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2
-\]
+$$
 
 It will also have the ability to return the biased estimate (based on maximum likelihood) which we will call $\hat{\sigma}^2$.
 
-\[
+$$
 \hat{\sigma}^2 = \frac{1}{n}\sum_{i=1}^{n}(x - \bar{x})^2
-\]
+$$
 
 ```{r}
 get_var = function(x, biased = FALSE) {

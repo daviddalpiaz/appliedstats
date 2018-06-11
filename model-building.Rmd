@@ -12,24 +12,24 @@ Let's take a step back and consider the process of finding a model for data at a
 
 Essentially, we are trying to discover the functional relationship between $y$ and the predictors. In the previous chapter we were fitting models for a car's fuel efficiency (`mpg`) as a function of its attributes (`wt`, `year`, `cyl`, `disp`, `hp`, `acc`). We also consider $y$ to be a function of some noise. Rarely if ever do we expect there to be an *exact* functional relationship between the predictors and the response.
 
-\[
+$$
 y = f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon
-\]
+$$
 
 We can think of this as
 
-\[
+$$
 \text{response} = \text{signal} + \text{noise}.
-\]
+$$
 
 We *could* consider all sorts of complicated functions for $f$. You will likely encounter several ways of doing this in future machine learning courses. So far in this course we have focused on (multiple) linear regression. That is
 
-\[
+$$
 \begin{aligned}
 y &= f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon \\
   &= \beta_0 + \beta_1 x_{1} + \beta_2 x_{2} + \cdots + \beta_{p-1} x_{p-1} + \epsilon
 \end{aligned}
-\]
+$$
 
 In the big picture of possible models that we could fit to this data, this is a rather restrictive model. What do we mean by a restrictive model?
 
@@ -47,29 +47,29 @@ Let's work backwards and discuss each of these.
 
 Consider one of the simplest models we could fit to data, simple linear regression.
 
-\[
+$$
 y = f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon = \beta_0 + \beta_1 x_{1} + \epsilon
-\]
+$$
 
 So here, despite having multiple predictors, we chose to use only one. How is this model **fit**? We will almost exclusively use the method of least squares, but recall, we had seen alternative methods of fitting this model.
 
-\[
+$$
 \underset{\beta_0, \beta_1}{\mathrm{argmin}} \max|y_i - (\beta_0 + \beta_1 x_i)|
-\]
+$$
 
-\[
+$$
 \underset{\beta_0, \beta_1}{\mathrm{argmin}} \sum_{i = 1}^{n}|y_i - (\beta_0 + \beta_1 x_i)|
-\]
+$$
 
-\[
+$$
 \underset{\beta_0, \beta_1}{\mathrm{argmin}} \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2
-\]
+$$
 
 Any of these methods (we will always use the last, least squares) will obtain estimates of the unknown parameters $\beta_0$ and $\beta_1$. Since those are the only unknowns of the specified model, we have then *fit* the model. The fitted model is then
 
-\[
+$$
 \hat{y} = \hat{f}(x_1, x_2, x_3, \ldots, x_{p-1}) = \hat{\beta}_0 + \hat{\beta}_1 x_{1}
-\]
+$$
 
 Note that, now we have dropped the term for the noise. We don't make any effort to model the noise, only the signal.
 
@@ -77,33 +77,33 @@ Note that, now we have dropped the term for the noise. We don't make any effort 
 
 What are the different **forms** a model could take? Currently, for the linear models we have considered, the only method for altering the form of the model is to control the predictors used. For example, one form of the multiple linear regression model is simple linear regression.
 
-\[
+$$
 y = f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon = \beta_0 + \beta_1 x_{1} + \epsilon
-\]
+$$
 
 We could also consider a SLR model with a different predictor, thus altering the form of the model.
 
-\[
+$$
 y = f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon = \beta_0 + \beta_2 x_{2} + \epsilon
-\]
+$$
 
 Often, we'll use multiple predictors in our model. Very often, we will at least try a model with all possible predictors.
 
-\[
+$$
 \begin{aligned}
 y &= f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon \\
   &= \beta_0 + \beta_1 x_{1} + \beta_2 x_{2} + \cdots + \beta_{p-1} x_{p-1} + \epsilon
 \end{aligned}
-\]
+$$
 
 We could also use some, but not all of the predictors.
 
-\[
+$$
 \begin{aligned}
 y &= f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon \\ 
   &= \beta_0 + \beta_1 x_{1} + \beta_3 x_{3} + \beta_5 x_{5} + \epsilon
 \end{aligned}
-\]
+$$
 
 These forms are **restrictive** in two senses. First, they only allow for linear relationships between the response and the predictors. This seems like an obvious restriction of linear models, but in fact, we will soon see how to use linear models for *non-linear* relationships. (It will involve transforming variables.) Second, how one variable affects the response is the same for **any** values of the other predictors. Soon we will see how to create models where the effect of $x_{1}$ can be different for different values of $x_{2}$. We will discuss the concept of *interaction*.
 
@@ -164,9 +164,9 @@ Why the focus on **linear models**? Two big reasons:
 
 When searching for a model, we often need to make assumptions. These assumptions are codified in the **family** and **form** of the model. For example
 
-\[
+$$
 y = \beta_0 + \beta_1 x_{1} + \beta_3 x_{3} + \beta_5 x_{5} + \epsilon
-\]
+$$
 
 assumes that $y$ is a linear combination of $x_{1}$, $x_{3}$, and $x_{5}$ as well as some noise. This assumes that the effect of $x_{1}$ on $y$ is $\beta_1$, which is the same for all values of $x_{3}$ and $x_{5}$. That is, we are using the *family* of linear models with a particular *form*.
 
@@ -179,15 +179,15 @@ fit = lm(y ~ x1 + x3 + x5, data = some_data)
 
 This is `R`'s way of saying the *family* is *linear* and specifying the *form* from above. An additive model with the specified predictors as well as an intercept. We then obtain
 
-\[
+$$
 \hat{y} = 1.5 + 0.9 x_{1} + 1.1 x_{3} + 2.3 x_{5}.
-\]
+$$
 
 This is our best guess for the function $f$ in 
 
-\[
+$$
 y = f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon
-\]
+$$
 
 for the assumed **family** and **form**. Fitting a model only gives us the best fit for the family and form that we specify. So the natural question is; how to we choose the correct family and form? We'll focus on *form* since we are focusing on the *family* of linear models.
 
@@ -209,15 +209,15 @@ Note that *linear* models of any size are rather interpretable to begin with. La
 
 To find small and interpretable models, we will eventually use selection procedures, which search among many possible forms of a model. For now we will do this in a more ad-hoc manner using **inference** techniques we have already encountered. To use inference as we have seen it, we need an additional assumption in addition to the family and form of the model.
 
-\[
+$$
 y = \beta_0 + \beta_1 x_{1} + \beta_3 x_{3} + \beta_5 x_{5} + \epsilon
-\]
+$$
 
 Our additional assumption is about the error term.
 
-\[
+$$
 \epsilon \sim N(0, \sigma^2)
-\]
+$$
 
 This assumption, that the errors are normally distributed with some common variance is the key to all of the inference we have done so far. We will discuss this is great detail later.
 
@@ -259,9 +259,9 @@ We'll discuss this further when we discuss experimental design and traditional A
 
 If the goal of a model is to predict the response, then the **only** consideration is how well the model fits the data. For this, we will need a metric. In regression problems, this is most often RMSE.
 
-\[
+$$
 \text{RMSE}(\text{model, data}) = \sqrt{\frac{1}{n} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2}
-\]
+$$
 
 where
 

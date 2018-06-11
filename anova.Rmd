@@ -45,23 +45,23 @@ The simplest example of an experimental design is the setup for a two-sample $t$
 
 Mathematically, we consider the model
 
-\[
+$$
 y_{ij} \sim N(\mu_i, \sigma^2)
-\]
+$$
 
 where $i = 1, 2$ for the two groups and $j = 1, 2, \ldots n_i$. Here $n_i$ is the number of subjects in group $i$. So $y_{13}$ would be the measurement for the third member of the first group.
 
 So measurements of subjects in group $1$ follow a normal distribution with mean $\mu_1$.
 
-\[
+$$
 y_{1j} \sim N(\mu_1, \sigma^2)
-\]
+$$
 
 Then measurements of subjects in group $2$ follow a normal distribution with mean $\mu_2$.
 
-\[
+$$
 y_{2j} \sim N(\mu_2, \sigma^2)
-\]
+$$
 
 This model makes a number of assumptions. Specifically, 
 
@@ -75,9 +75,9 @@ The natural question to ask: Is there a difference between the two groups? The s
 
 Mathematically, that is
 
-\[
+$$
 H_0: \mu_1 = \mu_2 \quad \text{vs} \quad H_1: \mu_1 \neq \mu_2
-\]
+$$
 
 For the stated model and assuming the null hypothesis is true, the $t$ test statistic would follow a $t$ distribution with degrees of freedom $n_1 + n_2 - 2$.
 
@@ -100,9 +100,9 @@ melatonin
 
 Here, we would like to test,
 
-\[
+$$
 H_0: \mu_C = \mu_T \quad \text{vs} \quad H_1: \mu_C \neq \mu_T
-\]
+$$
 
 To do so in `R`, we use the `t.test()` function, with the `var.equal` argument set to `TRUE`.
 
@@ -130,21 +130,21 @@ boxplot(sleep ~ group, data = melatonin, col = 5:6)
 
 What if there are more than two groups? Consider the model
 
-\[
+$$
 y_{ij} = \mu + \alpha_i + e_{ij}.
-\]
+$$
 
 where
 
-\[
+$$
 \sum \alpha_i = 0
-\]
+$$
 
 and
 
-\[
+$$
 e_{ij} \sim N(0,\sigma^{2}).
-\]
+$$
 
 Here,
 
@@ -153,21 +153,21 @@ Here,
 
 Then the total sample size is
 
-\[
+$$
 N = \sum_{i = i}^{g} n_i
-\]
+$$
 
 Observations from group $i$ follow a normal distribution
 
-\[
+$$
 y_{ij} \sim N(\mu_i,\sigma^{2})
-\]
+$$
 
 where the mean of each group is given by
 
-\[
+$$
 \mu_i = \mu + \alpha_i.
-\]
+$$
 
 Here $\alpha_i$ measures the effect of group $i$. It is the difference between the overall mean and the mean of group $i$.
 
@@ -175,17 +175,17 @@ Essentially, the assumptions here are the same as the two sample case, however n
 
 Much like the two-sample case, we would again like to test if the means of the groups are equal.
 
-\[
+$$
 H_0: \mu_1 = \mu_2 = \ldots \mu_g \quad \text{vs} \quad H_1: \text{ Not all } \mu_i \text{ are equal.}
-\]
+$$
 
 Notice that the alternative simply indicates the some of the means are not equal, not specifically which are not equal. More on that later.
 
 Alternatively, we could write
 
-\[
+$$
 H_0: \alpha_1 = \alpha_2 = \ldots = \alpha_g = 0 \quad \text{vs} \quad H_1: \text{ Not all } \alpha_i \text{ are } 0.
-\]
+$$
 
 This test is called **Analysis of Variance**. Analysis of Variance (ANOVA) compares the variation due to specific sources (between groups) with the variation among individuals who should be similar (within groups). In particular, ANOVA tests whether several populations have the same mean by comparing how far apart the sample means are with how much variation there is within the samples. We use variability of means to test for equality of means, thus the use of *variance* in the name for a test about means.
 
@@ -197,21 +197,21 @@ We'll leave out most of the details about how the estimation is done, but we'll 
 
 We'll then decompose the variance, as we've seen before in regression. The **total** variation measures how much the observations vary about the overall sample mean, *ignoring the groups*.
 
-\[
+$$
 SST = \sum_{i = i}^{g} \sum_{j = 1}^{n_i} (y_{ij} - \bar{y})^2
-\]
+$$
 
 The variation **between** groups looks at how far the individual sample means are from the overall sample mean.
 
-\[
+$$
 SSB = \sum_{i = i}^{g} \sum_{j = 1}^{n_i} (\bar{y}_i - \bar{y})^2 = \sum_{i = i}^{g} n_i (\bar{y}_i - \bar{y})^2
-\]
+$$
 
 Lastly, the **within** group variation measures how far observations are from the sample mean of its group.
 
-\[
+$$
 SSW = \sum_{i = i}^{g} \sum_{j = 1}^{n_i} (y_{ij} - \bar{y}_i)^2 = \sum_{i = i}^{g} (n_i - 1) s_{i}^{2}
-\]
+$$
 
 This could also be thought of as the error sum of squares, where $y_{ij}$ is an observation and $\bar{y}_i$ is its fitted (predicted) value from the model. 
 
@@ -355,9 +355,9 @@ Let's consider an example with real data. We'll use the `coagulation` dataset fr
 
 Here we would like to test
 
-\[
+$$
 H_0: \mu_A = \mu_B = \mu_C = \mu_D 
-\]
+$$
 
 where, for example, $\mu_A$ is the mean blood coagulation time for an animal that ate diet `A`.
 
@@ -446,9 +446,9 @@ We'd like to design our experiment so that we have a good chance of detecting an
 
 We'd like the ANOVA test to have high **power** for an alternative hypothesis with a minimum desired effect size.
 
-\[
+$$
 \text{Power } = P(\text{Rejct } H_0 \mid H_0 \text{ False})
-\]
+$$
 
 That is, for a true difference of means that we deem interesting, we want the test to reject with high probability.
 
@@ -502,9 +502,9 @@ What we'd really like, is for the [family-wise error rate](https://en.wikipedia.
 
 With this in mind, one of the simplest adjustments we can make, is to increase the p-values for each test, depending on the number of tests. In particular the Bonferroni correction simply multiplies by the number of tests.
 
-\[
+$$
 \text{p-value-bonf} = \min(1, n_{tests} \cdot \text{p-value})
-\]
+$$
 
 ```{r}
 with(coagulation, pairwise.t.test(coag, diet, p.adj = "bonferroni"))
@@ -561,24 +561,24 @@ The creator of this method, [John Tukey](https://en.wikipedia.org/wiki/John_Tuke
 
 What if there is more than one factor variable? Why do we need to limit ourselves to experiments with only one factor? We don't! Consider the model
 
-\[
+$$
 y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}.
-\]
+$$
 
 where $\epsilon_{ijk}$ are $N(0, \sigma^2)$ random variables.
 
 We add constraints
 
-\[
+$$
 \sum \alpha_i = 0 \quad \quad \sum \beta_j = 0.
-\]
+$$
 
 and
 
-\[
+$$
 (\alpha \beta)_{1j} + (\alpha \beta)_{2j} + (\alpha \beta)_{3j} = 0 \\
 (\alpha \beta)_{i1} + (\alpha \beta)_{i2} + (\alpha \beta)_{i3} + (\alpha \beta)_{i4} = 0
-\]
+$$
 
 for any $i$ or $j$.
 
@@ -741,9 +741,9 @@ To perform the needed tests, we will need to create another ANOVA table. (We'll 
 
 The row for **AB Interaction** tests:
 
-\[
+$$
 H_0: \text{ All }(\alpha\beta)_{ij} = 0. \quad \text{vs} \quad H_1: \text{ Not all } (\alpha\beta)_{ij} \text{ are } 0.
-\]
+$$
 
 - Null Model: $y_{ijk} = \mu + \alpha_i + \beta_j + \epsilon_{ijk}.$ (Additive Model.)
 - Alternative Model: $y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}.$ (Interaction Model.)
@@ -752,9 +752,9 @@ We reject the null when the $F$ statistic is large. Under the null hypothesis, t
 
 The row for **Factor B** tests:
 
-\[
+$$
 H_0: \text{ All }\beta_{j} = 0. \quad \text{vs} \quad H_1: \text{ Not all } \beta_{j} \text{ are } 0.
-\]
+$$
 
 - Null Model: $y_{ijk} = \mu + \alpha_i + \epsilon_{ijk}.$ (Only Factor A Model.)
 - Alternative Model: $y_{ijk} = \mu + \alpha_i + \beta_j + \epsilon_{ijk}.$ (Additive Model.)
@@ -763,9 +763,9 @@ We reject the null when the $F$ statistic is large. Under the null hypothesis, t
 
 The row for **Factor A** tests:
 
-\[
+$$
 H_0: \text{ All }\alpha_{i} = 0. \quad \text{vs} \quad H_1: \text{ Not all } \alpha_{i} \text{ are } 0.
-\]
+$$
 
 - Null Model: $y_{ijk} = \mu + \beta_j + \epsilon_{ijk}.$ (Only Factor B Model.)
 - Alternative Model: $y_{ijk} = \mu + \alpha_i + \beta_j + \epsilon_{ijk}.$ (Additive Model.)
