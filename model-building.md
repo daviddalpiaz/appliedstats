@@ -153,7 +153,7 @@ This is our best guess for the function $f$ in
 y = f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon
 \]
 
-for the assumed **family** and **form**. Fitting a model only gives us the best fit for the family and form that we specify. So the natural question is; how to we choose the correct family and form? We'll focus on *form* since we are focusing on the *family* of linear models.
+for the assumed **family** and **form**. Fitting a model only gives us the best fit for the family and form that we specify. So the natural question is; how do we choose the correct family and form? We'll focus on *form* since we are focusing on the *family* of linear models.
 
 ## Explanation versus Prediction
 
@@ -183,7 +183,7 @@ Our additional assumption is about the error term.
 \epsilon \sim N(0, \sigma^2)
 \]
 
-This assumption, that the errors are normally distributed with some common variance is the key to all of the inference we have done so far. We will discuss this is great detail later.
+This assumption, that the errors are normally distributed with some common variance is the key to all of the inference we have done so far. We will discuss this in great detail later.
 
 So with our inference tools (ANOVA and $t$-test) we have two potential strategies. Start with a very small model (no predictors) and attempt to add predictors. Or, start with a big model (all predictors) and attempt to remove predictors.
 
@@ -239,7 +239,7 @@ Suppose we fit a model using all data available and we evaluate RMSE on this fit
 
 Now, suppose we magically encounter some additional additional data. To truly asses how well the model predicts, we should evaluate how well our models predicts the response of this data. We will call this data the  **test** data and this RMSE the **test** RMSE.
 
-- Train RMSE: model fit on seen data, evaluated on seen data
+- Train RMSE: model fit on seen data, evaluated on **seen** data
 - Test RMSE: model fit on seen data, evaluated on **unseen** data
 
 Below, we simulate some data and fit two models. We will call the solid blue line the "simple" model. The dashed orange line will be called the "complex" model, which was fit with methods we do not yet know.
