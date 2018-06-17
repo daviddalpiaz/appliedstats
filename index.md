@@ -81,6 +81,7 @@ Your name could be here! Suggest an edit! Correct a typo! If you submit a correc
 - [Ray Fix](https://github.com/rayfix){target="_blank"}
 - [Tyler Kim](https://github.com/tyler-thetyrant/){target="_blank"}
 - [Yeongho Kim](https://github.com/yeonghoey/){target="_blank"}
+- [Elmar Langholz](https://github.com/langholz/){target="_blank"}
 
 ## License
 
