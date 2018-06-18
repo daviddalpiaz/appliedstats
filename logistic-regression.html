@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-06-17">
+<meta name="date" content="2018-06-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1102,35 +1102,35 @@ eta_hat</code></pre>
 <div id="interactions-1" class="section level4">
 <h4><span class="header-section-number">17.3.7.1</span> Interactions</h4>
 <p>Let’s add an interaction between LDL and family history for the model we selected.</p>
-<pre class="sourceCode r"><code class="sourceCode r">chd_mod_interaction =<span class="st"> </span><span class="kw">glm</span>(chd <span class="op">~</span><span class="st"> </span>tobacco <span class="op">+</span><span class="st"> </span>ldl <span class="op">+</span><span class="st"> </span>famhist <span class="op">+</span><span class="st"> </span>typea <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>ldl<span class="op">:</span>famhist, 
+<pre class="sourceCode r"><code class="sourceCode r">chd_mod_interaction =<span class="st"> </span><span class="kw">glm</span>(chd <span class="op">~</span><span class="st"> </span>alcohol <span class="op">+</span><span class="st"> </span>ldl <span class="op">+</span><span class="st"> </span>famhist <span class="op">+</span><span class="st"> </span>typea <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>ldl<span class="op">:</span>famhist, 
                           <span class="dt">data =</span> SAheart, <span class="dt">family =</span> binomial)
 <span class="kw">summary</span>(chd_mod_interaction)</code></pre>
 <pre><code>## 
 ## Call:
-## glm(formula = chd ~ tobacco + ldl + famhist + typea + age + ldl:famhist, 
+## glm(formula = chd ~ alcohol + ldl + famhist + typea + age + ldl:famhist, 
 ##     family = binomial, data = SAheart)
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -1.8463  -0.7938  -0.4419   0.9161   2.4956  
+## -1.9082  -0.8308  -0.4550   0.9286   2.5152  
 ## 
 ## Coefficients:
-##                    Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)        -5.79224    0.94625  -6.121 9.28e-10 ***
-## tobacco             0.08496    0.02628   3.233  0.00122 ** 
-## ldl                 0.01758    0.07302   0.241  0.80974    
-## famhistPresent     -0.77068    0.62341  -1.236  0.21637    
-## typea               0.03690    0.01240   2.974  0.00294 ** 
-## age                 0.05140    0.01030   4.990 6.03e-07 ***
-## ldl:famhistPresent  0.33334    0.11595   2.875  0.00404 ** 
+##                     Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)        -6.043472   0.937186  -6.449 1.13e-10 ***
+## alcohol             0.003800   0.004332   0.877  0.38033    
+## ldl                 0.035593   0.071448   0.498  0.61837    
+## famhistPresent     -0.733836   0.618131  -1.187  0.23515    
+## typea               0.036253   0.012172   2.978  0.00290 ** 
+## age                 0.062416   0.009723   6.419 1.37e-10 ***
+## ldl:famhistPresent  0.314311   0.114922   2.735  0.00624 ** 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
 ##     Null deviance: 596.11  on 461  degrees of freedom
-## Residual deviance: 466.90  on 455  degrees of freedom
-## AIC: 480.9
+## Residual deviance: 477.46  on 455  degrees of freedom
+## AIC: 491.46
 ## 
 ## Number of Fisher Scoring iterations: 5</code></pre>
 <p>Based on the <span class="math inline">\(z\)</span>-test seen in the above summary, this interaction is significant. The effect of LDL on the probability of CHD is different depending on family history.</p>
@@ -1138,36 +1138,36 @@ eta_hat</code></pre>
 <div id="polynomial-terms" class="section level4">
 <h4><span class="header-section-number">17.3.7.2</span> Polynomial Terms</h4>
 <p>Let’s take the previous model, and now add a polynomial term.</p>
-<pre class="sourceCode r"><code class="sourceCode r">chd_mod_int_quad =<span class="st"> </span><span class="kw">glm</span>(chd <span class="op">~</span><span class="st"> </span>tobacco <span class="op">+</span><span class="st"> </span>ldl <span class="op">+</span><span class="st"> </span>famhist <span class="op">+</span><span class="st"> </span>typea <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>ldl<span class="op">:</span>famhist <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(ldl<span class="op">^</span><span class="dv">2</span>),
+<pre class="sourceCode r"><code class="sourceCode r">chd_mod_int_quad =<span class="st"> </span><span class="kw">glm</span>(chd <span class="op">~</span><span class="st"> </span>alcohol <span class="op">+</span><span class="st"> </span>ldl <span class="op">+</span><span class="st"> </span>famhist <span class="op">+</span><span class="st"> </span>typea <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>ldl<span class="op">:</span>famhist <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(ldl<span class="op">^</span><span class="dv">2</span>),
                        <span class="dt">data =</span> SAheart, <span class="dt">family =</span> binomial)
 <span class="kw">summary</span>(chd_mod_int_quad)</code></pre>
 <pre><code>## 
 ## Call:
-## glm(formula = chd ~ tobacco + ldl + famhist + typea + age + ldl:famhist + 
+## glm(formula = chd ~ alcohol + ldl + famhist + typea + age + ldl:famhist + 
 ##     I(ldl^2), family = binomial, data = SAheart)
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -1.8470  -0.7923  -0.4414   0.9169   2.4916  
+## -1.8953  -0.8311  -0.4556   0.9276   2.5204  
 ## 
 ## Coefficients:
 ##                     Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)        -5.748983   1.067452  -5.386 7.22e-08 ***
-## tobacco             0.085046   0.026301   3.234  0.00122 ** 
-## ldl                -0.000253   0.216917  -0.001  0.99907    
-## famhistPresent     -0.779759   0.632197  -1.233  0.21742    
-## typea               0.036906   0.012406   2.975  0.00293 ** 
-## age                 0.051505   0.010365   4.969 6.73e-07 ***
-## I(ldl^2)            0.001321   0.015133   0.087  0.93043    
-## ldl:famhistPresent  0.335716   0.119248   2.815  0.00487 ** 
+## (Intercept)        -6.096747   1.065952  -5.720 1.07e-08 ***
+## alcohol             0.003842   0.004350   0.883  0.37716    
+## ldl                 0.056876   0.214420   0.265  0.79081    
+## famhistPresent     -0.723769   0.625167  -1.158  0.24698    
+## typea               0.036248   0.012171   2.978  0.00290 ** 
+## age                 0.062299   0.009788   6.365 1.95e-10 ***
+## I(ldl^2)           -0.001587   0.015076  -0.105  0.91617    
+## ldl:famhistPresent  0.311615   0.117559   2.651  0.00803 ** 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
 ##     Null deviance: 596.11  on 461  degrees of freedom
-## Residual deviance: 466.89  on 454  degrees of freedom
-## AIC: 482.89
+## Residual deviance: 477.45  on 454  degrees of freedom
+## AIC: 493.45
 ## 
 ## Number of Fisher Scoring iterations: 5</code></pre>
 <p>Unsurprisingly, since this additional transformed variable wasn’t intelligently chosen, it is not significant. However, this does allow us to stress the fact that the syntax notation that we had been using with <code>lm()</code> works basically exactly the same for <code>glm()</code>, however now we understand that this is specifying the linear combination of predictions, <span class="math inline">\(\eta({\bf x})\)</span>.</p>

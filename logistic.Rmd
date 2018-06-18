@@ -724,7 +724,7 @@ Without really thinking about it, we've been using our previous knowledge of `R`
 Let's add an interaction between LDL and family history for the model we selected.
 
 ```{r}
-chd_mod_interaction = glm(chd ~ tobacco + ldl + famhist + typea + age + ldl:famhist, 
+chd_mod_interaction = glm(chd ~ alcohol + ldl + famhist + typea + age + ldl:famhist, 
                           data = SAheart, family = binomial)
 summary(chd_mod_interaction)
 ```
@@ -736,7 +736,7 @@ Based on the $z$-test seen in the above summary, this interaction is significant
 Let's take the previous model, and now add a polynomial term.
 
 ```{r}
-chd_mod_int_quad = glm(chd ~ tobacco + ldl + famhist + typea + age + ldl:famhist + I(ldl^2),
+chd_mod_int_quad = glm(chd ~ alcohol + ldl + famhist + typea + age + ldl:famhist + I(ldl^2),
                        data = SAheart, family = binomial)
 summary(chd_mod_int_quad)
 ```
