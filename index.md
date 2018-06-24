@@ -82,6 +82,7 @@ Your name could be here! Suggest an edit! Correct a typo! If you submit a correc
 - [Tyler Kim](https://github.com/tyler-thetyrant/){target="_blank"}
 - [Yeongho Kim](https://github.com/yeonghoey/){target="_blank"}
 - [Elmar Langholz](https://github.com/langholz/){target="_blank"}
+- [Duy Cuong Nguyen](https://github.com/tdcnguyen/){target="_blank"}
 
 ## License
 
