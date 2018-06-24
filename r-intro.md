@@ -22,7 +22,7 @@ RStudio has a large number of useful keyboard shortcuts. A list of these can be 
 - On Windows: `Alt` + `Shift` + `K`
 - On Mac:  `Option` + `Shift` + `K`
 
-The RStudio team has developed [a number of "cheatsheets"](https://www.rstudio.com/resources/cheatsheets/){target="_blank"} for working with both `R` and RStudio. [This particular cheatseet for Base `R`](http://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf){target="_blank"} will summarize many of the concepts in this document.
+The RStudio team has developed [a number of "cheatsheets"](https://www.rstudio.com/resources/cheatsheets/){target="_blank"} for working with both `R` and RStudio. [This particular cheatsheet for Base `R`](http://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf){target="_blank"} will summarize many of the concepts in this document.
 
 When programming, it is often a good practice to follow a style guide. (Where do spaces go? Tabs or spaces? Underscores or CamelCase when naming variables?) No style guide is "correct" but it helps to be aware of what others do. The more import thing is to be consistent within your own code.
 

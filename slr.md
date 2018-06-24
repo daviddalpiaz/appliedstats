@@ -182,7 +182,7 @@ This is visually displayed in the image below. We see that for any value $x$, th
 Often, we directly talk about the assumptions that this model makes. They can be cleverly shortened to **LINE**.  
 
 - **L**inear. The relationship between $Y$ and $x$ is linear, of the form $\beta_0 + \beta_1 x$.
-- **I**ndepedent. The errors $\epsilon$ are independent.
+- **I**ndependent. The errors $\epsilon$ are independent.
 - **N**ormal. The errors, $\epsilon$ are normally distributed. That is the "error" around the line follows a normal distribution.
 - **E**qual Variance. At each value of $x$, the variance of $Y$ is the same, $\sigma^2$.
 
