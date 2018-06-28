@@ -1,6 +1,6 @@
 --- 
 title: "Applied Statistics with `R`"
-date: "2018-06-24"
+date: "2018-06-28"
 github-repo: daviddalpiaz/appliedstats
 url: 'https\://daviddalpiaz.github.io/appliedstats/'
 knit: "bookdown::render_book"
@@ -82,7 +82,7 @@ Your name could be here! Suggest an edit! Correct a typo! If you submit a correc
 - [Tyler Kim](https://github.com/tyler-thetyrant/){target="_blank"}
 - [Yeongho Kim](https://github.com/yeonghoey/){target="_blank"}
 - [Elmar Langholz](https://github.com/langholz/){target="_blank"}
-- [Duy Cuong Nguyen](https://github.com/tdcnguyen/){target="_blank"}
+- [Thai Duy Cuong Nguyen](https://www.linkedin.com/in/dnguyen5){target="_blank"}
 
 ## License
 

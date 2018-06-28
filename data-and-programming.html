@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-06-24">
+<meta name="date" content="2018-06-28">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1326,11 +1326,11 @@ x</code></pre>
 <p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the output of the final line of the body is what is returned by the function. In this case the function returns the vector stored in the variable <code>result</code>.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</code></pre>
-<pre><code>##  [1]  3.720165 -4.801908  3.208220  3.190132  4.597165  4.625090 -1.091612
-##  [8]  3.506353  5.014011  1.064349</code></pre>
+<pre><code>##  [1]  1.437740 13.514555 -9.326045  8.669908 -3.806941 -1.584978 -6.230987
+##  [8]  2.146701  4.283534  1.166835</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)</code></pre>
-<pre><code>##  [1]  0.4567828 -2.2904459  0.2917489  0.2859180  0.7394980  0.7485002
-##  [7] -1.0943718  0.3878571  0.8738752 -0.3993625</code></pre>
+<pre><code>##  [1]  0.06037687  1.83575342 -1.52197487  1.12355632 -0.71062793
+##  [6] -0.38398388 -1.06697969  0.16459910  0.47872863  0.02055204</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
 <pre class="sourceCode r"><code class="sourceCode r">standardize =<span class="st"> </span><span class="cf">function</span>(x) {
   (x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x)
@@ -1367,14 +1367,14 @@ s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2
   (<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>n) <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)
 }</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_var</span>(test_sample)</code></pre>
-<pre><code>## [1] 9.622788</code></pre>
+<pre><code>## [1] 46.2726</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">FALSE</span>)</code></pre>
-<pre><code>## [1] 9.622788</code></pre>
+<pre><code>## [1] 46.2726</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(test_sample)</code></pre>
-<pre><code>## [1] 9.622788</code></pre>
+<pre><code>## [1] 46.2726</code></pre>
 <p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built in function <code>var()</code>. Finally, let’s examine the biased estimate of <span class="math inline">\(\sigma^2\)</span>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">TRUE</span>)</code></pre>
-<pre><code>## [1] 8.660509</code></pre>
+<pre><code>## [1] 41.64534</code></pre>
 
 </div>
 </div>
