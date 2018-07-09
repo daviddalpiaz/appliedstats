@@ -33,7 +33,7 @@ Given data, we found the estimates for the $\beta$ parameters using
 \hat{\beta} = \left(  X^\top X  \right)^{-1}X^\top y.
 \]
 
-We than noted that these estimates had mean
+We then noted that these estimates had mean
 
 \[
 \text{E}[\hat{\beta}] = \beta,
