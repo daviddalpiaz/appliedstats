@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-07-09">
+<meta name="date" content="2018-07-10">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1390,7 +1390,7 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 <p>This seems like a decent classifier…</p>
 <p>However, are all errors created equal? In this case, absolutely note. The 137 non-spam emails that were marked as spam (false positives) are a problem. We can’t allow important information, say, a job offer, miss our inbox and get sent to the spam folder. On the other hand, the 161 spam email that would make it to an inbox (false negatives) are easily dealt with, just delete them.</p>
 <p>Instead of simply evaluating a classifier based on its misclassification rate (or accuracy), we’ll define two additional metrics, sensitivity and specificity. Note that this are simply two of many more metrics that can be considered. The <a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity" target="_blank">Wikipedia page for sensitivity and specificity</a> details a large number of metrics that can be derived form a confusion matrix.</p>
-<p><strong>Sensitivity</strong> is essentially the true positive rate. So when sensitivity if high, the number of false negatives is low.</p>
+<p><strong>Sensitivity</strong> is essentially the true positive rate. So when sensitivity is high, the number of false negatives is low.</p>
 <p><span class="math display">\[
 \text{Sens} = \text{True Positive Rate} = \frac{\text{TP}}{\text{P}} = \frac{\text{TP}}{\text{TP + FN}}
 \]</span></p>
@@ -1398,7 +1398,7 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 <pre class="sourceCode r"><code class="sourceCode r">get_sens =<span class="st"> </span><span class="cf">function</span>(conf_mat) {
   conf_mat[<span class="dv">2</span>, <span class="dv">2</span>] <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(conf_mat[, <span class="dv">2</span>])
 }</code></pre>
-<p><strong>Specificity</strong> is essentially the true negative rate. So when Specificity if high, the number of false positives is low.</p>
+<p><strong>Specificity</strong> is essentially the true negative rate. So when specificity is high, the number of false positives is low.</p>
 <p><span class="math display">\[
 \text{Spec} = \text{True Negative Rate} = \frac{\text{TN}}{\text{N}} = \frac{\text{TN}}{\text{TN + FP}}
 \]</span></p>
