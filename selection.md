@@ -1018,7 +1018,7 @@ all_hipcenter_mod$which[best_r2_ind, ]
 ##       FALSE       FALSE        TRUE
 ```
 
-We'll now calculate $\text{AIC}$ and $\text{BIC}$ for the each of the models with the best $\text{RSS}$. To do so, we will need both $n$ and the $p$ for the largest possible model.
+We'll now calculate $\text{AIC}$ and $\text{BIC}$ for each of the models with the best $\text{RSS}$. To do so, we will need both $n$ and the $p$ for the largest possible model.
 
 
 ```r
