@@ -83,6 +83,7 @@ Your name could be here! Suggest an edit! Correct a typo! If you submit a correc
 - [Yeongho Kim](https://github.com/yeonghoey/){target="_blank"}
 - [Elmar Langholz](https://github.com/langholz/){target="_blank"}
 - [Thai Duy Cuong Nguyen](https://www.linkedin.com/in/dnguyen5){target="_blank"}
+- [Junyoung Kim](https://github.com/junkim327){target="_blank"}
 
 ## License
 
