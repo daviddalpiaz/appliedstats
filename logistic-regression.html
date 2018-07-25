@@ -24,7 +24,7 @@
 
 
 
-<meta name="date" content="2018-07-24">
+<meta name="date" content="2018-07-25">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -963,7 +963,7 @@ D \overset{\text{approx}}{\sim} \chi^2_{k}
 <p>The predictors are various measurements for each individual, many related to heart health. For example <code>sbp</code>, systolic blood pressure, and <code>ldl</code>, low density lipoprotein cholesterol. For full details, use <code>?SAheart</code>.</p>
 <p>We’ll begin by attempting to model the probability of coronary heart disease based on low density lipoprotein cholesterol. That is, we will fit the model</p>
 <p><span class="math display">\[
-\log\left(\frac{P[\texttt{chd} = 1]}{1 - P[\texttt{chd} = 1]}\right) = \beta_0 + \beta_{\texttt{ldl}} \texttt{ldl}
+\log\left(\frac{P[\texttt{chd} = 1]}{1 - P[\texttt{chd} = 1]}\right) = \beta_0 + \beta_{\texttt{ldl}} x_{\texttt{ldl}}
 \]</span></p>
 <pre class="sourceCode r"><code class="sourceCode r">chd_mod_ldl =<span class="st"> </span><span class="kw">glm</span>(chd <span class="op">~</span><span class="st"> </span>ldl, <span class="dt">data =</span> SAheart, <span class="dt">family =</span> binomial)
 <span class="kw">plot</span>(<span class="kw">jitter</span>(chd, <span class="dt">factor =</span> <span class="fl">0.1</span>) <span class="op">~</span><span class="st"> </span>ldl, <span class="dt">data =</span> SAheart, <span class="dt">pch =</span> <span class="dv">20</span>, 
@@ -1053,7 +1053,7 @@ H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{adiposity}} = \beta_{\texttt{obesity}
 \]</span></p>
 <p>Then we can create an approximate <span class="math inline">\((1 - \alpha)\%\)</span> confidence intervals for <span class="math inline">\(\eta({\bf x})\)</span> using</p>
 <p><span class="math display">\[
-\hat{\eta}({\bf x}) \pm z_{\alpha/2} \cdot \text{SE}[\hat{\eta}({\bf x})]] 
+\hat{\eta}({\bf x}) \pm z_{\alpha/2} \cdot \text{SE}[\hat{\eta}({\bf x})]
 \]</span></p>
 <p>where <span class="math inline">\(z_{\alpha/2}\)</span> is the critical value such that <span class="math inline">\(P(Z &gt; z_{\alpha/2}) = \alpha/2\)</span>.</p>
 <p>This isn’t a particularly interesting interval. Instead, what we really want is an interval for the mean response, <span class="math inline">\(p({\bf x})\)</span>. To obtain an interval for <span class="math inline">\(p({\bf x})\)</span>, we simply apply the inverse logit transform to the endpoints of the interval for <span class="math inline">\(\eta.\)</span></p>
