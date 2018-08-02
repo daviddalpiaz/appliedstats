@@ -1233,7 +1233,7 @@ coef(fit6_alt)
 ##    0.09288754   -2.04307796
 ```
 
-This is because `poly()` uses *orthogonal polynimials*, which solves an issue we will discuss in the next chapter. 
+This is because `poly()` uses *orthogonal polynomials*, which solves an issue we will discuss in the next chapter. 
 
 
 ```r
