@@ -471,8 +471,8 @@ sim_anova = function(n = 10, mu_a = 0, mu_b = 0, mu_c = 0, mu_d = 0, sigma = 1, 
   
   # obtain F-statistic and p-value for testing difference of means
   aov_results = aov(response ~ group, data = sim_data)
-  f_stat = glance(aov_results)$stat
-  p_val  = glance(aov_results)$p.val
+  f_stat = glance(aov_results)$statistic
+  p_val  = glance(aov_results)$p.value
   
   # return f_stat if stat = TRUE, otheriwse, p-value
   ifelse(stat, f_stat, p_val)
@@ -1159,4 +1159,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`anova.Rmd`](anova.Rmd){target="_blank"}
 
-The file was created using `R` version `3.5.0`.
+The file was created using `R` version `3.5.2`.

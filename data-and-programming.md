@@ -1502,7 +1502,7 @@ example_data_from_csv
 ```
 ## # A tibble: 10 x 3
 ##        x y       z    
-##    <int> <chr>   <lgl>
+##    <dbl> <chr>   <lgl>
 ##  1     1 Hello   TRUE 
 ##  2     3 Hello   FALSE
 ##  3     5 Hello   TRUE 
@@ -1568,19 +1568,18 @@ head(mpg, n = 10)
 
 ```
 ## # A tibble: 10 x 11
-##    manufacturer model    displ  year   cyl trans   drv     cty   hwy fl   
-##    <chr>        <chr>    <dbl> <int> <int> <chr>   <chr> <int> <int> <chr>
-##  1 audi         a4         1.8  1999     4 auto(l~ f        18    29 p    
-##  2 audi         a4         1.8  1999     4 manual~ f        21    29 p    
-##  3 audi         a4         2    2008     4 manual~ f        20    31 p    
-##  4 audi         a4         2    2008     4 auto(a~ f        21    30 p    
-##  5 audi         a4         2.8  1999     6 auto(l~ f        16    26 p    
-##  6 audi         a4         2.8  1999     6 manual~ f        18    26 p    
-##  7 audi         a4         3.1  2008     6 auto(a~ f        18    27 p    
-##  8 audi         a4 quat~   1.8  1999     4 manual~ 4        18    26 p    
-##  9 audi         a4 quat~   1.8  1999     4 auto(l~ 4        16    25 p    
-## 10 audi         a4 quat~   2    2008     4 manual~ 4        20    28 p    
-## # ... with 1 more variable: class <chr>
+##    manufacturer model displ  year   cyl trans drv     cty   hwy fl    class
+##    <chr>        <chr> <dbl> <int> <int> <chr> <chr> <int> <int> <chr> <chr>
+##  1 audi         a4      1.8  1999     4 auto~ f        18    29 p     comp~
+##  2 audi         a4      1.8  1999     4 manu~ f        21    29 p     comp~
+##  3 audi         a4      2    2008     4 manu~ f        20    31 p     comp~
+##  4 audi         a4      2    2008     4 auto~ f        21    30 p     comp~
+##  5 audi         a4      2.8  1999     6 auto~ f        16    26 p     comp~
+##  6 audi         a4      2.8  1999     6 manu~ f        18    26 p     comp~
+##  7 audi         a4      3.1  2008     6 auto~ f        18    27 p     comp~
+##  8 audi         a4 q~   1.8  1999     4 manu~ 4        18    26 p     comp~
+##  9 audi         a4 q~   1.8  1999     4 auto~ 4        16    25 p     comp~
+## 10 audi         a4 q~   2    2008     4 manu~ 4        20    28 p     comp~
 ```
 
 The function `head()` will display the first `n` observations of the data frame. The `head()` function was more useful before tibbles. Notice that `mpg` is a tibble already, so the output from `head()` indicates there are only `10` observations. Note that this applies to `head(mpg, n = 10)` and not `mpg` itself. Also note that tibbles print a limited number of rows and columns by default. The last line of the printed output indicates which rows and columns were omitted.
@@ -1592,19 +1591,19 @@ mpg
 
 ```
 ## # A tibble: 234 x 11
-##    manufacturer model    displ  year   cyl trans   drv     cty   hwy fl   
-##    <chr>        <chr>    <dbl> <int> <int> <chr>   <chr> <int> <int> <chr>
-##  1 audi         a4         1.8  1999     4 auto(l~ f        18    29 p    
-##  2 audi         a4         1.8  1999     4 manual~ f        21    29 p    
-##  3 audi         a4         2    2008     4 manual~ f        20    31 p    
-##  4 audi         a4         2    2008     4 auto(a~ f        21    30 p    
-##  5 audi         a4         2.8  1999     6 auto(l~ f        16    26 p    
-##  6 audi         a4         2.8  1999     6 manual~ f        18    26 p    
-##  7 audi         a4         3.1  2008     6 auto(a~ f        18    27 p    
-##  8 audi         a4 quat~   1.8  1999     4 manual~ 4        18    26 p    
-##  9 audi         a4 quat~   1.8  1999     4 auto(l~ 4        16    25 p    
-## 10 audi         a4 quat~   2    2008     4 manual~ 4        20    28 p    
-## # ... with 224 more rows, and 1 more variable: class <chr>
+##    manufacturer model displ  year   cyl trans drv     cty   hwy fl    class
+##    <chr>        <chr> <dbl> <int> <int> <chr> <chr> <int> <int> <chr> <chr>
+##  1 audi         a4      1.8  1999     4 auto~ f        18    29 p     comp~
+##  2 audi         a4      1.8  1999     4 manu~ f        21    29 p     comp~
+##  3 audi         a4      2    2008     4 manu~ f        20    31 p     comp~
+##  4 audi         a4      2    2008     4 auto~ f        21    30 p     comp~
+##  5 audi         a4      2.8  1999     6 auto~ f        16    26 p     comp~
+##  6 audi         a4      2.8  1999     6 manu~ f        18    26 p     comp~
+##  7 audi         a4      3.1  2008     6 auto~ f        18    27 p     comp~
+##  8 audi         a4 q~   1.8  1999     4 manu~ 4        18    26 p     comp~
+##  9 audi         a4 q~   1.8  1999     4 auto~ 4        16    25 p     comp~
+## 10 audi         a4 q~   2    2008     4 manu~ 4        20    28 p     comp~
+## # ... with 224 more rows
 ```
 
 The function `str()` will display the "structure" of the data frame. It will display the number of **observations** and **variables**, list the variables, give the type of each variable, and show some elements of each variable. This information can also be found in the "Environment" window in RStudio.
@@ -1904,8 +1903,8 @@ To test our function, we will take a random sample of size `n = 10` from a norma
 ```
 
 ```
-##  [1] -1.0788448  9.1240903  2.4940289  9.2059380  1.2851125  0.5214299
-##  [7]  1.5298916  3.6043505  9.7233100  6.8112970
+##  [1]  1.5203745 -1.1362031 -5.5135379  8.9779512 -1.7950455 -1.5763725
+##  [7]  0.5894629  5.6251639  7.4206099 -0.2606774
 ```
 
 ```r
@@ -1913,8 +1912,8 @@ standardize(x = test_sample)
 ```
 
 ```
-##  [1] -1.3374142  1.1891160 -0.4526714  1.2093838 -0.7520327 -0.9411417
-##  [7] -0.6914186 -0.1777249  1.3374995  0.6164042
+##  [1]  0.02956229 -0.55130620 -1.50842332  1.66018336 -0.69536403
+##  [6] -0.64755054 -0.17398427  0.92708656  1.31966610 -0.35986994
 ```
 
 This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.
@@ -2016,7 +2015,7 @@ get_var(test_sample)
 ```
 
 ```
-## [1] 16.30802
+## [1] 20.91652
 ```
 
 ```r
@@ -2024,7 +2023,7 @@ get_var(test_sample, biased = FALSE)
 ```
 
 ```
-## [1] 16.30802
+## [1] 20.91652
 ```
 
 ```r
@@ -2032,7 +2031,7 @@ var(test_sample)
 ```
 
 ```
-## [1] 16.30802
+## [1] 20.91652
 ```
 
 We see the function is working as expected, and when returning the unbiased estimate it matches `R`'s built in function `var()`. Finally, let's examine the biased estimate of $\sigma^2$.
@@ -2043,7 +2042,7 @@ get_var(test_sample, biased = TRUE)
 ```
 
 ```
-## [1] 14.67722
+## [1] 18.82487
 ```
 
 

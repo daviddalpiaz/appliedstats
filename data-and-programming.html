@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Applied Statistics with R</title>
-  <meta name="description" content="Applied Statistics with R">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Data and Programming | Applied Statistics with R</title>
+  <meta name="description" content="Chapter 3 Data and Programming | Applied Statistics with R" />
+  <meta name="generator" content="bookdown  and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Applied Statistics with R" />
+  <meta property="og:title" content="Chapter 3 Data and Programming | Applied Statistics with R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://daviddalpiaz.github.io/appliedstats/" />
   
@@ -17,24 +16,25 @@
   <meta name="github-repo" content="daviddalpiaz/appliedstats" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Applied Statistics with R" />
+  <meta name="twitter:title" content="Chapter 3 Data and Programming | Applied Statistics with R" />
   
   
   
 
 
 
-<meta name="date" content="2018-08-02">
+<meta name="date" content="2019-03-19" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
-  <link rel="shortcut icon" href="favicon.gif" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
 <link rel="prev" href="introduction-to-r.html">
 <link rel="next" href="summarizing-data.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -1104,7 +1104,7 @@ example_data_from_csv =<span class="st"> </span><span class="kw">read_csv</span>
 <pre class="sourceCode r"><code class="sourceCode r">example_data_from_csv</code></pre>
 <pre><code>## # A tibble: 10 x 3
 ##        x y       z    
-##    &lt;int&gt; &lt;chr&gt;   &lt;lgl&gt;
+##    &lt;dbl&gt; &lt;chr&gt;   &lt;lgl&gt;
 ##  1     1 Hello   TRUE 
 ##  2     3 Hello   FALSE
 ##  3     5 Hello   TRUE 
@@ -1146,35 +1146,34 @@ example_data</code></pre>
 <p>To look at the data, we have two useful commands: <code>head()</code> and <code>str()</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(mpg, <span class="dt">n =</span> <span class="dv">10</span>)</code></pre>
 <pre><code>## # A tibble: 10 x 11
-##    manufacturer model    displ  year   cyl trans   drv     cty   hwy fl   
-##    &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;
-##  1 audi         a4         1.8  1999     4 auto(l… f        18    29 p    
-##  2 audi         a4         1.8  1999     4 manual… f        21    29 p    
-##  3 audi         a4         2    2008     4 manual… f        20    31 p    
-##  4 audi         a4         2    2008     4 auto(a… f        21    30 p    
-##  5 audi         a4         2.8  1999     6 auto(l… f        16    26 p    
-##  6 audi         a4         2.8  1999     6 manual… f        18    26 p    
-##  7 audi         a4         3.1  2008     6 auto(a… f        18    27 p    
-##  8 audi         a4 quat…   1.8  1999     4 manual… 4        18    26 p    
-##  9 audi         a4 quat…   1.8  1999     4 auto(l… 4        16    25 p    
-## 10 audi         a4 quat…   2    2008     4 manual… 4        20    28 p    
-## # ... with 1 more variable: class &lt;chr&gt;</code></pre>
+##    manufacturer model displ  year   cyl trans drv     cty   hwy fl    class
+##    &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
+##  1 audi         a4      1.8  1999     4 auto… f        18    29 p     comp…
+##  2 audi         a4      1.8  1999     4 manu… f        21    29 p     comp…
+##  3 audi         a4      2    2008     4 manu… f        20    31 p     comp…
+##  4 audi         a4      2    2008     4 auto… f        21    30 p     comp…
+##  5 audi         a4      2.8  1999     6 auto… f        16    26 p     comp…
+##  6 audi         a4      2.8  1999     6 manu… f        18    26 p     comp…
+##  7 audi         a4      3.1  2008     6 auto… f        18    27 p     comp…
+##  8 audi         a4 q…   1.8  1999     4 manu… 4        18    26 p     comp…
+##  9 audi         a4 q…   1.8  1999     4 auto… 4        16    25 p     comp…
+## 10 audi         a4 q…   2    2008     4 manu… 4        20    28 p     comp…</code></pre>
 <p>The function <code>head()</code> will display the first <code>n</code> observations of the data frame. The <code>head()</code> function was more useful before tibbles. Notice that <code>mpg</code> is a tibble already, so the output from <code>head()</code> indicates there are only <code>10</code> observations. Note that this applies to <code>head(mpg, n = 10)</code> and not <code>mpg</code> itself. Also note that tibbles print a limited number of rows and columns by default. The last line of the printed output indicates which rows and columns were omitted.</p>
 <pre class="sourceCode r"><code class="sourceCode r">mpg</code></pre>
 <pre><code>## # A tibble: 234 x 11
-##    manufacturer model    displ  year   cyl trans   drv     cty   hwy fl   
-##    &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;
-##  1 audi         a4         1.8  1999     4 auto(l… f        18    29 p    
-##  2 audi         a4         1.8  1999     4 manual… f        21    29 p    
-##  3 audi         a4         2    2008     4 manual… f        20    31 p    
-##  4 audi         a4         2    2008     4 auto(a… f        21    30 p    
-##  5 audi         a4         2.8  1999     6 auto(l… f        16    26 p    
-##  6 audi         a4         2.8  1999     6 manual… f        18    26 p    
-##  7 audi         a4         3.1  2008     6 auto(a… f        18    27 p    
-##  8 audi         a4 quat…   1.8  1999     4 manual… 4        18    26 p    
-##  9 audi         a4 quat…   1.8  1999     4 auto(l… 4        16    25 p    
-## 10 audi         a4 quat…   2    2008     4 manual… 4        20    28 p    
-## # ... with 224 more rows, and 1 more variable: class &lt;chr&gt;</code></pre>
+##    manufacturer model displ  year   cyl trans drv     cty   hwy fl    class
+##    &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
+##  1 audi         a4      1.8  1999     4 auto… f        18    29 p     comp…
+##  2 audi         a4      1.8  1999     4 manu… f        21    29 p     comp…
+##  3 audi         a4      2    2008     4 manu… f        20    31 p     comp…
+##  4 audi         a4      2    2008     4 auto… f        21    30 p     comp…
+##  5 audi         a4      2.8  1999     6 auto… f        16    26 p     comp…
+##  6 audi         a4      2.8  1999     6 manu… f        18    26 p     comp…
+##  7 audi         a4      3.1  2008     6 auto… f        18    27 p     comp…
+##  8 audi         a4 q…   1.8  1999     4 manu… 4        18    26 p     comp…
+##  9 audi         a4 q…   1.8  1999     4 auto… 4        16    25 p     comp…
+## 10 audi         a4 q…   2    2008     4 manu… 4        20    28 p     comp…
+## # … with 224 more rows</code></pre>
 <p>The function <code>str()</code> will display the “structure” of the data frame. It will display the number of <strong>observations</strong> and <strong>variables</strong>, list the variables, give the type of each variable, and show some elements of each variable. This information can also be found in the “Environment” window in RStudio.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(mpg)</code></pre>
 <pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    234 obs. of  11 variables:
@@ -1326,11 +1325,11 @@ x</code></pre>
 <p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the output of the final line of the body is what is returned by the function. In this case the function returns the vector stored in the variable <code>result</code>.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</code></pre>
-<pre><code>##  [1] -0.1347550  3.4288701  1.6334748  0.7209011 -0.6389943  1.5373304
-##  [7] -0.5772817 -4.0669831  7.9592454 -2.3552018</code></pre>
+<pre><code>##  [1]  4.734593 -2.913258  7.890416 -0.494740 -3.129078 -1.789891 -2.256765
+##  [8]  1.979824  6.926087 -7.217950</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)</code></pre>
-<pre><code>##  [1] -0.268499325  0.812158062  0.267710444 -0.009024456 -0.421408195
-##  [6]  0.238554998 -0.402694043 -1.460934319  2.185979206 -0.941842372</code></pre>
+<pre><code>##  [1]  0.8942780 -0.6737697  1.5413201 -0.1778981 -0.7180194 -0.4434445
+##  [7] -0.5391681  0.3294646  1.3436026 -1.5563656</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
 <pre class="sourceCode r"><code class="sourceCode r">standardize =<span class="st"> </span><span class="cf">function</span>(x) {
   (x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x)
@@ -1367,14 +1366,14 @@ s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2
   (<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>n) <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)
 }</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_var</span>(test_sample)</code></pre>
-<pre><code>## [1] 10.87447</code></pre>
+<pre><code>## [1] 23.78813</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">FALSE</span>)</code></pre>
-<pre><code>## [1] 10.87447</code></pre>
+<pre><code>## [1] 23.78813</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(test_sample)</code></pre>
-<pre><code>## [1] 10.87447</code></pre>
+<pre><code>## [1] 23.78813</code></pre>
 <p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built in function <code>var()</code>. Finally, let’s examine the biased estimate of <span class="math inline">\(\sigma^2\)</span>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">TRUE</span>)</code></pre>
-<pre><code>## [1] 9.78702</code></pre>
+<pre><code>## [1] 21.40932</code></pre>
 
 </div>
 </div>
@@ -1405,7 +1404,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -1417,6 +1416,10 @@ gitbook.start({
 "edit": {
 "link": "https://github.com/daviddalpiaz/appliedstats/edit/master/data-and-programming.Rmd",
 "text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
 },
 "download": ["applied_statistics.pdf"],
 "toc": {
@@ -1432,7 +1435,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;

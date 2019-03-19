@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html >
-
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Applied Statistics with R</title>
-  <meta name="description" content="Applied Statistics with R">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 17 Logistic Regression | Applied Statistics with R</title>
+  <meta name="description" content="Chapter 17 Logistic Regression | Applied Statistics with R" />
+  <meta name="generator" content="bookdown  and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Applied Statistics with R" />
+  <meta property="og:title" content="Chapter 17 Logistic Regression | Applied Statistics with R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://daviddalpiaz.github.io/appliedstats/" />
   
@@ -17,24 +16,25 @@
   <meta name="github-repo" content="daviddalpiaz/appliedstats" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Applied Statistics with R" />
+  <meta name="twitter:title" content="Chapter 17 Logistic Regression | Applied Statistics with R" />
   
   
   
 
 
 
-<meta name="date" content="2018-08-02">
+<meta name="date" content="2019-03-19" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
-  <link rel="shortcut icon" href="favicon.gif" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
 <link rel="prev" href="variable-selection-and-model-building.html">
 <link rel="next" href="beyond.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -1243,9 +1243,11 @@ C^B({\bf x}) = \underset{k}{\mathrm{argmax}} \ P[Y = k \mid {\bf X = x}].
 <span class="kw">library</span>(kernlab)
 <span class="kw">data</span>(<span class="st">&quot;spam&quot;</span>)
 tibble<span class="op">::</span><span class="kw">as.tibble</span>(spam)</code></pre>
+<pre><code>## Warning: `as.tibble()` is deprecated, use `as_tibble()` (but mind the new semantics).
+## This warning is displayed once per session.</code></pre>
 <pre><code>## # A tibble: 4,601 x 58
 ##     make address   all num3d   our  over remove internet order  mail
-##  * &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
 ##  1  0       0.64  0.64     0  0.32  0      0        0     0     0   
 ##  2  0.21    0.28  0.5      0  0.14  0.28   0.21     0.07  0     0.94
 ##  3  0.06    0     0.71     0  1.23  0.19   0.19     0.12  0.64  0.25
@@ -1256,7 +1258,7 @@ tibble<span class="op">::</span><span class="kw">as.tibble</span>(spam)</code></
 ##  8  0       0     0        0  1.88  0      0        1.88  0     0   
 ##  9  0.15    0     0.46     0  0.61  0      0.3      0     0.92  0.76
 ## 10  0.06    0.12  0.77     0  0.19  0.32   0.38     0     0.06  0   
-## # ... with 4,591 more rows, and 48 more variables: receive &lt;dbl&gt;,
+## # … with 4,591 more rows, and 48 more variables: receive &lt;dbl&gt;,
 ## #   will &lt;dbl&gt;, people &lt;dbl&gt;, report &lt;dbl&gt;, addresses &lt;dbl&gt;, free &lt;dbl&gt;,
 ## #   business &lt;dbl&gt;, email &lt;dbl&gt;, you &lt;dbl&gt;, credit &lt;dbl&gt;, your &lt;dbl&gt;,
 ## #   font &lt;dbl&gt;, num000 &lt;dbl&gt;, money &lt;dbl&gt;, hp &lt;dbl&gt;, hpl &lt;dbl&gt;,
@@ -1460,7 +1462,7 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 <ul>
 <li><a href="logistic.Rmd" target="_blank"><code>logistic.Rmd</code></a></li>
 </ul>
-<p>The file was created using <code>R</code> version <code>3.5.0</code>.</p>
+<p>The file was created using <code>R</code> version <code>3.5.2</code>.</p>
 
 </div>
 </div>
@@ -1490,7 +1492,7 @@ gitbook.start({
 "google": false,
 "linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
 "all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
@@ -1502,6 +1504,10 @@ gitbook.start({
 "edit": {
 "link": "https://github.com/daviddalpiaz/appliedstats/edit/master/logistic.Rmd",
 "text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
 },
 "download": ["applied_statistics.pdf"],
 "toc": {
@@ -1517,7 +1523,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:" && /^https?:/.test(src))
       src = src.replace(/^https?:/, '');
     script.src = src;

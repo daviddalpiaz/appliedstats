@@ -1074,9 +1074,14 @@ tibble::as.tibble(spam)
 ```
 
 ```
+## Warning: `as.tibble()` is deprecated, use `as_tibble()` (but mind the new semantics).
+## This warning is displayed once per session.
+```
+
+```
 ## # A tibble: 4,601 x 58
 ##     make address   all num3d   our  over remove internet order  mail
-##  * <dbl>   <dbl> <dbl> <dbl> <dbl> <dbl>  <dbl>    <dbl> <dbl> <dbl>
+##    <dbl>   <dbl> <dbl> <dbl> <dbl> <dbl>  <dbl>    <dbl> <dbl> <dbl>
 ##  1  0       0.64  0.64     0  0.32  0      0        0     0     0   
 ##  2  0.21    0.28  0.5      0  0.14  0.28   0.21     0.07  0     0.94
 ##  3  0.06    0     0.71     0  1.23  0.19   0.19     0.12  0.64  0.25
@@ -1530,4 +1535,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`logistic.Rmd`](logistic.Rmd){target="_blank"}
 
-The file was created using `R` version `3.5.0`.
+The file was created using `R` version `3.5.2`.
