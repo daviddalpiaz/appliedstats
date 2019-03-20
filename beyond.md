@@ -50,10 +50,9 @@ While, it probably isn't the best tool for the job, `R` now has the ability to [
 
 In this class we have only considered independent data. What if data is dependent? Time Series is the area of statistics which deals with this issue, and could easily span multiple courses.
 
-Two books that are used in STAT 429 at the University of Illinois, both free:
+The primary textbook for STAT 429: Time Series Analysis at the University of Illinois that is free is:
 
 - [*Time Series Analysis and Its Applications: With R Examples*](http://www.stat.pitt.edu/stoffer/tsa4/){target="_blank"} by Shumway and Stoffer
-- [A Tour of Time Series Analysis with R](http://tts.smac-group.com/){target="_blank"} by Balamuta, Guerrier, Molinari, and Xu. This book is currently under development at UIUC.
 
 Some tutorials:
 
