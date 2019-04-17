@@ -1,6 +1,6 @@
 --- 
 title: "Applied Statistics with `R`"
-date: "2019-03-20"
+date: "2019-04-17"
 github-repo: daviddalpiaz/appliedstats
 url: 'https\://daviddalpiaz.github.io/appliedstats/'
 knit: "bookdown::render_book"
@@ -30,9 +30,9 @@ Since this book is under active development you may encounter errors ranging fro
 
 This text uses MathJax to render mathematical notation for the web. Occasionally, but rarely, a JavaScript error will prevent MathJax from rendering correctly. In this case, you will see the "code" instead of the expected mathematical equations. From experience, this is almost always fixed by simply refreshing the page. You'll also notice that if you right-click any equation you can obtain the MathML Code (for copying into Microsoft Word) or the TeX command used to generate the equation.
 
-\[
+$$
 a^2 + b^2 = c^2
-\]
+$$
 
 ## Conventions
 
@@ -58,7 +58,7 @@ We use the quantity $p$ to refer to the number of $\beta$ parameters in a linear
 
 Material in this book was heavily influenced by:
 
-- Alex Stepanov
+- [Alex Stepanov](https://stat.illinois.edu/directory/profile/stepanov)
     - Longtime instructor of STAT 420 at the University of Illinois at Urbana-Champaign. The author of this book actually took Alex's STAT 420 class many years ago! Alex provided or inspired many of the examples in the text.
 - [David Unger](http://publish.illinois.edu/dunger/){target="_blank"}
     - Another STAT 420 instructor at the University of Illinois at Urbana-Champaign. Co-taught with the author during the summer of 2016 while this book was first being developed. Provided endless hours of copy editing and countless suggestions.
