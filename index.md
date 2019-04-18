@@ -1,6 +1,6 @@
 --- 
 title: "Applied Statistics with `R`"
-date: "2019-04-17"
+date: "2019-04-18"
 github-repo: daviddalpiaz/appliedstats
 url: 'https\://daviddalpiaz.github.io/appliedstats/'
 knit: "bookdown::render_book"
@@ -24,11 +24,11 @@ Welcome to Applied Statistics with `R`!
 
 This book was originally (and currently) designed for use with STAT 420, Methods of Applied Statistics, at the University of Illinois at Urbana-Champaign. It may certainly be used elsewhere, but any references to "this course" in this book specifically refer to STAT 420.
 
-This book is under active development. When possible, it would be best to always access the text online to be sure you are using the most up-to-date version. Also, the html version provides additional features such as changing text size, font, and colors. If you are in need of a local copy, a [**pdf version** is continuously maintained](http://daviddalpiaz.github.io/appliedstats/applied_statistics.pdf){target="_blank"}.
+This book is under active development. When possible, it would be best to always access the text online to be sure you are using the most up-to-date version. Also, the html version provides additional features such as changing text size, font, and colors. If you are in need of a local copy, a [**pdf version** is continuously maintained](http://daviddalpiaz.github.io/appliedstats/applied_statistics.pdf){target="_blank"}, however, because a pdf uses pages, the formatting may not be as functional. (In other words, the author needs to go back and spend some time working on the pdf formatting.)
 
 Since this book is under active development you may encounter errors ranging from typos, to broken code, to poorly explained topics. If you do, please let us know! Simply send an email and we will make the changes as soon as possible. (`dalpiaz2 AT illinois DOT edu`) Or, if you know RMarkdown and are familiar with GitHub, [make a pull request and fix an issue yourself!](https://github.com/daviddalpiaz/appliedstats){target="_blank"} This process is partially automated by the edit button in the top-left corner of the html version. If your suggestion or fix becomes part of the book, you will be added to the list at the end of this chapter. We'll also link to your GitHub account, or personal website upon request.
 
-This text uses MathJax to render mathematical notation for the web. Occasionally, but rarely, a JavaScript error will prevent MathJax from rendering correctly. In this case, you will see the "code" instead of the expected mathematical equations. From experience, this is almost always fixed by simply refreshing the page. You'll also notice that if you right-click any equation you can obtain the MathML Code (for copying into Microsoft Word) or the TeX command used to generate the equation.
+This text uses [MathJax](https://www.mathjax.org/){target="_blank"} to render mathematical notation for the web. Occasionally, but rarely, a JavaScript error will prevent MathJax from rendering correctly. In this case, you will see the "code" instead of the expected mathematical equations. From experience, this is almost always fixed by simply refreshing the page. You'll also notice that if you right-click any equation you can obtain the MathML Code (for copying into Microsoft Word) or the TeX command used to generate the equation.
 
 $$
 a^2 + b^2 = c^2
@@ -52,7 +52,7 @@ sqrt(a ^ 2 + b ^ 2)
 ## [1] 5
 ```
 
-We use the quantity $p$ to refer to the number of $\beta$ parameters in a linear model, **not** the number of predictors.
+We use the quantity $p$ to refer to the number of $\beta$ parameters in a linear model, **not** the number of predictors. Don't worry if you don't know what this means yet!
 
 ## Acknowledgements
 
