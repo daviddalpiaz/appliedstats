@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 17 Logistic Regression | Applied Statistics with R</title>
   <meta name="description" content="Chapter 17 Logistic Regression | Applied Statistics with R" />
-  <meta name="generator" content="bookdown  and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.9.19 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 17 Logistic Regression | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2019-04-18" />
+<meta name="date" content="2019-05-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1297,7 +1297,7 @@ fit_over =<span class="st"> </span><span class="kw">glm</span>(type <span class=
 <p>Note that, when we receive this warning, we should be highly suspicious of the parameter estimates.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(fit_selected)</code></pre>
 <pre><code>##   (Intercept)           edu         money  capitalTotal    charDollar 
-## -1.1248423316 -3.4811734345  1.0303968430  0.0009187823 12.3988576908</code></pre>
+## -1.1199744712 -1.9837988840  0.9784675298  0.0007757011 11.5772904667</code></pre>
 <p>However, the model can still be used to create a classifier, and we will evaluate that classifier on its own merits.</p>
 <p>We also, “suppressed” the warning:</p>
 <pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
@@ -1319,13 +1319,13 @@ I(y_i \neq \hat{C}({\bf x_i})) =
 <p>When using this metric on the training data, it will have the same issues as RSS did for ordinary linear regression, that is, it will only go down.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># training misclassification rate</span>
 <span class="kw">mean</span>(<span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_caps) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;spam&quot;</span>, <span class="st">&quot;nonspam&quot;</span>) <span class="op">!=</span><span class="st"> </span>spam_trn<span class="op">$</span>type)</code></pre>
-<pre><code>## [1] 0.342</code></pre>
+<pre><code>## [1] 0.339</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(<span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_selected) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;spam&quot;</span>, <span class="st">&quot;nonspam&quot;</span>) <span class="op">!=</span><span class="st"> </span>spam_trn<span class="op">$</span>type)</code></pre>
-<pre><code>## [1] 0.212</code></pre>
+<pre><code>## [1] 0.224</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(<span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_additive) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;spam&quot;</span>, <span class="st">&quot;nonspam&quot;</span>) <span class="op">!=</span><span class="st"> </span>spam_trn<span class="op">$</span>type)</code></pre>
-<pre><code>## [1] 0.064</code></pre>
+<pre><code>## [1] 0.066</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(<span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_over) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;spam&quot;</span>, <span class="st">&quot;nonspam&quot;</span>) <span class="op">!=</span><span class="st"> </span>spam_trn<span class="op">$</span>type)</code></pre>
-<pre><code>## [1] 0.063</code></pre>
+<pre><code>## [1] 0.136</code></pre>
 <p>Because of this, training data isn’t useful for evaluating, as it would suggest that we should always use the largest possible model, when in reality, that model is likely overfitting. Recall, a model that is too complex will overfit. A model that is too simple will underfit. (We’re looking for something in the middle.)</p>
 <p>To overcome this, we’ll use cross-validation as we did with ordinary linear regression, but this time we’ll cross-validate the misclassification rate. To do so, we’ll use the <code>cv.glm()</code> function from the <code>boot</code> library. It takes arguments for the data (in this case training), a model fit via <code>glm()</code>, and <code>K</code>, the number of folds. See <code>?cv.glm</code> for details.</p>
 <p>Previously, for cross-validating RMSE in ordinary linear regression, we used LOOCV. We certainly could do that here. However, with logistic regression, we no longer have the clever trick that would allow use to obtain a LOOCV metric without needing to fit the model <span class="math inline">\(n\)</span> times. So instead, we’ll use 5-fold cross-validation. (5 and 10 fold are the most common in practice.) Instead of leaving a single observation out repeatedly, we’ll leave out a fifth of the data.</p>
@@ -1339,13 +1339,13 @@ I(y_i \neq \hat{C}({\bf x_i})) =
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(boot)
 <span class="kw">set.seed</span>(<span class="dv">1</span>)
 <span class="kw">cv.glm</span>(spam_trn, fit_caps, <span class="dt">K =</span> <span class="dv">5</span>)<span class="op">$</span>delta[<span class="dv">1</span>]</code></pre>
-<pre><code>## [1] 0.2138392</code></pre>
+<pre><code>## [1] 0.2166961</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cv.glm</span>(spam_trn, fit_selected, <span class="dt">K =</span> <span class="dv">5</span>)<span class="op">$</span>delta[<span class="dv">1</span>]</code></pre>
-<pre><code>## [1] 0.1522741</code></pre>
+<pre><code>## [1] 0.1587043</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cv.glm</span>(spam_trn, fit_additive, <span class="dt">K =</span> <span class="dv">5</span>)<span class="op">$</span>delta[<span class="dv">1</span>]</code></pre>
-<pre><code>## [1] 0.07346089</code></pre>
+<pre><code>## [1] 0.08684467</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cv.glm</span>(spam_trn, fit_over, <span class="dt">K =</span> <span class="dv">5</span>)<span class="op">$</span>delta[<span class="dv">1</span>]</code></pre>
-<pre><code>## [1] 0.11</code></pre>
+<pre><code>## [1] 0.135</code></pre>
 <p>Note that we’re suppressing warnings again here. (Now there would be a lot more, since were fitting a total of 20 models.)</p>
 <p>Based on these results, <code>fit_caps</code> and <code>fit_selected</code> are underfitting relative to <code>fit_additive</code>. Similarly, <code>fit_over</code> is overfitting relative to <code>fit_additive</code>. Thus, based on these results, we prefer the classifier created based on the logistic regression fit and stored in <code>fit_additive</code>.</p>
 <p>Going forward, to evaluate and report on the efficacy of this classifier, we’ll use the test dataset. We’re going to take the position that the test data set should <strong>never</strong> be used in training, which is why we used cross-validation within the training dataset to select a model. Even though cross-validation uses hold-out sets to generate metrics, at some point all of the data is used for training.</p>
@@ -1373,22 +1373,22 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 <pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">conf_mat_50 =</span> <span class="kw">make_conf_mat</span>(<span class="dt">predicted =</span> spam_tst_pred, <span class="dt">actual =</span> spam_tst<span class="op">$</span>type))</code></pre>
 <pre><code>##          actual
 ## predicted nonspam spam
-##   nonspam    2050  161
-##   spam        137 1253</code></pre>
+##   nonspam    2057  157
+##   spam        127 1260</code></pre>
 <p><span class="math display">\[
 \text{Prev} = \frac{\text{P}}{\text{Total Obs}}= \frac{\text{TP + FN}}{\text{Total Obs}}
 \]</span></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(spam_tst<span class="op">$</span>type) <span class="op">/</span><span class="st"> </span><span class="kw">nrow</span>(spam_tst)</code></pre>
 <pre><code>## 
 ##   nonspam      spam 
-## 0.6073313 0.3926687</code></pre>
-<p>First, note that to be a reasonable classifier, it needs to outperform the obvious classifier of simply classifying all observations to the majority class. In this case, classifying everything as non-spam for a test misclassification rate of 0.3926687</p>
+## 0.6064982 0.3935018</code></pre>
+<p>First, note that to be a reasonable classifier, it needs to outperform the obvious classifier of simply classifying all observations to the majority class. In this case, classifying everything as non-spam for a test misclassification rate of 0.3935018</p>
 <p>Next, we can see that using the classifier create from <code>fit_additive</code>, only a total of <span class="math inline">\(137 + 161 = 298\)</span> from the total of 3601 email in the test set are misclassified. Overall, the accuracy in the test set it</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(spam_tst_pred <span class="op">==</span><span class="st"> </span>spam_tst<span class="op">$</span>type)</code></pre>
-<pre><code>## [1] 0.9172452</code></pre>
+<pre><code>## [1] 0.921133</code></pre>
 <p>In other words, the test misclassification is</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(spam_tst_pred <span class="op">!=</span><span class="st"> </span>spam_tst<span class="op">$</span>type)</code></pre>
-<pre><code>## [1] 0.08275479</code></pre>
+<pre><code>## [1] 0.07886698</code></pre>
 <p>This seems like a decent classifier…</p>
 <p>However, are all errors created equal? In this case, absolutely note. The 137 non-spam emails that were marked as spam (false positives) are a problem. We can’t allow important information, say, a job offer, miss our inbox and get sent to the spam folder. On the other hand, the 161 spam email that would make it to an inbox (false negatives) are easily dealt with, just delete them.</p>
 <p>Instead of simply evaluating a classifier based on its misclassification rate (or accuracy), we’ll define two additional metrics, sensitivity and specificity. Note that this are simply two of many more metrics that can be considered. The <a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity" target="_blank">Wikipedia page for sensitivity and specificity</a> details a large number of metrics that can be derived form a confusion matrix.</p>
@@ -1409,9 +1409,9 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 }</code></pre>
 <p>We calculate both based on the confusion matrix we had created for our classifier.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sens</span>(conf_mat_<span class="dv">50</span>)</code></pre>
-<pre><code>## [1] 0.8861386</code></pre>
+<pre><code>## [1] 0.8892025</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_spec</span>(conf_mat_<span class="dv">50</span>)</code></pre>
-<pre><code>## [1] 0.9373571</code></pre>
+<pre><code>## [1] 0.9418498</code></pre>
 <p>Recall that we had created this classifier using a probability of <span class="math inline">\(0.5\)</span> as a “cutoff” for how observations should be classified. Now we’ll modify this cutoff. We’ll see that by modifying the cutoff, <span class="math inline">\(c\)</span>, we can improve sensitivity or specificity at the expense of the overall accuracy (misclassification rate).</p>
 <p><span class="math display">\[
 \hat{C}(\bf x) = 
@@ -1429,13 +1429,13 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 <pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">conf_mat_10 =</span> <span class="kw">make_conf_mat</span>(<span class="dt">predicted =</span> spam_tst_pred_<span class="dv">10</span>, <span class="dt">actual =</span> spam_tst<span class="op">$</span>type))</code></pre>
 <pre><code>##          actual
 ## predicted nonspam spam
-##   nonspam    1654   31
-##   spam        533 1383</code></pre>
+##   nonspam    1583   29
+##   spam        601 1388</code></pre>
 <p>Unfortunately, while this does greatly reduce false negatives, false positives have almost quadrupled. We see this reflected in the sensitivity and specificity.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sens</span>(conf_mat_<span class="dv">10</span>)</code></pre>
-<pre><code>## [1] 0.9780764</code></pre>
+<pre><code>## [1] 0.9795342</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_spec</span>(conf_mat_<span class="dv">10</span>)</code></pre>
-<pre><code>## [1] 0.7562872</code></pre>
+<pre><code>## [1] 0.7248168</code></pre>
 <p>This classifier, using <span class="math inline">\(0.1\)</span> instead of <span class="math inline">\(0.5\)</span> has a higher sensitivity, but a much lower specificity. Clearly, we should have moved the cutoff in the other direction. Let’s try <span class="math inline">\(0.9\)</span>.</p>
 <pre class="sourceCode r"><code class="sourceCode r">spam_tst_pred_<span class="dv">90</span> =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_additive, spam_tst, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.9</span>, 
                           <span class="st">&quot;spam&quot;</span>, 
@@ -1444,13 +1444,13 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 <pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">conf_mat_90 =</span> <span class="kw">make_conf_mat</span>(<span class="dt">predicted =</span> spam_tst_pred_<span class="dv">90</span>, <span class="dt">actual =</span> spam_tst<span class="op">$</span>type))</code></pre>
 <pre><code>##          actual
 ## predicted nonspam spam
-##   nonspam    2120  447
-##   spam         67  967</code></pre>
+##   nonspam    2136  537
+##   spam         48  880</code></pre>
 <p>This is the result we’re looking for. We have far fewer false positives. While sensitivity is greatly reduced, specificity has gone up.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_sens</span>(conf_mat_<span class="dv">90</span>)</code></pre>
-<pre><code>## [1] 0.6838755</code></pre>
+<pre><code>## [1] 0.6210303</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_spec</span>(conf_mat_<span class="dv">90</span>)</code></pre>
-<pre><code>## [1] 0.9693644</code></pre>
+<pre><code>## [1] 0.978022</code></pre>
 <p>While this is far fewer false positives, is it acceptable though? Still probably not. Also, don’t forget, this would actually be a terrible spam detector today since this is based on data from a very different era of the internet, for a very specific set of people. Spam has changed a lot since 90s! (Ironically, machine learning is probably partially to blame.)</p>
 <p>This chapter has provided a rather quick introduction to classification, and thus, machine learning. For a more complete coverage of machine learning, <a href="http://www-bcf.usc.edu/~gareth/ISL/" target="_blank">An Introduction to Statistical Learning</a> is a highly recommended resource. Additionally, <a href="https://daviddalpiaz.github.io/r4sl/" target="_blank"><code>R</code> for Statistical Learning</a> has been written as a supplement which provides additional detail on how to perform these methods using <code>R</code>. The <a href="https://daviddalpiaz.github.io/r4sl/classification-overview.html" target="_blank">classification</a> and <a href="https://daviddalpiaz.github.io/r4sl/logistic-regression.html" target="_blank">logistic regression</a> chapters might be useful.</p>
 <p>We should note that the code to perform classification using logistic regression is presented in a way that illustrates the concepts to the reader. In practice, you may to prefer to use a more general machine learning pipeline such as <a href="http://topepo.github.io/caret/index.html" target="_blank"><code>caret</code></a> in <code>R</code>. This will streamline processes for creating predictions and generating evaluation metrics.</p>
@@ -1462,7 +1462,7 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 <ul>
 <li><a href="logistic.Rmd" target="_blank"><code>logistic.Rmd</code></a></li>
 </ul>
-<p>The file was created using <code>R</code> version <code>3.5.3</code>.</p>
+<p>The file was created using <code>R</code> version <code>3.6.0</code>.</p>
 
 </div>
 </div>

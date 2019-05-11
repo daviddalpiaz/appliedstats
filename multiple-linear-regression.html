@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 Multiple Linear Regression | Applied Statistics with R</title>
   <meta name="description" content="Chapter 9 Multiple Linear Regression | Applied Statistics with R" />
-  <meta name="generator" content="bookdown  and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.9.19 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 Multiple Linear Regression | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2019-04-18" />
+<meta name="date" content="2019-05-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1243,22 +1243,22 @@ sim_data =<span class="st"> </span><span class="kw">data.frame</span>(x1, x2, y)
 \]</span></p>
 <pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">beta_hat =</span> C <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>y)</code></pre>
 <pre><code>##         [,1]
-## x0  5.293609
-## x1 -1.798593
-## x2  5.775081</code></pre>
+## x0  7.290735
+## x1 -2.282176
+## x2  5.843424</code></pre>
 <p>Notice that these values are the same as the coefficients found using <code>lm()</code> in <code>R</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">coef</span>(<span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> sim_data))</code></pre>
 <pre><code>## (Intercept)          x1          x2 
-##    5.293609   -1.798593    5.775081</code></pre>
+##    7.290735   -2.282176    5.843424</code></pre>
 <p>Also, these values are close to what we would expect.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(beta_<span class="dv">0</span>, beta_<span class="dv">1</span>, beta_<span class="dv">2</span>)</code></pre>
 <pre><code>## [1]  5 -2  6</code></pre>
 <p>We then calculated the fitted values in order to calculate <span class="math inline">\(s_e\)</span>, which we see is the same as the <code>sigma</code> which is returned by <code>summary()</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r">y_hat =<span class="st"> </span>X <span class="op">%*%</span><span class="st"> </span>beta_hat
 (<span class="dt">s_e =</span> <span class="kw">sqrt</span>(<span class="kw">sum</span>((y <span class="op">-</span><span class="st"> </span>y_hat) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>p)))</code></pre>
-<pre><code>## [1] 3.976044</code></pre>
+<pre><code>## [1] 4.294307</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(<span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> sim_data))<span class="op">$</span>sigma</code></pre>
-<pre><code>## [1] 3.976044</code></pre>
+<pre><code>## [1] 4.294307</code></pre>
 <p>So far so good. Everything checks out. Now we will finally simulate from this model repeatedly in order to obtain an empirical distribution of <span class="math inline">\(\hat{\beta}_2\)</span>.</p>
 <p>We expect <span class="math inline">\(\hat{\beta}_2\)</span> to follow a normal distribution,</p>
 <p><span class="math display">\[
@@ -1266,18 +1266,18 @@ sim_data =<span class="st"> </span><span class="kw">data.frame</span>(x1, x2, y)
 \]</span></p>
 <p>In this case,</p>
 <p><span class="math display">\[
-\hat{\beta}_2 \sim N\left(\mu = 6, \sigma^2 = 16 \times 0.0014777 = 0.0236438  \right).
+\hat{\beta}_2 \sim N\left(\mu = 6, \sigma^2 = 16 \times 0.0014534 = 0.0232549  \right).
 \]</span></p>
 <p><span class="math display">\[
-\hat{\beta}_2 \sim N\left(\mu = 6, \sigma^2 = 0.0236438  \right).
+\hat{\beta}_2 \sim N\left(\mu = 6, \sigma^2 = 0.0232549  \right).
 \]</span></p>
 <p>Note that <span class="math inline">\(C_{22}\)</span> corresponds to the element in the <strong>third</strong> row and <strong>third</strong> column since <span class="math inline">\(\beta_2\)</span> is the <strong>third</strong> parameter in the model and because <code>R</code> is indexed starting at <code>1</code>. However, we index the <span class="math inline">\(C\)</span> matrix starting at <code>0</code> to match the diagonal elements to the corresponding <span class="math inline">\(\beta_j\)</span>.</p>
 <pre class="sourceCode r"><code class="sourceCode r">C[<span class="dv">3</span>, <span class="dv">3</span>]</code></pre>
-<pre><code>## [1] 0.00147774</code></pre>
+<pre><code>## [1] 0.00145343</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">C[<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>]</code></pre>
-<pre><code>## [1] 0.00147774</code></pre>
+<pre><code>## [1] 0.00145343</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>C[<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>]</code></pre>
-<pre><code>## [1] 0.02364383</code></pre>
+<pre><code>## [1] 0.02325487</code></pre>
 <p>We now perform the simulation a large number of times. Each time, we update the <code>y</code> variable in the data frame, leaving the <code>x</code> variables the same. We then fit a model, and store <span class="math inline">\(\hat{\beta}_2\)</span>.</p>
 <pre class="sourceCode r"><code class="sourceCode r">num_sims =<span class="st"> </span><span class="dv">10000</span>
 beta_hat_<span class="dv">2</span> =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, num_sims)
@@ -1289,38 +1289,38 @@ beta_hat_<span class="dv">2</span> =<span class="st"> </span><span class="kw">re
 }</code></pre>
 <p>We then see that the mean of the simulated values is close to the true value of <span class="math inline">\(\beta_2\)</span>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(beta_hat_<span class="dv">2</span>)</code></pre>
-<pre><code>## [1] 5.99871</code></pre>
+<pre><code>## [1] 5.999723</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">beta_<span class="dv">2</span></code></pre>
 <pre><code>## [1] 6</code></pre>
 <p>We also see that the variance of the simulated values is close to the true variance of <span class="math inline">\(\hat{\beta}_2\)</span>.</p>
 <p><span class="math display">\[
-\text{Var}[\hat{\beta}_2] = \sigma^2 \cdot C_{22} = 16 \times 0.0014777 = 0.0236438
+\text{Var}[\hat{\beta}_2] = \sigma^2 \cdot C_{22} = 16 \times 0.0014534 = 0.0232549
 \]</span></p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(beta_hat_<span class="dv">2</span>)</code></pre>
-<pre><code>## [1] 0.02360853</code></pre>
+<pre><code>## [1] 0.02343408</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>C[<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>]</code></pre>
-<pre><code>## [1] 0.02364383</code></pre>
+<pre><code>## [1] 0.02325487</code></pre>
 <p>The standard deviations found from the simulated data and the parent population are also very close.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(beta_hat_<span class="dv">2</span>)</code></pre>
-<pre><code>## [1] 0.1536507</code></pre>
+<pre><code>## [1] 0.1530819</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>C[<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>])</code></pre>
-<pre><code>## [1] 0.1537655</code></pre>
+<pre><code>## [1] 0.1524955</code></pre>
 <p>Lastly, we plot a histogram of the <em>simulated values</em>, and overlay the <em>true distribution</em>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(beta_hat_<span class="dv">2</span>, <span class="dt">prob =</span> <span class="ot">TRUE</span>, <span class="dt">breaks =</span> <span class="dv">20</span>, 
      <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">2</span>]), <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)
 <span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> beta_<span class="dv">2</span>, <span class="dt">sd =</span> <span class="kw">sqrt</span>(sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>C[<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>])), 
       <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre>
 <p><img src="mlr_files/figure-html/unnamed-chunk-40-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>This looks good! The simulation-based histogram appears to be Normal with mean 6 and spread of about 0.15 as you measure from center to inflection point. That matches really well with the sampling distribution of <span class="math inline">\(\hat{\beta}_2 \sim N\left(\mu = 6, \sigma^2 = 0.0236438 \right)\)</span>.</p>
+<p>This looks good! The simulation-based histogram appears to be Normal with mean 6 and spread of about 0.15 as you measure from center to inflection point. That matches really well with the sampling distribution of <span class="math inline">\(\hat{\beta}_2 \sim N\left(\mu = 6, \sigma^2 = 0.0232549 \right)\)</span>.</p>
 <p>One last check, we verify the <span class="math inline">\(68 - 95 - 99.7\)</span> rule.</p>
 <pre class="sourceCode r"><code class="sourceCode r">sd_bh2 =<span class="st"> </span><span class="kw">sqrt</span>(sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>C[<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>])
 <span class="co"># We expect these to be: 0.68, 0.95, 0.997</span>
 <span class="kw">mean</span>(beta_<span class="dv">2</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span>sd_bh2 <span class="op">&lt;</span><span class="st"> </span>beta_hat_<span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span>beta_hat_<span class="dv">2</span> <span class="op">&lt;</span><span class="st"> </span>beta_<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span>sd_bh2)</code></pre>
-<pre><code>## [1] 0.6811</code></pre>
+<pre><code>## [1] 0.6807</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(beta_<span class="dv">2</span> <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>sd_bh2 <span class="op">&lt;</span><span class="st"> </span>beta_hat_<span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span>beta_hat_<span class="dv">2</span> <span class="op">&lt;</span><span class="st"> </span>beta_<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>sd_bh2)</code></pre>
-<pre><code>## [1] 0.955</code></pre>
+<pre><code>## [1] 0.9529</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(beta_<span class="dv">2</span> <span class="op">-</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>sd_bh2 <span class="op">&lt;</span><span class="st"> </span>beta_hat_<span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span>beta_hat_<span class="dv">2</span> <span class="op">&lt;</span><span class="st"> </span>beta_<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>sd_bh2)</code></pre>
-<pre><code>## [1] 0.9972</code></pre>
+<pre><code>## [1] 0.9967</code></pre>
 </div>
 <div id="r-markdown-2" class="section level2">
 <h2><span class="header-section-number">9.6</span> <code>R</code> Markdown</h2>
@@ -1328,7 +1328,7 @@ beta_hat_<span class="dv">2</span> =<span class="st"> </span><span class="kw">re
 <ul>
 <li><a href="mlr.Rmd" target="_blank"><code>mlr.Rmd</code></a></li>
 </ul>
-<p>The file was created using <code>R</code> version <code>3.5.3</code>.</p>
+<p>The file was created using <code>R</code> version <code>3.6.0</code>.</p>
 
 </div>
 </div>

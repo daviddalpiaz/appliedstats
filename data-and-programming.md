@@ -1285,7 +1285,7 @@ ex_list = list(
 
 Lists can be subset using two syntaxes, the `$` operator, and square brackets `[]`. The `$` operator returns a named **element** of a list. The `[]` syntax returns a **list**, while the `[[]]` returns an **element** of a list.
 
-- `ex_list[1]` returns a list contain the first element.
+- `ex_list[1]` returns a list containing the first element.
 - `ex_list[[1]]` returns the first element of the list, in this case, a vector.
 
 
@@ -1903,8 +1903,8 @@ To test our function, we will take a random sample of size `n = 10` from a norma
 ```
 
 ```
-##  [1]  3.163341  4.204704 -5.287797 -4.586070  7.596236  3.958626  7.590519
-##  [8] -1.366633  4.023751  3.797948
+##  [1]  -3.2461685   1.0831788   2.5385094   0.6244832   8.7174476
+##  [6]  -2.6062825 -10.1475449   3.6756265   5.6757341  -5.9708768
 ```
 
 ```r
@@ -1912,8 +1912,8 @@ standardize(x = test_sample)
 ```
 
 ```
-##  [1]  0.1874180  0.4159870 -1.6675246 -1.5135023  1.1603954  0.3619754
-##  [7]  1.1591405 -0.8068672  0.3762697  0.3267080
+##  [1] -0.5822923  0.1861530  0.4444695  0.1047360  1.5412113 -0.4687146
+##  [7] -1.8072646  0.6463042  1.0013169 -1.0659194
 ```
 
 This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.
@@ -2015,7 +2015,7 @@ get_var(test_sample)
 ```
 
 ```
-## [1] 20.75723
+## [1] 31.74088
 ```
 
 ```r
@@ -2023,7 +2023,7 @@ get_var(test_sample, biased = FALSE)
 ```
 
 ```
-## [1] 20.75723
+## [1] 31.74088
 ```
 
 ```r
@@ -2031,7 +2031,7 @@ var(test_sample)
 ```
 
 ```
-## [1] 20.75723
+## [1] 31.74088
 ```
 
 We see the function is working as expected, and when returning the unbiased estimate it matches `R`'s built in function `var()`. Finally, let's examine the biased estimate of $\sigma^2$.
@@ -2042,7 +2042,7 @@ get_var(test_sample, biased = TRUE)
 ```
 
 ```
-## [1] 18.68151
+## [1] 28.56679
 ```
 
 

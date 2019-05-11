@@ -1170,7 +1170,7 @@ coef(fit_selected)
 
 ```
 ##   (Intercept)           edu         money  capitalTotal    charDollar 
-## -1.1248423316 -3.4811734345  1.0303968430  0.0009187823 12.3988576908
+## -1.1199744712 -1.9837988840  0.9784675298  0.0007757011 11.5772904667
 ```
 
 However, the model can still be used to create a classifier, and we will evaluate that classifier on its own merits.
@@ -1209,7 +1209,7 @@ mean(ifelse(predict(fit_caps) > 0, "spam", "nonspam") != spam_trn$type)
 ```
 
 ```
-## [1] 0.342
+## [1] 0.339
 ```
 
 ```r
@@ -1217,7 +1217,7 @@ mean(ifelse(predict(fit_selected) > 0, "spam", "nonspam") != spam_trn$type)
 ```
 
 ```
-## [1] 0.212
+## [1] 0.224
 ```
 
 ```r
@@ -1225,7 +1225,7 @@ mean(ifelse(predict(fit_additive) > 0, "spam", "nonspam") != spam_trn$type)
 ```
 
 ```
-## [1] 0.064
+## [1] 0.066
 ```
 
 ```r
@@ -1233,7 +1233,7 @@ mean(ifelse(predict(fit_over) > 0, "spam", "nonspam") != spam_trn$type)
 ```
 
 ```
-## [1] 0.063
+## [1] 0.136
 ```
 
 Because of this, training data isn't useful for evaluating, as it would suggest that we should always use the largest possible model, when in reality, that model is likely overfitting. Recall, a model that is too complex will overfit. A model that is too simple will underfit. (We're looking for something in the middle.)
@@ -1258,7 +1258,7 @@ cv.glm(spam_trn, fit_caps, K = 5)$delta[1]
 ```
 
 ```
-## [1] 0.2138392
+## [1] 0.2166961
 ```
 
 ```r
@@ -1266,7 +1266,7 @@ cv.glm(spam_trn, fit_selected, K = 5)$delta[1]
 ```
 
 ```
-## [1] 0.1522741
+## [1] 0.1587043
 ```
 
 ```r
@@ -1274,7 +1274,7 @@ cv.glm(spam_trn, fit_additive, K = 5)$delta[1]
 ```
 
 ```
-## [1] 0.07346089
+## [1] 0.08684467
 ```
 
 ```r
@@ -1282,7 +1282,7 @@ cv.glm(spam_trn, fit_over, K = 5)$delta[1]
 ```
 
 ```
-## [1] 0.11
+## [1] 0.135
 ```
  
 Note that we're suppressing warnings again here. (Now there would be a lot more, since were fitting a total of 20 models.)
@@ -1331,8 +1331,8 @@ Now we'll use these predictions to create a confusion matrix.
 ```
 ##          actual
 ## predicted nonspam spam
-##   nonspam    2050  161
-##   spam        137 1253
+##   nonspam    2057  157
+##   spam        127 1260
 ```
 
 $$
@@ -1347,10 +1347,10 @@ table(spam_tst$type) / nrow(spam_tst)
 ```
 ## 
 ##   nonspam      spam 
-## 0.6073313 0.3926687
+## 0.6064982 0.3935018
 ```
 
-First, note that to be a reasonable classifier, it needs to outperform the obvious classifier of simply classifying all observations to the majority class. In this case, classifying everything as non-spam for a test misclassification rate of 0.3926687
+First, note that to be a reasonable classifier, it needs to outperform the obvious classifier of simply classifying all observations to the majority class. In this case, classifying everything as non-spam for a test misclassification rate of 0.3935018
 
 Next, we can see that using the classifier create from `fit_additive`, only a total of $137 + 161 = 298$ from the total of 3601 email in the test set are misclassified. Overall, the accuracy in the test set it
 
@@ -1360,7 +1360,7 @@ mean(spam_tst_pred == spam_tst$type)
 ```
 
 ```
-## [1] 0.9172452
+## [1] 0.921133
 ```
 
 In other words, the test misclassification is
@@ -1371,7 +1371,7 @@ mean(spam_tst_pred != spam_tst$type)
 ```
 
 ```
-## [1] 0.08275479
+## [1] 0.07886698
 ```
 
 This seems like a decent classifier...
@@ -1416,7 +1416,7 @@ get_sens(conf_mat_50)
 ```
 
 ```
-## [1] 0.8861386
+## [1] 0.8892025
 ```
 
 ```r
@@ -1424,7 +1424,7 @@ get_spec(conf_mat_50)
 ```
 
 ```
-## [1] 0.9373571
+## [1] 0.9418498
 ```
 
 Recall that we had created this classifier using a probability of $0.5$ as a "cutoff" for how observations should be classified. Now we'll modify this cutoff. We'll see that by modifying the cutoff, $c$, we can improve sensitivity or specificity at the expense of the overall accuracy (misclassification rate).
@@ -1458,8 +1458,8 @@ This is essentially *decreasing* the threshold for an email to be labeled as spa
 ```
 ##          actual
 ## predicted nonspam spam
-##   nonspam    1654   31
-##   spam        533 1383
+##   nonspam    1583   29
+##   spam        601 1388
 ```
 
 Unfortunately, while this does greatly reduce false negatives, false positives have almost quadrupled. We see this reflected in the sensitivity and specificity.
@@ -1470,7 +1470,7 @@ get_sens(conf_mat_10)
 ```
 
 ```
-## [1] 0.9780764
+## [1] 0.9795342
 ```
 
 ```r
@@ -1478,7 +1478,7 @@ get_spec(conf_mat_10)
 ```
 
 ```
-## [1] 0.7562872
+## [1] 0.7248168
 ```
 
 This classifier, using $0.1$ instead of $0.5$ has a higher sensitivity, but a much lower specificity. Clearly, we should have moved the cutoff in the other direction. Let's try $0.9$.
@@ -1500,8 +1500,8 @@ This is essentially *increasing* the threshold for an email to be labeled as spa
 ```
 ##          actual
 ## predicted nonspam spam
-##   nonspam    2120  447
-##   spam         67  967
+##   nonspam    2136  537
+##   spam         48  880
 ```
 
 This is the result we're looking for. We have far fewer false positives. While sensitivity is greatly reduced, specificity has gone up.
@@ -1512,7 +1512,7 @@ get_sens(conf_mat_90)
 ```
 
 ```
-## [1] 0.6838755
+## [1] 0.6210303
 ```
 
 ```r
@@ -1520,7 +1520,7 @@ get_spec(conf_mat_90)
 ```
 
 ```
-## [1] 0.9693644
+## [1] 0.978022
 ```
 
 While this is far fewer false positives, is it acceptable though? Still probably not. Also, don't forget, this would actually be a terrible spam detector today since this is based on data from a very different era of the internet, for a very specific set of people. Spam has changed a lot since 90s! (Ironically, machine learning is probably partially to blame.)
@@ -1535,4 +1535,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`logistic.Rmd`](logistic.Rmd){target="_blank"}
 
-The file was created using `R` version `3.5.3`.
+The file was created using `R` version `3.6.0`.

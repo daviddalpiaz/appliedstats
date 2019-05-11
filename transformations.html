@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 14 Transformations | Applied Statistics with R</title>
   <meta name="description" content="Chapter 14 Transformations | Applied Statistics with R" />
-  <meta name="generator" content="bookdown  and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.9.19 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 14 Transformations | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2019-04-18" />
+<meta name="date" content="2019-05-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -832,8 +832,13 @@ xplot =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">0</
       <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre>
 <p><img src="transformations_files/figure-html/unnamed-chunk-38-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The previous plot was made using base graphics in <code>R</code>. The next plot was made using the package <a href="http://ggplot2.org/" target="_blank"><code>ggplot2</code></a>, an increasingly popular plotting method in <code>R</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
-<span class="kw">ggplot</span>(<span class="dt">data =</span> marketing, <span class="kw">aes</span>(<span class="dt">x =</span> advert, <span class="dt">y =</span> sales)) <span class="op">+</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)</code></pre>
+<pre><code>## Registered S3 methods overwritten by &#39;ggplot2&#39;:
+##   method         from 
+##   [.quosures     rlang
+##   c.quosures     rlang
+##   print.quosures rlang</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(<span class="dt">data =</span> marketing, <span class="kw">aes</span>(<span class="dt">x =</span> advert, <span class="dt">y =</span> sales)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">color =</span> <span class="st">&quot;green&quot;</span>, <span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>x) <span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)) <span class="op">+</span>
 <span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">formula =</span> y <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)<span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x <span class="op">^</span><span class="st"> </span><span class="dv">3</span>)) <span class="op">+</span>
@@ -1645,7 +1650,7 @@ xplot =<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min
 <ul>
 <li><a href="transformations.Rmd" target="_blank"><code>transformations.Rmd</code></a></li>
 </ul>
-<p>The file was created using <code>R</code> version <code>3.5.3</code>.</p>
+<p>The file was created using <code>R</code> version <code>3.6.0</code>.</p>
 
 </div>
 </div>

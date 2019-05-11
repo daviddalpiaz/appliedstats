@@ -1239,9 +1239,9 @@ We then calculate
 
 ```
 ##         [,1]
-## x0  5.293609
-## x1 -1.798593
-## x2  5.775081
+## x0  7.290735
+## x1 -2.282176
+## x2  5.843424
 ```
 
 Notice that these values are the same as the coefficients found using `lm()` in `R`.
@@ -1253,7 +1253,7 @@ coef(lm(y ~ x1 + x2, data = sim_data))
 
 ```
 ## (Intercept)          x1          x2 
-##    5.293609   -1.798593    5.775081
+##    7.290735   -2.282176    5.843424
 ```
 
 Also, these values are close to what we would expect.
@@ -1276,7 +1276,7 @@ y_hat = X %*% beta_hat
 ```
 
 ```
-## [1] 3.976044
+## [1] 4.294307
 ```
 
 ```r
@@ -1284,7 +1284,7 @@ summary(lm(y ~ x1 + x2, data = sim_data))$sigma
 ```
 
 ```
-## [1] 3.976044
+## [1] 4.294307
 ```
 
 So far so good. Everything checks out. Now we will finally simulate from this model repeatedly in order to obtain an empirical distribution of $\hat{\beta}_2$.
@@ -1298,11 +1298,11 @@ We expect $\hat{\beta}_2$ to follow a normal distribution,
 In this case,
 
 \[
-\hat{\beta}_2 \sim N\left(\mu = 6, \sigma^2 = 16 \times 0.0014777 = 0.0236438  \right).
+\hat{\beta}_2 \sim N\left(\mu = 6, \sigma^2 = 16 \times 0.0014534 = 0.0232549  \right).
 \]
 
 \[
-\hat{\beta}_2 \sim N\left(\mu = 6, \sigma^2 = 0.0236438  \right).
+\hat{\beta}_2 \sim N\left(\mu = 6, \sigma^2 = 0.0232549  \right).
 \]
 
 Note that $C_{22}$ corresponds to the element in the **third** row and **third** column since $\beta_2$ is the **third** parameter in the model and because `R` is indexed starting at `1`. However, we index the $C$ matrix starting at `0` to match the diagonal elements to the corresponding $\beta_j$.
@@ -1313,7 +1313,7 @@ C[3, 3]
 ```
 
 ```
-## [1] 0.00147774
+## [1] 0.00145343
 ```
 
 ```r
@@ -1321,7 +1321,7 @@ C[2 + 1, 2 + 1]
 ```
 
 ```
-## [1] 0.00147774
+## [1] 0.00145343
 ```
 
 ```r
@@ -1329,7 +1329,7 @@ sigma ^ 2 * C[2 + 1, 2 + 1]
 ```
 
 ```
-## [1] 0.02364383
+## [1] 0.02325487
 ```
 
 We now perform the simulation a large number of times. Each time, we update the `y` variable in the data frame, leaving the `x` variables the same. We then fit a model, and store $\hat{\beta}_2$.
@@ -1354,7 +1354,7 @@ mean(beta_hat_2)
 ```
 
 ```
-## [1] 5.99871
+## [1] 5.999723
 ```
 
 ```r
@@ -1368,7 +1368,7 @@ beta_2
 We also see that the variance of the simulated values is close to the true variance of $\hat{\beta}_2$.
 
 \[
-\text{Var}[\hat{\beta}_2] = \sigma^2 \cdot C_{22} = 16 \times 0.0014777 = 0.0236438
+\text{Var}[\hat{\beta}_2] = \sigma^2 \cdot C_{22} = 16 \times 0.0014534 = 0.0232549
 \]
 
 
@@ -1377,7 +1377,7 @@ var(beta_hat_2)
 ```
 
 ```
-## [1] 0.02360853
+## [1] 0.02343408
 ```
 
 ```r
@@ -1385,7 +1385,7 @@ sigma ^ 2 * C[2 + 1, 2 + 1]
 ```
 
 ```
-## [1] 0.02364383
+## [1] 0.02325487
 ```
 
 The standard deviations found from the simulated data and the parent population are also very close.
@@ -1396,7 +1396,7 @@ sd(beta_hat_2)
 ```
 
 ```
-## [1] 0.1536507
+## [1] 0.1530819
 ```
 
 ```r
@@ -1404,7 +1404,7 @@ sqrt(sigma ^ 2 * C[2 + 1, 2 + 1])
 ```
 
 ```
-## [1] 0.1537655
+## [1] 0.1524955
 ```
 
 Lastly, we plot a histogram of the *simulated values*, and overlay the *true distribution*.
@@ -1421,7 +1421,7 @@ curve(dnorm(x, mean = beta_2, sd = sqrt(sigma ^ 2 * C[2 + 1, 2 + 1])),
 
 \begin{center}\includegraphics{mlr_files/figure-latex/unnamed-chunk-40-1} \end{center}
 
-This looks good! The simulation-based histogram appears to be Normal with mean 6 and spread of about 0.15 as you measure from center to inflection point. That matches really well with the sampling distribution of $\hat{\beta}_2 \sim N\left(\mu = 6, \sigma^2 = 0.0236438  \right)$.
+This looks good! The simulation-based histogram appears to be Normal with mean 6 and spread of about 0.15 as you measure from center to inflection point. That matches really well with the sampling distribution of $\hat{\beta}_2 \sim N\left(\mu = 6, \sigma^2 = 0.0232549  \right)$.
 
 One last check, we verify the $68 - 95 - 99.7$ rule.
 
@@ -1433,7 +1433,7 @@ mean(beta_2 - 1 * sd_bh2 < beta_hat_2 & beta_hat_2 < beta_2 + 1 * sd_bh2)
 ```
 
 ```
-## [1] 0.6811
+## [1] 0.6807
 ```
 
 ```r
@@ -1441,7 +1441,7 @@ mean(beta_2 - 2 * sd_bh2 < beta_hat_2 & beta_hat_2 < beta_2 + 2 * sd_bh2)
 ```
 
 ```
-## [1] 0.955
+## [1] 0.9529
 ```
 
 ```r
@@ -1449,7 +1449,7 @@ mean(beta_2 - 3 * sd_bh2 < beta_hat_2 & beta_hat_2 < beta_2 + 3 * sd_bh2)
 ```
 
 ```
-## [1] 0.9972
+## [1] 0.9967
 ```
 
 ## `R` Markdown
@@ -1458,4 +1458,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`mlr.Rmd`](mlr.Rmd){target="_blank"}
 
-The file was created using `R` version `3.5.3`.
+The file was created using `R` version `3.6.0`.

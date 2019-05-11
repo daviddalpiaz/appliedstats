@@ -1489,4 +1489,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`diagnostics.Rmd`](diagnostics.Rmd){target="_blank"}
 
-The file was created using `R` version `3.5.3`.
+The file was created using `R` version `3.6.0`.

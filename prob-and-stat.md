@@ -67,8 +67,8 @@ rnorm(n = 10, mean = 2, sd = 5)
 ```
 
 ```
-##  [1]  4.88595072  0.93935758  2.96859359 -0.89929508  4.50044372
-##  [6] -5.21888863  0.09869907 -2.02306306 -1.72944221 -0.31513302
+##  [1] -2.234733  2.476014  4.110763  7.159733 -4.598161 -3.772158  3.224977
+##  [8]  3.591365 12.221425 -1.604289
 ```
 
 These functions exist for many other distributions, including but not limited to:
@@ -232,8 +232,8 @@ names(capt_test_results)
 ```
 
 ```
-## [1] "statistic"   "parameter"   "p.value"     "conf.int"    "estimate"   
-## [6] "null.value"  "alternative" "method"      "data.name"
+##  [1] "statistic"   "parameter"   "p.value"     "conf.int"    "estimate"   
+##  [6] "null.value"  "stderr"      "alternative" "method"      "data.name"
 ```
 
 We are interested in the confidence interval which is stored in `conf.int`.
