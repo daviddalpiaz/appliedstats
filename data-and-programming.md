@@ -1903,8 +1903,8 @@ To test our function, we will take a random sample of size `n = 10` from a norma
 ```
 
 ```
-##  [1] -5.766756  4.005591  3.074074 -1.436003  4.014975 11.476089  1.670632
-##  [8] -4.708751 -3.426562 -1.687267
+##  [1] -4.1653328 -6.1941994  3.5075146 -7.8545412 -0.4399241  2.0798880
+##  [7] -7.5765481 -1.4726720 -7.0473425 -0.4787468
 ```
 
 ```r
@@ -1912,8 +1912,8 @@ standardize(x = test_sample)
 ```
 
 ```
-##  [1] -1.2487434  0.6320334  0.4527546 -0.4152506  0.6338394  2.0697983
-##  [7]  0.1826493 -1.0451207 -0.7983517 -0.4636086
+##  [1] -0.2886560 -0.7762290  1.5552666 -1.1752389  0.6066264  1.2121824
+##  [7] -1.1084322  0.3584386 -0.9812546  0.5972966
 ```
 
 This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.
@@ -1989,7 +1989,7 @@ power_of_num(power = 5)
 
 To further illustrate a function with a default argument, we will write a function that calculates sample variance two ways.
 
-By default, is will calculate the unbiased estimate of $\sigma^2$, which we will call $s^2$.
+By default, it will calculate the unbiased estimate of $\sigma^2$, which we will call $s^2$.
 
 \[
 s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2
@@ -2015,7 +2015,7 @@ get_var(test_sample)
 ```
 
 ```
-## [1] 26.99748
+## [1] 17.31521
 ```
 
 ```r
@@ -2023,7 +2023,7 @@ get_var(test_sample, biased = FALSE)
 ```
 
 ```
-## [1] 26.99748
+## [1] 17.31521
 ```
 
 ```r
@@ -2031,7 +2031,7 @@ var(test_sample)
 ```
 
 ```
-## [1] 26.99748
+## [1] 17.31521
 ```
 
 We see the function is working as expected, and when returning the unbiased estimate it matches `R`'s built in function `var()`. Finally, let's examine the biased estimate of $\sigma^2$.
@@ -2042,7 +2042,7 @@ get_var(test_sample, biased = TRUE)
 ```
 
 ```
-## [1] 24.29774
+## [1] 15.58369
 ```
 
 

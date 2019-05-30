@@ -287,7 +287,7 @@ Here the sample means vary a lot around the overall sample mean, which is the so
 As a result, we we obtain a *large* test statistic, thus *small* p-value. 
 
 - $F = 374.4469511$
-- $\text{p-value} = 1.6349862\times 10^{-33}$
+- $\text{p-value} = \ensuremath{1.6349862\times 10^{-33}}$
 
 Now consider $\mu_A = 0, \mu_B = 0, \mu_C = 0$ with $\sigma = 1$. That is, equal means for the groups.
 
@@ -309,7 +309,7 @@ The next two examples show different means, with different levels of noise. Noti
 \begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 - $F = 16.4879492$
-- $\text{p-value} = 2.2378806\times 10^{-6}$
+- $\text{p-value} = \ensuremath{2.2378806\times 10^{-6}}$
 
 Above, there isn't obvious separation between the groups like the first example, but it is still obvious the means are different. Below, there is more noise. Visually it is somewhat hard to tell, but the test still suggests a difference of means. (At an $\alpha$ of 0.05.)
 

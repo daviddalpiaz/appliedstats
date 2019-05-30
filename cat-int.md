@@ -622,7 +622,7 @@ coef(mpg_disp_int_hp)
 - $\hat{\beta}_0 = 52.4081998$ is the estimated average `mpg` for a car with 0 `disp` and 0 `hp`.
 - $\hat{\beta}_1 = -0.1001738$ is the estimated change in average `mpg` for an increase in 1 `disp`, **for a car with 0 `hp`**.
 - $\hat{\beta}_2 = -0.21982$ is the estimated change in average `mpg` for an increase in 1 `hp`, **for a car with 0 `disp`**.
-- $\hat{\beta}_3 = 5.658269\times 10^{-4}$ is an estimate of the modification to the change in average `mpg` for an increase in `disp`, for a car of a certain `hp` (or vice versa).
+- $\hat{\beta}_3 = \ensuremath{5.658269\times 10^{-4}}$ is an estimate of the modification to the change in average `mpg` for an increase in `disp`, for a car of a certain `hp` (or vice versa).
 
 That last coefficient needs further explanation. Recall the rearrangement we made earlier
 
@@ -633,21 +633,21 @@ Y = \beta_0 + (\beta_1 + \beta_3 x_2) x_1 + \beta_2 x_2 + \epsilon.
 So, our estimate for $\beta_1 + \beta_3 x_2$, is $\hat{\beta}_1 + \hat{\beta}_3 x_2$, which in this case is
 
 \[
--0.1001738 + 5.658269\times 10^{-4} x_2.
+-0.1001738 + \ensuremath{5.658269\times 10^{-4}} x_2.
 \]
 
-This says that, for an increase of one `disp` we see an estimated change in average `mpg` of $-0.1001738 + 5.658269\times 10^{-4} x_2$. So how `disp` and `mpg` are related, depends on the `hp` of the car.
+This says that, for an increase of one `disp` we see an estimated change in average `mpg` of $-0.1001738 + \ensuremath{5.658269\times 10^{-4}} x_2$. So how `disp` and `mpg` are related, depends on the `hp` of the car.
 
 So for a car with 50 `hp`, the estimated change in average `mpg` for an increase of one `disp` is
 
 \[
--0.1001738 + 5.658269\times 10^{-4} \cdot 50 = -0.0718824
+-0.1001738 + \ensuremath{5.658269\times 10^{-4}} \cdot 50 = -0.0718824
 \]
 
 And for a car with 350 `hp`, the estimated change in average `mpg` for an increase of one `disp` is
 
 \[
--0.1001738 + 5.658269\times 10^{-4} \cdot 350 = 0.0978657
+-0.1001738 + \ensuremath{5.658269\times 10^{-4}} \cdot 350 = 0.0978657
 \]
 
 Notice the sign changed!

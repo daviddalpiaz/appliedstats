@@ -750,7 +750,7 @@ t = \frac{\hat{\beta}_1-0}{\text{SE}[\hat{\beta}_1]} = \frac{\hat{\beta}_1-0}{s_
 Lastly, `Pr(>|t|)`, gives us the p-value of that test.
 
 \[
-\text{p-value} = 1.4898365\times 10^{-12}
+\text{p-value} = \ensuremath{1.4898365\times 10^{-12}}
 \]
 
 Note here, we are specifically testing whether or not $\beta_1 = 0$. 
@@ -855,7 +855,7 @@ For the `cars` example,
 Again, that test is seen in the output from `summary()`, 
 
 \[
-\text{p-value} = 1.4898365\times 10^{-12}.
+\text{p-value} = \ensuremath{1.4898365\times 10^{-12}}.
 \]
 
 With this extremely low p-value, we would reject the null hypothesis at any reasonable $\alpha$ level, say for example $\alpha = 0.01$. So we say there is a significant **linear** relationship between speed and stopping distance. Notice that we emphasize **linear**.

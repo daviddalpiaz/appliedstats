@@ -67,8 +67,8 @@ rnorm(n = 10, mean = 2, sd = 5)
 ```
 
 ```
-##  [1]  6.5674714 -2.0531308  3.8031530 -7.0014536 -4.8543951  7.9684936
-##  [7]  9.0974349  0.3287399 -2.3353948 10.7871565
+##  [1] 11.64317458 -1.82843944  2.41434062 -0.03172827  1.63331730
+##  [6] -2.75199182 -3.78195320 11.37497521 -6.63720920  2.28549873
 ```
 
 These functions exist for many other distributions, including but not limited to:
@@ -557,7 +557,7 @@ for (s in 1:num_samples) {
 }
 ```
 
-To estimate $P(0 < D < 2)$ we will find the proportion of values of $d_s$ (among the 10^{4} values of $d_s$ generated) that are between 0 and 2.
+To estimate $P(0 < D < 2)$ we will find the proportion of values of $d_s$ (among the \ensuremath{10^{4}} values of $d_s$ generated) that are between 0 and 2.
 
 
 ```r
