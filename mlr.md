@@ -842,7 +842,7 @@ The decomposition of variation that we had seen in SLR still holds for MLR.
 That is,
 
 \[
-\text{SST} = \text{SSReg} + \text{SSE}.
+\text{SST} = \text{SSE} + \text{SSReg}.
 \]
 
 This means that, we can still calculate $R^2$ in the same manner as before, which `R` continues to do automatically.
