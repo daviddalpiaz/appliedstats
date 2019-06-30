@@ -296,8 +296,8 @@ How do we fit this model in `R`? There are a number of ways.
 One method would be to simply create a new variable, then fit a model like any other.
 
 ```{r, eval = FALSE}
-autompg$x3 = autompg$disp * autompg$domestic # THIS CODE NOT RUN!
-do_not_do_this = lm(mpg ~ disp + domestic + x3, data = autompg) # THIS CODE NOT RUN!
+autompg$x3 = autompg$disp * autompg$domestic # THIS CODE DOES NOT RUN!
+do_not_do_this = lm(mpg ~ disp + domestic + x3, data = autompg) # THIS CODE DOES NOT RUN!
 ```
 
 You should only do this as a last resort. We greatly prefer not to have to modify our data simply to fit a model. Instead, we can tell `R` we would like to use the existing data with an interaction term, which it will create automatically when we use the `:` operator.
