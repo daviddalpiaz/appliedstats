@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 Inference for Simple Linear Regression | Applied Statistics with R</title>
   <meta name="description" content="Chapter 8 Inference for Simple Linear Regression | Applied Statistics with R" />
-  <meta name="generator" content="bookdown 0.11.1 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.12.1 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 Inference for Simple Linear Regression | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2019-06-07" />
+<meta name="date" content="2019-07-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -54,7 +54,6 @@ a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
 a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -439,8 +438,8 @@ s_e = \text{RSE} = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 \]</span></p>
 <p>which we also called <span class="math inline">\(\text{RSE}\)</span>, for “Residual Standard Error.”</p>
 <p>When applied to the <code>cars</code> data, we obtained the following results:</p>
-<pre class="sourceCode r"><code class="sourceCode r">stop_dist_model =<span class="st"> </span><span class="kw">lm</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars)
-<span class="kw">summary</span>(stop_dist_model)</code></pre>
+<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb515-1" data-line-number="1">stop_dist_model =<span class="st"> </span><span class="kw">lm</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars)</a>
+<a class="sourceLine" id="cb515-2" data-line-number="2"><span class="kw">summary</span>(stop_dist_model)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = dist ~ speed, data = cars)
@@ -460,14 +459,14 @@ s_e = \text{RSE} = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 ## Multiple R-squared:  0.6511, Adjusted R-squared:  0.6438 
 ## F-statistic: 89.57 on 1 and 48 DF,  p-value: 1.49e-12</code></pre>
 <p>Last chapter, we only discussed the <code>Estimate</code>, <code>Residual standard error</code>, and <code>Multiple R-squared</code> values. In this chapter, we will discuss all of the information under <code>Coefficients</code> as well as <code>F-statistic</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars,
-     <span class="dt">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,
-     <span class="dt">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,
-     <span class="dt">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,
-     <span class="dt">pch  =</span> <span class="dv">20</span>,
-     <span class="dt">cex  =</span> <span class="dv">2</span>,
-     <span class="dt">col  =</span> <span class="st">&quot;grey&quot;</span>)
-<span class="kw">abline</span>(stop_dist_model, <span class="dt">lwd =</span> <span class="dv">5</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb517-1" data-line-number="1"><span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars,</a>
+<a class="sourceLine" id="cb517-2" data-line-number="2">     <span class="dt">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,</a>
+<a class="sourceLine" id="cb517-3" data-line-number="3">     <span class="dt">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,</a>
+<a class="sourceLine" id="cb517-4" data-line-number="4">     <span class="dt">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,</a>
+<a class="sourceLine" id="cb517-5" data-line-number="5">     <span class="dt">pch  =</span> <span class="dv">20</span>,</a>
+<a class="sourceLine" id="cb517-6" data-line-number="6">     <span class="dt">cex  =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb517-7" data-line-number="7">     <span class="dt">col  =</span> <span class="st">&quot;grey&quot;</span>)</a>
+<a class="sourceLine" id="cb517-8" data-line-number="8"><span class="kw">abline</span>(stop_dist_model, <span class="dt">lwd =</span> <span class="dv">5</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</a></code></pre></div>
 <p><img src="slr-inf_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>To get started, we’ll note that there is another equivalent expression for <span class="math inline">\(S_{xy}\)</span> which we did not see last chapter,</p>
 <p><span class="math display">\[
@@ -581,18 +580,18 @@ Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 \hat{\beta}_0 \sim N\left(  \beta_0, \sigma^2 \left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right) \right).
 \]</span></p>
 <p>First we need to decide ahead of time what our <span class="math inline">\(x\)</span> values will be for this simulation, since the <span class="math inline">\(x\)</span> values in SLR are also considered known quantities. The choice of <span class="math inline">\(x\)</span> values is arbitrary. Here we also set a seed for randomization, and calculate <span class="math inline">\(S_{xx}\)</span> which we will need going forward.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
-sample_size =<span class="st"> </span><span class="dv">100</span> <span class="co"># this is n</span>
-x =<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">length =</span> sample_size)
-Sxx =<span class="st"> </span><span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</code></pre>
+<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb518-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb518-2" data-line-number="2">sample_size =<span class="st"> </span><span class="dv">100</span> <span class="co"># this is n</span></a>
+<a class="sourceLine" id="cb518-3" data-line-number="3">x =<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">length =</span> sample_size)</a>
+<a class="sourceLine" id="cb518-4" data-line-number="4">Sxx =<span class="st"> </span><span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
 <p>We also fix our parameter values.</p>
-<pre class="sourceCode r"><code class="sourceCode r">beta_<span class="dv">0</span> =<span class="st"> </span><span class="dv">3</span>
-beta_<span class="dv">1</span> =<span class="st"> </span><span class="dv">6</span>
-sigma  =<span class="st"> </span><span class="dv">2</span></code></pre>
+<div class="sourceCode" id="cb519"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb519-1" data-line-number="1">beta_<span class="dv">0</span> =<span class="st"> </span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb519-2" data-line-number="2">beta_<span class="dv">1</span> =<span class="st"> </span><span class="dv">6</span></a>
+<a class="sourceLine" id="cb519-3" data-line-number="3">sigma  =<span class="st"> </span><span class="dv">2</span></a></code></pre></div>
 <p>With this information, we know the sampling distributions should be:</p>
-<pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">var_beta_1_hat =</span> sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>Sxx)</code></pre>
+<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb520-1" data-line-number="1">(<span class="dt">var_beta_1_hat =</span> sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>Sxx)</a></code></pre></div>
 <pre><code>## [1] 0.1176238</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">(<span class="dt">var_beta_0_hat =</span> sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>sample_size <span class="op">+</span><span class="st"> </span><span class="kw">mean</span>(x) <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>Sxx))</code></pre>
+<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb522-1" data-line-number="1">(<span class="dt">var_beta_0_hat =</span> sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>sample_size <span class="op">+</span><span class="st"> </span><span class="kw">mean</span>(x) <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>Sxx))</a></code></pre></div>
 <pre><code>## [1] 0.04</code></pre>
 <p><span class="math display">\[
 \hat{\beta}_1 \sim N(  6, 0.1176238)
@@ -616,64 +615,64 @@ sigma  =<span class="st"> </span><span class="dv">2</span></code></pre>
 \end{aligned}
 \]</span></p>
 <p>We now simulate data from this model 10,000 times. Note this may not be the most <code>R</code> way of doing the simulation. We perform the simulation in this manner in an attempt at clarity. For example, we could have used the <code>sim_slr()</code> function from the previous chapter. We also simply store variables in the global environment instead of creating a data frame for each new simulated dataset.</p>
-<pre class="sourceCode r"><code class="sourceCode r">num_samples =<span class="st"> </span><span class="dv">10000</span>
-beta_<span class="dv">0</span>_hats =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, num_samples)
-beta_<span class="dv">1</span>_hats =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, num_samples)
-
-<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>num_samples) {
-  eps =<span class="st"> </span><span class="kw">rnorm</span>(sample_size, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> sigma)
-  y   =<span class="st"> </span>beta_<span class="dv">0</span> <span class="op">+</span><span class="st"> </span>beta_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>eps
-  
-  sim_model =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x)
-  
-  beta_<span class="dv">0</span>_hats[i] =<span class="st"> </span><span class="kw">coef</span>(sim_model)[<span class="dv">1</span>]
-  beta_<span class="dv">1</span>_hats[i] =<span class="st"> </span><span class="kw">coef</span>(sim_model)[<span class="dv">2</span>]
-}</code></pre>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb524-1" data-line-number="1">num_samples =<span class="st"> </span><span class="dv">10000</span></a>
+<a class="sourceLine" id="cb524-2" data-line-number="2">beta_<span class="dv">0</span>_hats =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, num_samples)</a>
+<a class="sourceLine" id="cb524-3" data-line-number="3">beta_<span class="dv">1</span>_hats =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, num_samples)</a>
+<a class="sourceLine" id="cb524-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb524-5" data-line-number="5"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>num_samples) {</a>
+<a class="sourceLine" id="cb524-6" data-line-number="6">  eps =<span class="st"> </span><span class="kw">rnorm</span>(sample_size, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> sigma)</a>
+<a class="sourceLine" id="cb524-7" data-line-number="7">  y   =<span class="st"> </span>beta_<span class="dv">0</span> <span class="op">+</span><span class="st"> </span>beta_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>eps</a>
+<a class="sourceLine" id="cb524-8" data-line-number="8">  </a>
+<a class="sourceLine" id="cb524-9" data-line-number="9">  sim_model =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x)</a>
+<a class="sourceLine" id="cb524-10" data-line-number="10">  </a>
+<a class="sourceLine" id="cb524-11" data-line-number="11">  beta_<span class="dv">0</span>_hats[i] =<span class="st"> </span><span class="kw">coef</span>(sim_model)[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb524-12" data-line-number="12">  beta_<span class="dv">1</span>_hats[i] =<span class="st"> </span><span class="kw">coef</span>(sim_model)[<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb524-13" data-line-number="13">}</a></code></pre></div>
 <p>Each time we simulated the data, we obtained values of the estimated coefficiets. The variables <code>beta_0_hats</code> and <code>beta_1_hats</code> now store 10,000 simulated values of <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> respectively.</p>
 <p>We first verify the distribution of <span class="math inline">\(\hat{\beta}_1\)</span>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(beta_<span class="dv">1</span>_hats) <span class="co"># empirical mean</span></code></pre>
+<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb525-1" data-line-number="1"><span class="kw">mean</span>(beta_<span class="dv">1</span>_hats) <span class="co"># empirical mean</span></a></code></pre></div>
 <pre><code>## [1] 6.001998</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">beta_<span class="dv">1</span>            <span class="co"># true mean</span></code></pre>
+<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb527-1" data-line-number="1">beta_<span class="dv">1</span>            <span class="co"># true mean</span></a></code></pre></div>
 <pre><code>## [1] 6</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(beta_<span class="dv">1</span>_hats)  <span class="co"># empirical variance</span></code></pre>
+<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb529-1" data-line-number="1"><span class="kw">var</span>(beta_<span class="dv">1</span>_hats)  <span class="co"># empirical variance</span></a></code></pre></div>
 <pre><code>## [1] 0.11899</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">var_beta_<span class="dv">1</span>_hat    <span class="co"># true variance</span></code></pre>
+<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb531-1" data-line-number="1">var_beta_<span class="dv">1</span>_hat    <span class="co"># true variance</span></a></code></pre></div>
 <pre><code>## [1] 0.1176238</code></pre>
 <p>We see that the empirical and true means and variances are <em>very</em> similar. We also verify that the empirical distribution is normal. To do so, we plot a histogram of the <code>beta_1_hats</code>, and add the curve for the true distribution of <span class="math inline">\(\hat{\beta}_1\)</span>. We use <code>prob = TRUE</code> to put the histogram on the same scale as the normal curve.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># note need to use prob = TRUE</span>
-<span class="kw">hist</span>(beta_<span class="dv">1</span>_hats, <span class="dt">prob =</span> <span class="ot">TRUE</span>, <span class="dt">breaks =</span> <span class="dv">20</span>, 
-     <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">1</span>]), <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-<span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> beta_<span class="dv">1</span>, <span class="dt">sd =</span> <span class="kw">sqrt</span>(var_beta_<span class="dv">1</span>_hat)), 
-      <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre>
+<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb533-1" data-line-number="1"><span class="co"># note need to use prob = TRUE</span></a>
+<a class="sourceLine" id="cb533-2" data-line-number="2"><span class="kw">hist</span>(beta_<span class="dv">1</span>_hats, <span class="dt">prob =</span> <span class="ot">TRUE</span>, <span class="dt">breaks =</span> <span class="dv">20</span>, </a>
+<a class="sourceLine" id="cb533-3" data-line-number="3">     <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">1</span>]), <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)</a>
+<a class="sourceLine" id="cb533-4" data-line-number="4"><span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> beta_<span class="dv">1</span>, <span class="dt">sd =</span> <span class="kw">sqrt</span>(var_beta_<span class="dv">1</span>_hat)), </a>
+<a class="sourceLine" id="cb533-5" data-line-number="5">      <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</a></code></pre></div>
 <p><img src="slr-inf_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We then repeat the process for <span class="math inline">\(\hat{\beta}_0\)</span>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(beta_<span class="dv">0</span>_hats) <span class="co"># empirical mean</span></code></pre>
+<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb534-1" data-line-number="1"><span class="kw">mean</span>(beta_<span class="dv">0</span>_hats) <span class="co"># empirical mean</span></a></code></pre></div>
 <pre><code>## [1] 3.001147</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">beta_<span class="dv">0</span>            <span class="co"># true mean</span></code></pre>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb536-1" data-line-number="1">beta_<span class="dv">0</span>            <span class="co"># true mean</span></a></code></pre></div>
 <pre><code>## [1] 3</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(beta_<span class="dv">0</span>_hats)  <span class="co"># empirical variance</span></code></pre>
+<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb538-1" data-line-number="1"><span class="kw">var</span>(beta_<span class="dv">0</span>_hats)  <span class="co"># empirical variance</span></a></code></pre></div>
 <pre><code>## [1] 0.04017924</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">var_beta_<span class="dv">0</span>_hat    <span class="co"># true variance</span></code></pre>
+<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb540-1" data-line-number="1">var_beta_<span class="dv">0</span>_hat    <span class="co"># true variance</span></a></code></pre></div>
 <pre><code>## [1] 0.04</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(beta_<span class="dv">0</span>_hats, <span class="dt">prob =</span> <span class="ot">TRUE</span>, <span class="dt">breaks =</span> <span class="dv">25</span>, 
-     <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">0</span>]), <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-<span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> beta_<span class="dv">0</span>, <span class="dt">sd =</span> <span class="kw">sqrt</span>(var_beta_<span class="dv">0</span>_hat)),
-      <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</code></pre>
+<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb542-1" data-line-number="1"><span class="kw">hist</span>(beta_<span class="dv">0</span>_hats, <span class="dt">prob =</span> <span class="ot">TRUE</span>, <span class="dt">breaks =</span> <span class="dv">25</span>, </a>
+<a class="sourceLine" id="cb542-2" data-line-number="2">     <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">0</span>]), <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)</a>
+<a class="sourceLine" id="cb542-3" data-line-number="3"><span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> beta_<span class="dv">0</span>, <span class="dt">sd =</span> <span class="kw">sqrt</span>(var_beta_<span class="dv">0</span>_hat)),</a>
+<a class="sourceLine" id="cb542-4" data-line-number="4">      <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</a></code></pre></div>
 <p><img src="slr-inf_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>In this simulation study, we have only simulated a finite number of samples. To truly verify the distributional results, we would need to observe an infinite number of samples. However, the following plot should make it clear that if we continued simulating, the empirical results would get closer and closer to what we should expect.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="co"># adjusted plot margins, otherwise the &quot;hat&quot; does not display</span>
-<span class="kw">plot</span>(<span class="kw">cumsum</span>(beta_<span class="dv">1</span>_hats) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(beta_<span class="dv">1</span>_hats)), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">5.95</span>, <span class="fl">6.05</span>),
-     <span class="dt">xlab =</span> <span class="st">&quot;Number of Simulations&quot;</span>,
-     <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;Empirical Mean of &quot;</span> <span class="op">~</span><span class="st"> </span><span class="kw">hat</span>(beta)[<span class="dv">1</span>]),
-     <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">6</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre>
+<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb543-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="co"># adjusted plot margins, otherwise the &quot;hat&quot; does not display</span></a>
+<a class="sourceLine" id="cb543-2" data-line-number="2"><span class="kw">plot</span>(<span class="kw">cumsum</span>(beta_<span class="dv">1</span>_hats) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(beta_<span class="dv">1</span>_hats)), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">5.95</span>, <span class="fl">6.05</span>),</a>
+<a class="sourceLine" id="cb543-3" data-line-number="3">     <span class="dt">xlab =</span> <span class="st">&quot;Number of Simulations&quot;</span>,</a>
+<a class="sourceLine" id="cb543-4" data-line-number="4">     <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;Empirical Mean of &quot;</span> <span class="op">~</span><span class="st"> </span><span class="kw">hat</span>(beta)[<span class="dv">1</span>]),</a>
+<a class="sourceLine" id="cb543-5" data-line-number="5">     <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)</a>
+<a class="sourceLine" id="cb543-6" data-line-number="6"><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">6</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="slr-inf_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="co"># adjusted plot margins, otherwise the &quot;hat&quot; does not display</span>
-<span class="kw">plot</span>(<span class="kw">cumsum</span>(beta_<span class="dv">0</span>_hats) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(beta_<span class="dv">0</span>_hats)), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">2.95</span>, <span class="fl">3.05</span>),
-     <span class="dt">xlab =</span> <span class="st">&quot;Number of Simulations&quot;</span>,
-     <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;Empirical Mean of &quot;</span> <span class="op">~</span><span class="st"> </span><span class="kw">hat</span>(beta)[<span class="dv">0</span>]),
-     <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-<span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre>
+<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb544-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="co"># adjusted plot margins, otherwise the &quot;hat&quot; does not display</span></a>
+<a class="sourceLine" id="cb544-2" data-line-number="2"><span class="kw">plot</span>(<span class="kw">cumsum</span>(beta_<span class="dv">0</span>_hats) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(beta_<span class="dv">0</span>_hats)), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">2.95</span>, <span class="fl">3.05</span>),</a>
+<a class="sourceLine" id="cb544-3" data-line-number="3">     <span class="dt">xlab =</span> <span class="st">&quot;Number of Simulations&quot;</span>,</a>
+<a class="sourceLine" id="cb544-4" data-line-number="4">     <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;Empirical Mean of &quot;</span> <span class="op">~</span><span class="st"> </span><span class="kw">hat</span>(beta)[<span class="dv">0</span>]),</a>
+<a class="sourceLine" id="cb544-5" data-line-number="5">     <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)</a>
+<a class="sourceLine" id="cb544-6" data-line-number="6"><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="slr-inf_files/figure-html/unnamed-chunk-12-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
@@ -746,20 +745,20 @@ T \sim t_d
 \]</span></p>
 <p>where <span class="math inline">\(Z \sim N(0,1)\)</span>.</p>
 <p>Recall that a <span class="math inline">\(t\)</span> distribution is similar to a standard normal, but with heavier tails. As the degrees of freedom increases, the <span class="math inline">\(t\)</span> distribution becomes more and more like a standard normal. Below we plot a standard normal distribution as well as two examples of a <span class="math inline">\(t\)</span> distribution with different degrees of freedom. Notice how the <span class="math inline">\(t\)</span> distribution with the larger degrees of freedom is more similar to the standard normal curve.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># define grid of x values</span>
-x =<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dt">length =</span> <span class="dv">100</span>)
-
-<span class="co"># plot curve for standard normal</span>
-<span class="kw">plot</span>(x, <span class="kw">dnorm</span>(x), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">2</span>,
-     <span class="dt">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Density&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Normal vs t Distributions&quot;</span>)
-<span class="co"># add curves for t distributions</span>
-<span class="kw">lines</span>(x, <span class="kw">dt</span>(x, <span class="dt">df =</span> <span class="dv">1</span>), <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)
-<span class="kw">lines</span>(x, <span class="kw">dt</span>(x, <span class="dt">df =</span> <span class="dv">10</span>), <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)
-
-<span class="co"># add legend</span>
-<span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Distributions&quot;</span>,
-       <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;t, df = 1&quot;</span>, <span class="st">&quot;t, df = 10&quot;</span>, <span class="st">&quot;Standard Normal&quot;</span>), 
-       <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</code></pre>
+<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb545-1" data-line-number="1"><span class="co"># define grid of x values</span></a>
+<a class="sourceLine" id="cb545-2" data-line-number="2">x =<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dt">length =</span> <span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb545-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb545-4" data-line-number="4"><span class="co"># plot curve for standard normal</span></a>
+<a class="sourceLine" id="cb545-5" data-line-number="5"><span class="kw">plot</span>(x, <span class="kw">dnorm</span>(x), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb545-6" data-line-number="6">     <span class="dt">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Density&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Normal vs t Distributions&quot;</span>)</a>
+<a class="sourceLine" id="cb545-7" data-line-number="7"><span class="co"># add curves for t distributions</span></a>
+<a class="sourceLine" id="cb545-8" data-line-number="8"><span class="kw">lines</span>(x, <span class="kw">dt</span>(x, <span class="dt">df =</span> <span class="dv">1</span>), <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</a>
+<a class="sourceLine" id="cb545-9" data-line-number="9"><span class="kw">lines</span>(x, <span class="kw">dt</span>(x, <span class="dt">df =</span> <span class="dv">10</span>), <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)</a>
+<a class="sourceLine" id="cb545-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb545-11" data-line-number="11"><span class="co"># add legend</span></a>
+<a class="sourceLine" id="cb545-12" data-line-number="12"><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Distributions&quot;</span>,</a>
+<a class="sourceLine" id="cb545-13" data-line-number="13">       <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;t, df = 1&quot;</span>, <span class="st">&quot;t, df = 10&quot;</span>, <span class="st">&quot;Standard Normal&quot;</span>), </a>
+<a class="sourceLine" id="cb545-14" data-line-number="14">       <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</a></code></pre></div>
 <p><img src="slr-inf_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="confidence-intervals-for-slope-and-intercept" class="section level2">
@@ -816,8 +815,8 @@ t = \frac{\hat{\beta}_1-\beta_{10}}{\text{SE}[\hat{\beta}_1]} = \frac{\hat{\beta
 <div id="cars-example" class="section level2">
 <h2><span class="header-section-number">8.6</span> <code>cars</code> Example</h2>
 <p>We now return to the <code>cars</code> example from last chapter to illustrate these concepts. We first fit the model using <code>lm()</code> then use <code>summary()</code> to view the results in greater detail.</p>
-<pre class="sourceCode r"><code class="sourceCode r">stop_dist_model =<span class="st"> </span><span class="kw">lm</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars)
-<span class="kw">summary</span>(stop_dist_model)</code></pre>
+<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb546-1" data-line-number="1">stop_dist_model =<span class="st"> </span><span class="kw">lm</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars)</a>
+<a class="sourceLine" id="cb546-2" data-line-number="2"><span class="kw">summary</span>(stop_dist_model)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = dist ~ speed, data = cars)
@@ -839,11 +838,11 @@ t = \frac{\hat{\beta}_1-\beta_{10}}{\text{SE}[\hat{\beta}_1]} = \frac{\hat{\beta
 <div id="tests-in-r" class="section level3">
 <h3><span class="header-section-number">8.6.1</span> Tests in <code>R</code></h3>
 <p>We will now discuss the results displayed called <code>Coefficients</code>. First recall that we can extract this information directly.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(<span class="kw">summary</span>(stop_dist_model))</code></pre>
+<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb548-1" data-line-number="1"><span class="kw">names</span>(<span class="kw">summary</span>(stop_dist_model))</a></code></pre></div>
 <pre><code>##  [1] &quot;call&quot;          &quot;terms&quot;         &quot;residuals&quot;     &quot;coefficients&quot; 
 ##  [5] &quot;aliased&quot;       &quot;sigma&quot;         &quot;df&quot;            &quot;r.squared&quot;    
 ##  [9] &quot;adj.r.squared&quot; &quot;fstatistic&quot;    &quot;cov.unscaled&quot;</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(stop_dist_model)<span class="op">$</span>coefficients</code></pre>
+<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb550-1" data-line-number="1"><span class="kw">summary</span>(stop_dist_model)<span class="op">$</span>coefficients</a></code></pre></div>
 <pre><code>##               Estimate Std. Error   t value     Pr(&gt;|t|)
 ## (Intercept) -17.579095  6.7584402 -2.601058 1.231882e-02
 ## speed         3.932409  0.4155128  9.463990 1.489836e-12</code></pre>
@@ -857,7 +856,7 @@ t = \frac{\hat{\beta}_1-\beta_{10}}{\text{SE}[\hat{\beta}_1]} = \frac{\hat{\beta
 \]</span></p>
 <p>which are our estimates for the model parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</p>
 <p>Let’s now focus on the second row of output, which is relevant to <span class="math inline">\(\beta_1\)</span>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(stop_dist_model)<span class="op">$</span>coefficients[<span class="dv">2</span>,]</code></pre>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb552-1" data-line-number="1"><span class="kw">summary</span>(stop_dist_model)<span class="op">$</span>coefficients[<span class="dv">2</span>,]</a></code></pre></div>
 <pre><code>##     Estimate   Std. Error      t value     Pr(&gt;|t|) 
 ## 3.932409e+00 4.155128e-01 9.463990e+00 1.489836e-12</code></pre>
 <p>Again, the first value, <code>Estimate</code> is</p>
@@ -878,29 +877,29 @@ t = \frac{\hat{\beta}_1-0}{\text{SE}[\hat{\beta}_1]} = \frac{\hat{\beta}_1-0}{s_
 \]</span></p>
 <p>Note here, we are specifically testing whether or not <span class="math inline">\(\beta_1 = 0\)</span>.</p>
 <p>The first row of output reports the same values, but for <span class="math inline">\(\beta_0\)</span>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(stop_dist_model)<span class="op">$</span>coefficients[<span class="dv">1</span>,]</code></pre>
+<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb554-1" data-line-number="1"><span class="kw">summary</span>(stop_dist_model)<span class="op">$</span>coefficients[<span class="dv">1</span>,]</a></code></pre></div>
 <pre><code>##     Estimate   Std. Error      t value     Pr(&gt;|t|) 
 ## -17.57909489   6.75844017  -2.60105800   0.01231882</code></pre>
 <p>In summary, the following code stores the information of <code>summary(stop_dist_model)$coefficients</code> in a new variable <code>stop_dist_model_test_info</code>, then extracts each element into a new variable which describes the information it contains.</p>
-<pre class="sourceCode r"><code class="sourceCode r">stop_dist_model_test_info =<span class="st"> </span><span class="kw">summary</span>(stop_dist_model)<span class="op">$</span>coefficients
-
-beta_<span class="dv">0</span>_hat      =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>, <span class="dv">1</span>] <span class="co"># Estimate</span>
-beta_<span class="dv">0</span>_hat_se   =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>, <span class="dv">2</span>] <span class="co"># Std. Error</span>
-beta_<span class="dv">0</span>_hat_t    =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>, <span class="dv">3</span>] <span class="co"># t value</span>
-beta_<span class="dv">0</span>_hat_pval =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>, <span class="dv">4</span>] <span class="co"># Pr(&gt;|t|)</span>
-
-beta_<span class="dv">1</span>_hat      =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>, <span class="dv">1</span>] <span class="co"># Estimate</span>
-beta_<span class="dv">1</span>_hat_se   =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>, <span class="dv">2</span>] <span class="co"># Std. Error</span>
-beta_<span class="dv">1</span>_hat_t    =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>, <span class="dv">3</span>] <span class="co"># t value</span>
-beta_<span class="dv">1</span>_hat_pval =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>, <span class="dv">4</span>] <span class="co"># Pr(&gt;|t|)</span></code></pre>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb556-1" data-line-number="1">stop_dist_model_test_info =<span class="st"> </span><span class="kw">summary</span>(stop_dist_model)<span class="op">$</span>coefficients</a>
+<a class="sourceLine" id="cb556-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb556-3" data-line-number="3">beta_<span class="dv">0</span>_hat      =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>, <span class="dv">1</span>] <span class="co"># Estimate</span></a>
+<a class="sourceLine" id="cb556-4" data-line-number="4">beta_<span class="dv">0</span>_hat_se   =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>, <span class="dv">2</span>] <span class="co"># Std. Error</span></a>
+<a class="sourceLine" id="cb556-5" data-line-number="5">beta_<span class="dv">0</span>_hat_t    =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>, <span class="dv">3</span>] <span class="co"># t value</span></a>
+<a class="sourceLine" id="cb556-6" data-line-number="6">beta_<span class="dv">0</span>_hat_pval =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>, <span class="dv">4</span>] <span class="co"># Pr(&gt;|t|)</span></a>
+<a class="sourceLine" id="cb556-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb556-8" data-line-number="8">beta_<span class="dv">1</span>_hat      =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>, <span class="dv">1</span>] <span class="co"># Estimate</span></a>
+<a class="sourceLine" id="cb556-9" data-line-number="9">beta_<span class="dv">1</span>_hat_se   =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>, <span class="dv">2</span>] <span class="co"># Std. Error</span></a>
+<a class="sourceLine" id="cb556-10" data-line-number="10">beta_<span class="dv">1</span>_hat_t    =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>, <span class="dv">3</span>] <span class="co"># t value</span></a>
+<a class="sourceLine" id="cb556-11" data-line-number="11">beta_<span class="dv">1</span>_hat_pval =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>, <span class="dv">4</span>] <span class="co"># Pr(&gt;|t|)</span></a></code></pre></div>
 <p>We can then verify some equivalent expressions: the <span class="math inline">\(t\)</span> test statistic for <span class="math inline">\(\hat{\beta}_1\)</span> and the two-sided p-value associated with that test statistic.</p>
-<pre class="sourceCode r"><code class="sourceCode r">(beta_<span class="dv">1</span>_hat <span class="op">-</span><span class="st"> </span><span class="dv">0</span>) <span class="op">/</span><span class="st"> </span>beta_<span class="dv">1</span>_hat_se</code></pre>
+<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb557-1" data-line-number="1">(beta_<span class="dv">1</span>_hat <span class="op">-</span><span class="st"> </span><span class="dv">0</span>) <span class="op">/</span><span class="st"> </span>beta_<span class="dv">1</span>_hat_se</a></code></pre></div>
 <pre><code>## [1] 9.46399</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">beta_<span class="dv">1</span>_hat_t</code></pre>
+<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb559-1" data-line-number="1">beta_<span class="dv">1</span>_hat_t</a></code></pre></div>
 <pre><code>## [1] 9.46399</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(beta_<span class="dv">1</span>_hat_t), <span class="dt">df =</span> <span class="kw">length</span>(<span class="kw">resid</span>(stop_dist_model)) <span class="op">-</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</code></pre>
+<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb561-1" data-line-number="1"><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(beta_<span class="dv">1</span>_hat_t), <span class="dt">df =</span> <span class="kw">length</span>(<span class="kw">resid</span>(stop_dist_model)) <span class="op">-</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <pre><code>## [1] 1.489836e-12</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">beta_<span class="dv">1</span>_hat_pval</code></pre>
+<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb563-1" data-line-number="1">beta_<span class="dv">1</span>_hat_pval</a></code></pre></div>
 <pre><code>## [1] 1.489836e-12</code></pre>
 </div>
 <div id="significance-of-regression-t-test" class="section level3">
@@ -939,7 +938,7 @@ Y_i = \beta_0 + \epsilon_i.
 <div id="confidence-intervals-in-r" class="section level3">
 <h3><span class="header-section-number">8.6.3</span> Confidence Intervals in <code>R</code></h3>
 <p>Using <code>R</code> we can very easily obtain the confidence intervals for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)</code></pre>
+<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb565-1" data-line-number="1"><span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)</a></code></pre></div>
 <pre><code>##                  0.5 %    99.5 %
 ## (Intercept) -35.706610 0.5484205
 ## speed         2.817919 5.0468988</code></pre>
@@ -948,26 +947,26 @@ Y_i = \beta_0 + \epsilon_i.
 <p>Note that this 99% confidence interval does <strong>not</strong> contain the hypothesized value of 0. Since it does not contain 0, it is equivalent to rejecting the test of <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs <span class="math inline">\(H_1: \beta_1 \neq 0\)</span> at <span class="math inline">\(\alpha = 0.01\)</span>, which we had seen previously.</p>
 <p>You should be somewhat suspicious of the confidence interval for <span class="math inline">\(\beta_0\)</span>, as it covers negative values, which correspond to negative stopping distances. Technically the interpretation would be that we are 99% confident that the average stopping distance of a car traveling 0 miles per hour is between -35.7066103 and 0.5484205 feet, but we don’t really believe that, since we are actually certain that it would be non-negative.</p>
 <p>Note, we can extract specific values from this output a number of ways. This code is not run, and instead, you should check how it relates to the output of the code above.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">1</span>,]
-<span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">1</span>, <span class="dv">1</span>]
-<span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">1</span>, <span class="dv">2</span>]
-<span class="kw">confint</span>(stop_dist_model, <span class="dt">parm =</span> <span class="st">&quot;(Intercept)&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>)
-<span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">2</span>,]
-<span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">2</span>, <span class="dv">1</span>]
-<span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">2</span>, <span class="dv">2</span>]
-<span class="kw">confint</span>(stop_dist_model, <span class="dt">parm =</span> <span class="st">&quot;speed&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>)</code></pre>
+<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb567-1" data-line-number="1"><span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">1</span>,]</a>
+<a class="sourceLine" id="cb567-2" data-line-number="2"><span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">1</span>, <span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb567-3" data-line-number="3"><span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">1</span>, <span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb567-4" data-line-number="4"><span class="kw">confint</span>(stop_dist_model, <span class="dt">parm =</span> <span class="st">&quot;(Intercept)&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>)</a>
+<a class="sourceLine" id="cb567-5" data-line-number="5"><span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">2</span>,]</a>
+<a class="sourceLine" id="cb567-6" data-line-number="6"><span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">2</span>, <span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb567-7" data-line-number="7"><span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">2</span>, <span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb567-8" data-line-number="8"><span class="kw">confint</span>(stop_dist_model, <span class="dt">parm =</span> <span class="st">&quot;speed&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>)</a></code></pre></div>
 <p>We can also verify that calculations that <code>R</code> is performing for the <span class="math inline">\(\beta_1\)</span> interval.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># store estimate</span>
-beta_<span class="dv">1</span>_hat =<span class="st"> </span><span class="kw">coef</span>(stop_dist_model)[<span class="dv">2</span>]
-
-<span class="co"># store standard error</span>
-beta_<span class="dv">1</span>_hat_se =<span class="st"> </span><span class="kw">summary</span>(stop_dist_model)<span class="op">$</span>coefficients[<span class="dv">2</span>, <span class="dv">2</span>]
-
-<span class="co"># calculate critical value for two-sided 99% CI</span>
-crit =<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.995</span>, <span class="dt">df =</span> <span class="kw">length</span>(<span class="kw">resid</span>(stop_dist_model)) <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)
-
-<span class="co"># est - margin, est + margin</span>
-<span class="kw">c</span>(beta_<span class="dv">1</span>_hat <span class="op">-</span><span class="st"> </span>crit <span class="op">*</span><span class="st"> </span>beta_<span class="dv">1</span>_hat_se, beta_<span class="dv">1</span>_hat <span class="op">+</span><span class="st"> </span>crit <span class="op">*</span><span class="st"> </span>beta_<span class="dv">1</span>_hat_se)</code></pre>
+<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb568-1" data-line-number="1"><span class="co"># store estimate</span></a>
+<a class="sourceLine" id="cb568-2" data-line-number="2">beta_<span class="dv">1</span>_hat =<span class="st"> </span><span class="kw">coef</span>(stop_dist_model)[<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb568-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb568-4" data-line-number="4"><span class="co"># store standard error</span></a>
+<a class="sourceLine" id="cb568-5" data-line-number="5">beta_<span class="dv">1</span>_hat_se =<span class="st"> </span><span class="kw">summary</span>(stop_dist_model)<span class="op">$</span>coefficients[<span class="dv">2</span>, <span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb568-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb568-7" data-line-number="7"><span class="co"># calculate critical value for two-sided 99% CI</span></a>
+<a class="sourceLine" id="cb568-8" data-line-number="8">crit =<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.995</span>, <span class="dt">df =</span> <span class="kw">length</span>(<span class="kw">resid</span>(stop_dist_model)) <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb568-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb568-10" data-line-number="10"><span class="co"># est - margin, est + margin</span></a>
+<a class="sourceLine" id="cb568-11" data-line-number="11"><span class="kw">c</span>(beta_<span class="dv">1</span>_hat <span class="op">-</span><span class="st"> </span>crit <span class="op">*</span><span class="st"> </span>beta_<span class="dv">1</span>_hat_se, beta_<span class="dv">1</span>_hat <span class="op">+</span><span class="st"> </span>crit <span class="op">*</span><span class="st"> </span>beta_<span class="dv">1</span>_hat_se)</a></code></pre></div>
 <pre><code>##    speed    speed 
 ## 2.817919 5.046899</code></pre>
 </div>
@@ -1004,9 +1003,9 @@ crit =<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.995
 \hat{y}(x) \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}
 \]</span></p>
 <p>To find confidence intervals for the mean response using <code>R</code>, we use the <code>predict()</code> function. We give the function our fitted model as well as new data, stored as a data frame. (This is important, so that <code>R</code> knows the name of the predictor variable.) Here, we are finding the confidence interval for the mean stopping distance when a car is travelling 5 miles per hour and when a car is travelling 21 miles per hour.</p>
-<pre class="sourceCode r"><code class="sourceCode r">new_speeds =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">speed =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">21</span>))
-<span class="kw">predict</span>(stop_dist_model, <span class="dt">newdata =</span> new_speeds, 
-        <span class="dt">interval =</span> <span class="kw">c</span>(<span class="st">&quot;confidence&quot;</span>), <span class="dt">level =</span> <span class="fl">0.99</span>)</code></pre>
+<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb570-1" data-line-number="1">new_speeds =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">speed =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">21</span>))</a>
+<a class="sourceLine" id="cb570-2" data-line-number="2"><span class="kw">predict</span>(stop_dist_model, <span class="dt">newdata =</span> new_speeds, </a>
+<a class="sourceLine" id="cb570-3" data-line-number="3">        <span class="dt">interval =</span> <span class="kw">c</span>(<span class="st">&quot;confidence&quot;</span>), <span class="dt">level =</span> <span class="fl">0.99</span>)</a></code></pre></div>
 <pre><code>##         fit       lwr      upr
 ## 1  2.082949 -10.89309 15.05898
 ## 2 65.001489  56.45836 73.54462</code></pre>
@@ -1033,8 +1032,8 @@ crit =<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.995
 \hat{y}(x) \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}.
 \]</span></p>
 <p>To calculate this for a set of points in <code>R</code> notice there is only a minor change in syntax from finding a confidence interval for the mean response.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">predict</span>(stop_dist_model, <span class="dt">newdata =</span> new_speeds, 
-        <span class="dt">interval =</span> <span class="kw">c</span>(<span class="st">&quot;prediction&quot;</span>), <span class="dt">level =</span> <span class="fl">0.99</span>)</code></pre>
+<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb572-1" data-line-number="1"><span class="kw">predict</span>(stop_dist_model, <span class="dt">newdata =</span> new_speeds, </a>
+<a class="sourceLine" id="cb572-2" data-line-number="2">        <span class="dt">interval =</span> <span class="kw">c</span>(<span class="st">&quot;prediction&quot;</span>), <span class="dt">level =</span> <span class="fl">0.99</span>)</a></code></pre></div>
 <pre><code>##         fit       lwr       upr
 ## 1  2.082949 -41.16099  45.32689
 ## 2 65.001489  22.87494 107.12803</code></pre>
@@ -1043,29 +1042,29 @@ crit =<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.995
 <div id="confidence-and-prediction-bands" class="section level2">
 <h2><span class="header-section-number">8.9</span> Confidence and Prediction Bands</h2>
 <p>Often we will like to plot both confidence intervals for the mean response and prediction intervals for all possible values of <span class="math inline">\(x\)</span>. We calls these confidence and prediction bands.</p>
-<pre class="sourceCode r"><code class="sourceCode r">speed_grid =<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(cars<span class="op">$</span>speed), <span class="kw">max</span>(cars<span class="op">$</span>speed), <span class="dt">by =</span> <span class="fl">0.01</span>)
-dist_ci_band =<span class="st"> </span><span class="kw">predict</span>(stop_dist_model, 
-                       <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">speed =</span> speed_grid), 
-                       <span class="dt">interval =</span> <span class="st">&quot;confidence&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>)
-dist_pi_band =<span class="st"> </span><span class="kw">predict</span>(stop_dist_model, 
-                       <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">speed =</span> speed_grid), 
-                       <span class="dt">interval =</span> <span class="st">&quot;prediction&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>) 
-
-<span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars,
-     <span class="dt">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,
-     <span class="dt">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,
-     <span class="dt">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,
-     <span class="dt">pch  =</span> <span class="dv">20</span>,
-     <span class="dt">cex  =</span> <span class="dv">2</span>,
-     <span class="dt">col  =</span> <span class="st">&quot;grey&quot;</span>,
-     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="kw">min</span>(dist_pi_band), <span class="kw">max</span>(dist_pi_band)))
-<span class="kw">abline</span>(stop_dist_model, <span class="dt">lwd =</span> <span class="dv">5</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)
-
-<span class="kw">lines</span>(speed_grid, dist_ci_band[,<span class="st">&quot;lwr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
-<span class="kw">lines</span>(speed_grid, dist_ci_band[,<span class="st">&quot;upr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
-<span class="kw">lines</span>(speed_grid, dist_pi_band[,<span class="st">&quot;lwr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">3</span>)
-<span class="kw">lines</span>(speed_grid, dist_pi_band[,<span class="st">&quot;upr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">3</span>)
-<span class="kw">points</span>(<span class="kw">mean</span>(cars<span class="op">$</span>speed), <span class="kw">mean</span>(cars<span class="op">$</span>dist), <span class="dt">pch =</span> <span class="st">&quot;+&quot;</span>, <span class="dt">cex =</span> <span class="dv">3</span>)</code></pre>
+<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb574-1" data-line-number="1">speed_grid =<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(cars<span class="op">$</span>speed), <span class="kw">max</span>(cars<span class="op">$</span>speed), <span class="dt">by =</span> <span class="fl">0.01</span>)</a>
+<a class="sourceLine" id="cb574-2" data-line-number="2">dist_ci_band =<span class="st"> </span><span class="kw">predict</span>(stop_dist_model, </a>
+<a class="sourceLine" id="cb574-3" data-line-number="3">                       <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">speed =</span> speed_grid), </a>
+<a class="sourceLine" id="cb574-4" data-line-number="4">                       <span class="dt">interval =</span> <span class="st">&quot;confidence&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>)</a>
+<a class="sourceLine" id="cb574-5" data-line-number="5">dist_pi_band =<span class="st"> </span><span class="kw">predict</span>(stop_dist_model, </a>
+<a class="sourceLine" id="cb574-6" data-line-number="6">                       <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">speed =</span> speed_grid), </a>
+<a class="sourceLine" id="cb574-7" data-line-number="7">                       <span class="dt">interval =</span> <span class="st">&quot;prediction&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>) </a>
+<a class="sourceLine" id="cb574-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb574-9" data-line-number="9"><span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars,</a>
+<a class="sourceLine" id="cb574-10" data-line-number="10">     <span class="dt">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,</a>
+<a class="sourceLine" id="cb574-11" data-line-number="11">     <span class="dt">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,</a>
+<a class="sourceLine" id="cb574-12" data-line-number="12">     <span class="dt">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,</a>
+<a class="sourceLine" id="cb574-13" data-line-number="13">     <span class="dt">pch  =</span> <span class="dv">20</span>,</a>
+<a class="sourceLine" id="cb574-14" data-line-number="14">     <span class="dt">cex  =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb574-15" data-line-number="15">     <span class="dt">col  =</span> <span class="st">&quot;grey&quot;</span>,</a>
+<a class="sourceLine" id="cb574-16" data-line-number="16">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="kw">min</span>(dist_pi_band), <span class="kw">max</span>(dist_pi_band)))</a>
+<a class="sourceLine" id="cb574-17" data-line-number="17"><span class="kw">abline</span>(stop_dist_model, <span class="dt">lwd =</span> <span class="dv">5</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</a>
+<a class="sourceLine" id="cb574-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb574-19" data-line-number="19"><span class="kw">lines</span>(speed_grid, dist_ci_band[,<span class="st">&quot;lwr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb574-20" data-line-number="20"><span class="kw">lines</span>(speed_grid, dist_ci_band[,<span class="st">&quot;upr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb574-21" data-line-number="21"><span class="kw">lines</span>(speed_grid, dist_pi_band[,<span class="st">&quot;lwr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb574-22" data-line-number="22"><span class="kw">lines</span>(speed_grid, dist_pi_band[,<span class="st">&quot;upr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb574-23" data-line-number="23"><span class="kw">points</span>(<span class="kw">mean</span>(cars<span class="op">$</span>speed), <span class="kw">mean</span>(cars<span class="op">$</span>dist), <span class="dt">pch =</span> <span class="st">&quot;+&quot;</span>, <span class="dt">cex =</span> <span class="dv">3</span>)</a></code></pre></div>
 <p><img src="slr-inf_files/figure-html/unnamed-chunk-27-1.png" width="960" style="display: block; margin: auto;" /></p>
 <p>Some things to notice:</p>
 <ul>
@@ -1150,7 +1149,7 @@ F = \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2 / 1}{\sum_{i=1}^{n}(y_i - \hat{y
 \]</span></p>
 <p>In particular, we will reject the null when the <span class="math inline">\(F\)</span> statistic is large, that is, when there is a low probability that the observations could have come from the null model by chance. We will let <code>R</code> calculate the p-value for us.</p>
 <p>To perform the <span class="math inline">\(F\)</span> test in <code>R</code> you can look at the last row of the output from <code>summary()</code> called <code>F-statistic</code> which gives the value of the test statistic, the relevant degrees of freedom, as well as the p-value of the test.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(stop_dist_model)</code></pre>
+<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb575-1" data-line-number="1"><span class="kw">summary</span>(stop_dist_model)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = dist ~ speed, data = cars)
@@ -1170,7 +1169,7 @@ F = \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2 / 1}{\sum_{i=1}^{n}(y_i - \hat{y
 ## Multiple R-squared:  0.6511, Adjusted R-squared:  0.6438 
 ## F-statistic: 89.57 on 1 and 48 DF,  p-value: 1.49e-12</code></pre>
 <p>Additionally, you can use the <code>anova()</code> function to display the information in an ANOVA table.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(stop_dist_model)</code></pre>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb577-1" data-line-number="1"><span class="kw">anova</span>(stop_dist_model)</a></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: dist
@@ -1181,7 +1180,7 @@ F = \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2 / 1}{\sum_{i=1}^{n}(y_i - \hat{y
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>This also gives a p-value for the test. You should notice that the p-value from the <span class="math inline">\(t\)</span> test was the same. You might also notice that the value of the test statistic for the <span class="math inline">\(t\)</span> test, <span class="math inline">\(9.46399\)</span>, can be squared to obtain the value of the <span class="math inline">\(F\)</span> statistic, <span class="math inline">\(89.5671065\)</span>.</p>
 <p>Note that there is another equivalent way to do this in <code>R</code>, which we will return to often to compare two models.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(<span class="kw">lm</span>(dist <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> cars), <span class="kw">lm</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars))</code></pre>
+<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb579-1" data-line-number="1"><span class="kw">anova</span>(<span class="kw">lm</span>(dist <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> cars), <span class="kw">lm</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars))</a></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: dist ~ 1

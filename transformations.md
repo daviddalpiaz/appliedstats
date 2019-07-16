@@ -772,17 +772,6 @@ The previous plot was made using base graphics in `R`. The next plot was made us
 
 ```r
 library(ggplot2)
-```
-
-```
-## Registered S3 methods overwritten by 'ggplot2':
-##   method         from 
-##   [.quosures     rlang
-##   c.quosures     rlang
-##   print.quosures rlang
-```
-
-```r
 ggplot(data = marketing, aes(x = advert, y = sales)) +
   stat_smooth(method = "lm", se = FALSE, color = "green", formula = y ~ x) +
   stat_smooth(method = "lm", se = FALSE, color = "blue", formula = y ~ x + I(x ^ 2)) +
