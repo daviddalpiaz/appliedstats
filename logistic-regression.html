@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 17 Logistic Regression | Applied Statistics with R</title>
   <meta name="description" content="Chapter 17 Logistic Regression | Applied Statistics with R" />
-  <meta name="generator" content="bookdown 0.12.1 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.14.1 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 17 Logistic Regression | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -23,15 +23,15 @@
 
 
 
-<meta name="date" content="2019-07-16" />
+<meta name="date" content="2019-10-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
-<link rel="prev" href="variable-selection-and-model-building.html">
-<link rel="next" href="beyond.html">
+<link rel="prev" href="variable-selection-and-model-building.html"/>
+<link rel="next" href="beyond.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -39,6 +39,9 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
 
 
 
@@ -753,8 +756,9 @@ p_i &amp;= p({\bf x_i}) = \frac{1}{1 + e^{-\eta({\bf x_i})}} \\
 <a class="sourceLine" id="cb1431-4" data-line-number="4"><span class="kw">grid</span>()</a>
 <a class="sourceLine" id="cb1431-5" data-line-number="5"><span class="kw">curve</span>(<span class="kw">predict</span>(fit_glm, <span class="kw">data.frame</span>(x), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>), </a>
 <a class="sourceLine" id="cb1431-6" data-line-number="6">      <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb1431-7" data-line-number="7"><span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Estimated Probability&quot;</span>, <span class="st">&quot;Data&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">0</span>), </a>
-<a class="sourceLine" id="cb1431-8" data-line-number="8">       <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">20</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb1431-7" data-line-number="7"><span class="kw">curve</span>(boot<span class="op">::</span><span class="kw">inv.logit</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">4</span> <span class="op">*</span><span class="st"> </span>x), <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lty =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb1431-8" data-line-number="8"><span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;True Probability&quot;</span>, <span class="st">&quot;Estimated Probability&quot;</span>, <span class="st">&quot;Data&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>), </a>
+<a class="sourceLine" id="cb1431-9" data-line-number="9">       <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">20</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</a></code></pre></div>
 <p><img src="logistic_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We see that this time, as <span class="math inline">\(x\)</span> increases, <span class="math inline">\(\hat{p}({\bf x})\)</span> decreases.</p>
 <p>Now let’s look at an example where the estimated probability doesn’t always simply increase or decrease. Much like ordinary linear regression, the linear combination of predictors can contain transformations of predictors (in this case a quadratic term) and interactions.</p>
@@ -785,8 +789,10 @@ p_i &amp;= p({\bf x_i}) = \frac{1}{1 + e^{-\eta({\bf x_i})}} \\
 <a class="sourceLine" id="cb1435-4" data-line-number="4"><span class="kw">grid</span>()</a>
 <a class="sourceLine" id="cb1435-5" data-line-number="5"><span class="kw">curve</span>(<span class="kw">predict</span>(fit_glm, <span class="kw">data.frame</span>(x), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>), </a>
 <a class="sourceLine" id="cb1435-6" data-line-number="6">      <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb1435-7" data-line-number="7"><span class="kw">legend</span>(<span class="st">&quot;left&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Prob&quot;</span>, <span class="st">&quot;Data&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">0</span>), </a>
-<a class="sourceLine" id="cb1435-8" data-line-number="8">       <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="dv">20</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb1435-7" data-line-number="7"><span class="kw">curve</span>(boot<span class="op">::</span><span class="kw">inv.logit</span>(<span class="op">-</span><span class="fl">1.5</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>x <span class="op">^</span><span class="st"> </span><span class="dv">2</span>), </a>
+<a class="sourceLine" id="cb1435-8" data-line-number="8">      <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lty =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb1435-9" data-line-number="9"><span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;True Probability&quot;</span>, <span class="st">&quot;Estimated Probability&quot;</span>, <span class="st">&quot;Data&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>), </a>
+<a class="sourceLine" id="cb1435-10" data-line-number="10">       <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">20</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</a></code></pre></div>
 <p><img src="logistic_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
@@ -1461,7 +1467,7 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 <ul>
 <li><a href="logistic.Rmd" target="_blank"><code>logistic.Rmd</code></a></li>
 </ul>
-<p>The file was created using <code>R</code> version <code>3.6.0</code>.</p>
+<p>The file was created using <code>R</code> version <code>3.6.1</code>.</p>
 
 </div>
 </div>
@@ -1476,11 +1482,13 @@ Now we’ll use these predictions to create a confusion matrix.</p>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -1523,8 +1531,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

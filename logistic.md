@@ -415,8 +415,9 @@ plot(y ~ x, data = example_data,
 grid()
 curve(predict(fit_glm, data.frame(x), type = "response"), 
       add = TRUE, col = "dodgerblue", lty = 2)
-legend("bottomleft", c("Estimated Probability", "Data"), lty = c(2, 0), 
-       pch = c(NA, 20), lwd = 2, col = c("dodgerblue", "black"))
+curve(boot::inv.logit(1 - 4 * x), add = TRUE, col = "darkorange", lty = 1)
+legend("bottomleft", c("True Probability", "Estimated Probability", "Data"), lty = c(1, 2, 0), 
+       pch = c(NA, NA, 20), lwd = 2, col = c("darkorange", "dodgerblue", "black"))
 ```
 
 
@@ -471,8 +472,10 @@ plot(y ~ x, data = example_data,
 grid()
 curve(predict(fit_glm, data.frame(x), type = "response"), 
       add = TRUE, col = "dodgerblue", lty = 2)
-legend("left", c("Prob", "Data"), lty = c(2, 0), 
-       pch = c(NA, 20), lwd = 2, col = c("dodgerblue", "black"))
+curve(boot::inv.logit(-1.5 + 0.5 * x + x ^ 2), 
+      add = TRUE, col = "darkorange", lty = 1)
+legend("bottomleft", c("True Probability", "Estimated Probability", "Data"), lty = c(1, 2, 0), 
+       pch = c(NA, NA, 20), lwd = 2, col = c("darkorange", "dodgerblue", "black"))
 ```
 
 
@@ -1535,4 +1538,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`logistic.Rmd`](logistic.Rmd){target="_blank"}
 
-The file was created using `R` version `3.6.0`.
+The file was created using `R` version `3.6.1`.
