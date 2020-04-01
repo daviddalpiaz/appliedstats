@@ -4,7 +4,7 @@ inst_pkgs = load_pkgs =  c("ggplot2", "devtools", "zoo",
                            "plot3D", "lmtest", "faraway", "leaps", "broom", 
                            "readr", "bestglm", "kernlab")
 inst_pkgs = inst_pkgs[!(inst_pkgs %in% installed.packages()[,"Package"])]
-if(length(inst_pkgs)) install.packages(inst_pkgs)
+if (length(inst_pkgs)) install.packages(inst_pkgs)
 
 # Dynamically load packages
 pkgs_loaded = lapply(load_pkgs, require, character.only = TRUE)
