@@ -588,8 +588,15 @@ To illustrate the use of logistic regression, we will use the `SAheart` dataset 
 
 
 ```r
-# install.packages("ElemStatLearn")
-library(ElemStatLearn)
+# install.packages("bestglm")
+library(bestglm)
+```
+
+```
+## Loading required package: leaps
+```
+
+```r
 data("SAheart")
 ```
 
@@ -1077,36 +1084,38 @@ tibble::as.tibble(spam)
 ```
 
 ```
-## Warning: `as.tibble()` is deprecated, use `as_tibble()` (but mind the new semantics).
-## This warning is displayed once per session.
+## Warning: `as.tibble()` is deprecated as of tibble 2.0.0.
+## Please use `as_tibble()` instead.
+## The signature and semantics have changed, see `?as_tibble`.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_warnings()` to see where this warning was generated.
 ```
 
 ```
 ## # A tibble: 4,601 x 58
-##     make address   all num3d   our  over remove internet order  mail
-##    <dbl>   <dbl> <dbl> <dbl> <dbl> <dbl>  <dbl>    <dbl> <dbl> <dbl>
-##  1  0       0.64  0.64     0  0.32  0      0        0     0     0   
-##  2  0.21    0.28  0.5      0  0.14  0.28   0.21     0.07  0     0.94
-##  3  0.06    0     0.71     0  1.23  0.19   0.19     0.12  0.64  0.25
-##  4  0       0     0        0  0.63  0      0.31     0.63  0.31  0.63
-##  5  0       0     0        0  0.63  0      0.31     0.63  0.31  0.63
-##  6  0       0     0        0  1.85  0      0        1.85  0     0   
-##  7  0       0     0        0  1.92  0      0        0     0     0.64
-##  8  0       0     0        0  1.88  0      0        1.88  0     0   
-##  9  0.15    0     0.46     0  0.61  0      0.3      0     0.92  0.76
-## 10  0.06    0.12  0.77     0  0.19  0.32   0.38     0     0.06  0   
-## # ... with 4,591 more rows, and 48 more variables: receive <dbl>,
-## #   will <dbl>, people <dbl>, report <dbl>, addresses <dbl>, free <dbl>,
-## #   business <dbl>, email <dbl>, you <dbl>, credit <dbl>, your <dbl>,
-## #   font <dbl>, num000 <dbl>, money <dbl>, hp <dbl>, hpl <dbl>,
-## #   george <dbl>, num650 <dbl>, lab <dbl>, labs <dbl>, telnet <dbl>,
-## #   num857 <dbl>, data <dbl>, num415 <dbl>, num85 <dbl>, technology <dbl>,
-## #   num1999 <dbl>, parts <dbl>, pm <dbl>, direct <dbl>, cs <dbl>,
-## #   meeting <dbl>, original <dbl>, project <dbl>, re <dbl>, edu <dbl>,
-## #   table <dbl>, conference <dbl>, charSemicolon <dbl>,
-## #   charRoundbracket <dbl>, charSquarebracket <dbl>,
-## #   charExclamation <dbl>, charDollar <dbl>, charHash <dbl>,
-## #   capitalAve <dbl>, capitalLong <dbl>, capitalTotal <dbl>, type <fct>
+##     make address   all num3d   our  over remove internet order  mail receive
+##    <dbl>   <dbl> <dbl> <dbl> <dbl> <dbl>  <dbl>    <dbl> <dbl> <dbl>   <dbl>
+##  1  0       0.64  0.64     0  0.32  0      0        0     0     0       0   
+##  2  0.21    0.28  0.5      0  0.14  0.28   0.21     0.07  0     0.94    0.21
+##  3  0.06    0     0.71     0  1.23  0.19   0.19     0.12  0.64  0.25    0.38
+##  4  0       0     0        0  0.63  0      0.31     0.63  0.31  0.63    0.31
+##  5  0       0     0        0  0.63  0      0.31     0.63  0.31  0.63    0.31
+##  6  0       0     0        0  1.85  0      0        1.85  0     0       0   
+##  7  0       0     0        0  1.92  0      0        0     0     0.64    0.96
+##  8  0       0     0        0  1.88  0      0        1.88  0     0       0   
+##  9  0.15    0     0.46     0  0.61  0      0.3      0     0.92  0.76    0.76
+## 10  0.06    0.12  0.77     0  0.19  0.32   0.38     0     0.06  0       0   
+## # ... with 4,591 more rows, and 47 more variables: will <dbl>, people <dbl>,
+## #   report <dbl>, addresses <dbl>, free <dbl>, business <dbl>, email <dbl>,
+## #   you <dbl>, credit <dbl>, your <dbl>, font <dbl>, num000 <dbl>, money <dbl>,
+## #   hp <dbl>, hpl <dbl>, george <dbl>, num650 <dbl>, lab <dbl>, labs <dbl>,
+## #   telnet <dbl>, num857 <dbl>, data <dbl>, num415 <dbl>, num85 <dbl>,
+## #   technology <dbl>, num1999 <dbl>, parts <dbl>, pm <dbl>, direct <dbl>,
+## #   cs <dbl>, meeting <dbl>, original <dbl>, project <dbl>, re <dbl>,
+## #   edu <dbl>, table <dbl>, conference <dbl>, charSemicolon <dbl>,
+## #   charRoundbracket <dbl>, charSquarebracket <dbl>, charExclamation <dbl>,
+## #   charDollar <dbl>, charHash <dbl>, capitalAve <dbl>, capitalLong <dbl>,
+## #   capitalTotal <dbl>, type <fct>
 ```
 
 This dataset, created in the late 1990s at Hewlett-Packard Labs, contains 4601 emails, of which 1813 are considered spam. The remaining are not spam. (Which for simplicity, we might call, ham.) Additional details can be obtained by using `?spam` of by visiting the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/spambase){target="_blank"}. 
@@ -1538,4 +1547,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`logistic.Rmd`](logistic.Rmd){target="_blank"}
 
-The file was created using `R` version `3.6.1`.
+The file was created using `R` version `3.6.2`.

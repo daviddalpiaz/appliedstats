@@ -777,10 +777,8 @@ Now let's try to do the same, but using our new factor variable.
 ## lm(formula = mpg ~ disp * origin, data = autompg)
 ## 
 ## Coefficients:
-##        (Intercept)                disp       originforeign  
-##           33.47937            -0.05441            12.57547  
-## disp:originforeign  
-##           -0.10252
+##        (Intercept)                disp       originforeign  disp:originforeign  
+##           33.47937            -0.05441            12.57547            -0.10252
 ```
 
 It seems that it doesn't produce the same results. Right away we notice that the intercept is different, as is the the coefficient in front of `disp`. We also notice that the remaining two coefficients are of the same magnitude as their respective counterparts using the domestic variable, but with a different sign. Why is this happening?
@@ -949,10 +947,8 @@ To attempt to fix this, we will try using an interaction model, that is, instead
 ## lm(formula = mpg ~ disp * cyl, data = autompg)
 ## 
 ## Coefficients:
-## (Intercept)         disp         cyl6         cyl8    disp:cyl6  
-##    43.59052     -0.13069    -13.20026    -20.85706      0.08299  
-##   disp:cyl8  
-##     0.10817
+## (Intercept)         disp         cyl6         cyl8    disp:cyl6    disp:cyl8  
+##    43.59052     -0.13069    -13.20026    -20.85706      0.08299      0.10817
 ```
 
 ```r
@@ -1218,10 +1214,8 @@ lm(mpg ~ disp * cyl, data = autompg)
 ## lm(formula = mpg ~ disp * cyl, data = autompg)
 ## 
 ## Coefficients:
-## (Intercept)         disp         cyl6         cyl8    disp:cyl6  
-##    43.59052     -0.13069    -13.20026    -20.85706      0.08299  
-##   disp:cyl8  
-##     0.10817
+## (Intercept)         disp         cyl6         cyl8    disp:cyl6    disp:cyl8  
+##    43.59052     -0.13069    -13.20026    -20.85706      0.08299      0.10817
 ```
 
 ```r
@@ -1466,4 +1460,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`cat-int.Rmd`](cat-int.Rmd){target="_blank"}
 
-The file was created using `R` version `3.6.1`.
+The file was created using `R` version `3.6.2`.

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 13 Model Diagnostics | Applied Statistics with R</title>
   <meta name="description" content="Chapter 13 Model Diagnostics | Applied Statistics with R" />
-  <meta name="generator" content="bookdown 0.14.1 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.18.1 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 13 Model Diagnostics | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2019-10-02" />
+<meta name="date" content="2020-04-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -389,7 +389,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="19" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>19</b> Appendix</a></li>
 <li class="divider"></li>
-<li><a href="https://github.com/daviddalpiaz/appliedstats" target="blank">&copy; 2016 - 2019 David Dalpiaz</a></li>
+<li><a href="https://github.com/daviddalpiaz/appliedstats" target="blank">&copy; 2016 - 2020 David Dalpiaz</a></li>
 
 </ul>
 
@@ -955,20 +955,20 @@ h_i = \frac{1}{n} + \frac{(x_i - \bar{x})^2}{S_{xx}}.
 <p>Notice that this point was the mean of both of the predictors.</p>
 <p>Returning to our three plots, each with an added point, we can calculate the leverages for each. Note that the 11th data point each time is the added data point.</p>
 <div class="sourceCode" id="cb945"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb945-1" data-line-number="1"><span class="kw">hatvalues</span>(model_<span class="dv">1</span>)</a></code></pre></div>
-<pre><code>##          1          2          3          4          5          6 
-## 0.33534597 0.23860732 0.16610842 0.11784927 0.09382988 0.09405024 
-##          7          8          9         10         11 
-## 0.11851036 0.16721022 0.24014985 0.33732922 0.09100926</code></pre>
+<pre><code>##          1          2          3          4          5          6          7 
+## 0.33534597 0.23860732 0.16610842 0.11784927 0.09382988 0.09405024 0.11851036 
+##          8          9         10         11 
+## 0.16721022 0.24014985 0.33732922 0.09100926</code></pre>
 <div class="sourceCode" id="cb947"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb947-1" data-line-number="1"><span class="kw">hatvalues</span>(model_<span class="dv">2</span>)</a></code></pre></div>
-<pre><code>##          1          2          3          4          5          6 
-## 0.23238866 0.18663968 0.14979757 0.12186235 0.10283401 0.09271255 
-##          7          8          9         10         11 
-## 0.09149798 0.09919028 0.11578947 0.14129555 0.66599190</code></pre>
+<pre><code>##          1          2          3          4          5          6          7 
+## 0.23238866 0.18663968 0.14979757 0.12186235 0.10283401 0.09271255 0.09149798 
+##          8          9         10         11 
+## 0.09919028 0.11578947 0.14129555 0.66599190</code></pre>
 <div class="sourceCode" id="cb949"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb949-1" data-line-number="1"><span class="kw">hatvalues</span>(model_<span class="dv">3</span>)</a></code></pre></div>
-<pre><code>##          1          2          3          4          5          6 
-## 0.27852761 0.21411043 0.16319018 0.12576687 0.10184049 0.09141104 
-##          7          8          9         10         11 
-## 0.09447853 0.11104294 0.14110429 0.18466258 0.49386503</code></pre>
+<pre><code>##          1          2          3          4          5          6          7 
+## 0.27852761 0.21411043 0.16319018 0.12576687 0.10184049 0.09141104 0.09447853 
+##          8          9         10         11 
+## 0.11104294 0.14110429 0.18466258 0.49386503</code></pre>
 <p>Are any of these large?</p>
 <div class="sourceCode" id="cb951"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb951-1" data-line-number="1"><span class="kw">hatvalues</span>(model_<span class="dv">1</span>) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">mean</span>(<span class="kw">hatvalues</span>(model_<span class="dv">1</span>))</a></code></pre></div>
 <pre><code>##     1     2     3     4     5     6     7     8     9    10    11 
@@ -1004,15 +1004,15 @@ r_i = \frac{e_i}{s_e\sqrt{1 - h_i}} \overset{approx}{\sim} N(\mu = 0, \sigma^ 2 
 <p>We can use this fact to identify “large” residuals. For example, standardized residuals greater than 2 in magnitude should only happen approximately 5 percent of the time.</p>
 <p>Returning again to our three plots, each with an added point, we can calculate the residuals and standardized residuals for each. Standardized residuals can be obtained in <code>R</code> by using <code>rstandard()</code> where we would normally use <code>resid()</code>.</p>
 <div class="sourceCode" id="cb957"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb957-1" data-line-number="1"><span class="kw">resid</span>(model_<span class="dv">1</span>)</a></code></pre></div>
-<pre><code>##          1          2          3          4          5          6 
-##  0.4949887 -1.4657145 -0.5629345 -0.3182468 -0.5718877 -1.1073271 
-##          7          8          9         10         11 
-##  0.4852728 -1.1459548  0.9420814 -1.1641029  4.4138254</code></pre>
+<pre><code>##          1          2          3          4          5          6          7 
+##  0.4949887 -1.4657145 -0.5629345 -0.3182468 -0.5718877 -1.1073271  0.4852728 
+##          8          9         10         11 
+## -1.1459548  0.9420814 -1.1641029  4.4138254</code></pre>
 <div class="sourceCode" id="cb959"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb959-1" data-line-number="1"><span class="kw">rstandard</span>(model_<span class="dv">1</span>)</a></code></pre></div>
-<pre><code>##          1          2          3          4          5          6 
-##  0.3464701 -0.9585470 -0.3517802 -0.1933575 -0.3428264 -0.6638841 
-##          7          8          9         10         11 
-##  0.2949482 -0.7165857  0.6167268 -0.8160389  2.6418234</code></pre>
+<pre><code>##          1          2          3          4          5          6          7 
+##  0.3464701 -0.9585470 -0.3517802 -0.1933575 -0.3428264 -0.6638841  0.2949482 
+##          8          9         10         11 
+## -0.7165857  0.6167268 -0.8160389  2.6418234</code></pre>
 <div class="sourceCode" id="cb961"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb961-1" data-line-number="1"><span class="kw">rstandard</span>(model_<span class="dv">1</span>)[<span class="kw">abs</span>(<span class="kw">rstandard</span>(model_<span class="dv">1</span>)) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>]</a></code></pre></div>
 <pre><code>##       11 
 ## 2.641823</code></pre>
@@ -1191,7 +1191,7 @@ D_i &gt; \frac{4}{n}
 <ul>
 <li><a href="diagnostics.Rmd" target="_blank"><code>diagnostics.Rmd</code></a></li>
 </ul>
-<p>The file was created using <code>R</code> version <code>3.6.1</code>.</p>
+<p>The file was created using <code>R</code> version <code>3.6.2</code>.</p>
 
 </div>
 </div>
@@ -1220,12 +1220,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -1237,6 +1236,10 @@ gitbook.start({
 "text": "Edit"
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },

@@ -1308,26 +1308,17 @@ coef(fit6_alt2)
 ```
 
 ```
-##               (Intercept) poly(mph, 6, raw = TRUE)1 
-##             -4.206224e+00              4.203382e+00 
-## poly(mph, 6, raw = TRUE)2 poly(mph, 6, raw = TRUE)3 
-##             -3.521452e-01              1.579340e-02 
-## poly(mph, 6, raw = TRUE)4 poly(mph, 6, raw = TRUE)5 
-##             -3.472665e-04              3.585201e-06 
+##               (Intercept) poly(mph, 6, raw = TRUE)1 poly(mph, 6, raw = TRUE)2 
+##             -4.206224e+00              4.203382e+00             -3.521452e-01 
+## poly(mph, 6, raw = TRUE)3 poly(mph, 6, raw = TRUE)4 poly(mph, 6, raw = TRUE)5 
+##              1.579340e-02             -3.472665e-04              3.585201e-06 
 ## poly(mph, 6, raw = TRUE)6 
 ##             -1.401995e-08
 ```
 
 We've now seen how to transform predictor and response variables. In this chapter we have mostly focused on using this in the context of fixing SLR models. However, these concepts can easily be used together with categorical variables and interactions to build larger, more flexible models. In the next chapter, we will discuss how to choose a good model from a collection of possible models.
 
-
-***
-***
-
 **Material below here is currently being merged into the content above.**
-
-***
-***
 
 ## Response Transformations {-}
 
@@ -2170,4 +2161,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`transformations.Rmd`](transformations.Rmd){target="_blank"}
 
-The file was created using `R` version `3.6.1`.
+The file was created using `R` version `3.6.2`.

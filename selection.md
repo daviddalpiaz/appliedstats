@@ -291,10 +291,10 @@ coef(hipcenter_mod)
 ```
 
 ```
-##  (Intercept)          Age       Weight      HtShoes           Ht 
-## 436.43212823   0.77571620   0.02631308  -2.69240774   0.60134458 
-##       Seated          Arm        Thigh          Leg 
-##   0.53375170  -1.32806864  -1.14311888  -6.43904627
+##  (Intercept)          Age       Weight      HtShoes           Ht       Seated 
+## 436.43212823   0.77571620   0.02631308  -2.69240774   0.60134458   0.53375170 
+##          Arm        Thigh          Leg 
+##  -1.32806864  -1.14311888  -6.43904627
 ```
 
 Let's return to the `seatpos` data from the `faraway` package. Now, let's consider only models with first order terms, thus no interactions and no polynomials. There are *eight* predictors in this model. So if we consider all possible models, ranging from using 0 predictors, to all eight predictors, there are 
@@ -1436,4 +1436,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`selection.Rmd`](selection.Rmd){target="_blank"}
 
-The file was created using `R` version `3.6.1`.
+The file was created using `R` version `3.6.2`.

@@ -271,10 +271,10 @@ vif(hip_model)
 ```
 
 ```
-##        Age     Weight    HtShoes         Ht     Seated        Arm 
-##   1.997931   3.647030 307.429378 333.137832   8.951054   4.496368 
-##      Thigh        Leg 
-##   2.762886   6.694291
+##        Age     Weight    HtShoes         Ht     Seated        Arm      Thigh 
+##   1.997931   3.647030 307.429378 333.137832   8.951054   4.496368   2.762886 
+##        Leg 
+##   6.694291
 ```
 
 In practice it is common to say that any VIF greater than $5$ is cause for concern. So in this example we see there is a huge multicollinearity issue as many of the predictors have a VIF greater than 5.
@@ -296,10 +296,10 @@ coef(hip_model)
 ```
 
 ```
-##  (Intercept)          Age       Weight      HtShoes           Ht 
-## 436.43212823   0.77571620   0.02631308  -2.69240774   0.60134458 
-##       Seated          Arm        Thigh          Leg 
-##   0.53375170  -1.32806864  -1.14311888  -6.43904627
+##  (Intercept)          Age       Weight      HtShoes           Ht       Seated 
+## 436.43212823   0.77571620   0.02631308  -2.69240774   0.60134458   0.53375170 
+##          Arm        Thigh          Leg 
+##  -1.32806864  -1.14311888  -6.43904627
 ```
 
 ```r
@@ -307,10 +307,10 @@ coef(hip_model_noise)
 ```
 
 ```
-##  (Intercept)          Age       Weight      HtShoes           Ht 
-## 415.32909380   0.76578240   0.01910958  -2.90377584  -0.12068122 
-##       Seated          Arm        Thigh          Leg 
-##   2.03241638  -1.02127944  -0.89034509  -5.61777220
+##  (Intercept)          Age       Weight      HtShoes           Ht       Seated 
+## 415.32909380   0.76578240   0.01910958  -2.90377584  -0.12068122   2.03241638 
+##          Arm        Thigh          Leg 
+##  -1.02127944  -0.89034509  -5.61777220
 ```
 
 This tells us that a model with collinearity is bad at explaining the relationship between the response and the predictors. We cannot even be confident in the direction of the relationship. However, does collinearity effect prediction?
@@ -724,4 +724,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`collinearity.Rmd`](collinearity.Rmd){target="_blank"}
 
-The file was created using `R` version `3.6.1`.
+The file was created using `R` version `3.6.2`.
