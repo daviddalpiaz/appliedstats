@@ -1452,7 +1452,7 @@ str(example_data)
 ```
 ## 'data.frame':	10 obs. of  3 variables:
 ##  $ x: num  1 3 5 7 9 1 3 5 7 9
-##  $ y: Factor w/ 2 levels "Goodbye","Hello": 2 2 2 2 2 2 2 2 2 1
+##  $ y: chr  "Hello" "Hello" "Hello" "Hello" ...
 ##  $ z: logi  TRUE FALSE TRUE FALSE TRUE FALSE ...
 ```
 
@@ -1529,7 +1529,7 @@ example_data
 ```
 ## # A tibble: 10 x 3
 ##        x y       z    
-##    <dbl> <fct>   <lgl>
+##    <dbl> <chr>   <lgl>
 ##  1     1 Hello   TRUE 
 ##  2     3 Hello   FALSE
 ##  3     5 Hello   TRUE 
@@ -1901,8 +1901,8 @@ To test our function, we will take a random sample of size `n = 10` from a norma
 ```
 
 ```
-##  [1] 10.714347  3.949344  4.520998  1.065384  6.503819  4.613671 14.234716
-##  [8]  4.229662 11.241546  2.444898
+##  [1] -2.5337025 -0.3125173  4.4828749  4.1028690  1.9575161 -7.4714199
+##  [7]  6.7813384 -5.2467783 -4.5499924  4.9218568
 ```
 
 ```r
@@ -1910,8 +1910,8 @@ standardize(x = test_sample)
 ```
 
 ```
-##  [1]  1.01897621 -0.56116439 -0.42763997 -1.23478763  0.03549909 -0.40599367
-##  [7]  1.84124897 -0.49568904  1.14211703 -0.91256661
+##  [1] -0.5542196 -0.1060703  0.8614543  0.7847838  0.3519346 -1.5504599
+##  [7]  1.3251954 -1.1016133 -0.9610289  0.9500239
 ```
 
 This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.
@@ -2013,7 +2013,7 @@ get_var(test_sample)
 ```
 
 ```
-## [1] 18.32924
+## [1] 24.56542
 ```
 
 ```r
@@ -2021,7 +2021,7 @@ get_var(test_sample, biased = FALSE)
 ```
 
 ```
-## [1] 18.32924
+## [1] 24.56542
 ```
 
 ```r
@@ -2029,7 +2029,7 @@ var(test_sample)
 ```
 
 ```
-## [1] 18.32924
+## [1] 24.56542
 ```
 
 We see the function is working as expected, and when returning the unbiased estimate it matches `R`'s built in function `var()`. Finally, let's examine the biased estimate of $\sigma^2$.
@@ -2040,7 +2040,7 @@ get_var(test_sample, biased = TRUE)
 ```
 
 ```
-## [1] 16.49632
+## [1] 22.10888
 ```
 
 

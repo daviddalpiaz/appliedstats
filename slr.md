@@ -1309,4 +1309,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`slr.Rmd`](slr.Rmd){target="_blank"}
 
-The file was created using `R` version `3.6.2`.
+The file was created using `R` version `4.0.0`.
