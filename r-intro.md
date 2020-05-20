@@ -24,7 +24,7 @@ RStudio has a large number of useful keyboard shortcuts. A list of these can be 
 
 The RStudio team has developed [a number of "cheatsheets"](https://www.rstudio.com/resources/cheatsheets/){target="_blank"} for working with both `R` and RStudio. [This particular cheatsheet for "Base" `R`](http://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf){target="_blank"} will summarize many of the concepts in this document. ("Base" `R` is a name used to differentiate the practice of using built-in `R` functions, as opposed to using functions from outside packages, in particular, those from the [`tidyverse`](https://www.tidyverse.org/){target="_blank"}. More on this later.)
 
-When programming, it is often a good practice to follow a style guide. (Where do spaces go? Tabs or spaces? Underscores or CamelCase when naming variables?) No style guide is "correct" but it helps to be aware of what others do. The more import thing is to be consistent within your own code.
+When programming, it is often a good practice to follow a style guide. (Where do spaces go? Tabs or spaces? Underscores or CamelCase when naming variables?) No style guide is "correct" but it helps to be aware of what others do. The more important thing is to be consistent within your own code.
 
 - [Hadley Wickham Style Guide](http://adv-r.had.co.nz/Style.html){target="_blank"} from [Advanced `R`](http://adv-r.had.co.nz/){target="_blank"}
 - [Google Style Guide](https://google.github.io/styleguide/Rguide.xml){target="_blank"}

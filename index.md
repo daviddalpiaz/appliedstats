@@ -1,6 +1,6 @@
 --- 
 title: "Applied Statistics with `R`"
-date: "2020-05-08"
+date: "2020-05-20"
 github-repo: daviddalpiaz/appliedstats
 url: 'https\://daviddalpiaz.github.io/appliedstats/'
 knit: "bookdown::render_book"
@@ -86,6 +86,7 @@ Your name could be here! Suggest an edit! Correct a typo! If you submit a correc
 - [Tony Ma](https://www.linkedin.com/in/tony-ma-b978143a/){target="_blank"}
 - [Radu Manolescu](https://www.linkedin.com/in/radumanolescu1/){target="_blank"}
 - [Dileep Pasumarthi](https://www.linkedin.com/in/dileep-pasumarthi-75a53345/){target="_blank"}
+- Sihun Wang
 
 ## License
 
