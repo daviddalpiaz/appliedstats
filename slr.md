@@ -1183,7 +1183,7 @@ set.seed(1)
 epsilon = rnorm(n = num_obs, mean = 0, sd = sigma)
 ```
 
-Now, since the $x_i$ values in SLR are considered fixed and known, we simply specify 20 values. Another common practice is to generate them from a uniform distribution, and then use them for the remainder of the analysis.
+Now, since the $x_i$ values in SLR are considered fixed and known, we simply specify 21 values. Another common practice is to generate them from a uniform distribution, and then use them for the remainder of the analysis.
 
 
 ```r
