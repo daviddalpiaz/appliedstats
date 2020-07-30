@@ -597,7 +597,7 @@ When fitting logistic regression, we can use the same formula syntax as ordinary
 chd_mod_additive = glm(chd ~ ., data = SAheart, family = binomial)
 ```
 
-We can then use the likelihood-ratio test to compare the two model. Specifically, we are testing
+We can then use the likelihood-ratio test to compare the two models. Specifically, we are testing
 
 $$
 H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{tobacco}} = \beta_{\texttt{adiposity}} = \beta_{\texttt{famhist}} = \beta_{\texttt{typea}} = \beta_{\texttt{obesity}} = \beta_{\texttt{alcohol}} = \beta_{\texttt{age}} = 0
@@ -764,7 +764,7 @@ You may have realized this before we actually explicitly wrote it down!
 
 ### Deviance
 
-You have probably noticed that the output from `summary()` is also very similar to that of ordinary linear regression. One difference, is the "deviance" being reported. The `Null deviance` is the deviance for the null model, that is, a model with no predictors. The `Residual deviance` is the deviance for the mode that was fit.
+You have probably noticed that the output from `summary()` is also very similar to that of ordinary linear regression. One difference, is the "deviance" being reported. The `Null deviance` is the deviance for the null model, that is, a model with no predictors. The `Residual deviance` is the deviance for the model that was fit.
 
 [**Deviance**](https://en.wikipedia.org/wiki/Deviance_(statistics)){target="_blank"} compares the model to a saturated model. (Without repeated observations, a saturated model is a model that fits perfectly, using a parameter for each observation.) Essentially, deviance is a generalized *residual sum of squared* for GLMs. Like RSS, deviance decreased as the model complexity increases.
 
@@ -1008,7 +1008,7 @@ mean(spam_tst_pred != spam_tst$type)
 
 This seems like a decent classifier...
 
-However, are all errors created equal? In this case, absolutely note. The 137 non-spam emails that were marked as spam (false positives) are a problem. We can't allow important information, say, a job offer, miss our inbox and get sent to the spam folder. On the other hand, the 161 spam email that would make it to an inbox (false negatives) are easily dealt with, just delete them.
+However, are all errors created equal? In this case, absolutely not. The 137 non-spam emails that were marked as spam (false positives) are a problem. We can't allow important information, say, a job offer, miss our inbox and get sent to the spam folder. On the other hand, the 161 spam email that would make it to an inbox (false negatives) are easily dealt with, just delete them.
 
 Instead of simply evaluating a classifier based on its misclassification rate (or accuracy), we'll define two additional metrics, sensitivity and specificity. Note that these are simply two of many more metrics that can be considered. The [Wikipedia page for sensitivity and specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity){target="_blank"} details a large number of metrics that can be derived form a confusion matrix.
 
