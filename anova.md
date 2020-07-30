@@ -278,6 +278,16 @@ Let's see what this looks like in a few situations. In each of the following exa
 First, consider $\mu_A = -5, \mu_B = 0, \mu_C = 5$ with $\sigma = 1$.
 
 
+```
+## Warning: Unknown or uninitialised column: `statistic`.
+```
+
+```
+## Warning: Unknown or uninitialised column: `p.value`.
+```
+
+
+
 \begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 The left panel shows the three normal distributions we are sampling from. The ticks along the $x$-axis show the randomly sampled observations. The right panel, re-displays only the sampled values in a boxplot. Note that the mid-line of the boxes is usually the sample median. These boxplots have been modified to use the sample mean.
@@ -286,10 +296,20 @@ Here the sample means vary a lot around the overall sample mean, which is the so
 
 As a result, we we obtain a *large* test statistic, thus *small* p-value. 
 
-- $F = 374.4469511$
-- $\text{p-value} = \ensuremath{1.6349862\times 10^{-33}}$
+- $F = $
+- $\text{p-value} = $
 
 Now consider $\mu_A = 0, \mu_B = 0, \mu_C = 0$ with $\sigma = 1$. That is, equal means for the groups.
+
+
+```
+## Warning: Unknown or uninitialised column: `statistic`.
+```
+
+```
+## Warning: Unknown or uninitialised column: `p.value`.
+```
+
 
 
 \begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-10-1} \end{center}
@@ -298,18 +318,28 @@ Here the sample means vary only a tiny bit around the overall sample mean. Withi
 
 As a result, we we obtain a *small* test statistic, thus *large* p-value. 
 
-- $F = 2.667892$
-- $\text{p-value} = 0.0780579$
+- $F = $
+- $\text{p-value} = $
 
 The next two examples show different means, with different levels of noise. Notice how these affect the test statistic and p-value.
 
 - $\mu_A = -1, \mu_B = 0, \mu_C = 1, \sigma = 1$
 
 
+```
+## Warning: Unknown or uninitialised column: `statistic`.
+```
+
+```
+## Warning: Unknown or uninitialised column: `p.value`.
+```
+
+
+
 \begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
-- $F = 16.4879492$
-- $\text{p-value} = \ensuremath{2.2378806\times 10^{-6}}$
+- $F = $
+- $\text{p-value} = $
 
 Above, there isn't obvious separation between the groups like the first example, but it is still obvious the means are different. Below, there is more noise. Visually it is somewhat hard to tell, but the test still suggests a difference of means. (At an $\alpha$ of 0.05.)
 
@@ -317,10 +347,20 @@ Above, there isn't obvious separation between the groups like the first example,
 - $n_i = 20$ for each group.
 
 
+```
+## Warning: Unknown or uninitialised column: `statistic`.
+```
+
+```
+## Warning: Unknown or uninitialised column: `p.value`.
+```
+
+
+
 \begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
-- $F = 4.6256472$
-- $\text{p-value} = 0.0137529$
+- $F = $
+- $\text{p-value} = $
 
 Let's consider an example with real data. We'll use the `coagulation` dataset from the `faraway` package. Here four different diets (`A`, `B`, `C`, `D`) were administered to a random sample of 24 animals. The subjects were randomly assigned to one of the four diets. For each, their blood coagulation time was measured in seconds.
 
@@ -474,19 +514,15 @@ sim_anova = function(n = 10, mu_a = 0, mu_b = 0, mu_c = 0, mu_d = 0, sigma = 1, 
   f_stat = glance(aov_results)$statistic
   p_val  = glance(aov_results)$p.value
   
-  # return f_stat if stat = TRUE, otheriwse, p-value
+  # return f_stat if stat = TRUE, otherwise, p-value
   ifelse(stat, f_stat, p_val)
   
 }
 
-f_stats = replicate(n = 5000, sim_anova(stat = TRUE))
-hist(f_stats, breaks = 100, prob = TRUE, border = "dodgerblue", main = "Empirical Distribution of F")
-curve(df(x, df1 = 4 - 1, df2 = 40 - 4), col = "darkorange", add = TRUE, lwd = 2)
+# f_stats = replicate(n = 5000, sim_anova(stat = TRUE))
+# hist(f_stats, breaks = 100, prob = TRUE, border = "dodgerblue", main = "Empirical Distribution of F")
+# curve(df(x, df1 = 4 - 1, df2 = 40 - 4), col = "darkorange", add = TRUE, lwd = 2)
 ```
-
-
-
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 ### Power
 
@@ -514,59 +550,26 @@ The following simulations look at the effect of significance level, effect size,
 
 
 ```r
-p_vals = replicate(n = 1000, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
-                                     sigma = 1.5, stat = FALSE))
-mean(p_vals < 0.05)
-```
-
-```
-## [1] 0.663
-```
-
-```r
-mean(p_vals < 0.01)
-```
-
-```
-## [1] 0.39
+# p_vals = replicate(n = 1000, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
+#                                      sigma = 1.5, stat = FALSE))
+# mean(p_vals < 0.05)
+# mean(p_vals < 0.01)
 ```
 
 
 ```r
-p_vals = replicate(n = 1000, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
-                                     sigma = 2.0, stat = FALSE))
-mean(p_vals < 0.05)
-```
-
-```
-## [1] 0.408
-```
-
-```r
-mean(p_vals < 0.01)
-```
-
-```
-## [1] 0.179
+# p_vals = replicate(n = 1000, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
+#                                      sigma = 2.0, stat = FALSE))
+# mean(p_vals < 0.05)
+# mean(p_vals < 0.01)
 ```
 
 
 ```r
-p_vals = replicate(n = 1000, sim_anova(mu_a = -2, mu_b = 0, mu_c = 0, mu_d = 2, 
-                                     sigma = 2.0, stat = FALSE))
-mean(p_vals < 0.05)
-```
-
-```
-## [1] 0.964
-```
-
-```r
-mean(p_vals < 0.01)
-```
-
-```
-## [1] 0.855
+# p_vals = replicate(n = 1000, sim_anova(mu_a = -2, mu_b = 0, mu_c = 0, mu_d = 2, 
+#                                      sigma = 2.0, stat = FALSE))
+# mean(p_vals < 0.05)
+# mean(p_vals < 0.01)
 ```
 
 ## Post Hoc Testing

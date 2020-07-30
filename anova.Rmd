@@ -429,14 +429,14 @@ sim_anova = function(n = 10, mu_a = 0, mu_b = 0, mu_c = 0, mu_d = 0, sigma = 1, 
   f_stat = glance(aov_results)$statistic
   p_val  = glance(aov_results)$p.value
   
-  # return f_stat if stat = TRUE, otheriwse, p-value
+  # return f_stat if stat = TRUE, otherwise, p-value
   ifelse(stat, f_stat, p_val)
   
 }
 
-f_stats = replicate(n = 5000, sim_anova(stat = TRUE))
-hist(f_stats, breaks = 100, prob = TRUE, border = "dodgerblue", main = "Empirical Distribution of F")
-curve(df(x, df1 = 4 - 1, df2 = 40 - 4), col = "darkorange", add = TRUE, lwd = 2)
+# f_stats = replicate(n = 5000, sim_anova(stat = TRUE))
+# hist(f_stats, breaks = 100, prob = TRUE, border = "dodgerblue", main = "Empirical Distribution of F")
+# curve(df(x, df1 = 4 - 1, df2 = 40 - 4), col = "darkorange", add = TRUE, lwd = 2)
 ```
 
 ### Power
@@ -464,24 +464,24 @@ A number of things can affect the power of a test:
 The following simulations look at the effect of significance level, effect size, and noise level on the power of an ANOVA $F$-test. Homework will look into sample size and balance.
 
 ```{r}
-p_vals = replicate(n = 1000, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
-                                     sigma = 1.5, stat = FALSE))
-mean(p_vals < 0.05)
-mean(p_vals < 0.01)
+# p_vals = replicate(n = 1000, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
+#                                      sigma = 1.5, stat = FALSE))
+# mean(p_vals < 0.05)
+# mean(p_vals < 0.01)
 ```
 
 ```{r}
-p_vals = replicate(n = 1000, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
-                                     sigma = 2.0, stat = FALSE))
-mean(p_vals < 0.05)
-mean(p_vals < 0.01)
+# p_vals = replicate(n = 1000, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
+#                                      sigma = 2.0, stat = FALSE))
+# mean(p_vals < 0.05)
+# mean(p_vals < 0.01)
 ```
 
 ```{r}
-p_vals = replicate(n = 1000, sim_anova(mu_a = -2, mu_b = 0, mu_c = 0, mu_d = 2, 
-                                     sigma = 2.0, stat = FALSE))
-mean(p_vals < 0.05)
-mean(p_vals < 0.01)
+# p_vals = replicate(n = 1000, sim_anova(mu_a = -2, mu_b = 0, mu_c = 0, mu_d = 2, 
+#                                      sigma = 2.0, stat = FALSE))
+# mean(p_vals < 0.05)
+# mean(p_vals < 0.01)
 ```
 
 ## Post Hoc Testing
