@@ -429,14 +429,14 @@ sim_anova = function(n = 10, mu_a = 0, mu_b = 0, mu_c = 0, mu_d = 0, sigma = 1, 
   f_stat = glance(aov_results)$statistic
   p_val  = glance(aov_results)$p.value
   
-  # return f_stat if stat = TRUE, otheriwse, p-value
+  # return f_stat if stat = TRUE, otherwise, p-value
   ifelse(stat, f_stat, p_val)
   
 }
 
-f_stats = replicate(n = 5000, sim_anova(stat = TRUE))
-hist(f_stats, breaks = 100, prob = TRUE, border = "dodgerblue", main = "Empirical Distribution of F")
-curve(df(x, df1 = 4 - 1, df2 = 40 - 4), col = "darkorange", add = TRUE, lwd = 2)
+# f_stats = replicate(n = 5000, sim_anova(stat = TRUE))
+# hist(f_stats, breaks = 100, prob = TRUE, border = "dodgerblue", main = "Empirical Distribution of F")
+# curve(df(x, df1 = 4 - 1, df2 = 40 - 4), col = "darkorange", add = TRUE, lwd = 2)
 ```
 
 ### Power
