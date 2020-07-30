@@ -510,7 +510,8 @@ sim_anova = function(n = 10, mu_a = 0, mu_b = 0, mu_c = 0, mu_d = 0, sigma = 1, 
   )
   
   # obtain F-statistic and p-value for testing difference of means
-  aov_results = aov(response ~ group, data = sim_data)
+  # use lm instead of aov for better result formatting with glance
+  aov_results = lm(response ~ group, data = sim_data)
   f_stat = glance(aov_results)$statistic
   p_val  = glance(aov_results)$p.value
   
@@ -519,10 +520,14 @@ sim_anova = function(n = 10, mu_a = 0, mu_b = 0, mu_c = 0, mu_d = 0, sigma = 1, 
   
 }
 
-# f_stats = replicate(n = 5000, sim_anova(stat = TRUE))
-# hist(f_stats, breaks = 100, prob = TRUE, border = "dodgerblue", main = "Empirical Distribution of F")
-# curve(df(x, df1 = 4 - 1, df2 = 40 - 4), col = "darkorange", add = TRUE, lwd = 2)
+f_stats = replicate(n = 5000, sim_anova(stat = TRUE))
+hist(f_stats, breaks = 100, prob = TRUE, border = "dodgerblue", main = "Empirical Distribution of F")
+curve(df(x, df1 = 4 - 1, df2 = 40 - 4), col = "darkorange", add = TRUE, lwd = 2)
 ```
+
+
+
+\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 ### Power
 
@@ -550,26 +555,59 @@ The following simulations look at the effect of significance level, effect size,
 
 
 ```r
-# p_vals = replicate(n = 1000, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
-#                                      sigma = 1.5, stat = FALSE))
-# mean(p_vals < 0.05)
-# mean(p_vals < 0.01)
+p_vals = replicate(n = 1000, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1,
+                                     sigma = 1.5, stat = FALSE))
+mean(p_vals < 0.05)
+```
+
+```
+## [1] 0.663
+```
+
+```r
+mean(p_vals < 0.01)
+```
+
+```
+## [1] 0.39
 ```
 
 
 ```r
-# p_vals = replicate(n = 1000, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1, 
-#                                      sigma = 2.0, stat = FALSE))
-# mean(p_vals < 0.05)
-# mean(p_vals < 0.01)
+p_vals = replicate(n = 1000, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1,
+                                     sigma = 2.0, stat = FALSE))
+mean(p_vals < 0.05)
+```
+
+```
+## [1] 0.408
+```
+
+```r
+mean(p_vals < 0.01)
+```
+
+```
+## [1] 0.179
 ```
 
 
 ```r
-# p_vals = replicate(n = 1000, sim_anova(mu_a = -2, mu_b = 0, mu_c = 0, mu_d = 2, 
-#                                      sigma = 2.0, stat = FALSE))
-# mean(p_vals < 0.05)
-# mean(p_vals < 0.01)
+p_vals = replicate(n = 1000, sim_anova(mu_a = -2, mu_b = 0, mu_c = 0, mu_d = 2,
+                                     sigma = 2.0, stat = FALSE))
+mean(p_vals < 0.05)
+```
+
+```
+## [1] 0.964
+```
+
+```r
+mean(p_vals < 0.01)
+```
+
+```
+## [1] 0.855
 ```
 
 ## Post Hoc Testing

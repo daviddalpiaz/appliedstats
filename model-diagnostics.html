@@ -502,30 +502,30 @@ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)
 <p><span class="math display">\[
 \text{Model 3:} \quad Y = 3 + 5x^2 + \epsilon, \quad \epsilon \sim N(0, 25)
 \]</span></p>
-<div class="sourceCode" id="cb872"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb872-1" data-line-number="1">sim_<span class="dv">1</span> =<span class="st"> </span><span class="cf">function</span>(<span class="dt">sample_size =</span> <span class="dv">500</span>) {</a>
-<a class="sourceLine" id="cb872-2" data-line-number="2">  x =<span class="st"> </span><span class="kw">runif</span>(<span class="dt">n =</span> sample_size) <span class="op">*</span><span class="st"> </span><span class="dv">5</span></a>
-<a class="sourceLine" id="cb872-3" data-line-number="3">  y =<span class="st"> </span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">5</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> sample_size, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb872-4" data-line-number="4">  <span class="kw">data.frame</span>(x, y)</a>
-<a class="sourceLine" id="cb872-5" data-line-number="5">}</a>
-<a class="sourceLine" id="cb872-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb872-7" data-line-number="7">sim_<span class="dv">2</span> =<span class="st"> </span><span class="cf">function</span>(<span class="dt">sample_size =</span> <span class="dv">500</span>) {</a>
-<a class="sourceLine" id="cb872-8" data-line-number="8">  x =<span class="st"> </span><span class="kw">runif</span>(<span class="dt">n =</span> sample_size) <span class="op">*</span><span class="st"> </span><span class="dv">5</span></a>
-<a class="sourceLine" id="cb872-9" data-line-number="9">  y =<span class="st"> </span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">5</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> sample_size, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> x)</a>
-<a class="sourceLine" id="cb872-10" data-line-number="10">  <span class="kw">data.frame</span>(x, y)</a>
-<a class="sourceLine" id="cb872-11" data-line-number="11">}</a>
-<a class="sourceLine" id="cb872-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb872-13" data-line-number="13">sim_<span class="dv">3</span> =<span class="st"> </span><span class="cf">function</span>(<span class="dt">sample_size =</span> <span class="dv">500</span>) {</a>
-<a class="sourceLine" id="cb872-14" data-line-number="14">  x =<span class="st"> </span><span class="kw">runif</span>(<span class="dt">n =</span> sample_size) <span class="op">*</span><span class="st"> </span><span class="dv">5</span></a>
-<a class="sourceLine" id="cb872-15" data-line-number="15">  y =<span class="st"> </span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">5</span> <span class="op">*</span><span class="st"> </span>x <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> sample_size, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb872-16" data-line-number="16">  <span class="kw">data.frame</span>(x, y)</a>
-<a class="sourceLine" id="cb872-17" data-line-number="17">}</a></code></pre></div>
+<div class="sourceCode" id="cb881"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb881-1" data-line-number="1">sim_<span class="dv">1</span> =<span class="st"> </span><span class="cf">function</span>(<span class="dt">sample_size =</span> <span class="dv">500</span>) {</a>
+<a class="sourceLine" id="cb881-2" data-line-number="2">  x =<span class="st"> </span><span class="kw">runif</span>(<span class="dt">n =</span> sample_size) <span class="op">*</span><span class="st"> </span><span class="dv">5</span></a>
+<a class="sourceLine" id="cb881-3" data-line-number="3">  y =<span class="st"> </span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">5</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> sample_size, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb881-4" data-line-number="4">  <span class="kw">data.frame</span>(x, y)</a>
+<a class="sourceLine" id="cb881-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb881-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb881-7" data-line-number="7">sim_<span class="dv">2</span> =<span class="st"> </span><span class="cf">function</span>(<span class="dt">sample_size =</span> <span class="dv">500</span>) {</a>
+<a class="sourceLine" id="cb881-8" data-line-number="8">  x =<span class="st"> </span><span class="kw">runif</span>(<span class="dt">n =</span> sample_size) <span class="op">*</span><span class="st"> </span><span class="dv">5</span></a>
+<a class="sourceLine" id="cb881-9" data-line-number="9">  y =<span class="st"> </span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">5</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> sample_size, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> x)</a>
+<a class="sourceLine" id="cb881-10" data-line-number="10">  <span class="kw">data.frame</span>(x, y)</a>
+<a class="sourceLine" id="cb881-11" data-line-number="11">}</a>
+<a class="sourceLine" id="cb881-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb881-13" data-line-number="13">sim_<span class="dv">3</span> =<span class="st"> </span><span class="cf">function</span>(<span class="dt">sample_size =</span> <span class="dv">500</span>) {</a>
+<a class="sourceLine" id="cb881-14" data-line-number="14">  x =<span class="st"> </span><span class="kw">runif</span>(<span class="dt">n =</span> sample_size) <span class="op">*</span><span class="st"> </span><span class="dv">5</span></a>
+<a class="sourceLine" id="cb881-15" data-line-number="15">  y =<span class="st"> </span><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">5</span> <span class="op">*</span><span class="st"> </span>x <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> sample_size, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb881-16" data-line-number="16">  <span class="kw">data.frame</span>(x, y)</a>
+<a class="sourceLine" id="cb881-17" data-line-number="17">}</a></code></pre></div>
 <div id="fitted-versus-residuals-plot" class="section level3">
 <h3><span class="header-section-number">13.2.1</span> Fitted versus Residuals Plot</h3>
 <p>Probably our most useful tool will be a <strong>Fitted versus Residuals Plot</strong>. It will be useful for checking both the <strong>linearity</strong> and <strong>constant variance</strong> assumptions.</p>
 <p>Data generated from Model 1 above should not show any signs of violating assumptions, so we’ll use this to see what a good fitted versus residuals plot should look like. First, we’ll simulate observations from this model.</p>
-<div class="sourceCode" id="cb873"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb873-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
-<a class="sourceLine" id="cb873-2" data-line-number="2">sim_data_<span class="dv">1</span> =<span class="st"> </span><span class="kw">sim_1</span>()</a>
-<a class="sourceLine" id="cb873-3" data-line-number="3"><span class="kw">head</span>(sim_data_<span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb882"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb882-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb882-2" data-line-number="2">sim_data_<span class="dv">1</span> =<span class="st"> </span><span class="kw">sim_1</span>()</a>
+<a class="sourceLine" id="cb882-3" data-line-number="3"><span class="kw">head</span>(sim_data_<span class="dv">1</span>)</a></code></pre></div>
 <pre><code>##          x         y
 ## 1 4.574030 24.773995
 ## 2 4.685377 26.475936
@@ -534,15 +534,15 @@ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)
 ## 5 3.208728 20.341344
 ## 6 2.595480 14.943525</code></pre>
 <p>We then fit the model and add the fitted line to a scatterplot.</p>
-<div class="sourceCode" id="cb875"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb875-1" data-line-number="1"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> sim_data_<span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,</a>
-<a class="sourceLine" id="cb875-2" data-line-number="2">     <span class="dt">main =</span> <span class="st">&quot;Data from Model 1&quot;</span>)</a>
-<a class="sourceLine" id="cb875-3" data-line-number="3">fit_<span class="dv">1</span> =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> sim_data_<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb875-4" data-line-number="4"><span class="kw">abline</span>(fit_<span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb884"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb884-1" data-line-number="1"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> sim_data_<span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,</a>
+<a class="sourceLine" id="cb884-2" data-line-number="2">     <span class="dt">main =</span> <span class="st">&quot;Data from Model 1&quot;</span>)</a>
+<a class="sourceLine" id="cb884-3" data-line-number="3">fit_<span class="dv">1</span> =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> sim_data_<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb884-4" data-line-number="4"><span class="kw">abline</span>(fit_<span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We now plot a fitted versus residuals plot. Note, this is residuals on the <span class="math inline">\(y\)</span>-axis despite the ordering in the name. Sometimes you will see this called a residuals versus fitted, or residuals versus predicted plot.</p>
-<div class="sourceCode" id="cb876"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb876-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">fitted</span>(fit_<span class="dv">1</span>), <span class="kw">resid</span>(fit_<span class="dv">1</span>), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,</a>
-<a class="sourceLine" id="cb876-2" data-line-number="2">     <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Data from Model 1&quot;</span>)</a>
-<a class="sourceLine" id="cb876-3" data-line-number="3"><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb885"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb885-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">fitted</span>(fit_<span class="dv">1</span>), <span class="kw">resid</span>(fit_<span class="dv">1</span>), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,</a>
+<a class="sourceLine" id="cb885-2" data-line-number="2">     <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Data from Model 1&quot;</span>)</a>
+<a class="sourceLine" id="cb885-3" data-line-number="3"><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We should look for two things in this plot.</p>
 <ul>
@@ -552,31 +552,31 @@ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)
 <p>Here we see this is the case for both.</p>
 <p>To get a better idea of how a fitted versus residuals plot can be useful, we will simulate from models with violated assumptions.</p>
 <p>Model 2 is an example of non-constant variance. In this case, the variance is larger for larger values of the predictor variable <span class="math inline">\(x\)</span>.</p>
-<div class="sourceCode" id="cb877"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb877-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
-<a class="sourceLine" id="cb877-2" data-line-number="2">sim_data_<span class="dv">2</span> =<span class="st"> </span><span class="kw">sim_2</span>()</a>
-<a class="sourceLine" id="cb877-3" data-line-number="3">fit_<span class="dv">2</span> =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> sim_data_<span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb877-4" data-line-number="4"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> sim_data_<span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,</a>
-<a class="sourceLine" id="cb877-5" data-line-number="5">     <span class="dt">main =</span> <span class="st">&quot;Data from Model 2&quot;</span>)</a>
-<a class="sourceLine" id="cb877-6" data-line-number="6"><span class="kw">abline</span>(fit_<span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb886"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb886-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb886-2" data-line-number="2">sim_data_<span class="dv">2</span> =<span class="st"> </span><span class="kw">sim_2</span>()</a>
+<a class="sourceLine" id="cb886-3" data-line-number="3">fit_<span class="dv">2</span> =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> sim_data_<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb886-4" data-line-number="4"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> sim_data_<span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,</a>
+<a class="sourceLine" id="cb886-5" data-line-number="5">     <span class="dt">main =</span> <span class="st">&quot;Data from Model 2&quot;</span>)</a>
+<a class="sourceLine" id="cb886-6" data-line-number="6"><span class="kw">abline</span>(fit_<span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>This actually is rather easy to see here by adding the fitted line to a scatterplot. This is because we are only performing simple linear regression. With multiple regression, a fitted versus residuals plot is a necessity, since adding a fitted regression to a scatterplot isn’t exactly possible.</p>
-<div class="sourceCode" id="cb878"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb878-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">fitted</span>(fit_<span class="dv">2</span>), <span class="kw">resid</span>(fit_<span class="dv">2</span>), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,</a>
-<a class="sourceLine" id="cb878-2" data-line-number="2">     <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Data from Model 2&quot;</span>)</a>
-<a class="sourceLine" id="cb878-3" data-line-number="3"><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb887"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb887-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">fitted</span>(fit_<span class="dv">2</span>), <span class="kw">resid</span>(fit_<span class="dv">2</span>), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,</a>
+<a class="sourceLine" id="cb887-2" data-line-number="2">     <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Data from Model 2&quot;</span>)</a>
+<a class="sourceLine" id="cb887-3" data-line-number="3"><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>On the fitted versus residuals plot, we see two things very clearly. For any fitted value, the residuals seem roughly centered at 0. This is good! The linearity assumption is not violated. However, we also see very clearly, that for larger fitted values, the spread of the residuals is larger. This is bad! The constant variance assumption is violated here.</p>
 <p>Now we will demonstrate a model which does not meet the linearity assumption. Model 3 is an example of a model where <span class="math inline">\(Y\)</span> is not a linear combination of the predictors. In this case the predictor is <span class="math inline">\(x\)</span>, but the model uses <span class="math inline">\(x^2\)</span>. (We’ll see later that this is something that a “linear” model can deal with. The fix is simple, just make <span class="math inline">\(x^2\)</span> a predictor!)</p>
-<div class="sourceCode" id="cb879"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb879-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
-<a class="sourceLine" id="cb879-2" data-line-number="2">sim_data_<span class="dv">3</span> =<span class="st"> </span><span class="kw">sim_3</span>()</a>
-<a class="sourceLine" id="cb879-3" data-line-number="3">fit_<span class="dv">3</span> =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> sim_data_<span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb879-4" data-line-number="4"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> sim_data_<span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,</a>
-<a class="sourceLine" id="cb879-5" data-line-number="5">     <span class="dt">main =</span> <span class="st">&quot;Data from Model 3&quot;</span>)</a>
-<a class="sourceLine" id="cb879-6" data-line-number="6"><span class="kw">abline</span>(fit_<span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb888"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb888-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb888-2" data-line-number="2">sim_data_<span class="dv">3</span> =<span class="st"> </span><span class="kw">sim_3</span>()</a>
+<a class="sourceLine" id="cb888-3" data-line-number="3">fit_<span class="dv">3</span> =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> sim_data_<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb888-4" data-line-number="4"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> sim_data_<span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,</a>
+<a class="sourceLine" id="cb888-5" data-line-number="5">     <span class="dt">main =</span> <span class="st">&quot;Data from Model 3&quot;</span>)</a>
+<a class="sourceLine" id="cb888-6" data-line-number="6"><span class="kw">abline</span>(fit_<span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Again, this is rather clear on the scatterplot, but again, we wouldn’t be able to check this plot for multiple regression.</p>
-<div class="sourceCode" id="cb880"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb880-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">fitted</span>(fit_<span class="dv">3</span>), <span class="kw">resid</span>(fit_<span class="dv">3</span>), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,</a>
-<a class="sourceLine" id="cb880-2" data-line-number="2">     <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Data from Model 3&quot;</span>)</a>
-<a class="sourceLine" id="cb880-3" data-line-number="3"><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb889"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb889-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">fitted</span>(fit_<span class="dv">3</span>), <span class="kw">resid</span>(fit_<span class="dv">3</span>), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,</a>
+<a class="sourceLine" id="cb889-2" data-line-number="2">     <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Data from Model 3&quot;</span>)</a>
+<a class="sourceLine" id="cb889-3" data-line-number="3"><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>This time on the fitted versus residuals plot, for any fitted value, the spread of the residuals is about the same. However, they are not even close to centered at zero! At small and large fitted values the model is underestimating, while at medium fitted values, the model is overestimating. These are systematic errors, not random noise. So the constant variance assumption is met, but the linearity assumption is violated. The form of our model is simply wrong. We’re trying to fit a line to a curve!</p>
 </div>
@@ -590,29 +590,29 @@ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)
 </ul>
 <p>Isn’t that convenient? A test that will specifically test the <strong>constant variance</strong> assumption.</p>
 <p>The Breusch-Pagan Test can not be performed by default in <code>R</code>, however the function <code>bptest</code> in the <code>lmtest</code> package implements the test.</p>
-<div class="sourceCode" id="cb881"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb881-1" data-line-number="1"><span class="co">#install.packages(&quot;lmtest&quot;)</span></a>
-<a class="sourceLine" id="cb881-2" data-line-number="2"><span class="kw">library</span>(lmtest)</a></code></pre></div>
+<div class="sourceCode" id="cb890"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb890-1" data-line-number="1"><span class="co">#install.packages(&quot;lmtest&quot;)</span></a>
+<a class="sourceLine" id="cb890-2" data-line-number="2"><span class="kw">library</span>(lmtest)</a></code></pre></div>
 <p>Let’s try it on the three models we fit above. Recall,</p>
 <ul>
 <li><code>fit_1</code> had no violation of assumptions,</li>
 <li><code>fit_2</code> violated the constant variance assumption, but not linearity,</li>
 <li><code>fit_3</code> violated linearity, but not constant variance.</li>
 </ul>
-<div class="sourceCode" id="cb882"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb882-1" data-line-number="1"><span class="kw">bptest</span>(fit_<span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb891"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb891-1" data-line-number="1"><span class="kw">bptest</span>(fit_<span class="dv">1</span>)</a></code></pre></div>
 <pre><code>## 
 ##  studentized Breusch-Pagan test
 ## 
 ## data:  fit_1
 ## BP = 1.0234, df = 1, p-value = 0.3117</code></pre>
 <p>For <code>fit_1</code> we see a large p-value, so we do not reject the null of homoscedasticity, which is what we would expect.</p>
-<div class="sourceCode" id="cb884"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb884-1" data-line-number="1"><span class="kw">bptest</span>(fit_<span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb893"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb893-1" data-line-number="1"><span class="kw">bptest</span>(fit_<span class="dv">2</span>)</a></code></pre></div>
 <pre><code>## 
 ##  studentized Breusch-Pagan test
 ## 
 ## data:  fit_2
 ## BP = 76.693, df = 1, p-value &lt; 2.2e-16</code></pre>
 <p>For <code>fit_2</code> we see a small p-value, so we reject the null of homoscedasticity. The constant variance assumption is violated. This matches our findings with a fitted versus residuals plot.</p>
-<div class="sourceCode" id="cb886"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb886-1" data-line-number="1"><span class="kw">bptest</span>(fit_<span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb895"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb895-1" data-line-number="1"><span class="kw">bptest</span>(fit_<span class="dv">3</span>)</a></code></pre></div>
 <pre><code>## 
 ##  studentized Breusch-Pagan test
 ## 
@@ -623,25 +623,25 @@ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)
 <div id="histograms-1" class="section level3">
 <h3><span class="header-section-number">13.2.3</span> Histograms</h3>
 <p>We have a number of tools for assessing the normality assumption. The most obvious would be to make a histogram of the residuals. If it appears roughly normal, then we’ll believe the errors could truly be normal.</p>
-<div class="sourceCode" id="cb888"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb888-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb888-2" data-line-number="2"><span class="kw">hist</span>(<span class="kw">resid</span>(fit_<span class="dv">1</span>),</a>
-<a class="sourceLine" id="cb888-3" data-line-number="3">     <span class="dt">xlab   =</span> <span class="st">&quot;Residuals&quot;</span>,</a>
-<a class="sourceLine" id="cb888-4" data-line-number="4">     <span class="dt">main   =</span> <span class="st">&quot;Histogram of Residuals, fit_1&quot;</span>,</a>
-<a class="sourceLine" id="cb888-5" data-line-number="5">     <span class="dt">col    =</span> <span class="st">&quot;darkorange&quot;</span>,</a>
-<a class="sourceLine" id="cb888-6" data-line-number="6">     <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,</a>
-<a class="sourceLine" id="cb888-7" data-line-number="7">     <span class="dt">breaks =</span> <span class="dv">20</span>)</a>
-<a class="sourceLine" id="cb888-8" data-line-number="8"><span class="kw">hist</span>(<span class="kw">resid</span>(fit_<span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb888-9" data-line-number="9">     <span class="dt">xlab   =</span> <span class="st">&quot;Residuals&quot;</span>,</a>
-<a class="sourceLine" id="cb888-10" data-line-number="10">     <span class="dt">main   =</span> <span class="st">&quot;Histogram of Residuals, fit_2&quot;</span>,</a>
-<a class="sourceLine" id="cb888-11" data-line-number="11">     <span class="dt">col    =</span> <span class="st">&quot;darkorange&quot;</span>,</a>
-<a class="sourceLine" id="cb888-12" data-line-number="12">     <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,</a>
-<a class="sourceLine" id="cb888-13" data-line-number="13">     <span class="dt">breaks =</span> <span class="dv">20</span>)</a>
-<a class="sourceLine" id="cb888-14" data-line-number="14"><span class="kw">hist</span>(<span class="kw">resid</span>(fit_<span class="dv">3</span>),</a>
-<a class="sourceLine" id="cb888-15" data-line-number="15">     <span class="dt">xlab   =</span> <span class="st">&quot;Residuals&quot;</span>,</a>
-<a class="sourceLine" id="cb888-16" data-line-number="16">     <span class="dt">main   =</span> <span class="st">&quot;Histogram of Residuals, fit_3&quot;</span>,</a>
-<a class="sourceLine" id="cb888-17" data-line-number="17">     <span class="dt">col    =</span> <span class="st">&quot;darkorange&quot;</span>,</a>
-<a class="sourceLine" id="cb888-18" data-line-number="18">     <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,</a>
-<a class="sourceLine" id="cb888-19" data-line-number="19">     <span class="dt">breaks =</span> <span class="dv">20</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb897"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb897-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb897-2" data-line-number="2"><span class="kw">hist</span>(<span class="kw">resid</span>(fit_<span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb897-3" data-line-number="3">     <span class="dt">xlab   =</span> <span class="st">&quot;Residuals&quot;</span>,</a>
+<a class="sourceLine" id="cb897-4" data-line-number="4">     <span class="dt">main   =</span> <span class="st">&quot;Histogram of Residuals, fit_1&quot;</span>,</a>
+<a class="sourceLine" id="cb897-5" data-line-number="5">     <span class="dt">col    =</span> <span class="st">&quot;darkorange&quot;</span>,</a>
+<a class="sourceLine" id="cb897-6" data-line-number="6">     <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,</a>
+<a class="sourceLine" id="cb897-7" data-line-number="7">     <span class="dt">breaks =</span> <span class="dv">20</span>)</a>
+<a class="sourceLine" id="cb897-8" data-line-number="8"><span class="kw">hist</span>(<span class="kw">resid</span>(fit_<span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb897-9" data-line-number="9">     <span class="dt">xlab   =</span> <span class="st">&quot;Residuals&quot;</span>,</a>
+<a class="sourceLine" id="cb897-10" data-line-number="10">     <span class="dt">main   =</span> <span class="st">&quot;Histogram of Residuals, fit_2&quot;</span>,</a>
+<a class="sourceLine" id="cb897-11" data-line-number="11">     <span class="dt">col    =</span> <span class="st">&quot;darkorange&quot;</span>,</a>
+<a class="sourceLine" id="cb897-12" data-line-number="12">     <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,</a>
+<a class="sourceLine" id="cb897-13" data-line-number="13">     <span class="dt">breaks =</span> <span class="dv">20</span>)</a>
+<a class="sourceLine" id="cb897-14" data-line-number="14"><span class="kw">hist</span>(<span class="kw">resid</span>(fit_<span class="dv">3</span>),</a>
+<a class="sourceLine" id="cb897-15" data-line-number="15">     <span class="dt">xlab   =</span> <span class="st">&quot;Residuals&quot;</span>,</a>
+<a class="sourceLine" id="cb897-16" data-line-number="16">     <span class="dt">main   =</span> <span class="st">&quot;Histogram of Residuals, fit_3&quot;</span>,</a>
+<a class="sourceLine" id="cb897-17" data-line-number="17">     <span class="dt">col    =</span> <span class="st">&quot;darkorange&quot;</span>,</a>
+<a class="sourceLine" id="cb897-18" data-line-number="18">     <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,</a>
+<a class="sourceLine" id="cb897-19" data-line-number="19">     <span class="dt">breaks =</span> <span class="dv">20</span>)</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-14-1.png" width="1440" style="display: block; margin: auto;" /></p>
 <p>Above are histograms for each of the three regression we have been considering. Notice that the first, for <code>fit_1</code> appears very normal. The third, for <code>fit_3</code>, appears to be very non-normal. However <code>fit_2</code> is not as clear. It does have a rough bell shape, however, it also has a very sharp peak. For this reason we will usually use more powerful tools such as <strong>Q-Q plots</strong> and the <strong>Shapiro-Wilk test</strong> for assessing the normality of errors.</p>
 </div>
@@ -649,64 +649,64 @@ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)
 <h3><span class="header-section-number">13.2.4</span> Q-Q Plots</h3>
 <p>Another visual method for assessing the normality of errors, which is more powerful than a histogram, is a normal quantile-quantile plot, or <strong>Q-Q plot</strong> for short.</p>
 <p>In <code>R</code> these are very easy to make. The <code>qqnorm()</code> function plots the points, and the <code>qqline()</code> function adds the necessary line. We create a Q-Q plot for the residuals of <code>fit_1</code> to check if the errors could truly be normally distributed.</p>
-<div class="sourceCode" id="cb889"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb889-1" data-line-number="1"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_<span class="dv">1</span>), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit_1&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)</a>
-<a class="sourceLine" id="cb889-2" data-line-number="2"><span class="kw">qqline</span>(<span class="kw">resid</span>(fit_<span class="dv">1</span>), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb898"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb898-1" data-line-number="1"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_<span class="dv">1</span>), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit_1&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)</a>
+<a class="sourceLine" id="cb898-2" data-line-number="2"><span class="kw">qqline</span>(<span class="kw">resid</span>(fit_<span class="dv">1</span>), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>In short, if the points of the plot do not closely follow a straight line, this would suggest that the data do not come from a normal distribution.</p>
 <p>The calculations required to create the plot vary depending on the implementation, but essentially the <span class="math inline">\(y\)</span>-axis is the sorted data (observed, or sample quantiles), and the <span class="math inline">\(x\)</span>-axis is the values we would expect if the data did come from a normal distribution (theoretical quantiles).</p>
 <p>The <a href="http://en.wikipedia.org/wiki/Normal_probability_plot" target="_blank">Wikipedia page for Normal probability plots</a> gives details on how this is implemented in <code>R</code> if you are interested.</p>
 <p>Also, to get a better idea of how Q-Q plots work, here is a quick function which creates a Q-Q plot:</p>
-<div class="sourceCode" id="cb890"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb890-1" data-line-number="1">qq_plot =<span class="st"> </span><span class="cf">function</span>(e) {</a>
-<a class="sourceLine" id="cb890-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb890-3" data-line-number="3">  n =<span class="st"> </span><span class="kw">length</span>(e)</a>
-<a class="sourceLine" id="cb890-4" data-line-number="4">  normal_quantiles =<span class="st"> </span><span class="kw">qnorm</span>(((<span class="dv">1</span><span class="op">:</span>n <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span>) <span class="op">/</span><span class="st"> </span>n))</a>
-<a class="sourceLine" id="cb890-5" data-line-number="5">  <span class="co"># normal_quantiles = qnorm(((1:n) / (n + 1)))</span></a>
-<a class="sourceLine" id="cb890-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb890-7" data-line-number="7">  <span class="co"># plot theoretical verus observed quantiles</span></a>
-<a class="sourceLine" id="cb890-8" data-line-number="8">  <span class="kw">plot</span>(normal_quantiles, <span class="kw">sort</span>(e),</a>
-<a class="sourceLine" id="cb890-9" data-line-number="9">       <span class="dt">xlab =</span> <span class="kw">c</span>(<span class="st">&quot;Theoretical Quantiles&quot;</span>),</a>
-<a class="sourceLine" id="cb890-10" data-line-number="10">       <span class="dt">ylab =</span> <span class="kw">c</span>(<span class="st">&quot;Sample Quantiles&quot;</span>),</a>
-<a class="sourceLine" id="cb890-11" data-line-number="11">       <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)</a>
-<a class="sourceLine" id="cb890-12" data-line-number="12">  <span class="kw">title</span>(<span class="st">&quot;Normal Q-Q Plot&quot;</span>)</a>
-<a class="sourceLine" id="cb890-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb890-14" data-line-number="14">  <span class="co"># calculate line through the first and third quartiles</span></a>
-<a class="sourceLine" id="cb890-15" data-line-number="15">  slope     =<span class="st"> </span>(<span class="kw">quantile</span>(e, <span class="fl">0.75</span>) <span class="op">-</span><span class="st"> </span><span class="kw">quantile</span>(e, <span class="fl">0.25</span>)) <span class="op">/</span><span class="st"> </span>(<span class="kw">qnorm</span>(<span class="fl">0.75</span>) <span class="op">-</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.25</span>))</a>
-<a class="sourceLine" id="cb890-16" data-line-number="16">  intercept =<span class="st"> </span><span class="kw">quantile</span>(e, <span class="fl">0.25</span>) <span class="op">-</span><span class="st"> </span>slope <span class="op">*</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.25</span>)</a>
-<a class="sourceLine" id="cb890-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb890-18" data-line-number="18">  <span class="co"># add to existing plot</span></a>
-<a class="sourceLine" id="cb890-19" data-line-number="19">  <span class="kw">abline</span>(intercept, slope, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)</a>
-<a class="sourceLine" id="cb890-20" data-line-number="20">}</a></code></pre></div>
+<div class="sourceCode" id="cb899"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb899-1" data-line-number="1">qq_plot =<span class="st"> </span><span class="cf">function</span>(e) {</a>
+<a class="sourceLine" id="cb899-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb899-3" data-line-number="3">  n =<span class="st"> </span><span class="kw">length</span>(e)</a>
+<a class="sourceLine" id="cb899-4" data-line-number="4">  normal_quantiles =<span class="st"> </span><span class="kw">qnorm</span>(((<span class="dv">1</span><span class="op">:</span>n <span class="op">-</span><span class="st"> </span><span class="fl">0.5</span>) <span class="op">/</span><span class="st"> </span>n))</a>
+<a class="sourceLine" id="cb899-5" data-line-number="5">  <span class="co"># normal_quantiles = qnorm(((1:n) / (n + 1)))</span></a>
+<a class="sourceLine" id="cb899-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb899-7" data-line-number="7">  <span class="co"># plot theoretical verus observed quantiles</span></a>
+<a class="sourceLine" id="cb899-8" data-line-number="8">  <span class="kw">plot</span>(normal_quantiles, <span class="kw">sort</span>(e),</a>
+<a class="sourceLine" id="cb899-9" data-line-number="9">       <span class="dt">xlab =</span> <span class="kw">c</span>(<span class="st">&quot;Theoretical Quantiles&quot;</span>),</a>
+<a class="sourceLine" id="cb899-10" data-line-number="10">       <span class="dt">ylab =</span> <span class="kw">c</span>(<span class="st">&quot;Sample Quantiles&quot;</span>),</a>
+<a class="sourceLine" id="cb899-11" data-line-number="11">       <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)</a>
+<a class="sourceLine" id="cb899-12" data-line-number="12">  <span class="kw">title</span>(<span class="st">&quot;Normal Q-Q Plot&quot;</span>)</a>
+<a class="sourceLine" id="cb899-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb899-14" data-line-number="14">  <span class="co"># calculate line through the first and third quartiles</span></a>
+<a class="sourceLine" id="cb899-15" data-line-number="15">  slope     =<span class="st"> </span>(<span class="kw">quantile</span>(e, <span class="fl">0.75</span>) <span class="op">-</span><span class="st"> </span><span class="kw">quantile</span>(e, <span class="fl">0.25</span>)) <span class="op">/</span><span class="st"> </span>(<span class="kw">qnorm</span>(<span class="fl">0.75</span>) <span class="op">-</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.25</span>))</a>
+<a class="sourceLine" id="cb899-16" data-line-number="16">  intercept =<span class="st"> </span><span class="kw">quantile</span>(e, <span class="fl">0.25</span>) <span class="op">-</span><span class="st"> </span>slope <span class="op">*</span><span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.25</span>)</a>
+<a class="sourceLine" id="cb899-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb899-18" data-line-number="18">  <span class="co"># add to existing plot</span></a>
+<a class="sourceLine" id="cb899-19" data-line-number="19">  <span class="kw">abline</span>(intercept, slope, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)</a>
+<a class="sourceLine" id="cb899-20" data-line-number="20">}</a></code></pre></div>
 <p>We can then verify that it is essentially equivalent to using <code>qqnorm()</code> and <code>qqline()</code> in <code>R</code>.</p>
-<div class="sourceCode" id="cb891"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb891-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">420</span>)</a>
-<a class="sourceLine" id="cb891-2" data-line-number="2">x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">0</span> , <span class="dt">sd =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb891-3" data-line-number="3"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb891-4" data-line-number="4"><span class="kw">qqnorm</span>(x, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)</a>
-<a class="sourceLine" id="cb891-5" data-line-number="5"><span class="kw">qqline</span>(x, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)</a>
-<a class="sourceLine" id="cb891-6" data-line-number="6"><span class="kw">qq_plot</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb900"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb900-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">420</span>)</a>
+<a class="sourceLine" id="cb900-2" data-line-number="2">x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">0</span> , <span class="dt">sd =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb900-3" data-line-number="3"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb900-4" data-line-number="4"><span class="kw">qqnorm</span>(x, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)</a>
+<a class="sourceLine" id="cb900-5" data-line-number="5"><span class="kw">qqline</span>(x, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)</a>
+<a class="sourceLine" id="cb900-6" data-line-number="6"><span class="kw">qq_plot</span>(x)</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-17-1.png" width="960" style="display: block; margin: auto;" /></p>
 <p>To get a better idea of what “close to the line” means, we perform a number of simulations, and create Q-Q plots.</p>
 <p>First we simulate data from a normal distribution with different sample sizes, and each time create a Q-Q plot.</p>
-<div class="sourceCode" id="cb892"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb892-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb892-2" data-line-number="2"><span class="kw">set.seed</span>(<span class="dv">420</span>)</a>
-<a class="sourceLine" id="cb892-3" data-line-number="3"><span class="kw">qq_plot</span>(<span class="kw">rnorm</span>(<span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb892-4" data-line-number="4"><span class="kw">qq_plot</span>(<span class="kw">rnorm</span>(<span class="dv">25</span>))</a>
-<a class="sourceLine" id="cb892-5" data-line-number="5"><span class="kw">qq_plot</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb901"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb901-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb901-2" data-line-number="2"><span class="kw">set.seed</span>(<span class="dv">420</span>)</a>
+<a class="sourceLine" id="cb901-3" data-line-number="3"><span class="kw">qq_plot</span>(<span class="kw">rnorm</span>(<span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb901-4" data-line-number="4"><span class="kw">qq_plot</span>(<span class="kw">rnorm</span>(<span class="dv">25</span>))</a>
+<a class="sourceLine" id="cb901-5" data-line-number="5"><span class="kw">qq_plot</span>(<span class="kw">rnorm</span>(<span class="dv">100</span>))</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-18-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>Since this data <strong>is</strong> sampled from a normal distribution, these are all, by definition, good Q-Q plots. The points are “close to the line” and we would conclude that this data could have been sampled from a normal distribution. Notice in the first plot, one point is <em>somewhat</em> far from the line, but just one point, in combination with the small sample size, is not enough to make us worried. We see with the large sample size, all of the points are rather close to the line.</p>
 <p>Next, we simulate data from a <span class="math inline">\(t\)</span> distribution with a small degrees of freedom, for different sample sizes.</p>
-<div class="sourceCode" id="cb893"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb893-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb893-2" data-line-number="2"><span class="kw">set.seed</span>(<span class="dv">420</span>)</a>
-<a class="sourceLine" id="cb893-3" data-line-number="3"><span class="kw">qq_plot</span>(<span class="kw">rt</span>(<span class="dv">10</span>, <span class="dt">df =</span> <span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb893-4" data-line-number="4"><span class="kw">qq_plot</span>(<span class="kw">rt</span>(<span class="dv">25</span>, <span class="dt">df =</span> <span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb893-5" data-line-number="5"><span class="kw">qq_plot</span>(<span class="kw">rt</span>(<span class="dv">100</span>, <span class="dt">df =</span> <span class="dv">4</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb902"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb902-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb902-2" data-line-number="2"><span class="kw">set.seed</span>(<span class="dv">420</span>)</a>
+<a class="sourceLine" id="cb902-3" data-line-number="3"><span class="kw">qq_plot</span>(<span class="kw">rt</span>(<span class="dv">10</span>, <span class="dt">df =</span> <span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb902-4" data-line-number="4"><span class="kw">qq_plot</span>(<span class="kw">rt</span>(<span class="dv">25</span>, <span class="dt">df =</span> <span class="dv">4</span>))</a>
+<a class="sourceLine" id="cb902-5" data-line-number="5"><span class="kw">qq_plot</span>(<span class="kw">rt</span>(<span class="dv">100</span>, <span class="dt">df =</span> <span class="dv">4</span>))</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-19-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>Recall, that as the degrees of freedom for a <span class="math inline">\(t\)</span> distribution become larger, the distribution becomes more and more similar to a normal. Here, using 4 degrees of freedom, we have a distribution that is somewhat normal, it is symmetrical and roughly bell-shaped, however it has “fat tails.” This presents itself clearly in the third panel. While many of the points are close to the line, at the edges, there are large discrepancies. This indicates that the values are too small (negative) or too large (positive) compared to what we would expect for a normal distribution. So for the sample size of <code>100</code>, we would conclude that that normality assumption is violated. (If these were residuals of a model.) For sample sizes of <code>10</code> and <code>25</code> we may be suspicious, but not entirely confident. Reading Q-Q plots, is a bit of an art, not completely a science.</p>
 <p>Next, we simulate data from an exponential distribution.</p>
-<div class="sourceCode" id="cb894"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb894-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb894-2" data-line-number="2"><span class="kw">set.seed</span>(<span class="dv">420</span>)</a>
-<a class="sourceLine" id="cb894-3" data-line-number="3"><span class="kw">qq_plot</span>(<span class="kw">rexp</span>(<span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb894-4" data-line-number="4"><span class="kw">qq_plot</span>(<span class="kw">rexp</span>(<span class="dv">25</span>))</a>
-<a class="sourceLine" id="cb894-5" data-line-number="5"><span class="kw">qq_plot</span>(<span class="kw">rexp</span>(<span class="dv">100</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb903"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb903-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb903-2" data-line-number="2"><span class="kw">set.seed</span>(<span class="dv">420</span>)</a>
+<a class="sourceLine" id="cb903-3" data-line-number="3"><span class="kw">qq_plot</span>(<span class="kw">rexp</span>(<span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb903-4" data-line-number="4"><span class="kw">qq_plot</span>(<span class="kw">rexp</span>(<span class="dv">25</span>))</a>
+<a class="sourceLine" id="cb903-5" data-line-number="5"><span class="kw">qq_plot</span>(<span class="kw">rexp</span>(<span class="dv">100</span>))</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-20-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>This is a distribution that is not very similar to a normal, so in all three cases, we see points that are far from the lines, so we would think that the normality assumption is violated.</p>
 <p>For a better understanding of which Q-Q plots are “good,” repeat the simulations above a number of times (without setting the seed) and pay attention to the differences between those that are simulated from normal, and those that are not. Also consider different samples sizes and distribution parameters.</p>
@@ -717,30 +717,30 @@ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)
 <li><code>fit_3</code> violated linearity, but not constant variance.</li>
 </ul>
 <p>We’ll now create a Q-Q plot for each to assess normality of errors.</p>
-<div class="sourceCode" id="cb895"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb895-1" data-line-number="1"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_<span class="dv">1</span>), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit_1&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)</a>
-<a class="sourceLine" id="cb895-2" data-line-number="2"><span class="kw">qqline</span>(<span class="kw">resid</span>(fit_<span class="dv">1</span>), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb904"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb904-1" data-line-number="1"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_<span class="dv">1</span>), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit_1&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)</a>
+<a class="sourceLine" id="cb904-2" data-line-number="2"><span class="kw">qqline</span>(<span class="kw">resid</span>(fit_<span class="dv">1</span>), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>For <code>fit_1</code>, we have a near perfect Q-Q plot. We would believe the errors follow a normal distribution.</p>
-<div class="sourceCode" id="cb896"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb896-1" data-line-number="1"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_<span class="dv">2</span>), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit_2&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)</a>
-<a class="sourceLine" id="cb896-2" data-line-number="2"><span class="kw">qqline</span>(<span class="kw">resid</span>(fit_<span class="dv">2</span>), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb905"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb905-1" data-line-number="1"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_<span class="dv">2</span>), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit_2&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)</a>
+<a class="sourceLine" id="cb905-2" data-line-number="2"><span class="kw">qqline</span>(<span class="kw">resid</span>(fit_<span class="dv">2</span>), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>For <code>fit_2</code>, we have a suspect Q-Q plot. We would probably <strong>not</strong> believe the errors follow a normal distribution.</p>
-<div class="sourceCode" id="cb897"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb897-1" data-line-number="1"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_<span class="dv">3</span>), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit_3&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)</a>
-<a class="sourceLine" id="cb897-2" data-line-number="2"><span class="kw">qqline</span>(<span class="kw">resid</span>(fit_<span class="dv">3</span>), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb906"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb906-1" data-line-number="1"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(fit_<span class="dv">3</span>), <span class="dt">main =</span> <span class="st">&quot;Normal Q-Q Plot, fit_3&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)</a>
+<a class="sourceLine" id="cb906-2" data-line-number="2"><span class="kw">qqline</span>(<span class="kw">resid</span>(fit_<span class="dv">3</span>), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Lastly, for <code>fit_3</code>, we again have a suspect Q-Q plot. We would probably <strong>not</strong> believe the errors follow a normal distribution.</p>
 </div>
 <div id="shapiro-wilk-test" class="section level3">
 <h3><span class="header-section-number">13.2.5</span> Shapiro-Wilk Test</h3>
 <p>Histograms and Q-Q Plots give a nice visual representation of the residuals distribution, however if we are interested in formal testing, there are a number of options available. A commonly used test is the <strong>Shapiro–Wilk test</strong>, which is implemented in <code>R</code>.</p>
-<div class="sourceCode" id="cb898"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb898-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
-<a class="sourceLine" id="cb898-2" data-line-number="2"><span class="kw">shapiro.test</span>(<span class="kw">rnorm</span>(<span class="dv">25</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb907"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb907-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb907-2" data-line-number="2"><span class="kw">shapiro.test</span>(<span class="kw">rnorm</span>(<span class="dv">25</span>))</a></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  rnorm(25)
 ## W = 0.9499, p-value = 0.2495</code></pre>
-<div class="sourceCode" id="cb900"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb900-1" data-line-number="1"><span class="kw">shapiro.test</span>(<span class="kw">rexp</span>(<span class="dv">25</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb909"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb909-1" data-line-number="1"><span class="kw">shapiro.test</span>(<span class="kw">rexp</span>(<span class="dv">25</span>))</a></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
@@ -750,19 +750,19 @@ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)
 <p>For details, see: <a href="https://en.wikipedia.org/wiki/Shapiro-Wilk_test" target="_blank">Wikipedia: Shapiro–Wilk test.</a></p>
 <p>In the above examples, we see we fail to reject for the data sampled from normal, and reject on the non-normal data, for any reasonable <span class="math inline">\(\alpha\)</span>.</p>
 <p>Returning again to <code>fit_1</code>, <code>fit_2</code> and <code>fit_3</code>, we see the result of running <code>shapiro.test()</code> on the residuals of each, returns a result for each that matches for decisions based on the Q-Q plots.</p>
-<div class="sourceCode" id="cb902"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb902-1" data-line-number="1"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(fit_<span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb911"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb911-1" data-line-number="1"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(fit_<span class="dv">1</span>))</a></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  resid(fit_1)
 ## W = 0.99858, p-value = 0.9622</code></pre>
-<div class="sourceCode" id="cb904"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb904-1" data-line-number="1"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(fit_<span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb913"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb913-1" data-line-number="1"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(fit_<span class="dv">2</span>))</a></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  resid(fit_2)
 ## W = 0.93697, p-value = 1.056e-13</code></pre>
-<div class="sourceCode" id="cb906"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb906-1" data-line-number="1"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(fit_<span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb915"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb915-1" data-line-number="1"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(fit_<span class="dv">3</span>))</a></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
@@ -774,65 +774,65 @@ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)
 <h2><span class="header-section-number">13.3</span> Unusual Observations</h2>
 <p>In addition to checking the assumptions of regression, we also look for any “unusual observations” in the data. Often a small number of data points can have an extremely large influence on a regression, sometimes so much so that the regression assumptions are violated as a result of these points.</p>
 <p>The following three plots are inspired by an example from <a href="http://www.maths.bath.ac.uk/~jjf23/LMR/" target="_blank">Linear Models with R</a>.</p>
-<div class="sourceCode" id="cb908"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb908-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb908-2" data-line-number="2"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
-<a class="sourceLine" id="cb908-3" data-line-number="3">ex_data  =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,</a>
-<a class="sourceLine" id="cb908-4" data-line-number="4">                      <span class="dt">y =</span> <span class="dv">10</span><span class="op">:</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb908-5" data-line-number="5">ex_model =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> ex_data)</a>
-<a class="sourceLine" id="cb908-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb908-7" data-line-number="7"><span class="co"># low leverage, large residual, small influence</span></a>
-<a class="sourceLine" id="cb908-8" data-line-number="8">point_<span class="dv">1</span> =<span class="st"> </span><span class="kw">c</span>(<span class="fl">5.4</span>, <span class="dv">11</span>)</a>
-<a class="sourceLine" id="cb908-9" data-line-number="9">ex_data_<span class="dv">1</span> =<span class="st"> </span><span class="kw">rbind</span>(ex_data, point_<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb908-10" data-line-number="10">model_<span class="dv">1</span> =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> ex_data_<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb908-11" data-line-number="11"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> ex_data_<span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>,</a>
-<a class="sourceLine" id="cb908-12" data-line-number="12">     <span class="dt">main =</span> <span class="st">&quot;Low Leverage, Large Residual, Small Influence&quot;</span>)</a>
-<a class="sourceLine" id="cb908-13" data-line-number="13"><span class="kw">points</span>(<span class="dt">x =</span> point_<span class="dv">1</span>[<span class="dv">1</span>], <span class="dt">y =</span> point_<span class="dv">1</span>[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">4</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb908-14" data-line-number="14"><span class="kw">abline</span>(ex_model, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb908-15" data-line-number="15"><span class="kw">abline</span>(model_<span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb908-16" data-line-number="16"><span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Original Data&quot;</span>, <span class="st">&quot;Added Point&quot;</span>),</a>
-<a class="sourceLine" id="cb908-17" data-line-number="17">       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;darkorange&quot;</span>))</a>
-<a class="sourceLine" id="cb908-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb908-19" data-line-number="19"><span class="co"># high leverage, small residual, small influence</span></a>
-<a class="sourceLine" id="cb908-20" data-line-number="20">point_<span class="dv">2</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">18</span>, <span class="fl">-5.7</span>)</a>
-<a class="sourceLine" id="cb908-21" data-line-number="21">ex_data_<span class="dv">2</span> =<span class="st"> </span><span class="kw">rbind</span>(ex_data, point_<span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb908-22" data-line-number="22">model_<span class="dv">2</span> =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> ex_data_<span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb908-23" data-line-number="23"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> ex_data_<span class="dv">2</span>, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>,</a>
-<a class="sourceLine" id="cb908-24" data-line-number="24">     <span class="dt">main =</span> <span class="st">&quot;High Leverage, Small Residual, Small Influence&quot;</span>)</a>
-<a class="sourceLine" id="cb908-25" data-line-number="25"><span class="kw">points</span>(<span class="dt">x =</span> point_<span class="dv">2</span>[<span class="dv">1</span>], <span class="dt">y =</span> point_<span class="dv">2</span>[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">4</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb908-26" data-line-number="26"><span class="kw">abline</span>(ex_model, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb908-27" data-line-number="27"><span class="kw">abline</span>(model_<span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb908-28" data-line-number="28"><span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Original Data&quot;</span>, <span class="st">&quot;Added Point&quot;</span>),</a>
-<a class="sourceLine" id="cb908-29" data-line-number="29">       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;darkorange&quot;</span>))</a>
-<a class="sourceLine" id="cb908-30" data-line-number="30"></a>
-<a class="sourceLine" id="cb908-31" data-line-number="31"><span class="co"># high leverage, large residual, large influence</span></a>
-<a class="sourceLine" id="cb908-32" data-line-number="32">point_<span class="dv">3</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">14</span>, <span class="fl">5.1</span>)</a>
-<a class="sourceLine" id="cb908-33" data-line-number="33">ex_data_<span class="dv">3</span> =<span class="st"> </span><span class="kw">rbind</span>(ex_data, point_<span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb908-34" data-line-number="34">model_<span class="dv">3</span> =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> ex_data_<span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb908-35" data-line-number="35"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> ex_data_<span class="dv">3</span>, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">3</span>, <span class="dv">12</span>),</a>
-<a class="sourceLine" id="cb908-36" data-line-number="36">     <span class="dt">main =</span> <span class="st">&quot;High Leverage, Large Residual, Large Influence&quot;</span>)</a>
-<a class="sourceLine" id="cb908-37" data-line-number="37"><span class="kw">points</span>(<span class="dt">x =</span> point_<span class="dv">3</span>[<span class="dv">1</span>], <span class="dt">y =</span> point_<span class="dv">3</span>[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">4</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb908-38" data-line-number="38"><span class="kw">abline</span>(ex_model, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb908-39" data-line-number="39"><span class="kw">abline</span>(model_<span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb908-40" data-line-number="40"><span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Original Data&quot;</span>, <span class="st">&quot;Added Point&quot;</span>),</a>
-<a class="sourceLine" id="cb908-41" data-line-number="41">       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;darkorange&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb917"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb917-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb917-2" data-line-number="2"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb917-3" data-line-number="3">ex_data  =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,</a>
+<a class="sourceLine" id="cb917-4" data-line-number="4">                      <span class="dt">y =</span> <span class="dv">10</span><span class="op">:</span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb917-5" data-line-number="5">ex_model =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> ex_data)</a>
+<a class="sourceLine" id="cb917-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb917-7" data-line-number="7"><span class="co"># low leverage, large residual, small influence</span></a>
+<a class="sourceLine" id="cb917-8" data-line-number="8">point_<span class="dv">1</span> =<span class="st"> </span><span class="kw">c</span>(<span class="fl">5.4</span>, <span class="dv">11</span>)</a>
+<a class="sourceLine" id="cb917-9" data-line-number="9">ex_data_<span class="dv">1</span> =<span class="st"> </span><span class="kw">rbind</span>(ex_data, point_<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb917-10" data-line-number="10">model_<span class="dv">1</span> =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> ex_data_<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb917-11" data-line-number="11"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> ex_data_<span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>,</a>
+<a class="sourceLine" id="cb917-12" data-line-number="12">     <span class="dt">main =</span> <span class="st">&quot;Low Leverage, Large Residual, Small Influence&quot;</span>)</a>
+<a class="sourceLine" id="cb917-13" data-line-number="13"><span class="kw">points</span>(<span class="dt">x =</span> point_<span class="dv">1</span>[<span class="dv">1</span>], <span class="dt">y =</span> point_<span class="dv">1</span>[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">4</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb917-14" data-line-number="14"><span class="kw">abline</span>(ex_model, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb917-15" data-line-number="15"><span class="kw">abline</span>(model_<span class="dv">1</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb917-16" data-line-number="16"><span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Original Data&quot;</span>, <span class="st">&quot;Added Point&quot;</span>),</a>
+<a class="sourceLine" id="cb917-17" data-line-number="17">       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;darkorange&quot;</span>))</a>
+<a class="sourceLine" id="cb917-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb917-19" data-line-number="19"><span class="co"># high leverage, small residual, small influence</span></a>
+<a class="sourceLine" id="cb917-20" data-line-number="20">point_<span class="dv">2</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">18</span>, <span class="fl">-5.7</span>)</a>
+<a class="sourceLine" id="cb917-21" data-line-number="21">ex_data_<span class="dv">2</span> =<span class="st"> </span><span class="kw">rbind</span>(ex_data, point_<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb917-22" data-line-number="22">model_<span class="dv">2</span> =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> ex_data_<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb917-23" data-line-number="23"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> ex_data_<span class="dv">2</span>, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>,</a>
+<a class="sourceLine" id="cb917-24" data-line-number="24">     <span class="dt">main =</span> <span class="st">&quot;High Leverage, Small Residual, Small Influence&quot;</span>)</a>
+<a class="sourceLine" id="cb917-25" data-line-number="25"><span class="kw">points</span>(<span class="dt">x =</span> point_<span class="dv">2</span>[<span class="dv">1</span>], <span class="dt">y =</span> point_<span class="dv">2</span>[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">4</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb917-26" data-line-number="26"><span class="kw">abline</span>(ex_model, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb917-27" data-line-number="27"><span class="kw">abline</span>(model_<span class="dv">2</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb917-28" data-line-number="28"><span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Original Data&quot;</span>, <span class="st">&quot;Added Point&quot;</span>),</a>
+<a class="sourceLine" id="cb917-29" data-line-number="29">       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;darkorange&quot;</span>))</a>
+<a class="sourceLine" id="cb917-30" data-line-number="30"></a>
+<a class="sourceLine" id="cb917-31" data-line-number="31"><span class="co"># high leverage, large residual, large influence</span></a>
+<a class="sourceLine" id="cb917-32" data-line-number="32">point_<span class="dv">3</span> =<span class="st"> </span><span class="kw">c</span>(<span class="dv">14</span>, <span class="fl">5.1</span>)</a>
+<a class="sourceLine" id="cb917-33" data-line-number="33">ex_data_<span class="dv">3</span> =<span class="st"> </span><span class="kw">rbind</span>(ex_data, point_<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb917-34" data-line-number="34">model_<span class="dv">3</span> =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> ex_data_<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb917-35" data-line-number="35"><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> ex_data_<span class="dv">3</span>, <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">3</span>, <span class="dv">12</span>),</a>
+<a class="sourceLine" id="cb917-36" data-line-number="36">     <span class="dt">main =</span> <span class="st">&quot;High Leverage, Large Residual, Large Influence&quot;</span>)</a>
+<a class="sourceLine" id="cb917-37" data-line-number="37"><span class="kw">points</span>(<span class="dt">x =</span> point_<span class="dv">3</span>[<span class="dv">1</span>], <span class="dt">y =</span> point_<span class="dv">3</span>[<span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">1</span>, <span class="dt">cex =</span> <span class="dv">4</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb917-38" data-line-number="38"><span class="kw">abline</span>(ex_model, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb917-39" data-line-number="39"><span class="kw">abline</span>(model_<span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb917-40" data-line-number="40"><span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Original Data&quot;</span>, <span class="st">&quot;Added Point&quot;</span>),</a>
+<a class="sourceLine" id="cb917-41" data-line-number="41">       <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;darkorange&quot;</span>))</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unusual_obs_plot-1.png" width="1440" style="display: block; margin: auto;" /></p>
 <p>The blue solid line in each plot is a regression fit to the 10 original data points stored in <code>ex_data</code>. The dashed orange line in each plot is the result of adding a single point to the original data in <code>ex_data</code>. This additional point is indicated by the circled point.</p>
 <p>The slope of the regression for the original ten points, the solid blue line, is given by:</p>
-<div class="sourceCode" id="cb909"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb909-1" data-line-number="1"><span class="kw">coef</span>(ex_model)[<span class="dv">2</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb918"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb918-1" data-line-number="1"><span class="kw">coef</span>(ex_model)[<span class="dv">2</span>]</a></code></pre></div>
 <pre><code>##          x 
 ## -0.9696033</code></pre>
 <p>The added point in the first plot has a <em>small</em> effect on the slope, which becomes:</p>
-<div class="sourceCode" id="cb911"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb911-1" data-line-number="1"><span class="kw">coef</span>(model_<span class="dv">1</span>)[<span class="dv">2</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb920"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb920-1" data-line-number="1"><span class="kw">coef</span>(model_<span class="dv">1</span>)[<span class="dv">2</span>]</a></code></pre></div>
 <pre><code>##          x 
 ## -0.9749534</code></pre>
 <p>We will say that this point has low leverage, is an outlier due to its large residual, but has small influence.</p>
 <p>The added point in the second plot also has a <em>small</em> effect on the slope, which is:</p>
-<div class="sourceCode" id="cb913"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb913-1" data-line-number="1"><span class="kw">coef</span>(model_<span class="dv">2</span>)[<span class="dv">2</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb922"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb922-1" data-line-number="1"><span class="kw">coef</span>(model_<span class="dv">2</span>)[<span class="dv">2</span>]</a></code></pre></div>
 <pre><code>##          x 
 ## -0.9507397</code></pre>
 <p>We will say that this point has high leverage, is not an outlier due to its small residual, and has a very small influence.</p>
 <p>Lastly, the added point in the third plot has a <em>large</em> effect on the slope, which is now:</p>
-<div class="sourceCode" id="cb915"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb915-1" data-line-number="1"><span class="kw">coef</span>(model_<span class="dv">3</span>)[<span class="dv">2</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb924"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb924-1" data-line-number="1"><span class="kw">coef</span>(model_<span class="dv">3</span>)[<span class="dv">2</span>]</a></code></pre></div>
 <pre><code>##          x 
 ## -0.5892241</code></pre>
 <p>This added point is influential. It both has high leverage, and is an outlier due to its large residual.</p>
@@ -881,43 +881,43 @@ h_i = \frac{1}{n} + \frac{(x_i - \bar{x})^2}{S_{xx}}.
 \]</span></p>
 <p>This expression should be familiar. (Think back to inference for SLR.) It suggests that the large leverages occur when <span class="math inline">\(x\)</span> values are far from their mean. Recall that the regression goes through the point <span class="math inline">\((\bar{x},\bar{y})\)</span>.</p>
 <p>There are multiple ways to find leverages in <code>R</code>.</p>
-<div class="sourceCode" id="cb917"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb917-1" data-line-number="1">lev_ex =<span class="st"> </span><span class="kw">data.frame</span>(</a>
-<a class="sourceLine" id="cb917-2" data-line-number="2">  <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">11</span>, <span class="dv">11</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">8</span>),</a>
-<a class="sourceLine" id="cb917-3" data-line-number="3">  <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb917-4" data-line-number="4">  <span class="dt">y  =</span> <span class="kw">c</span>(<span class="dv">11</span>, <span class="dv">15</span>, <span class="dv">13</span>, <span class="dv">14</span>, <span class="dv">0</span>, <span class="dv">19</span>, <span class="dv">16</span>, <span class="dv">8</span>))</a>
-<a class="sourceLine" id="cb917-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb917-6" data-line-number="6"><span class="kw">plot</span>(x2 <span class="op">~</span><span class="st"> </span>x1, <span class="dt">data =</span> lev_ex, <span class="dt">cex =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb917-7" data-line-number="7"><span class="kw">points</span>(<span class="dv">7</span>, <span class="dv">3</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">cex =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb926"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb926-1" data-line-number="1">lev_ex =<span class="st"> </span><span class="kw">data.frame</span>(</a>
+<a class="sourceLine" id="cb926-2" data-line-number="2">  <span class="dt">x1 =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">11</span>, <span class="dv">11</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">8</span>),</a>
+<a class="sourceLine" id="cb926-3" data-line-number="3">  <span class="dt">x2 =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb926-4" data-line-number="4">  <span class="dt">y  =</span> <span class="kw">c</span>(<span class="dv">11</span>, <span class="dv">15</span>, <span class="dv">13</span>, <span class="dv">14</span>, <span class="dv">0</span>, <span class="dv">19</span>, <span class="dv">16</span>, <span class="dv">8</span>))</a>
+<a class="sourceLine" id="cb926-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb926-6" data-line-number="6"><span class="kw">plot</span>(x2 <span class="op">~</span><span class="st"> </span>x1, <span class="dt">data =</span> lev_ex, <span class="dt">cex =</span> <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb926-7" data-line-number="7"><span class="kw">points</span>(<span class="dv">7</span>, <span class="dv">3</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">cex =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-32-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Here we’ve created some multivariate data. Notice that we have plotted the <span class="math inline">\(x\)</span> values, not the <span class="math inline">\(y\)</span> values. The red point is <span class="math inline">\((7, 3)\)</span> which is the mean of <code>x1</code> and the mean of <code>x2</code> respectively.</p>
 <p>We could calculate the leverages using the expressions defined above. We first create the <span class="math inline">\(X\)</span> matrix, then calculate <span class="math inline">\(H\)</span> as defined, and extract the diagonal elements.</p>
-<div class="sourceCode" id="cb918"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb918-1" data-line-number="1">X =<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">8</span>), lev_ex<span class="op">$</span>x1, lev_ex<span class="op">$</span>x2)</a>
-<a class="sourceLine" id="cb918-2" data-line-number="2">H =<span class="st"> </span>X <span class="op">%*%</span><span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(X)</a>
-<a class="sourceLine" id="cb918-3" data-line-number="3"><span class="kw">diag</span>(H)</a></code></pre></div>
+<div class="sourceCode" id="cb927"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb927-1" data-line-number="1">X =<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">8</span>), lev_ex<span class="op">$</span>x1, lev_ex<span class="op">$</span>x2)</a>
+<a class="sourceLine" id="cb927-2" data-line-number="2">H =<span class="st"> </span>X <span class="op">%*%</span><span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(X)</a>
+<a class="sourceLine" id="cb927-3" data-line-number="3"><span class="kw">diag</span>(H)</a></code></pre></div>
 <pre><code>## [1] 0.6000 0.3750 0.2875 0.1250 0.4000 0.2125 0.5875 0.4125</code></pre>
 <p>Notice here, we have two predictors, so the regression would have 3 <span class="math inline">\(\beta\)</span> parameters, so the sum of the diagonal elements is 3.</p>
-<div class="sourceCode" id="cb920"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb920-1" data-line-number="1"><span class="kw">sum</span>(<span class="kw">diag</span>(H))</a></code></pre></div>
+<div class="sourceCode" id="cb929"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb929-1" data-line-number="1"><span class="kw">sum</span>(<span class="kw">diag</span>(H))</a></code></pre></div>
 <pre><code>## [1] 3</code></pre>
 <p>Alternatively, the method we will use more often, is to simply fit a regression, then use the <code>hatvalues()</code> function, which returns the leverages.</p>
-<div class="sourceCode" id="cb922"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb922-1" data-line-number="1">lev_fit =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> lev_ex)</a>
-<a class="sourceLine" id="cb922-2" data-line-number="2"><span class="kw">hatvalues</span>(lev_fit)</a></code></pre></div>
+<div class="sourceCode" id="cb931"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb931-1" data-line-number="1">lev_fit =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> lev_ex)</a>
+<a class="sourceLine" id="cb931-2" data-line-number="2"><span class="kw">hatvalues</span>(lev_fit)</a></code></pre></div>
 <pre><code>##      1      2      3      4      5      6      7      8 
 ## 0.6000 0.3750 0.2875 0.1250 0.4000 0.2125 0.5875 0.4125</code></pre>
 <p>Again, note that here we have “used” the <span class="math inline">\(y\)</span> values to fit the regression, but <code>R</code> still ignores them when calculating the leverages, as leverages only depend on the <span class="math inline">\(x\)</span> values.</p>
-<div class="sourceCode" id="cb924"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb924-1" data-line-number="1"><span class="kw">coef</span>(lev_fit)</a></code></pre></div>
+<div class="sourceCode" id="cb933"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb933-1" data-line-number="1"><span class="kw">coef</span>(lev_fit)</a></code></pre></div>
 <pre><code>## (Intercept)          x1          x2 
 ##         3.7        -0.7         4.4</code></pre>
 <p>Let’s see what happens to these coefficients when we modify the <code>y</code> value of the point with the highest leverage.</p>
-<div class="sourceCode" id="cb926"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb926-1" data-line-number="1"><span class="kw">which.max</span>(<span class="kw">hatvalues</span>(lev_fit))</a></code></pre></div>
+<div class="sourceCode" id="cb935"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb935-1" data-line-number="1"><span class="kw">which.max</span>(<span class="kw">hatvalues</span>(lev_fit))</a></code></pre></div>
 <pre><code>## 1 
 ## 1</code></pre>
-<div class="sourceCode" id="cb928"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb928-1" data-line-number="1">lev_ex[<span class="kw">which.max</span>(<span class="kw">hatvalues</span>(lev_fit)),]</a></code></pre></div>
+<div class="sourceCode" id="cb937"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb937-1" data-line-number="1">lev_ex[<span class="kw">which.max</span>(<span class="kw">hatvalues</span>(lev_fit)),]</a></code></pre></div>
 <pre><code>##   x1 x2  y
 ## 1  0  1 11</code></pre>
 <p>We see that the original <code>y</code> value is 11. We’ll create a copy of the data, and modify this point to have a <code>y</code> value of <code>20</code>.</p>
-<div class="sourceCode" id="cb930"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb930-1" data-line-number="1">lev_ex_<span class="dv">1</span> =<span class="st"> </span>lev_ex</a>
-<a class="sourceLine" id="cb930-2" data-line-number="2">lev_ex_<span class="dv">1</span><span class="op">$</span>y[<span class="dv">1</span>] =<span class="st"> </span><span class="dv">20</span></a>
-<a class="sourceLine" id="cb930-3" data-line-number="3"><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> lev_ex_<span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb939"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb939-1" data-line-number="1">lev_ex_<span class="dv">1</span> =<span class="st"> </span>lev_ex</a>
+<a class="sourceLine" id="cb939-2" data-line-number="2">lev_ex_<span class="dv">1</span><span class="op">$</span>y[<span class="dv">1</span>] =<span class="st"> </span><span class="dv">20</span></a>
+<a class="sourceLine" id="cb939-3" data-line-number="3"><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> lev_ex_<span class="dv">1</span>)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ ., data = lev_ex_1)
@@ -927,16 +927,16 @@ h_i = \frac{1}{n} + \frac{(x_i - \bar{x})^2}{S_{xx}}.
 ##       8.875       -1.375        4.625</code></pre>
 <p>Notice the <strong>large</strong> changes in the coefficients. Also notice that each of the coefficients has changed in some way. Note that the leverages of the points would not have changed, as we have not modified any of the <span class="math inline">\(x\)</span> values.</p>
 <p>Now let’s see what happens to these coefficients when we modify the <code>y</code> value of the point with the lowest leverage.</p>
-<div class="sourceCode" id="cb932"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb932-1" data-line-number="1"><span class="kw">which.min</span>(<span class="kw">hatvalues</span>(lev_fit))</a></code></pre></div>
+<div class="sourceCode" id="cb941"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb941-1" data-line-number="1"><span class="kw">which.min</span>(<span class="kw">hatvalues</span>(lev_fit))</a></code></pre></div>
 <pre><code>## 4 
 ## 4</code></pre>
-<div class="sourceCode" id="cb934"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb934-1" data-line-number="1">lev_ex[<span class="kw">which.min</span>(<span class="kw">hatvalues</span>(lev_fit)),]</a></code></pre></div>
+<div class="sourceCode" id="cb943"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb943-1" data-line-number="1">lev_ex[<span class="kw">which.min</span>(<span class="kw">hatvalues</span>(lev_fit)),]</a></code></pre></div>
 <pre><code>##   x1 x2  y
 ## 4  7  3 14</code></pre>
 <p>We see that the original <code>y</code> value is 14. We’ll again create a copy of the data, and modify this point to have a <code>y</code> value of <code>30</code>.</p>
-<div class="sourceCode" id="cb936"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb936-1" data-line-number="1">lev_ex_<span class="dv">2</span> =<span class="st"> </span>lev_ex</a>
-<a class="sourceLine" id="cb936-2" data-line-number="2">lev_ex_<span class="dv">2</span><span class="op">$</span>y[<span class="dv">4</span>] =<span class="st"> </span><span class="dv">30</span></a>
-<a class="sourceLine" id="cb936-3" data-line-number="3"><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> lev_ex_<span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb945"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb945-1" data-line-number="1">lev_ex_<span class="dv">2</span> =<span class="st"> </span>lev_ex</a>
+<a class="sourceLine" id="cb945-2" data-line-number="2">lev_ex_<span class="dv">2</span><span class="op">$</span>y[<span class="dv">4</span>] =<span class="st"> </span><span class="dv">30</span></a>
+<a class="sourceLine" id="cb945-3" data-line-number="3"><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> lev_ex_<span class="dv">2</span>)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ ., data = lev_ex_2)
@@ -945,38 +945,38 @@ h_i = \frac{1}{n} + \frac{(x_i - \bar{x})^2}{S_{xx}}.
 ## (Intercept)           x1           x2  
 ##         5.7         -0.7          4.4</code></pre>
 <p>This time despite a large change in the <code>y</code> value, there is only small change in the coefficients. Also, only the intercept has changed!</p>
-<div class="sourceCode" id="cb938"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb938-1" data-line-number="1"><span class="kw">mean</span>(lev_ex<span class="op">$</span>x1)</a></code></pre></div>
+<div class="sourceCode" id="cb947"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb947-1" data-line-number="1"><span class="kw">mean</span>(lev_ex<span class="op">$</span>x1)</a></code></pre></div>
 <pre><code>## [1] 7</code></pre>
-<div class="sourceCode" id="cb940"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb940-1" data-line-number="1"><span class="kw">mean</span>(lev_ex<span class="op">$</span>x2)</a></code></pre></div>
+<div class="sourceCode" id="cb949"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb949-1" data-line-number="1"><span class="kw">mean</span>(lev_ex<span class="op">$</span>x2)</a></code></pre></div>
 <pre><code>## [1] 3</code></pre>
-<div class="sourceCode" id="cb942"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb942-1" data-line-number="1">lev_ex[<span class="dv">4</span>,]</a></code></pre></div>
+<div class="sourceCode" id="cb951"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb951-1" data-line-number="1">lev_ex[<span class="dv">4</span>,]</a></code></pre></div>
 <pre><code>##   x1 x2  y
 ## 4  7  3 14</code></pre>
 <p>Notice that this point was the mean of both of the predictors.</p>
 <p>Returning to our three plots, each with an added point, we can calculate the leverages for each. Note that the 11th data point each time is the added data point.</p>
-<div class="sourceCode" id="cb944"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb944-1" data-line-number="1"><span class="kw">hatvalues</span>(model_<span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb953"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb953-1" data-line-number="1"><span class="kw">hatvalues</span>(model_<span class="dv">1</span>)</a></code></pre></div>
 <pre><code>##          1          2          3          4          5          6          7 
 ## 0.33534597 0.23860732 0.16610842 0.11784927 0.09382988 0.09405024 0.11851036 
 ##          8          9         10         11 
 ## 0.16721022 0.24014985 0.33732922 0.09100926</code></pre>
-<div class="sourceCode" id="cb946"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb946-1" data-line-number="1"><span class="kw">hatvalues</span>(model_<span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb955"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb955-1" data-line-number="1"><span class="kw">hatvalues</span>(model_<span class="dv">2</span>)</a></code></pre></div>
 <pre><code>##          1          2          3          4          5          6          7 
 ## 0.23238866 0.18663968 0.14979757 0.12186235 0.10283401 0.09271255 0.09149798 
 ##          8          9         10         11 
 ## 0.09919028 0.11578947 0.14129555 0.66599190</code></pre>
-<div class="sourceCode" id="cb948"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb948-1" data-line-number="1"><span class="kw">hatvalues</span>(model_<span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb957"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb957-1" data-line-number="1"><span class="kw">hatvalues</span>(model_<span class="dv">3</span>)</a></code></pre></div>
 <pre><code>##          1          2          3          4          5          6          7 
 ## 0.27852761 0.21411043 0.16319018 0.12576687 0.10184049 0.09141104 0.09447853 
 ##          8          9         10         11 
 ## 0.11104294 0.14110429 0.18466258 0.49386503</code></pre>
 <p>Are any of these large?</p>
-<div class="sourceCode" id="cb950"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb950-1" data-line-number="1"><span class="kw">hatvalues</span>(model_<span class="dv">1</span>) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">mean</span>(<span class="kw">hatvalues</span>(model_<span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb959"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb959-1" data-line-number="1"><span class="kw">hatvalues</span>(model_<span class="dv">1</span>) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">mean</span>(<span class="kw">hatvalues</span>(model_<span class="dv">1</span>))</a></code></pre></div>
 <pre><code>##     1     2     3     4     5     6     7     8     9    10    11 
 ## FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
-<div class="sourceCode" id="cb952"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb952-1" data-line-number="1"><span class="kw">hatvalues</span>(model_<span class="dv">2</span>) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">mean</span>(<span class="kw">hatvalues</span>(model_<span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb961"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb961-1" data-line-number="1"><span class="kw">hatvalues</span>(model_<span class="dv">2</span>) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">mean</span>(<span class="kw">hatvalues</span>(model_<span class="dv">2</span>))</a></code></pre></div>
 <pre><code>##     1     2     3     4     5     6     7     8     9    10    11 
 ## FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE</code></pre>
-<div class="sourceCode" id="cb954"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb954-1" data-line-number="1"><span class="kw">hatvalues</span>(model_<span class="dv">3</span>) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">mean</span>(<span class="kw">hatvalues</span>(model_<span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb963"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb963-1" data-line-number="1"><span class="kw">hatvalues</span>(model_<span class="dv">3</span>) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">mean</span>(<span class="kw">hatvalues</span>(model_<span class="dv">3</span>))</a></code></pre></div>
 <pre><code>##     1     2     3     4     5     6     7     8     9    10    11 
 ## FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE</code></pre>
 <p>We see that in the second and third plots, the added point is a point of high leverage. Recall that only in the third plot did that have an influence on the regression. To understand why, we’ll need to discuss outliers.</p>
@@ -1003,44 +1003,44 @@ r_i = \frac{e_i}{s_e\sqrt{1 - h_i}} \overset{approx}{\sim} N(\mu = 0, \sigma^ 2 
 <p>when <span class="math inline">\(n\)</span> is large.</p>
 <p>We can use this fact to identify “large” residuals. For example, standardized residuals greater than 2 in magnitude should only happen approximately 5 percent of the time.</p>
 <p>Returning again to our three plots, each with an added point, we can calculate the residuals and standardized residuals for each. Standardized residuals can be obtained in <code>R</code> by using <code>rstandard()</code> where we would normally use <code>resid()</code>.</p>
-<div class="sourceCode" id="cb956"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb956-1" data-line-number="1"><span class="kw">resid</span>(model_<span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb965"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb965-1" data-line-number="1"><span class="kw">resid</span>(model_<span class="dv">1</span>)</a></code></pre></div>
 <pre><code>##          1          2          3          4          5          6          7 
 ##  0.4949887 -1.4657145 -0.5629345 -0.3182468 -0.5718877 -1.1073271  0.4852728 
 ##          8          9         10         11 
 ## -1.1459548  0.9420814 -1.1641029  4.4138254</code></pre>
-<div class="sourceCode" id="cb958"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb958-1" data-line-number="1"><span class="kw">rstandard</span>(model_<span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb967"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb967-1" data-line-number="1"><span class="kw">rstandard</span>(model_<span class="dv">1</span>)</a></code></pre></div>
 <pre><code>##          1          2          3          4          5          6          7 
 ##  0.3464701 -0.9585470 -0.3517802 -0.1933575 -0.3428264 -0.6638841  0.2949482 
 ##          8          9         10         11 
 ## -0.7165857  0.6167268 -0.8160389  2.6418234</code></pre>
-<div class="sourceCode" id="cb960"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb960-1" data-line-number="1"><span class="kw">rstandard</span>(model_<span class="dv">1</span>)[<span class="kw">abs</span>(<span class="kw">rstandard</span>(model_<span class="dv">1</span>)) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb969"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb969-1" data-line-number="1"><span class="kw">rstandard</span>(model_<span class="dv">1</span>)[<span class="kw">abs</span>(<span class="kw">rstandard</span>(model_<span class="dv">1</span>)) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>]</a></code></pre></div>
 <pre><code>##       11 
 ## 2.641823</code></pre>
 <p>In the first plot, we see that the 11th point, the added point, is a large standardized residual.</p>
-<div class="sourceCode" id="cb962"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb962-1" data-line-number="1"><span class="kw">resid</span>(model_<span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb971"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb971-1" data-line-number="1"><span class="kw">resid</span>(model_<span class="dv">2</span>)</a></code></pre></div>
 <pre><code>##           1           2           3           4           5           6 
 ##  1.03288292 -0.95203397 -0.07346766  0.14700626 -0.13084829 -0.69050140 
 ##           7           8           9          10          11 
 ##  0.87788484 -0.77755647  1.28626601 -0.84413207  0.12449986</code></pre>
-<div class="sourceCode" id="cb964"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb964-1" data-line-number="1"><span class="kw">rstandard</span>(model_<span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb973"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb973-1" data-line-number="1"><span class="kw">rstandard</span>(model_<span class="dv">2</span>)</a></code></pre></div>
 <pre><code>##           1           2           3           4           5           6 
 ##  1.41447023 -1.26655590 -0.09559792  0.18822094 -0.16574677 -0.86977220 
 ##           7           8           9          10          11 
 ##  1.10506546 -0.98294409  1.64121833 -1.09295417  0.25846620</code></pre>
-<div class="sourceCode" id="cb966"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb966-1" data-line-number="1"><span class="kw">rstandard</span>(model_<span class="dv">2</span>)[<span class="kw">abs</span>(<span class="kw">rstandard</span>(model_<span class="dv">2</span>)) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb975"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb975-1" data-line-number="1"><span class="kw">rstandard</span>(model_<span class="dv">2</span>)[<span class="kw">abs</span>(<span class="kw">rstandard</span>(model_<span class="dv">2</span>)) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>]</a></code></pre></div>
 <pre><code>## named numeric(0)</code></pre>
 <p>In the second plot, we see that there are no points with large standardized residuals.</p>
-<div class="sourceCode" id="cb968"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb968-1" data-line-number="1"><span class="kw">resid</span>(model_<span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb977"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb977-1" data-line-number="1"><span class="kw">resid</span>(model_<span class="dv">3</span>)</a></code></pre></div>
 <pre><code>##           1           2           3           4           5           6 
 ##  2.30296166 -0.04347087  0.47357980  0.33253808 -0.30683212 -1.22800087 
 ##           7           8           9          10          11 
 ## -0.02113027 -2.03808722 -0.33578039 -2.82769411  3.69191633</code></pre>
-<div class="sourceCode" id="cb970"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb970-1" data-line-number="1"><span class="kw">rstandard</span>(model_<span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb979"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb979-1" data-line-number="1"><span class="kw">rstandard</span>(model_<span class="dv">3</span>)</a></code></pre></div>
 <pre><code>##           1           2           3           4           5           6 
 ##  1.41302755 -0.02555591  0.26980722  0.18535382 -0.16873216 -0.67141143 
 ##           7           8           9          10          11 
 ## -0.01157256 -1.12656475 -0.18882474 -1.63206526  2.70453408</code></pre>
-<div class="sourceCode" id="cb972"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb972-1" data-line-number="1"><span class="kw">rstandard</span>(model_<span class="dv">3</span>)[<span class="kw">abs</span>(<span class="kw">rstandard</span>(model_<span class="dv">3</span>)) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb981"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb981-1" data-line-number="1"><span class="kw">rstandard</span>(model_<span class="dv">3</span>)[<span class="kw">abs</span>(<span class="kw">rstandard</span>(model_<span class="dv">3</span>)) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>]</a></code></pre></div>
 <pre><code>##       11 
 ## 2.704534</code></pre>
 <p>In the last plot, we see that the 11th point, the added point, is a large standardized residual.</p>
@@ -1068,13 +1068,13 @@ D_i &gt; \frac{4}{n}
 <li>Plot Three: high leverage, large residual.</li>
 </ul>
 <p>We’ll now directly check if each of these is influential.</p>
-<div class="sourceCode" id="cb974"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb974-1" data-line-number="1"><span class="kw">cooks.distance</span>(model_<span class="dv">1</span>)[<span class="dv">11</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span> <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">cooks.distance</span>(model_<span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb983"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb983-1" data-line-number="1"><span class="kw">cooks.distance</span>(model_<span class="dv">1</span>)[<span class="dv">11</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span> <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">cooks.distance</span>(model_<span class="dv">1</span>))</a></code></pre></div>
 <pre><code>##    11 
 ## FALSE</code></pre>
-<div class="sourceCode" id="cb976"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb976-1" data-line-number="1"><span class="kw">cooks.distance</span>(model_<span class="dv">2</span>)[<span class="dv">11</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span> <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">cooks.distance</span>(model_<span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb985"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb985-1" data-line-number="1"><span class="kw">cooks.distance</span>(model_<span class="dv">2</span>)[<span class="dv">11</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span> <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">cooks.distance</span>(model_<span class="dv">2</span>))</a></code></pre></div>
 <pre><code>##    11 
 ## FALSE</code></pre>
-<div class="sourceCode" id="cb978"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb978-1" data-line-number="1"><span class="kw">cooks.distance</span>(model_<span class="dv">3</span>)[<span class="dv">11</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span> <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">cooks.distance</span>(model_<span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb987"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb987-1" data-line-number="1"><span class="kw">cooks.distance</span>(model_<span class="dv">3</span>)[<span class="dv">11</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span> <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">cooks.distance</span>(model_<span class="dv">3</span>))</a></code></pre></div>
 <pre><code>##   11 
 ## TRUE</code></pre>
 <p>And, as expected, the added point in the third plot, with high leverage and a large residual is considered influential!</p>
@@ -1086,64 +1086,64 @@ D_i &gt; \frac{4}{n}
 <h3><span class="header-section-number">13.4.1</span> Good Diagnostics</h3>
 <p>Last chapter we fit an additive regression to the <code>mtcars</code> data with <code>mpg</code> as the response and <code>hp</code> and <code>am</code> as predictors. Let’s perform some diagnostics on this model.</p>
 <p>First, fit the model as we did last chapter.</p>
-<div class="sourceCode" id="cb980"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb980-1" data-line-number="1">mpg_hp_add =<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>am, <span class="dt">data =</span> mtcars)</a></code></pre></div>
-<div class="sourceCode" id="cb981"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb981-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">fitted</span>(mpg_hp_add), <span class="kw">resid</span>(mpg_hp_add), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,</a>
-<a class="sourceLine" id="cb981-2" data-line-number="2">     <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residual&quot;</span>,</a>
-<a class="sourceLine" id="cb981-3" data-line-number="3">     <span class="dt">main =</span> <span class="st">&quot;mtcars: Fitted versus Residuals&quot;</span>)</a>
-<a class="sourceLine" id="cb981-4" data-line-number="4"><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb989"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb989-1" data-line-number="1">mpg_hp_add =<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>am, <span class="dt">data =</span> mtcars)</a></code></pre></div>
+<div class="sourceCode" id="cb990"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb990-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">fitted</span>(mpg_hp_add), <span class="kw">resid</span>(mpg_hp_add), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,</a>
+<a class="sourceLine" id="cb990-2" data-line-number="2">     <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residual&quot;</span>,</a>
+<a class="sourceLine" id="cb990-3" data-line-number="3">     <span class="dt">main =</span> <span class="st">&quot;mtcars: Fitted versus Residuals&quot;</span>)</a>
+<a class="sourceLine" id="cb990-4" data-line-number="4"><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-50-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The fitted versus residuals plot looks good. We don’t see any obvious pattern, and the variance looks roughly constant. (Maybe a little larger for large fitted values, but not enough to worry about.)</p>
-<div class="sourceCode" id="cb982"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb982-1" data-line-number="1"><span class="kw">bptest</span>(mpg_hp_add)</a></code></pre></div>
+<div class="sourceCode" id="cb991"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb991-1" data-line-number="1"><span class="kw">bptest</span>(mpg_hp_add)</a></code></pre></div>
 <pre><code>## 
 ##  studentized Breusch-Pagan test
 ## 
 ## data:  mpg_hp_add
 ## BP = 7.5858, df = 2, p-value = 0.02253</code></pre>
 <p>The Breusch-Pagan test verifies this, at least for a small <span class="math inline">\(\alpha\)</span> value.</p>
-<div class="sourceCode" id="cb984"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb984-1" data-line-number="1"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(mpg_hp_add), <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)</a>
-<a class="sourceLine" id="cb984-2" data-line-number="2"><span class="kw">qqline</span>(<span class="kw">resid</span>(mpg_hp_add), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb993"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb993-1" data-line-number="1"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(mpg_hp_add), <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)</a>
+<a class="sourceLine" id="cb993-2" data-line-number="2"><span class="kw">qqline</span>(<span class="kw">resid</span>(mpg_hp_add), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-52-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The Q-Q plot looks extremely good and the Shapiro-Wilk test agrees.</p>
-<div class="sourceCode" id="cb985"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb985-1" data-line-number="1"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(mpg_hp_add))</a></code></pre></div>
+<div class="sourceCode" id="cb994"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb994-1" data-line-number="1"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(mpg_hp_add))</a></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  resid(mpg_hp_add)
 ## W = 0.96485, p-value = 0.3706</code></pre>
-<div class="sourceCode" id="cb987"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb987-1" data-line-number="1"><span class="kw">sum</span>(<span class="kw">hatvalues</span>(mpg_hp_add) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">mean</span>(<span class="kw">hatvalues</span>(mpg_hp_add)))</a></code></pre></div>
+<div class="sourceCode" id="cb996"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb996-1" data-line-number="1"><span class="kw">sum</span>(<span class="kw">hatvalues</span>(mpg_hp_add) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">mean</span>(<span class="kw">hatvalues</span>(mpg_hp_add)))</a></code></pre></div>
 <pre><code>## [1] 2</code></pre>
 <p>We see that there are two points of large leverage.</p>
-<div class="sourceCode" id="cb989"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb989-1" data-line-number="1"><span class="kw">sum</span>(<span class="kw">abs</span>(<span class="kw">rstandard</span>(mpg_hp_add)) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb998"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb998-1" data-line-number="1"><span class="kw">sum</span>(<span class="kw">abs</span>(<span class="kw">rstandard</span>(mpg_hp_add)) <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
 <pre><code>## [1] 1</code></pre>
 <p>There is also one point with a large residual. Do these result in any points that are considered influential?</p>
-<div class="sourceCode" id="cb991"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb991-1" data-line-number="1">cd_mpg_hp_add =<span class="st"> </span><span class="kw">cooks.distance</span>(mpg_hp_add)</a>
-<a class="sourceLine" id="cb991-2" data-line-number="2"><span class="kw">sum</span>(cd_mpg_hp_add <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span> <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(cd_mpg_hp_add))</a></code></pre></div>
+<div class="sourceCode" id="cb1000"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1000-1" data-line-number="1">cd_mpg_hp_add =<span class="st"> </span><span class="kw">cooks.distance</span>(mpg_hp_add)</a>
+<a class="sourceLine" id="cb1000-2" data-line-number="2"><span class="kw">sum</span>(cd_mpg_hp_add <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span> <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(cd_mpg_hp_add))</a></code></pre></div>
 <pre><code>## [1] 2</code></pre>
-<div class="sourceCode" id="cb993"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb993-1" data-line-number="1">large_cd_mpg =<span class="st"> </span>cd_mpg_hp_add <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span> <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(cd_mpg_hp_add)</a>
-<a class="sourceLine" id="cb993-2" data-line-number="2">cd_mpg_hp_add[large_cd_mpg]</a></code></pre></div>
+<div class="sourceCode" id="cb1002"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1002-1" data-line-number="1">large_cd_mpg =<span class="st"> </span>cd_mpg_hp_add <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span> <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(cd_mpg_hp_add)</a>
+<a class="sourceLine" id="cb1002-2" data-line-number="2">cd_mpg_hp_add[large_cd_mpg]</a></code></pre></div>
 <pre><code>## Toyota Corolla  Maserati Bora 
 ##      0.1772555      0.3447994</code></pre>
 <p>We find two influential points. Interestingly, they are <strong>very</strong> different cars.</p>
-<div class="sourceCode" id="cb995"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb995-1" data-line-number="1"><span class="kw">coef</span>(mpg_hp_add)</a></code></pre></div>
+<div class="sourceCode" id="cb1004"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1004-1" data-line-number="1"><span class="kw">coef</span>(mpg_hp_add)</a></code></pre></div>
 <pre><code>## (Intercept)          hp          am 
 ##  26.5849137  -0.0588878   5.2770853</code></pre>
 <p>Since the diagnostics looked good, there isn’t much need to worry about these two points, but let’s see how much the coefficients change if we remove them.</p>
-<div class="sourceCode" id="cb997"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb997-1" data-line-number="1">mpg_hp_add_fix =<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>am,</a>
-<a class="sourceLine" id="cb997-2" data-line-number="2">                    <span class="dt">data =</span> mtcars,</a>
-<a class="sourceLine" id="cb997-3" data-line-number="3">                    <span class="dt">subset =</span> cd_mpg_hp_add <span class="op">&lt;=</span><span class="st"> </span><span class="dv">4</span> <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(cd_mpg_hp_add))</a>
-<a class="sourceLine" id="cb997-4" data-line-number="4"><span class="kw">coef</span>(mpg_hp_add_fix)</a></code></pre></div>
+<div class="sourceCode" id="cb1006"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1006-1" data-line-number="1">mpg_hp_add_fix =<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>hp <span class="op">+</span><span class="st"> </span>am,</a>
+<a class="sourceLine" id="cb1006-2" data-line-number="2">                    <span class="dt">data =</span> mtcars,</a>
+<a class="sourceLine" id="cb1006-3" data-line-number="3">                    <span class="dt">subset =</span> cd_mpg_hp_add <span class="op">&lt;=</span><span class="st"> </span><span class="dv">4</span> <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(cd_mpg_hp_add))</a>
+<a class="sourceLine" id="cb1006-4" data-line-number="4"><span class="kw">coef</span>(mpg_hp_add_fix)</a></code></pre></div>
 <pre><code>## (Intercept)          hp          am 
 ## 27.22190933 -0.06286249  4.29765867</code></pre>
 <p>It seems there isn’t much of a change in the coefficients as a results of removing the supposed influential points. Notice we did not create a new dataset to accomplish this. We instead used the <code>subset</code> argument to <code>lm()</code>. Think about what the code <code>cd_mpg_hp_add &lt;= 4 / length(cd_mpg_hp_add)</code> does here.</p>
-<div class="sourceCode" id="cb999"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb999-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb999-2" data-line-number="2"><span class="kw">plot</span>(mpg_hp_add)</a></code></pre></div>
+<div class="sourceCode" id="cb1008"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1008-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb1008-2" data-line-number="2"><span class="kw">plot</span>(mpg_hp_add)</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-59-1.png" width="768" style="display: block; margin: auto;" /></p>
 <p>Notice that, calling <code>plot()</code> on a variable which stores an object created by <code>lm()</code> outputs four diagnostic plots by default. Use <code>?plot.lm</code> to learn more. The first two should already be familiar.</p>
 </div>
 <div id="suspect-diagnostics" class="section level3">
 <h3><span class="header-section-number">13.4.2</span> Suspect Diagnostics</h3>
 <p>Let’s consider the model <code>big_model</code> from last chapter which was fit to the <code>autompg</code> dataset. It used <code>mpg</code> as the response, and considered many interaction terms between the predictors <code>disp</code>, <code>hp</code>, and <code>domestic</code>.</p>
-<div class="sourceCode" id="cb1000"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1000-1" data-line-number="1"><span class="kw">str</span>(autompg)</a></code></pre></div>
+<div class="sourceCode" id="cb1009"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1009-1" data-line-number="1"><span class="kw">str</span>(autompg)</a></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    383 obs. of  9 variables:
 ##  $ mpg     : num  18 15 18 16 17 15 14 14 14 15 ...
 ##  $ cyl     : Factor w/ 3 levels &quot;4&quot;,&quot;6&quot;,&quot;8&quot;: 3 3 3 3 3 3 3 3 3 3 ...
@@ -1154,28 +1154,28 @@ D_i &gt; \frac{4}{n}
 ##  $ year    : int  70 70 70 70 70 70 70 70 70 70 ...
 ##  $ origin  : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ domestic: num  1 1 1 1 1 1 1 1 1 1 ...</code></pre>
-<div class="sourceCode" id="cb1002"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1002-1" data-line-number="1">big_model =<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>disp <span class="op">*</span><span class="st"> </span>hp <span class="op">*</span><span class="st"> </span>domestic, <span class="dt">data =</span> autompg)</a></code></pre></div>
-<div class="sourceCode" id="cb1003"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1003-1" data-line-number="1"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(big_model), <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)</a>
-<a class="sourceLine" id="cb1003-2" data-line-number="2"><span class="kw">qqline</span>(<span class="kw">resid</span>(big_model), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1011"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1011-1" data-line-number="1">big_model =<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>disp <span class="op">*</span><span class="st"> </span>hp <span class="op">*</span><span class="st"> </span>domestic, <span class="dt">data =</span> autompg)</a></code></pre></div>
+<div class="sourceCode" id="cb1012"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1012-1" data-line-number="1"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(big_model), <span class="dt">col =</span> <span class="st">&quot;darkgrey&quot;</span>)</a>
+<a class="sourceLine" id="cb1012-2" data-line-number="2"><span class="kw">qqline</span>(<span class="kw">resid</span>(big_model), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-63-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb1004"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1004-1" data-line-number="1"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(big_model))</a></code></pre></div>
+<div class="sourceCode" id="cb1013"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1013-1" data-line-number="1"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(big_model))</a></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  resid(big_model)
 ## W = 0.96161, p-value = 1.824e-08</code></pre>
 <p>Here both the Q-Q plot, and the Shapiro-Wilk test suggest that the normality assumption is violated.</p>
-<div class="sourceCode" id="cb1006"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1006-1" data-line-number="1">big_mod_cd =<span class="st"> </span><span class="kw">cooks.distance</span>(big_model)</a>
-<a class="sourceLine" id="cb1006-2" data-line-number="2"><span class="kw">sum</span>(big_mod_cd <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span> <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(big_mod_cd))</a></code></pre></div>
+<div class="sourceCode" id="cb1015"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1015-1" data-line-number="1">big_mod_cd =<span class="st"> </span><span class="kw">cooks.distance</span>(big_model)</a>
+<a class="sourceLine" id="cb1015-2" data-line-number="2"><span class="kw">sum</span>(big_mod_cd <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span> <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(big_mod_cd))</a></code></pre></div>
 <pre><code>## [1] 31</code></pre>
 <p>Here, we find 31, so perhaps removing them will help!</p>
-<div class="sourceCode" id="cb1008"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1008-1" data-line-number="1">big_model_fix =<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>disp <span class="op">*</span><span class="st"> </span>hp <span class="op">*</span><span class="st"> </span>domestic,</a>
-<a class="sourceLine" id="cb1008-2" data-line-number="2">                   <span class="dt">data =</span> autompg,</a>
-<a class="sourceLine" id="cb1008-3" data-line-number="3">                   <span class="dt">subset =</span> big_mod_cd <span class="op">&lt;</span><span class="st"> </span><span class="dv">4</span> <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(big_mod_cd))</a>
-<a class="sourceLine" id="cb1008-4" data-line-number="4"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(big_model_fix), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>)</a>
-<a class="sourceLine" id="cb1008-5" data-line-number="5"><span class="kw">qqline</span>(<span class="kw">resid</span>(big_model_fix), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1017"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1017-1" data-line-number="1">big_model_fix =<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>disp <span class="op">*</span><span class="st"> </span>hp <span class="op">*</span><span class="st"> </span>domestic,</a>
+<a class="sourceLine" id="cb1017-2" data-line-number="2">                   <span class="dt">data =</span> autompg,</a>
+<a class="sourceLine" id="cb1017-3" data-line-number="3">                   <span class="dt">subset =</span> big_mod_cd <span class="op">&lt;</span><span class="st"> </span><span class="dv">4</span> <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(big_mod_cd))</a>
+<a class="sourceLine" id="cb1017-4" data-line-number="4"><span class="kw">qqnorm</span>(<span class="kw">resid</span>(big_model_fix), <span class="dt">col =</span> <span class="st">&quot;grey&quot;</span>)</a>
+<a class="sourceLine" id="cb1017-5" data-line-number="5"><span class="kw">qqline</span>(<span class="kw">resid</span>(big_model_fix), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-65-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb1009"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1009-1" data-line-number="1"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(big_model_fix))</a></code></pre></div>
+<div class="sourceCode" id="cb1018"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1018-1" data-line-number="1"><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(big_model_fix))</a></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
