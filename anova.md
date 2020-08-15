@@ -278,16 +278,6 @@ Let's see what this looks like in a few situations. In each of the following exa
 First, consider $\mu_A = -5, \mu_B = 0, \mu_C = 5$ with $\sigma = 1$.
 
 
-```
-## Warning: Unknown or uninitialised column: `statistic`.
-```
-
-```
-## Warning: Unknown or uninitialised column: `p.value`.
-```
-
-
-
 \begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 The left panel shows the three normal distributions we are sampling from. The ticks along the $x$-axis show the randomly sampled observations. The right panel, re-displays only the sampled values in a boxplot. Note that the mid-line of the boxes is usually the sample median. These boxplots have been modified to use the sample mean.
@@ -296,20 +286,10 @@ Here the sample means vary a lot around the overall sample mean, which is the so
 
 As a result, we we obtain a *large* test statistic, thus *small* p-value. 
 
-- $F = $
-- $\text{p-value} = $
+- $F = 374.4469511$
+- $\text{p-value} = \ensuremath{1.6349862\times 10^{-33}}$
 
 Now consider $\mu_A = 0, \mu_B = 0, \mu_C = 0$ with $\sigma = 1$. That is, equal means for the groups.
-
-
-```
-## Warning: Unknown or uninitialised column: `statistic`.
-```
-
-```
-## Warning: Unknown or uninitialised column: `p.value`.
-```
-
 
 
 \begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-10-1} \end{center}
@@ -318,28 +298,18 @@ Here the sample means vary only a tiny bit around the overall sample mean. Withi
 
 As a result, we we obtain a *small* test statistic, thus *large* p-value. 
 
-- $F = $
-- $\text{p-value} = $
+- $F = 2.667892$
+- $\text{p-value} = 0.0780579$
 
 The next two examples show different means, with different levels of noise. Notice how these affect the test statistic and p-value.
 
 - $\mu_A = -1, \mu_B = 0, \mu_C = 1, \sigma = 1$
 
 
-```
-## Warning: Unknown or uninitialised column: `statistic`.
-```
-
-```
-## Warning: Unknown or uninitialised column: `p.value`.
-```
-
-
-
 \begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
-- $F = $
-- $\text{p-value} = $
+- $F = 16.4879492$
+- $\text{p-value} = \ensuremath{2.2378806\times 10^{-6}}$
 
 Above, there isn't obvious separation between the groups like the first example, but it is still obvious the means are different. Below, there is more noise. Visually it is somewhat hard to tell, but the test still suggests a difference of means. (At an $\alpha$ of 0.05.)
 
@@ -347,20 +317,10 @@ Above, there isn't obvious separation between the groups like the first example,
 - $n_i = 20$ for each group.
 
 
-```
-## Warning: Unknown or uninitialised column: `statistic`.
-```
-
-```
-## Warning: Unknown or uninitialised column: `p.value`.
-```
-
-
-
 \begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
-- $F = $
-- $\text{p-value} = $
+- $F = 4.6256472$
+- $\text{p-value} = 0.0137529$
 
 Let's consider an example with real data. We'll use the `coagulation` dataset from the `faraway` package. Here four different diets (`A`, `B`, `C`, `D`) were administered to a random sample of 24 animals. The subjects were randomly assigned to one of the four diets. For each, their blood coagulation time was measured in seconds.
 
