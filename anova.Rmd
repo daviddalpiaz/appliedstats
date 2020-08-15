@@ -268,7 +268,8 @@ plot_anova = function(n = 20, mu_a = 0, mu_b = 0, mu_c = 0, sigma = 1) {
   segments(x0 = 1.6, x1 = 2.4, y0 = mean(response[group == "B"]), y1 = mean(response[group == "B"]), lwd = 2, lty = 2, col = "darkorange")
   segments(x0 = 2.6, x1 = 3.4, y0 = mean(response[group == "C"]), y1 = mean(response[group == "C"]), lwd = 2, lty = 2, col = "black")
 
-  aov_results = aov(response ~ group)
+  # use lm instead of aov for ease of use with broom::glance
+  aov_results = lm(response ~ group) 
   f_stat = glance(aov_results)$statistic
   p_val  = glance(aov_results)$p.value
   list(f = f_stat, p = p_val)
