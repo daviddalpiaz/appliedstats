@@ -89,6 +89,7 @@ Your name could be here! Suggest an edit! Correct a typo! If you submit a correc
 - Sihun Wang
 - [Joseph Wilson](https://github.com/greenfacts){target="_blank"}
 - [Yingkui Lin](https://github.com/lin){target="_blank"}
+- [Andy Siddall](https://www.researchgate.net/profile/Andy_Siddall){target="_blank"}
 
 ## License
 
