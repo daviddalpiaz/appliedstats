@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 17 Logistic Regression | Applied Statistics with R</title>
   <meta name="description" content="Chapter 17 Logistic Regression | Applied Statistics with R" />
-  <meta name="generator" content="bookdown 0.20.2 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20.3 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 17 Logistic Regression | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-08-15" />
+<meta name="date" content="2020-09-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -541,7 +541,7 @@ P[Y = 0 \mid {\bf X} = {\bf x}] = 1 - p({\bf x})
 <p><span class="math display">\[
 \log\left(\frac{p({\bf x})}{1 - p({\bf x})}\right) = \beta_0 + \beta_1 x_1 + \ldots  + \beta_{p - 1} x_{p - 1}
 \]</span></p>
-<p>Immediately we notice some similarities to ordinary linear regression, in particular, the right hand side. This is our usual linear combination of the predictors. We have our usual <span class="math inline">\(p - 1\)</span> predictors for a total of <span class="math inline">\(p\)</span> <span class="math inline">\(\beta\)</span> parameters. (Note, many more machine learning focused texts will use <span class="math inline">\(p\)</span> as the number of parameters. This is an arbitrary choice, but you should be aware of it.)</p>
+<p>Immediately we notice some similarities to ordinary linear regression, in particular, the right hand side. This is our usual linear combination of the predictors. We have our usual <span class="math inline">\(p - 1\)</span> predictors for a total of <span class="math inline">\(p\)</span> <span class="math inline">\(\beta\)</span> parameters. (Note, many more machine learning focused texts will use <span class="math inline">\(p\)</span> as the number of predictors. This is an arbitrary choice, but you should be aware of it.)</p>
 <p>The left hand side is called the <strong>log odds</strong>, which is the log of the odds. The odds are the probability for a positive event <span class="math inline">\((Y = 1)\)</span> divided by the probability of a negative event <span class="math inline">\((Y = 0)\)</span>. So when the odds are <span class="math inline">\(1\)</span>, the two events have equal probability. Odds greater than <span class="math inline">\(1\)</span> favor a positive event. The opposite is true when the odds are less than <span class="math inline">\(1\)</span>.</p>
 <p><span class="math display">\[
 \frac{p({\bf x})}{1 - p({\bf x})} = \frac{P[Y = 1 \mid {\bf X} = {\bf x}]}{P[Y = 0 \mid {\bf X} = {\bf x}]}
@@ -1353,7 +1353,7 @@ I(y_i \neq \hat{C}({\bf x_i})) =
 <div class="sourceCode" id="cb1498"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1498-1" data-line-number="1"><span class="kw">cv.glm</span>(spam_trn, fit_additive, <span class="dt">K =</span> <span class="dv">5</span>)<span class="op">$</span>delta[<span class="dv">1</span>]</a></code></pre></div>
 <pre><code>## [1] 0.08684467</code></pre>
 <div class="sourceCode" id="cb1500"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1500-1" data-line-number="1"><span class="kw">cv.glm</span>(spam_trn, fit_over, <span class="dt">K =</span> <span class="dv">5</span>)<span class="op">$</span>delta[<span class="dv">1</span>]</a></code></pre></div>
-<pre><code>## [1] 0.135</code></pre>
+<pre><code>## [1] 0.143</code></pre>
 <p>Note that we’re suppressing warnings again here. (Now there would be a lot more, since were fitting a total of 20 models.)</p>
 <p>Based on these results, <code>fit_caps</code> and <code>fit_selected</code> are underfitting relative to <code>fit_additive</code>. Similarly, <code>fit_over</code> is overfitting relative to <code>fit_additive</code>. Thus, based on these results, we prefer the classifier created based on the logistic regression fit and stored in <code>fit_additive</code>.</p>
 <p>Going forward, to evaluate and report on the efficacy of this classifier, we’ll use the test dataset. We’re going to take the position that the test data set should <strong>never</strong> be used in training, which is why we used cross-validation within the training dataset to select a model. Even though cross-validation uses hold-out sets to generate metrics, at some point all of the data is used for training.</p>
@@ -1470,7 +1470,7 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 <ul>
 <li><a href="logistic.Rmd" target="_blank"><code>logistic.Rmd</code></a></li>
 </ul>
-<p>The file was created using <code>R</code> version <code>4.0.0</code>.</p>
+<p>The file was created using <code>R</code> version <code>4.0.2</code>.</p>
 
 </div>
 </div>

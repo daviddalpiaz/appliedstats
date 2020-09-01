@@ -926,10 +926,10 @@ solve(Z) %*% Z
 ```
 
 ```
-##              [,1]          [,2]         [,3]
-## [1,] 1.000000e+00 -6.245005e-17 0.000000e+00
-## [2,] 8.326673e-17  1.000000e+00 5.551115e-17
-## [3,] 2.775558e-17  0.000000e+00 1.000000e+00
+##               [,1]          [,2]          [,3]
+## [1,]  1.000000e+00 -6.245005e-17  0.000000e+00
+## [2,]  9.020562e-17  1.000000e+00 -5.551115e-17
+## [3,] -2.775558e-17  0.000000e+00  1.000000e+00
 ```
 
 ```r
@@ -1901,8 +1901,8 @@ To test our function, we will take a random sample of size `n = 10` from a norma
 ```
 
 ```
-##  [1]  -0.4881505  -1.0497188  -1.0328641   3.2122394  -1.8218816   2.7729629
-##  [7]  -2.4844938 -12.3645786  -1.2700239   8.1063367
+##  [1]  8.3556631  2.9606040  1.0206960  0.7292529  0.6980764 -0.6569231
+##  [7] -3.3923038  9.8359129  3.2911999  3.7354970
 ```
 
 ```r
@@ -1910,8 +1910,8 @@ standardize(x = test_sample)
 ```
 
 ```
-##  [1]  0.02943095 -0.07798336 -0.07475947  0.73722521 -0.22567925  0.65320233
-##  [7] -0.35242079 -2.24223984 -0.12012234  1.67334657
+##  [1]  1.42707109  0.07584716 -0.41001409 -0.48300772 -0.49081604 -0.83018356
+##  [7] -1.51527555  1.79780828  0.15864682  0.26992361
 ```
 
 This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.
@@ -2013,7 +2013,7 @@ get_var(test_sample)
 ```
 
 ```
-## [1] 27.3326
+## [1] 15.94181
 ```
 
 ```r
@@ -2021,7 +2021,7 @@ get_var(test_sample, biased = FALSE)
 ```
 
 ```
-## [1] 27.3326
+## [1] 15.94181
 ```
 
 ```r
@@ -2029,7 +2029,7 @@ var(test_sample)
 ```
 
 ```
-## [1] 27.3326
+## [1] 15.94181
 ```
 
 We see the function is working as expected, and when returning the unbiased estimate it matches `R`'s built in function `var()`. Finally, let's examine the biased estimate of $\sigma^2$.
@@ -2040,7 +2040,7 @@ get_var(test_sample, biased = TRUE)
 ```
 
 ```
-## [1] 24.59934
+## [1] 14.34763
 ```
 
 

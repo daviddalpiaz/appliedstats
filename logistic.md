@@ -99,7 +99,7 @@ $$
 \log\left(\frac{p({\bf x})}{1 - p({\bf x})}\right) = \beta_0 + \beta_1 x_1 + \ldots  + \beta_{p - 1} x_{p - 1}
 $$
 
-Immediately we notice some similarities to ordinary linear regression, in particular, the right hand side. This is our usual linear combination of the predictors. We have our usual $p - 1$ predictors for a total of $p$ $\beta$ parameters. (Note, many more machine learning focused texts will use $p$ as the number of parameters. This is an arbitrary choice, but you should be aware of it.)
+Immediately we notice some similarities to ordinary linear regression, in particular, the right hand side. This is our usual linear combination of the predictors. We have our usual $p - 1$ predictors for a total of $p$ $\beta$ parameters. (Note, many more machine learning focused texts will use $p$ as the number of predictors. This is an arbitrary choice, but you should be aware of it.)
 
 The left hand side is called the **log odds**, which is the log of the odds. The odds are the probability for a positive event $(Y = 1)$ divided by the probability of a negative event $(Y = 0)$. So when the odds are $1$, the two events have equal probability. Odds greater than $1$ favor a positive event. The opposite is true when the odds are less than $1$.
 
@@ -1294,7 +1294,7 @@ cv.glm(spam_trn, fit_over, K = 5)$delta[1]
 ```
 
 ```
-## [1] 0.135
+## [1] 0.143
 ```
  
 Note that we're suppressing warnings again here. (Now there would be a lot more, since were fitting a total of 20 models.)
@@ -1547,4 +1547,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`logistic.Rmd`](logistic.Rmd){target="_blank"}
 
-The file was created using `R` version `4.0.0`.
+The file was created using `R` version `4.0.2`.

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Data and Programming | Applied Statistics with R</title>
   <meta name="description" content="Chapter 3 Data and Programming | Applied Statistics with R" />
-  <meta name="generator" content="bookdown 0.20.2 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.20.3 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Data and Programming | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-08-15" />
+<meta name="date" content="2020-09-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -854,10 +854,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [3,]  0.01724138  0.02586207 0.06896552</code></pre>
 <p>To verify that <code>solve(Z)</code> returns the inverse, we multiply it by <code>Z</code>. We would expect this to return the identity matrix, however we see that this is not the case due to some computational issues. However, <code>R</code> also has the <code>all.equal()</code> function which checks for equality, with some small tolerance which accounts for some computational issues. The <code>identical()</code> function is used to check for exact equality.</p>
 <div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1"><span class="kw">solve</span>(Z) <span class="op">%*%</span><span class="st"> </span>Z</a></code></pre></div>
-<pre><code>##              [,1]          [,2]         [,3]
-## [1,] 1.000000e+00 -6.245005e-17 0.000000e+00
-## [2,] 8.326673e-17  1.000000e+00 5.551115e-17
-## [3,] 2.775558e-17  0.000000e+00 1.000000e+00</code></pre>
+<pre><code>##               [,1]          [,2]          [,3]
+## [1,]  1.000000e+00 -6.245005e-17  0.000000e+00
+## [2,]  9.020562e-17  1.000000e+00 -5.551115e-17
+## [3,] -2.775558e-17  0.000000e+00  1.000000e+00</code></pre>
 <div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb169-1" data-line-number="1"><span class="kw">diag</span>(<span class="dv">3</span>)</a></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    1    0    0
@@ -1325,11 +1325,11 @@ X^\top X
 <p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the output of the final line of the body is what is returned by the function. In this case the function returns the vector stored in the variable <code>result</code>.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
 <div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb302-1" data-line-number="1">(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</a></code></pre></div>
-<pre><code>##  [1]  8.733384  5.616470 -2.076416  3.815293 -4.679741  3.803280  1.889081
-##  [8]  2.351080  2.970370 -1.903063</code></pre>
+<pre><code>##  [1]  1.8054138  2.7691796 -1.5382147 -7.7026549  5.5407959  5.9100534
+##  [7] 10.7496864 10.2379270 -0.2353937  7.0822909</code></pre>
 <div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb304-1" data-line-number="1"><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)</a></code></pre></div>
-<pre><code>##  [1]  1.6792117  0.8958503 -1.0375714  0.4431678 -1.6918544  0.4401487
-##  [7] -0.0409393  0.0751732  0.2308167 -0.9940033</code></pre>
+<pre><code>##  [1] -0.2923271 -0.1222481 -0.8823883 -1.9702474  0.3668682  0.4320323
+##  [7]  1.2860983  1.1957864 -0.6524751  0.6389009</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
 <div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb306-1" data-line-number="1">standardize =<span class="st"> </span><span class="cf">function</span>(x) {</a>
 <a class="sourceLine" id="cb306-2" data-line-number="2">  (x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x)</a>
@@ -1366,14 +1366,14 @@ s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2
 <a class="sourceLine" id="cb319-3" data-line-number="3">  (<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>n) <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb319-4" data-line-number="4">}</a></code></pre></div>
 <div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb320-1" data-line-number="1"><span class="kw">get_var</span>(test_sample)</a></code></pre></div>
-<pre><code>## [1] 15.83162</code></pre>
+<pre><code>## [1] 32.11012</code></pre>
 <div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb322-1" data-line-number="1"><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<pre><code>## [1] 15.83162</code></pre>
+<pre><code>## [1] 32.11012</code></pre>
 <div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb324-1" data-line-number="1"><span class="kw">var</span>(test_sample)</a></code></pre></div>
-<pre><code>## [1] 15.83162</code></pre>
+<pre><code>## [1] 32.11012</code></pre>
 <p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built in function <code>var()</code>. Finally, let’s examine the biased estimate of <span class="math inline">\(\sigma^2\)</span>.</p>
 <div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb326-1" data-line-number="1"><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<pre><code>## [1] 14.24846</code></pre>
+<pre><code>## [1] 28.89911</code></pre>
 
 </div>
 </div>
