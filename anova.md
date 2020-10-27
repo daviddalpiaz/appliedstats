@@ -498,7 +498,7 @@ We'd like to design our experiment so that we have a good chance of detecting an
 We'd like the ANOVA test to have high **power** for an alternative hypothesis with a minimum desired effect size.
 
 \[
-\text{Power } = P(\text{Rejct } H_0 \mid H_0 \text{ False})
+\text{Power } = P(\text{Reject } H_0 \mid H_0 \text{ False})
 \]
 
 That is, for a true difference of means that we deem interesting, we want the test to reject with high probability.
