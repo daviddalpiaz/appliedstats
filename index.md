@@ -1,6 +1,6 @@
 --- 
-title: "Applied Statistics with `R`"
-date: "2020-10-28"
+title: "Applied Statistics with R"
+date: "2020-10-30"
 github-repo: daviddalpiaz/appliedstats
 url: 'https\://daviddalpiaz.github.io/appliedstats/'
 knit: "bookdown::render_book"
@@ -16,7 +16,7 @@ description: ""
 
 # Introduction
 
-Welcome to Applied Statistics with `R`!
+Welcome to Applied Statistics with R!
 
 ## About This Book
 
@@ -95,4 +95,3 @@ Your name could be here! Suggest an edit! Correct a typo! If you submit a correc
 ## License
 
 ![This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).](images/cc.png)
-
