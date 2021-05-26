@@ -1,4 +1,6 @@
-[![TravisCI Build Status](https://api.travis-ci.org/daviddalpiaz/appliedstats.svg)](https://travis-ci.org/daviddalpiaz/appliedstats)
+<!-- badges: start -->
+[![Book Build Status](https://github.com/daviddalpiaz/appliedstats/workflows/bookdown/badge.svg)](https://github.com/daviddalpiaz/appliedstats/actions)
+<!-- badges: end -->
 
 # Applied Statistics with `R` (`appliedstats`)
 
