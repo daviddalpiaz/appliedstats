@@ -24,6 +24,10 @@ jobs:
 
       - name: Setup pandoc
         uses: r-lib/actions/setup-pandoc@master
+        
+      - name: Install XQuartz on macOS
+        if: runner.os == 'macOS'
+        run: brew cask install xquartz
 
       - name: Cache R packages
         uses: actions/cache@v2
