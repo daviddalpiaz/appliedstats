@@ -1,0 +1,63 @@
+on:
+  push:
+    branches:
+      - main
+      - master
+
+name: bookdown
+
+jobs:
+  build:
+    runs-on: macOS-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      # Deploy with master... Let's see what goes wrong! 
+      - name: Setup R
+        uses: r-lib/actions/setup-r@master
+
+      - name: Install tinytex
+        uses: r-lib/actions/setup-tinytex@master
+
+      - name: Setup pandoc
+        uses: r-lib/actions/setup-pandoc@master
+        
+      - name: Install XQuartz on macOS
+        if: runner.os == 'macOS'
+        run: brew install xquartz --cask
+
+      - name: Cache R packages
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: r-4-${{ hashFiles('DESCRIPTION') }}
+          restore-keys: r-4-
+
+      - name: Cache bookdown results
+        uses: actions/cache@v2
+        with:
+          path: _bookdown_files
+          key: bookdown-4-${{ hashFiles('**/*Rmd') }}
+          restore-keys: bookdown-4-
+
+      - name: Install pak
+        run: |
+          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
+        shell: Rscript {0}
+
+      - name: Install dependencies
+        run: |
+          pak::local_install_dev_deps(upgrade = TRUE)
+        shell: Rscript {0}
+
+      - name: Build site
+        run: Rscript -e 'bookdown::render_book("index.Rmd", quiet = TRUE)'
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN}}
+          publish_dir: ./_book
