@@ -1,6 +1,6 @@
 --- 
 title: "Applied Statistics with R"
-date: "2020-10-30"
+date: "2021-05-26"
 github-repo: daviddalpiaz/appliedstats
 url: 'https\://daviddalpiaz.github.io/appliedstats/'
 knit: "bookdown::render_book"
@@ -91,6 +91,7 @@ Your name could be here! Suggest an edit! Correct a typo! If you submit a correc
 - [Yingkui Lin](https://github.com/lin){target="_blank"}
 - [Andy Siddall](https://www.researchgate.net/profile/Andy_Siddall){target="_blank"}
 - [Nishant Balepur](https://github.com/nbalepur){target="_blank"}
+- [Durga Krovi](https://github.com/dkrovi2){target="_blank"}
 
 ## License
 

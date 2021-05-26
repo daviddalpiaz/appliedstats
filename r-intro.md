@@ -5,7 +5,7 @@
 `R` is both a programming language and software environment for statistical computing, which is *free* and *open-source*. To get started, you will need to install two pieces of software:
 
 - [`R`, the actual programming language.](http://cran.r-project.org/){target="_blank"}
-    - Chose your operating system, and select the most recent version, 4.0.2.
+    - Chose your operating system, and select the most recent version, 4.1.0.
 - [RStudio, an excellent IDE for working with `R`.](http://www.rstudio.com/){target="_blank"}
     - Note, you must have `R` installed to use RStudio. RStudio is simply an interface used to interact with `R`.
 
@@ -22,7 +22,7 @@ RStudio has a large number of useful keyboard shortcuts. A list of these can be 
 - On Windows: `Alt` + `Shift` + `K`
 - On Mac:  `Option` + `Shift` + `K`
 
-The RStudio team has developed [a number of "cheatsheets"](https://www.rstudio.com/resources/cheatsheets/){target="_blank"} for working with both `R` and RStudio. [This particular cheatsheet for "Base" `R`](http://www.rstudio.com/wp-content/uploads/2016/05/base-r.pdf){target="_blank"} will summarize many of the concepts in this document. ("Base" `R` is a name used to differentiate the practice of using built-in `R` functions, as opposed to using functions from outside packages, in particular, those from the [`tidyverse`](https://www.tidyverse.org/){target="_blank"}. More on this later.)
+The RStudio team has developed [a number of "cheatsheets"](https://www.rstudio.com/resources/cheatsheets/){target="_blank"} for working with both `R` and RStudio. [This particular cheatsheet for "Base" `R`](http://github.com/rstudio/cheatsheets/raw/master/base-r.pdf){target="_blank"} will summarize many of the concepts in this document. ("Base" `R` is a name used to differentiate the practice of using built-in `R` functions, as opposed to using functions from outside packages, in particular, those from the [`tidyverse`](https://www.tidyverse.org/){target="_blank"}. More on this later.)
 
 When programming, it is often a good practice to follow a style guide. (Where do spaces go? Tabs or spaces? Underscores or CamelCase when naming variables?) No style guide is "correct" but it helps to be aware of what others do. The more important thing is to be consistent within your own code.
 

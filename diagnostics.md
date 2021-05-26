@@ -180,9 +180,7 @@ fit_1 = lm(y ~ x, data = sim_data_1)
 abline(fit_1, col = "darkorange", lwd = 3)
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-4-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" />
 
 We now plot a fitted versus residuals plot. Note, this is residuals on the $y$-axis despite the ordering in the name. Sometimes you will see this called a residuals versus fitted, or residuals versus predicted plot.
 
@@ -193,9 +191,7 @@ plot(fitted(fit_1), resid(fit_1), col = "grey", pch = 20,
 abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-5-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" />
 
 We should look for two things in this plot.
 
@@ -218,9 +214,7 @@ plot(y ~ x, data = sim_data_2, col = "grey", pch = 20,
 abline(fit_2, col = "darkorange", lwd = 3)
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-6-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" />
 
 This actually is rather easy to see here by adding the fitted line to a scatterplot. This is because we are only performing simple linear regression. With multiple regression, a fitted versus residuals plot is a necessity, since adding a fitted regression to a scatterplot isn't exactly possible.
 
@@ -231,9 +225,7 @@ plot(fitted(fit_2), resid(fit_2), col = "grey", pch = 20,
 abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-7-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" />
 
 On the fitted versus residuals plot, we see two things very clearly. For any fitted value, the residuals seem roughly centered at 0. This is good! The linearity assumption is not violated. However, we also see very clearly, that for larger fitted values, the spread of the residuals is larger. This is bad! The constant variance assumption is violated here.
 
@@ -249,9 +241,7 @@ plot(y ~ x, data = sim_data_3, col = "grey", pch = 20,
 abline(fit_3, col = "darkorange", lwd = 3)
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-8-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" />
 
 Again, this is rather clear on the scatterplot, but again, we wouldn't be able to check this plot for multiple regression.
 
@@ -262,9 +252,7 @@ plot(fitted(fit_3), resid(fit_3), col = "grey", pch = 20,
 abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-9-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" />
 
 This time on the fitted versus residuals plot, for any fitted value, the spread of the residuals is about the same. However, they are not even close to centered at zero! At small and large fitted values the model is underestimating, while at medium fitted values, the model is overestimating. These are systematic errors, not random noise. So the constant variance assumption is met, but the linearity assumption is violated. The form of our model is simply wrong. We're trying to fit a line to a curve!
 
@@ -365,9 +353,7 @@ hist(resid(fit_3),
      breaks = 20)
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-14-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-14-1.png" width="1440" style="display: block; margin: auto;" />
 
 Above are histograms for each of the three regression we have been considering. Notice that the first, for `fit_1` appears very normal. The third, for `fit_3`, appears to be very non-normal. However `fit_2` is not as clear. It does have a rough bell shape, however, it also has a very sharp peak. For this reason we will usually use more powerful tools such as **Q-Q plots** and the **Shapiro-Wilk test** for assessing the normality of errors.
 
@@ -383,9 +369,7 @@ qqnorm(resid(fit_1), main = "Normal Q-Q Plot, fit_1", col = "darkgrey")
 qqline(resid(fit_1), col = "dodgerblue", lwd = 2)
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-15-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" />
 
 In short, if the points of the plot do not closely follow a straight line, this would suggest that the data do not come from a normal distribution.
 
@@ -431,9 +415,7 @@ qqline(x, lty = 2, lwd = 2, col = "dodgerblue")
 qq_plot(x)
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-17-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-17-1.png" width="960" style="display: block; margin: auto;" />
 
 To get a better idea of what "close to the line" means, we perform a number of simulations, and create Q-Q plots.
 
@@ -448,9 +430,7 @@ qq_plot(rnorm(25))
 qq_plot(rnorm(100))
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-18-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-18-1.png" width="1152" style="display: block; margin: auto;" />
 
 Since this data **is** sampled from a normal distribution, these are all, by definition, good Q-Q plots. The points are "close to the line" and we would conclude that this data could have been sampled from a normal distribution. Notice in the first plot, one point is *somewhat* far from the line, but just one point, in combination with the small sample size, is not enough to make us worried. We see with the large sample size, all of the points are rather close to the line.
 
@@ -465,9 +445,7 @@ qq_plot(rt(25, df = 4))
 qq_plot(rt(100, df = 4))
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-19-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-19-1.png" width="1152" style="display: block; margin: auto;" />
 
 Recall, that as the degrees of freedom for a $t$ distribution become larger, the distribution becomes more and more similar to a normal. Here, using 4 degrees of freedom, we have a distribution that is somewhat normal, it is symmetrical and roughly bell-shaped, however it has "fat tails." This presents itself clearly in the third panel. While many of the points are close to the line, at the edges, there are large discrepancies. This indicates that the values are too small (negative) or too large (positive) compared to what we would expect for a normal distribution. So for the sample size of `100`, we would conclude that that normality assumption is violated. (If these were residuals of a model.) For sample sizes of `10` and `25` we may be suspicious, but not entirely confident. Reading Q-Q plots, is a bit of an art, not completely a science.
 
@@ -482,9 +460,7 @@ qq_plot(rexp(25))
 qq_plot(rexp(100))
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-20-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-20-1.png" width="1152" style="display: block; margin: auto;" />
 
 This is a distribution that is not very similar to a normal, so in all three cases, we see points that are far from the lines, so we would think that the normality assumption is violated.
 
@@ -504,9 +480,7 @@ qqnorm(resid(fit_1), main = "Normal Q-Q Plot, fit_1", col = "darkgrey")
 qqline(resid(fit_1), col = "dodgerblue", lwd = 2)
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-21-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" />
 
 For `fit_1`, we have a near perfect Q-Q plot. We would believe the errors follow a normal distribution.
 
@@ -516,9 +490,7 @@ qqnorm(resid(fit_2), main = "Normal Q-Q Plot, fit_2", col = "darkgrey")
 qqline(resid(fit_2), col = "dodgerblue", lwd = 2)
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-22-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" />
 
 For `fit_2`, we have a suspect Q-Q plot. We would probably **not** believe the errors follow a normal distribution.
 
@@ -528,9 +500,7 @@ qqnorm(resid(fit_3), main = "Normal Q-Q Plot, fit_3", col = "darkgrey")
 qqline(resid(fit_3), col = "dodgerblue", lwd = 2)
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-23-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" />
 
 Lastly, for `fit_3`, we again have a suspect Q-Q plot. We would probably **not** believe the errors follow a normal distribution.
 
@@ -662,9 +632,7 @@ legend("bottomleft", c("Original Data", "Added Point"),
        lty = c(1, 2), col = c("dodgerblue", "darkorange"))
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unusual_obs_plot-1} \end{center}
+<img src="diagnostics_files/figure-html/unusual_obs_plot-1.png" width="1440" style="display: block; margin: auto;" />
 
 The blue solid line in each plot is a regression fit to the 10 original data points stored in `ex_data`. The dashed orange line in each plot is the result of adding a single point to the original data in `ex_data`. This additional point is indicated by the circled point.
 
@@ -803,9 +771,7 @@ plot(x2 ~ x1, data = lev_ex, cex = 2)
 points(7, 3, pch = 20, col = "red", cex = 2)
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-32-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-32-1.png" width="672" style="display: block; margin: auto;" />
 
 Here we've created some multivariate data. Notice that we have plotted the $x$ values, not the $y$ values. The red point is $(7, 3)$ which is the mean of `x1` and the mean of `x2` respectively.
 
@@ -1198,8 +1164,7 @@ and an observation with a large Cook's Distance is called influential. This is a
 
 The Cook's distance for each point of a regression can be calculated using `cooks.distance()` which is a default function in `R`. Let's look for influential points in the three plots we had been considering.
 
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-47-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-47-1.png" width="1440" style="display: block; margin: auto;" />
 
 Recall that the circled points in each plot have different characteristics:
 
@@ -1260,9 +1225,7 @@ plot(fitted(mpg_hp_add), resid(mpg_hp_add), col = "grey", pch = 20,
 abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-50-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-50-1.png" width="672" style="display: block; margin: auto;" />
 
 The fitted versus residuals plot looks good. We don't see any obvious pattern, and the variance looks roughly constant. (Maybe a little larger for large fitted values, but not enough to worry about.)
 
@@ -1287,9 +1250,7 @@ qqnorm(resid(mpg_hp_add), col = "darkgrey")
 qqline(resid(mpg_hp_add), col = "dodgerblue", lwd = 2)
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-52-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-52-1.png" width="672" style="display: block; margin: auto;" />
 
 The Q-Q plot looks extremely good and the Shapiro-Wilk test agrees.
 
@@ -1383,9 +1344,7 @@ par(mfrow = c(2, 2))
 plot(mpg_hp_add)
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-59-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-59-1.png" width="768" style="display: block; margin: auto;" />
 
 Notice that, calling `plot()` on a variable which stores an object created by `lm()` outputs four diagnostic plots by default. Use `?plot.lm` to learn more. The first two should already be familiar.
 
@@ -1424,9 +1383,7 @@ qqnorm(resid(big_model), col = "darkgrey")
 qqline(resid(big_model), col = "dodgerblue", lwd = 2)
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-63-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-63-1.png" width="672" style="display: block; margin: auto;" />
 
 ```r
 shapiro.test(resid(big_model))
@@ -1463,9 +1420,7 @@ qqnorm(resid(big_model_fix), col = "grey")
 qqline(resid(big_model_fix), col = "dodgerblue", lwd = 2)
 ```
 
-
-
-\begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-65-1} \end{center}
+<img src="diagnostics_files/figure-html/unnamed-chunk-65-1.png" width="672" style="display: block; margin: auto;" />
 
 ```r
 shapiro.test(resid(big_model_fix))
@@ -1489,4 +1444,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`diagnostics.Rmd`](diagnostics.Rmd){target="_blank"}
 
-The file was created using `R` version `4.0.2`.
+The file was created using `R` version `4.1.0`.

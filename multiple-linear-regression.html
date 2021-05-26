@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 Multiple Linear Regression | Applied Statistics with R</title>
   <meta name="description" content="Chapter 9 Multiple Linear Regression | Applied Statistics with R" />
-  <meta name="generator" content="bookdown 0.21.2 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22.3 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 Multiple Linear Regression | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-10-30" />
+<meta name="date" content="2021-05-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -49,14 +49,15 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -65,16 +66,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -83,9 +84,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -117,6 +118,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -430,26 +432,26 @@ Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 \]</span></p>
 <p>where <span class="math inline">\(\epsilon_i \sim N(0, \sigma^2)\)</span>.</p>
 <p>However, it is rarely the case that a dataset will have a single predictor variable. It is also rarely the case that a response variable will only depend on a single variable. So in this chapter, we will extend our current linear model to allow a response to depend on <em>multiple</em> predictors.</p>
-<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb581-1" data-line-number="1"><span class="co"># read the data from the web</span></a>
-<a class="sourceLine" id="cb581-2" data-line-number="2">autompg =<span class="st"> </span><span class="kw">read.table</span>(</a>
-<a class="sourceLine" id="cb581-3" data-line-number="3">  <span class="st">&quot;http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data&quot;</span>,</a>
-<a class="sourceLine" id="cb581-4" data-line-number="4">  <span class="dt">quote =</span> <span class="st">&quot;</span><span class="ch">\&quot;</span><span class="st">&quot;</span>,</a>
-<a class="sourceLine" id="cb581-5" data-line-number="5">  <span class="dt">comment.char =</span> <span class="st">&quot;&quot;</span>,</a>
-<a class="sourceLine" id="cb581-6" data-line-number="6">  <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb581-7" data-line-number="7"><span class="co"># give the dataframe headers</span></a>
-<a class="sourceLine" id="cb581-8" data-line-number="8"><span class="kw">colnames</span>(autompg) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;mpg&quot;</span>, <span class="st">&quot;cyl&quot;</span>, <span class="st">&quot;disp&quot;</span>, <span class="st">&quot;hp&quot;</span>, <span class="st">&quot;wt&quot;</span>, <span class="st">&quot;acc&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;origin&quot;</span>, <span class="st">&quot;name&quot;</span>)</a>
-<a class="sourceLine" id="cb581-9" data-line-number="9"><span class="co"># remove missing data, which is stored as &quot;?&quot;</span></a>
-<a class="sourceLine" id="cb581-10" data-line-number="10">autompg =<span class="st"> </span><span class="kw">subset</span>(autompg, autompg<span class="op">$</span>hp <span class="op">!=</span><span class="st"> &quot;?&quot;</span>)</a>
-<a class="sourceLine" id="cb581-11" data-line-number="11"><span class="co"># remove the plymouth reliant, as it causes some issues</span></a>
-<a class="sourceLine" id="cb581-12" data-line-number="12">autompg =<span class="st"> </span><span class="kw">subset</span>(autompg, autompg<span class="op">$</span>name <span class="op">!=</span><span class="st"> &quot;plymouth reliant&quot;</span>)</a>
-<a class="sourceLine" id="cb581-13" data-line-number="13"><span class="co"># give the dataset row names, based on the engine, year and name</span></a>
-<a class="sourceLine" id="cb581-14" data-line-number="14"><span class="kw">rownames</span>(autompg) =<span class="st"> </span><span class="kw">paste</span>(autompg<span class="op">$</span>cyl, <span class="st">&quot;cylinder&quot;</span>, autompg<span class="op">$</span>year, autompg<span class="op">$</span>name)</a>
-<a class="sourceLine" id="cb581-15" data-line-number="15"><span class="co"># remove the variable for name, as well as origin</span></a>
-<a class="sourceLine" id="cb581-16" data-line-number="16">autompg =<span class="st"> </span><span class="kw">subset</span>(autompg, <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot;mpg&quot;</span>, <span class="st">&quot;cyl&quot;</span>, <span class="st">&quot;disp&quot;</span>, <span class="st">&quot;hp&quot;</span>, <span class="st">&quot;wt&quot;</span>, <span class="st">&quot;acc&quot;</span>, <span class="st">&quot;year&quot;</span>))</a>
-<a class="sourceLine" id="cb581-17" data-line-number="17"><span class="co"># change horsepower from character to numeric</span></a>
-<a class="sourceLine" id="cb581-18" data-line-number="18">autompg<span class="op">$</span>hp =<span class="st"> </span><span class="kw">as.numeric</span>(autompg<span class="op">$</span>hp)</a>
-<a class="sourceLine" id="cb581-19" data-line-number="19"><span class="co"># check final structure of data</span></a>
-<a class="sourceLine" id="cb581-20" data-line-number="20"><span class="kw">str</span>(autompg)</a></code></pre></div>
+<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="multiple-linear-regression.html#cb581-1"></a><span class="co"># read the data from the web</span></span>
+<span id="cb581-2"><a href="multiple-linear-regression.html#cb581-2"></a>autompg =<span class="st"> </span><span class="kw">read.table</span>(</span>
+<span id="cb581-3"><a href="multiple-linear-regression.html#cb581-3"></a>  <span class="st">&quot;http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data&quot;</span>,</span>
+<span id="cb581-4"><a href="multiple-linear-regression.html#cb581-4"></a>  <span class="dt">quote =</span> <span class="st">&quot;</span><span class="ch">\&quot;</span><span class="st">&quot;</span>,</span>
+<span id="cb581-5"><a href="multiple-linear-regression.html#cb581-5"></a>  <span class="dt">comment.char =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb581-6"><a href="multiple-linear-regression.html#cb581-6"></a>  <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb581-7"><a href="multiple-linear-regression.html#cb581-7"></a><span class="co"># give the dataframe headers</span></span>
+<span id="cb581-8"><a href="multiple-linear-regression.html#cb581-8"></a><span class="kw">colnames</span>(autompg) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;mpg&quot;</span>, <span class="st">&quot;cyl&quot;</span>, <span class="st">&quot;disp&quot;</span>, <span class="st">&quot;hp&quot;</span>, <span class="st">&quot;wt&quot;</span>, <span class="st">&quot;acc&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;origin&quot;</span>, <span class="st">&quot;name&quot;</span>)</span>
+<span id="cb581-9"><a href="multiple-linear-regression.html#cb581-9"></a><span class="co"># remove missing data, which is stored as &quot;?&quot;</span></span>
+<span id="cb581-10"><a href="multiple-linear-regression.html#cb581-10"></a>autompg =<span class="st"> </span><span class="kw">subset</span>(autompg, autompg<span class="op">$</span>hp <span class="op">!=</span><span class="st"> &quot;?&quot;</span>)</span>
+<span id="cb581-11"><a href="multiple-linear-regression.html#cb581-11"></a><span class="co"># remove the plymouth reliant, as it causes some issues</span></span>
+<span id="cb581-12"><a href="multiple-linear-regression.html#cb581-12"></a>autompg =<span class="st"> </span><span class="kw">subset</span>(autompg, autompg<span class="op">$</span>name <span class="op">!=</span><span class="st"> &quot;plymouth reliant&quot;</span>)</span>
+<span id="cb581-13"><a href="multiple-linear-regression.html#cb581-13"></a><span class="co"># give the dataset row names, based on the engine, year and name</span></span>
+<span id="cb581-14"><a href="multiple-linear-regression.html#cb581-14"></a><span class="kw">rownames</span>(autompg) =<span class="st"> </span><span class="kw">paste</span>(autompg<span class="op">$</span>cyl, <span class="st">&quot;cylinder&quot;</span>, autompg<span class="op">$</span>year, autompg<span class="op">$</span>name)</span>
+<span id="cb581-15"><a href="multiple-linear-regression.html#cb581-15"></a><span class="co"># remove the variable for name, as well as origin</span></span>
+<span id="cb581-16"><a href="multiple-linear-regression.html#cb581-16"></a>autompg =<span class="st"> </span><span class="kw">subset</span>(autompg, <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot;mpg&quot;</span>, <span class="st">&quot;cyl&quot;</span>, <span class="st">&quot;disp&quot;</span>, <span class="st">&quot;hp&quot;</span>, <span class="st">&quot;wt&quot;</span>, <span class="st">&quot;acc&quot;</span>, <span class="st">&quot;year&quot;</span>))</span>
+<span id="cb581-17"><a href="multiple-linear-regression.html#cb581-17"></a><span class="co"># change horsepower from character to numeric</span></span>
+<span id="cb581-18"><a href="multiple-linear-regression.html#cb581-18"></a>autompg<span class="op">$</span>hp =<span class="st"> </span><span class="kw">as.numeric</span>(autompg<span class="op">$</span>hp)</span>
+<span id="cb581-19"><a href="multiple-linear-regression.html#cb581-19"></a><span class="co"># check final structure of data</span></span>
+<span id="cb581-20"><a href="multiple-linear-regression.html#cb581-20"></a><span class="kw">str</span>(autompg)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    390 obs. of  7 variables:
 ##  $ mpg : num  18 15 18 16 17 15 14 14 14 15 ...
 ##  $ cyl : int  8 8 8 8 8 8 8 8 8 8 ...
@@ -491,8 +493,8 @@ n \beta_0 + \beta_1 \sum_{i = 1}^{n} x_{i1} + \beta_2 \sum_{i = 1}^{n} x_{i2} &a
 \end{aligned}
 \]</span></p>
 <p>We now have three equations and three variables, which we could solve, or we could simply let <code>R</code> solve for us.</p>
-<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb583-1" data-line-number="1">mpg_model =<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>year, <span class="dt">data =</span> autompg)</a>
-<a class="sourceLine" id="cb583-2" data-line-number="2"><span class="kw">coef</span>(mpg_model)</a></code></pre></div>
+<div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="multiple-linear-regression.html#cb583-1"></a>mpg_model =<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>year, <span class="dt">data =</span> autompg)</span>
+<span id="cb583-2"><a href="multiple-linear-regression.html#cb583-2"></a><span class="kw">coef</span>(mpg_model)</span></code></pre></div>
 <pre><code>##   (Intercept)            wt          year 
 ## -14.637641945  -0.006634876   0.761401955</code></pre>
 <p><span class="math display">\[
@@ -599,17 +601,17 @@ X^\top X \beta = X^\top y.
 \hat{\beta} = \left(  X^\top X  \right)^{-1}X^\top y
 \]</span></p>
 <p>To verify that this is what <code>R</code> has done for us in the case of two predictors, we create an <span class="math inline">\(X\)</span> matrix. Note that the first column is all 1s, and the remaining columns contain the data.</p>
-<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb585-1" data-line-number="1">n =<span class="st"> </span><span class="kw">nrow</span>(autompg)</a>
-<a class="sourceLine" id="cb585-2" data-line-number="2">p =<span class="st"> </span><span class="kw">length</span>(<span class="kw">coef</span>(mpg_model))</a>
-<a class="sourceLine" id="cb585-3" data-line-number="3">X =<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">rep</span>(<span class="dv">1</span>, n), autompg<span class="op">$</span>wt, autompg<span class="op">$</span>year)</a>
-<a class="sourceLine" id="cb585-4" data-line-number="4">y =<span class="st"> </span>autompg<span class="op">$</span>mpg</a>
-<a class="sourceLine" id="cb585-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb585-6" data-line-number="6">(<span class="dt">beta_hat =</span> <span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>y)</a></code></pre></div>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="multiple-linear-regression.html#cb585-1"></a>n =<span class="st"> </span><span class="kw">nrow</span>(autompg)</span>
+<span id="cb585-2"><a href="multiple-linear-regression.html#cb585-2"></a>p =<span class="st"> </span><span class="kw">length</span>(<span class="kw">coef</span>(mpg_model))</span>
+<span id="cb585-3"><a href="multiple-linear-regression.html#cb585-3"></a>X =<span class="st"> </span><span class="kw">cbind</span>(<span class="kw">rep</span>(<span class="dv">1</span>, n), autompg<span class="op">$</span>wt, autompg<span class="op">$</span>year)</span>
+<span id="cb585-4"><a href="multiple-linear-regression.html#cb585-4"></a>y =<span class="st"> </span>autompg<span class="op">$</span>mpg</span>
+<span id="cb585-5"><a href="multiple-linear-regression.html#cb585-5"></a></span>
+<span id="cb585-6"><a href="multiple-linear-regression.html#cb585-6"></a>(<span class="dt">beta_hat =</span> <span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>y)</span></code></pre></div>
 <pre><code>##               [,1]
 ## [1,] -14.637641945
 ## [2,]  -0.006634876
 ## [3,]   0.761401955</code></pre>
-<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb587-1" data-line-number="1"><span class="kw">coef</span>(mpg_model)</a></code></pre></div>
+<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="multiple-linear-regression.html#cb587-1"></a><span class="kw">coef</span>(mpg_model)</span></code></pre></div>
 <pre><code>##   (Intercept)            wt          year 
 ## -14.637641945  -0.006634876   0.761401955</code></pre>
 <p><span class="math display">\[
@@ -651,21 +653,21 @@ s_e^2 = \frac{\sum_{i=1}^n (y_i - \bar{y})^2}{n - 1}
 s_e = \sqrt{\frac{\sum_{i=1}^n (y_i - \hat{y}_i)^2}{n - p}}.
 \]</span></p>
 <p>In <code>R</code>, we could directly access <span class="math inline">\(s_e\)</span> for a fitted model, as we have seen before.</p>
-<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb589-1" data-line-number="1"><span class="kw">summary</span>(mpg_model)<span class="op">$</span>sigma</a></code></pre></div>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="multiple-linear-regression.html#cb589-1"></a><span class="kw">summary</span>(mpg_model)<span class="op">$</span>sigma</span></code></pre></div>
 <pre><code>## [1] 3.431367</code></pre>
 <p>And we can now verify that our math above is indeed calculating the same quantities.</p>
-<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb591-1" data-line-number="1">y_hat =<span class="st"> </span>X <span class="op">%*%</span><span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>y</a>
-<a class="sourceLine" id="cb591-2" data-line-number="2">e     =<span class="st"> </span>y <span class="op">-</span><span class="st"> </span>y_hat</a>
-<a class="sourceLine" id="cb591-3" data-line-number="3"><span class="kw">sqrt</span>(<span class="kw">t</span>(e) <span class="op">%*%</span><span class="st"> </span>e <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>p))</a></code></pre></div>
+<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="multiple-linear-regression.html#cb591-1"></a>y_hat =<span class="st"> </span>X <span class="op">%*%</span><span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X) <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>y</span>
+<span id="cb591-2"><a href="multiple-linear-regression.html#cb591-2"></a>e     =<span class="st"> </span>y <span class="op">-</span><span class="st"> </span>y_hat</span>
+<span id="cb591-3"><a href="multiple-linear-regression.html#cb591-3"></a><span class="kw">sqrt</span>(<span class="kw">t</span>(e) <span class="op">%*%</span><span class="st"> </span>e <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>p))</span></code></pre></div>
 <pre><code>##          [,1]
 ## [1,] 3.431367</code></pre>
-<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb593-1" data-line-number="1"><span class="kw">sqrt</span>(<span class="kw">sum</span>((y <span class="op">-</span><span class="st"> </span>y_hat) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>p))</a></code></pre></div>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="multiple-linear-regression.html#cb593-1"></a><span class="kw">sqrt</span>(<span class="kw">sum</span>((y <span class="op">-</span><span class="st"> </span>y_hat) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>p))</span></code></pre></div>
 <pre><code>## [1] 3.431367</code></pre>
 </div>
 <div id="sampling-distribution" class="section level2">
 <h2><span class="header-section-number">9.2</span> Sampling Distribution</h2>
 <p>As we can see in the output below, the results of calling <code>summary()</code> are similar to SLR, but there are some differences, most obviously a new row for the added predictor variable.</p>
-<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb595-1" data-line-number="1"><span class="kw">summary</span>(mpg_model)</a></code></pre></div>
+<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="multiple-linear-regression.html#cb595-1"></a><span class="kw">summary</span>(mpg_model)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ wt + year, data = autompg)
@@ -781,7 +783,7 @@ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \epsilon_i, \qquad i = 1, 2, \
 H_0: \beta_1 = 0 \quad \text{vs} \quad H_1: \beta_1 \neq 0
 \]</span></p>
 <p>can be found in the <code>summary()</code> output, in particular:</p>
-<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb597-1" data-line-number="1"><span class="kw">summary</span>(mpg_model)<span class="op">$</span>coef</a></code></pre></div>
+<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="multiple-linear-regression.html#cb597-1"></a><span class="kw">summary</span>(mpg_model)<span class="op">$</span>coef</span></code></pre></div>
 <pre><code>##                  Estimate   Std. Error    t value      Pr(&gt;|t|)
 ## (Intercept) -14.637641945 4.0233913563  -3.638135  3.118311e-04
 ## wt           -0.006634876 0.0002148504 -30.881372 1.850466e-106
@@ -809,7 +811,7 @@ H_0: \beta_1 = 0 \quad \text{vs} \quad H_1: \beta_1 \neq 0
 \hat{\beta}_j \pm t_{\alpha/2, n - p} \cdot s_e\sqrt{C_{jj}}
 \]</span></p>
 <p>We can find these in <code>R</code> using the same method as before. Now there will simply be additional rows for the additional <span class="math inline">\(\beta\)</span>.</p>
-<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb599-1" data-line-number="1"><span class="kw">confint</span>(mpg_model, <span class="dt">level =</span> <span class="fl">0.99</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="multiple-linear-regression.html#cb599-1"></a><span class="kw">confint</span>(mpg_model, <span class="dt">level =</span> <span class="fl">0.99</span>)</span></code></pre></div>
 <pre><code>##                     0.5 %       99.5 %
 ## (Intercept) -25.052563681 -4.222720208
 ## wt           -0.007191036 -0.006078716
@@ -850,35 +852,35 @@ x_{0(p-1)} \\
 \hat{y}(x_0) \pm t_{\alpha/2, n - p} \cdot s_e \sqrt{x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
 \]</span></p>
 <p>The math has changed a bit, but the process in <code>R</code> remains almost identical. Here, we create a data frame for two additional cars. One car that weighs 3500 pounds produced in 1976, as well as a second car that weighs 5000 pounds which was produced in 1981.</p>
-<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb601-1" data-line-number="1">new_cars =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">wt =</span> <span class="kw">c</span>(<span class="dv">3500</span>, <span class="dv">5000</span>), <span class="dt">year =</span> <span class="kw">c</span>(<span class="dv">76</span>, <span class="dv">81</span>))</a>
-<a class="sourceLine" id="cb601-2" data-line-number="2">new_cars</a></code></pre></div>
+<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="multiple-linear-regression.html#cb601-1"></a>new_cars =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">wt =</span> <span class="kw">c</span>(<span class="dv">3500</span>, <span class="dv">5000</span>), <span class="dt">year =</span> <span class="kw">c</span>(<span class="dv">76</span>, <span class="dv">81</span>))</span>
+<span id="cb601-2"><a href="multiple-linear-regression.html#cb601-2"></a>new_cars</span></code></pre></div>
 <pre><code>##     wt year
 ## 1 3500   76
 ## 2 5000   81</code></pre>
-<p>We can then use the <code>predict()</code> function with <code>interval = &quot;confidence&quot;</code> to obtain intervals for the mean fuel efficiency for both new cars. Again, it is important to make the data passed to <code>newdata</code> a data frame, so that <code>R</code> knows which values are for which variables.</p>
-<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb603-1" data-line-number="1"><span class="kw">predict</span>(mpg_model, <span class="dt">newdata =</span> new_cars, <span class="dt">interval =</span> <span class="st">&quot;confidence&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>)</a></code></pre></div>
+<p>We can then use the <code>predict()</code> function with <code>interval = "confidence"</code> to obtain intervals for the mean fuel efficiency for both new cars. Again, it is important to make the data passed to <code>newdata</code> a data frame, so that <code>R</code> knows which values are for which variables.</p>
+<div class="sourceCode" id="cb603"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb603-1"><a href="multiple-linear-regression.html#cb603-1"></a><span class="kw">predict</span>(mpg_model, <span class="dt">newdata =</span> new_cars, <span class="dt">interval =</span> <span class="st">&quot;confidence&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>)</span></code></pre></div>
 <pre><code>##        fit     lwr      upr
 ## 1 20.00684 19.4712 20.54248
 ## 2 13.86154 12.3341 15.38898</code></pre>
 <p><code>R</code> then reports the estimate <span class="math inline">\(\hat{y}(x_0)\)</span> (<code>fit</code>) for each, as well as the lower (<code>lwr</code>) and upper (<code>upr</code>) bounds for the interval at a desired level (99%).</p>
 <p>A word of caution here: one of these estimates is good while one is suspect.</p>
-<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb605-1" data-line-number="1">new_cars<span class="op">$</span>wt</a></code></pre></div>
+<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="multiple-linear-regression.html#cb605-1"></a>new_cars<span class="op">$</span>wt</span></code></pre></div>
 <pre><code>## [1] 3500 5000</code></pre>
-<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb607-1" data-line-number="1"><span class="kw">range</span>(autompg<span class="op">$</span>wt)</a></code></pre></div>
+<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="multiple-linear-regression.html#cb607-1"></a><span class="kw">range</span>(autompg<span class="op">$</span>wt)</span></code></pre></div>
 <pre><code>## [1] 1613 5140</code></pre>
 <p>Note that both of the weights of the new cars are within the range of observed values.</p>
-<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb609-1" data-line-number="1">new_cars<span class="op">$</span>year</a></code></pre></div>
+<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb609-1"><a href="multiple-linear-regression.html#cb609-1"></a>new_cars<span class="op">$</span>year</span></code></pre></div>
 <pre><code>## [1] 76 81</code></pre>
-<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb611-1" data-line-number="1"><span class="kw">range</span>(autompg<span class="op">$</span>year)</a></code></pre></div>
+<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="multiple-linear-regression.html#cb611-1"></a><span class="kw">range</span>(autompg<span class="op">$</span>year)</span></code></pre></div>
 <pre><code>## [1] 70 82</code></pre>
 <p>As are the years of each of the new cars.</p>
-<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb613-1" data-line-number="1"><span class="kw">plot</span>(year <span class="op">~</span><span class="st"> </span>wt, <span class="dt">data =</span> autompg, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)</a>
-<a class="sourceLine" id="cb613-2" data-line-number="2"><span class="kw">points</span>(new_cars, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">cex =</span> <span class="dv">3</span>, <span class="dt">pch =</span> <span class="st">&quot;X&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb613-1"><a href="multiple-linear-regression.html#cb613-1"></a><span class="kw">plot</span>(year <span class="op">~</span><span class="st"> </span>wt, <span class="dt">data =</span> autompg, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)</span>
+<span id="cb613-2"><a href="multiple-linear-regression.html#cb613-2"></a><span class="kw">points</span>(new_cars, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">cex =</span> <span class="dv">3</span>, <span class="dt">pch =</span> <span class="st">&quot;X&quot;</span>)</span></code></pre></div>
 <p><img src="mlr_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>However, we have to consider weight and year together now. And based on the above plot, one of the new cars is within the “blob” of observed values, while the other, the car from 1981 weighing 5000 pounds, is noticeably outside of the observed values. This is a hidden extrapolation which you should be aware of when using multiple regression.</p>
 <p>Shifting gears back to the new data pair that can be reasonably estimated, we do a quick verification of some of the mathematics in <code>R</code>.</p>
-<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb614-1" data-line-number="1">x0 =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3500</span>, <span class="dv">76</span>)</a>
-<a class="sourceLine" id="cb614-2" data-line-number="2">x0 <span class="op">%*%</span><span class="st"> </span>beta_hat</a></code></pre></div>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="multiple-linear-regression.html#cb614-1"></a>x0 =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3500</span>, <span class="dv">76</span>)</span>
+<span id="cb614-2"><a href="multiple-linear-regression.html#cb614-2"></a>x0 <span class="op">%*%</span><span class="st"> </span>beta_hat</span></code></pre></div>
 <pre><code>##          [,1]
 ## [1,] 20.00684</code></pre>
 <p><span class="math display">\[
@@ -909,13 +911,13 @@ x_{0} = \begin{bmatrix}
 \end{bmatrix}= 20.0068411
 \]</span></p>
 <p>Also note that, using a particular value for <span class="math inline">\(x_0\)</span>, we can essentially extract certain <span class="math inline">\(\hat{\beta}_j\)</span> values.</p>
-<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb616-1" data-line-number="1">beta_hat</a></code></pre></div>
+<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="multiple-linear-regression.html#cb616-1"></a>beta_hat</span></code></pre></div>
 <pre><code>##               [,1]
 ## [1,] -14.637641945
 ## [2,]  -0.006634876
 ## [3,]   0.761401955</code></pre>
-<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb618-1" data-line-number="1">x0 =<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb618-2" data-line-number="2">x0 <span class="op">%*%</span><span class="st"> </span>beta_hat</a></code></pre></div>
+<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="multiple-linear-regression.html#cb618-1"></a>x0 =<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb618-2"><a href="multiple-linear-regression.html#cb618-2"></a>x0 <span class="op">%*%</span><span class="st"> </span>beta_hat</span></code></pre></div>
 <pre><code>##          [,1]
 ## [1,] 0.761402</code></pre>
 <p>With this in mind, confidence intervals for the individual <span class="math inline">\(\hat{\beta}_j\)</span> are actually a special case of a confidence interval for mean response.</p>
@@ -944,11 +946,11 @@ x_{0} = \begin{bmatrix}
 <p><span class="math display">\[
 \hat{y}(x_0) \pm t_{\alpha/2, n - p} \cdot s_e \sqrt{1 + x_{0}^\top\left(X^\top X\right)^{-1}x_{0}}
 \]</span></p>
-<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb620-1" data-line-number="1">new_cars</a></code></pre></div>
+<div class="sourceCode" id="cb620"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb620-1"><a href="multiple-linear-regression.html#cb620-1"></a>new_cars</span></code></pre></div>
 <pre><code>##     wt year
 ## 1 3500   76
 ## 2 5000   81</code></pre>
-<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb622-1" data-line-number="1"><span class="kw">predict</span>(mpg_model, <span class="dt">newdata =</span> new_cars, <span class="dt">interval =</span> <span class="st">&quot;prediction&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb622"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb622-1"><a href="multiple-linear-regression.html#cb622-1"></a><span class="kw">predict</span>(mpg_model, <span class="dt">newdata =</span> new_cars, <span class="dt">interval =</span> <span class="st">&quot;prediction&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>)</span></code></pre></div>
 <pre><code>##        fit       lwr      upr
 ## 1 20.00684 11.108294 28.90539
 ## 2 13.86154  4.848751 22.87432</code></pre>
@@ -965,7 +967,7 @@ x_{0} = \begin{bmatrix}
 \text{SST} = \text{SSE} + \text{SSReg}.
 \]</span></p>
 <p>This means that, we can still calculate <span class="math inline">\(R^2\)</span> in the same manner as before, which <code>R</code> continues to do automatically.</p>
-<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb624-1" data-line-number="1"><span class="kw">summary</span>(mpg_model)<span class="op">$</span>r.squared</a></code></pre></div>
+<div class="sourceCode" id="cb624"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb624-1"><a href="multiple-linear-regression.html#cb624-1"></a><span class="kw">summary</span>(mpg_model)<span class="op">$</span>r.squared</span></code></pre></div>
 <pre><code>## [1] 0.8082355</code></pre>
 <p>The interpretation changes slightly as compared to SLR. In this MLR case, we say that <span class="math inline">\(80.82\%\)</span> for the observed variation in miles per gallon is explained by the linear relationship with the two predictor variables, weight and year.</p>
 <p>In multiple regression, the significance of regression test is</p>
@@ -1048,9 +1050,9 @@ P(F_{p-1, n-p} &gt; F)
 <li><span class="math inline">\(H_1\)</span>: <span class="math inline">\(Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \epsilon_i\)</span></li>
 </ul>
 <p>That is, in the null model, we use neither of the predictors, whereas in the full (alternative) model, at least one of the predictors is useful.</p>
-<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb626-1" data-line-number="1">null_mpg_model =<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> autompg)</a>
-<a class="sourceLine" id="cb626-2" data-line-number="2">full_mpg_model =<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>year, <span class="dt">data =</span> autompg)</a>
-<a class="sourceLine" id="cb626-3" data-line-number="3"><span class="kw">anova</span>(null_mpg_model, full_mpg_model)</a></code></pre></div>
+<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="multiple-linear-regression.html#cb626-1"></a>null_mpg_model =<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> autompg)</span>
+<span id="cb626-2"><a href="multiple-linear-regression.html#cb626-2"></a>full_mpg_model =<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>year, <span class="dt">data =</span> autompg)</span>
+<span id="cb626-3"><a href="multiple-linear-regression.html#cb626-3"></a><span class="kw">anova</span>(null_mpg_model, full_mpg_model)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: mpg ~ 1
@@ -1061,7 +1063,7 @@ P(F_{p-1, n-p} &gt; F)
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>First, notice that <code>R</code> does not display the results in the same manner as the table above. More important than the layout of the table are its contents. We see that the value of the <span class="math inline">\(F\)</span> statistic is 815.55, and the p-value is extremely low, so we reject the null hypothesis at any reasonable <span class="math inline">\(\alpha\)</span> and say that the regression is significant. At least one of <code>wt</code> or <code>year</code> has a useful linear relationship with <code>mpg</code>.</p>
-<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb628-1" data-line-number="1"><span class="kw">summary</span>(mpg_model)</a></code></pre></div>
+<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="multiple-linear-regression.html#cb628-1"></a><span class="kw">summary</span>(mpg_model)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = mpg ~ wt + year, data = autompg)
@@ -1084,23 +1086,23 @@ P(F_{p-1, n-p} &gt; F)
 <p>Notice that the value reported in the row for <code>F-statistic</code> is indeed the <span class="math inline">\(F\)</span> test statistic for the significance of regression test, and additionally it reports the two relevant degrees of freedom.</p>
 <p>Also, note that none of the individual <span class="math inline">\(t\)</span>-tests are equivalent to the <span class="math inline">\(F\)</span>-test as they were in SLR. This equivalence only holds for SLR because the individual test for <span class="math inline">\(\beta_1\)</span> is the same as testing for all non-intercept parameters, since there is only one.</p>
 <p>We can also verify the sums of squares and degrees of freedom directly in <code>R</code>. You should match these to the table from <code>R</code> and use this to match <code>R</code>’s output to the written table above.</p>
-<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb630-1" data-line-number="1"><span class="co"># SSReg</span></a>
-<a class="sourceLine" id="cb630-2" data-line-number="2"><span class="kw">sum</span>((<span class="kw">fitted</span>(full_mpg_model) <span class="op">-</span><span class="st"> </span><span class="kw">fitted</span>(null_mpg_model)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="multiple-linear-regression.html#cb630-1"></a><span class="co"># SSReg</span></span>
+<span id="cb630-2"><a href="multiple-linear-regression.html#cb630-2"></a><span class="kw">sum</span>((<span class="kw">fitted</span>(full_mpg_model) <span class="op">-</span><span class="st"> </span><span class="kw">fitted</span>(null_mpg_model)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 19205.03</code></pre>
-<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb632-1" data-line-number="1"><span class="co"># SSE</span></a>
-<a class="sourceLine" id="cb632-2" data-line-number="2"><span class="kw">sum</span>(<span class="kw">resid</span>(full_mpg_model) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="multiple-linear-regression.html#cb632-1"></a><span class="co"># SSE</span></span>
+<span id="cb632-2"><a href="multiple-linear-regression.html#cb632-2"></a><span class="kw">sum</span>(<span class="kw">resid</span>(full_mpg_model) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 4556.646</code></pre>
-<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb634-1" data-line-number="1"><span class="co"># SST</span></a>
-<a class="sourceLine" id="cb634-2" data-line-number="2"><span class="kw">sum</span>(<span class="kw">resid</span>(null_mpg_model) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb634"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb634-1"><a href="multiple-linear-regression.html#cb634-1"></a><span class="co"># SST</span></span>
+<span id="cb634-2"><a href="multiple-linear-regression.html#cb634-2"></a><span class="kw">sum</span>(<span class="kw">resid</span>(null_mpg_model) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 23761.67</code></pre>
-<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb636-1" data-line-number="1"><span class="co"># Degrees of Freedom: Regression</span></a>
-<a class="sourceLine" id="cb636-2" data-line-number="2"><span class="kw">length</span>(<span class="kw">coef</span>(full_mpg_model)) <span class="op">-</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">coef</span>(null_mpg_model))</a></code></pre></div>
+<div class="sourceCode" id="cb636"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb636-1"><a href="multiple-linear-regression.html#cb636-1"></a><span class="co"># Degrees of Freedom: Regression</span></span>
+<span id="cb636-2"><a href="multiple-linear-regression.html#cb636-2"></a><span class="kw">length</span>(<span class="kw">coef</span>(full_mpg_model)) <span class="op">-</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">coef</span>(null_mpg_model))</span></code></pre></div>
 <pre><code>## [1] 2</code></pre>
-<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb638-1" data-line-number="1"><span class="co"># Degrees of Freedom: Error</span></a>
-<a class="sourceLine" id="cb638-2" data-line-number="2"><span class="kw">length</span>(<span class="kw">resid</span>(full_mpg_model)) <span class="op">-</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">coef</span>(full_mpg_model))</a></code></pre></div>
+<div class="sourceCode" id="cb638"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb638-1"><a href="multiple-linear-regression.html#cb638-1"></a><span class="co"># Degrees of Freedom: Error</span></span>
+<span id="cb638-2"><a href="multiple-linear-regression.html#cb638-2"></a><span class="kw">length</span>(<span class="kw">resid</span>(full_mpg_model)) <span class="op">-</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">coef</span>(full_mpg_model))</span></code></pre></div>
 <pre><code>## [1] 387</code></pre>
-<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb640-1" data-line-number="1"><span class="co"># Degrees of Freedom: Total</span></a>
-<a class="sourceLine" id="cb640-2" data-line-number="2"><span class="kw">length</span>(<span class="kw">resid</span>(null_mpg_model)) <span class="op">-</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">coef</span>(null_mpg_model))</a></code></pre></div>
+<div class="sourceCode" id="cb640"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb640-1"><a href="multiple-linear-regression.html#cb640-1"></a><span class="co"># Degrees of Freedom: Total</span></span>
+<span id="cb640-2"><a href="multiple-linear-regression.html#cb640-2"></a><span class="kw">length</span>(<span class="kw">resid</span>(null_mpg_model)) <span class="op">-</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">coef</span>(null_mpg_model))</span></code></pre></div>
 <pre><code>## [1] 389</code></pre>
 </div>
 <div id="nested-models" class="section level2">
@@ -1168,7 +1170,7 @@ F = \frac{\sum_{i=1}^{n}(\hat{y}_{1i} - \hat{y}_{0i})^2 / (p - q)}{\sum_{i=1}^{n
 \]</span></p>
 <p>Notice that the row for “Diff” compares the sum of the squared differences of the fitted values. The degrees of freedom is then the difference of the number of <span class="math inline">\(\beta\)</span>-parameters estimated between the two models.</p>
 <p>For example, the <code>autompg</code> dataset has a number of additional variables that we have yet to use.</p>
-<div class="sourceCode" id="cb642"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb642-1" data-line-number="1"><span class="kw">names</span>(autompg)</a></code></pre></div>
+<div class="sourceCode" id="cb642"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb642-1"><a href="multiple-linear-regression.html#cb642-1"></a><span class="kw">names</span>(autompg)</span></code></pre></div>
 <pre><code>## [1] &quot;mpg&quot;  &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;   &quot;wt&quot;   &quot;acc&quot;  &quot;year&quot;</code></pre>
 <p>We’ll continue to use <code>mpg</code> as the response, but now we will consider two different models.</p>
 <ul>
@@ -1181,10 +1183,10 @@ H_0: \beta_{\texttt{cyl}} = \beta_{\texttt{disp}} = \beta_{\texttt{hp}} = \beta_
 \]</span></p>
 <p>The alternative is simply that at least one of the <span class="math inline">\(\beta_{j}\)</span> from the null is not 0.</p>
 <p>To perform this test in <code>R</code> we first define both models, then give them to the <code>anova()</code> commands.</p>
-<div class="sourceCode" id="cb644"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb644-1" data-line-number="1">null_mpg_model =<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>year, <span class="dt">data =</span> autompg)</a>
-<a class="sourceLine" id="cb644-2" data-line-number="2"><span class="co">#full_mpg_model = lm(mpg ~ wt + year + cyl + disp + hp + acc, data = autompg)</span></a>
-<a class="sourceLine" id="cb644-3" data-line-number="3">full_mpg_model =<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> autompg)</a>
-<a class="sourceLine" id="cb644-4" data-line-number="4"><span class="kw">anova</span>(null_mpg_model, full_mpg_model)</a></code></pre></div>
+<div class="sourceCode" id="cb644"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb644-1"><a href="multiple-linear-regression.html#cb644-1"></a>null_mpg_model =<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>wt <span class="op">+</span><span class="st"> </span>year, <span class="dt">data =</span> autompg)</span>
+<span id="cb644-2"><a href="multiple-linear-regression.html#cb644-2"></a><span class="co">#full_mpg_model = lm(mpg ~ wt + year + cyl + disp + hp + acc, data = autompg)</span></span>
+<span id="cb644-3"><a href="multiple-linear-regression.html#cb644-3"></a>full_mpg_model =<span class="st"> </span><span class="kw">lm</span>(mpg <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> autompg)</span>
+<span id="cb644-4"><a href="multiple-linear-regression.html#cb644-4"></a><span class="kw">anova</span>(null_mpg_model, full_mpg_model)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: mpg ~ wt + year
@@ -1195,23 +1197,23 @@ H_0: \beta_{\texttt{cyl}} = \beta_{\texttt{disp}} = \beta_{\texttt{hp}} = \beta_
 <p>Here we have used the formula <code>mpg ~ .</code> to define to full model. This is the same as the commented out line. Specifically, this is a common shortcut in <code>R</code> which reads, “model <code>mpg</code> as the response with each of the remaining variables in the data frame as predictors.”</p>
 <p>Here we see that the value of the <span class="math inline">\(F\)</span> statistic is 0.553, and the p-value is very large, so we fail to reject the null hypothesis at any reasonable <span class="math inline">\(\alpha\)</span> and say that none of <code>cyl</code>, <code>disp</code>, <code>hp</code>, and <code>acc</code> are significant with <code>wt</code> and <code>year</code> already in the model.</p>
 <p>Again, we verify the sums of squares and degrees of freedom directly in <code>R</code>. You should match these to the table from <code>R</code>, and use this to match <code>R</code>’s output to the written table above.</p>
-<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb646-1" data-line-number="1"><span class="co"># SSDiff</span></a>
-<a class="sourceLine" id="cb646-2" data-line-number="2"><span class="kw">sum</span>((<span class="kw">fitted</span>(full_mpg_model) <span class="op">-</span><span class="st"> </span><span class="kw">fitted</span>(null_mpg_model)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="multiple-linear-regression.html#cb646-1"></a><span class="co"># SSDiff</span></span>
+<span id="cb646-2"><a href="multiple-linear-regression.html#cb646-2"></a><span class="kw">sum</span>((<span class="kw">fitted</span>(full_mpg_model) <span class="op">-</span><span class="st"> </span><span class="kw">fitted</span>(null_mpg_model)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 26.17981</code></pre>
-<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb648-1" data-line-number="1"><span class="co"># SSE (For Full)</span></a>
-<a class="sourceLine" id="cb648-2" data-line-number="2"><span class="kw">sum</span>(<span class="kw">resid</span>(full_mpg_model) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb648-1"><a href="multiple-linear-regression.html#cb648-1"></a><span class="co"># SSE (For Full)</span></span>
+<span id="cb648-2"><a href="multiple-linear-regression.html#cb648-2"></a><span class="kw">sum</span>(<span class="kw">resid</span>(full_mpg_model) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 4530.466</code></pre>
-<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb650-1" data-line-number="1"><span class="co"># SST (For Null)</span></a>
-<a class="sourceLine" id="cb650-2" data-line-number="2"><span class="kw">sum</span>(<span class="kw">resid</span>(null_mpg_model) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb650-1"><a href="multiple-linear-regression.html#cb650-1"></a><span class="co"># SST (For Null)</span></span>
+<span id="cb650-2"><a href="multiple-linear-regression.html#cb650-2"></a><span class="kw">sum</span>(<span class="kw">resid</span>(null_mpg_model) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 4556.646</code></pre>
-<div class="sourceCode" id="cb652"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb652-1" data-line-number="1"><span class="co"># Degrees of Freedom: Diff</span></a>
-<a class="sourceLine" id="cb652-2" data-line-number="2"><span class="kw">length</span>(<span class="kw">coef</span>(full_mpg_model)) <span class="op">-</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">coef</span>(null_mpg_model))</a></code></pre></div>
+<div class="sourceCode" id="cb652"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb652-1"><a href="multiple-linear-regression.html#cb652-1"></a><span class="co"># Degrees of Freedom: Diff</span></span>
+<span id="cb652-2"><a href="multiple-linear-regression.html#cb652-2"></a><span class="kw">length</span>(<span class="kw">coef</span>(full_mpg_model)) <span class="op">-</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">coef</span>(null_mpg_model))</span></code></pre></div>
 <pre><code>## [1] 4</code></pre>
-<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb654-1" data-line-number="1"><span class="co"># Degrees of Freedom: Full</span></a>
-<a class="sourceLine" id="cb654-2" data-line-number="2"><span class="kw">length</span>(<span class="kw">resid</span>(full_mpg_model)) <span class="op">-</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">coef</span>(full_mpg_model))</a></code></pre></div>
+<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb654-1"><a href="multiple-linear-regression.html#cb654-1"></a><span class="co"># Degrees of Freedom: Full</span></span>
+<span id="cb654-2"><a href="multiple-linear-regression.html#cb654-2"></a><span class="kw">length</span>(<span class="kw">resid</span>(full_mpg_model)) <span class="op">-</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">coef</span>(full_mpg_model))</span></code></pre></div>
 <pre><code>## [1] 383</code></pre>
-<div class="sourceCode" id="cb656"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb656-1" data-line-number="1"><span class="co"># Degrees of Freedom: Null</span></a>
-<a class="sourceLine" id="cb656-2" data-line-number="2"><span class="kw">length</span>(<span class="kw">resid</span>(null_mpg_model)) <span class="op">-</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">coef</span>(null_mpg_model))</a></code></pre></div>
+<div class="sourceCode" id="cb656"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb656-1"><a href="multiple-linear-regression.html#cb656-1"></a><span class="co"># Degrees of Freedom: Null</span></span>
+<span id="cb656-2"><a href="multiple-linear-regression.html#cb656-2"></a><span class="kw">length</span>(<span class="kw">resid</span>(null_mpg_model)) <span class="op">-</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">coef</span>(null_mpg_model))</span></code></pre></div>
 <pre><code>## [1] 387</code></pre>
 </div>
 <div id="simulation-1" class="section level2">
@@ -1221,47 +1223,47 @@ H_0: \beta_{\texttt{cyl}} = \beta_{\texttt{disp}} = \beta_{\texttt{hp}} = \beta_
 Y_i = 5 + -2 x_{i1} + 6 x_{i2} + \epsilon_i, \qquad i = 1, 2, \ldots, n
 \]</span></p>
 <p>where <span class="math inline">\(\epsilon_i \sim N(0, \sigma^2 = 16)\)</span>. Here we have two predictors, so <span class="math inline">\(p = 3\)</span>.</p>
-<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb658-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">1337</span>)</a>
-<a class="sourceLine" id="cb658-2" data-line-number="2">n =<span class="st"> </span><span class="dv">100</span> <span class="co"># sample size</span></a>
-<a class="sourceLine" id="cb658-3" data-line-number="3">p =<span class="st"> </span><span class="dv">3</span></a>
-<a class="sourceLine" id="cb658-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb658-5" data-line-number="5">beta_<span class="dv">0</span> =<span class="st"> </span><span class="dv">5</span></a>
-<a class="sourceLine" id="cb658-6" data-line-number="6">beta_<span class="dv">1</span> =<span class="st"> </span><span class="dv">-2</span></a>
-<a class="sourceLine" id="cb658-7" data-line-number="7">beta_<span class="dv">2</span> =<span class="st"> </span><span class="dv">6</span></a>
-<a class="sourceLine" id="cb658-8" data-line-number="8">sigma  =<span class="st"> </span><span class="dv">4</span></a></code></pre></div>
+<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb658-1"><a href="multiple-linear-regression.html#cb658-1"></a><span class="kw">set.seed</span>(<span class="dv">1337</span>)</span>
+<span id="cb658-2"><a href="multiple-linear-regression.html#cb658-2"></a>n =<span class="st"> </span><span class="dv">100</span> <span class="co"># sample size</span></span>
+<span id="cb658-3"><a href="multiple-linear-regression.html#cb658-3"></a>p =<span class="st"> </span><span class="dv">3</span></span>
+<span id="cb658-4"><a href="multiple-linear-regression.html#cb658-4"></a></span>
+<span id="cb658-5"><a href="multiple-linear-regression.html#cb658-5"></a>beta_<span class="dv">0</span> =<span class="st"> </span><span class="dv">5</span></span>
+<span id="cb658-6"><a href="multiple-linear-regression.html#cb658-6"></a>beta_<span class="dv">1</span> =<span class="st"> </span><span class="dv">-2</span></span>
+<span id="cb658-7"><a href="multiple-linear-regression.html#cb658-7"></a>beta_<span class="dv">2</span> =<span class="st"> </span><span class="dv">6</span></span>
+<span id="cb658-8"><a href="multiple-linear-regression.html#cb658-8"></a>sigma  =<span class="st"> </span><span class="dv">4</span></span></code></pre></div>
 <p>As is the norm with regression, the <span class="math inline">\(x\)</span> values are considered fixed and known quantities, so we will simulate those first, and they remain the same for the rest of the simulation study. Also note we create an <code>x0</code> which is all <code>1</code>, which we need to create our <code>X</code> matrix. If you look at the matrix formulation of regression, this unit vector of all <code>1</code>s is a “predictor” that puts the intercept into the model. We also calculate the <code>C</code> matrix for later use.</p>
-<div class="sourceCode" id="cb659"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb659-1" data-line-number="1">x0 =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span>, n)</a>
-<a class="sourceLine" id="cb659-2" data-line-number="2">x1 =<span class="st"> </span><span class="kw">sample</span>(<span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dt">length =</span> n))</a>
-<a class="sourceLine" id="cb659-3" data-line-number="3">x2 =<span class="st"> </span><span class="kw">sample</span>(<span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dt">length =</span> n))</a>
-<a class="sourceLine" id="cb659-4" data-line-number="4">X =<span class="st"> </span><span class="kw">cbind</span>(x0, x1, x2)</a>
-<a class="sourceLine" id="cb659-5" data-line-number="5">C =<span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X)</a></code></pre></div>
+<div class="sourceCode" id="cb659"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb659-1"><a href="multiple-linear-regression.html#cb659-1"></a>x0 =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span>, n)</span>
+<span id="cb659-2"><a href="multiple-linear-regression.html#cb659-2"></a>x1 =<span class="st"> </span><span class="kw">sample</span>(<span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dt">length =</span> n))</span>
+<span id="cb659-3"><a href="multiple-linear-regression.html#cb659-3"></a>x2 =<span class="st"> </span><span class="kw">sample</span>(<span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dt">length =</span> n))</span>
+<span id="cb659-4"><a href="multiple-linear-regression.html#cb659-4"></a>X =<span class="st"> </span><span class="kw">cbind</span>(x0, x1, x2)</span>
+<span id="cb659-5"><a href="multiple-linear-regression.html#cb659-5"></a>C =<span class="st"> </span><span class="kw">solve</span>(<span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>X)</span></code></pre></div>
 <p>We then simulate the response according the model above. Lastly, we place the two predictors and response into a data frame. Note that we do <strong>not</strong> place <code>x0</code> in the data frame. This is a result of <code>R</code> adding an intercept by default.</p>
-<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb660-1" data-line-number="1">eps      =<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> sigma)</a>
-<a class="sourceLine" id="cb660-2" data-line-number="2">y        =<span class="st"> </span>beta_<span class="dv">0</span> <span class="op">+</span><span class="st"> </span>beta_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>beta_<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>eps</a>
-<a class="sourceLine" id="cb660-3" data-line-number="3">sim_data =<span class="st"> </span><span class="kw">data.frame</span>(x1, x2, y)</a></code></pre></div>
+<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb660-1"><a href="multiple-linear-regression.html#cb660-1"></a>eps      =<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> sigma)</span>
+<span id="cb660-2"><a href="multiple-linear-regression.html#cb660-2"></a>y        =<span class="st"> </span>beta_<span class="dv">0</span> <span class="op">+</span><span class="st"> </span>beta_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>beta_<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>eps</span>
+<span id="cb660-3"><a href="multiple-linear-regression.html#cb660-3"></a>sim_data =<span class="st"> </span><span class="kw">data.frame</span>(x1, x2, y)</span></code></pre></div>
 <p>Plotting this data and fitting the regression produces the following plot.</p>
 <p><img src="mlr_files/figure-html/unnamed-chunk-30-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>We then calculate</p>
 <p><span class="math display">\[
 \hat{\beta} = \left(  X^\top X  \right)^{-1}X^\top y.
 \]</span></p>
-<div class="sourceCode" id="cb661"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb661-1" data-line-number="1">(<span class="dt">beta_hat =</span> C <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>y)</a></code></pre></div>
+<div class="sourceCode" id="cb661"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb661-1"><a href="multiple-linear-regression.html#cb661-1"></a>(<span class="dt">beta_hat =</span> C <span class="op">%*%</span><span class="st"> </span><span class="kw">t</span>(X) <span class="op">%*%</span><span class="st"> </span>y)</span></code></pre></div>
 <pre><code>##         [,1]
 ## x0  7.290735
 ## x1 -2.282176
 ## x2  5.843424</code></pre>
 <p>Notice that these values are the same as the coefficients found using <code>lm()</code> in <code>R</code>.</p>
-<div class="sourceCode" id="cb663"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb663-1" data-line-number="1"><span class="kw">coef</span>(<span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> sim_data))</a></code></pre></div>
+<div class="sourceCode" id="cb663"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb663-1"><a href="multiple-linear-regression.html#cb663-1"></a><span class="kw">coef</span>(<span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> sim_data))</span></code></pre></div>
 <pre><code>## (Intercept)          x1          x2 
 ##    7.290735   -2.282176    5.843424</code></pre>
 <p>Also, these values are close to what we would expect.</p>
-<div class="sourceCode" id="cb665"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb665-1" data-line-number="1"><span class="kw">c</span>(beta_<span class="dv">0</span>, beta_<span class="dv">1</span>, beta_<span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb665"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb665-1"><a href="multiple-linear-regression.html#cb665-1"></a><span class="kw">c</span>(beta_<span class="dv">0</span>, beta_<span class="dv">1</span>, beta_<span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1]  5 -2  6</code></pre>
 <p>We then calculated the fitted values in order to calculate <span class="math inline">\(s_e\)</span>, which we see is the same as the <code>sigma</code> which is returned by <code>summary()</code>.</p>
-<div class="sourceCode" id="cb667"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb667-1" data-line-number="1">y_hat =<span class="st"> </span>X <span class="op">%*%</span><span class="st"> </span>beta_hat</a>
-<a class="sourceLine" id="cb667-2" data-line-number="2">(<span class="dt">s_e =</span> <span class="kw">sqrt</span>(<span class="kw">sum</span>((y <span class="op">-</span><span class="st"> </span>y_hat) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>p)))</a></code></pre></div>
+<div class="sourceCode" id="cb667"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb667-1"><a href="multiple-linear-regression.html#cb667-1"></a>y_hat =<span class="st"> </span>X <span class="op">%*%</span><span class="st"> </span>beta_hat</span>
+<span id="cb667-2"><a href="multiple-linear-regression.html#cb667-2"></a>(<span class="dt">s_e =</span> <span class="kw">sqrt</span>(<span class="kw">sum</span>((y <span class="op">-</span><span class="st"> </span>y_hat) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span>p)))</span></code></pre></div>
 <pre><code>## [1] 4.294307</code></pre>
-<div class="sourceCode" id="cb669"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb669-1" data-line-number="1"><span class="kw">summary</span>(<span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> sim_data))<span class="op">$</span>sigma</a></code></pre></div>
+<div class="sourceCode" id="cb669"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb669-1"><a href="multiple-linear-regression.html#cb669-1"></a><span class="kw">summary</span>(<span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> sim_data))<span class="op">$</span>sigma</span></code></pre></div>
 <pre><code>## [1] 4.294307</code></pre>
 <p>So far so good. Everything checks out. Now we will finally simulate from this model repeatedly in order to obtain an empirical distribution of <span class="math inline">\(\hat{\beta}_2\)</span>.</p>
 <p>We expect <span class="math inline">\(\hat{\beta}_2\)</span> to follow a normal distribution,</p>
@@ -1276,54 +1278,54 @@ Y_i = 5 + -2 x_{i1} + 6 x_{i2} + \epsilon_i, \qquad i = 1, 2, \ldots, n
 \hat{\beta}_2 \sim N\left(\mu = 6, \sigma^2 = 0.0232549  \right).
 \]</span></p>
 <p>Note that <span class="math inline">\(C_{22}\)</span> corresponds to the element in the <strong>third</strong> row and <strong>third</strong> column since <span class="math inline">\(\beta_2\)</span> is the <strong>third</strong> parameter in the model and because <code>R</code> is indexed starting at <code>1</code>. However, we index the <span class="math inline">\(C\)</span> matrix starting at <code>0</code> to match the diagonal elements to the corresponding <span class="math inline">\(\beta_j\)</span>.</p>
-<div class="sourceCode" id="cb671"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb671-1" data-line-number="1">C[<span class="dv">3</span>, <span class="dv">3</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb671"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb671-1"><a href="multiple-linear-regression.html#cb671-1"></a>C[<span class="dv">3</span>, <span class="dv">3</span>]</span></code></pre></div>
 <pre><code>## [1] 0.00145343</code></pre>
-<div class="sourceCode" id="cb673"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb673-1" data-line-number="1">C[<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb673"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb673-1"><a href="multiple-linear-regression.html#cb673-1"></a>C[<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## [1] 0.00145343</code></pre>
-<div class="sourceCode" id="cb675"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb675-1" data-line-number="1">sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>C[<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb675"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb675-1"><a href="multiple-linear-regression.html#cb675-1"></a>sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>C[<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## [1] 0.02325487</code></pre>
 <p>We now perform the simulation a large number of times. Each time, we update the <code>y</code> variable in the data frame, leaving the <code>x</code> variables the same. We then fit a model, and store <span class="math inline">\(\hat{\beta}_2\)</span>.</p>
-<div class="sourceCode" id="cb677"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb677-1" data-line-number="1">num_sims =<span class="st"> </span><span class="dv">10000</span></a>
-<a class="sourceLine" id="cb677-2" data-line-number="2">beta_hat_<span class="dv">2</span> =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, num_sims)</a>
-<a class="sourceLine" id="cb677-3" data-line-number="3"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>num_sims) {</a>
-<a class="sourceLine" id="cb677-4" data-line-number="4">  eps           =<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean =</span> <span class="dv">0</span> , <span class="dt">sd =</span> sigma)</a>
-<a class="sourceLine" id="cb677-5" data-line-number="5">  sim_data<span class="op">$</span>y    =<span class="st"> </span>beta_<span class="dv">0</span> <span class="op">*</span><span class="st"> </span>x0 <span class="op">+</span><span class="st"> </span>beta_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>beta_<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>eps</a>
-<a class="sourceLine" id="cb677-6" data-line-number="6">  fit           =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> sim_data)</a>
-<a class="sourceLine" id="cb677-7" data-line-number="7">  beta_hat_<span class="dv">2</span>[i] =<span class="st"> </span><span class="kw">coef</span>(fit)[<span class="dv">3</span>]</a>
-<a class="sourceLine" id="cb677-8" data-line-number="8">}</a></code></pre></div>
+<div class="sourceCode" id="cb677"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb677-1"><a href="multiple-linear-regression.html#cb677-1"></a>num_sims =<span class="st"> </span><span class="dv">10000</span></span>
+<span id="cb677-2"><a href="multiple-linear-regression.html#cb677-2"></a>beta_hat_<span class="dv">2</span> =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, num_sims)</span>
+<span id="cb677-3"><a href="multiple-linear-regression.html#cb677-3"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>num_sims) {</span>
+<span id="cb677-4"><a href="multiple-linear-regression.html#cb677-4"></a>  eps           =<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean =</span> <span class="dv">0</span> , <span class="dt">sd =</span> sigma)</span>
+<span id="cb677-5"><a href="multiple-linear-regression.html#cb677-5"></a>  sim_data<span class="op">$</span>y    =<span class="st"> </span>beta_<span class="dv">0</span> <span class="op">*</span><span class="st"> </span>x0 <span class="op">+</span><span class="st"> </span>beta_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>beta_<span class="dv">2</span> <span class="op">*</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>eps</span>
+<span id="cb677-6"><a href="multiple-linear-regression.html#cb677-6"></a>  fit           =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x2, <span class="dt">data =</span> sim_data)</span>
+<span id="cb677-7"><a href="multiple-linear-regression.html#cb677-7"></a>  beta_hat_<span class="dv">2</span>[i] =<span class="st"> </span><span class="kw">coef</span>(fit)[<span class="dv">3</span>]</span>
+<span id="cb677-8"><a href="multiple-linear-regression.html#cb677-8"></a>}</span></code></pre></div>
 <p>We then see that the mean of the simulated values is close to the true value of <span class="math inline">\(\beta_2\)</span>.</p>
-<div class="sourceCode" id="cb678"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb678-1" data-line-number="1"><span class="kw">mean</span>(beta_hat_<span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb678"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb678-1"><a href="multiple-linear-regression.html#cb678-1"></a><span class="kw">mean</span>(beta_hat_<span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 5.999723</code></pre>
-<div class="sourceCode" id="cb680"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb680-1" data-line-number="1">beta_<span class="dv">2</span></a></code></pre></div>
+<div class="sourceCode" id="cb680"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb680-1"><a href="multiple-linear-regression.html#cb680-1"></a>beta_<span class="dv">2</span></span></code></pre></div>
 <pre><code>## [1] 6</code></pre>
 <p>We also see that the variance of the simulated values is close to the true variance of <span class="math inline">\(\hat{\beta}_2\)</span>.</p>
 <p><span class="math display">\[
 \text{Var}[\hat{\beta}_2] = \sigma^2 \cdot C_{22} = 16 \times 0.0014534 = 0.0232549
 \]</span></p>
-<div class="sourceCode" id="cb682"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb682-1" data-line-number="1"><span class="kw">var</span>(beta_hat_<span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb682"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb682-1"><a href="multiple-linear-regression.html#cb682-1"></a><span class="kw">var</span>(beta_hat_<span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 0.02343408</code></pre>
-<div class="sourceCode" id="cb684"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb684-1" data-line-number="1">sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>C[<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb684"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb684-1"><a href="multiple-linear-regression.html#cb684-1"></a>sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>C[<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## [1] 0.02325487</code></pre>
 <p>The standard deviations found from the simulated data and the parent population are also very close.</p>
-<div class="sourceCode" id="cb686"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb686-1" data-line-number="1"><span class="kw">sd</span>(beta_hat_<span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb686"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb686-1"><a href="multiple-linear-regression.html#cb686-1"></a><span class="kw">sd</span>(beta_hat_<span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 0.1530819</code></pre>
-<div class="sourceCode" id="cb688"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb688-1" data-line-number="1"><span class="kw">sqrt</span>(sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>C[<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>])</a></code></pre></div>
+<div class="sourceCode" id="cb688"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb688-1"><a href="multiple-linear-regression.html#cb688-1"></a><span class="kw">sqrt</span>(sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>C[<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>])</span></code></pre></div>
 <pre><code>## [1] 0.1524955</code></pre>
 <p>Lastly, we plot a histogram of the <em>simulated values</em>, and overlay the <em>true distribution</em>.</p>
-<div class="sourceCode" id="cb690"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb690-1" data-line-number="1"><span class="kw">hist</span>(beta_hat_<span class="dv">2</span>, <span class="dt">prob =</span> <span class="ot">TRUE</span>, <span class="dt">breaks =</span> <span class="dv">20</span>, </a>
-<a class="sourceLine" id="cb690-2" data-line-number="2">     <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">2</span>]), <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)</a>
-<a class="sourceLine" id="cb690-3" data-line-number="3"><span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> beta_<span class="dv">2</span>, <span class="dt">sd =</span> <span class="kw">sqrt</span>(sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>C[<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>])), </a>
-<a class="sourceLine" id="cb690-4" data-line-number="4">      <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb690"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb690-1"><a href="multiple-linear-regression.html#cb690-1"></a><span class="kw">hist</span>(beta_hat_<span class="dv">2</span>, <span class="dt">prob =</span> <span class="ot">TRUE</span>, <span class="dt">breaks =</span> <span class="dv">20</span>, </span>
+<span id="cb690-2"><a href="multiple-linear-regression.html#cb690-2"></a>     <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">2</span>]), <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span>
+<span id="cb690-3"><a href="multiple-linear-regression.html#cb690-3"></a><span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> beta_<span class="dv">2</span>, <span class="dt">sd =</span> <span class="kw">sqrt</span>(sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>C[<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>])), </span>
+<span id="cb690-4"><a href="multiple-linear-regression.html#cb690-4"></a>      <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</span></code></pre></div>
 <p><img src="mlr_files/figure-html/unnamed-chunk-40-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>This looks good! The simulation-based histogram appears to be Normal with mean 6 and spread of about 0.15 as you measure from center to inflection point. That matches really well with the sampling distribution of <span class="math inline">\(\hat{\beta}_2 \sim N\left(\mu = 6, \sigma^2 = 0.0232549 \right)\)</span>.</p>
 <p>One last check, we verify the <span class="math inline">\(68 - 95 - 99.7\)</span> rule.</p>
-<div class="sourceCode" id="cb691"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb691-1" data-line-number="1">sd_bh2 =<span class="st"> </span><span class="kw">sqrt</span>(sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>C[<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>])</a>
-<a class="sourceLine" id="cb691-2" data-line-number="2"><span class="co"># We expect these to be: 0.68, 0.95, 0.997</span></a>
-<a class="sourceLine" id="cb691-3" data-line-number="3"><span class="kw">mean</span>(beta_<span class="dv">2</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span>sd_bh2 <span class="op">&lt;</span><span class="st"> </span>beta_hat_<span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span>beta_hat_<span class="dv">2</span> <span class="op">&lt;</span><span class="st"> </span>beta_<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span>sd_bh2)</a></code></pre></div>
+<div class="sourceCode" id="cb691"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb691-1"><a href="multiple-linear-regression.html#cb691-1"></a>sd_bh2 =<span class="st"> </span><span class="kw">sqrt</span>(sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>C[<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span>])</span>
+<span id="cb691-2"><a href="multiple-linear-regression.html#cb691-2"></a><span class="co"># We expect these to be: 0.68, 0.95, 0.997</span></span>
+<span id="cb691-3"><a href="multiple-linear-regression.html#cb691-3"></a><span class="kw">mean</span>(beta_<span class="dv">2</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span>sd_bh2 <span class="op">&lt;</span><span class="st"> </span>beta_hat_<span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span>beta_hat_<span class="dv">2</span> <span class="op">&lt;</span><span class="st"> </span>beta_<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span>sd_bh2)</span></code></pre></div>
 <pre><code>## [1] 0.6807</code></pre>
-<div class="sourceCode" id="cb693"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb693-1" data-line-number="1"><span class="kw">mean</span>(beta_<span class="dv">2</span> <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>sd_bh2 <span class="op">&lt;</span><span class="st"> </span>beta_hat_<span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span>beta_hat_<span class="dv">2</span> <span class="op">&lt;</span><span class="st"> </span>beta_<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>sd_bh2)</a></code></pre></div>
+<div class="sourceCode" id="cb693"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb693-1"><a href="multiple-linear-regression.html#cb693-1"></a><span class="kw">mean</span>(beta_<span class="dv">2</span> <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>sd_bh2 <span class="op">&lt;</span><span class="st"> </span>beta_hat_<span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span>beta_hat_<span class="dv">2</span> <span class="op">&lt;</span><span class="st"> </span>beta_<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>sd_bh2)</span></code></pre></div>
 <pre><code>## [1] 0.9529</code></pre>
-<div class="sourceCode" id="cb695"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb695-1" data-line-number="1"><span class="kw">mean</span>(beta_<span class="dv">2</span> <span class="op">-</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>sd_bh2 <span class="op">&lt;</span><span class="st"> </span>beta_hat_<span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span>beta_hat_<span class="dv">2</span> <span class="op">&lt;</span><span class="st"> </span>beta_<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>sd_bh2)</a></code></pre></div>
+<div class="sourceCode" id="cb695"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb695-1"><a href="multiple-linear-regression.html#cb695-1"></a><span class="kw">mean</span>(beta_<span class="dv">2</span> <span class="op">-</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>sd_bh2 <span class="op">&lt;</span><span class="st"> </span>beta_hat_<span class="dv">2</span> <span class="op">&amp;</span><span class="st"> </span>beta_hat_<span class="dv">2</span> <span class="op">&lt;</span><span class="st"> </span>beta_<span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">3</span> <span class="op">*</span><span class="st"> </span>sd_bh2)</span></code></pre></div>
 <pre><code>## [1] 0.9967</code></pre>
 </div>
 <div id="r-markdown-2" class="section level2">
@@ -1332,7 +1334,7 @@ Y_i = 5 + -2 x_{i1} + 6 x_{i2} + \epsilon_i, \qquad i = 1, 2, \ldots, n
 <ul>
 <li><a href="mlr.Rmd" target="_blank"><code>mlr.Rmd</code></a></li>
 </ul>
-<p>The file was created using <code>R</code> version <code>4.0.2</code>.</p>
+<p>The file was created using <code>R</code> version <code>4.1.0</code>.</p>
 
 </div>
 </div>
@@ -1365,6 +1367,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

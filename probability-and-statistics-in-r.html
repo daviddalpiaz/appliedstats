@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Probability and Statistics in R | Applied Statistics with R</title>
   <meta name="description" content="Chapter 5 Probability and Statistics in R | Applied Statistics with R" />
-  <meta name="generator" content="bookdown 0.21.2 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22.3 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Probability and Statistics in R | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2020-10-30" />
+<meta name="date" content="2021-05-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -49,14 +49,15 @@
 
 
 
-<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
@@ -65,16 +66,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -83,9 +84,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -117,6 +118,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -435,18 +437,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Note that <code>name</code> represents the name of the given distribution.</p>
 <p>For example, consider a random variable <span class="math inline">\(X\)</span> which is <span class="math inline">\(N(\mu = 2, \sigma^2 = 25)\)</span>. (Note, we are parameterizing using the variance <span class="math inline">\(\sigma^2\)</span>. <code>R</code> however uses the standard deviation.)</p>
 <p>To calculate the value of the pdf at <code>x = 3</code>, that is, the height of the curve at <code>x = 3</code>, use:</p>
-<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb344-1" data-line-number="1"><span class="kw">dnorm</span>(<span class="dt">x =</span> <span class="dv">3</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="probability-and-statistics-in-r.html#cb344-1"></a><span class="kw">dnorm</span>(<span class="dt">x =</span> <span class="dv">3</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## [1] 0.07820854</code></pre>
 <p>To calculate the value of the cdf at <code>x = 3</code>, that is, <span class="math inline">\(P(X \leq 3)\)</span>, the probability that <span class="math inline">\(X\)</span> is less than or equal to <code>3</code>, use:</p>
-<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb346-1" data-line-number="1"><span class="kw">pnorm</span>(<span class="dt">q =</span> <span class="dv">3</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="probability-and-statistics-in-r.html#cb346-1"></a><span class="kw">pnorm</span>(<span class="dt">q =</span> <span class="dv">3</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## [1] 0.5792597</code></pre>
 <p>Or, to calculate the quantile for probability 0.975, use:</p>
-<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb348-1" data-line-number="1"><span class="kw">qnorm</span>(<span class="dt">p =</span> <span class="fl">0.975</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="probability-and-statistics-in-r.html#cb348-1"></a><span class="kw">qnorm</span>(<span class="dt">p =</span> <span class="fl">0.975</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</span></code></pre></div>
 <pre><code>## [1] 11.79982</code></pre>
 <p>Lastly, to generate a random sample of size <code>n = 10</code>, use:</p>
-<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb350-1" data-line-number="1"><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</a></code></pre></div>
-<pre><code>##  [1]  5.4730925  1.0536142 -0.2774783 -1.1502399 -3.9487621 -6.3183128
-##  [7]  7.1314386 -5.8790068 -3.1560936  5.2281630</code></pre>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="probability-and-statistics-in-r.html#cb350-1"></a><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</span></code></pre></div>
+<pre><code>##  [1]  1.567809984  8.599108878 -2.895519218 -4.983178239 12.172421230
+##  [6] -0.006576604 -0.438084117 -4.569277739  3.949856359 -8.527456302</code></pre>
 <p>These functions exist for many other distributions, including but not limited to:</p>
 <table>
 <thead>
@@ -479,7 +481,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>Where <code>*</code> can be <code>d</code>, <code>p</code>, <code>q</code>, and <code>r</code>. Each distribution will have its own set of parameters which need to be passed to the functions as arguments. For example, <code>dbinom()</code> would not have arguments for <code>mean</code> and <code>sd</code>, since those are not parameters of the distribution. Instead a binomial distribution is usually parameterized by <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span>, however <code>R</code> chooses to call them something else. To find the names that <code>R</code> uses we would use <code>?dbinom</code> and see that <code>R</code> instead calls the arguments <code>size</code> and <code>prob</code>. For example:</p>
-<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb352-1" data-line-number="1"><span class="kw">dbinom</span>(<span class="dt">x =</span> <span class="dv">6</span>, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">prob =</span> <span class="fl">0.75</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="probability-and-statistics-in-r.html#cb352-1"></a><span class="kw">dbinom</span>(<span class="dt">x =</span> <span class="dv">6</span>, <span class="dt">size =</span> <span class="dv">10</span>, <span class="dt">prob =</span> <span class="fl">0.75</span>)</span></code></pre></div>
 <pre><code>## [1] 0.145998</code></pre>
 <p>Also note that, when using the <code>dname</code> functions with discrete distributions, they are the pmf of the distribution. For example, the above command is <span class="math inline">\(P(Y = 6)\)</span> if <span class="math inline">\(Y \sim b(n = 10, p = 0.75)\)</span>. (The probability of flipping an unfair coin <code>10</code> times and seeing <code>6</code> heads, if the probability of heads is <code>0.75</code>.)</p>
 </div>
@@ -517,31 +519,31 @@ t = \frac{\bar{x}-\mu_{0}}{s/\sqrt{n}} \sim t_{n-1},
 <div id="one-sample-t-test-example" class="section level3">
 <h3><span class="header-section-number">5.2.2</span> One Sample t-Test: Example</h3>
 <p>Suppose a grocery store sells “16 ounce” boxes of <em>Captain Crisp</em> cereal. A random sample of 9 boxes was taken and weighed. The weight in ounces are stored in the data frame <code>capt_crisp</code>.</p>
-<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb354-1" data-line-number="1">capt_crisp =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">weight =</span> <span class="kw">c</span>(<span class="fl">15.5</span>, <span class="fl">16.2</span>, <span class="fl">16.1</span>, <span class="fl">15.8</span>, <span class="fl">15.6</span>, <span class="fl">16.0</span>, <span class="fl">15.8</span>, <span class="fl">15.9</span>, <span class="fl">16.2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="probability-and-statistics-in-r.html#cb354-1"></a>capt_crisp =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">weight =</span> <span class="kw">c</span>(<span class="fl">15.5</span>, <span class="fl">16.2</span>, <span class="fl">16.1</span>, <span class="fl">15.8</span>, <span class="fl">15.6</span>, <span class="fl">16.0</span>, <span class="fl">15.8</span>, <span class="fl">15.9</span>, <span class="fl">16.2</span>))</span></code></pre></div>
 <p>The company that makes <em>Captain Crisp</em> cereal claims that the average weight of a box is at least 16 ounces. We will assume the weight of cereal in a box is normally distributed and use a 0.05 level of significance to test the company’s claim.</p>
 <p>To test <span class="math inline">\(H_{0}: \mu \geq 16\)</span> versus <span class="math inline">\(H_{1}: \mu &lt; 16\)</span>, the test statistic is</p>
 <p><span class="math display">\[
 t = \frac{\bar{x} - \mu_{0}}{s / \sqrt{n}}
 \]</span></p>
 <p>The sample mean <span class="math inline">\(\bar{x}\)</span> and the sample standard deviation <span class="math inline">\(s\)</span> can be easily computed using <code>R</code>. We also create variables which store the hypothesized mean and the sample size.</p>
-<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb355-1" data-line-number="1">x_bar =<span class="st"> </span><span class="kw">mean</span>(capt_crisp<span class="op">$</span>weight)</a>
-<a class="sourceLine" id="cb355-2" data-line-number="2">s     =<span class="st"> </span><span class="kw">sd</span>(capt_crisp<span class="op">$</span>weight)</a>
-<a class="sourceLine" id="cb355-3" data-line-number="3">mu_<span class="dv">0</span>  =<span class="st"> </span><span class="dv">16</span></a>
-<a class="sourceLine" id="cb355-4" data-line-number="4">n     =<span class="st"> </span><span class="dv">9</span></a></code></pre></div>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="probability-and-statistics-in-r.html#cb355-1"></a>x_bar =<span class="st"> </span><span class="kw">mean</span>(capt_crisp<span class="op">$</span>weight)</span>
+<span id="cb355-2"><a href="probability-and-statistics-in-r.html#cb355-2"></a>s     =<span class="st"> </span><span class="kw">sd</span>(capt_crisp<span class="op">$</span>weight)</span>
+<span id="cb355-3"><a href="probability-and-statistics-in-r.html#cb355-3"></a>mu_<span class="dv">0</span>  =<span class="st"> </span><span class="dv">16</span></span>
+<span id="cb355-4"><a href="probability-and-statistics-in-r.html#cb355-4"></a>n     =<span class="st"> </span><span class="dv">9</span></span></code></pre></div>
 <p>We can then easily compute the test statistic.</p>
-<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb356-1" data-line-number="1">t =<span class="st"> </span>(x_bar <span class="op">-</span><span class="st"> </span>mu_<span class="dv">0</span>) <span class="op">/</span><span class="st"> </span>(s <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(n))</a>
-<a class="sourceLine" id="cb356-2" data-line-number="2">t</a></code></pre></div>
+<div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="probability-and-statistics-in-r.html#cb356-1"></a>t =<span class="st"> </span>(x_bar <span class="op">-</span><span class="st"> </span>mu_<span class="dv">0</span>) <span class="op">/</span><span class="st"> </span>(s <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(n))</span>
+<span id="cb356-2"><a href="probability-and-statistics-in-r.html#cb356-2"></a>t</span></code></pre></div>
 <pre><code>## [1] -1.2</code></pre>
 <p>Under the null hypothesis, the test statistic has a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n - 1\)</span> degrees of freedom, in this case 8.</p>
 <p>To complete the test, we need to obtain the p-value of the test. Since this is a one-sided test with a less-than alternative, we need the area to the left of -1.2 for a <span class="math inline">\(t\)</span> distribution with 8 degrees of freedom. That is,</p>
 <p><span class="math display">\[
 P(t_{8} &lt; -1.2)
 \]</span></p>
-<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb358-1" data-line-number="1"><span class="kw">pt</span>(t, <span class="dt">df =</span> n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="probability-and-statistics-in-r.html#cb358-1"></a><span class="kw">pt</span>(t, <span class="dt">df =</span> n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] 0.1322336</code></pre>
 <p>We now have the p-value of our test, which is greater than our significance level (0.05), so we fail to reject the null hypothesis.</p>
 <p>Alternatively, this entire process could have been completed using one line of <code>R</code> code.</p>
-<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb360-1" data-line-number="1"><span class="kw">t.test</span>(<span class="dt">x =</span> capt_crisp<span class="op">$</span>weight, <span class="dt">mu =</span> <span class="dv">16</span>, <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;less&quot;</span>), <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="probability-and-statistics-in-r.html#cb360-1"></a><span class="kw">t.test</span>(<span class="dt">x =</span> capt_crisp<span class="op">$</span>weight, <span class="dt">mu =</span> <span class="dv">16</span>, <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;less&quot;</span>), <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
 ## 
@@ -562,26 +564,26 @@ P(t_{8} &lt; -1.2)
 <li>An estimate of <span class="math inline">\(\mu\)</span>.</li>
 </ul>
 <p>Since the test was one-sided, <code>R</code> returned a one-sided confidence interval. If instead we wanted a two-sided interval for the mean weight of boxes of <em>Captain Crisp</em> cereal we could modify our code.</p>
-<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb362-1" data-line-number="1">capt_test_results =<span class="st"> </span><span class="kw">t.test</span>(capt_crisp<span class="op">$</span>weight, <span class="dt">mu =</span> <span class="dv">16</span>,</a>
-<a class="sourceLine" id="cb362-2" data-line-number="2">                           <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;two.sided&quot;</span>), <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="probability-and-statistics-in-r.html#cb362-1"></a>capt_test_results =<span class="st"> </span><span class="kw">t.test</span>(capt_crisp<span class="op">$</span>weight, <span class="dt">mu =</span> <span class="dv">16</span>,</span>
+<span id="cb362-2"><a href="probability-and-statistics-in-r.html#cb362-2"></a>                           <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;two.sided&quot;</span>), <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
 <p>This time we have stored the results. By doing so, we can directly access portions of the output from <code>t.test()</code>. To see what information is available we use the <code>names()</code> function.</p>
-<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb363-1" data-line-number="1"><span class="kw">names</span>(capt_test_results)</a></code></pre></div>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="probability-and-statistics-in-r.html#cb363-1"></a><span class="kw">names</span>(capt_test_results)</span></code></pre></div>
 <pre><code>##  [1] &quot;statistic&quot;   &quot;parameter&quot;   &quot;p.value&quot;     &quot;conf.int&quot;    &quot;estimate&quot;   
 ##  [6] &quot;null.value&quot;  &quot;stderr&quot;      &quot;alternative&quot; &quot;method&quot;      &quot;data.name&quot;</code></pre>
 <p>We are interested in the confidence interval which is stored in <code>conf.int</code>.</p>
-<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb365-1" data-line-number="1">capt_test_results<span class="op">$</span>conf.int</a></code></pre></div>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="probability-and-statistics-in-r.html#cb365-1"></a>capt_test_results<span class="op">$</span>conf.int</span></code></pre></div>
 <pre><code>## [1] 15.70783 16.09217
 ## attr(,&quot;conf.level&quot;)
 ## [1] 0.95</code></pre>
 <p>Let’s check this interval “by hand.” The one piece of information we are missing is the critical value, <span class="math inline">\(t_{n-1}(\alpha/2) = t_{8}(0.025)\)</span>, which can be calculated in <code>R</code> using the <code>qt()</code> function.</p>
-<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb367-1" data-line-number="1"><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dt">df =</span> <span class="dv">8</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="probability-and-statistics-in-r.html#cb367-1"></a><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dt">df =</span> <span class="dv">8</span>)</span></code></pre></div>
 <pre><code>## [1] 2.306004</code></pre>
 <p>So, the 95% CI for the mean weight of a cereal box is calculated by plugging into the formula,</p>
 <p><span class="math display">\[
 \bar{x} \pm t_{n-1}(\alpha/2) \frac{s}{\sqrt{n}}
 \]</span></p>
-<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb369-1" data-line-number="1"><span class="kw">c</span>(<span class="kw">mean</span>(capt_crisp<span class="op">$</span>weight) <span class="op">-</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dt">df =</span> <span class="dv">8</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sd</span>(capt_crisp<span class="op">$</span>weight) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">9</span>),</a>
-<a class="sourceLine" id="cb369-2" data-line-number="2">  <span class="kw">mean</span>(capt_crisp<span class="op">$</span>weight) <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dt">df =</span> <span class="dv">8</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sd</span>(capt_crisp<span class="op">$</span>weight) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">9</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="probability-and-statistics-in-r.html#cb369-1"></a><span class="kw">c</span>(<span class="kw">mean</span>(capt_crisp<span class="op">$</span>weight) <span class="op">-</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dt">df =</span> <span class="dv">8</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sd</span>(capt_crisp<span class="op">$</span>weight) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">9</span>),</span>
+<span id="cb369-2"><a href="probability-and-statistics-in-r.html#cb369-2"></a>  <span class="kw">mean</span>(capt_crisp<span class="op">$</span>weight) <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dt">df =</span> <span class="dv">8</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sd</span>(capt_crisp<span class="op">$</span>weight) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">9</span>))</span></code></pre></div>
 <pre><code>## [1] 15.70783 16.09217</code></pre>
 </div>
 <div id="two-sample-t-test-review" class="section level3">
@@ -602,37 +604,37 @@ t = \frac{(\bar{x} - \bar{y})-\mu_{0}}{s_{p}\sqrt{\frac{1}{n}+\frac{1}{m}}} \sim
 <div id="two-sample-t-test-example" class="section level3">
 <h3><span class="header-section-number">5.2.4</span> Two Sample t-Test: Example</h3>
 <p>Assume that the distributions of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are <span class="math inline">\(\mathrm{N}(\mu_{1},\sigma^{2})\)</span> and <span class="math inline">\(\mathrm{N}(\mu_{2},\sigma^{2})\)</span>, respectively. Given the <span class="math inline">\(n = 6\)</span> observations of <span class="math inline">\(X\)</span>,</p>
-<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb371-1" data-line-number="1">x =<span class="st"> </span><span class="kw">c</span>(<span class="dv">70</span>, <span class="dv">82</span>, <span class="dv">78</span>, <span class="dv">74</span>, <span class="dv">94</span>, <span class="dv">82</span>)</a>
-<a class="sourceLine" id="cb371-2" data-line-number="2">n =<span class="st"> </span><span class="kw">length</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="probability-and-statistics-in-r.html#cb371-1"></a>x =<span class="st"> </span><span class="kw">c</span>(<span class="dv">70</span>, <span class="dv">82</span>, <span class="dv">78</span>, <span class="dv">74</span>, <span class="dv">94</span>, <span class="dv">82</span>)</span>
+<span id="cb371-2"><a href="probability-and-statistics-in-r.html#cb371-2"></a>n =<span class="st"> </span><span class="kw">length</span>(x)</span></code></pre></div>
 <p>and the <span class="math inline">\(m = 8\)</span> observations of <span class="math inline">\(Y\)</span>,</p>
-<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb372-1" data-line-number="1">y =<span class="st"> </span><span class="kw">c</span>(<span class="dv">64</span>, <span class="dv">72</span>, <span class="dv">60</span>, <span class="dv">76</span>, <span class="dv">72</span>, <span class="dv">80</span>, <span class="dv">84</span>, <span class="dv">68</span>)</a>
-<a class="sourceLine" id="cb372-2" data-line-number="2">m =<span class="st"> </span><span class="kw">length</span>(y)</a></code></pre></div>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="probability-and-statistics-in-r.html#cb372-1"></a>y =<span class="st"> </span><span class="kw">c</span>(<span class="dv">64</span>, <span class="dv">72</span>, <span class="dv">60</span>, <span class="dv">76</span>, <span class="dv">72</span>, <span class="dv">80</span>, <span class="dv">84</span>, <span class="dv">68</span>)</span>
+<span id="cb372-2"><a href="probability-and-statistics-in-r.html#cb372-2"></a>m =<span class="st"> </span><span class="kw">length</span>(y)</span></code></pre></div>
 <p>we will test <span class="math inline">\(H_{0}: \mu_{1} = \mu_{2}\)</span> versus <span class="math inline">\(H_{1}: \mu_{1} &gt; \mu_{2}\)</span>.</p>
 <p>First, note that we can calculate the sample means and standard deviations.</p>
-<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb373-1" data-line-number="1">x_bar =<span class="st"> </span><span class="kw">mean</span>(x)</a>
-<a class="sourceLine" id="cb373-2" data-line-number="2">s_x   =<span class="st"> </span><span class="kw">sd</span>(x)</a>
-<a class="sourceLine" id="cb373-3" data-line-number="3">y_bar =<span class="st"> </span><span class="kw">mean</span>(y)</a>
-<a class="sourceLine" id="cb373-4" data-line-number="4">s_y   =<span class="st"> </span><span class="kw">sd</span>(y)</a></code></pre></div>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="probability-and-statistics-in-r.html#cb373-1"></a>x_bar =<span class="st"> </span><span class="kw">mean</span>(x)</span>
+<span id="cb373-2"><a href="probability-and-statistics-in-r.html#cb373-2"></a>s_x   =<span class="st"> </span><span class="kw">sd</span>(x)</span>
+<span id="cb373-3"><a href="probability-and-statistics-in-r.html#cb373-3"></a>y_bar =<span class="st"> </span><span class="kw">mean</span>(y)</span>
+<span id="cb373-4"><a href="probability-and-statistics-in-r.html#cb373-4"></a>s_y   =<span class="st"> </span><span class="kw">sd</span>(y)</span></code></pre></div>
 <p>We can then calculate the pooled standard deviation.</p>
 <p><span class="math display">\[
 s_{p} = \sqrt{\frac{(n-1)s_{x}^{2}+(m-1)s_{y}^{2}}{n+m-2}}
 \]</span></p>
-<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb374-1" data-line-number="1">s_p =<span class="st"> </span><span class="kw">sqrt</span>(((n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>s_x <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(m <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>s_y <span class="op">^</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>(n <span class="op">+</span><span class="st"> </span>m <span class="op">-</span><span class="st"> </span><span class="dv">2</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="probability-and-statistics-in-r.html#cb374-1"></a>s_p =<span class="st"> </span><span class="kw">sqrt</span>(((n <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>s_x <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>(m <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>s_y <span class="op">^</span><span class="st"> </span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>(n <span class="op">+</span><span class="st"> </span>m <span class="op">-</span><span class="st"> </span><span class="dv">2</span>))</span></code></pre></div>
 <p>Thus, the relevant <span class="math inline">\(t\)</span> test statistic is given by</p>
 <p><span class="math display">\[
 t = \frac{(\bar{x}-\bar{y})-\mu_{0}}{s_{p}\sqrt{\frac{1}{n}+\frac{1}{m}}}.
 \]</span></p>
-<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb375-1" data-line-number="1">t =<span class="st"> </span>((x_bar <span class="op">-</span><span class="st"> </span>y_bar) <span class="op">-</span><span class="st"> </span><span class="dv">0</span>) <span class="op">/</span><span class="st"> </span>(s_p <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>n <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>m))</a>
-<a class="sourceLine" id="cb375-2" data-line-number="2">t</a></code></pre></div>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="probability-and-statistics-in-r.html#cb375-1"></a>t =<span class="st"> </span>((x_bar <span class="op">-</span><span class="st"> </span>y_bar) <span class="op">-</span><span class="st"> </span><span class="dv">0</span>) <span class="op">/</span><span class="st"> </span>(s_p <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>n <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>m))</span>
+<span id="cb375-2"><a href="probability-and-statistics-in-r.html#cb375-2"></a>t</span></code></pre></div>
 <pre><code>## [1] 1.823369</code></pre>
 <p>Note that <span class="math inline">\(t \sim t_{n + m - 2} = t_{12}\)</span>, so we can calculate the p-value, which is</p>
 <p><span class="math display">\[
 P(t_{12} &gt; 1.8233692).
 \]</span></p>
-<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb377-1" data-line-number="1"><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(t, <span class="dt">df =</span> n <span class="op">+</span><span class="st"> </span>m <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="probability-and-statistics-in-r.html#cb377-1"></a><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pt</span>(t, <span class="dt">df =</span> n <span class="op">+</span><span class="st"> </span>m <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 0.04661961</code></pre>
 <p>But, then again, we could have simply performed this test in one line of <code>R</code>.</p>
-<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb379-1" data-line-number="1"><span class="kw">t.test</span>(x, y, <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;greater&quot;</span>), <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="probability-and-statistics-in-r.html#cb379-1"></a><span class="kw">t.test</span>(x, y, <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;greater&quot;</span>), <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Two Sample t-test
 ## 
@@ -646,10 +648,10 @@ P(t_{12} &gt; 1.8233692).
 ##        80        72</code></pre>
 <p>Recall that a two-sample <span class="math inline">\(t\)</span>-test can be done with or without an equal variance assumption. Here <code>var.equal = TRUE</code> tells <code>R</code> we would like to perform the test under the equal variance assumption.</p>
 <p>Above we carried out the analysis using two vectors <code>x</code> and <code>y</code>. In general, we will have a preference for using data frames.</p>
-<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb381-1" data-line-number="1">t_test_data =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">values =</span> <span class="kw">c</span>(x, y),</a>
-<a class="sourceLine" id="cb381-2" data-line-number="2">                         <span class="dt">group  =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;A&quot;</span>, <span class="kw">length</span>(x)), <span class="kw">rep</span>(<span class="st">&quot;B&quot;</span>, <span class="kw">length</span>(y))))</a></code></pre></div>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="probability-and-statistics-in-r.html#cb381-1"></a>t_test_data =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">values =</span> <span class="kw">c</span>(x, y),</span>
+<span id="cb381-2"><a href="probability-and-statistics-in-r.html#cb381-2"></a>                         <span class="dt">group  =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;A&quot;</span>, <span class="kw">length</span>(x)), <span class="kw">rep</span>(<span class="st">&quot;B&quot;</span>, <span class="kw">length</span>(y))))</span></code></pre></div>
 <p>We now have the data stored in a single variables (<code>values</code>) and have created a second variable (<code>group</code>) which indicates which “sample” the value belongs to.</p>
-<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb382-1" data-line-number="1">t_test_data</a></code></pre></div>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="probability-and-statistics-in-r.html#cb382-1"></a>t_test_data</span></code></pre></div>
 <pre><code>##    values group
 ## 1      70     A
 ## 2      82     A
@@ -666,14 +668,14 @@ P(t_{12} &gt; 1.8233692).
 ## 13     84     B
 ## 14     68     B</code></pre>
 <p>Now to perform the test, we still use the <code>t.test()</code> function but with the <code>~</code> syntax and a <code>data</code> argument.</p>
-<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb384-1" data-line-number="1"><span class="kw">t.test</span>(values <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> t_test_data,</a>
-<a class="sourceLine" id="cb384-2" data-line-number="2">       <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;greater&quot;</span>), <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="probability-and-statistics-in-r.html#cb384-1"></a><span class="kw">t.test</span>(values <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> t_test_data,</span>
+<span id="cb384-2"><a href="probability-and-statistics-in-r.html#cb384-2"></a>       <span class="dt">alternative =</span> <span class="kw">c</span>(<span class="st">&quot;greater&quot;</span>), <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Two Sample t-test
 ## 
 ## data:  values by group
 ## t = 1.8234, df = 12, p-value = 0.04662
-## alternative hypothesis: true difference in means is greater than 0
+## alternative hypothesis: true difference in means between group A and group B is greater than 0
 ## 95 percent confidence interval:
 ##  0.1802451       Inf
 ## sample estimates:
@@ -689,7 +691,7 @@ P(t_{12} &gt; 1.8233692).
 <li>In <strong>model fitting</strong>, the <em>data</em> is known. We will then assume a certain form of model and find the best possible values of the parameters given the observed data. Essentially we are seeking to uncover the truth. Often we will attempt to fit many models, and we will learn metrics to assess which model fits best.</li>
 </ul>
 <div class="figure">
-<img src="images/simulation.png" alt="Simulation vs Modeling" />
+<img src="images/simulation.png" alt="" />
 <p class="caption">Simulation vs Modeling</p>
 </div>
 <p>Often we will simulate data according to a process we decide, then use a modeling method seen in class. We can then verify how well the method works, since we know the data generating process.</p>
@@ -734,7 +736,7 @@ D \sim N(\mu = 1, \sigma^2 = 0.32).
 P(0 &lt; D &lt; 2) = P(D &lt; 2) - P(D &lt; 0).
 \]</span></p>
 <p>This can then be calculated using <code>R</code> without a need to first standardize, or use a table.</p>
-<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb386-1" data-line-number="1"><span class="kw">pnorm</span>(<span class="dv">2</span>, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="kw">sqrt</span>(<span class="fl">0.32</span>)) <span class="op">-</span><span class="st"> </span><span class="kw">pnorm</span>(<span class="dv">0</span>, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="kw">sqrt</span>(<span class="fl">0.32</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="probability-and-statistics-in-r.html#cb386-1"></a><span class="kw">pnorm</span>(<span class="dv">2</span>, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="kw">sqrt</span>(<span class="fl">0.32</span>)) <span class="op">-</span><span class="st"> </span><span class="kw">pnorm</span>(<span class="dv">0</span>, <span class="dt">mean =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="kw">sqrt</span>(<span class="fl">0.32</span>))</span></code></pre></div>
 <pre><code>## [1] 0.9229001</code></pre>
 <p>An alternative approach, would be to <strong>simulate</strong> a large number of observations of <span class="math inline">\(D\)</span> then use the <strong>empirical distribution</strong> to calculate the probability.</p>
 <p>Our strategy will be to repeatedly:</p>
@@ -744,37 +746,37 @@ P(0 &lt; D &lt; 2) = P(D &lt; 2) - P(D &lt; 0).
 <li>Calculate the differences of the means, <span class="math inline">\(d_s = \bar{x}_{1s} - \bar{x}_{2s}\)</span>.</li>
 </ul>
 <p>We will repeat the process a large number of times. Then we will use the distribution of the simulated observations of <span class="math inline">\(d_s\)</span> as an estimate for the true distribution of <span class="math inline">\(D\)</span>.</p>
-<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb388-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
-<a class="sourceLine" id="cb388-2" data-line-number="2">num_samples =<span class="st"> </span><span class="dv">10000</span></a>
-<a class="sourceLine" id="cb388-3" data-line-number="3">differences =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, num_samples)</a></code></pre></div>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="probability-and-statistics-in-r.html#cb388-1"></a><span class="kw">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb388-2"><a href="probability-and-statistics-in-r.html#cb388-2"></a>num_samples =<span class="st"> </span><span class="dv">10000</span></span>
+<span id="cb388-3"><a href="probability-and-statistics-in-r.html#cb388-3"></a>differences =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, num_samples)</span></code></pre></div>
 <p>Before starting our <code>for</code> loop to perform the operation, we set a seed for reproducibility, create and set a variable <code>num_samples</code> which will define the number of repetitions, and lastly create a variables <code>differences</code> which will store the simulate values, <span class="math inline">\(d_s\)</span>.</p>
 <p>By using <code>set.seed()</code> we can reproduce the random results of <code>rnorm()</code> each time starting from that line.</p>
-<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb389-1" data-line-number="1"><span class="cf">for</span> (s <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>num_samples) {</a>
-<a class="sourceLine" id="cb389-2" data-line-number="2">  x1 =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">25</span>, <span class="dt">mean =</span> <span class="dv">6</span>, <span class="dt">sd =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb389-3" data-line-number="3">  x2 =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">25</span>, <span class="dt">mean =</span> <span class="dv">5</span>, <span class="dt">sd =</span> <span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb389-4" data-line-number="4">  differences[s] =<span class="st"> </span><span class="kw">mean</span>(x1) <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x2)</a>
-<a class="sourceLine" id="cb389-5" data-line-number="5">}</a></code></pre></div>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="probability-and-statistics-in-r.html#cb389-1"></a><span class="cf">for</span> (s <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>num_samples) {</span>
+<span id="cb389-2"><a href="probability-and-statistics-in-r.html#cb389-2"></a>  x1 =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">25</span>, <span class="dt">mean =</span> <span class="dv">6</span>, <span class="dt">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb389-3"><a href="probability-and-statistics-in-r.html#cb389-3"></a>  x2 =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">25</span>, <span class="dt">mean =</span> <span class="dv">5</span>, <span class="dt">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb389-4"><a href="probability-and-statistics-in-r.html#cb389-4"></a>  differences[s] =<span class="st"> </span><span class="kw">mean</span>(x1) <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x2)</span>
+<span id="cb389-5"><a href="probability-and-statistics-in-r.html#cb389-5"></a>}</span></code></pre></div>
 <p>To estimate <span class="math inline">\(P(0 &lt; D &lt; 2)\)</span> we will find the proportion of values of <span class="math inline">\(d_s\)</span> (among the 10^{4} values of <span class="math inline">\(d_s\)</span> generated) that are between 0 and 2.</p>
-<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb390-1" data-line-number="1"><span class="kw">mean</span>(<span class="dv">0</span> <span class="op">&lt;</span><span class="st"> </span>differences <span class="op">&amp;</span><span class="st"> </span>differences <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="probability-and-statistics-in-r.html#cb390-1"></a><span class="kw">mean</span>(<span class="dv">0</span> <span class="op">&lt;</span><span class="st"> </span>differences <span class="op">&amp;</span><span class="st"> </span>differences <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 0.9222</code></pre>
 <p>Recall that above we derived the distribution of <span class="math inline">\(D\)</span> to be <span class="math inline">\(N(\mu = 1, \sigma^2 = 0.32)\)</span></p>
 <p>If we look at a histogram of the differences, we find that it looks very much like a normal distribution.</p>
-<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb392-1" data-line-number="1"><span class="kw">hist</span>(differences, <span class="dt">breaks =</span> <span class="dv">20</span>, </a>
-<a class="sourceLine" id="cb392-2" data-line-number="2">     <span class="dt">main   =</span> <span class="st">&quot;Empirical Distribution of D&quot;</span>,</a>
-<a class="sourceLine" id="cb392-3" data-line-number="3">     <span class="dt">xlab   =</span> <span class="st">&quot;Simulated Values of D&quot;</span>,</a>
-<a class="sourceLine" id="cb392-4" data-line-number="4">     <span class="dt">col    =</span> <span class="st">&quot;dodgerblue&quot;</span>,</a>
-<a class="sourceLine" id="cb392-5" data-line-number="5">     <span class="dt">border =</span> <span class="st">&quot;darkorange&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="probability-and-statistics-in-r.html#cb392-1"></a><span class="kw">hist</span>(differences, <span class="dt">breaks =</span> <span class="dv">20</span>, </span>
+<span id="cb392-2"><a href="probability-and-statistics-in-r.html#cb392-2"></a>     <span class="dt">main   =</span> <span class="st">&quot;Empirical Distribution of D&quot;</span>,</span>
+<span id="cb392-3"><a href="probability-and-statistics-in-r.html#cb392-3"></a>     <span class="dt">xlab   =</span> <span class="st">&quot;Simulated Values of D&quot;</span>,</span>
+<span id="cb392-4"><a href="probability-and-statistics-in-r.html#cb392-4"></a>     <span class="dt">col    =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
+<span id="cb392-5"><a href="probability-and-statistics-in-r.html#cb392-5"></a>     <span class="dt">border =</span> <span class="st">&quot;darkorange&quot;</span>)</span></code></pre></div>
 <p><img src="prob-and-stat_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 <p>Also the sample mean and variance are very close to to what we would expect.</p>
-<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb393-1" data-line-number="1"><span class="kw">mean</span>(differences)</a></code></pre></div>
+<div class="sourceCode" id="cb393"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb393-1"><a href="probability-and-statistics-in-r.html#cb393-1"></a><span class="kw">mean</span>(differences)</span></code></pre></div>
 <pre><code>## [1] 1.001423</code></pre>
-<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb395-1" data-line-number="1"><span class="kw">var</span>(differences)</a></code></pre></div>
+<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="probability-and-statistics-in-r.html#cb395-1"></a><span class="kw">var</span>(differences)</span></code></pre></div>
 <pre><code>## [1] 0.3230183</code></pre>
 <p>We could have also accomplished this task with a single line of more “idiomatic” <code>R</code>.</p>
-<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb397-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
-<a class="sourceLine" id="cb397-2" data-line-number="2">diffs =<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">10000</span>, <span class="kw">mean</span>(<span class="kw">rnorm</span>(<span class="dv">25</span>, <span class="dv">6</span>, <span class="dv">2</span>)) <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(<span class="kw">rnorm</span>(<span class="dv">25</span>, <span class="dv">5</span>, <span class="dv">2</span>)))</a></code></pre></div>
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="probability-and-statistics-in-r.html#cb397-1"></a><span class="kw">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb397-2"><a href="probability-and-statistics-in-r.html#cb397-2"></a>diffs =<span class="st"> </span><span class="kw">replicate</span>(<span class="dv">10000</span>, <span class="kw">mean</span>(<span class="kw">rnorm</span>(<span class="dv">25</span>, <span class="dv">6</span>, <span class="dv">2</span>)) <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(<span class="kw">rnorm</span>(<span class="dv">25</span>, <span class="dv">5</span>, <span class="dv">2</span>)))</span></code></pre></div>
 <p>Use <code>?replicate</code> to take a look at the documentation for the <code>replicate</code> function and see if you can understand how this line performs the same operations that our <code>for</code> loop above executed.</p>
-<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb398-1" data-line-number="1"><span class="kw">mean</span>(differences <span class="op">==</span><span class="st"> </span>diffs)</a></code></pre></div>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="probability-and-statistics-in-r.html#cb398-1"></a><span class="kw">mean</span>(differences <span class="op">==</span><span class="st"> </span>diffs)</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
 <p>We see that by setting the same seed for the randomization, we actually obtain identical results!</p>
 </div>
@@ -798,37 +800,37 @@ Var[X] = \mu.
 \bar{X} \overset{d}{\to} N\left(\mu, \frac{\sigma^2}{n}\right).
 \]</span></p>
 <p>The following verifies this result for a Poisson distribution with <span class="math inline">\(\mu = 10\)</span> and a sample size of <span class="math inline">\(n = 50\)</span>.</p>
-<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb400-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">1337</span>)</a>
-<a class="sourceLine" id="cb400-2" data-line-number="2">mu          =<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb400-3" data-line-number="3">sample_size =<span class="st"> </span><span class="dv">50</span></a>
-<a class="sourceLine" id="cb400-4" data-line-number="4">samples     =<span class="st"> </span><span class="dv">100000</span></a>
-<a class="sourceLine" id="cb400-5" data-line-number="5">x_bars      =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, samples)</a></code></pre></div>
-<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb401-1" data-line-number="1"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>samples){</a>
-<a class="sourceLine" id="cb401-2" data-line-number="2">  x_bars[i] =<span class="st"> </span><span class="kw">mean</span>(<span class="kw">rpois</span>(sample_size, <span class="dt">lambda =</span> mu))</a>
-<a class="sourceLine" id="cb401-3" data-line-number="3">}</a></code></pre></div>
-<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb402-1" data-line-number="1">x_bar_hist =<span class="st"> </span><span class="kw">hist</span>(x_bars, <span class="dt">breaks =</span> <span class="dv">50</span>, </a>
-<a class="sourceLine" id="cb402-2" data-line-number="2">                  <span class="dt">main =</span> <span class="st">&quot;Histogram of Sample Means&quot;</span>,</a>
-<a class="sourceLine" id="cb402-3" data-line-number="3">                  <span class="dt">xlab =</span> <span class="st">&quot;Sample Means&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="probability-and-statistics-in-r.html#cb400-1"></a><span class="kw">set.seed</span>(<span class="dv">1337</span>)</span>
+<span id="cb400-2"><a href="probability-and-statistics-in-r.html#cb400-2"></a>mu          =<span class="st"> </span><span class="dv">10</span></span>
+<span id="cb400-3"><a href="probability-and-statistics-in-r.html#cb400-3"></a>sample_size =<span class="st"> </span><span class="dv">50</span></span>
+<span id="cb400-4"><a href="probability-and-statistics-in-r.html#cb400-4"></a>samples     =<span class="st"> </span><span class="dv">100000</span></span>
+<span id="cb400-5"><a href="probability-and-statistics-in-r.html#cb400-5"></a>x_bars      =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, samples)</span></code></pre></div>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="probability-and-statistics-in-r.html#cb401-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>samples){</span>
+<span id="cb401-2"><a href="probability-and-statistics-in-r.html#cb401-2"></a>  x_bars[i] =<span class="st"> </span><span class="kw">mean</span>(<span class="kw">rpois</span>(sample_size, <span class="dt">lambda =</span> mu))</span>
+<span id="cb401-3"><a href="probability-and-statistics-in-r.html#cb401-3"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="probability-and-statistics-in-r.html#cb402-1"></a>x_bar_hist =<span class="st"> </span><span class="kw">hist</span>(x_bars, <span class="dt">breaks =</span> <span class="dv">50</span>, </span>
+<span id="cb402-2"><a href="probability-and-statistics-in-r.html#cb402-2"></a>                  <span class="dt">main =</span> <span class="st">&quot;Histogram of Sample Means&quot;</span>,</span>
+<span id="cb402-3"><a href="probability-and-statistics-in-r.html#cb402-3"></a>                  <span class="dt">xlab =</span> <span class="st">&quot;Sample Means&quot;</span>)</span></code></pre></div>
 <p><img src="prob-and-stat_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
 <p>Now we will compare sample statistics from the empirical distribution with their known values based on the parent distribution.</p>
-<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb403-1" data-line-number="1"><span class="kw">c</span>(<span class="kw">mean</span>(x_bars), mu)</a></code></pre></div>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="probability-and-statistics-in-r.html#cb403-1"></a><span class="kw">c</span>(<span class="kw">mean</span>(x_bars), mu)</span></code></pre></div>
 <pre><code>## [1] 10.00008 10.00000</code></pre>
-<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb405-1" data-line-number="1"><span class="kw">c</span>(<span class="kw">var</span>(x_bars), mu <span class="op">/</span><span class="st"> </span>sample_size)</a></code></pre></div>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="probability-and-statistics-in-r.html#cb405-1"></a><span class="kw">c</span>(<span class="kw">var</span>(x_bars), mu <span class="op">/</span><span class="st"> </span>sample_size)</span></code></pre></div>
 <pre><code>## [1] 0.1989732 0.2000000</code></pre>
-<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb407-1" data-line-number="1"><span class="kw">c</span>(<span class="kw">sd</span>(x_bars), <span class="kw">sqrt</span>(mu) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(sample_size))</a></code></pre></div>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="probability-and-statistics-in-r.html#cb407-1"></a><span class="kw">c</span>(<span class="kw">sd</span>(x_bars), <span class="kw">sqrt</span>(mu) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(sample_size))</span></code></pre></div>
 <pre><code>## [1] 0.4460641 0.4472136</code></pre>
 <p>And here, we will calculate the proportion of sample means that are within 2 standard deviations of the population mean.</p>
-<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb409-1" data-line-number="1"><span class="kw">mean</span>(x_bars <span class="op">&gt;</span><span class="st"> </span>mu <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(mu) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(sample_size) <span class="op">&amp;</span></a>
-<a class="sourceLine" id="cb409-2" data-line-number="2"><span class="st">     </span>x_bars <span class="op">&lt;</span><span class="st"> </span>mu <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(mu) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(sample_size))</a></code></pre></div>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="probability-and-statistics-in-r.html#cb409-1"></a><span class="kw">mean</span>(x_bars <span class="op">&gt;</span><span class="st"> </span>mu <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(mu) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(sample_size) <span class="op">&amp;</span></span>
+<span id="cb409-2"><a href="probability-and-statistics-in-r.html#cb409-2"></a><span class="st">     </span>x_bars <span class="op">&lt;</span><span class="st"> </span>mu <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(mu) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(sample_size))</span></code></pre></div>
 <pre><code>## [1] 0.95429</code></pre>
 <p>This last histogram uses a bit of a trick to approximately shade the bars that are within two standard deviations of the mean.)</p>
-<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb411-1" data-line-number="1">shading =<span class="st"> </span><span class="kw">ifelse</span>(x_bar_hist<span class="op">$</span>breaks <span class="op">&gt;</span><span class="st"> </span>mu <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(mu) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(sample_size) <span class="op">&amp;</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb411-2" data-line-number="2"><span class="st">                   </span>x_bar_hist<span class="op">$</span>breaks <span class="op">&lt;</span><span class="st"> </span>mu <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(mu) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(sample_size),</a>
-<a class="sourceLine" id="cb411-3" data-line-number="3">                  <span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>)</a>
-<a class="sourceLine" id="cb411-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb411-5" data-line-number="5">x_bar_hist =<span class="st"> </span><span class="kw">hist</span>(x_bars, <span class="dt">breaks =</span> <span class="dv">50</span>, <span class="dt">col =</span> shading,</a>
-<a class="sourceLine" id="cb411-6" data-line-number="6">                  <span class="dt">main =</span> <span class="st">&quot;Histogram of Sample Means, Two Standard Deviations&quot;</span>,</a>
-<a class="sourceLine" id="cb411-7" data-line-number="7">                  <span class="dt">xlab =</span> <span class="st">&quot;Sample Means&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="probability-and-statistics-in-r.html#cb411-1"></a>shading =<span class="st"> </span><span class="kw">ifelse</span>(x_bar_hist<span class="op">$</span>breaks <span class="op">&gt;</span><span class="st"> </span>mu <span class="op">-</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(mu) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(sample_size) <span class="op">&amp;</span><span class="st"> </span></span>
+<span id="cb411-2"><a href="probability-and-statistics-in-r.html#cb411-2"></a><span class="st">                   </span>x_bar_hist<span class="op">$</span>breaks <span class="op">&lt;</span><span class="st"> </span>mu <span class="op">+</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">sqrt</span>(mu) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(sample_size),</span>
+<span id="cb411-3"><a href="probability-and-statistics-in-r.html#cb411-3"></a>                  <span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>)</span>
+<span id="cb411-4"><a href="probability-and-statistics-in-r.html#cb411-4"></a></span>
+<span id="cb411-5"><a href="probability-and-statistics-in-r.html#cb411-5"></a>x_bar_hist =<span class="st"> </span><span class="kw">hist</span>(x_bars, <span class="dt">breaks =</span> <span class="dv">50</span>, <span class="dt">col =</span> shading,</span>
+<span id="cb411-6"><a href="probability-and-statistics-in-r.html#cb411-6"></a>                  <span class="dt">main =</span> <span class="st">&quot;Histogram of Sample Means, Two Standard Deviations&quot;</span>,</span>
+<span id="cb411-7"><a href="probability-and-statistics-in-r.html#cb411-7"></a>                  <span class="dt">xlab =</span> <span class="st">&quot;Sample Means&quot;</span>)</span></code></pre></div>
 <p><img src="prob-and-stat_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 
 </div>
@@ -863,6 +865,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {

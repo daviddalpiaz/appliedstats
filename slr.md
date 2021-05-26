@@ -86,9 +86,7 @@ plot(dist ~ speed, data = cars,
      col  = "grey")
 ```
 
-
-
-\begin{center}\includegraphics{slr_files/figure-latex/unnamed-chunk-6-1} \end{center}
+<img src="slr_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" />
 
 Let's now define some terminology. We have pairs of data, $(x_i, y_i)$, for $i = 1, 2, \ldots n$, where $n$ is the sample size of the dataset.
 
@@ -116,18 +114,15 @@ What sort of function should we use for $f(X)$ for the `cars` data?
 
 We could try to model the data with a horizontal line. That is, the model for $y$ does not depend on the value of $x$. (Some function $f(X) = c$.) In the plot below, we see this doesn't seem to do a very good job. Many of the data points are very far from the orange line representing $c$. This is an example of **underfitting**. The obvious fix is to make the function $f(X)$ actually depend on $x$.
 
-
-\begin{center}\includegraphics{slr_files/figure-latex/underfit_plot-1} \end{center}
+<img src="slr_files/figure-html/underfit_plot-1.png" width="672" style="display: block; margin: auto;" />
 
 We could also try to model the data with a very "wiggly" function that tries to go through as many of the data points as possible. This also doesn't seem to work very well. The stopping distance for a speed of 5 mph shouldn't be off the chart! (Even in 1920.) This is an example of **overfitting**. (Note that in this example no function will go through every point, since there are some $x$ values that have several possible $y$ values in the data.)
 
-
-\begin{center}\includegraphics{slr_files/figure-latex/overfit_plot-1} \end{center}
+<img src="slr_files/figure-html/overfit_plot-1.png" width="672" style="display: block; margin: auto;" />
 
 Lastly, we could try to model the data with a well chosen line rather than one of the two extremes previously attempted. The line on the plot below seems to summarize the relationship between stopping distance and speed quite well. As speed increases, the distance required to come to a stop increases. There is still some variation about this line, but it seems to capture the overall trend.
 
-
-\begin{center}\includegraphics{slr_files/figure-latex/goodfit_plot-1} \end{center}
+<img src="slr_files/figure-html/goodfit_plot-1.png" width="672" style="display: block; margin: auto;" />
 
 With this in mind, we would like to restrict our choice of $f(X)$ to *linear* functions of $X$. We will write our model using $\beta_1$ for the slope, and $\beta_0$ for the intercept,
 
@@ -693,15 +688,13 @@ For the `cars` example, we calculate $R^2 = 0.65$. We then say that $65\%$ of th
 
 The following plots visually demonstrate the three "sums of squares" for a simulated dataset which has $R^2 = 0.92$ which is a somewhat high value. Notice in the final plot, that the orange arrows account for a larger proportion of the total arrow.
 
-
-\begin{center}\includegraphics{slr_files/figure-latex/unnamed-chunk-27-1} \end{center}
+<img src="slr_files/figure-html/unnamed-chunk-27-1.png" width="1152" style="display: block; margin: auto;" />
 
 
 
 The next plots again visually demonstrate the three "sums of squares," this time for a simulated dataset which has $R^2 = 0.19$. Notice in the final plot, that now the blue arrows account for a larger proportion of the total arrow.
 
-
-\begin{center}\includegraphics{slr_files/figure-latex/unnamed-chunk-29-1} \end{center}
+<img src="slr_files/figure-html/unnamed-chunk-29-1.png" width="1152" style="display: block; margin: auto;" />
 
 
 ## The `lm` Function
@@ -761,9 +754,7 @@ plot(dist ~ speed, data = cars,
 abline(stop_dist_model, lwd = 3, col = "darkorange")
 ```
 
-
-
-\begin{center}\includegraphics{slr_files/figure-latex/unnamed-chunk-33-1} \end{center}
+<img src="slr_files/figure-html/unnamed-chunk-33-1.png" width="672" style="display: block; margin: auto;" />
 
 The `abline()` function is used to add lines of the form $a + bx$ to a plot. (Hence **`ab`**`line`.) When we give it `stop_dist_model` as an argument, it automatically extracts the regression coefficient estimates ($\hat{\beta}_0$ and $\hat{\beta}_1$) and uses them as the slope and intercept of the line. Here we also use `lwd` to modify the width of the line, as well as `col` to modify the color of the line.
 
@@ -1220,9 +1211,7 @@ plot(y_vals ~ x_vals)
 abline(sim_fit)
 ```
 
-
-
-\begin{center}\includegraphics{slr_files/figure-latex/unnamed-chunk-51-1} \end{center}
+<img src="slr_files/figure-html/unnamed-chunk-51-1.png" width="672" style="display: block; margin: auto;" />
 
 We should say here, that we're being sort of lazy, and not the good kinda of lazy that could be considered efficient. Any time you simulate data, you should consider doing two things: writing a function, and storing the data in a data frame.
 
@@ -1293,9 +1282,7 @@ legend("topright", c("Estimate", "Truth"), lty = c(1, 2), lwd = 2,
        col = c("darkorange", "dodgerblue"))
 ```
 
-
-
-\begin{center}\includegraphics{slr_files/figure-latex/unnamed-chunk-56-1} \end{center}
+<img src="slr_files/figure-html/unnamed-chunk-56-1.png" width="672" style="display: block; margin: auto;" />
 
 
 ## History
@@ -1309,4 +1296,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`slr.Rmd`](slr.Rmd){target="_blank"}
 
-The file was created using `R` version `4.0.2`.
+The file was created using `R` version `4.1.0`.

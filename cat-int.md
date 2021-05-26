@@ -73,9 +73,7 @@ As we often do, we will start by plotting the data. We are interested in `mpg` a
 plot(mpg ~ hp, data = mtcars, cex = 2)
 ```
 
-
-
-\begin{center}\includegraphics{cat-int_files/figure-latex/unnamed-chunk-3-1} \end{center}
+<img src="cat-int_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" />
 
 Since we are also interested in the transmission type, we could also label the points accordingly.
 
@@ -85,9 +83,7 @@ plot(mpg ~ hp, data = mtcars, col = am + 1, pch = am + 1, cex = 2)
 legend("topright", c("Automatic", "Manual"), col = c(1, 2), pch = c(1, 2))
 ```
 
-
-
-\begin{center}\includegraphics{cat-int_files/figure-latex/unnamed-chunk-4-1} \end{center}
+<img src="cat-int_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" />
 
 We used a common `R` "trick" when plotting this data. The `am` variable takes two possible values; `0` for automatic transmission, and `1` for manual transmissions. `R` can use numbers to represent colors, however the color for `0` is white. So we take the `am` vector and add `1` to it. Then observations with automatic transmissions are now represented by `1`, which is black in `R`, and manual transmission are represented by `2`, which is red in `R`. (Note, we are only adding `1` inside the call to `plot()`, we are not actually modifying the values stored in `am`.)
 
@@ -113,9 +109,7 @@ abline(mpg_hp_slr, lwd = 3, col = "grey")
 legend("topright", c("Automatic", "Manual"), col = c(1, 2), pch = c(1, 2))
 ```
 
-
-
-\begin{center}\includegraphics{cat-int_files/figure-latex/unnamed-chunk-6-1} \end{center}
+<img src="cat-int_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" />
 
 We should notice a pattern here. The red, manual observations largely fall above the line, while the black, automatic observations are mostly below the line. This means our model underestimates the fuel efficiency of manual transmissions, and overestimates the fuel efficiency of automatic transmissions. To correct for this, we will add a predictor to our model, namely, `am` as $x_2$.
 
@@ -206,9 +200,7 @@ abline(int_manu, slope_manu, col = 2, lty = 2, lwd = 2) # add line for manual
 legend("topright", c("Automatic", "Manual"), col = c(1, 2), pch = c(1, 2))
 ```
 
-
-
-\begin{center}\includegraphics{cat-int_files/figure-latex/unnamed-chunk-10-1} \end{center}
+<img src="cat-int_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" />
 
 We notice right away that the points are no longer systematically incorrect. The red, manual observations vary about the red line in no particular pattern without underestimating the observations as before. The black, automatic points vary about the black line, also without an obvious pattern.
 
@@ -364,9 +356,7 @@ abline(int_dom, slope_dom, col = 2, lty = 2, lwd = 2) # add line for domestic ca
 legend("topright", c("Foreign", "Domestic"), pch = c(1, 2), col = c(1, 2))
 ```
 
-
-
-\begin{center}\includegraphics{cat-int_files/figure-latex/unnamed-chunk-15-1} \end{center}
+<img src="cat-int_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" />
 
 This is a model that allows for two *parallel* lines, meaning the `mpg` can be different on average between foreign and domestic cars of the same engine displacement, but the change in average `mpg` for an increase in displacement is the same for both. We can see this model isn't doing very well here. The red line fits the red points fairly well, but the black line isn't doing very well for the black points, it should clearly have a more negative slope. Essentially, we would like a model that allows for two different slopes.
 
@@ -522,9 +512,7 @@ abline(int_dom, slope_dom, col = 2, lty = 2, lwd = 2) # line for domestic cars
 legend("topright", c("Foreign", "Domestic"), pch = c(1, 2), col = c(1, 2))
 ```
 
-
-
-\begin{center}\includegraphics{cat-int_files/figure-latex/unnamed-chunk-23-1} \end{center}
+<img src="cat-int_files/figure-html/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" />
 
 We see that these lines fit the data much better, which matches the result of our tests.
 
@@ -622,7 +610,7 @@ coef(mpg_disp_int_hp)
 - $\hat{\beta}_0 = 52.4081998$ is the estimated average `mpg` for a car with 0 `disp` and 0 `hp`.
 - $\hat{\beta}_1 = -0.1001738$ is the estimated change in average `mpg` for an increase in 1 `disp`, **for a car with 0 `hp`**.
 - $\hat{\beta}_2 = -0.21982$ is the estimated change in average `mpg` for an increase in 1 `hp`, **for a car with 0 `disp`**.
-- $\hat{\beta}_3 = \ensuremath{5.658269\times 10^{-4}}$ is an estimate of the modification to the change in average `mpg` for an increase in `disp`, for a car of a certain `hp` (or vice versa).
+- $\hat{\beta}_3 = 5.658269\times 10^{-4}$ is an estimate of the modification to the change in average `mpg` for an increase in `disp`, for a car of a certain `hp` (or vice versa).
 
 That last coefficient needs further explanation. Recall the rearrangement we made earlier
 
@@ -633,21 +621,21 @@ Y = \beta_0 + (\beta_1 + \beta_3 x_2) x_1 + \beta_2 x_2 + \epsilon.
 So, our estimate for $\beta_1 + \beta_3 x_2$, is $\hat{\beta}_1 + \hat{\beta}_3 x_2$, which in this case is
 
 \[
--0.1001738 + \ensuremath{5.658269\times 10^{-4}} x_2.
+-0.1001738 + 5.658269\times 10^{-4} x_2.
 \]
 
-This says that, for an increase of one `disp` we see an estimated change in average `mpg` of $-0.1001738 + \ensuremath{5.658269\times 10^{-4}} x_2$. So how `disp` and `mpg` are related, depends on the `hp` of the car.
+This says that, for an increase of one `disp` we see an estimated change in average `mpg` of $-0.1001738 + 5.658269\times 10^{-4} x_2$. So how `disp` and `mpg` are related, depends on the `hp` of the car.
 
 So for a car with 50 `hp`, the estimated change in average `mpg` for an increase of one `disp` is
 
 \[
--0.1001738 + \ensuremath{5.658269\times 10^{-4}} \cdot 50 = -0.0718824
+-0.1001738 + 5.658269\times 10^{-4} \cdot 50 = -0.0718824
 \]
 
 And for a car with 350 `hp`, the estimated change in average `mpg` for an increase of one `disp` is
 
 \[
--0.1001738 + \ensuremath{5.658269\times 10^{-4}} \cdot 350 = 0.0978657
+-0.1001738 + 5.658269\times 10^{-4} \cdot 350 = 0.0978657
 \]
 
 Notice the sign changed!
@@ -922,9 +910,7 @@ legend("topright", c("4 Cylinder", "6 Cylinder", "8 Cylinder"),
        col = plot_colors, lty = c(1, 2, 3), pch = c(1, 2, 3))
 ```
 
-
-
-\begin{center}\includegraphics{cat-int_files/figure-latex/unnamed-chunk-37-1} \end{center}
+<img src="cat-int_files/figure-html/unnamed-chunk-37-1.png" width="672" style="display: block; margin: auto;" />
 
 On this plot, we have
 
@@ -999,9 +985,7 @@ legend("topright", c("4 Cylinder", "6 Cylinder", "8 Cylinder"),
        col = plot_colors, lty = c(1, 2, 3), pch = c(1, 2, 3))
 ```
 
-
-
-\begin{center}\includegraphics{cat-int_files/figure-latex/unnamed-chunk-39-1} \end{center}
+<img src="cat-int_files/figure-html/unnamed-chunk-39-1.png" width="672" style="display: block; margin: auto;" />
 
 This looks much better! We can see that for medium displacement cars, 6 cylinder cars now perform better than 8 cylinder cars, which seems much more reasonable than before.
 
@@ -1460,4 +1444,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`cat-int.Rmd`](cat-int.Rmd){target="_blank"}
 
-The file was created using `R` version `4.0.2`.
+The file was created using `R` version `4.1.0`.

@@ -131,7 +131,7 @@ t.test(sleep ~ group, data = melatonin, var.equal = TRUE)
 ## 
 ## data:  sleep by group
 ## t = -2.0854, df = 18, p-value = 0.05154
-## alternative hypothesis: true difference in means is not equal to 0
+## alternative hypothesis: true difference in means between group control and group treatment is not equal to 0
 ## 95 percent confidence interval:
 ##  -3.02378261  0.01117547
 ## sample estimates:
@@ -160,9 +160,7 @@ With a big enough sample size, we could make an effect size of say, four minutes
 boxplot(sleep ~ group, data = melatonin, col = 5:6)
 ```
 
-
-
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-6-1} \end{center}
+<img src="anova_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" />
 
 <!-- TODO: other parametarization, explain identify -->
 
@@ -277,8 +275,7 @@ Let's see what this looks like in a few situations. In each of the following exa
 
 First, consider $\mu_A = -5, \mu_B = 0, \mu_C = 5$ with $\sigma = 1$.
 
-
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-9-1} \end{center}
+<img src="anova_files/figure-html/unnamed-chunk-9-1.png" width="960" style="display: block; margin: auto;" />
 
 The left panel shows the three normal distributions we are sampling from. The ticks along the $x$-axis show the randomly sampled observations. The right panel, re-displays only the sampled values in a boxplot. Note that the mid-line of the boxes is usually the sample median. These boxplots have been modified to use the sample mean.
 
@@ -287,12 +284,11 @@ Here the sample means vary a lot around the overall sample mean, which is the so
 As a result, we we obtain a *large* test statistic, thus *small* p-value. 
 
 - $F = 374.4469511$
-- $\text{p-value} = \ensuremath{1.6349862\times 10^{-33}}$
+- $\text{p-value} = 1.6349862\times 10^{-33}$
 
 Now consider $\mu_A = 0, \mu_B = 0, \mu_C = 0$ with $\sigma = 1$. That is, equal means for the groups.
 
-
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-10-1} \end{center}
+<img src="anova_files/figure-html/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" />
 
 Here the sample means vary only a tiny bit around the overall sample mean. Within the groups there is variability, this time much larger than the variability of the sample means.
 
@@ -305,19 +301,17 @@ The next two examples show different means, with different levels of noise. Noti
 
 - $\mu_A = -1, \mu_B = 0, \mu_C = 1, \sigma = 1$
 
-
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-11-1} \end{center}
+<img src="anova_files/figure-html/unnamed-chunk-11-1.png" width="960" style="display: block; margin: auto;" />
 
 - $F = 16.4879492$
-- $\text{p-value} = \ensuremath{2.2378806\times 10^{-6}}$
+- $\text{p-value} = 2.2378806\times 10^{-6}$
 
 Above, there isn't obvious separation between the groups like the first example, but it is still obvious the means are different. Below, there is more noise. Visually it is somewhat hard to tell, but the test still suggests a difference of means. (At an $\alpha$ of 0.05.)
 
 - $\mu_A = -1, \mu_B = 0, \mu_C = 1, \sigma = 2$
 - $n_i = 20$ for each group.
 
-
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-12-1} \end{center}
+<img src="anova_files/figure-html/unnamed-chunk-12-1.png" width="960" style="display: block; margin: auto;" />
 
 - $F = 4.6256472$
 - $\text{p-value} = 0.0137529$
@@ -346,9 +340,7 @@ names(coagulation)
 plot(coag ~ diet, data = coagulation, col = 2:5)
 ```
 
-
-
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-13-1} \end{center}
+<img src="anova_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" />
 
 We first load the data and create the relevant boxplot. The plot alone suggests a difference of means. The `aov()` function is used to obtain the relevant sums of squares. Using the `summary()` function on the output from `aov()` creates the desired ANOVA table. (Without the unneeded row for total.)
 
@@ -485,9 +477,7 @@ hist(f_stats, breaks = 100, prob = TRUE, border = "dodgerblue", main = "Empirica
 curve(df(x, df1 = 4 - 1, df2 = 40 - 4), col = "darkorange", add = TRUE, lwd = 2)
 ```
 
-
-
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-17-1} \end{center}
+<img src="anova_files/figure-html/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" />
 
 ### Power
 
@@ -704,9 +694,7 @@ Also, nicely, we can easily produce a plot of these confidence intervals.
 plot(TukeyHSD(coag_aov, conf.level = 0.95))
 ```
 
-
-
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-25-1} \end{center}
+<img src="anova_files/figure-html/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" />
 
 The creator of this method, [John Tukey](https://en.wikipedia.org/wiki/John_Tukey){target="_blank"}, is an important figure in the history of data science. He essentially [predicted the rise of data science over 50 years ago](https://projecteuclid.org/euclid.aoms/1177704711){target="_blank"}. For some retrospective thoughts on those 50 years, see [this paper from David Donoho](http://courses.csail.mit.edu/18.337/2015/docs/50YearsDataScience.pdf){target="_blank"}.
 
@@ -818,9 +806,7 @@ with(rats, interaction.plot(poison, treat, time, lwd = 2, col = 1:4))
 with(rats, interaction.plot(treat, poison, time, lwd = 2, col = 1:3))
 ```
 
-
-
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-27-1} \end{center}
+<img src="anova_files/figure-html/unnamed-chunk-27-1.png" width="1440" style="display: block; margin: auto;" />
 
 If there is not interaction, thus an additive model, we would expect to see parallel lines. That would mean, when we change the level of one factor, there can be an effect on the response. However, the difference between the levels of the other factor should still be the same.
 
@@ -893,19 +879,13 @@ knitr::kable(get_est_means(model = rats_int, table = rats_table))
 ```
 
 
-\begin{tabular}{l|r|r|r}
-\hline
-  & I & II & III\\
-\hline
-A & 0.4125 & 0.3200 & 0.210\\
-\hline
-B & 0.8800 & 0.8150 & 0.335\\
-\hline
-C & 0.5675 & 0.3750 & 0.235\\
-\hline
-D & 0.6100 & 0.6675 & 0.325\\
-\hline
-\end{tabular}
+
+|   |      I|     II|   III|
+|:--|------:|------:|-----:|
+|A  | 0.4125| 0.3200| 0.210|
+|B  | 0.8800| 0.8150| 0.335|
+|C  | 0.5675| 0.3750| 0.235|
+|D  | 0.6100| 0.6675| 0.325|
 
 
 
@@ -917,19 +897,13 @@ knitr::kable(get_est_means(model = rats_add, table = rats_table))
 ```
 
 
-\begin{tabular}{l|r|r|r}
-\hline
-  & I & II & III\\
-\hline
-A & 0.4522917 & 0.3791667 & 0.1110417\\
-\hline
-B & 0.8147917 & 0.7416667 & 0.4735417\\
-\hline
-C & 0.5306250 & 0.4575000 & 0.1893750\\
-\hline
-D & 0.6722917 & 0.5991667 & 0.3310417\\
-\hline
-\end{tabular}
+
+|   |         I|        II|       III|
+|:--|---------:|---------:|---------:|
+|A  | 0.4522917| 0.3791667| 0.1110417|
+|B  | 0.8147917| 0.7416667| 0.4735417|
+|C  | 0.5306250| 0.4575000| 0.1893750|
+|D  | 0.6722917| 0.5991667| 0.3310417|
 
 To understand the difference, let's consider the effect of the treatments.
 
@@ -965,19 +939,13 @@ knitr::kable(get_est_means(model = rats_pois, table = rats_table))
 ```
 
 
-\begin{tabular}{l|r|r|r}
-\hline
-  & I & II & III\\
-\hline
-A & 0.6175 & 0.544375 & 0.27625\\
-\hline
-B & 0.6175 & 0.544375 & 0.27625\\
-\hline
-C & 0.6175 & 0.544375 & 0.27625\\
-\hline
-D & 0.6175 & 0.544375 & 0.27625\\
-\hline
-\end{tabular}
+
+|   |      I|       II|     III|
+|:--|------:|--------:|-------:|
+|A  | 0.6175| 0.544375| 0.27625|
+|B  | 0.6175| 0.544375| 0.27625|
+|C  | 0.6175| 0.544375| 0.27625|
+|D  | 0.6175| 0.544375| 0.27625|
 
 
 ```r
@@ -985,19 +953,13 @@ knitr::kable(get_est_means(model = rats_treat, table = rats_table))
 ```
 
 
-\begin{tabular}{l|r|r|r}
-\hline
-  & I & II & III\\
-\hline
-A & 0.3141667 & 0.3141667 & 0.3141667\\
-\hline
-B & 0.6766667 & 0.6766667 & 0.6766667\\
-\hline
-C & 0.3925000 & 0.3925000 & 0.3925000\\
-\hline
-D & 0.5341667 & 0.5341667 & 0.5341667\\
-\hline
-\end{tabular}
+
+|   |         I|        II|       III|
+|:--|---------:|---------:|---------:|
+|A  | 0.3141667| 0.3141667| 0.3141667|
+|B  | 0.6766667| 0.6766667| 0.6766667|
+|C  | 0.3925000| 0.3925000| 0.3925000|
+|D  | 0.5341667| 0.5341667| 0.5341667|
 
 
 ```r
@@ -1005,19 +967,13 @@ knitr::kable(get_est_means(model = rats_null, table = rats_table))
 ```
 
 
-\begin{tabular}{l|r|r|r}
-\hline
-  & I & II & III\\
-\hline
-A & 0.479375 & 0.479375 & 0.479375\\
-\hline
-B & 0.479375 & 0.479375 & 0.479375\\
-\hline
-C & 0.479375 & 0.479375 & 0.479375\\
-\hline
-D & 0.479375 & 0.479375 & 0.479375\\
-\hline
-\end{tabular}
+
+|   |        I|       II|      III|
+|:--|--------:|--------:|--------:|
+|A  | 0.479375| 0.479375| 0.479375|
+|B  | 0.479375| 0.479375| 0.479375|
+|C  | 0.479375| 0.479375| 0.479375|
+|D  | 0.479375| 0.479375| 0.479375|
 
 To perform the needed tests, we will need to create another ANOVA table. (We'll skip the details of the sums of squares calculations and simply let `R` take care of them.)
 
@@ -1127,9 +1083,7 @@ with(warpbreaks, interaction.plot(wool, tension, breaks, lwd = 2, col = 2:4))
 with(warpbreaks, interaction.plot(tension, wool, breaks, lwd = 2, col = 2:3))
 ```
 
-
-
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-42-1} \end{center}
+<img src="anova_files/figure-html/unnamed-chunk-42-1.png" width="1440" style="display: block; margin: auto;" />
 
 Either plot makes it rather clear that the `wool` and `tensions` factors interact.
 
@@ -1160,4 +1114,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`anova.Rmd`](anova.Rmd){target="_blank"}
 
-The file was created using `R` version `4.0.2`.
+The file was created using `R` version `4.1.0`.

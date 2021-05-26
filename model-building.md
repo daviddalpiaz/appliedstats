@@ -113,8 +113,7 @@ For example, there are several families of *non-parametric* regression. Smoothin
 
 In linear regression, we specified models with parameters, $\beta_j$ and fit the model by finding the best values of these parameters. This is a *parametric* approach. A non-parametric approach skips the step of specifying a model with parameters, and are often described as more of an algorithm. Non-parametric models are often used in machine learning.
 
-
-\begin{center}\includegraphics{model-building_files/figure-latex/unnamed-chunk-2-1} \end{center}
+<img src="model-building_files/figure-html/unnamed-chunk-2-1.png" width="1152" style="display: block; margin: auto;" />
 
 Here, SLR (parametric) is used on the left, while smoothing (non-parametric) is used on the right. SLR finds the best slope and intercept. Smoothing produces the fitted $y$ value at a particular $x$ value by considering the $y$ values of the data in a neighborhood of the $x$ value considered. (Local smoothing.)
 
@@ -200,9 +199,7 @@ Just because two variables are correlated does not necessarily mean that one cau
 plot(mpg ~ hp, data = autompg, col = "dodgerblue", pch = 20, cex = 1.5)
 ```
 
-
-
-\begin{center}\includegraphics{model-building_files/figure-latex/unnamed-chunk-5-1} \end{center}
+<img src="model-building_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" />
 
 Does an increase in horsepower cause a drop in fuel efficiency? Or, perhaps the causality is reversed and an increase in fuel efficiency cause a decrease in horsepower. Or, perhaps there is a third variable that explains both!
 
@@ -244,8 +241,7 @@ Now, suppose we magically encounter some additional additional data. To truly as
 
 Below, we simulate some data and fit two models. We will call the solid blue line the "simple" model. The dashed orange line will be called the "complex" model, which was fit with methods we do not yet know.
 
-
-\begin{center}\includegraphics{model-building_files/figure-latex/unnamed-chunk-6-1} \end{center}
+<img src="model-building_files/figure-html/unnamed-chunk-6-1.png" width="1152" style="display: block; margin: auto;" />
 
 The left panel shows the data that was used to fit the two models. Clearly the "complex" model fits the data much better. The right panel shows additional data that was simulated in the same manner as the original data. Here we see that the "simple" model fits much better. The dashed orange line almost seems random.
 
@@ -275,4 +271,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`model-building.Rmd`](model-building.Rmd){target="_blank"}
 
-The file was created using `R` version `4.0.2`.
+The file was created using `R` version `4.1.0`.

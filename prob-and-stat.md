@@ -67,8 +67,8 @@ rnorm(n = 10, mean = 2, sd = 5)
 ```
 
 ```
-##  [1] -0.6190182  4.4900191 -0.1676563  1.9672686 -0.9577004 -4.4294914
-##  [7]  1.6386795  6.5084872  4.8735251  3.3176047
+##  [1]  1.567809984  8.599108878 -2.895519218 -4.983178239 12.172421230
+##  [6] -0.006576604 -0.438084117 -4.569277739  3.949856359 -8.527456302
 ```
 
 These functions exist for many other distributions, including but not limited to:
@@ -440,7 +440,7 @@ t.test(values ~ group, data = t_test_data,
 ## 
 ## data:  values by group
 ## t = 1.8234, df = 12, p-value = 0.04662
-## alternative hypothesis: true difference in means is greater than 0
+## alternative hypothesis: true difference in means between group A and group B is greater than 0
 ## 95 percent confidence interval:
 ##  0.1802451       Inf
 ## sample estimates:
@@ -557,7 +557,7 @@ for (s in 1:num_samples) {
 }
 ```
 
-To estimate $P(0 < D < 2)$ we will find the proportion of values of $d_s$ (among the \ensuremath{10^{4}} values of $d_s$ generated) that are between 0 and 2.
+To estimate $P(0 < D < 2)$ we will find the proportion of values of $d_s$ (among the 10^{4} values of $d_s$ generated) that are between 0 and 2.
 
 
 ```r
@@ -581,7 +581,7 @@ hist(differences, breaks = 20,
      border = "darkorange")
 ```
 
-![](prob-and-stat_files/figure-latex/unnamed-chunk-30-1.pdf)<!-- --> 
+<img src="prob-and-stat_files/figure-html/unnamed-chunk-30-1.png" width="672" />
 
 Also the sample mean and variance are very close to to what we would expect.
 
@@ -676,7 +676,7 @@ x_bar_hist = hist(x_bars, breaks = 50,
                   xlab = "Sample Means")
 ```
 
-![](prob-and-stat_files/figure-latex/unnamed-chunk-36-1.pdf)<!-- --> 
+<img src="prob-and-stat_files/figure-html/unnamed-chunk-36-1.png" width="672" />
 
 Now we will compare sample statistics from the empirical distribution with their known values based on the parent distribution.
 
@@ -732,7 +732,7 @@ x_bar_hist = hist(x_bars, breaks = 50, col = shading,
                   xlab = "Sample Means")
 ```
 
-![](prob-and-stat_files/figure-latex/unnamed-chunk-41-1.pdf)<!-- --> 
+<img src="prob-and-stat_files/figure-html/unnamed-chunk-41-1.png" width="672" />
 
 
 
