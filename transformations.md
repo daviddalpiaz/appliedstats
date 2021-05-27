@@ -33,7 +33,9 @@ plot(salary ~ years, data = initech, col = "grey", pch = 20, cex = 1.5,
      main = "Salaries at Initech, By Seniority")
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 We first fit a simple linear model.
 
@@ -73,7 +75,9 @@ plot(salary ~ years, data = initech, col = "grey", pch = 20, cex = 1.5,
 abline(initech_fit, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-6-1} \end{center}
 
 Adding the fitted line to the plot, we see that the linear relationship appears correct.
 
@@ -89,7 +93,9 @@ qqnorm(resid(initech_fit), main = "Normal Q-Q Plot", col = "darkgrey")
 qqline(resid(initech_fit), col = "dodgerblue", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-7-1.png" width="960" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-7-1} \end{center}
 
 However, from the fitted versus residuals plot it appears there is non-constant variance. Specifically, the variance increases as the fitted value increases.
 
@@ -159,7 +165,9 @@ plot(log(salary) ~ years, data = initech, col = "grey", pch = 20, cex = 1.5,
 abline(initech_fit_log, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 Plotting the data on the transformed log scale and adding the fitted line, the relationship again appears linear, and we can already see that the variation about the fitted line looks constant.
 
@@ -171,7 +179,9 @@ curve(exp(initech_fit_log$coef[1] + initech_fit_log$coef[2] * x),
       from = 0, to = 30, add = TRUE, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-10-1} \end{center}
 
 By plotting the data on the original scale, and adding the fitted regression, we see an exponential relationship. However, this is still a *linear* model, since the new transformed response, $\log(y)$, is still a *linear* combination of the predictors.
 
@@ -187,7 +197,9 @@ qqnorm(resid(initech_fit_log), main = "Normal Q-Q Plot", col = "darkgrey")
 qqline(resid(initech_fit_log), col = "dodgerblue", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-11-1.png" width="960" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 The fitted versus residuals plot looks much better. It appears the constant variance assumption is no longer violated.
 
@@ -322,7 +334,9 @@ We then use the `boxcox()` function to find the best transformation of the form 
 boxcox(savings_model, plotit = TRUE)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 `R` automatically plots the log-Likelihood as a function of possible $\lambda$ values. It indicates both the value that maximizes the log-likelihood, as well as a confidence interval for the $\lambda$ value that maximizes the log-likelihood.
 
@@ -331,7 +345,9 @@ boxcox(savings_model, plotit = TRUE)
 boxcox(savings_model, plotit = TRUE, lambda = seq(0.5, 1.5, by = 0.1))
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-18-1} \end{center}
 
 Note that we can specify a range of $\lambda$ values to consider and thus be plotted. We often specify a range that is more visually interesting. Here we see that $\lambda = 1$ is both in the confidence interval, and is extremely close to the maximum. This suggests a transformation of the form
 
@@ -348,7 +364,9 @@ plot(fitted(savings_model), resid(savings_model), col = "dodgerblue",
 abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
 Looking at a fitted versus residuals plot verifies that there likely are not any issue with the assumptions of this model, which Breusch-Pagan and Shapiro-Wilk tests verify.
 
@@ -392,7 +410,9 @@ plot(fitted(gala_model), resid(gala_model), col = "dodgerblue",
 abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-22-1} \end{center}
 
 Even though there is not a lot of data for large fitted values, it still seems very clear that the constant variance assumption is violated.
 
@@ -401,7 +421,9 @@ Even though there is not a lot of data for large fitted values, it still seems v
 boxcox(gala_model, lambda = seq(-0.25, 0.75, by = 0.05), plotit = TRUE)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-23-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-23-1} \end{center}
 
 Using the Box-Cox method, we see that $\lambda = 0.3$ is both in the confidence interval, and is extremely close to the maximum, which suggests a transformation of the form
 
@@ -423,7 +445,9 @@ plot(fitted(gala_model_cox), resid(gala_model_cox), col = "dodgerblue",
 abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-25-1} \end{center}
 
 The resulting fitted versus residuals plot looks much better!
 
@@ -434,7 +458,9 @@ Lastly, we return to the `initech` data, and the `initech_fit` model we had used
 boxcox(initech_fit)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-26-1} \end{center}
 
 Using the Box-Cox method, we see that $\lambda = 0$ is both in the interval, and extremely close to the maximum, which suggests a transformation of the form
 
@@ -481,7 +507,9 @@ plot(fitted(mpg_hp), resid(mpg_hp), col = "dodgerblue",
 abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-29-1.png" width="768" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-29-1} \end{center}
 
 We first attempt SLR, but we see a rather obvious pattern in the fitted versus residuals plot, which includes increasing variance, so we attempt a $\log$ transform of the response.
 
@@ -496,7 +524,9 @@ plot(fitted(mpg_hp_log), resid(mpg_hp_log), col = "dodgerblue",
 abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-30-1.png" width="768" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-30-1} \end{center}
 
 After performing the $\log$ transform of the response, we still have some of the same issues with the fitted versus response. Now, we will try also $\log$ transforming the **predictor**.
 
@@ -511,7 +541,9 @@ plot(fitted(mpg_hp_loglog), resid(mpg_hp_loglog), col = "dodgerblue",
 abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-31-1.png" width="768" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-31-1} \end{center}
 
 Here, our fitted versus residuals plot looks good.
 
@@ -535,7 +567,9 @@ plot(sales ~ advert, data = marketing,
      pch = 20, cex = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-33-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-33-1} \end{center}
 
 We would like to fit the model,
 
@@ -729,7 +763,9 @@ lines(xplot, predict(mark_mod_poly3, newdata = data.frame(advert = xplot)),
       col = "red", lty = 3, lwd = 3)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-38-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-38-1} \end{center}
 
 The previous plot was made using base graphics in `R`. The next plot was made using the package [`ggplot2`](http://ggplot2.org/){target="_blank"}, an increasingly popular plotting method in `R`.
 
@@ -743,7 +779,9 @@ ggplot(data = marketing, aes(x = advert, y = sales)) +
   geom_point(colour = "black", size = 3)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-39-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-39-1} \end{center}
 
 Note we could fit a polynomial of an arbitrary order,
 
@@ -802,7 +840,9 @@ lines(xplot, predict(fit_perf, newdata = data.frame(x = xplot)),
       col = "darkorange", lwd = 2, lty = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-40-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-40-1} \end{center}
 
 Notice in the summary, `R` could not calculate standard errors. This is a result of being "out" of degrees of freedom. With 11 $\beta$ parameters and 11 data points, we use up all the degrees of freedom before we can estimate $\sigma$.
 
@@ -849,7 +889,9 @@ plot(fitted(fit1), resid(fit1), xlab = "Fitted", ylab = "Residuals",
   abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-44-1.png" width="768" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-44-1} \end{center}
 
 Pretty clearly we can do better. Yes fuel efficiency does increase as speed increases, but only up to a certain point.
 
@@ -892,7 +934,9 @@ plot(fitted(fit2), resid(fit2), xlab = "Fitted", ylab = "Residuals",
   abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-46-1.png" width="768" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-46-1} \end{center}
 
 While this model clearly fits much better, and the second order term is significant, we still see a pattern in the fitted versus residuals plot which suggests higher order terms will help. Also, we would expect the curve to flatten as speed increases or decreases, not go sharply downward as we see here.
 
@@ -934,7 +978,9 @@ plot(fitted(fit3), resid(fit3), xlab = "Fitted", ylab = "Residuals",
   abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-48-1.png" width="768" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-48-1} \end{center}
 
 Adding the third order term doesn't seem to help at all. The fitted curve hardly changes. This makes sense, since what we would like is for the curve to flatten at the extremes. For this we will need an even degree polynomial term.
 
@@ -977,7 +1023,9 @@ plot(fitted(fit4), resid(fit4), xlab = "Fitted", ylab = "Residuals",
   abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-50-1.png" width="768" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-50-1} \end{center}
 
 Now we are making progress. The fourth order term is significant with the other terms in the model. Also we are starting to see what we expected for low and high speed. However, there still seems to be a bit of a pattern in the residuals, so we will again try more higher order terms. We will add the fifth and sixth together, since adding the fifth will be similar to adding the third.
 
@@ -1023,7 +1071,9 @@ plot(fitted(fit6), resid(fit6), xlab = "Fitted", ylab = "Residuals",
   abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-52-1.png" width="768" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-52-1} \end{center}
 
 Again the sixth order term is significant with the other terms in the model and here we see less pattern in the residuals plot. Let's now test for which of the previous two models we prefer. We will test
 
@@ -1093,7 +1143,9 @@ plot(fitted(fit8), resid(fit8), xlab = "Fitted", ylab = "Residuals",
   abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-55-1.png" width="768" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-55-1} \end{center}
 
 
 ```r
@@ -1281,7 +1333,9 @@ plot(salary ~ years, data = initech, col = "grey", pch = 20, cex = 1.5,
      main = "Salaries at Initech, By Seniority")
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-62-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-62-1} \end{center}
 
 
 ```r
@@ -1317,7 +1371,9 @@ plot(salary ~ years, data = initech, col = "grey", pch = 20, cex = 1.5,
 abline(initech_fit, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-64-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-64-1} \end{center}
 
 
 ```r
@@ -1331,7 +1387,9 @@ qqnorm(resid(initech_fit), main = "Normal Q-Q Plot", col = "darkgrey")
 qqline(resid(initech_fit), col = "dodgerblue", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-65-1.png" width="960" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-65-1} \end{center}
 
 
 ```r
@@ -1349,7 +1407,9 @@ plot(log(salary) ~ years, data = initech, col = "grey", pch = 20, cex = 1.5,
 abline(initech_fit_log, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-67-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-67-1} \end{center}
 
 $$
 Y_i = \exp(\beta_0 + \beta_1 x_i) \cdot \exp(\epsilon_i)
@@ -1363,7 +1423,9 @@ curve(exp(initech_fit_log$coef[1] + initech_fit_log$coef[2] * x),
       from = 0, to = 30, add = TRUE, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-68-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-68-1} \end{center}
 
 
 ```r
@@ -1377,7 +1439,9 @@ qqnorm(resid(initech_fit_log), main = "Normal Q-Q Plot", col = "darkgrey")
 qqline(resid(initech_fit_log), col = "dodgerblue", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-69-1.png" width="960" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-69-1} \end{center}
 
 
 ```r
@@ -1466,7 +1530,9 @@ plot(y ~ x, data = quad_data, col = "grey", pch = 20, cex = 1.5,
 abline(lin_fit, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-75-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-75-1} \end{center}
 
 
 ```r
@@ -1480,7 +1546,9 @@ qqnorm(resid(lin_fit), main = "Normal Q-Q Plot", col = "darkgrey")
 qqline(resid(lin_fit), col = "dodgerblue", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-76-1.png" width="960" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-76-1} \end{center}
 
 $$
 Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \epsilon_i
@@ -1522,7 +1590,9 @@ curve(quad_fit$coef[1] + quad_fit$coef[2] * x + quad_fit$coef[3] * x ^ 2,
       from = -5, to = 30, add = TRUE, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-78-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-78-1} \end{center}
 
 
 ```r
@@ -1536,7 +1606,9 @@ qqnorm(resid(quad_fit), main = "Normal Q-Q Plot", col = "darkgrey")
 qqline(resid(quad_fit), col = "dodgerblue", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-79-1.png" width="960" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-79-1} \end{center}
 
 ### Overfitting and Extrapolation
 
@@ -1573,7 +1645,9 @@ lines(x_plot, predict(fit_perfect, newdata = data.frame(x = x_plot)),
       col = "darkorange", lwd = 2, lty = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-83-1.png" width="768" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-83-1} \end{center}
 
 ### Comparing Polynomial Models
 
@@ -1610,7 +1684,9 @@ plot(y ~ x, data = data_higher, col = "grey", pch = 20, cex = 1.5,
      main = "Simulated Quartic Data")
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-86-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-86-1} \end{center}
 
 
 ```r
@@ -1629,7 +1705,9 @@ lines(x_plot, predict(fit_4, newdata = data.frame(x = x_plot)),
       col = "darkorange", lwd = 2, lty = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-88-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-88-1} \end{center}
 
 
 ```r
@@ -1643,7 +1721,9 @@ qqnorm(resid(fit_2), main = "Normal Q-Q Plot", col = "darkgrey")
 qqline(resid(fit_2), col = "dodgerblue", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-89-1.png" width="960" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-89-1} \end{center}
 
 
 ```r
@@ -1657,7 +1737,9 @@ qqnorm(resid(fit_4), main = "Normal Q-Q Plot", col = "darkgrey")
 qqline(resid(fit_4), col = "dodgerblue", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-90-1.png" width="960" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-90-1} \end{center}
 
 
 ```r
@@ -1932,7 +2014,9 @@ coef(lm(y ~ x + x, data = quad_data))
 pairs(autompg)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-105-1.png" width="960" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-105-1} \end{center}
 
 
 ```r
@@ -1948,7 +2032,9 @@ plot(fitted(mpg_hp), resid(mpg_hp), col = "dodgerblue",
 abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-106-1.png" width="960" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-106-1} \end{center}
 
 
 ```r
@@ -1966,7 +2052,9 @@ plot(fitted(mpg_hp_log), resid(mpg_hp_log), col = "dodgerblue",
 abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-107-1.png" width="960" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-107-1} \end{center}
 
 
 ```r
@@ -1984,7 +2072,9 @@ plot(fitted(mpg_hp_log), resid(mpg_hp_log), col = "dodgerblue",
 abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-108-1.png" width="960" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-108-1} \end{center}
 
 
 ```r
@@ -1999,7 +2089,9 @@ plot(fitted(mpg_hp_loglog), resid(mpg_hp_loglog), col = "dodgerblue",
 abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-109-1.png" width="960" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-109-1} \end{center}
 
 
 ```r
@@ -2012,7 +2104,9 @@ qqnorm(resid(big_model), col = "darkgrey")
 qqline(resid(big_model), col = "dodgerblue", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-111-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-111-1} \end{center}
 
 
 ```r
@@ -2057,7 +2151,9 @@ qqnorm(resid(bigger_model), col = "darkgrey")
 qqline(resid(bigger_model), col = "dodgerblue", lwd = 2)
 ```
 
-<img src="transformations_files/figure-html/unnamed-chunk-113-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-113-1} \end{center}
 
 ## `R` Markdown
 

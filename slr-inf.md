@@ -84,7 +84,9 @@ plot(dist ~ speed, data = cars,
 abline(stop_dist_model, lwd = 5, col = "darkorange")
 ```
 
-<img src="slr-inf_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-3-1} \end{center}
 
 To get started, we'll note that there is another equivalent expression for $S_{xy}$ which we did not see last chapter,
 
@@ -373,7 +375,9 @@ curve(dnorm(x, mean = beta_1, sd = sqrt(var_beta_1_hat)),
       col = "darkorange", add = TRUE, lwd = 3)
 ```
 
-<img src="slr-inf_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 We then repeat the process for $\hat{\beta}_0$.
 
@@ -418,7 +422,9 @@ curve(dnorm(x, mean = beta_0, sd = sqrt(var_beta_0_hat)),
       col = "darkorange", add = TRUE, lwd = 3)
 ```
 
-<img src="slr-inf_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-11-1} \end{center}
 
 In this simulation study, we have only simulated a finite number of samples. To truly verify the distributional results, we would need to observe an infinite number of samples. However, the following plot should make it clear that if we continued simulating, the empirical results would get closer and closer to what we should expect.
 
@@ -432,7 +438,9 @@ plot(cumsum(beta_1_hats) / (1:length(beta_1_hats)), type = "l", ylim = c(5.95, 6
 abline(h = 6, col = "darkorange", lwd = 2)
 ```
 
-<img src="slr-inf_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
 ```r
 par(mar = c(5, 5, 1, 1)) # adjusted plot margins, otherwise the "hat" does not display
@@ -443,7 +451,9 @@ plot(cumsum(beta_0_hats) / (1:length(beta_0_hats)), type = "l", ylim = c(2.95, 3
 abline(h = 3, col = "darkorange", lwd = 2)
 ```
 
-<img src="slr-inf_files/figure-html/unnamed-chunk-12-2.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-12-2} \end{center}
 
 ## Standard Errors
 
@@ -561,7 +571,9 @@ legend("topright", title = "Distributions",
        lwd = 2, lty = c(3, 2, 1), col = c("darkorange", "dodgerblue", "black"))
 ```
 
-<img src="slr-inf_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 ## Confidence Intervals for Slope and Intercept
 
@@ -738,7 +750,7 @@ t = \frac{\hat{\beta}_1-0}{\text{SE}[\hat{\beta}_1]} = \frac{\hat{\beta}_1-0}{s_
 Lastly, `Pr(>|t|)`, gives us the p-value of that test.
 
 \[
-\text{p-value} = 1.4898365\times 10^{-12}
+\text{p-value} = \ensuremath{1.4898365\times 10^{-12}}
 \]
 
 Note here, we are specifically testing whether or not $\beta_1 = 0$. 
@@ -843,12 +855,13 @@ For the `cars` example,
 Again, that test is seen in the output from `summary()`, 
 
 \[
-\text{p-value} = 1.4898365\times 10^{-12}.
+\text{p-value} = \ensuremath{1.4898365\times 10^{-12}}.
 \]
 
 With this extremely low p-value, we would reject the null hypothesis at any reasonable $\alpha$ level, say for example $\alpha = 0.01$. So we say there is a significant **linear** relationship between speed and stopping distance. Notice that we emphasize **linear**.
 
-<img src="slr-inf_files/figure-html/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 In this plot of simulated data, we see a clear relationship between $x$ and $y$, however it is not a linear relationship. If we fit a line to this data, it is very flat. The resulting test for $H_0: \beta_1 = 0$ vs $H_1: \beta_1 \neq 0$ gives a large p-value, in this case $0.7564548$, so we would fail to reject and say that there is no significant linear relationship between $x$ and $y$. We will see later how to fit a curve to this data using a "linear" model, but for now, realize that testing $H_0: \beta_1 = 0$ vs $H_1: \beta_1 \neq 0$ can only detect straight line relationships.
 
@@ -1047,7 +1060,9 @@ lines(speed_grid, dist_pi_band[,"upr"], col = "dodgerblue", lwd = 3, lty = 3)
 points(mean(cars$speed), mean(cars$dist), pch = "+", cex = 3)
 ```
 
-<img src="slr-inf_files/figure-html/unnamed-chunk-27-1.png" width="960" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-27-1} \end{center}
 
 Some things to notice:
 

@@ -330,7 +330,9 @@ legend("topleft", c("Ordinary", "Logistic", "Data"), lty = c(1, 2, 0),
        pch = c(NA, NA, 20), lwd = 2, col = c("darkorange", "dodgerblue", "black"))
 ```
 
-<img src="logistic_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-8-1} \end{center}
 
 Since we only have a single predictor variable, we are able to graphically show this situation. First, note that the data, is plotted using black dots. The response `y` only takes values `0` and `1`.
 
@@ -418,7 +420,9 @@ legend("bottomleft", c("True Probability", "Estimated Probability", "Data"), lty
        pch = c(NA, NA, 20), lwd = 2, col = c("darkorange", "dodgerblue", "black"))
 ```
 
-<img src="logistic_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
 We see that this time, as $x$ increases, $\hat{p}({\bf x})$ decreases.
 
@@ -474,7 +478,9 @@ legend("bottomleft", c("True Probability", "Estimated Probability", "Data"), lty
        pch = c(NA, NA, 20), lwd = 2, col = c("darkorange", "dodgerblue", "black"))
 ```
 
-<img src="logistic_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-16-1} \end{center}
 
 ## Working with Logistic Regression
 
@@ -595,14 +601,23 @@ data("SAheart")
 ```
 
 
-| sbp| tobacco|  ldl| adiposity|famhist | typea| obesity| alcohol| age| chd|
-|---:|-------:|----:|---------:|:-------|-----:|-------:|-------:|---:|---:|
-| 160|   12.00| 5.73|     23.11|Present |    49|   25.30|   97.20|  52|   1|
-| 144|    0.01| 4.41|     28.61|Absent  |    55|   28.87|    2.06|  63|   1|
-| 118|    0.08| 3.48|     32.28|Present |    52|   29.14|    3.81|  46|   0|
-| 170|    7.50| 6.41|     38.03|Present |    51|   31.99|   24.26|  58|   1|
-| 134|   13.60| 3.50|     27.78|Present |    60|   25.99|   57.34|  49|   1|
-| 132|    6.20| 6.47|     36.21|Present |    62|   30.77|   14.14|  45|   0|
+\begin{tabular}{r|r|r|r|l|r|r|r|r|r}
+\hline
+sbp & tobacco & ldl & adiposity & famhist & typea & obesity & alcohol & age & chd\\
+\hline
+160 & 12.00 & 5.73 & 23.11 & Present & 49 & 25.30 & 97.20 & 52 & 1\\
+\hline
+144 & 0.01 & 4.41 & 28.61 & Absent & 55 & 28.87 & 2.06 & 63 & 1\\
+\hline
+118 & 0.08 & 3.48 & 32.28 & Present & 52 & 29.14 & 3.81 & 46 & 0\\
+\hline
+170 & 7.50 & 6.41 & 38.03 & Present & 51 & 31.99 & 24.26 & 58 & 1\\
+\hline
+134 & 13.60 & 3.50 & 27.78 & Present & 60 & 25.99 & 57.34 & 49 & 1\\
+\hline
+132 & 6.20 & 6.47 & 36.21 & Present & 62 & 30.77 & 14.14 & 45 & 0\\
+\hline
+\end{tabular}
 
 This data comes from a retrospective sample of males in a heart-disease high-risk region of the Western Cape, South Africa. The `chd` variable, which we will use as a response, indicates whether or not coronary heart disease is present in an individual. Note that this is coded as a numeric `0` / `1` variable. Using this as a response with `glm()` it is important to indicate `family = binomial`, otherwise ordinary linear regression will be fit. Later, we will see the use of a factor variable response, which is actually preferred, as you cannot accidentally fit ordinary linear regression.
 
@@ -624,7 +639,9 @@ curve(predict(chd_mod_ldl, data.frame(ldl = x), type = "response"),
       add = TRUE, col = "dodgerblue", lty = 2)
 ```
 
-<img src="logistic_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
 As before, we plot the data in addition to the estimated probabilities. Note that we have "jittered" the data to make it easier to visualize, but the data do only take values `0` and `1`.
 
@@ -1086,7 +1103,7 @@ tibble::as.tibble(spam)
 ##  8  0       0     0        0  1.88  0      0        1.88  0     0       0   
 ##  9  0.15    0     0.46     0  0.61  0      0.3      0     0.92  0.76    0.76
 ## 10  0.06    0.12  0.77     0  0.19  0.32   0.38     0     0.06  0       0   
-## # … with 4,591 more rows, and 47 more variables: will <dbl>, people <dbl>,
+## # ... with 4,591 more rows, and 47 more variables: will <dbl>, people <dbl>,
 ## #   report <dbl>, addresses <dbl>, free <dbl>, business <dbl>, email <dbl>,
 ## #   you <dbl>, credit <dbl>, your <dbl>, font <dbl>, num000 <dbl>, money <dbl>,
 ## #   hp <dbl>, hpl <dbl>, george <dbl>, num650 <dbl>, lab <dbl>, labs <dbl>,

@@ -72,7 +72,7 @@ When visualizing a single numerical variable, a **histogram** will be our go-to 
 hist(mpg$cty)
 ```
 
-<img src="data-summary_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+![](data-summary_files/figure-latex/unnamed-chunk-3-1.pdf)<!-- --> 
 
 The histogram function has a number of parameters which can be changed to make our plot look much nicer. Use the `?` operator to read the documentation for the `hist()` to see a full list of these parameters.
 
@@ -86,7 +86,7 @@ hist(mpg$cty,
      border = "darkorange")
 ```
 
-<img src="data-summary_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+![](data-summary_files/figure-latex/unnamed-chunk-4-1.pdf)<!-- --> 
 
 Importantly, you should always be sure to label your axes and give the plot a title. The argument `breaks` is specific to `hist()`. Entering an integer will give a suggestion to `R` for how many bars to use for the histogram. By default `R` will attempt to intelligently guess a good number of `breaks`, but as we can see here, it is sometimes useful to modify this yourself.
 
@@ -99,7 +99,7 @@ Somewhat similar to a histogram, a barplot can provide a visual summary of a cat
 barplot(table(mpg$drv))
 ```
 
-<img src="data-summary_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+![](data-summary_files/figure-latex/unnamed-chunk-5-1.pdf)<!-- --> 
 
 
 ```r
@@ -111,7 +111,7 @@ barplot(table(mpg$drv),
         border = "darkorange")
 ```
 
-<img src="data-summary_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+![](data-summary_files/figure-latex/unnamed-chunk-6-1.pdf)<!-- --> 
 
 ### Boxplots
 
@@ -133,7 +133,7 @@ First note that we can use a single boxplot as an alternative to a histogram for
 boxplot(mpg$hwy)
 ```
 
-<img src="data-summary_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+![](data-summary_files/figure-latex/unnamed-chunk-8-1.pdf)<!-- --> 
 
 However, more often we will use boxplots to compare a numerical variable for different values of a categorical variable.
 
@@ -142,7 +142,7 @@ However, more often we will use boxplots to compare a numerical variable for dif
 boxplot(hwy ~ drv, data = mpg)
 ```
 
-<img src="data-summary_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+![](data-summary_files/figure-latex/unnamed-chunk-9-1.pdf)<!-- --> 
 
 Here we used the `boxplot()` command to create side-by-side boxplots. However, since we are now dealing with two variables, the syntax has changed. The `R` syntax `hwy ~ drv, data = mpg` reads "Plot the `hwy` variable against the `drv` variable using the dataset `mpg`." We see the use of a `~` (which specifies a formula) and also a `data = ` argument. This will be a syntax that is common to many functions we will use in this course. 
 
@@ -158,7 +158,7 @@ boxplot(hwy ~ drv, data = mpg,
      border = "dodgerblue")
 ```
 
-<img src="data-summary_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+![](data-summary_files/figure-latex/unnamed-chunk-10-1.pdf)<!-- --> 
 
 Again, `boxplot()` has a number of additional arguments which have the ability to make our plot more visually appealing.
 
@@ -171,7 +171,7 @@ Lastly, to visualize the relationship between two numeric variables we will use 
 plot(hwy ~ displ, data = mpg)
 ```
 
-<img src="data-summary_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+![](data-summary_files/figure-latex/unnamed-chunk-11-1.pdf)<!-- --> 
 
 
 ```r
@@ -184,6 +184,6 @@ plot(hwy ~ displ, data = mpg,
      col  = "dodgerblue")
 ```
 
-<img src="data-summary_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+![](data-summary_files/figure-latex/unnamed-chunk-12-1.pdf)<!-- --> 
 
 

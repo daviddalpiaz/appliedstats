@@ -77,7 +77,8 @@ where $\epsilon_i \sim N(0, \sigma^2)$. In this notation we will define:
 
 The picture below will visualize what we would like to accomplish. The data points $(x_{i1}, x_{i2}, y_i)$ now exist in 3-dimensional space, so instead of fitting a line to the data, we will fit a plane. (We'll soon move to higher dimensions, so this will be the last example that is easy to visualize and think about this way.)
 
-<img src="mlr_files/figure-html/unnamed-chunk-4-1.png" width="576" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics{mlr_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 How do we find such a plane? Well, we would like a plane that is as close as possible to the data points. That is, we would like it to minimize the errors it is making. How will we define these errors? Squared distance of course! So, we would like to minimize
 
@@ -702,7 +703,9 @@ plot(year ~ wt, data = autompg, pch = 20, col = "dodgerblue", cex = 1.5)
 points(new_cars, col = "darkorange", cex = 3, pch = "X")
 ```
 
-<img src="mlr_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{mlr_files/figure-latex/unnamed-chunk-16-1} \end{center}
 
 However, we have to consider weight and year together now. And based on the above plot, one of the new cars is within the "blob" of observed values, while the other, the car from 1981 weighing 5000 pounds, is noticeably outside of the observed values. This is a hidden extrapolation which you should be aware of when using multiple regression.
 
@@ -1220,7 +1223,8 @@ sim_data = data.frame(x1, x2, y)
 
 Plotting this data and fitting the regression produces the following plot.
 
-<img src="mlr_files/figure-html/unnamed-chunk-30-1.png" width="576" style="display: block; margin: auto;" />
+
+\begin{center}\includegraphics{mlr_files/figure-latex/unnamed-chunk-30-1} \end{center}
 
 We then calculate
 
@@ -1413,7 +1417,9 @@ curve(dnorm(x, mean = beta_2, sd = sqrt(sigma ^ 2 * C[2 + 1, 2 + 1])),
       col = "darkorange", add = TRUE, lwd = 3)
 ```
 
-<img src="mlr_files/figure-html/unnamed-chunk-40-1.png" width="672" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics{mlr_files/figure-latex/unnamed-chunk-40-1} \end{center}
 
 This looks good! The simulation-based histogram appears to be Normal with mean 6 and spread of about 0.15 as you measure from center to inflection point. That matches really well with the sampling distribution of $\hat{\beta}_2 \sim N\left(\mu = 6, \sigma^2 = 0.0232549  \right)$.
 

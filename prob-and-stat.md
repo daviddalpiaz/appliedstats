@@ -67,8 +67,8 @@ rnorm(n = 10, mean = 2, sd = 5)
 ```
 
 ```
-##  [1] -5.4558397  2.0062732  7.6916186  8.5025835 -1.3400141  7.3611746
-##  [7] -9.4225098 -3.3775215  0.5458422 -0.8504008
+##  [1]  3.0805866  3.9246057  7.6172135 -6.1234174  0.1680727  1.1768176
+##  [7]  9.7400089 -6.2691662  2.5340207  3.7763840
 ```
 
 These functions exist for many other distributions, including but not limited to:
@@ -557,7 +557,7 @@ for (s in 1:num_samples) {
 }
 ```
 
-To estimate $P(0 < D < 2)$ we will find the proportion of values of $d_s$ (among the 10^{4} values of $d_s$ generated) that are between 0 and 2.
+To estimate $P(0 < D < 2)$ we will find the proportion of values of $d_s$ (among the \ensuremath{10^{4}} values of $d_s$ generated) that are between 0 and 2.
 
 
 ```r
@@ -581,7 +581,7 @@ hist(differences, breaks = 20,
      border = "darkorange")
 ```
 
-<img src="prob-and-stat_files/figure-html/unnamed-chunk-30-1.png" width="672" />
+![](prob-and-stat_files/figure-latex/unnamed-chunk-30-1.pdf)<!-- --> 
 
 Also the sample mean and variance are very close to to what we would expect.
 
@@ -676,7 +676,7 @@ x_bar_hist = hist(x_bars, breaks = 50,
                   xlab = "Sample Means")
 ```
 
-<img src="prob-and-stat_files/figure-html/unnamed-chunk-36-1.png" width="672" />
+![](prob-and-stat_files/figure-latex/unnamed-chunk-36-1.pdf)<!-- --> 
 
 Now we will compare sample statistics from the empirical distribution with their known values based on the parent distribution.
 
@@ -732,7 +732,7 @@ x_bar_hist = hist(x_bars, breaks = 50, col = shading,
                   xlab = "Sample Means")
 ```
 
-<img src="prob-and-stat_files/figure-html/unnamed-chunk-41-1.png" width="672" />
+![](prob-and-stat_files/figure-latex/unnamed-chunk-41-1.pdf)<!-- --> 
 
 
 
