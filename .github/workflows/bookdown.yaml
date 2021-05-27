@@ -54,7 +54,9 @@ jobs:
         shell: Rscript {0}
 
       - name: Build site
-        run: Rscript -e 'bookdown::render_book("index.Rmd", quiet = TRUE)'
+        run: |
+          Rscript -e 'bookdown::render_book("index.Rmd", "bookdown::gitbook", quiet = TRUE)'
+          Rscript -e 'bookdown::render_book("index.Rmd", "bookdown::pdf_book", quiet = TRUE)'
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
