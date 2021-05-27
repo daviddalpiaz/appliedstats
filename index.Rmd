@@ -92,6 +92,7 @@ Your name could be here! Suggest an edit! Correct a typo! If you submit a correc
 - [Andy Siddall](https://www.researchgate.net/profile/Andy_Siddall){target="_blank"}
 - [Nishant Balepur](https://github.com/nbalepur){target="_blank"}
 - [Durga Krovi](https://github.com/dkrovi2){target="_blank"}
+- [Raj Krishnan](https://www.rajkrishnan.dev){target="_blank"}
 
 ## License
 
