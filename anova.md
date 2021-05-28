@@ -479,15 +479,28 @@ sim_anova = function(n = 10, mu_a = 0, mu_b = 0, mu_c = 0, mu_d = 0, sigma = 1, 
   ifelse(stat, f_stat, p_val)
   
 }
+```
 
+
+```r
 f_stats = replicate(n = 5000, sim_anova(stat = TRUE))
+```
+
+
+
+
+
+
+
+```r
 hist(f_stats, breaks = 100, prob = TRUE, border = "dodgerblue", main = "Empirical Distribution of F")
 curve(df(x, df1 = 4 - 1, df2 = 40 - 4), col = "darkorange", add = TRUE, lwd = 2)
 ```
 
 
 
-\begin{center}\includegraphics{anova_files/figure-latex/unnamed-chunk-17-1} \end{center}
+\begin{center}\includegraphics{anova_files/figure-latex/sim-anova-graphs-1} \end{center}
+
 
 ### Power
 
@@ -521,7 +534,7 @@ mean(p_vals < 0.05)
 ```
 
 ```
-## [1] 0.663
+## [1] 0.661
 ```
 
 ```r
@@ -529,7 +542,7 @@ mean(p_vals < 0.01)
 ```
 
 ```
-## [1] 0.39
+## [1] 0.384
 ```
 
 
@@ -540,7 +553,7 @@ mean(p_vals < 0.05)
 ```
 
 ```
-## [1] 0.408
+## [1] 0.425
 ```
 
 ```r
@@ -548,7 +561,7 @@ mean(p_vals < 0.01)
 ```
 
 ```
-## [1] 0.179
+## [1] 0.19
 ```
 
 
@@ -559,7 +572,7 @@ mean(p_vals < 0.05)
 ```
 
 ```
-## [1] 0.964
+## [1] 0.956
 ```
 
 ```r
@@ -567,7 +580,7 @@ mean(p_vals < 0.01)
 ```
 
 ```
-## [1] 0.855
+## [1] 0.837
 ```
 
 ## Post Hoc Testing
@@ -646,7 +659,12 @@ get_p_val = function() {
   glance(t.test(y ~ g, var.equal = TRUE))$p.value
   
 }
+```
 
+
+
+
+```r
 set.seed(1337)
 
 # FWER with 100 tests
@@ -655,9 +673,11 @@ set.seed(1337)
 mean(replicate(1000, any(replicate(100, get_p_val()) < 0.05)))
 ```
 
+
 ```
 ## [1] 0.994
 ```
+
 
 ```r
 # FWER with 100 tests
@@ -665,6 +685,7 @@ mean(replicate(1000, any(replicate(100, get_p_val()) < 0.05)))
 # bonferroni adjustment
 mean(replicate(1000, any(p.adjust(replicate(100, get_p_val()), "bonferroni") < 0.05)))
 ```
+
 
 ```
 ## [1] 0.058
