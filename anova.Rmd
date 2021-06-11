@@ -408,7 +408,7 @@ is.factor(good$group) # 1, 2, and 3 are labels.
 
 Here we verify the distribution of the test statistic under the null hypothesis. We simulate from a null model (equal variance) to obtain an empirical distribution of the $F$ statistic. We add the curve for the expected distribution.
 
-```{r}
+```{r sim-anova-function}
 library(broom)
 
 sim_anova = function(n = 10, mu_a = 0, mu_b = 0, mu_c = 0, mu_d = 0, sigma = 1, stat = TRUE) {
@@ -436,10 +436,28 @@ sim_anova = function(n = 10, mu_a = 0, mu_b = 0, mu_c = 0, mu_d = 0, sigma = 1, 
   
 }
 
+```
+
+```{r sample-sim-anova-simulation, eval = FALSE}
 f_stats = replicate(n = 5000, sim_anova(stat = TRUE))
+```
+
+
+```{r cache-simulation, eval = FALSE, echo = FALSE}
+f_stats = replicate(n = 5000, sim_anova(stat = TRUE))
+dir.create("sim-result-cache", showWarnings = FALSE)
+saveRDS(f_stats, "sim-result-cache/f_statistics_simulation.rds", version = 2)
+```
+
+```{r load-cached-fstats, echo = FALSE}
+f_stats = readRDS("sim-result-cache/f_statistics_simulation.rds")
+```
+
+```{r sim-anova-graphs}
 hist(f_stats, breaks = 100, prob = TRUE, border = "dodgerblue", main = "Empirical Distribution of F")
 curve(df(x, df1 = 4 - 1, df2 = 40 - 4), col = "darkorange", add = TRUE, lwd = 2)
 ```
+
 
 ### Power
 
@@ -517,7 +535,7 @@ We see that these p-values are much higher than the unadjusted p-values, thus, w
 
 We can simulate the 100 test scenario to illustrate this point.
 
-```{r}
+```{r sim-p-val-function}
 get_p_val = function() {
   
   # create data for two groups, equal mean
@@ -528,18 +546,45 @@ get_p_val = function() {
   glance(t.test(y ~ g, var.equal = TRUE))$p.value
   
 }
+```
 
+```{r cache-p-val-simulation, eval = FALSE, echo = FALSE}
+set.seed(1337)
+
+simulation_100_p_val = mean(replicate(1000, any(replicate(100, get_p_val()) < 0.05)))
+simulation_100_p_val_bonf = mean(replicate(1000, any(p.adjust(replicate(100, get_p_val()), "bonferroni") < 0.05)))
+
+# Ensure sim-result-cache is present
+dir.create("sim-result-cache", showWarnings = FALSE)
+# Save cached versions
+saveRDS(simulation_100_p_val, "sim-result-cache/simulation_100_p_val.rds", version = 2)
+saveRDS(simulation_100_p_val_bonf, "sim-result-cache/simulation_100_p_val_bonf.rds", version = 2)
+```
+
+```{r, eval = FALSE}
 set.seed(1337)
 
 # FWER with 100 tests
 # desired rate = 0.05
 # no adjustment
 mean(replicate(1000, any(replicate(100, get_p_val()) < 0.05)))
+```
 
+```{r load-cached-pval-anova, echo = FALSE}
+simulation_100_p_val = readRDS("sim-result-cache/simulation_100_p_val.rds")
+simulation_100_p_val
+```
+
+```{r, eval = FALSE}
 # FWER with 100 tests
 # desired rate = 0.05
 # bonferroni adjustment
 mean(replicate(1000, any(p.adjust(replicate(100, get_p_val()), "bonferroni") < 0.05)))
+```
+
+```{r load-cached-pval-bonferroni-anova, echo = FALSE}
+simulation_100_p_val_bonf = readRDS("sim-result-cache/simulation_100_p_val_bonf.rds")
+simulation_100_p_val_bonf
 ```
 
 For the specific case of testing all two-way mean differences after an ANOVA test, there are [a number of potential methods](https://en.wikipedia.org/wiki/Post_hoc_analysis){target="_blank"} for making an adjustment of this type. The pros and cons of the potential methods are beyond the scope of this course. We choose a method for its ease of use, and to a lesser extent, its developer.
