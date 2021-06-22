@@ -1,6 +1,6 @@
 --- 
 title: "Applied Statistics with R"
-date: "2021-06-18"
+date: "2021-06-22"
 github-repo: daviddalpiaz/appliedstats
 url: 'https\://daviddalpiaz.github.io/appliedstats/'
 knit: "bookdown::render_book"
@@ -94,6 +94,7 @@ Your name could be here! Suggest an edit! Correct a typo! If you submit a correc
 - [Durga Krovi](https://github.com/dkrovi2){target="_blank"}
 - [Raj Krishnan](https://www.rajkrishnan.dev){target="_blank"}
 - [Ed Pureza](https://github.com/purecod3){target="_blank"}
+- [Siddharth Singh](https://www.linkedin.com/in/siddharth-singh-87859142/){target="_blank"}
 
 ## License
 
