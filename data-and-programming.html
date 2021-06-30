@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Data and Programming | Applied Statistics with R</title>
   <meta name="description" content="Chapter 3 Data and Programming | Applied Statistics with R" />
-  <meta name="generator" content="bookdown 0.22.4 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22.7 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Data and Programming | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-06-22" />
+<meta name="date" content="2021-06-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1329,11 +1329,11 @@ X^\top X
 <p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the output of the final line of the body is what is returned by the function. In this case the function returns the vector stored in the variable <code>result</code>.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
 <div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="data-and-programming.html#cb302-1"></a>(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</span></code></pre></div>
-<pre><code>##  [1] -5.3997925 11.1803636  9.8632098  7.0487644  3.4580178  9.1890373
-##  [7] -2.0406511  4.2342131  1.3590487 -0.4745152</code></pre>
+<pre><code>##  [1]  1.061616 -3.023650  8.898162  2.085021  5.445692 -7.566928 -3.540370
+##  [8] -2.806139  2.043714  9.567595</code></pre>
 <div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="data-and-programming.html#cb304-1"></a><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)</span></code></pre></div>
-<pre><code>##  [1] -1.67461734  1.32978999  1.09111514  0.58112352 -0.06953774  0.96895169
-##  [7] -1.06592410  0.07111274 -0.44988146 -0.78213243</code></pre>
+<pre><code>##  [1] -0.02766278 -0.75744066  1.37223068  0.15515478  0.75549327 -1.56903607
+##  [7] -0.84974563 -0.71858511  0.14777577  1.49181575</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
 <div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="data-and-programming.html#cb306-1"></a>standardize =<span class="st"> </span><span class="cf">function</span>(x) {</span>
 <span id="cb306-2"><a href="data-and-programming.html#cb306-2"></a>  (x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x)</span>
@@ -1370,14 +1370,14 @@ s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2
 <span id="cb319-3"><a href="data-and-programming.html#cb319-3"></a>  (<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>n) <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</span>
 <span id="cb319-4"><a href="data-and-programming.html#cb319-4"></a>}</span></code></pre></div>
 <div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="data-and-programming.html#cb320-1"></a><span class="kw">get_var</span>(test_sample)</span></code></pre></div>
-<pre><code>## [1] 30.45507</code></pre>
+<pre><code>## [1] 31.33714</code></pre>
 <div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="data-and-programming.html#cb322-1"></a><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
-<pre><code>## [1] 30.45507</code></pre>
+<pre><code>## [1] 31.33714</code></pre>
 <div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="data-and-programming.html#cb324-1"></a><span class="kw">var</span>(test_sample)</span></code></pre></div>
-<pre><code>## [1] 30.45507</code></pre>
+<pre><code>## [1] 31.33714</code></pre>
 <p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built in function <code>var()</code>. Finally, let’s examine the biased estimate of <span class="math inline">\(\sigma^2\)</span>.</p>
 <div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="data-and-programming.html#cb326-1"></a><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<pre><code>## [1] 27.40956</code></pre>
+<pre><code>## [1] 28.20343</code></pre>
 
 </div>
 </div>

@@ -237,7 +237,7 @@ The trouble with using RMSE to identify how well a model fits data, is that RMSE
 
 Suppose we fit a model using all data available and we evaluate RMSE on this fitted model and all of the seen data. We will call this data the **training** data, and this RMSE the **train** RMSE.
 
-Now, suppose we magically encounter some additional additional data. To truly asses how well the model predicts, we should evaluate how well our models predicts the response of this data. We will call this data the  **test** data and this RMSE the **test** RMSE.
+Now, suppose we magically encounter some additional data. To truly asses how well the model predicts, we should evaluate how well our models predicts the response of this data. We will call this data the  **test** data and this RMSE the **test** RMSE.
 
 - Train RMSE: model fit on seen data, evaluated on **seen** data
 - Test RMSE: model fit on seen data, evaluated on **unseen** data
