@@ -206,7 +206,7 @@ rownames(autompg) = paste(autompg$cyl, "cylinder", autompg$year, autompg$name)
 autompg = subset(autompg, select = c("mpg", "cyl", "disp", "hp", "wt", "acc", "year", "origin"))
 # change horsepower from character to numeric
 autompg$hp = as.numeric(autompg$hp)
-# create a dummary variable for foreign vs domestic cars. domestic = 1.
+# create a dummy variable for foreign vs domestic cars. domestic = 1.
 autompg$domestic = as.numeric(autompg$origin == 1)
 # remove 3 and 5 cylinder cars (which are very rare.)
 autompg = autompg[autompg$cyl != 5,]
