@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 11 Categorical Predictors and Interactions | Applied Statistics with R</title>
   <meta name="description" content="Chapter 11 Categorical Predictors and Interactions | Applied Statistics with R" />
-  <meta name="generator" content="bookdown 0.22.7 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22.8 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 11 Categorical Predictors and Interactions | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-06-30" />
+<meta name="date" content="2021-07-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -599,7 +599,7 @@ Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \epsilon,
 <span id="cb714-16"><a href="categorical-predictors-and-interactions.html#cb714-16"></a>autompg =<span class="st"> </span><span class="kw">subset</span>(autompg, <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot;mpg&quot;</span>, <span class="st">&quot;cyl&quot;</span>, <span class="st">&quot;disp&quot;</span>, <span class="st">&quot;hp&quot;</span>, <span class="st">&quot;wt&quot;</span>, <span class="st">&quot;acc&quot;</span>, <span class="st">&quot;year&quot;</span>, <span class="st">&quot;origin&quot;</span>))</span>
 <span id="cb714-17"><a href="categorical-predictors-and-interactions.html#cb714-17"></a><span class="co"># change horsepower from character to numeric</span></span>
 <span id="cb714-18"><a href="categorical-predictors-and-interactions.html#cb714-18"></a>autompg<span class="op">$</span>hp =<span class="st"> </span><span class="kw">as.numeric</span>(autompg<span class="op">$</span>hp)</span>
-<span id="cb714-19"><a href="categorical-predictors-and-interactions.html#cb714-19"></a><span class="co"># create a dummary variable for foreign vs domestic cars. domestic = 1.</span></span>
+<span id="cb714-19"><a href="categorical-predictors-and-interactions.html#cb714-19"></a><span class="co"># create a dummy variable for foreign vs domestic cars. domestic = 1.</span></span>
 <span id="cb714-20"><a href="categorical-predictors-and-interactions.html#cb714-20"></a>autompg<span class="op">$</span>domestic =<span class="st"> </span><span class="kw">as.numeric</span>(autompg<span class="op">$</span>origin <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</span>
 <span id="cb714-21"><a href="categorical-predictors-and-interactions.html#cb714-21"></a><span class="co"># remove 3 and 5 cylinder cars (which are very rare.)</span></span>
 <span id="cb714-22"><a href="categorical-predictors-and-interactions.html#cb714-22"></a>autompg =<span class="st"> </span>autompg[autompg<span class="op">$</span>cyl <span class="op">!=</span><span class="st"> </span><span class="dv">5</span>,]</span>
