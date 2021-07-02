@@ -95,6 +95,7 @@ Your name could be here! Suggest an edit! Correct a typo! If you submit a correc
 - [Raj Krishnan](https://www.rajkrishnan.dev){target="_blank"}
 - [Ed Pureza](https://github.com/purecod3){target="_blank"}
 - [Siddharth Singh](https://www.linkedin.com/in/siddharth-singh-87859142/){target="_blank"}
+- [Schillaci Mcinnis](https://github.com/kerlue){target="_blank"}
 
 ## License
 
