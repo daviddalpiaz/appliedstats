@@ -96,6 +96,7 @@ Your name could be here! Suggest an edit! Correct a typo! If you submit a correc
 - [Ed Pureza](https://github.com/purecod3){target="_blank"}
 - [Siddharth Singh](https://www.linkedin.com/in/siddharth-singh-87859142/){target="_blank"}
 - [Schillaci Mcinnis](https://github.com/kerlue){target="_blank"}
+- [Ivan Valdes Castillo](https://github.com/ivanvc){target="_blank"}
 
 ## License
 
