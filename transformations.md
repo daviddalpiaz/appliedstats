@@ -563,7 +563,7 @@ marketing = read.csv("data/marketing.csv")
 
 ```r
 plot(sales ~ advert, data = marketing, 
-     xlab = "Advert Spending (in $100,00)", ylab = "Sales (in $100,00)",
+     xlab = "Advert Spending (in $10,000)", ylab = "Sales (in $10,000)",
      pch = 20, cex = 2)
 ```
 
@@ -753,7 +753,7 @@ Now we see that with the first and second order terms in the model, the third or
 
 ```r
 plot(sales ~ advert, data = marketing, 
-     xlab = "Advert Spending (in $100,00)", ylab = "Sales (in $100,00)",
+     xlab = "Advert Spending (in $10,000)", ylab = "Sales (in $10,000)",
      pch = 20, cex = 2)
 abline(mark_mod, lty = 2, col = "green", lwd = 2)
 xplot = seq(0, 16, by = 0.01)
@@ -863,10 +863,10 @@ We will also be adding fitted curves to scatterplots repeatedly, so smartly we w
 
 
 ```r
-plot_econ_curve = function(model){
+plot_econ_curve = function(model) {
   plot(mpg ~ mph, data = econ, xlab = "Speed (Miles per Hour)", 
        ylab = "Fuel Efficiency (Miles per Gallon)", col = "dodgerblue", 
-       pch = 20, cex =2)
+       pch = 20, cex = 2)
   xplot = seq(10, 75, by = 0.1)
   lines(xplot, predict(model, newdata = data.frame(mph = xplot)),
         col = "darkorange", lwd = 2, lty = 1)
@@ -885,7 +885,7 @@ fit1 = lm(mpg ~ mph, data = econ)
 par(mfrow = c(1, 2))
 plot_econ_curve(fit1)
 plot(fitted(fit1), resid(fit1), xlab = "Fitted", ylab = "Residuals", 
-     col = "dodgerblue", pch = 20, cex =2)
+     col = "dodgerblue", pch = 20, cex = 2)
   abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
@@ -930,7 +930,7 @@ summary(fit2)
 par(mfrow = c(1, 2))
 plot_econ_curve(fit2)
 plot(fitted(fit2), resid(fit2), xlab = "Fitted", ylab = "Residuals", 
-     col = "dodgerblue", pch = 20, cex =2)
+     col = "dodgerblue", pch = 20, cex = 2)
   abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
@@ -974,7 +974,7 @@ summary(fit3)
 par(mfrow = c(1, 2))
 plot_econ_curve(fit3)
 plot(fitted(fit3), resid(fit3), xlab = "Fitted", ylab = "Residuals", 
-     col = "dodgerblue", pch = 20, cex =2)
+     col = "dodgerblue", pch = 20, cex = 2)
   abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
@@ -1019,7 +1019,7 @@ summary(fit4)
 par(mfrow = c(1, 2))
 plot_econ_curve(fit4)
 plot(fitted(fit4), resid(fit4), xlab = "Fitted", ylab = "Residuals", 
-     col = "dodgerblue", pch = 20, cex =2)
+     col = "dodgerblue", pch = 20, cex = 2)
   abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
@@ -1067,7 +1067,7 @@ summary(fit6)
 par(mfrow = c(1, 2))
 plot_econ_curve(fit6)
 plot(fitted(fit6), resid(fit6), xlab = "Fitted", ylab = "Residuals", 
-     col = "dodgerblue", pch = 20, cex =2)
+     col = "dodgerblue", pch = 20, cex = 2)
   abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
@@ -1139,7 +1139,7 @@ summary(fit8)
 par(mfrow = c(1, 2))
 plot_econ_curve(fit8)
 plot(fitted(fit8), resid(fit8), xlab = "Fitted", ylab = "Residuals", 
-     col = "dodgerblue", pch = 20, cex =2)
+     col = "dodgerblue", pch = 20, cex = 2)
   abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
