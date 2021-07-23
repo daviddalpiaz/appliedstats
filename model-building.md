@@ -267,7 +267,7 @@ When using model to,
 - **explain**; we prefer *small* and *interpretable* models.
 - **predict**; we prefer models that make the smallest errors possible, without *overfitting*.
 
-Linear models can accomplish both these goals. Later, we will see that often a linear model that accomplish one of these goals, usually accomplishes the other.
+Linear models can accomplish both these goals. Later, we will see that often a linear model that accomplishes one of these goals, usually accomplishes the other.
 
 ## `R` Markdown
 
