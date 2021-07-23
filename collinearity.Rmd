@@ -146,7 +146,7 @@ vif(hip_model)
 
 In practice it is common to say that any VIF greater than $5$ is cause for concern. So in this example we see there is a huge multicollinearity issue as many of the predictors have a VIF greater than 5.
 
-Let's further investigate how the presence of collinearity actually effects a model. If we add a moderate amount of noise to the data, we see that the estimates of the coefficients change drastically. This is a rather undesirable effect. Adding random noise should not effect the coefficients of a model.
+Let's further investigate how the presence of collinearity actually affects a model. If we add a moderate amount of noise to the data, we see that the estimates of the coefficients change drastically. This is a rather undesirable effect. Adding random noise should not affect the coefficients of a model.
 
 ```{r}
 set.seed(1337)
@@ -161,7 +161,7 @@ coef(hip_model)
 coef(hip_model_noise)
 ```
 
-This tells us that a model with collinearity is bad at explaining the relationship between the response and the predictors. We cannot even be confident in the direction of the relationship. However, does collinearity effect prediction?
+This tells us that a model with collinearity is bad at explaining the relationship between the response and the predictors. We cannot even be confident in the direction of the relationship. However, does collinearity affect prediction?
 
 ```{r}
 plot(fitted(hip_model), fitted(hip_model_noise), col = "dodgerblue", pch = 20,
@@ -392,7 +392,7 @@ hist(mse_good,
      xlab = "MSE")
 ```
 
-Interestingly, in both cases, the MSE is roughly the same on average. Again, this is because collinearity effects a model's ability to *explain*, but not predict.
+Interestingly, in both cases, the MSE is roughly the same on average. Again, this is because collinearity affects a model's ability to *explain*, but not predict.
 
 ```{r}
 mean(mse_bad)
