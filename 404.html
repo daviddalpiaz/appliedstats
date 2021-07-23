@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 10 Model Building | Applied Statistics with R</title>
-  <meta name="description" content="Chapter 10 Model Building | Applied Statistics with R" />
+  <title>Page not found | Applied Statistics with R</title>
+  <meta name="description" content="Page not found | Applied Statistics with R" />
   <meta name="generator" content="bookdown 0.22.15 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 10 Model Building | Applied Statistics with R" />
+  <meta property="og:title" content="Page not found | Applied Statistics with R" />
   <meta property="og:type" content="book" />
   <meta property="og:url" content="https://daviddalpiaz.github.io/appliedstats/" />
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="daviddalpiaz/appliedstats" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 10 Model Building | Applied Statistics with R" />
+  <meta name="twitter:title" content="Page not found | Applied Statistics with R" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
-<link rel="prev" href="multiple-linear-regression.html"/>
-<link rel="next" href="categorical-predictors-and-interactions.html"/>
+
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -412,230 +412,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="model-building" class="section level1">
-<h1><span class="header-section-number">Chapter 10</span> Model Building</h1>
-<blockquote>
-<p>“Statisticians, like artists, have the bad habit of falling in love with their models.”</p>
-<p>— <strong>George Box</strong></p>
-</blockquote>
-<p>Let’s take a step back and consider the process of finding a model for data at a higher level. We are attempting to find a model for a response variable <span class="math inline">\(y\)</span> based on a number of predictors <span class="math inline">\(x_1, x_2, x_3, \ldots, x_{p-1}\)</span>.</p>
-<p>Essentially, we are trying to discover the functional relationship between <span class="math inline">\(y\)</span> and the predictors. In the previous chapter we were fitting models for a car’s fuel efficiency (<code>mpg</code>) as a function of its attributes (<code>wt</code>, <code>year</code>, <code>cyl</code>, <code>disp</code>, <code>hp</code>, <code>acc</code>). We also consider <span class="math inline">\(y\)</span> to be a function of some noise. Rarely if ever do we expect there to be an <em>exact</em> functional relationship between the predictors and the response.</p>
-<p><span class="math display">\[
-y = f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon
-\]</span></p>
-<p>We can think of this as</p>
-<p><span class="math display">\[
-\text{response} = \text{signal} + \text{noise}.
-\]</span></p>
-<p>We <em>could</em> consider all sorts of complicated functions for <span class="math inline">\(f\)</span>. You will likely encounter several ways of doing this in future machine learning courses. So far in this course we have focused on (multiple) linear regression. That is</p>
-<p><span class="math display">\[
-\begin{aligned}
-y &amp;= f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon \\
-  &amp;= \beta_0 + \beta_1 x_{1} + \beta_2 x_{2} + \cdots + \beta_{p-1} x_{p-1} + \epsilon
-\end{aligned}
-\]</span></p>
-<p>In the big picture of possible models that we could fit to this data, this is a rather restrictive model. What do we mean by a restrictive model?</p>
-<div id="family-form-and-fit" class="section level2">
-<h2><span class="header-section-number">10.1</span> Family, Form, and Fit</h2>
-<p>When modeling data, there are a number of choices that need to be made.</p>
-<ul>
-<li>What <strong>family</strong> of models will be considered?</li>
-<li>What <strong>form</strong> of the model will be used?</li>
-<li>How will the model be <strong>fit</strong>?</li>
-</ul>
-<p>Let’s work backwards and discuss each of these.</p>
-<div id="fit" class="section level3">
-<h3><span class="header-section-number">10.1.1</span> Fit</h3>
-<p>Consider one of the simplest models we could fit to data, simple linear regression.</p>
-<p><span class="math display">\[
-y = f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon = \beta_0 + \beta_1 x_{1} + \epsilon
-\]</span></p>
-<p>So here, despite having multiple predictors, we chose to use only one. How is this model <strong>fit</strong>? We will almost exclusively use the method of least squares, but recall, we had seen alternative methods of fitting this model.</p>
-<p><span class="math display">\[
-\underset{\beta_0, \beta_1}{\mathrm{argmin}} \max|y_i - (\beta_0 + \beta_1 x_i)|
-\]</span></p>
-<p><span class="math display">\[
-\underset{\beta_0, \beta_1}{\mathrm{argmin}} \sum_{i = 1}^{n}|y_i - (\beta_0 + \beta_1 x_i)|
-\]</span></p>
-<p><span class="math display">\[
-\underset{\beta_0, \beta_1}{\mathrm{argmin}} \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2
-\]</span></p>
-<p>Any of these methods (we will always use the last, least squares) will obtain estimates of the unknown parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>. Since those are the only unknowns of the specified model, we have then <em>fit</em> the model. The fitted model is then</p>
-<p><span class="math display">\[
-\hat{y} = \hat{f}(x_1, x_2, x_3, \ldots, x_{p-1}) = \hat{\beta}_0 + \hat{\beta}_1 x_{1}
-\]</span></p>
-<p>Note that, now we have dropped the term for the noise. We don’t make any effort to model the noise, only the signal.</p>
-</div>
-<div id="form" class="section level3">
-<h3><span class="header-section-number">10.1.2</span> Form</h3>
-<p>What are the different <strong>forms</strong> a model could take? Currently, for the linear models we have considered, the only method for altering the form of the model is to control the predictors used. For example, one form of the multiple linear regression model is simple linear regression.</p>
-<p><span class="math display">\[
-y = f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon = \beta_0 + \beta_1 x_{1} + \epsilon
-\]</span></p>
-<p>We could also consider a SLR model with a different predictor, thus altering the form of the model.</p>
-<p><span class="math display">\[
-y = f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon = \beta_0 + \beta_2 x_{2} + \epsilon
-\]</span></p>
-<p>Often, we’ll use multiple predictors in our model. Very often, we will at least try a model with all possible predictors.</p>
-<p><span class="math display">\[
-\begin{aligned}
-y &amp;= f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon \\
-  &amp;= \beta_0 + \beta_1 x_{1} + \beta_2 x_{2} + \cdots + \beta_{p-1} x_{p-1} + \epsilon
-\end{aligned}
-\]</span></p>
-<p>We could also use some, but not all of the predictors.</p>
-<p><span class="math display">\[
-\begin{aligned}
-y &amp;= f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon \\ 
-  &amp;= \beta_0 + \beta_1 x_{1} + \beta_3 x_{3} + \beta_5 x_{5} + \epsilon
-\end{aligned}
-\]</span></p>
-<p>These forms are <strong>restrictive</strong> in two senses. First, they only allow for linear relationships between the response and the predictors. This seems like an obvious restriction of linear models, but in fact, we will soon see how to use linear models for <em>non-linear</em> relationships. (It will involve transforming variables.) Second, how one variable affects the response is the same for <strong>any</strong> values of the other predictors. Soon we will see how to create models where the effect of <span class="math inline">\(x_{1}\)</span> can be different for different values of <span class="math inline">\(x_{2}\)</span>. We will discuss the concept of <em>interaction</em>.</p>
-</div>
-<div id="family" class="section level3">
-<h3><span class="header-section-number">10.1.3</span> Family</h3>
-<p>A <strong>family</strong> of models is a broader grouping of many possible <em>forms</em> of a model. For example, above we saw several forms of models from the family of linear models. We will only ever concern ourselves with linear models, which model a response as a linear combination of predictors. There are certainly other families of models.</p>
-<p>For example, there are several families of <em>non-parametric</em> regression. Smoothing is a broad family of models. As are regression trees.</p>
-<p>In linear regression, we specified models with parameters, <span class="math inline">\(\beta_j\)</span> and fit the model by finding the best values of these parameters. This is a <em>parametric</em> approach. A non-parametric approach skips the step of specifying a model with parameters, and are often described as more of an algorithm. Non-parametric models are often used in machine learning.</p>
-<p><img src="model-building_files/figure-html/unnamed-chunk-2-1.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>Here, SLR (parametric) is used on the left, while smoothing (non-parametric) is used on the right. SLR finds the best slope and intercept. Smoothing produces the fitted <span class="math inline">\(y\)</span> value at a particular <span class="math inline">\(x\)</span> value by considering the <span class="math inline">\(y\)</span> values of the data in a neighborhood of the <span class="math inline">\(x\)</span> value considered. (Local smoothing.)</p>
-<p>Why the focus on <strong>linear models</strong>? Two big reasons:</p>
-<ul>
-<li>Linear models are <strong>the</strong> go-to model. Linear models have been around for a long time, and are computationally easy. A linear model may not be the final model you use, but often, it should be the first model you try.</li>
-<li>The ideas behind linear models can be easily transferred to other modeling techniques.</li>
-</ul>
-</div>
-<div id="assumed-model-fitted-model" class="section level3">
-<h3><span class="header-section-number">10.1.4</span> Assumed Model, Fitted Model</h3>
-<p>When searching for a model, we often need to make assumptions. These assumptions are codified in the <strong>family</strong> and <strong>form</strong> of the model. For example</p>
-<p><span class="math display">\[
-y = \beta_0 + \beta_1 x_{1} + \beta_3 x_{3} + \beta_5 x_{5} + \epsilon
-\]</span></p>
-<p>assumes that <span class="math inline">\(y\)</span> is a linear combination of <span class="math inline">\(x_{1}\)</span>, <span class="math inline">\(x_{3}\)</span>, and <span class="math inline">\(x_{5}\)</span> as well as some noise. This assumes that the effect of <span class="math inline">\(x_{1}\)</span> on <span class="math inline">\(y\)</span> is <span class="math inline">\(\beta_1\)</span>, which is the same for all values of <span class="math inline">\(x_{3}\)</span> and <span class="math inline">\(x_{5}\)</span>. That is, we are using the <em>family</em> of linear models with a particular <em>form</em>.</p>
-<p>Suppose we then <em>fit</em> this model to some data and obtain the <strong>fitted model</strong>. For example, in <code>R</code> we would use</p>
-<div class="sourceCode" id="cb697"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb697-1"><a href="model-building.html#cb697-1"></a>fit =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x3 <span class="op">+</span><span class="st"> </span>x5, <span class="dt">data =</span> some_data)</span></code></pre></div>
-<p>This is <code>R</code>’s way of saying the <em>family</em> is <em>linear</em> and specifying the <em>form</em> from above. An additive model with the specified predictors as well as an intercept. We then obtain</p>
-<p><span class="math display">\[
-\hat{y} = 1.5 + 0.9 x_{1} + 1.1 x_{3} + 2.3 x_{5}.
-\]</span></p>
-<p>This is our best guess for the function <span class="math inline">\(f\)</span> in</p>
-<p><span class="math display">\[
-y = f(x_1, x_2, x_3, \ldots, x_{p-1}) + \epsilon
-\]</span></p>
-<p>for the assumed <strong>family</strong> and <strong>form</strong>. Fitting a model only gives us the best fit for the family and form that we specify. So the natural question is; how do we choose the correct family and form? We’ll focus on <em>form</em> since we are focusing on the <em>family</em> of linear models.</p>
-</div>
-</div>
-<div id="explanation-versus-prediction" class="section level2">
-<h2><span class="header-section-number">10.2</span> Explanation versus Prediction</h2>
-<p>What is the purpose of fitting a model to data? Usually it is to accomplish one of two goals. We can use a model to <strong>explain</strong> the relationship between the response and the predictors. Models can also be used to <strong>predict</strong> the response based on the predictors. Often, a good model will do both, but we’ll discuss both goals separately since the process of finding models for explaining and predicting have some differences.</p>
-<p>For our purposes, since we are only considering linear models, searching for a good model is essentially searching for a good <strong>form</strong> of a model.</p>
-<div id="explanation" class="section level3">
-<h3><span class="header-section-number">10.2.1</span> Explanation</h3>
-<p>If the goal of a model is to explain the relationship between the response and the predictors, we are looking for a model that is <strong>small</strong> and <strong>interpretable</strong>, but still fits the data well. When discussing linear models, the <strong>size</strong> of a model is essentially the number of <span class="math inline">\(\beta\)</span> parameters used.</p>
-<p>Suppose we would like to find a model that explains fuel efficiency (<code>mpg</code>) based on a car’s attributes (<code>wt</code>, <code>year</code>, <code>cyl</code>, <code>disp</code>, <code>hp</code>, <code>acc</code>). Perhaps we are a car manufacturer trying to engineer a fuel efficient vehicle. If this is the case, we are interested in both which predictor variables are useful for explaining the car’s fuel efficiency, as well as how those variables effect fuel efficiency. By understanding this relationship, we can use this knowledge to our advantage when designing a car.</p>
-<p>To explain a relationship, we are interested in keeping models as small as possible, since smaller models are easy to interpret. The fewer predictors the less considerations we need to make in our design process.</p>
-<p>Note that <em>linear</em> models of any size are rather interpretable to begin with. Later in your data analysis careers, you will see more complicated models that may fit data better, but are much harder, if not impossible to interpret. These models aren’t nearly as useful for explaining a relationship. This is another reason to always attempt a linear model. If it fits as well as more complicated methods, it will be the easiest to understand.</p>
-<p>To find small and interpretable models, we will eventually use selection procedures, which search among many possible forms of a model. For now we will do this in a more ad-hoc manner using <strong>inference</strong> techniques we have already encountered. To use inference as we have seen it, we need an additional assumption in addition to the family and form of the model.</p>
-<p><span class="math display">\[
-y = \beta_0 + \beta_1 x_{1} + \beta_3 x_{3} + \beta_5 x_{5} + \epsilon
-\]</span></p>
-<p>Our additional assumption is about the error term.</p>
-<p><span class="math display">\[
-\epsilon \sim N(0, \sigma^2)
-\]</span></p>
-<p>This assumption, that the errors are normally distributed with some common variance is the key to all of the inference we have done so far. We will discuss this in great detail later.</p>
-<p>So with our inference tools (ANOVA and <span class="math inline">\(t\)</span>-test) we have two potential strategies. Start with a very small model (no predictors) and attempt to add predictors. Or, start with a big model (all predictors) and attempt to remove predictors.</p>
-<div id="correlation-and-causation" class="section level4">
-<h4><span class="header-section-number">10.2.1.1</span> Correlation and Causation</h4>
-<p>A word of caution when using a model to <em>explain</em> a relationship. There are two terms often used to describe a relationship between two variables: <em>causation</em> and <em>correlation</em>. <a href="https://xkcd.com/552/" target="_blank">Correlation</a> is often also referred to as association.</p>
-<p>Just because two variables are correlated does not necessarily mean that one causes the other. For example, consider modeling <code>mpg</code> as only a function of <code>hp</code>.</p>
-<div class="sourceCode" id="cb698"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb698-1"><a href="model-building.html#cb698-1"></a><span class="kw">plot</span>(mpg <span class="op">~</span><span class="st"> </span>hp, <span class="dt">data =</span> autompg, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)</span></code></pre></div>
-<p><img src="model-building_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Does an increase in horsepower cause a drop in fuel efficiency? Or, perhaps the causality is reversed and an increase in fuel efficiency cause a decrease in horsepower. Or, perhaps there is a third variable that explains both!</p>
-<p>The issue here is that we have <strong>observational</strong> data. With observational data, we can only detect <em>associations</em>. To speak with confidence about <em>causality</em>, we would need to run <strong>experiments</strong>. Often, this decision is made for us, before we ever see data, so we can only modify our interpretation.</p>
-<p>This is a concept that you should encounter often in your statistics education. For some further reading, and some related fallacies, see: <a href="https://en.wikipedia.org/wiki/Correlation_does_not_imply_causation" target="_blank">Wikipedia: Correlation does not imply causation</a>.</p>
-<p>We’ll discuss this further when we discuss experimental design and traditional ANOVA techniques. (All of which has recently been re-branded as A/B testing.)</p>
-</div>
-</div>
-<div id="prediction" class="section level3">
-<h3><span class="header-section-number">10.2.2</span> Prediction</h3>
-<p>If the goal of a model is to predict the response, then the <strong>only</strong> consideration is how well the model fits the data. For this, we will need a metric. In regression problems, this is most often RMSE.</p>
-<p><span class="math display">\[
-\text{RMSE}(\text{model, data}) = \sqrt{\frac{1}{n} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2}
-\]</span></p>
-<p>where</p>
-<ul>
-<li><span class="math inline">\(y_i\)</span> are the actual values of the response for the given data</li>
-<li><span class="math inline">\(\hat{y}_i\)</span> are the predicted values using the fitted model and the predictors from the data</li>
-</ul>
-<p>Correlation and causation are <em>not</em> an issue here. If a predictor is correlated with the response, it is useful for prediction. For example, in elementary school aged children their shoe size certainly doesn’t <em>cause</em> them to read at a higher level, however we could very easily use shoe size to make a prediction about a child’s reading ability. The larger their shoe size, the better they read. There’s a lurking variable here though, their age! (Don’t send your kids to school with size 14 shoes, it won’t make them read better!)</p>
-<p>Also, since we are not performing inference, the extra assumption about the errors is not needed. The only thing we care about is how close the fitted model is to the data. Least squares is least squares. For a specified model, it will find the values of the parameters which will minimize the squared error loss. Your results might be largely uninterpretable and useless for inference, but for prediction none of that matters.</p>
-<p>Suppose instead of the manufacturer who would like to build a car, we are a consumer who wishes to purchase a new car. However this particular car is so new, it has not been rigorously tested, so we are unsure of what fuel efficiency to expect. (And, as skeptics, we don’t trust what the manufacturer is telling us.) In this case, we would like to use the model to help <em>predict</em> the fuel efficiency of this car based on its attributes, which are the predictors of the model. The smaller the errors the model makes, the more confident we are in its prediction.</p>
-<div id="test-train-split" class="section level4">
-<h4><span class="header-section-number">10.2.2.1</span> Test-Train Split</h4>
-<p>The trouble with using RMSE to identify how well a model fits data, is that RMSE is <strong>always</strong> (equal or) lower for a larger model. This would suggest that we should always use the largest model possible when looking for a model that predicts well. The problem with this is the potential to <strong>overfit</strong> to the data. So, we want a model that fits well, but does not overfit. To understand overfitting, we need to think about applying a model to seen and unseen data.</p>
-<p>Suppose we fit a model using all data available and we evaluate RMSE on this fitted model and all of the seen data. We will call this data the <strong>training</strong> data, and this RMSE the <strong>train</strong> RMSE.</p>
-<p>Now, suppose we magically encounter some additional data. To truly asses how well the model predicts, we should evaluate how well our models predicts the response of this data. We will call this data the <strong>test</strong> data and this RMSE the <strong>test</strong> RMSE.</p>
-<ul>
-<li>Train RMSE: model fit on seen data, evaluated on <strong>seen</strong> data</li>
-<li>Test RMSE: model fit on seen data, evaluated on <strong>unseen</strong> data</li>
-</ul>
-<p>Below, we simulate some data and fit two models. We will call the solid blue line the “simple” model. The dashed orange line will be called the “complex” model, which was fit with methods we do not yet know.</p>
-<p><img src="model-building_files/figure-html/unnamed-chunk-6-1.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>The left panel shows the data that was used to fit the two models. Clearly the “complex” model fits the data much better. The right panel shows additional data that was simulated in the same manner as the original data. Here we see that the “simple” model fits much better. The dashed orange line almost seems random.</p>
-<table>
-<thead>
-<tr class="header">
-<th>Model</th>
-<th><strong>Train</strong> RMSE</th>
-<th><strong>Test</strong> RMSE</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Simple</td>
-<td>1.71</td>
-<td>1.45</td>
-</tr>
-<tr class="even">
-<td>Complex</td>
-<td>1.41</td>
-<td>2.07</td>
-</tr>
-</tbody>
-</table>
-<p>The more “complex”, wiggly, model fits the training data much better as it has a much lower train RMSE. However, we see that the “simple” model fits the test data much better, with a much lower test RMSE. This means that the complex model has <em>overfit</em> the data, and we prefer the simple model. When choosing a model for prediction, we prefer a model that predicts unseen data.</p>
-<p>In practice, you can’t simply generate more data to evaluate your models. Instead we split existing data into data used to fit the model (train) and data used to evaluate the model (test). Never fit a model with test data.</p>
-</div>
-</div>
-</div>
-<div id="summary" class="section level2">
-<h2><span class="header-section-number">10.3</span> Summary</h2>
-<p>Models can be used to <strong>explain</strong> relationships and <strong>predict</strong> observations.</p>
-<p>When using model to,</p>
-<ul>
-<li><strong>explain</strong>; we prefer <em>small</em> and <em>interpretable</em> models.</li>
-<li><strong>predict</strong>; we prefer models that make the smallest errors possible, without <em>overfitting</em>.</li>
-</ul>
-<p>Linear models can accomplish both these goals. Later, we will see that often a linear model that accomplish one of these goals, usually accomplishes the other.</p>
-</div>
-<div id="r-markdown-3" class="section level2">
-<h2><span class="header-section-number">10.4</span> <code>R</code> Markdown</h2>
-<p>The <code>R</code> Markdown file for this chapter can be found here:</p>
-<ul>
-<li><a href="model-building.Rmd" target="_blank"><code>model-building.Rmd</code></a></li>
-</ul>
-<p>The file was created using <code>R</code> version <code>4.1.0</code>.</p>
-
-</div>
+<div id="page-not-found" class="section level1">
+<h1>Page not found</h1>
+<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
+<p>You may want to try searching to find the page's new location, or use
+the table of contents to find the page you are looking for.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="multiple-linear-regression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="categorical-predictors-and-interactions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -667,7 +456,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/daviddalpiaz/appliedstats/edit/master/model-building.Rmd",
+"link": "https://github.com/daviddalpiaz/appliedstats/edit/master/%s",
 "text": "Edit"
 },
 "history": {

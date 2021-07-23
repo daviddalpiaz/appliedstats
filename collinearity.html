@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 15 Collinearity | Applied Statistics with R</title>
   <meta name="description" content="Chapter 15 Collinearity | Applied Statistics with R" />
-  <meta name="generator" content="bookdown 0.22.11 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.22.15 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 15 Collinearity | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-07-12" />
+<meta name="date" content="2021-07-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -571,7 +571,7 @@ S_{x_j x_j} = \sum(x_{ij}-\bar{x}_j)^2.
 ##        Leg 
 ##   6.694291</code></pre>
 <p>In practice it is common to say that any VIF greater than <span class="math inline">\(5\)</span> is cause for concern. So in this example we see there is a huge multicollinearity issue as many of the predictors have a VIF greater than 5.</p>
-<p>Let’s further investigate how the presence of collinearity actually effects a model. If we add a moderate amount of noise to the data, we see that the estimates of the coefficients change drastically. This is a rather undesirable effect. Adding random noise should not effect the coefficients of a model.</p>
+<p>Let’s further investigate how the presence of collinearity actually affects a model. If we add a moderate amount of noise to the data, we see that the estimates of the coefficients change drastically. This is a rather undesirable effect. Adding random noise should not affect the coefficients of a model.</p>
 <div class="sourceCode" id="cb1226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1226-1"><a href="collinearity.html#cb1226-1"></a><span class="kw">set.seed</span>(<span class="dv">1337</span>)</span>
 <span id="cb1226-2"><a href="collinearity.html#cb1226-2"></a>noise =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="kw">nrow</span>(seatpos), <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</span>
 <span id="cb1226-3"><a href="collinearity.html#cb1226-3"></a>hip_model_noise =<span class="st"> </span><span class="kw">lm</span>(hipcenter <span class="op">+</span><span class="st"> </span>noise <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> seatpos)</span></code></pre></div>
@@ -586,7 +586,7 @@ S_{x_j x_j} = \sum(x_{ij}-\bar{x}_j)^2.
 ## 415.32909380   0.76578240   0.01910958  -2.90377584  -0.12068122   2.03241638 
 ##          Arm        Thigh          Leg 
 ##  -1.02127944  -0.89034509  -5.61777220</code></pre>
-<p>This tells us that a model with collinearity is bad at explaining the relationship between the response and the predictors. We cannot even be confident in the direction of the relationship. However, does collinearity effect prediction?</p>
+<p>This tells us that a model with collinearity is bad at explaining the relationship between the response and the predictors. We cannot even be confident in the direction of the relationship. However, does collinearity affect prediction?</p>
 <div class="sourceCode" id="cb1231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1231-1"><a href="collinearity.html#cb1231-1"></a><span class="kw">plot</span>(<span class="kw">fitted</span>(hip_model), <span class="kw">fitted</span>(hip_model_noise), <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>,</span>
 <span id="cb1231-2"><a href="collinearity.html#cb1231-2"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Predicted, Without Noise&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Predicted, With Noise&quot;</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>)</span>
 <span id="cb1231-3"><a href="collinearity.html#cb1231-3"></a><span class="kw">abline</span>(<span class="dt">a =</span> <span class="dv">0</span>, <span class="dt">b =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
@@ -769,7 +769,7 @@ Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \epsilon
 <span id="cb1276-10"><a href="collinearity.html#cb1276-10"></a>     <span class="dt">main =</span> <span class="st">&quot;MSE, without Collinearity&quot;</span>,</span>
 <span id="cb1276-11"><a href="collinearity.html#cb1276-11"></a>     <span class="dt">xlab =</span> <span class="st">&quot;MSE&quot;</span>)</span></code></pre></div>
 <p><img src="collinearity_files/figure-html/unnamed-chunk-37-1.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>Interestingly, in both cases, the MSE is roughly the same on average. Again, this is because collinearity effects a model’s ability to <em>explain</em>, but not predict.</p>
+<p>Interestingly, in both cases, the MSE is roughly the same on average. Again, this is because collinearity affects a model’s ability to <em>explain</em>, but not predict.</p>
 <div class="sourceCode" id="cb1277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1277-1"><a href="collinearity.html#cb1277-1"></a><span class="kw">mean</span>(mse_bad)</span></code></pre></div>
 <pre><code>## [1] 17.7186</code></pre>
 <div class="sourceCode" id="cb1279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1279-1"><a href="collinearity.html#cb1279-1"></a><span class="kw">mean</span>(mse_good)</span></code></pre></div>
