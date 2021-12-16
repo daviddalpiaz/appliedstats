@@ -1087,6 +1087,8 @@ tibble::as.tibble(spam)
 ## Warning: `as.tibble()` was deprecated in tibble 2.0.0.
 ## Please use `as_tibble()` instead.
 ## The signature and semantics have changed, see `?as_tibble`.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
 
 ```
@@ -1109,11 +1111,7 @@ tibble::as.tibble(spam)
 ## #   hp <dbl>, hpl <dbl>, george <dbl>, num650 <dbl>, lab <dbl>, labs <dbl>,
 ## #   telnet <dbl>, num857 <dbl>, data <dbl>, num415 <dbl>, num85 <dbl>,
 ## #   technology <dbl>, num1999 <dbl>, parts <dbl>, pm <dbl>, direct <dbl>,
-## #   cs <dbl>, meeting <dbl>, original <dbl>, project <dbl>, re <dbl>,
-## #   edu <dbl>, table <dbl>, conference <dbl>, charSemicolon <dbl>,
-## #   charRoundbracket <dbl>, charSquarebracket <dbl>, charExclamation <dbl>,
-## #   charDollar <dbl>, charHash <dbl>, capitalAve <dbl>, capitalLong <dbl>,
-## #   capitalTotal <dbl>, type <fct>
+## #   cs <dbl>, meeting <dbl>, original <dbl>, project <dbl>, re <dbl>, ...
 ```
 
 This dataset, created in the late 1990s at Hewlett-Packard Labs, contains 4601 emails, of which 1813 are considered spam. The remaining are not spam. (Which for simplicity, we might call, ham.) Additional details can be obtained by using `?spam` of by visiting the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/spambase){target="_blank"}. 
@@ -1545,4 +1543,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`logistic.Rmd`](logistic.Rmd){target="_blank"}
 
-The file was created using `R` version `4.1.0`.
+The file was created using `R` version `4.1.2`.

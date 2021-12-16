@@ -1,6 +1,6 @@
 --- 
 title: "Applied Statistics with R"
-date: "2021-07-23"
+author: "[David Dalpiaz](https://daviddalpiaz.org/)"
 github-repo: daviddalpiaz/appliedstats
 url: 'https\://daviddalpiaz.github.io/appliedstats/'
 knit: "bookdown::render_book"

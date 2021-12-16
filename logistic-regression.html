@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 17 Logistic Regression | Applied Statistics with R</title>
   <meta name="description" content="Chapter 17 Logistic Regression | Applied Statistics with R" />
-  <meta name="generator" content="bookdown 0.22.15 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 17 Logistic Regression | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -21,9 +21,9 @@
   
   
 
+<meta name="author" content="David Dalpiaz" />
 
 
-<meta name="date" content="2021-07-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,8 @@
   <link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
 <link rel="prev" href="variable-selection-and-model-building.html"/>
 <link rel="next" href="beyond.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -40,7 +41,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -1255,7 +1255,9 @@ C^B({\bf x}) = \underset{k}{\mathrm{argmax}} \ P[Y = k \mid {\bf X = x}].
 <span id="cb1476-4"><a href="logistic-regression.html#cb1476-4"></a>tibble<span class="op">::</span><span class="kw">as.tibble</span>(spam)</span></code></pre></div>
 <pre><code>## Warning: `as.tibble()` was deprecated in tibble 2.0.0.
 ## Please use `as_tibble()` instead.
-## The signature and semantics have changed, see `?as_tibble`.</code></pre>
+## The signature and semantics have changed, see `?as_tibble`.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
 <pre><code>## # A tibble: 4,601 × 58
 ##     make address   all num3d   our  over remove internet order  mail receive
 ##    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
@@ -1275,11 +1277,7 @@ C^B({\bf x}) = \underset{k}{\mathrm{argmax}} \ P[Y = k \mid {\bf X = x}].
 ## #   hp &lt;dbl&gt;, hpl &lt;dbl&gt;, george &lt;dbl&gt;, num650 &lt;dbl&gt;, lab &lt;dbl&gt;, labs &lt;dbl&gt;,
 ## #   telnet &lt;dbl&gt;, num857 &lt;dbl&gt;, data &lt;dbl&gt;, num415 &lt;dbl&gt;, num85 &lt;dbl&gt;,
 ## #   technology &lt;dbl&gt;, num1999 &lt;dbl&gt;, parts &lt;dbl&gt;, pm &lt;dbl&gt;, direct &lt;dbl&gt;,
-## #   cs &lt;dbl&gt;, meeting &lt;dbl&gt;, original &lt;dbl&gt;, project &lt;dbl&gt;, re &lt;dbl&gt;,
-## #   edu &lt;dbl&gt;, table &lt;dbl&gt;, conference &lt;dbl&gt;, charSemicolon &lt;dbl&gt;,
-## #   charRoundbracket &lt;dbl&gt;, charSquarebracket &lt;dbl&gt;, charExclamation &lt;dbl&gt;,
-## #   charDollar &lt;dbl&gt;, charHash &lt;dbl&gt;, capitalAve &lt;dbl&gt;, capitalLong &lt;dbl&gt;,
-## #   capitalTotal &lt;dbl&gt;, type &lt;fct&gt;</code></pre>
+## #   cs &lt;dbl&gt;, meeting &lt;dbl&gt;, original &lt;dbl&gt;, project &lt;dbl&gt;, re &lt;dbl&gt;, …</code></pre>
 <p>This dataset, created in the late 1990s at Hewlett-Packard Labs, contains 4601 emails, of which 1813 are considered spam. The remaining are not spam. (Which for simplicity, we might call, ham.) Additional details can be obtained by using <code>?spam</code> of by visiting the <a href="https://archive.ics.uci.edu/ml/datasets/spambase" target="_blank">UCI Machine Learning Repository</a>.</p>
 <p>The response variable, <code>type</code>, is a <strong>factor</strong> with levels that label each email as <code>spam</code> or <code>nonspam</code>. When fitting models, <code>nonspam</code> will be the reference level, <span class="math inline">\(Y = 0\)</span>, as it comes first alphabetically.</p>
 <div class="sourceCode" id="cb1479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1479-1"><a href="logistic-regression.html#cb1479-1"></a><span class="kw">is.factor</span>(spam<span class="op">$</span>type)</span></code></pre></div>
@@ -1472,7 +1470,7 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 <ul>
 <li><a href="logistic.Rmd" target="_blank"><code>logistic.Rmd</code></a></li>
 </ul>
-<p>The file was created using <code>R</code> version <code>4.1.0</code>.</p>
+<p>The file was created using <code>R</code> version <code>4.1.2</code>.</p>
 
 </div>
 </div>
@@ -1486,7 +1484,6 @@ Now we’ll use these predictions to create a confusion matrix.</p>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1527,7 +1524,7 @@ gitbook.start({
 },
 "download": ["applied_statistics.pdf"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

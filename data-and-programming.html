@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Data and Programming | Applied Statistics with R</title>
   <meta name="description" content="Chapter 3 Data and Programming | Applied Statistics with R" />
-  <meta name="generator" content="bookdown 0.22.15 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Data and Programming | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -21,9 +21,9 @@
   
   
 
+<meta name="author" content="David Dalpiaz" />
 
 
-<meta name="date" content="2021-07-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,8 @@
   <link rel="shortcut icon" href="favicon.gif" type="image/x-icon" />
 <link rel="prev" href="introduction-to-r.html"/>
 <link rel="next" href="summarizing-data.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -40,7 +41,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -1152,33 +1152,33 @@ X^\top X
 <p>To look at the data, we have two useful commands: <code>head()</code> and <code>str()</code>.</p>
 <div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="data-and-programming.html#cb264-1"></a><span class="kw">head</span>(mpg, <span class="dt">n =</span> <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 11
-##    manufacturer model    displ  year   cyl trans   drv     cty   hwy fl    class
-##    &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
-##  1 audi         a4         1.8  1999     4 auto(l… f        18    29 p     comp…
-##  2 audi         a4         1.8  1999     4 manual… f        21    29 p     comp…
-##  3 audi         a4         2    2008     4 manual… f        20    31 p     comp…
-##  4 audi         a4         2    2008     4 auto(a… f        21    30 p     comp…
-##  5 audi         a4         2.8  1999     6 auto(l… f        16    26 p     comp…
-##  6 audi         a4         2.8  1999     6 manual… f        18    26 p     comp…
-##  7 audi         a4         3.1  2008     6 auto(a… f        18    27 p     comp…
-##  8 audi         a4 quat…   1.8  1999     4 manual… 4        18    26 p     comp…
-##  9 audi         a4 quat…   1.8  1999     4 auto(l… 4        16    25 p     comp…
-## 10 audi         a4 quat…   2    2008     4 manual… 4        20    28 p     comp…</code></pre>
+##    manufacturer model      displ  year   cyl trans drv     cty   hwy fl    class
+##    &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
+##  1 audi         a4           1.8  1999     4 auto… f        18    29 p     comp…
+##  2 audi         a4           1.8  1999     4 manu… f        21    29 p     comp…
+##  3 audi         a4           2    2008     4 manu… f        20    31 p     comp…
+##  4 audi         a4           2    2008     4 auto… f        21    30 p     comp…
+##  5 audi         a4           2.8  1999     6 auto… f        16    26 p     comp…
+##  6 audi         a4           2.8  1999     6 manu… f        18    26 p     comp…
+##  7 audi         a4           3.1  2008     6 auto… f        18    27 p     comp…
+##  8 audi         a4 quattro   1.8  1999     4 manu… 4        18    26 p     comp…
+##  9 audi         a4 quattro   1.8  1999     4 auto… 4        16    25 p     comp…
+## 10 audi         a4 quattro   2    2008     4 manu… 4        20    28 p     comp…</code></pre>
 <p>The function <code>head()</code> will display the first <code>n</code> observations of the data frame. The <code>head()</code> function was more useful before tibbles. Notice that <code>mpg</code> is a tibble already, so the output from <code>head()</code> indicates there are only <code>10</code> observations. Note that this applies to <code>head(mpg, n = 10)</code> and not <code>mpg</code> itself. Also note that tibbles print a limited number of rows and columns by default. The last line of the printed output indicates which rows and columns were omitted.</p>
 <div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="data-and-programming.html#cb266-1"></a>mpg</span></code></pre></div>
 <pre><code>## # A tibble: 234 × 11
-##    manufacturer model    displ  year   cyl trans   drv     cty   hwy fl    class
-##    &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
-##  1 audi         a4         1.8  1999     4 auto(l… f        18    29 p     comp…
-##  2 audi         a4         1.8  1999     4 manual… f        21    29 p     comp…
-##  3 audi         a4         2    2008     4 manual… f        20    31 p     comp…
-##  4 audi         a4         2    2008     4 auto(a… f        21    30 p     comp…
-##  5 audi         a4         2.8  1999     6 auto(l… f        16    26 p     comp…
-##  6 audi         a4         2.8  1999     6 manual… f        18    26 p     comp…
-##  7 audi         a4         3.1  2008     6 auto(a… f        18    27 p     comp…
-##  8 audi         a4 quat…   1.8  1999     4 manual… 4        18    26 p     comp…
-##  9 audi         a4 quat…   1.8  1999     4 auto(l… 4        16    25 p     comp…
-## 10 audi         a4 quat…   2    2008     4 manual… 4        20    28 p     comp…
+##    manufacturer model      displ  year   cyl trans drv     cty   hwy fl    class
+##    &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
+##  1 audi         a4           1.8  1999     4 auto… f        18    29 p     comp…
+##  2 audi         a4           1.8  1999     4 manu… f        21    29 p     comp…
+##  3 audi         a4           2    2008     4 manu… f        20    31 p     comp…
+##  4 audi         a4           2    2008     4 auto… f        21    30 p     comp…
+##  5 audi         a4           2.8  1999     6 auto… f        16    26 p     comp…
+##  6 audi         a4           2.8  1999     6 manu… f        18    26 p     comp…
+##  7 audi         a4           3.1  2008     6 auto… f        18    27 p     comp…
+##  8 audi         a4 quattro   1.8  1999     4 manu… 4        18    26 p     comp…
+##  9 audi         a4 quattro   1.8  1999     4 auto… 4        16    25 p     comp…
+## 10 audi         a4 quattro   2    2008     4 manu… 4        20    28 p     comp…
 ## # … with 224 more rows</code></pre>
 <p>The function <code>str()</code> will display the “structure” of the data frame. It will display the number of <strong>observations</strong> and <strong>variables</strong>, list the variables, give the type of each variable, and show some elements of each variable. This information can also be found in the “Environment” window in RStudio.</p>
 <div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="data-and-programming.html#cb268-1"></a><span class="kw">str</span>(mpg)</span></code></pre></div>
@@ -1329,11 +1329,11 @@ X^\top X
 <p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the output of the final line of the body is what is returned by the function. In this case the function returns the vector stored in the variable <code>result</code>.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
 <div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="data-and-programming.html#cb302-1"></a>(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</span></code></pre></div>
-<pre><code>##  [1]  5.67177180 -0.28662320 -1.70384913 -2.43945359  8.16758476  0.06011423
-##  [7] -6.72249021 -3.37245534  2.32430687 -5.49376169</code></pre>
+<pre><code>##  [1]  5.99300861  5.38519152 -0.33487336  9.36813490  5.27324913  3.09543909
+##  [7]  0.74404393  6.99231688  0.02098523  6.01895929</code></pre>
 <div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="data-and-programming.html#cb304-1"></a><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)</span></code></pre></div>
-<pre><code>##  [1]  1.28841794  0.01977201 -0.28198004 -0.43860303  1.81981994  0.09359844
-##  [7] -1.35053602 -0.63725533  0.57568444 -1.08891835</code></pre>
+<pre><code>##  [1]  0.5354579  0.3481278 -1.4148048  1.5756769  0.3136269 -0.3575774
+##  [7] -1.0822808  0.8434462 -1.3051286  0.5434559</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
 <div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="data-and-programming.html#cb306-1"></a>standardize =<span class="st"> </span><span class="cf">function</span>(x) {</span>
 <span id="cb306-2"><a href="data-and-programming.html#cb306-2"></a>  (x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x)</span>
@@ -1370,14 +1370,14 @@ s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2
 <span id="cb319-3"><a href="data-and-programming.html#cb319-3"></a>  (<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>n) <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</span>
 <span id="cb319-4"><a href="data-and-programming.html#cb319-4"></a>}</span></code></pre></div>
 <div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="data-and-programming.html#cb320-1"></a><span class="kw">get_var</span>(test_sample)</span></code></pre></div>
-<pre><code>## [1] 22.05859</code></pre>
+<pre><code>## [1] 10.52763</code></pre>
 <div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="data-and-programming.html#cb322-1"></a><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
-<pre><code>## [1] 22.05859</code></pre>
+<pre><code>## [1] 10.52763</code></pre>
 <div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="data-and-programming.html#cb324-1"></a><span class="kw">var</span>(test_sample)</span></code></pre></div>
-<pre><code>## [1] 22.05859</code></pre>
+<pre><code>## [1] 10.52763</code></pre>
 <p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built in function <code>var()</code>. Finally, let’s examine the biased estimate of <span class="math inline">\(\sigma^2\)</span>.</p>
 <div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="data-and-programming.html#cb326-1"></a><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<pre><code>## [1] 19.85273</code></pre>
+<pre><code>## [1] 9.474865</code></pre>
 
 </div>
 </div>
@@ -1392,7 +1392,6 @@ s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1433,7 +1432,7 @@ gitbook.start({
 },
 "download": ["applied_statistics.pdf"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {
