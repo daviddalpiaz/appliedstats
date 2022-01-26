@@ -98,7 +98,7 @@ Frequently you may wish to create a vector based on a sequence of numbers. The q
 
 Here we see `R` labeling the rows after the first since this is a large vector. Also, we see that by putting parentheses around the assignment, `R` both stores the vector in a variable called `y` and automatically outputs `y` to the console.
 
-Note that scalars do not exists in `R`. They are simply vectors of length `1`.
+Note that scalars do not exist in `R`. They are simply vectors of length `1`.
 
 
 ```r
@@ -1901,8 +1901,8 @@ To test our function, we will take a random sample of size `n = 10` from a norma
 ```
 
 ```
-##  [1] -3.2352675 -3.0813208  7.5758820 -7.7962827 -5.1917928 -2.8946616
-##  [7]  1.3650717  6.1902828  1.4759118 -0.1096197
+##  [1] -6.2572177 -4.7502669  5.3399571 -8.7047147  4.7833069 -0.2552769
+##  [7]  2.4402202  5.8314945  3.6617644  3.8824502
 ```
 
 ```r
@@ -1910,8 +1910,8 @@ standardize(x = test_sample)
 ```
 
 ```
-##  [1] -0.54834981 -0.51667481  1.67607662 -1.48679236 -0.95091076 -0.47826912
-##  [7]  0.39818377  1.39098543  0.42098946  0.09476159
+##  [1] -1.2906875 -1.0069274  0.8930707 -1.7515534  0.7882529 -0.1605168
+##  [7]  0.3470477  0.9856276  0.5770655  0.6186208
 ```
 
 This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.
@@ -2013,7 +2013,7 @@ get_var(test_sample)
 ```
 
 ```
-## [1] 23.62151
+## [1] 28.203
 ```
 
 ```r
@@ -2021,7 +2021,7 @@ get_var(test_sample, biased = FALSE)
 ```
 
 ```
-## [1] 23.62151
+## [1] 28.203
 ```
 
 ```r
@@ -2029,7 +2029,7 @@ var(test_sample)
 ```
 
 ```
-## [1] 23.62151
+## [1] 28.203
 ```
 
 We see the function is working as expected, and when returning the unbiased estimate it matches `R`'s built in function `var()`. Finally, let's examine the biased estimate of $\sigma^2$.
@@ -2040,7 +2040,7 @@ get_var(test_sample, biased = TRUE)
 ```
 
 ```
-## [1] 21.25936
+## [1] 25.3827
 ```
 
 
