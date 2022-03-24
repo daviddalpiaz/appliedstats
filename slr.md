@@ -765,7 +765,7 @@ abline(stop_dist_model, lwd = 3, col = "darkorange")
 
 \begin{center}\includegraphics{slr_files/figure-latex/unnamed-chunk-33-1} \end{center}
 
-The `abline()` function is used to add lines of the form $a + bx$ to a plot. (Hence **`ab`**`line`.) When we give it `stop_dist_model` as an argument, it automatically extracts the regression coefficient estimates ($\hat{\beta}_0$ and $\hat{\beta}_1$) and uses them as the slope and intercept of the line. Here we also use `lwd` to modify the width of the line, as well as `col` to modify the color of the line.
+The `abline()` function is used to add lines of the form $a + bx$ to a plot. (Hence **`ab`**`line`.) When we give it `stop_dist_model` as an argument, it automatically extracts the regression coefficient estimates ($\hat{\beta}_0$ and $\hat{\beta}_1$) and uses them as the intercept and slope of the line. Here we also use `lwd` to modify the width of the line, as well as `col` to modify the color of the line.
 
 The "thing" that is returned by the `lm()` function is actually an object of class `lm` which is a list. The exact details of this are unimportant unless you are seriously interested in the inner-workings of `R`, but know that we can determine the names of the elements of the list using the `names()` command.
 
@@ -1309,4 +1309,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`slr.Rmd`](slr.Rmd){target="_blank"}
 
-The file was created using `R` version `4.1.2`.
+The file was created using `R` version `4.1.3`.

@@ -772,14 +772,6 @@ The previous plot was made using base graphics in `R`. The next plot was made us
 
 ```r
 library(ggplot2)
-```
-
-```
-## Warning in register(): Can't find generic `scale_type` in package ggplot2 to
-## register S3 method.
-```
-
-```r
 ggplot(data = marketing, aes(x = advert, y = sales)) +
   stat_smooth(method = "lm", se = FALSE, color = "green", formula = y ~ x) +
   stat_smooth(method = "lm", se = FALSE, color = "blue", formula = y ~ x + I(x ^ 2)) +
@@ -2169,4 +2161,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`transformations.Rmd`](transformations.Rmd){target="_blank"}
 
-The file was created using `R` version `4.1.2`.
+The file was created using `R` version `4.1.3`.
