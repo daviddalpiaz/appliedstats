@@ -857,7 +857,7 @@ Our goal then, is to fit a model to this data in order to be able to predict fue
 econ = read.csv("data/fuel_econ.csv")
 ```
 
-In this example, we will be frequently looking a the fitted versus residuals plot, so we *should* write a function to make our life easier, but this is left as an exercise for homework.
+In this example, we will be frequently looking at the fitted versus residuals plot, so we *should* write a function to make our life easier, but this is left as an exercise for homework.
 
 We will also be adding fitted curves to scatterplots repeatedly, so smartly we will write a function to do so.
 
@@ -2161,4 +2161,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`transformations.Rmd`](transformations.Rmd){target="_blank"}
 
-The file was created using `R` version `4.1.3`.
+The file was created using `R` version `4.2.0`.

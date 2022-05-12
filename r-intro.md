@@ -5,7 +5,7 @@
 `R` is both a programming language and software environment for statistical computing, which is *free* and *open-source*. To get started, you will need to install two pieces of software:
 
 - [`R`, the actual programming language.](http://cran.r-project.org/){target="_blank"}
-    - Chose your operating system, and select the most recent version, 4.1.3.
+    - Chose your operating system, and select the most recent version, 4.2.0.
 - [RStudio, an excellent IDE for working with `R`.](http://www.rstudio.com/){target="_blank"}
     - Note, you must have `R` installed to use RStudio. RStudio is simply an interface used to interact with `R`.
 

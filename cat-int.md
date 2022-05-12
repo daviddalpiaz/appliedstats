@@ -1460,4 +1460,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`cat-int.Rmd`](cat-int.Rmd){target="_blank"}
 
-The file was created using `R` version `4.1.3`.
+The file was created using `R` version `4.2.0`.

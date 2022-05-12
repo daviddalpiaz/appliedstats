@@ -99,6 +99,7 @@ Your name could be here! Suggest an edit! Correct a typo! If you submit a correc
 - [Ivan Valdes Castillo](https://github.com/ivanvc){target="_blank"}
 - [Tony Mu](https://tonymuu.github.io/){target="_blank"}
 - [Salman Yousaf](https://www.linkedin.com/in/salman-y){target="_blank"}
+- [Yutaro Nishiyama](https://www.linkedin.com/in/yutaro-nishiyama-a8a895b4/){target="_blank"}
 
 ## License
 
