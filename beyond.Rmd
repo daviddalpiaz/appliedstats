@@ -24,7 +24,7 @@ The `R` community has started to call this collection of packages the [Tidyverse
 
 ## Visualization
 
-In this course, we have mostly used the base plotting methods in `R`. When working with tidy data, many users prefer to use the [`ggplot2`](http://ggplot2.org/){target="_blank"} package, also developed by Hadley Wickham. RStudio provides a rather detailed ["cheat sheet"](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf){target="_blank"} for working with `ggplot2`. The community maintains a [graph gallery](http://www.r-graph-gallery.com/portfolio/ggplot2-package/){target="_blank"} of examples.
+In this course, we have mostly used the base plotting methods in `R`. When working with tidy data, many users prefer to use the [`ggplot2`](https://ggplot2.tidyverse.org/){target="_blank"} package, also developed by Hadley Wickham. RStudio provides a rather detailed ["cheat sheet"](https://raw.githubusercontent.com/rstudio/cheatsheets/main/data-visualization.pdf){target="_blank"} for working with `ggplot2`. The community maintains a [graph gallery](http://www.r-graph-gallery.com/portfolio/ggplot2-package/){target="_blank"} of examples.
 
 Use of the [`manipulate` package](https://support.rstudio.com/hc/en-us/articles/200551906-Interactive-Plotting-with-Manipulate){target="_blank"} with RStudio gives the ability to quickly change a static graphic to become interactive.
 
