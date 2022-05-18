@@ -100,6 +100,7 @@ Your name could be here! Suggest an edit! Correct a typo! If you submit a correc
 - [Tony Mu](https://tonymuu.github.io/){target="_blank"}
 - [Salman Yousaf](https://www.linkedin.com/in/salman-y){target="_blank"}
 - [Yutaro Nishiyama](https://www.linkedin.com/in/yutaro-nishiyama-a8a895b4/){target="_blank"}
+- [Regina Sahani Goonetilleke](https://www.linkedin.com/in/sahani-goonetilleke/){target="_blank"}
 
 ## License
 
