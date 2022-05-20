@@ -34,6 +34,7 @@ So far, we have seen a lot of `R`, and a lot of `R` quickly. Again, the precedin
 Those who are familiar with other languages may find the following "cheatsheets" helpful for transitioning to `R`.
 
 - [MATLAB, NumPy, Julia](http://hyperpolyglot.org/numerical-analysis2#polynomials){target="_blank"}
+- [Python pandas comparison with R/R Libraries](https://pandas.pydata.org/pandas-docs/stable/getting_started/comparison/comparison_with_r.html)
 - [Stata](http://dss.princeton.edu/training/RStata.pdf){target="_blank"}
 - [SAS]() - Look for a resource still! Suggestions welcome.
 
