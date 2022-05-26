@@ -109,7 +109,7 @@ Note that scalars do not exist in `R`. They are simply vectors of length `1`.
 ## [1] 2
 ```
 
-If we want to create a sequence that isn't limited to integers and increasing by 1 at a time, we can use the `seq()` function.
+To create a sequence that is not limited to consecutive integers, use the `seq()` function to define a sequence by its start, end, and increment.
 
 
 ```r
@@ -1901,8 +1901,8 @@ To test our function, we will take a random sample of size `n = 10` from a norma
 ```
 
 ```
-##  [1]  6.649300  1.628852  7.523380 11.361196 -4.135986 -4.314276  9.844965
-##  [8]  0.706213  3.679428 10.611966
+##  [1]  6.3643056  5.3002326  3.2619597 10.8661418  5.0236298 -3.8805478
+##  [7]  0.8130702  6.7680625  5.3202859  2.1028263
 ```
 
 ```r
@@ -1910,8 +1910,8 @@ standardize(x = test_sample)
 ```
 
 ```
-##  [1]  0.3958918 -0.4705995  0.5467515  1.2091293 -1.4655666 -1.4963381
-##  [7]  0.9474394 -0.6298399 -0.1166856  1.0798178
+##  [1]  0.5485042  0.2795801 -0.2355546  1.6862575  0.2096740 -2.0406872
+##  [7] -0.8544647  0.6505461  0.2846481 -0.5285034
 ```
 
 This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.
@@ -2013,7 +2013,7 @@ get_var(test_sample)
 ```
 
 ```
-## [1] 33.57041
+## [1] 15.65609
 ```
 
 ```r
@@ -2021,7 +2021,7 @@ get_var(test_sample, biased = FALSE)
 ```
 
 ```
-## [1] 33.57041
+## [1] 15.65609
 ```
 
 ```r
@@ -2029,7 +2029,7 @@ var(test_sample)
 ```
 
 ```
-## [1] 33.57041
+## [1] 15.65609
 ```
 
 We see the function is working as expected, and when returning the unbiased estimate it matches `R`'s built in function `var()`. Finally, let's examine the biased estimate of $\sigma^2$.
@@ -2040,7 +2040,7 @@ get_var(test_sample, biased = TRUE)
 ```
 
 ```
-## [1] 30.21337
+## [1] 14.09048
 ```
 
 
