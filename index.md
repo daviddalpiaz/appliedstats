@@ -102,7 +102,6 @@ Your name could be here! Suggest an edit! Correct a typo! If you submit a correc
 - [Yutaro Nishiyama](https://www.linkedin.com/in/yutaro-nishiyama-a8a895b4/){target="_blank"}
 - [Regina Sahani Goonetilleke](https://www.linkedin.com/in/sahani-goonetilleke/){target="_blank"}
 - [Paul Zuradzki](https://github.com/paulzuradzki){target="_blank"}
-- [Will Tsai](https://github.com/willtsai){target="_blank"}
 
 ## License
 
