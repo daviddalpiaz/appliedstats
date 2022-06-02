@@ -327,7 +327,7 @@ for (i in 1:num_samples) {
 }
 ```
 
-Each time we simulated the data, we obtained values of the estimated coefficients. The variables `beta_0_hats` and `beta_1_hats` now store 10,000 simulated values of $\hat{\beta}_0$ and $\hat{\beta}_1$ respectively.
+Each time we simulated the data, we obtained values of the estimated coefficiets. The variables `beta_0_hats` and `beta_1_hats` now store 10,000 simulated values of $\hat{\beta}_0$ and $\hat{\beta}_1$ respectively.
 
 We first verify the distribution of $\hat{\beta}_1$.
 
