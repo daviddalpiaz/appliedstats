@@ -447,8 +447,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] 11.79982</code></pre>
 <p>Lastly, to generate a random sample of size <code>n = 10</code>, use:</p>
 <div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="probability-and-statistics-in-r.html#cb350-1"></a><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</span></code></pre></div>
-<pre><code>##  [1]  7.5145686  7.1406411  0.5710387  3.6719780 10.8170303 -5.1724521
-##  [7]  7.5081798 -0.7705282  8.5307687  0.7742791</code></pre>
+<pre><code>##  [1]  1.803533  6.070578  1.973606  0.264857 -5.636142 -1.269075  6.124632
+##  [8]  3.132262  3.573389  6.543421</code></pre>
 <p>These functions exist for many other distributions, including but not limited to:</p>
 <table>
 <thead>
@@ -512,9 +512,9 @@ t = \frac{\bar{x}-\mu_{0}}{s/\sqrt{n}} \sim t_{n-1},
 <p>where <span class="math inline">\(\bar{x} = \displaystyle\frac{\sum_{i=1}^{n}x_{i}}{n}\)</span> and <span class="math inline">\(s = \sqrt{\displaystyle\frac{1}{n - 1}\sum_{i=1}^{n}(x_i - \bar{x})^2}\)</span>.</p>
 <p>A <span class="math inline">\(100(1 - \alpha)\)</span>% confidence interval for <span class="math inline">\(\mu\)</span> is given by,</p>
 <p><span class="math display">\[
-\bar{x} \pm t_{n-1}(\alpha/2)\frac{s}{\sqrt{n}}
+\bar{x} \pm t_{\alpha/2, n-1}\frac{s}{\sqrt{n}}
 \]</span></p>
-<p>where <span class="math inline">\(t_{n-1}(\alpha/2)\)</span> is the critical value such that <span class="math inline">\(P\left(t&gt;t_{n-1}(\alpha/2)\right) = \alpha/2\)</span> for <span class="math inline">\(n-1\)</span> degrees of freedom.</p>
+<p>where <span class="math inline">\(t_{\alpha/2, n-1}\)</span> is the critical value such that <span class="math inline">\(P\left(t&gt;t_{\alpha/2, n-1}\right) = \alpha/2\)</span> for <span class="math inline">\(n-1\)</span> degrees of freedom.</p>
 </div>
 <div id="one-sample-t-test-example" class="section level3 hasAnchor">
 <h3><span class="header-section-number">5.2.2</span> One Sample t-Test: Example<a href="probability-and-statistics-in-r.html#one-sample-t-test-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -575,12 +575,12 @@ P(t_{8} &lt; -1.2)
 <pre><code>## [1] 15.70783 16.09217
 ## attr(,&quot;conf.level&quot;)
 ## [1] 0.95</code></pre>
-<p>Let’s check this interval “by hand.” The one piece of information we are missing is the critical value, <span class="math inline">\(t_{n-1}(\alpha/2) = t_{8}(0.025)\)</span>, which can be calculated in <code>R</code> using the <code>qt()</code> function.</p>
+<p>Let’s check this interval “by hand.” The one piece of information we are missing is the critical value, <span class="math inline">\(t_{\alpha/2, n-1} = t_{8}(0.025)\)</span>, which can be calculated in <code>R</code> using the <code>qt()</code> function.</p>
 <div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="probability-and-statistics-in-r.html#cb367-1"></a><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dt">df =</span> <span class="dv">8</span>)</span></code></pre></div>
 <pre><code>## [1] 2.306004</code></pre>
 <p>So, the 95% CI for the mean weight of a cereal box is calculated by plugging into the formula,</p>
 <p><span class="math display">\[
-\bar{x} \pm t_{n-1}(\alpha/2) \frac{s}{\sqrt{n}}
+\bar{x} \pm t_{\alpha/2, n-1} \frac{s}{\sqrt{n}}
 \]</span></p>
 <div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="probability-and-statistics-in-r.html#cb369-1"></a><span class="kw">c</span>(<span class="kw">mean</span>(capt_crisp<span class="op">$</span>weight) <span class="op">-</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dt">df =</span> <span class="dv">8</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sd</span>(capt_crisp<span class="op">$</span>weight) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">9</span>),</span>
 <span id="cb369-2"><a href="probability-and-statistics-in-r.html#cb369-2"></a>  <span class="kw">mean</span>(capt_crisp<span class="op">$</span>weight) <span class="op">+</span><span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.975</span>, <span class="dt">df =</span> <span class="dv">8</span>) <span class="op">*</span><span class="st"> </span><span class="kw">sd</span>(capt_crisp<span class="op">$</span>weight) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="dv">9</span>))</span></code></pre></div>
@@ -597,9 +597,9 @@ t = \frac{(\bar{x} - \bar{y})-\mu_{0}}{s_{p}\sqrt{\frac{1}{n}+\frac{1}{m}}} \sim
 <p>where <span class="math inline">\(\displaystyle\bar{x}=\frac{\sum_{i=1}^{n}x_{i}}{n}\)</span>, <span class="math inline">\(\displaystyle\bar{y}=\frac{\sum_{i=1}^{m}y_{i}}{m}\)</span>, and <span class="math inline">\(s_p^2 = \displaystyle\frac{(n-1)s_x^2+(m-1)s_y^2}{n+m-2}\)</span>.</p>
 <p>A <span class="math inline">\(100(1-\alpha)\)</span>% CI for <span class="math inline">\(\mu_{x}-\mu_{y}\)</span> is given by</p>
 <p><span class="math display">\[
-(\bar{x} - \bar{y}) \pm t_{n+m-2}(\alpha/2) \left(s_{p}\textstyle\sqrt{\frac{1}{n}+\frac{1}{m}}\right),
+(\bar{x} - \bar{y}) \pm t_{\alpha/2, n+m-2}\left(s_{p}\textstyle\sqrt{\frac{1}{n}+\frac{1}{m}}\right),
 \]</span></p>
-<p>where <span class="math inline">\(t_{n+m-2}(\alpha/2)\)</span> is the critical value such that <span class="math inline">\(P\left(t&gt;t_{n+m-2}(\alpha/2)\right)=\alpha/2\)</span>.</p>
+<p>where <span class="math inline">\(t_{\alpha/2, n+m-2}\)</span> is the critical value such that <span class="math inline">\(P\left(t&gt;t_{\alpha/2, n+m-2}\right)=\alpha/2\)</span>.</p>
 </div>
 <div id="two-sample-t-test-example" class="section level3 hasAnchor">
 <h3><span class="header-section-number">5.2.4</span> Two Sample t-Test: Example<a href="probability-and-statistics-in-r.html#two-sample-t-test-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>

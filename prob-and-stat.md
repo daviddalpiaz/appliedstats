@@ -67,8 +67,8 @@ rnorm(n = 10, mean = 2, sd = 5)
 ```
 
 ```
-##  [1]  4.7972981 -4.4794422 -0.5031056  7.5676698 -0.1945593 -3.6898151
-##  [7] -2.2304238 -1.1811396 -1.0034611 -4.1120715
+##  [1]   3.305354 -10.416895   8.792358  -2.918265   8.755244  11.553870
+##  [7]   8.892501  -3.716651   1.385770  -4.390153
 ```
 
 These functions exist for many other distributions, including but not limited to:
@@ -124,10 +124,10 @@ where $\bar{x} = \displaystyle\frac{\sum_{i=1}^{n}x_{i}}{n}$ and $s = \sqrt{\dis
 A $100(1 - \alpha)$\% confidence interval for $\mu$ is given by,
 
 \[
-\bar{x} \pm t_{n-1}(\alpha/2)\frac{s}{\sqrt{n}}
+\bar{x} \pm t_{\alpha/2, n-1}\frac{s}{\sqrt{n}}
 \]
 
-where $t_{n-1}(\alpha/2)$ is the critical value such that $P\left(t>t_{n-1}(\alpha/2)\right) = \alpha/2$ for $n-1$ degrees of freedom.
+where $t_{\alpha/2, n-1}$ is the critical value such that $P\left(t>t_{\alpha/2, n-1}\right) = \alpha/2$ for $n-1$ degrees of freedom.
 
 ### One Sample t-Test: Example
 
@@ -249,7 +249,7 @@ capt_test_results$conf.int
 ## [1] 0.95
 ```
 
-Let's check this interval "by hand." The one piece of information we are missing is the critical value, $t_{n-1}(\alpha/2) = t_{8}(0.025)$, which can be calculated in `R` using the `qt()` function.
+Let's check this interval "by hand." The one piece of information we are missing is the critical value, $t_{\alpha/2, n-1} = t_{8}(0.025)$, which can be calculated in `R` using the `qt()` function.
 
 
 ```r
@@ -263,7 +263,7 @@ qt(0.975, df = 8)
 So, the 95\% CI for the mean weight of a cereal box is calculated by plugging into the formula,
 
 \[
-\bar{x} \pm t_{n-1}(\alpha/2) \frac{s}{\sqrt{n}}
+\bar{x} \pm t_{\alpha/2, n-1} \frac{s}{\sqrt{n}}
 \]
 
 
@@ -293,10 +293,10 @@ where $\displaystyle\bar{x}=\frac{\sum_{i=1}^{n}x_{i}}{n}$, $\displaystyle\bar{y
 A $100(1-\alpha)$\% CI for $\mu_{x}-\mu_{y}$ is given by
 
 \[
-(\bar{x} - \bar{y}) \pm t_{n+m-2}(\alpha/2) \left(s_{p}\textstyle\sqrt{\frac{1}{n}+\frac{1}{m}}\right),
+(\bar{x} - \bar{y}) \pm t_{\alpha/2, n+m-2}\left(s_{p}\textstyle\sqrt{\frac{1}{n}+\frac{1}{m}}\right),
 \]
 
-where $t_{n+m-2}(\alpha/2)$ is the critical value such that $P\left(t>t_{n+m-2}(\alpha/2)\right)=\alpha/2$.
+where $t_{\alpha/2, n+m-2}$ is the critical value such that $P\left(t>t_{\alpha/2, n+m-2}\right)=\alpha/2$.
 
 ### Two Sample t-Test: Example
 
