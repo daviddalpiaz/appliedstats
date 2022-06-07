@@ -856,7 +856,7 @@ summary(mpg_model)$r.squared
 ## [1] 0.8082355
 ```
 
-The interpretation changes slightly as compared to SLR. In this MLR case, we say that $80.82\%$ for the observed variation in miles per gallon is explained by the linear relationship with the two predictor variables, weight and year.
+The interpretation changes slightly as compared to SLR. In this MLR case, we say that $80.82\%$ of the observed variation in miles per gallon is explained by the linear relationship with the two predictor variables, weight and year.
 
 In multiple regression, the significance of regression test is
 
