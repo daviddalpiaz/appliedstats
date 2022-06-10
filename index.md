@@ -104,7 +104,6 @@ Your name could be here! Suggest an edit! Correct a typo! If you submit a correc
 - [Paul Zuradzki](https://github.com/paulzuradzki){target="_blank"}
 - [Will Tsai](https://github.com/willtsai){target="_blank"}
 - [Ellen Veomett](https://sites.google.com/a/stmarys-ca.edu/ellen-veomett/){target="_blank"}
-- [David Newman](https://github.com/djoldman/){target="_blank"}
 
 ## License
 
