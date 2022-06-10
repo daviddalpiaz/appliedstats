@@ -9,7 +9,7 @@
 - [RStudio, an excellent IDE for working with `R`.](http://www.rstudio.com/){target="_blank"}
     - Note, you must have `R` installed to use RStudio. RStudio is simply an interface used to interact with `R`.
 
-The popularity of `R` is on the rise, and everyday it becomes a better tool for statistical analysis. It even generated this book! (A skill you will learn in this course.) There are many good resources for learning `R`. 
+The popularity of `R` is on the rise, and every day it becomes a better tool for statistical analysis. It even generated this book! (A skill you will learn in this course.) There are many good resources for learning `R`. 
 
 The following few chapters will serve as a whirlwind introduction to `R`. They are by no means meant to be a complete reference for the `R` language, but simply an introduction to the basics that we will need along the way. Several of the more important topics will be re-stressed as they are actually needed for analyses.
 
@@ -24,7 +24,7 @@ RStudio has a large number of useful keyboard shortcuts. A list of these can be 
 
 The RStudio team has developed [a number of "cheatsheets"](https://www.rstudio.com/resources/cheatsheets/){target="_blank"} for working with both `R` and RStudio. [This particular cheatsheet for "Base" `R`](https://github.com/rstudio/cheatsheets/blob/main/base-r.pdf){target="_blank"} will summarize many of the concepts in this document. ("Base" `R` is a name used to differentiate the practice of using built-in `R` functions, as opposed to using functions from outside packages, in particular, those from the [`tidyverse`](https://www.tidyverse.org/){target="_blank"}. More on this later.)
 
-When programming, it is often a good practice to follow a style guide. (Where do spaces go? Tabs or spaces? Underscores or CamelCase when naming variables?) No style guide is "correct" but it helps to be aware of what others do. The more important thing is to be consistent within your own code.
+When programming, it is often a good practice to follow a style guide. (Where do spaces go? Tabs or spaces? Underscores or CamelCase when naming variables?) No style guide is "correct," but it helps to be aware of what others do. The more important thing is to be consistent within your own code.
 
 - [Hadley Wickham Style Guide](http://adv-r.had.co.nz/Style.html){target="_blank"} from [Advanced `R`](http://adv-r.had.co.nz/){target="_blank"}
 - [Google Style Guide](https://google.github.io/styleguide/Rguide.xml){target="_blank"}
@@ -35,7 +35,7 @@ For this course, our main deviation from these two guides is the use of `=` in p
 
 To get started, we'll use `R` like a simple calculator.
 
-#### Addition, Subtraction, Multiplication and Division {-}
+#### Addition, Subtraction, Multiplication, and Division {-}
 
 | Math          | `R`     | Result    |
 |---------------|---------|-----------|
