@@ -32,7 +32,7 @@
 
 Many operations in `R` make heavy use of **vectors**. Vectors in `R` are indexed starting at `1`. That is what the `[1]` in the output is indicating, that the first element of the row being displayed is the first element of the vector. Larger vectors will start additional rows with `[*]` where `*` is the index of the first element of the row.
 
-Possibly the most common way to create a vector in `R` is using the `c()` function, which is short for "combine."" As the name suggests, it combines a list of elements separated by commas. 
+Possibly the most common way to create a vector in `R` is using the `c()` function, which is short for "combine." As the name suggests, it combines a list of elements separated by commas. 
 
 
 ```r
@@ -43,7 +43,7 @@ c(1, 3, 5, 7, 8, 9)
 ## [1] 1 3 5 7 8 9
 ```
 
-Here `R` simply outputs this vector. If we would like to store this vector in a **variable** we can do so with the **assignment** operator `=`. In this case the variable `x` now holds the vector we just created, and we can access the vector by typing `x`.
+Here `R` simply outputs this vector. If we would like to store this vector in a **variable**, we can do so with the **assignment** operator `=`. In this case the variable `x` now holds the vector we just created, and we can access the vector by typing `x`.
 
 
 ```r
@@ -277,7 +277,7 @@ x[z]
 
 ### Vectorization
 
-One of the biggest strengths of `R` is its use of vectorized operations. (Frequently the lack of understanding of this concept leads of a belief that `R` is *slow*. `R` is not the fastest language, but it has a reputation for being slower than it really is.)
+One of the biggest strengths of `R` is its use of vectorized operations. (Frequently the lack of understanding of this concept leads to a belief that `R` is *slow*. `R` is not the fastest language, but it has a reputation for being slower than it really is.)
 
 
 ```r
@@ -1077,7 +1077,7 @@ c(is.matrix(a_vec), is.matrix(b_vec))
 ## [1] FALSE FALSE
 ```
 
-When this is the case, the `%*%` operator is used to calculate the **dot product**, also know as the **inner product** of the two vectors.
+When this is the case, the `%*%` operator is used to calculate the **dot product**, also known as the **inner product** of the two vectors.
 
 The dot product of vectors $\boldsymbol{a} = \lbrack a_1, a_2, \cdots a_n \rbrack$ and $\boldsymbol{b} = \lbrack b_1, b_2, \cdots b_n \rbrack$ is defined to be
 
@@ -1136,7 +1136,7 @@ as.matrix(a_vec) %*% b_vec
 ## [3,]    6    6    6
 ```
 
-At face value this is a $3 \times 1$ matrix, multiplied by a $3 \times 1$ matrix. However, when `b_vec` is automatically coerced to be a matrix, `R` decided to make it a "row vector", a $1 \times 3$ matrix, so that the multiplication has conformable dimensions.
+At face value this is a $3 \times 1$ matrix, multiplied by a $3 \times 1$ matrix. However, when `b_vec` is automatically coerced to be a matrix, `R` decided to make it a "row vector," a $1 \times 3$ matrix, so that the multiplication has conformable dimensions.
 
 If we had coerced both, then `R` would produce an error.
 
@@ -1480,11 +1480,11 @@ dim(example_data)
 ## [1] 10  3
 ```
 
-The `data.frame()` function above is one way to create a data frame. We can also import data from various file types in into `R`, as well as use data stored in packages.
+The `data.frame()` function above is one way to create a data frame. We can also import data from various file types into `R`, as well as use data stored in packages.
 
 
 
-[The example data above can also be found here as a .csv file.](data/example-data.csv) To read this data into `R`, we would use the `read_csv()` function from the `readr` package. Note that `R` has a built in function `read.csv()` that operates very similarly. The `readr` function `read_csv()` has a number of advantages. For example, it is much faster reading larger data. [It also uses the `tibble` package to read the data as a tibble.](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html){target="_blank"}
+[The example data above can also be found here as a .csv file.](data/example-data.csv) To read this data into `R`, we would use the `read_csv()` function from the `readr` package. Note that `R` has a built-in function `read.csv()` that operates very similarly. The `readr` function `read_csv()` has a number of advantages. For example, it is much faster reading larger data. [It also uses the `tibble` package to read the data as a tibble.](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html){target="_blank"}
 
 
 ```r
@@ -1875,10 +1875,10 @@ We can also write our own functions in `R`. For example, we often like to "stand
 \frac{x - \bar{x}}{s}
 \]
 
-In `R` we would write a function to do this. When writing a function, there are three thing you must do.
+In `R` we would write a function to do this. When writing a function, there are three things you must do.
 
 - Give the function a name. Preferably something that is short, but descriptive.
-- Specify the arguments using `function()`
+- Specify the arguments using `function()`.
 - Write the body of the function within curly braces, `{}`.
 
 
@@ -1901,8 +1901,8 @@ To test our function, we will take a random sample of size `n = 10` from a norma
 ```
 
 ```
-##  [1]  3.22824967  3.29917313  4.49366484  1.12070073  1.08654600  0.04479183
-##  [7]  3.65565701  0.66093641 -0.30931028  4.44243178
+##  [1] -1.495145  4.446364 -3.493928  3.837669 -3.269320  7.260432 -3.057624
+##  [8]  4.711027 -4.708411  3.423284
 ```
 
 ```r
@@ -1910,8 +1910,8 @@ standardize(x = test_sample)
 ```
 
 ```
-##  [1]  0.5747374  0.6133393  1.2634732 -0.5723522 -0.5909419 -1.1579443
-##  [7]  0.8073652 -0.8225912 -1.3506738  1.2355883
+##  [1] -0.5172305  0.8422125 -0.9745606  0.7029405 -0.9231693  1.4860834
+##  [7] -0.8747323  0.9027686 -1.2524396  0.6081274
 ```
 
 This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.
@@ -2013,7 +2013,7 @@ get_var(test_sample)
 ```
 
 ```
-## [1] 3.375675
+## [1] 19.10168
 ```
 
 ```r
@@ -2021,7 +2021,7 @@ get_var(test_sample, biased = FALSE)
 ```
 
 ```
-## [1] 3.375675
+## [1] 19.10168
 ```
 
 ```r
@@ -2029,10 +2029,10 @@ var(test_sample)
 ```
 
 ```
-## [1] 3.375675
+## [1] 19.10168
 ```
 
-We see the function is working as expected, and when returning the unbiased estimate it matches `R`'s built in function `var()`. Finally, let's examine the biased estimate of $\sigma^2$.
+We see the function is working as expected, and when returning the unbiased estimate it matches `R`'s built-in function `var()`. Finally, let's examine the biased estimate of $\sigma^2$.
 
 
 ```r
@@ -2040,7 +2040,7 @@ get_var(test_sample, biased = TRUE)
 ```
 
 ```
-## [1] 3.038108
+## [1] 17.19151
 ```
 
 

@@ -447,8 +447,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] 11.79982</code></pre>
 <p>Lastly, to generate a random sample of size <code>n = 10</code>, use:</p>
 <div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="probability-and-statistics-in-r.html#cb350-1"></a><span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>)</span></code></pre></div>
-<pre><code>##  [1] -1.71273485  1.36093149  2.07824683  1.81833931  3.96385925 -0.05043539
-##  [7]  0.31968543 -8.01797152  9.35704267  4.74964214</code></pre>
+<pre><code>##  [1]  6.5009107 -1.8336272  2.7999710 -0.7399683  3.0391514 -5.6890194
+##  [7]  7.9688554 -1.9098973 -2.6352456  8.7572214</code></pre>
 <p>These functions exist for many other distributions, including but not limited to:</p>
 <table>
 <thead>
@@ -491,7 +491,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>A prerequisite for STAT 420 is an understanding of the basics of hypothesis testing. Recall the basic structure of hypothesis tests:</p>
 <ul>
 <li>An overall model and related assumptions are made. (The most common being observations following a normal distribution.)</li>
-<li>The <strong>null</strong> (<span class="math inline">\(H_{0}\)</span>) and <strong>alternative</strong> (<span class="math inline">\(H_{1}\)</span> or <span class="math inline">\(H_{A}\)</span>) hypothesis are specified. Usually the null specifies a particular value of a parameter.</li>
+<li>The <strong>null</strong> (<span class="math inline">\(H_{0}\)</span>) and <strong>alternative</strong> (<span class="math inline">\(H_{1}\)</span> or <span class="math inline">\(H_{A}\)</span>) hypotheses are specified. Usually the null specifies a particular value of a parameter.</li>
 <li>With given data, the <strong>value</strong> of the <em>test statistic</em> is calculated.</li>
 <li>Under the general assumptions, as well as assuming the null hypothesis is true, the <strong>distribution</strong> of the <em>test statistic</em> is known.</li>
 <li>Given the distribution and value of the test statistic, as well as the form of the alternative hypothesis, we can calculate a <strong>p-value</strong> of the test.</li>
@@ -518,7 +518,7 @@ t = \frac{\bar{x}-\mu_{0}}{s/\sqrt{n}} \sim t_{n-1},
 </div>
 <div id="one-sample-t-test-example" class="section level3 hasAnchor">
 <h3><span class="header-section-number">5.2.2</span> One Sample t-Test: Example<a href="probability-and-statistics-in-r.html#one-sample-t-test-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Suppose a grocery store sells “16 ounce” boxes of <em>Captain Crisp</em> cereal. A random sample of 9 boxes was taken and weighed. The weight in ounces are stored in the data frame <code>capt_crisp</code>.</p>
+<p>Suppose a grocery store sells “16 ounce” boxes of <em>Captain Crisp</em> cereal. A random sample of 9 boxes was taken and weighed. The weight in ounces is stored in the data frame <code>capt_crisp</code>.</p>
 <div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="probability-and-statistics-in-r.html#cb354-1"></a>capt_crisp =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">weight =</span> <span class="kw">c</span>(<span class="fl">15.5</span>, <span class="fl">16.2</span>, <span class="fl">16.1</span>, <span class="fl">15.8</span>, <span class="fl">15.6</span>, <span class="fl">16.0</span>, <span class="fl">15.8</span>, <span class="fl">15.9</span>, <span class="fl">16.2</span>))</span></code></pre></div>
 <p>The company that makes <em>Captain Crisp</em> cereal claims that the average weight of a box is at least 16 ounces. We will assume the weight of cereal in a box is normally distributed and use a 0.05 level of significance to test the company’s claim.</p>
 <p>To test <span class="math inline">\(H_{0}: \mu \geq 16\)</span> versus <span class="math inline">\(H_{1}: \mu &lt; 16\)</span>, the test statistic is</p>
@@ -743,7 +743,7 @@ P(0 &lt; D &lt; 2) = P(D &lt; 2) - P(D &lt; 0).
 <ul>
 <li>Generate a sample of 25 random observations from <span class="math inline">\(N(\mu_1 = 6,\sigma^2 = 4)\)</span>. Call the mean of this sample <span class="math inline">\(\bar{x}_{1s}\)</span>.</li>
 <li>Generate a sample of 25 random observations from <span class="math inline">\(N(\mu_1 = 5,\sigma^2 = 4)\)</span>. Call the mean of this sample <span class="math inline">\(\bar{x}_{2s}\)</span>.</li>
-<li>Calculate the differences of the means, <span class="math inline">\(d_s = \bar{x}_{1s} - \bar{x}_{2s}\)</span>.</li>
+<li>Calculate the differences in the means, <span class="math inline">\(d_s = \bar{x}_{1s} - \bar{x}_{2s}\)</span>.</li>
 </ul>
 <p>We will repeat the process a large number of times. Then we will use the distribution of the simulated observations of <span class="math inline">\(d_s\)</span> as an estimate for the true distribution of <span class="math inline">\(D\)</span>.</p>
 <div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="probability-and-statistics-in-r.html#cb388-1"></a><span class="kw">set.seed</span>(<span class="dv">42</span>)</span>

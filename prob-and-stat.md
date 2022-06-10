@@ -67,8 +67,8 @@ rnorm(n = 10, mean = 2, sd = 5)
 ```
 
 ```
-##  [1]  2.4624666 -3.6070063 -0.7753135  8.6990051 -0.6603577  4.9541454
-##  [7] -3.8948330 -1.9613349 12.4879931 -7.3304735
+##  [1]  2.319000  6.651205  6.232145  4.730300  2.822789  7.121040  6.399683
+##  [8]  9.465562 11.497711 -9.631306
 ```
 
 These functions exist for many other distributions, including but not limited to:
@@ -99,7 +99,7 @@ Also note that, when using the `dname` functions with discrete distributions, th
 A prerequisite for STAT 420 is an understanding of the basics of hypothesis testing. Recall the basic structure of hypothesis tests:
 
 - An overall model and related assumptions are made. (The most common being observations following a normal distribution.)
-- The **null** ($H_{0}$) and **alternative** ($H_{1}$ or $H_{A}$) hypothesis are specified. Usually the null specifies a particular value of a parameter.
+- The **null** ($H_{0}$) and **alternative** ($H_{1}$ or $H_{A}$) hypotheses are specified. Usually the null specifies a particular value of a parameter.
 - With given data, the **value** of the *test statistic* is calculated.
 - Under the general assumptions, as well as assuming the null hypothesis is true, the **distribution** of the *test statistic* is known.
 - Given the distribution and value of the test statistic, as well as the form of the alternative hypothesis, we can calculate a **p-value** of the test.
@@ -131,7 +131,7 @@ where $t_{\alpha/2, n-1}$ is the critical value such that $P\left(t>t_{\alpha/2,
 
 ### One Sample t-Test: Example
 
-Suppose a grocery store sells "16 ounce" boxes of *Captain Crisp* cereal. A random sample of 9 boxes was taken and weighed. The weight in ounces are stored in the data frame `capt_crisp`.
+Suppose a grocery store sells "16 ounce" boxes of *Captain Crisp* cereal. A random sample of 9 boxes was taken and weighed. The weight in ounces is stored in the data frame `capt_crisp`.
 
 
 ```r
@@ -533,7 +533,7 @@ Our strategy will be to repeatedly:
 
 - Generate a sample of 25 random observations from $N(\mu_1 = 6,\sigma^2 = 4)$. Call the mean of this sample $\bar{x}_{1s}$.
 - Generate a sample of 25 random observations from $N(\mu_1 = 5,\sigma^2 = 4)$. Call the mean of this sample $\bar{x}_{2s}$.
-- Calculate the differences of the means, $d_s = \bar{x}_{1s} - \bar{x}_{2s}$.
+- Calculate the differences in the means, $d_s = \bar{x}_{1s} - \bar{x}_{2s}$.
 
 We will repeat the process a large number of times. Then we will use the distribution of the simulated observations of $d_s$ as an estimate for the true distribution of $D$.
 

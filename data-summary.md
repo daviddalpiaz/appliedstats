@@ -2,7 +2,7 @@
 
 ## Summary Statistics
 
-`R` has built in functions for a large number of summary statistics. For numeric variables, we can summarize data with the center and spread. We'll again look at the `mpg` dataset from the `ggplot2` package.
+`R` has built-in functions for a large number of summary statistics. For numeric variables, we can summarize data with the center and spread. We'll again look at the `mpg` dataset from the `ggplot2` package.
 
 
 ```r
@@ -54,7 +54,7 @@ table(mpg$drv) / nrow(mpg)
 
 ## Plotting
 
-Now that we have some data to work with, and we have learned about the data at the most basic level, our next tasks is to visualize the data. Often, a proper visualization can illuminate features of the data that can inform further analysis.
+Now that we have some data to work with, and we have learned about the data at the most basic level, our next task is to visualize the data. Often, a proper visualization can illuminate features of the data that can inform further analysis.
 
 We will look at four methods of visualizing data that we will use throughout the course:
 
@@ -104,11 +104,11 @@ barplot(table(mpg$drv))
 
 ```r
 barplot(table(mpg$drv),
-        xlab   = "Drivetrain (f = FWD, r = RWD, 4 = 4WD)",
-        ylab   = "Frequency",
-        main   = "Drivetrains",
-        col    = "dodgerblue",
-        border = "darkorange")
+     xlab   = "Drivetrain (f = FWD, r = RWD, 4 = 4WD)",
+     ylab   = "Frequency",
+     main   = "Drivetrains",
+     col    = "dodgerblue",
+     border = "darkorange")
 ```
 
 ![](data-summary_files/figure-latex/unnamed-chunk-6-1.pdf)<!-- --> 

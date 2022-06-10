@@ -475,10 +475,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="vectors" class="section level3 hasAnchor">
 <h3><span class="header-section-number">3.2.1</span> Vectors<a href="data-and-programming.html#vectors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Many operations in <code>R</code> make heavy use of <strong>vectors</strong>. Vectors in <code>R</code> are indexed starting at <code>1</code>. That is what the <code>[1]</code> in the output is indicating, that the first element of the row being displayed is the first element of the vector. Larger vectors will start additional rows with <code>[*]</code> where <code>*</code> is the index of the first element of the row.</p>
-<p>Possibly the most common way to create a vector in <code>R</code> is using the <code>c()</code> function, which is short for “combine.”" As the name suggests, it combines a list of elements separated by commas.</p>
+<p>Possibly the most common way to create a vector in <code>R</code> is using the <code>c()</code> function, which is short for “combine.” As the name suggests, it combines a list of elements separated by commas.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="data-and-programming.html#cb6-1"></a><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>)</span></code></pre></div>
 <pre><code>## [1] 1 3 5 7 8 9</code></pre>
-<p>Here <code>R</code> simply outputs this vector. If we would like to store this vector in a <strong>variable</strong> we can do so with the <strong>assignment</strong> operator <code>=</code>. In this case the variable <code>x</code> now holds the vector we just created, and we can access the vector by typing <code>x</code>.</p>
+<p>Here <code>R</code> simply outputs this vector. If we would like to store this vector in a <strong>variable</strong>, we can do so with the <strong>assignment</strong> operator <code>=</code>. In this case the variable <code>x</code> now holds the vector we just created, and we can access the vector by typing <code>x</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="data-and-programming.html#cb8-1"></a>x =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>)</span>
 <span id="cb8-2"><a href="data-and-programming.html#cb8-2"></a>x</span></code></pre></div>
 <pre><code>## [1] 1 3 5 7 8 9</code></pre>
@@ -560,7 +560,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="vectorization" class="section level3 hasAnchor">
 <h3><span class="header-section-number">3.2.2</span> Vectorization<a href="data-and-programming.html#vectorization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>One of the biggest strengths of <code>R</code> is its use of vectorized operations. (Frequently the lack of understanding of this concept leads of a belief that <code>R</code> is <em>slow</em>. <code>R</code> is not the fastest language, but it has a reputation for being slower than it really is.)</p>
+<p>One of the biggest strengths of <code>R</code> is its use of vectorized operations. (Frequently the lack of understanding of this concept leads to a belief that <code>R</code> is <em>slow</em>. <code>R</code> is not the fastest language, but it has a reputation for being slower than it really is.)</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="data-and-programming.html#cb48-1"></a>x =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></span>
 <span id="cb48-2"><a href="data-and-programming.html#cb48-2"></a>x <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span></code></pre></div>
 <pre><code>##  [1]  2  3  4  5  6  7  8  9 10 11</code></pre>
@@ -914,7 +914,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] TRUE TRUE</code></pre>
 <div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="data-and-programming.html#cb194-1"></a><span class="kw">c</span>(<span class="kw">is.matrix</span>(a_vec), <span class="kw">is.matrix</span>(b_vec))</span></code></pre></div>
 <pre><code>## [1] FALSE FALSE</code></pre>
-<p>When this is the case, the <code>%*%</code> operator is used to calculate the <strong>dot product</strong>, also know as the <strong>inner product</strong> of the two vectors.</p>
+<p>When this is the case, the <code>%*%</code> operator is used to calculate the <strong>dot product</strong>, also known as the <strong>inner product</strong> of the two vectors.</p>
 <p>The dot product of vectors <span class="math inline">\(\boldsymbol{a} = \lbrack a_1, a_2, \cdots a_n \rbrack\)</span> and <span class="math inline">\(\boldsymbol{b} = \lbrack b_1, b_2, \cdots b_n \rbrack\)</span> is defined to be</p>
 <p><span class="math display">\[
 \boldsymbol{a} \cdot \boldsymbol{b} = \sum_{i = 1}^{n} a_i b_i = a_1 b_1 + a_2 b_2 + \cdots a_n b_n.
@@ -940,7 +940,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [1,]    2    2    2
 ## [2,]    4    4    4
 ## [3,]    6    6    6</code></pre>
-<p>At face value this is a <span class="math inline">\(3 \times 1\)</span> matrix, multiplied by a <span class="math inline">\(3 \times 1\)</span> matrix. However, when <code>b_vec</code> is automatically coerced to be a matrix, <code>R</code> decided to make it a “row vector”, a <span class="math inline">\(1 \times 3\)</span> matrix, so that the multiplication has conformable dimensions.</p>
+<p>At face value this is a <span class="math inline">\(3 \times 1\)</span> matrix, multiplied by a <span class="math inline">\(3 \times 1\)</span> matrix. However, when <code>b_vec</code> is automatically coerced to be a matrix, <code>R</code> decided to make it a “row vector,” a <span class="math inline">\(1 \times 3\)</span> matrix, so that the multiplication has conformable dimensions.</p>
 <p>If we had coerced both, then <code>R</code> would produce an error.</p>
 <div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="data-and-programming.html#cb204-1"></a><span class="kw">as.matrix</span>(a_vec) <span class="op">%*%</span><span class="st"> </span><span class="kw">as.matrix</span>(b_vec)</span></code></pre></div>
 <p>Another way to calculate a <em>dot product</em> is with the <code>crossprod()</code> function. Given two vectors, the <code>crossprod()</code> function calculates their dot product. The function has a rather misleading name.</p>
@@ -1102,8 +1102,8 @@ X^\top X
 <pre><code>## [1] 3</code></pre>
 <div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="data-and-programming.html#cb256-1"></a><span class="kw">dim</span>(example_data)</span></code></pre></div>
 <pre><code>## [1] 10  3</code></pre>
-<p>The <code>data.frame()</code> function above is one way to create a data frame. We can also import data from various file types in into <code>R</code>, as well as use data stored in packages.</p>
-<p><a href="data/example-data.csv">The example data above can also be found here as a .csv file.</a> To read this data into <code>R</code>, we would use the <code>read_csv()</code> function from the <code>readr</code> package. Note that <code>R</code> has a built in function <code>read.csv()</code> that operates very similarly. The <code>readr</code> function <code>read_csv()</code> has a number of advantages. For example, it is much faster reading larger data. <a href="https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html" target="_blank">It also uses the <code>tibble</code> package to read the data as a tibble.</a></p>
+<p>The <code>data.frame()</code> function above is one way to create a data frame. We can also import data from various file types into <code>R</code>, as well as use data stored in packages.</p>
+<p><a href="data/example-data.csv">The example data above can also be found here as a .csv file.</a> To read this data into <code>R</code>, we would use the <code>read_csv()</code> function from the <code>readr</code> package. Note that <code>R</code> has a built-in function <code>read.csv()</code> that operates very similarly. The <code>readr</code> function <code>read_csv()</code> has a number of advantages. For example, it is much faster reading larger data. <a href="https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html" target="_blank">It also uses the <code>tibble</code> package to read the data as a tibble.</a></p>
 <div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="data-and-programming.html#cb258-1"></a><span class="kw">library</span>(readr)</span>
 <span id="cb258-2"><a href="data-and-programming.html#cb258-2"></a>example_data_from_csv =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/example-data.csv&quot;</span>)</span></code></pre></div>
 <p>This particular line of code assumes that the file <code>example_data.csv</code> exists in a folder called <code>data</code> in your current working directory.</p>
@@ -1314,10 +1314,10 @@ X^\top X
 <p><span class="math display">\[
 \frac{x - \bar{x}}{s}
 \]</span></p>
-<p>In <code>R</code> we would write a function to do this. When writing a function, there are three thing you must do.</p>
+<p>In <code>R</code> we would write a function to do this. When writing a function, there are three things you must do.</p>
 <ul>
 <li>Give the function a name. Preferably something that is short, but descriptive.</li>
-<li>Specify the arguments using <code>function()</code></li>
+<li>Specify the arguments using <code>function()</code>.</li>
 <li>Write the body of the function within curly braces, <code>{}</code>.</li>
 </ul>
 <div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="data-and-programming.html#cb301-1"></a>standardize =<span class="st"> </span><span class="cf">function</span>(x) {</span>
@@ -1329,11 +1329,11 @@ X^\top X
 <p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the output of the final line of the body is what is returned by the function. In this case the function returns the vector stored in the variable <code>result</code>.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
 <div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="data-and-programming.html#cb302-1"></a>(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</span></code></pre></div>
-<pre><code>##  [1] -0.4091405 -6.2830400  2.5980998  7.1224209  7.2718941 -2.4274036
-##  [7]  3.5963802  8.3032942  0.9729968  4.6429110</code></pre>
+<pre><code>##  [1] -2.1772695 -7.0440724  0.2399159  3.0160283 -5.0001516  2.7272385
+##  [7] -3.1040636 -0.6424527 -1.1459545  8.2021863</code></pre>
 <div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="data-and-programming.html#cb304-1"></a><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)</span></code></pre></div>
-<pre><code>##  [1] -0.63199976 -1.89126907  0.01270407  0.98264554  1.01469018 -1.06468280
-##  [7]  0.22671928  1.23580574 -0.33569179  0.45107861</code></pre>
+<pre><code>##  [1] -0.38512527 -1.49787627  0.16754255  0.80227583 -1.03055204  0.73624663
+##  [7] -0.59702848 -0.03420314 -0.14932433  1.98804451</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
 <div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="data-and-programming.html#cb306-1"></a>standardize =<span class="st"> </span><span class="cf">function</span>(x) {</span>
 <span id="cb306-2"><a href="data-and-programming.html#cb306-2"></a>  (x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x)</span>
@@ -1370,14 +1370,14 @@ s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2
 <span id="cb319-3"><a href="data-and-programming.html#cb319-3"></a>  (<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>n) <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</span>
 <span id="cb319-4"><a href="data-and-programming.html#cb319-4"></a>}</span></code></pre></div>
 <div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="data-and-programming.html#cb320-1"></a><span class="kw">get_var</span>(test_sample)</span></code></pre></div>
-<pre><code>## [1] 21.75784</code></pre>
+<pre><code>## [1] 19.12897</code></pre>
 <div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="data-and-programming.html#cb322-1"></a><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
-<pre><code>## [1] 21.75784</code></pre>
+<pre><code>## [1] 19.12897</code></pre>
 <div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="data-and-programming.html#cb324-1"></a><span class="kw">var</span>(test_sample)</span></code></pre></div>
-<pre><code>## [1] 21.75784</code></pre>
-<p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built in function <code>var()</code>. Finally, let’s examine the biased estimate of <span class="math inline">\(\sigma^2\)</span>.</p>
+<pre><code>## [1] 19.12897</code></pre>
+<p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built-in function <code>var()</code>. Finally, let’s examine the biased estimate of <span class="math inline">\(\sigma^2\)</span>.</p>
 <div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="data-and-programming.html#cb326-1"></a><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<pre><code>## [1] 19.58206</code></pre>
+<pre><code>## [1] 17.21607</code></pre>
 
 </div>
 </div>
