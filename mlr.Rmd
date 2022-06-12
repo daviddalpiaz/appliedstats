@@ -133,13 +133,13 @@ coef(mpg_model)
 \hat{y} = `r coef(mpg_model)[1]` + `r coef(mpg_model)[2]` x_1 + `r coef(mpg_model)[3]` x_2
 \]
 
-Here we have once again fit our model using `lm()`, however we have introduced a new syntactical element. The formula `mpg ~ wt + year` now reads: "model the response variable `mpg` as a linear function of `wt` and `year`". That is, it will estimate an intercept, as well as slope coefficients for `wt` and `year`. We then extract these as we have done before using `coef()`.
+Here we have once again fit our model using `lm()`, however we have introduced a new syntactical element. The formula `mpg ~ wt + year` now reads: "model the response variable `mpg` as a linear function of `wt` and `year`." That is, it will estimate an intercept, as well as slope coefficients for `wt` and `year`. We then extract these as we have done before using `coef()`.
 
 In the multiple linear regression setting, some of the interpretations of the coefficients change slightly.
 
 Here, $\hat{\beta}_0 = `r coef(mpg_model)[1]`$ is our estimate for $\beta_0$, the mean miles per gallon for a car that weighs 0 pounds and was built in 1900. We see our estimate here is negative, which is a physical impossibility. However, this isn't unexpected, as we shouldn't expect our model to be accurate for cars from 1900 which weigh 0 pounds. (Because they never existed!) This isn't much of a change from SLR. That is, $\beta_0$ is still simply the mean when all of the predictors are 0.
 
-The interpretation of the coefficients in front of our predictors are slightly different than before. For example $\hat{\beta}_1 = `r coef(mpg_model)[2]`$ is our estimate for $\beta_1$, the average change in miles per gallon for an increase in weight ($x_{1}$) of one-pound **for a car of a certain model year**, that is, for a fixed value of $x_{2}$. Note that this coefficient is actually the same for any given value of $x_{2}$. Later, we will look at models that allow for a different change in mean response for different values of $x_{2}$. Also note that this estimate is negative, which we would expect since, in general, fuel efficiency decreases for larger vehicles. Recall that in the multiple linear regression setting, this interpretation is dependent on a fixed value for $x_{2}$, that is, "for a car of a certain model year." It is possible that the indirect relationship between fuel efficiency and weight does not hold when an additional factor, say year, is included, and thus we could have the sign of our coefficient flipped.
+The interpretation of the coefficients in front of our predictors is slightly different than before. For example $\hat{\beta}_1 = `r coef(mpg_model)[2]`$ is our estimate for $\beta_1$, the average change in miles per gallon for an increase in weight ($x_{1}$) of one-pound **for a car of a certain model year**, that is, for a fixed value of $x_{2}$. Note that this coefficient is actually the same for any given value of $x_{2}$. Later, we will look at models that allow for a different change in mean response for different values of $x_{2}$. Also note that this estimate is negative, which we would expect since, in general, fuel efficiency decreases for larger vehicles. Recall that in the multiple linear regression setting, this interpretation is dependent on a fixed value for $x_{2}$, that is, "for a car of a certain model year." It is possible that the indirect relationship between fuel efficiency and weight does not hold when an additional factor, say year, is included, and thus we could have the sign of our coefficient flipped.
 
 Lastly, $\hat{\beta}_2 = `r coef(mpg_model)[3]`$ is our estimate for $\beta_2$, the average change in miles per gallon for a one-year increase in model year ($x_{2}$) for a car of a certain weight, that is, for a fixed value of $x_{1}$. It is not surprising that the estimate is positive. We expect that as time passes and the years march on, technology would improve so that a car of a specific weight would get better mileage now as compared to their predecessors. And yet, the coefficient could have been negative because we are also including weight as variable, and not strictly as a fixed value. 
 
@@ -219,7 +219,7 @@ Just as before, we can estimate $\beta$ by minimizing,
 f(\beta_0, \beta_1, \beta_2, \cdots, \beta_{p-1}) = \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)}))^2,
 \]
 
-which would require taking $p$ derivatives, which result in following **normal equations**.
+which would require taking $p$ derivatives, which result in the following **normal equations**.
 
 \[
 \begin{bmatrix}
@@ -701,7 +701,7 @@ That is,
 \text{SST} = \text{SSE} + \text{SSReg}.
 \]
 
-This means that, we can still calculate $R^2$ in the same manner as before, which `R` continues to do automatically.
+This means that we can still calculate $R^2$ in the same manner as before, which `R` continues to do automatically.
 
 ```{r}
 summary(mpg_model)$r.squared
