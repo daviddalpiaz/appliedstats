@@ -270,6 +270,24 @@ identical(x + y, rep(x, 10) + y)
 # ?all.equal
 ```
 
+```{r}
+x = c(1, 3, 5)
+y = c(1, 2, 4)
+all(x == y)
+any(x == y)
+```
+
+While `all` returns `TRUE` only when all of their arguments are `TRUE`, `any` returns `TRUE` when at least one of their arguments is `TRUE`.
+
+```{r}
+x = c(10 ^ (-8))
+y = c(10 ^ (-9))
+all(x == y)
+all.equal(x, y)
+```
+
+`all.equal` tests "near equality" with a default tolerance value around `1.5e-8` and returns `TRUE` if all of their arguments have differences smaller than the tolerance.
+
 ### Matrices
 
 `R` can also be used for **matrix** calculations. Matrices have rows and columns containing a single data type. In a matrix, the order of rows and columns is important. (This is not true of *data frames*, which we will see later.)
