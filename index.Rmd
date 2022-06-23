@@ -20,7 +20,7 @@ Welcome to Applied Statistics with R!
 
 ## About This Book
 
-This book was originally (and currently) designed for use with **STAT 420**, *Methods of Applied Statistics*, at the University of Illinois at Urbana-Champaign. It may certainly be used elsewhere, but any references to "this course" in this book specifically refer to STAT 420.
+This book was originally (and currently) designed for use with **STAT 420**, *Methods of Applied Statistics*, at the University of Illinois Urbana-Champaign. It may certainly be used elsewhere, but any references to "this course" in this book specifically refer to STAT 420.
 
 This book is under active development. When possible, it would be best to always access the text online to be sure you are using the most up-to-date version. Also, the html version provides additional features such as changing text size, font, and colors. If you are in need of a local copy, a [**pdf version** is continuously maintained](http://daviddalpiaz.github.io/appliedstats/applied_statistics.pdf){target="_blank"}, however, because a pdf uses pages, the formatting may not be as functional. (In other words, the author needs to go back and spend some time working on the pdf formatting.)
 
