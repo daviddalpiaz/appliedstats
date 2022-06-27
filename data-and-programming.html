@@ -663,14 +663,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] 5 7 8 9</code></pre>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="data-and-programming.html#cb73-1"></a>x[x <span class="op">!=</span><span class="st"> </span><span class="dv">3</span>]</span></code></pre></div>
 <pre><code>## [1] 1 5 7 8 9</code></pre>
-<ul>
-<li>TODO: coercion</li>
-</ul>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="data-and-programming.html#cb75-1"></a><span class="kw">sum</span>(x <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## [1] 4</code></pre>
 <div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="data-and-programming.html#cb77-1"></a><span class="kw">as.numeric</span>(x <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## [1] 0 0 1 1 1 1</code></pre>
-<p>Here we see that using the <code>sum()</code> function on a vector of logical <code>TRUE</code> and <code>FALSE</code> values that is the result of <code>x &gt; 3</code> results in a numeric result. <code>R</code> is first automatically coercing the logical to numeric where <code>TRUE</code> is <code>1</code> and <code>FALSE</code> is <code>0</code>. This coercion from logical to numeric happens for most mathematical operations.</p>
+<p>Here we see that using the <code>sum()</code> function on a vector of logical <code>TRUE</code> and <code>FALSE</code> values that is the result of <code>x &gt; 3</code> results in a numeric result. <code>R</code> is first automatically coercing the logical to numeric where <code>TRUE</code> is <code>1</code> and <code>FALSE</code> is <code>0</code>. This coercion from logical to numeric happens for most mathematical operations. If you are interested in more detail, check out <a href="https://adv-r.hadley.nz/vectors-chap.html?q=coercion#testing-and-coercion">Advanced R</a>.</p>
 <div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="data-and-programming.html#cb79-1"></a><span class="kw">which</span>(x <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## [1] 3 4 5 6</code></pre>
 <div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="data-and-programming.html#cb81-1"></a>x[<span class="kw">which</span>(x <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>)]</span></code></pre></div>
@@ -732,62 +729,78 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="data-and-programming.html#cb120-1"></a><span class="co"># ?any</span></span>
 <span id="cb120-2"><a href="data-and-programming.html#cb120-2"></a><span class="co"># ?all.equal</span></span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="data-and-programming.html#cb121-1"></a>x =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb121-2"><a href="data-and-programming.html#cb121-2"></a>y =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>)</span>
+<span id="cb121-3"><a href="data-and-programming.html#cb121-3"></a>x <span class="op">==</span><span class="st"> </span>y</span></code></pre></div>
+<pre><code>## [1]  TRUE FALSE FALSE</code></pre>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="data-and-programming.html#cb123-1"></a><span class="kw">all</span>(x <span class="op">==</span><span class="st"> </span>y)</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="data-and-programming.html#cb125-1"></a><span class="kw">any</span>(x <span class="op">==</span><span class="st"> </span>y)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>While <code>all</code> returns <code>TRUE</code> only when all of its arguments are <code>TRUE</code>, <code>any</code> returns <code>TRUE</code> when at least one of its arguments is <code>TRUE</code>.</p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="data-and-programming.html#cb127-1"></a>x =<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span> <span class="op">^</span><span class="st"> </span>(<span class="op">-</span><span class="dv">8</span>))</span>
+<span id="cb127-2"><a href="data-and-programming.html#cb127-2"></a>y =<span class="st"> </span><span class="kw">c</span>(<span class="dv">10</span> <span class="op">^</span><span class="st"> </span>(<span class="op">-</span><span class="dv">9</span>))</span>
+<span id="cb127-3"><a href="data-and-programming.html#cb127-3"></a><span class="kw">all</span>(x <span class="op">==</span><span class="st"> </span>y)</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="data-and-programming.html#cb129-1"></a><span class="kw">all.equal</span>(x, y)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>The <code>all.equal</code> function tests “near equality” with a default tolerance value around <code>1.5e-8</code> and returns <code>TRUE</code> if all of its arguments have differences smaller than the tolerance.</p>
 </div>
 <div id="matrices" class="section level3 hasAnchor">
 <h3><span class="header-section-number">3.2.5</span> Matrices<a href="data-and-programming.html#matrices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><code>R</code> can also be used for <strong>matrix</strong> calculations. Matrices have rows and columns containing a single data type. In a matrix, the order of rows and columns is important. (This is not true of <em>data frames</em>, which we will see later.)</p>
 <p>Matrices can be created using the <code>matrix</code> function.</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="data-and-programming.html#cb121-1"></a>x =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">9</span></span>
-<span id="cb121-2"><a href="data-and-programming.html#cb121-2"></a>x</span></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="data-and-programming.html#cb131-1"></a>x =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">9</span></span>
+<span id="cb131-2"><a href="data-and-programming.html#cb131-2"></a>x</span></code></pre></div>
 <pre><code>## [1] 1 2 3 4 5 6 7 8 9</code></pre>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="data-and-programming.html#cb123-1"></a>X =<span class="st"> </span><span class="kw">matrix</span>(x, <span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">ncol =</span> <span class="dv">3</span>)</span>
-<span id="cb123-2"><a href="data-and-programming.html#cb123-2"></a>X</span></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="data-and-programming.html#cb133-1"></a>X =<span class="st"> </span><span class="kw">matrix</span>(x, <span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">ncol =</span> <span class="dv">3</span>)</span>
+<span id="cb133-2"><a href="data-and-programming.html#cb133-2"></a>X</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    1    4    7
 ## [2,]    2    5    8
 ## [3,]    3    6    9</code></pre>
 <p>Note here that we are using two different variables: lower case <code>x</code>, which stores a vector and capital <code>X</code>, which stores a matrix. (Following the usual mathematical convention.) We can do this because <code>R</code> is case sensitive.</p>
 <p>By default the <code>matrix</code> function reorders a vector into columns, but we can also tell <code>R</code> to use rows instead.</p>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="data-and-programming.html#cb125-1"></a>Y =<span class="st"> </span><span class="kw">matrix</span>(x, <span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb125-2"><a href="data-and-programming.html#cb125-2"></a>Y</span></code></pre></div>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="data-and-programming.html#cb135-1"></a>Y =<span class="st"> </span><span class="kw">matrix</span>(x, <span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb135-2"><a href="data-and-programming.html#cb135-2"></a>Y</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    1    2    3
 ## [2,]    4    5    6
 ## [3,]    7    8    9</code></pre>
 <p>We can also create a matrix of a specified dimension where every element is the same, in this case <code>0</code>.</p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="data-and-programming.html#cb127-1"></a>Z =<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">4</span>)</span>
-<span id="cb127-2"><a href="data-and-programming.html#cb127-2"></a>Z</span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="data-and-programming.html#cb137-1"></a>Z =<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">4</span>)</span>
+<span id="cb137-2"><a href="data-and-programming.html#cb137-2"></a>Z</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4]
 ## [1,]    0    0    0    0
 ## [2,]    0    0    0    0</code></pre>
 <p>Like vectors, matrices can be subsetted using square brackets, <code>[]</code>. However, since matrices are two-dimensional, we need to specify both a row and a column when subsetting.</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="data-and-programming.html#cb129-1"></a>X</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="data-and-programming.html#cb139-1"></a>X</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    1    4    7
 ## [2,]    2    5    8
 ## [3,]    3    6    9</code></pre>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="data-and-programming.html#cb131-1"></a>X[<span class="dv">1</span>, <span class="dv">2</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="data-and-programming.html#cb141-1"></a>X[<span class="dv">1</span>, <span class="dv">2</span>]</span></code></pre></div>
 <pre><code>## [1] 4</code></pre>
 <p>Here we accessed the element in the first row and the second column. We could also subset an entire row or column.</p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="data-and-programming.html#cb133-1"></a>X[<span class="dv">1</span>, ]</span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="data-and-programming.html#cb143-1"></a>X[<span class="dv">1</span>, ]</span></code></pre></div>
 <pre><code>## [1] 1 4 7</code></pre>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="data-and-programming.html#cb135-1"></a>X[, <span class="dv">2</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="data-and-programming.html#cb145-1"></a>X[, <span class="dv">2</span>]</span></code></pre></div>
 <pre><code>## [1] 4 5 6</code></pre>
 <p>We can also use vectors to subset more than one row or column at a time. Here we subset to the first and third column of the second row.</p>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="data-and-programming.html#cb137-1"></a>X[<span class="dv">2</span>, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="data-and-programming.html#cb147-1"></a>X[<span class="dv">2</span>, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)]</span></code></pre></div>
 <pre><code>## [1] 2 8</code></pre>
 <p>Matrices can also be created by combining vectors as columns, using <code>cbind</code>, or combining vectors as rows, using <code>rbind</code>.</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="data-and-programming.html#cb139-1"></a>x =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">9</span></span>
-<span id="cb139-2"><a href="data-and-programming.html#cb139-2"></a><span class="kw">rev</span>(x)</span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="data-and-programming.html#cb149-1"></a>x =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">9</span></span>
+<span id="cb149-2"><a href="data-and-programming.html#cb149-2"></a><span class="kw">rev</span>(x)</span></code></pre></div>
 <pre><code>## [1] 9 8 7 6 5 4 3 2 1</code></pre>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="data-and-programming.html#cb141-1"></a><span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="data-and-programming.html#cb151-1"></a><span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>)</span></code></pre></div>
 <pre><code>## [1] 1 1 1 1 1 1 1 1 1</code></pre>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="data-and-programming.html#cb143-1"></a><span class="kw">rbind</span>(x, <span class="kw">rev</span>(x), <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="data-and-programming.html#cb153-1"></a><span class="kw">rbind</span>(x, <span class="kw">rev</span>(x), <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>))</span></code></pre></div>
 <pre><code>##   [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9]
 ## x    1    2    3    4    5    6    7    8    9
 ##      9    8    7    6    5    4    3    2    1
 ##      1    1    1    1    1    1    1    1    1</code></pre>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="data-and-programming.html#cb145-1"></a><span class="kw">cbind</span>(<span class="dt">col_1 =</span> x, <span class="dt">col_2 =</span> <span class="kw">rev</span>(x), <span class="dt">col_3 =</span> <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="data-and-programming.html#cb155-1"></a><span class="kw">cbind</span>(<span class="dt">col_1 =</span> x, <span class="dt">col_2 =</span> <span class="kw">rev</span>(x), <span class="dt">col_3 =</span> <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>))</span></code></pre></div>
 <pre><code>##       col_1 col_2 col_3
 ##  [1,]     1     9     1
 ##  [2,]     2     8     1
@@ -800,96 +813,96 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  [9,]     9     1     1</code></pre>
 <p>When using <code>rbind</code> and <code>cbind</code> you can specify “argument” names that will be used as column names.</p>
 <p><code>R</code> can then be used to perform matrix calculations.</p>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="data-and-programming.html#cb147-1"></a>x =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">9</span></span>
-<span id="cb147-2"><a href="data-and-programming.html#cb147-2"></a>y =<span class="st"> </span><span class="dv">9</span><span class="op">:</span><span class="dv">1</span></span>
-<span id="cb147-3"><a href="data-and-programming.html#cb147-3"></a>X =<span class="st"> </span><span class="kw">matrix</span>(x, <span class="dv">3</span>, <span class="dv">3</span>)</span>
-<span id="cb147-4"><a href="data-and-programming.html#cb147-4"></a>Y =<span class="st"> </span><span class="kw">matrix</span>(y, <span class="dv">3</span>, <span class="dv">3</span>)</span>
-<span id="cb147-5"><a href="data-and-programming.html#cb147-5"></a>X</span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="data-and-programming.html#cb157-1"></a>x =<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">9</span></span>
+<span id="cb157-2"><a href="data-and-programming.html#cb157-2"></a>y =<span class="st"> </span><span class="dv">9</span><span class="op">:</span><span class="dv">1</span></span>
+<span id="cb157-3"><a href="data-and-programming.html#cb157-3"></a>X =<span class="st"> </span><span class="kw">matrix</span>(x, <span class="dv">3</span>, <span class="dv">3</span>)</span>
+<span id="cb157-4"><a href="data-and-programming.html#cb157-4"></a>Y =<span class="st"> </span><span class="kw">matrix</span>(y, <span class="dv">3</span>, <span class="dv">3</span>)</span>
+<span id="cb157-5"><a href="data-and-programming.html#cb157-5"></a>X</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    1    4    7
 ## [2,]    2    5    8
 ## [3,]    3    6    9</code></pre>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="data-and-programming.html#cb149-1"></a>Y</span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="data-and-programming.html#cb159-1"></a>Y</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    9    6    3
 ## [2,]    8    5    2
 ## [3,]    7    4    1</code></pre>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="data-and-programming.html#cb151-1"></a>X <span class="op">+</span><span class="st"> </span>Y</span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="data-and-programming.html#cb161-1"></a>X <span class="op">+</span><span class="st"> </span>Y</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]   10   10   10
 ## [2,]   10   10   10
 ## [3,]   10   10   10</code></pre>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="data-and-programming.html#cb153-1"></a>X <span class="op">-</span><span class="st"> </span>Y</span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="data-and-programming.html#cb163-1"></a>X <span class="op">-</span><span class="st"> </span>Y</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]   -8   -2    4
 ## [2,]   -6    0    6
 ## [3,]   -4    2    8</code></pre>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="data-and-programming.html#cb155-1"></a>X <span class="op">*</span><span class="st"> </span>Y</span></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="data-and-programming.html#cb165-1"></a>X <span class="op">*</span><span class="st"> </span>Y</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    9   24   21
 ## [2,]   16   25   16
 ## [3,]   21   24    9</code></pre>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="data-and-programming.html#cb157-1"></a>X <span class="op">/</span><span class="st"> </span>Y</span></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="data-and-programming.html#cb167-1"></a>X <span class="op">/</span><span class="st"> </span>Y</span></code></pre></div>
 <pre><code>##           [,1]      [,2]     [,3]
 ## [1,] 0.1111111 0.6666667 2.333333
 ## [2,] 0.2500000 1.0000000 4.000000
 ## [3,] 0.4285714 1.5000000 9.000000</code></pre>
 <p>Note that <code>X * Y</code> is not matrix multiplication. It is element by element multiplication. (Same for <code>X / Y</code>). Instead, matrix multiplication uses <code>%*%</code>. Other matrix functions include <code>t()</code> which gives the transpose of a matrix and <code>solve()</code> which returns the inverse of a square matrix if it is invertible.</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="data-and-programming.html#cb159-1"></a>X <span class="op">%*%</span><span class="st"> </span>Y</span></code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="data-and-programming.html#cb169-1"></a>X <span class="op">%*%</span><span class="st"> </span>Y</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]   90   54   18
 ## [2,]  114   69   24
 ## [3,]  138   84   30</code></pre>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="data-and-programming.html#cb161-1"></a><span class="kw">t</span>(X)</span></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="data-and-programming.html#cb171-1"></a><span class="kw">t</span>(X)</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    1    2    3
 ## [2,]    4    5    6
 ## [3,]    7    8    9</code></pre>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="data-and-programming.html#cb163-1"></a>Z =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">2</span>, <span class="dv">-3</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">-2</span>, <span class="dv">-3</span>, <span class="dv">-2</span>, <span class="dv">16</span>), <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb163-2"><a href="data-and-programming.html#cb163-2"></a>Z</span></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="data-and-programming.html#cb173-1"></a>Z =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">9</span>, <span class="dv">2</span>, <span class="dv">-3</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">-2</span>, <span class="dv">-3</span>, <span class="dv">-2</span>, <span class="dv">16</span>), <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb173-2"><a href="data-and-programming.html#cb173-2"></a>Z</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    9    2   -3
 ## [2,]    2    4   -2
 ## [3,]   -3   -2   16</code></pre>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="data-and-programming.html#cb165-1"></a><span class="kw">solve</span>(Z)</span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="data-and-programming.html#cb175-1"></a><span class="kw">solve</span>(Z)</span></code></pre></div>
 <pre><code>##             [,1]        [,2]       [,3]
 ## [1,]  0.12931034 -0.05603448 0.01724138
 ## [2,] -0.05603448  0.29094828 0.02586207
 ## [3,]  0.01724138  0.02586207 0.06896552</code></pre>
 <p>To verify that <code>solve(Z)</code> returns the inverse, we multiply it by <code>Z</code>. We would expect this to return the identity matrix, however we see that this is not the case due to some computational issues. However, <code>R</code> also has the <code>all.equal()</code> function which checks for equality, with some small tolerance which accounts for some computational issues. The <code>identical()</code> function is used to check for exact equality.</p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="data-and-programming.html#cb167-1"></a><span class="kw">solve</span>(Z) <span class="op">%*%</span><span class="st"> </span>Z</span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="data-and-programming.html#cb177-1"></a><span class="kw">solve</span>(Z) <span class="op">%*%</span><span class="st"> </span>Z</span></code></pre></div>
 <pre><code>##              [,1]          [,2]         [,3]
 ## [1,] 1.000000e+00 -6.245005e-17 0.000000e+00
 ## [2,] 8.326673e-17  1.000000e+00 5.551115e-17
 ## [3,] 2.775558e-17  0.000000e+00 1.000000e+00</code></pre>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="data-and-programming.html#cb169-1"></a><span class="kw">diag</span>(<span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="data-and-programming.html#cb179-1"></a><span class="kw">diag</span>(<span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    1    0    0
 ## [2,]    0    1    0
 ## [3,]    0    0    1</code></pre>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="data-and-programming.html#cb171-1"></a><span class="kw">all.equal</span>(<span class="kw">solve</span>(Z) <span class="op">%*%</span><span class="st"> </span>Z, <span class="kw">diag</span>(<span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="data-and-programming.html#cb181-1"></a><span class="kw">all.equal</span>(<span class="kw">solve</span>(Z) <span class="op">%*%</span><span class="st"> </span>Z, <span class="kw">diag</span>(<span class="dv">3</span>))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p><code>R</code> has a number of matrix specific functions for obtaining dimension and summary information.</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="data-and-programming.html#cb173-1"></a>X =<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb173-2"><a href="data-and-programming.html#cb173-2"></a>X</span></code></pre></div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="data-and-programming.html#cb183-1"></a>X =<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb183-2"><a href="data-and-programming.html#cb183-2"></a>X</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    1    3    5
 ## [2,]    2    4    6</code></pre>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="data-and-programming.html#cb175-1"></a><span class="kw">dim</span>(X)</span></code></pre></div>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="data-and-programming.html#cb185-1"></a><span class="kw">dim</span>(X)</span></code></pre></div>
 <pre><code>## [1] 2 3</code></pre>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="data-and-programming.html#cb177-1"></a><span class="kw">rowSums</span>(X)</span></code></pre></div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="data-and-programming.html#cb187-1"></a><span class="kw">rowSums</span>(X)</span></code></pre></div>
 <pre><code>## [1]  9 12</code></pre>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="data-and-programming.html#cb179-1"></a><span class="kw">colSums</span>(X)</span></code></pre></div>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="data-and-programming.html#cb189-1"></a><span class="kw">colSums</span>(X)</span></code></pre></div>
 <pre><code>## [1]  3  7 11</code></pre>
-<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="data-and-programming.html#cb181-1"></a><span class="kw">rowMeans</span>(X)</span></code></pre></div>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="data-and-programming.html#cb191-1"></a><span class="kw">rowMeans</span>(X)</span></code></pre></div>
 <pre><code>## [1] 3 4</code></pre>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="data-and-programming.html#cb183-1"></a><span class="kw">colMeans</span>(X)</span></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="data-and-programming.html#cb193-1"></a><span class="kw">colMeans</span>(X)</span></code></pre></div>
 <pre><code>## [1] 1.5 3.5 5.5</code></pre>
 <p>The <code>diag()</code> function can be used in a number of ways. We can extract the diagonal of a matrix.</p>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="data-and-programming.html#cb185-1"></a><span class="kw">diag</span>(Z)</span></code></pre></div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="data-and-programming.html#cb195-1"></a><span class="kw">diag</span>(Z)</span></code></pre></div>
 <pre><code>## [1]  9  4 16</code></pre>
 <p>Or create a matrix with specified elements on the diagonal. (And <code>0</code> on the off-diagonals.)</p>
-<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="data-and-programming.html#cb187-1"></a><span class="kw">diag</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="data-and-programming.html#cb197-1"></a><span class="kw">diag</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]    1    0    0    0    0
 ## [2,]    0    2    0    0    0
@@ -897,7 +910,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [4,]    0    0    0    4    0
 ## [5,]    0    0    0    0    5</code></pre>
 <p>Or, lastly, create a square matrix of a certain dimension with <code>1</code> for every element of the diagonal and <code>0</code> for the off-diagonals.</p>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="data-and-programming.html#cb189-1"></a><span class="kw">diag</span>(<span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="data-and-programming.html#cb199-1"></a><span class="kw">diag</span>(<span class="dv">5</span>)</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]    1    0    0    0    0
 ## [2,]    0    1    0    0    0
@@ -907,47 +920,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="calculations-with-vectors-and-matrices" class="section level4 unnumbered hasAnchor">
 <h4>Calculations with Vectors and Matrices<a href="data-and-programming.html#calculations-with-vectors-and-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Certain operations in <code>R</code>, for example <code>%*%</code> have different behavior on vectors and matrices. To illustrate this, we will first create two vectors.</p>
-<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="data-and-programming.html#cb191-1"></a>a_vec =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb191-2"><a href="data-and-programming.html#cb191-2"></a>b_vec =<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="data-and-programming.html#cb201-1"></a>a_vec =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb201-2"><a href="data-and-programming.html#cb201-2"></a>b_vec =<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span></code></pre></div>
 <p>Note that these are indeed vectors. They are not matrices.</p>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="data-and-programming.html#cb192-1"></a><span class="kw">c</span>(<span class="kw">is.vector</span>(a_vec), <span class="kw">is.vector</span>(b_vec))</span></code></pre></div>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="data-and-programming.html#cb202-1"></a><span class="kw">c</span>(<span class="kw">is.vector</span>(a_vec), <span class="kw">is.vector</span>(b_vec))</span></code></pre></div>
 <pre><code>## [1] TRUE TRUE</code></pre>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="data-and-programming.html#cb194-1"></a><span class="kw">c</span>(<span class="kw">is.matrix</span>(a_vec), <span class="kw">is.matrix</span>(b_vec))</span></code></pre></div>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="data-and-programming.html#cb204-1"></a><span class="kw">c</span>(<span class="kw">is.matrix</span>(a_vec), <span class="kw">is.matrix</span>(b_vec))</span></code></pre></div>
 <pre><code>## [1] FALSE FALSE</code></pre>
 <p>When this is the case, the <code>%*%</code> operator is used to calculate the <strong>dot product</strong>, also known as the <strong>inner product</strong> of the two vectors.</p>
 <p>The dot product of vectors <span class="math inline">\(\boldsymbol{a} = \lbrack a_1, a_2, \cdots a_n \rbrack\)</span> and <span class="math inline">\(\boldsymbol{b} = \lbrack b_1, b_2, \cdots b_n \rbrack\)</span> is defined to be</p>
 <p><span class="math display">\[
 \boldsymbol{a} \cdot \boldsymbol{b} = \sum_{i = 1}^{n} a_i b_i = a_1 b_1 + a_2 b_2 + \cdots a_n b_n.
 \]</span></p>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="data-and-programming.html#cb196-1"></a>a_vec <span class="op">%*%</span><span class="st"> </span>b_vec <span class="co"># inner product</span></span></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="data-and-programming.html#cb206-1"></a>a_vec <span class="op">%*%</span><span class="st"> </span>b_vec <span class="co"># inner product</span></span></code></pre></div>
 <pre><code>##      [,1]
 ## [1,]   12</code></pre>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="data-and-programming.html#cb198-1"></a>a_vec <span class="op">%o%</span><span class="st"> </span>b_vec <span class="co"># outer product</span></span></code></pre></div>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="data-and-programming.html#cb208-1"></a>a_vec <span class="op">%o%</span><span class="st"> </span>b_vec <span class="co"># outer product</span></span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    2    2    2
 ## [2,]    4    4    4
 ## [3,]    6    6    6</code></pre>
 <p>The <code>%o%</code> operator is used to calculate the <strong>outer product</strong> of the two vectors.</p>
 <p>When vectors are coerced to become matrices, they are column vectors. So a vector of length <span class="math inline">\(n\)</span> becomes an <span class="math inline">\(n \times 1\)</span> matrix after coercion.</p>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="data-and-programming.html#cb200-1"></a><span class="kw">as.matrix</span>(a_vec)</span></code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="data-and-programming.html#cb210-1"></a><span class="kw">as.matrix</span>(a_vec)</span></code></pre></div>
 <pre><code>##      [,1]
 ## [1,]    1
 ## [2,]    2
 ## [3,]    3</code></pre>
 <p>If we use the <code>%*%</code> operator on matrices, <code>%*%</code> again performs the expected matrix multiplication. So you might expect the following to produce an error, because the dimensions are incorrect.</p>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="data-and-programming.html#cb202-1"></a><span class="kw">as.matrix</span>(a_vec) <span class="op">%*%</span><span class="st"> </span>b_vec</span></code></pre></div>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="data-and-programming.html#cb212-1"></a><span class="kw">as.matrix</span>(a_vec) <span class="op">%*%</span><span class="st"> </span>b_vec</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    2    2    2
 ## [2,]    4    4    4
 ## [3,]    6    6    6</code></pre>
 <p>At face value this is a <span class="math inline">\(3 \times 1\)</span> matrix, multiplied by a <span class="math inline">\(3 \times 1\)</span> matrix. However, when <code>b_vec</code> is automatically coerced to be a matrix, <code>R</code> decided to make it a “row vector,” a <span class="math inline">\(1 \times 3\)</span> matrix, so that the multiplication has conformable dimensions.</p>
 <p>If we had coerced both, then <code>R</code> would produce an error.</p>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="data-and-programming.html#cb204-1"></a><span class="kw">as.matrix</span>(a_vec) <span class="op">%*%</span><span class="st"> </span><span class="kw">as.matrix</span>(b_vec)</span></code></pre></div>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="data-and-programming.html#cb214-1"></a><span class="kw">as.matrix</span>(a_vec) <span class="op">%*%</span><span class="st"> </span><span class="kw">as.matrix</span>(b_vec)</span></code></pre></div>
 <p>Another way to calculate a <em>dot product</em> is with the <code>crossprod()</code> function. Given two vectors, the <code>crossprod()</code> function calculates their dot product. The function has a rather misleading name.</p>
-<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="data-and-programming.html#cb205-1"></a><span class="kw">crossprod</span>(a_vec, b_vec)  <span class="co"># inner product</span></span></code></pre></div>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="data-and-programming.html#cb215-1"></a><span class="kw">crossprod</span>(a_vec, b_vec)  <span class="co"># inner product</span></span></code></pre></div>
 <pre><code>##      [,1]
 ## [1,]   12</code></pre>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="data-and-programming.html#cb207-1"></a><span class="kw">tcrossprod</span>(a_vec, b_vec)  <span class="co"># outer product</span></span></code></pre></div>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="data-and-programming.html#cb217-1"></a><span class="kw">tcrossprod</span>(a_vec, b_vec)  <span class="co"># outer product</span></span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    2    2    2
 ## [2,]    4    4    4
@@ -961,40 +974,40 @@ X^\top Y.
 X^\top X
 \]</span></p>
 <p>is used repeatedly.</p>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="data-and-programming.html#cb209-1"></a>C_mat =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>), <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb209-2"><a href="data-and-programming.html#cb209-2"></a>D_mat =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="dv">2</span>, <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="data-and-programming.html#cb219-1"></a>C_mat =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>), <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb219-2"><a href="data-and-programming.html#cb219-2"></a>D_mat =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="dv">2</span>, <span class="dv">3</span>)</span></code></pre></div>
 <p>This is useful both as a shortcut for a frequent calculation and as a more efficient implementation than using <code>t()</code> and <code>%*%</code>.</p>
-<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="data-and-programming.html#cb210-1"></a><span class="kw">crossprod</span>(C_mat, D_mat)</span></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="data-and-programming.html#cb220-1"></a><span class="kw">crossprod</span>(C_mat, D_mat)</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    6    6    6
 ## [2,]   14   14   14
 ## [3,]   22   22   22</code></pre>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="data-and-programming.html#cb212-1"></a><span class="kw">t</span>(C_mat) <span class="op">%*%</span><span class="st"> </span>D_mat</span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="data-and-programming.html#cb222-1"></a><span class="kw">t</span>(C_mat) <span class="op">%*%</span><span class="st"> </span>D_mat</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    6    6    6
 ## [2,]   14   14   14
 ## [3,]   22   22   22</code></pre>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="data-and-programming.html#cb214-1"></a><span class="kw">all.equal</span>(<span class="kw">crossprod</span>(C_mat, D_mat), <span class="kw">t</span>(C_mat) <span class="op">%*%</span><span class="st"> </span>D_mat)</span></code></pre></div>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="data-and-programming.html#cb224-1"></a><span class="kw">all.equal</span>(<span class="kw">crossprod</span>(C_mat, D_mat), <span class="kw">t</span>(C_mat) <span class="op">%*%</span><span class="st"> </span>D_mat)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="data-and-programming.html#cb216-1"></a><span class="kw">crossprod</span>(C_mat, C_mat)</span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="data-and-programming.html#cb226-1"></a><span class="kw">crossprod</span>(C_mat, C_mat)</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    5   11   17
 ## [2,]   11   25   39
 ## [3,]   17   39   61</code></pre>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="data-and-programming.html#cb218-1"></a><span class="kw">t</span>(C_mat) <span class="op">%*%</span><span class="st"> </span>C_mat</span></code></pre></div>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="data-and-programming.html#cb228-1"></a><span class="kw">t</span>(C_mat) <span class="op">%*%</span><span class="st"> </span>C_mat</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3]
 ## [1,]    5   11   17
 ## [2,]   11   25   39
 ## [3,]   17   39   61</code></pre>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="data-and-programming.html#cb220-1"></a><span class="kw">all.equal</span>(<span class="kw">crossprod</span>(C_mat, C_mat), <span class="kw">t</span>(C_mat) <span class="op">%*%</span><span class="st"> </span>C_mat)</span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="data-and-programming.html#cb230-1"></a><span class="kw">all.equal</span>(<span class="kw">crossprod</span>(C_mat, C_mat), <span class="kw">t</span>(C_mat) <span class="op">%*%</span><span class="st"> </span>C_mat)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 </div>
 </div>
 <div id="lists" class="section level3 hasAnchor">
 <h3><span class="header-section-number">3.2.6</span> Lists<a href="data-and-programming.html#lists" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A list is a one-dimensional heterogeneous data structure. So it is indexed like a vector with a single integer value, but each element can contain an element of any type.</p>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="data-and-programming.html#cb222-1"></a><span class="co"># creation</span></span>
-<span id="cb222-2"><a href="data-and-programming.html#cb222-2"></a><span class="kw">list</span>(<span class="dv">42</span>, <span class="st">&quot;Hello&quot;</span>, <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="data-and-programming.html#cb232-1"></a><span class="co"># creation</span></span>
+<span id="cb232-2"><a href="data-and-programming.html#cb232-2"></a><span class="kw">list</span>(<span class="dv">42</span>, <span class="st">&quot;Hello&quot;</span>, <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>## [[1]]
 ## [1] 42
 ## 
@@ -1003,38 +1016,38 @@ X^\top X
 ## 
 ## [[3]]
 ## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="data-and-programming.html#cb224-1"></a>ex_list =<span class="st"> </span><span class="kw">list</span>(</span>
-<span id="cb224-2"><a href="data-and-programming.html#cb224-2"></a>  <span class="dt">a =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>),</span>
-<span id="cb224-3"><a href="data-and-programming.html#cb224-3"></a>  <span class="dt">b =</span> <span class="ot">TRUE</span>,</span>
-<span id="cb224-4"><a href="data-and-programming.html#cb224-4"></a>  <span class="dt">c =</span> <span class="st">&quot;Hello!&quot;</span>,</span>
-<span id="cb224-5"><a href="data-and-programming.html#cb224-5"></a>  <span class="dt">d =</span> <span class="cf">function</span>(<span class="dt">arg =</span> <span class="dv">42</span>) {<span class="kw">print</span>(<span class="st">&quot;Hello World!&quot;</span>)},</span>
-<span id="cb224-6"><a href="data-and-programming.html#cb224-6"></a>  <span class="dt">e =</span> <span class="kw">diag</span>(<span class="dv">5</span>)</span>
-<span id="cb224-7"><a href="data-and-programming.html#cb224-7"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="data-and-programming.html#cb234-1"></a>ex_list =<span class="st"> </span><span class="kw">list</span>(</span>
+<span id="cb234-2"><a href="data-and-programming.html#cb234-2"></a>  <span class="dt">a =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>),</span>
+<span id="cb234-3"><a href="data-and-programming.html#cb234-3"></a>  <span class="dt">b =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb234-4"><a href="data-and-programming.html#cb234-4"></a>  <span class="dt">c =</span> <span class="st">&quot;Hello!&quot;</span>,</span>
+<span id="cb234-5"><a href="data-and-programming.html#cb234-5"></a>  <span class="dt">d =</span> <span class="cf">function</span>(<span class="dt">arg =</span> <span class="dv">42</span>) {<span class="kw">print</span>(<span class="st">&quot;Hello World!&quot;</span>)},</span>
+<span id="cb234-6"><a href="data-and-programming.html#cb234-6"></a>  <span class="dt">e =</span> <span class="kw">diag</span>(<span class="dv">5</span>)</span>
+<span id="cb234-7"><a href="data-and-programming.html#cb234-7"></a>)</span></code></pre></div>
 <p>Lists can be subset using two syntaxes, the <code>$</code> operator, and square brackets <code>[]</code>. The <code>$</code> operator returns a named <strong>element</strong> of a list. The <code>[]</code> syntax returns a <strong>list</strong>, while the <code>[[]]</code> returns an <strong>element</strong> of a list.</p>
 <ul>
 <li><code>ex_list[1]</code> returns a list containing the first element.</li>
 <li><code>ex_list[[1]]</code> returns the first element of the list, in this case, a vector.</li>
 </ul>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="data-and-programming.html#cb225-1"></a><span class="co"># subsetting</span></span>
-<span id="cb225-2"><a href="data-and-programming.html#cb225-2"></a>ex_list<span class="op">$</span>e</span></code></pre></div>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="data-and-programming.html#cb235-1"></a><span class="co"># subsetting</span></span>
+<span id="cb235-2"><a href="data-and-programming.html#cb235-2"></a>ex_list<span class="op">$</span>e</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]    1    0    0    0    0
 ## [2,]    0    1    0    0    0
 ## [3,]    0    0    1    0    0
 ## [4,]    0    0    0    1    0
 ## [5,]    0    0    0    0    1</code></pre>
-<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="data-and-programming.html#cb227-1"></a>ex_list[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="data-and-programming.html#cb237-1"></a>ex_list[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]</span></code></pre></div>
 <pre><code>## $a
 ## [1] 1 2 3 4
 ## 
 ## $b
 ## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="data-and-programming.html#cb229-1"></a>ex_list[<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="data-and-programming.html#cb239-1"></a>ex_list[<span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## $a
 ## [1] 1 2 3 4</code></pre>
-<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="data-and-programming.html#cb231-1"></a>ex_list[[<span class="dv">1</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="data-and-programming.html#cb241-1"></a>ex_list[[<span class="dv">1</span>]]</span></code></pre></div>
 <pre><code>## [1] 1 2 3 4</code></pre>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="data-and-programming.html#cb233-1"></a>ex_list[<span class="kw">c</span>(<span class="st">&quot;e&quot;</span>, <span class="st">&quot;a&quot;</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="data-and-programming.html#cb243-1"></a>ex_list[<span class="kw">c</span>(<span class="st">&quot;e&quot;</span>, <span class="st">&quot;a&quot;</span>)]</span></code></pre></div>
 <pre><code>## $e
 ##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]    1    0    0    0    0
@@ -1045,7 +1058,7 @@ X^\top X
 ## 
 ## $a
 ## [1] 1 2 3 4</code></pre>
-<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="data-and-programming.html#cb235-1"></a>ex_list[<span class="st">&quot;e&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="data-and-programming.html#cb245-1"></a>ex_list[<span class="st">&quot;e&quot;</span>]</span></code></pre></div>
 <pre><code>## $e
 ##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]    1    0    0    0    0
@@ -1053,26 +1066,26 @@ X^\top X
 ## [3,]    0    0    1    0    0
 ## [4,]    0    0    0    1    0
 ## [5,]    0    0    0    0    1</code></pre>
-<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="data-and-programming.html#cb237-1"></a>ex_list[[<span class="st">&quot;e&quot;</span>]]</span></code></pre></div>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="data-and-programming.html#cb247-1"></a>ex_list[[<span class="st">&quot;e&quot;</span>]]</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]    1    0    0    0    0
 ## [2,]    0    1    0    0    0
 ## [3,]    0    0    1    0    0
 ## [4,]    0    0    0    1    0
 ## [5,]    0    0    0    0    1</code></pre>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="data-and-programming.html#cb239-1"></a>ex_list<span class="op">$</span>d</span></code></pre></div>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="data-and-programming.html#cb249-1"></a>ex_list<span class="op">$</span>d</span></code></pre></div>
 <pre><code>## function(arg = 42) {print(&quot;Hello World!&quot;)}</code></pre>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="data-and-programming.html#cb241-1"></a>ex_list<span class="op">$</span><span class="kw">d</span>(<span class="dt">arg =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="data-and-programming.html#cb251-1"></a>ex_list<span class="op">$</span><span class="kw">d</span>(<span class="dt">arg =</span> <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Hello World!&quot;</code></pre>
 </div>
 <div id="data-frames" class="section level3 hasAnchor">
 <h3><span class="header-section-number">3.2.7</span> Data Frames<a href="data-and-programming.html#data-frames" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We have previously seen vectors and matrices for storing data as we introduced <code>R</code>. We will now introduce a <strong>data frame</strong> which will be the most common way that we store and interact with data in this course.</p>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="data-and-programming.html#cb243-1"></a>example_data =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span>),</span>
-<span id="cb243-2"><a href="data-and-programming.html#cb243-2"></a>                          <span class="dt">y =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;Hello&quot;</span>, <span class="dv">9</span>), <span class="st">&quot;Goodbye&quot;</span>),</span>
-<span id="cb243-3"><a href="data-and-programming.html#cb243-3"></a>                          <span class="dt">z =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>), <span class="dv">5</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="data-and-programming.html#cb253-1"></a>example_data =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">9</span>),</span>
+<span id="cb253-2"><a href="data-and-programming.html#cb253-2"></a>                          <span class="dt">y =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;Hello&quot;</span>, <span class="dv">9</span>), <span class="st">&quot;Goodbye&quot;</span>),</span>
+<span id="cb253-3"><a href="data-and-programming.html#cb253-3"></a>                          <span class="dt">z =</span> <span class="kw">rep</span>(<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>), <span class="dv">5</span>))</span></code></pre></div>
 <p>Unlike a matrix, which can be thought of as a vector rearranged into rows and columns, a data frame is not required to have the same data type for each element. A data frame is a <strong>list</strong> of vectors. So, each vector must contain the same data type, but the different vectors can store different data types.</p>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="data-and-programming.html#cb244-1"></a>example_data</span></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="data-and-programming.html#cb254-1"></a>example_data</span></code></pre></div>
 <pre><code>##    x       y     z
 ## 1  1   Hello  TRUE
 ## 2  3   Hello FALSE
@@ -1085,29 +1098,29 @@ X^\top X
 ## 9  7   Hello  TRUE
 ## 10 9 Goodbye FALSE</code></pre>
 <p>Unlike a list which has more flexibility, the elements of a data frame must all be vectors, and have the same length.</p>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="data-and-programming.html#cb246-1"></a>example_data<span class="op">$</span>x</span></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="data-and-programming.html#cb256-1"></a>example_data<span class="op">$</span>x</span></code></pre></div>
 <pre><code>##  [1] 1 3 5 7 9 1 3 5 7 9</code></pre>
-<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="data-and-programming.html#cb248-1"></a><span class="kw">all.equal</span>(<span class="kw">length</span>(example_data<span class="op">$</span>x),</span>
-<span id="cb248-2"><a href="data-and-programming.html#cb248-2"></a>          <span class="kw">length</span>(example_data<span class="op">$</span>y),</span>
-<span id="cb248-3"><a href="data-and-programming.html#cb248-3"></a>          <span class="kw">length</span>(example_data<span class="op">$</span>z))</span></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="data-and-programming.html#cb258-1"></a><span class="kw">all.equal</span>(<span class="kw">length</span>(example_data<span class="op">$</span>x),</span>
+<span id="cb258-2"><a href="data-and-programming.html#cb258-2"></a>          <span class="kw">length</span>(example_data<span class="op">$</span>y),</span>
+<span id="cb258-3"><a href="data-and-programming.html#cb258-3"></a>          <span class="kw">length</span>(example_data<span class="op">$</span>z))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="data-and-programming.html#cb250-1"></a><span class="kw">str</span>(example_data)</span></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="data-and-programming.html#cb260-1"></a><span class="kw">str</span>(example_data)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    10 obs. of  3 variables:
 ##  $ x: num  1 3 5 7 9 1 3 5 7 9
 ##  $ y: chr  &quot;Hello&quot; &quot;Hello&quot; &quot;Hello&quot; &quot;Hello&quot; ...
 ##  $ z: logi  TRUE FALSE TRUE FALSE TRUE FALSE ...</code></pre>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="data-and-programming.html#cb252-1"></a><span class="kw">nrow</span>(example_data)</span></code></pre></div>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="data-and-programming.html#cb262-1"></a><span class="kw">nrow</span>(example_data)</span></code></pre></div>
 <pre><code>## [1] 10</code></pre>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="data-and-programming.html#cb254-1"></a><span class="kw">ncol</span>(example_data)</span></code></pre></div>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="data-and-programming.html#cb264-1"></a><span class="kw">ncol</span>(example_data)</span></code></pre></div>
 <pre><code>## [1] 3</code></pre>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="data-and-programming.html#cb256-1"></a><span class="kw">dim</span>(example_data)</span></code></pre></div>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="data-and-programming.html#cb266-1"></a><span class="kw">dim</span>(example_data)</span></code></pre></div>
 <pre><code>## [1] 10  3</code></pre>
 <p>The <code>data.frame()</code> function above is one way to create a data frame. We can also import data from various file types into <code>R</code>, as well as use data stored in packages.</p>
 <p><a href="data/example-data.csv">The example data above can also be found here as a .csv file.</a> To read this data into <code>R</code>, we would use the <code>read_csv()</code> function from the <code>readr</code> package. Note that <code>R</code> has a built-in function <code>read.csv()</code> that operates very similarly. The <code>readr</code> function <code>read_csv()</code> has a number of advantages. For example, it is much faster reading larger data. <a href="https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html" target="_blank">It also uses the <code>tibble</code> package to read the data as a tibble.</a></p>
-<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="data-and-programming.html#cb258-1"></a><span class="kw">library</span>(readr)</span>
-<span id="cb258-2"><a href="data-and-programming.html#cb258-2"></a>example_data_from_csv =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/example-data.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="data-and-programming.html#cb268-1"></a><span class="kw">library</span>(readr)</span>
+<span id="cb268-2"><a href="data-and-programming.html#cb268-2"></a>example_data_from_csv =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/example-data.csv&quot;</span>)</span></code></pre></div>
 <p>This particular line of code assumes that the file <code>example_data.csv</code> exists in a folder called <code>data</code> in your current working directory.</p>
-<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="data-and-programming.html#cb259-1"></a>example_data_from_csv</span></code></pre></div>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="data-and-programming.html#cb269-1"></a>example_data_from_csv</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 3
 ##        x y       z    
 ##    &lt;dbl&gt; &lt;chr&gt;   &lt;lgl&gt;
@@ -1123,9 +1136,9 @@ X^\top X
 ## 10     9 Goodbye FALSE</code></pre>
 <p>A tibble is simply a data frame that prints with sanity. Notice in the output above that we are given additional information such as dimension and variable type.</p>
 <p>The <code>as_tibble()</code> function can be used to coerce a regular data frame to a tibble.</p>
-<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="data-and-programming.html#cb261-1"></a><span class="kw">library</span>(tibble)</span>
-<span id="cb261-2"><a href="data-and-programming.html#cb261-2"></a>example_data =<span class="st"> </span><span class="kw">as_tibble</span>(example_data)</span>
-<span id="cb261-3"><a href="data-and-programming.html#cb261-3"></a>example_data</span></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="data-and-programming.html#cb271-1"></a><span class="kw">library</span>(tibble)</span>
+<span id="cb271-2"><a href="data-and-programming.html#cb271-2"></a>example_data =<span class="st"> </span><span class="kw">as_tibble</span>(example_data)</span>
+<span id="cb271-3"><a href="data-and-programming.html#cb271-3"></a>example_data</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 3
 ##        x y       z    
 ##    &lt;dbl&gt; &lt;chr&gt;   &lt;lgl&gt;
@@ -1141,7 +1154,7 @@ X^\top X
 ## 10     9 Goodbye FALSE</code></pre>
 <p>Alternatively, we could use the “Import Dataset” feature in RStudio which can be found in the environment window. (By default, the top-right pane of RStudio.) Once completed, this process will automatically generate the code to import a file. The resulting code will be shown in the console window. In recent versions of RStudio, <code>read_csv()</code> is used by default, thus reading in a tibble.</p>
 <p>Earlier we looked at installing packages, in particular the <code>ggplot2</code> package. (A package for visualization. While not necessary for this course, it is quickly growing in popularity.)</p>
-<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="data-and-programming.html#cb263-1"></a><span class="kw">library</span>(ggplot2)</span></code></pre></div>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="data-and-programming.html#cb273-1"></a><span class="kw">library</span>(ggplot2)</span></code></pre></div>
 <p>Inside the <code>ggplot2</code> package is a dataset called <code>mpg</code>. By loading the package using the <code>library()</code> function, we can now access <code>mpg</code>.</p>
 <p>When using data from inside a package, there are three things we would generally like to do:</p>
 <ul>
@@ -1150,7 +1163,7 @@ X^\top X
 <li>Visualize the data.</li>
 </ul>
 <p>To look at the data, we have two useful commands: <code>head()</code> and <code>str()</code>.</p>
-<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="data-and-programming.html#cb264-1"></a><span class="kw">head</span>(mpg, <span class="dt">n =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="data-and-programming.html#cb274-1"></a><span class="kw">head</span>(mpg, <span class="dt">n =</span> <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 10 × 11
 ##    manufacturer model      displ  year   cyl trans drv     cty   hwy fl    class
 ##    &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
@@ -1165,7 +1178,7 @@ X^\top X
 ##  9 audi         a4 quattro   1.8  1999     4 auto… 4        16    25 p     comp…
 ## 10 audi         a4 quattro   2    2008     4 manu… 4        20    28 p     comp…</code></pre>
 <p>The function <code>head()</code> will display the first <code>n</code> observations of the data frame. The <code>head()</code> function was more useful before tibbles. Notice that <code>mpg</code> is a tibble already, so the output from <code>head()</code> indicates there are only <code>10</code> observations. Note that this applies to <code>head(mpg, n = 10)</code> and not <code>mpg</code> itself. Also note that tibbles print a limited number of rows and columns by default. The last line of the printed output indicates which rows and columns were omitted.</p>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="data-and-programming.html#cb266-1"></a>mpg</span></code></pre></div>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="data-and-programming.html#cb276-1"></a>mpg</span></code></pre></div>
 <pre><code>## # A tibble: 234 × 11
 ##    manufacturer model      displ  year   cyl trans drv     cty   hwy fl    class
 ##    &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
@@ -1181,7 +1194,7 @@ X^\top X
 ## 10 audi         a4 quattro   2    2008     4 manu… 4        20    28 p     comp…
 ## # … with 224 more rows</code></pre>
 <p>The function <code>str()</code> will display the “structure” of the data frame. It will display the number of <strong>observations</strong> and <strong>variables</strong>, list the variables, give the type of each variable, and show some elements of each variable. This information can also be found in the “Environment” window in RStudio.</p>
-<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="data-and-programming.html#cb268-1"></a><span class="kw">str</span>(mpg)</span></code></pre></div>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="data-and-programming.html#cb278-1"></a><span class="kw">str</span>(mpg)</span></code></pre></div>
 <pre><code>## tibble [234 × 11] (S3: tbl_df/tbl/data.frame)
 ##  $ manufacturer: chr [1:234] &quot;audi&quot; &quot;audi&quot; &quot;audi&quot; &quot;audi&quot; ...
 ##  $ model       : chr [1:234] &quot;a4&quot; &quot;a4&quot; &quot;a4&quot; &quot;a4&quot; ...
@@ -1197,14 +1210,14 @@ X^\top X
 <p>It is important to note that while matrices have rows and columns, data frames (tibbles) instead have observations and variables. When displayed in the console or viewer, each row is an observation and each column is a variable. However generally speaking, their order does not matter, it is simply a side-effect of how the data was entered or stored.</p>
 <p>In this dataset an observation is for a particular model-year of a car, and the variables describe attributes of the car, for example its highway fuel efficiency.</p>
 <p>To understand more about the data set, we use the <code>?</code> operator to pull up the documentation for the data.</p>
-<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="data-and-programming.html#cb270-1"></a>?mpg</span></code></pre></div>
+<div class="sourceCode" id="cb280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb280-1"><a href="data-and-programming.html#cb280-1"></a>?mpg</span></code></pre></div>
 <p><code>R</code> has a number of functions for quickly working with and extracting basic information from data frames. To quickly obtain a vector of the variable names, we use the <code>names()</code> function.</p>
-<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="data-and-programming.html#cb271-1"></a><span class="kw">names</span>(mpg)</span></code></pre></div>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="data-and-programming.html#cb281-1"></a><span class="kw">names</span>(mpg)</span></code></pre></div>
 <pre><code>##  [1] &quot;manufacturer&quot; &quot;model&quot;        &quot;displ&quot;        &quot;year&quot;         &quot;cyl&quot;         
 ##  [6] &quot;trans&quot;        &quot;drv&quot;          &quot;cty&quot;          &quot;hwy&quot;          &quot;fl&quot;          
 ## [11] &quot;class&quot;</code></pre>
 <p>To access one of the variables <strong>as a vector</strong>, we use the <code>$</code> operator.</p>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="data-and-programming.html#cb273-1"></a>mpg<span class="op">$</span>year</span></code></pre></div>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="data-and-programming.html#cb283-1"></a>mpg<span class="op">$</span>year</span></code></pre></div>
 <pre><code>##   [1] 1999 1999 2008 2008 1999 1999 2008 1999 1999 2008 2008 1999 1999 2008 2008
 ##  [16] 1999 2008 2008 2008 2008 2008 1999 2008 1999 1999 2008 2008 2008 2008 2008
 ##  [31] 1999 1999 1999 2008 1999 2008 2008 1999 1999 1999 1999 2008 2008 2008 1999
@@ -1221,7 +1234,7 @@ X^\top X
 ## [196] 1999 2008 2008 1999 2008 1999 1999 2008 1999 1999 2008 2008 1999 1999 2008
 ## [211] 2008 1999 1999 1999 1999 2008 2008 2008 2008 1999 1999 1999 1999 1999 1999
 ## [226] 2008 2008 1999 1999 2008 2008 1999 1999 2008</code></pre>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="data-and-programming.html#cb275-1"></a>mpg<span class="op">$</span>hwy</span></code></pre></div>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="data-and-programming.html#cb285-1"></a>mpg<span class="op">$</span>hwy</span></code></pre></div>
 <pre><code>##   [1] 29 29 31 30 26 26 27 26 25 28 27 25 25 25 25 24 25 23 20 15 20 17 17 26 23
 ##  [26] 26 25 24 19 14 15 17 27 30 26 29 26 24 24 22 22 24 24 17 22 21 23 23 19 18
 ##  [51] 17 17 19 19 12 17 15 17 17 12 17 16 18 15 16 12 17 17 16 12 15 16 17 15 17
@@ -1233,15 +1246,15 @@ X^\top X
 ## [201] 20 20 22 17 19 18 20 29 26 29 29 24 44 29 26 29 29 29 29 23 24 44 41 29 26
 ## [226] 28 29 29 29 28 29 26 26 26</code></pre>
 <p>We can use the <code>dim()</code>, <code>nrow()</code> and <code>ncol()</code> functions to obtain information about the dimension of the data frame.</p>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="data-and-programming.html#cb277-1"></a><span class="kw">dim</span>(mpg)</span></code></pre></div>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="data-and-programming.html#cb287-1"></a><span class="kw">dim</span>(mpg)</span></code></pre></div>
 <pre><code>## [1] 234  11</code></pre>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="data-and-programming.html#cb279-1"></a><span class="kw">nrow</span>(mpg)</span></code></pre></div>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="data-and-programming.html#cb289-1"></a><span class="kw">nrow</span>(mpg)</span></code></pre></div>
 <pre><code>## [1] 234</code></pre>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="data-and-programming.html#cb281-1"></a><span class="kw">ncol</span>(mpg)</span></code></pre></div>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="data-and-programming.html#cb291-1"></a><span class="kw">ncol</span>(mpg)</span></code></pre></div>
 <pre><code>## [1] 11</code></pre>
 <p>Here <code>nrow()</code> is also the number of observations, which in most cases is the <em>sample size</em>.</p>
 <p>Subsetting data frames can work much like subsetting matrices using square brackets, <code>[,]</code>. Here, we find fuel efficient vehicles earning over 35 miles per gallon and only display <code>manufacturer</code>, <code>model</code> and <code>year</code>.</p>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="data-and-programming.html#cb283-1"></a>mpg[mpg<span class="op">$</span>hwy <span class="op">&gt;</span><span class="st"> </span><span class="dv">35</span>, <span class="kw">c</span>(<span class="st">&quot;manufacturer&quot;</span>, <span class="st">&quot;model&quot;</span>, <span class="st">&quot;year&quot;</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="data-and-programming.html#cb293-1"></a>mpg[mpg<span class="op">$</span>hwy <span class="op">&gt;</span><span class="st"> </span><span class="dv">35</span>, <span class="kw">c</span>(<span class="st">&quot;manufacturer&quot;</span>, <span class="st">&quot;model&quot;</span>, <span class="st">&quot;year&quot;</span>)]</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 3
 ##   manufacturer model       year
 ##   &lt;chr&gt;        &lt;chr&gt;      &lt;int&gt;
@@ -1252,10 +1265,10 @@ X^\top X
 ## 5 volkswagen   new beetle  1999
 ## 6 volkswagen   new beetle  1999</code></pre>
 <p>An alternative would be to use the <code>subset()</code> function, which has a much more readable syntax.</p>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="data-and-programming.html#cb285-1"></a><span class="kw">subset</span>(mpg, <span class="dt">subset =</span> hwy <span class="op">&gt;</span><span class="st"> </span><span class="dv">35</span>, <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot;manufacturer&quot;</span>, <span class="st">&quot;model&quot;</span>, <span class="st">&quot;year&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="data-and-programming.html#cb295-1"></a><span class="kw">subset</span>(mpg, <span class="dt">subset =</span> hwy <span class="op">&gt;</span><span class="st"> </span><span class="dv">35</span>, <span class="dt">select =</span> <span class="kw">c</span>(<span class="st">&quot;manufacturer&quot;</span>, <span class="st">&quot;model&quot;</span>, <span class="st">&quot;year&quot;</span>))</span></code></pre></div>
 <p>Lastly, we could use the <code>filter</code> and <code>select</code> functions from the <code>dplyr</code> package which introduces the <code>%&gt;%</code> operator from the <code>magrittr</code> package. This is not necessary for this course, however the <code>dplyr</code> package is something you should be aware of as it is becoming a popular tool in the <code>R</code> world.</p>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="data-and-programming.html#cb286-1"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb286-2"><a href="data-and-programming.html#cb286-2"></a>mpg <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(hwy <span class="op">&gt;</span><span class="st"> </span><span class="dv">35</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(manufacturer, model, year)</span></code></pre></div>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="data-and-programming.html#cb296-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb296-2"><a href="data-and-programming.html#cb296-2"></a>mpg <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(hwy <span class="op">&gt;</span><span class="st"> </span><span class="dv">35</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(manufacturer, model, year)</span></code></pre></div>
 <p>All three approaches produce the same results. Which you use will be largely based on a given situation as well as user preference.</p>
 <p>When subsetting a data frame, be aware of what is being returned, as sometimes it may be a vector instead of a data frame. Also note that there are differences between subsetting a data frame and a tibble. A data frame operates more like a matrix where it is possible to reduce the subset to a vector. A tibble operates more like a list where it always subsets to another tibble.</p>
 </div>
@@ -1265,49 +1278,49 @@ X^\top X
 <div id="control-flow" class="section level3 hasAnchor">
 <h3><span class="header-section-number">3.3.1</span> Control Flow<a href="data-and-programming.html#control-flow" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In <code>R</code>, the if/else syntax is:</p>
-<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="data-and-programming.html#cb287-1"></a><span class="cf">if</span> (...) {</span>
-<span id="cb287-2"><a href="data-and-programming.html#cb287-2"></a>  some R code</span>
-<span id="cb287-3"><a href="data-and-programming.html#cb287-3"></a>} <span class="cf">else</span> {</span>
-<span id="cb287-4"><a href="data-and-programming.html#cb287-4"></a>  more R code</span>
-<span id="cb287-5"><a href="data-and-programming.html#cb287-5"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="data-and-programming.html#cb297-1"></a><span class="cf">if</span> (...) {</span>
+<span id="cb297-2"><a href="data-and-programming.html#cb297-2"></a>  some R code</span>
+<span id="cb297-3"><a href="data-and-programming.html#cb297-3"></a>} <span class="cf">else</span> {</span>
+<span id="cb297-4"><a href="data-and-programming.html#cb297-4"></a>  more R code</span>
+<span id="cb297-5"><a href="data-and-programming.html#cb297-5"></a>}</span></code></pre></div>
 <p>For example,</p>
-<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="data-and-programming.html#cb288-1"></a>x =<span class="st"> </span><span class="dv">1</span></span>
-<span id="cb288-2"><a href="data-and-programming.html#cb288-2"></a>y =<span class="st"> </span><span class="dv">3</span></span>
-<span id="cb288-3"><a href="data-and-programming.html#cb288-3"></a><span class="cf">if</span> (x <span class="op">&gt;</span><span class="st"> </span>y) {</span>
-<span id="cb288-4"><a href="data-and-programming.html#cb288-4"></a>  z =<span class="st"> </span>x <span class="op">*</span><span class="st"> </span>y</span>
-<span id="cb288-5"><a href="data-and-programming.html#cb288-5"></a>  <span class="kw">print</span>(<span class="st">&quot;x is larger than y&quot;</span>)</span>
-<span id="cb288-6"><a href="data-and-programming.html#cb288-6"></a>} <span class="cf">else</span> {</span>
-<span id="cb288-7"><a href="data-and-programming.html#cb288-7"></a>  z =<span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="dv">5</span> <span class="op">*</span><span class="st"> </span>y</span>
-<span id="cb288-8"><a href="data-and-programming.html#cb288-8"></a>  <span class="kw">print</span>(<span class="st">&quot;x is less than or equal to y&quot;</span>)</span>
-<span id="cb288-9"><a href="data-and-programming.html#cb288-9"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="data-and-programming.html#cb298-1"></a>x =<span class="st"> </span><span class="dv">1</span></span>
+<span id="cb298-2"><a href="data-and-programming.html#cb298-2"></a>y =<span class="st"> </span><span class="dv">3</span></span>
+<span id="cb298-3"><a href="data-and-programming.html#cb298-3"></a><span class="cf">if</span> (x <span class="op">&gt;</span><span class="st"> </span>y) {</span>
+<span id="cb298-4"><a href="data-and-programming.html#cb298-4"></a>  z =<span class="st"> </span>x <span class="op">*</span><span class="st"> </span>y</span>
+<span id="cb298-5"><a href="data-and-programming.html#cb298-5"></a>  <span class="kw">print</span>(<span class="st">&quot;x is larger than y&quot;</span>)</span>
+<span id="cb298-6"><a href="data-and-programming.html#cb298-6"></a>} <span class="cf">else</span> {</span>
+<span id="cb298-7"><a href="data-and-programming.html#cb298-7"></a>  z =<span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="dv">5</span> <span class="op">*</span><span class="st"> </span>y</span>
+<span id="cb298-8"><a href="data-and-programming.html#cb298-8"></a>  <span class="kw">print</span>(<span class="st">&quot;x is less than or equal to y&quot;</span>)</span>
+<span id="cb298-9"><a href="data-and-programming.html#cb298-9"></a>}</span></code></pre></div>
 <pre><code>## [1] &quot;x is less than or equal to y&quot;</code></pre>
-<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="data-and-programming.html#cb290-1"></a>z</span></code></pre></div>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="data-and-programming.html#cb300-1"></a>z</span></code></pre></div>
 <pre><code>## [1] 16</code></pre>
 <p><code>R</code> also has a special function <code>ifelse()</code> which is very useful. It returns one of two specified values based on a conditional statement.</p>
-<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="data-and-programming.html#cb292-1"></a><span class="kw">ifelse</span>(<span class="dv">4</span> <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="data-and-programming.html#cb302-1"></a><span class="kw">ifelse</span>(<span class="dv">4</span> <span class="op">&gt;</span><span class="st"> </span><span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
 <p>The real power of <code>ifelse()</code> comes from its ability to be applied to vectors.</p>
-<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="data-and-programming.html#cb294-1"></a>fib =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">13</span>, <span class="dv">21</span>)</span>
-<span id="cb294-2"><a href="data-and-programming.html#cb294-2"></a><span class="kw">ifelse</span>(fib <span class="op">&gt;</span><span class="st"> </span><span class="dv">6</span>, <span class="st">&quot;Foo&quot;</span>, <span class="st">&quot;Bar&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="data-and-programming.html#cb304-1"></a>fib =<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">13</span>, <span class="dv">21</span>)</span>
+<span id="cb304-2"><a href="data-and-programming.html#cb304-2"></a><span class="kw">ifelse</span>(fib <span class="op">&gt;</span><span class="st"> </span><span class="dv">6</span>, <span class="st">&quot;Foo&quot;</span>, <span class="st">&quot;Bar&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Bar&quot; &quot;Bar&quot; &quot;Bar&quot; &quot;Bar&quot; &quot;Bar&quot; &quot;Foo&quot; &quot;Foo&quot; &quot;Foo&quot;</code></pre>
 <p>Now a <code>for</code> loop example,</p>
-<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="data-and-programming.html#cb296-1"></a>x =<span class="st"> </span><span class="dv">11</span><span class="op">:</span><span class="dv">15</span></span>
-<span id="cb296-2"><a href="data-and-programming.html#cb296-2"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>) {</span>
-<span id="cb296-3"><a href="data-and-programming.html#cb296-3"></a>  x[i] =<span class="st"> </span>x[i] <span class="op">*</span><span class="st"> </span><span class="dv">2</span></span>
-<span id="cb296-4"><a href="data-and-programming.html#cb296-4"></a>}</span>
-<span id="cb296-5"><a href="data-and-programming.html#cb296-5"></a></span>
-<span id="cb296-6"><a href="data-and-programming.html#cb296-6"></a>x</span></code></pre></div>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="data-and-programming.html#cb306-1"></a>x =<span class="st"> </span><span class="dv">11</span><span class="op">:</span><span class="dv">15</span></span>
+<span id="cb306-2"><a href="data-and-programming.html#cb306-2"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>) {</span>
+<span id="cb306-3"><a href="data-and-programming.html#cb306-3"></a>  x[i] =<span class="st"> </span>x[i] <span class="op">*</span><span class="st"> </span><span class="dv">2</span></span>
+<span id="cb306-4"><a href="data-and-programming.html#cb306-4"></a>}</span>
+<span id="cb306-5"><a href="data-and-programming.html#cb306-5"></a></span>
+<span id="cb306-6"><a href="data-and-programming.html#cb306-6"></a>x</span></code></pre></div>
 <pre><code>## [1] 22 24 26 28 30</code></pre>
 <p>Note that this <code>for</code> loop is very normal in many programming languages, but not in <code>R</code>. In <code>R</code> we would not use a loop, instead we would simply use a vectorized operation.</p>
-<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="data-and-programming.html#cb298-1"></a>x =<span class="st"> </span><span class="dv">11</span><span class="op">:</span><span class="dv">15</span></span>
-<span id="cb298-2"><a href="data-and-programming.html#cb298-2"></a>x =<span class="st"> </span>x <span class="op">*</span><span class="st"> </span><span class="dv">2</span></span>
-<span id="cb298-3"><a href="data-and-programming.html#cb298-3"></a>x</span></code></pre></div>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="data-and-programming.html#cb308-1"></a>x =<span class="st"> </span><span class="dv">11</span><span class="op">:</span><span class="dv">15</span></span>
+<span id="cb308-2"><a href="data-and-programming.html#cb308-2"></a>x =<span class="st"> </span>x <span class="op">*</span><span class="st"> </span><span class="dv">2</span></span>
+<span id="cb308-3"><a href="data-and-programming.html#cb308-3"></a>x</span></code></pre></div>
 <pre><code>## [1] 22 24 26 28 30</code></pre>
 </div>
 <div id="functions" class="section level3 hasAnchor">
 <h3><span class="header-section-number">3.3.2</span> Functions<a href="data-and-programming.html#functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>So far we have been using functions, but haven’t actually discussed some of their details.</p>
-<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="data-and-programming.html#cb300-1"></a><span class="kw">function_name</span>(<span class="dt">arg1 =</span> <span class="dv">10</span>, <span class="dt">arg2 =</span> <span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="data-and-programming.html#cb310-1"></a><span class="kw">function_name</span>(<span class="dt">arg1 =</span> <span class="dv">10</span>, <span class="dt">arg2 =</span> <span class="dv">20</span>)</span></code></pre></div>
 <p>To use a function, you simply type its name, followed by an open parenthesis, then specify values of its arguments, then finish with a closing parenthesis.</p>
 <p>An <strong>argument</strong> is a variable which is used in the body of the function. Specifying the values of the arguments is essentially providing the inputs to the function.</p>
 <p>We can also write our own functions in <code>R</code>. For example, we often like to “standardize” variables, that is, subtracting the sample mean, and dividing by the sample standard deviation.</p>
@@ -1320,42 +1333,42 @@ X^\top X
 <li>Specify the arguments using <code>function()</code>.</li>
 <li>Write the body of the function within curly braces, <code>{}</code>.</li>
 </ul>
-<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="data-and-programming.html#cb301-1"></a>standardize =<span class="st"> </span><span class="cf">function</span>(x) {</span>
-<span id="cb301-2"><a href="data-and-programming.html#cb301-2"></a>  m =<span class="st"> </span><span class="kw">mean</span>(x)</span>
-<span id="cb301-3"><a href="data-and-programming.html#cb301-3"></a>  std =<span class="st"> </span><span class="kw">sd</span>(x)</span>
-<span id="cb301-4"><a href="data-and-programming.html#cb301-4"></a>  result =<span class="st"> </span>(x <span class="op">-</span><span class="st"> </span>m) <span class="op">/</span><span class="st"> </span>std</span>
-<span id="cb301-5"><a href="data-and-programming.html#cb301-5"></a>  result</span>
-<span id="cb301-6"><a href="data-and-programming.html#cb301-6"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="data-and-programming.html#cb311-1"></a>standardize =<span class="st"> </span><span class="cf">function</span>(x) {</span>
+<span id="cb311-2"><a href="data-and-programming.html#cb311-2"></a>  m =<span class="st"> </span><span class="kw">mean</span>(x)</span>
+<span id="cb311-3"><a href="data-and-programming.html#cb311-3"></a>  std =<span class="st"> </span><span class="kw">sd</span>(x)</span>
+<span id="cb311-4"><a href="data-and-programming.html#cb311-4"></a>  result =<span class="st"> </span>(x <span class="op">-</span><span class="st"> </span>m) <span class="op">/</span><span class="st"> </span>std</span>
+<span id="cb311-5"><a href="data-and-programming.html#cb311-5"></a>  result</span>
+<span id="cb311-6"><a href="data-and-programming.html#cb311-6"></a>}</span></code></pre></div>
 <p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the output of the final line of the body is what is returned by the function. In this case the function returns the vector stored in the variable <code>result</code>.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
-<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="data-and-programming.html#cb302-1"></a>(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</span></code></pre></div>
-<pre><code>##  [1]  5.951531 10.040652 -1.324556 -3.884348 -5.422511  8.626820 -2.958906
-##  [8] -3.271018 -1.855312  4.368904</code></pre>
-<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="data-and-programming.html#cb304-1"></a><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)</span></code></pre></div>
-<pre><code>##  [1]  0.8700098  1.5924473 -0.4154787 -0.8677250 -1.1394769  1.3426613
-##  [7] -0.7042244 -0.7593663 -0.5092491  0.5904022</code></pre>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="data-and-programming.html#cb312-1"></a>(<span class="dt">test_sample =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">2</span>, <span class="dt">sd =</span> <span class="dv">5</span>))</span></code></pre></div>
+<pre><code>##  [1] -1.2777099  5.9053565  1.9427972 -5.3298204 -4.6272079 -5.0197467
+##  [7]  0.3112569  5.2217634  3.7731853  0.1762039</code></pre>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="data-and-programming.html#cb314-1"></a><span class="kw">standardize</span>(<span class="dt">x =</span> test_sample)</span></code></pre></div>
+<pre><code>##  [1] -0.33187992  1.38896397  0.43965547 -1.30264217 -1.13431761 -1.22835796
+##  [7]  0.04878812  1.22519589  0.87816069  0.01643352</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
-<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="data-and-programming.html#cb306-1"></a>standardize =<span class="st"> </span><span class="cf">function</span>(x) {</span>
-<span id="cb306-2"><a href="data-and-programming.html#cb306-2"></a>  (x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x)</span>
-<span id="cb306-3"><a href="data-and-programming.html#cb306-3"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="data-and-programming.html#cb316-1"></a>standardize =<span class="st"> </span><span class="cf">function</span>(x) {</span>
+<span id="cb316-2"><a href="data-and-programming.html#cb316-2"></a>  (x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">/</span><span class="st"> </span><span class="kw">sd</span>(x)</span>
+<span id="cb316-3"><a href="data-and-programming.html#cb316-3"></a>}</span></code></pre></div>
 <p>When specifying arguments, you can provide default arguments.</p>
-<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="data-and-programming.html#cb307-1"></a>power_of_num =<span class="st"> </span><span class="cf">function</span>(num, <span class="dt">power =</span> <span class="dv">2</span>) {</span>
-<span id="cb307-2"><a href="data-and-programming.html#cb307-2"></a>  num <span class="op">^</span><span class="st"> </span>power</span>
-<span id="cb307-3"><a href="data-and-programming.html#cb307-3"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="data-and-programming.html#cb317-1"></a>power_of_num =<span class="st"> </span><span class="cf">function</span>(num, <span class="dt">power =</span> <span class="dv">2</span>) {</span>
+<span id="cb317-2"><a href="data-and-programming.html#cb317-2"></a>  num <span class="op">^</span><span class="st"> </span>power</span>
+<span id="cb317-3"><a href="data-and-programming.html#cb317-3"></a>}</span></code></pre></div>
 <p>Let’s look at a number of ways that we could run this function to perform the operation <code>10^2</code> resulting in <code>100</code>.</p>
-<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="data-and-programming.html#cb308-1"></a><span class="kw">power_of_num</span>(<span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="data-and-programming.html#cb318-1"></a><span class="kw">power_of_num</span>(<span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## [1] 100</code></pre>
-<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="data-and-programming.html#cb310-1"></a><span class="kw">power_of_num</span>(<span class="dv">10</span>, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="data-and-programming.html#cb320-1"></a><span class="kw">power_of_num</span>(<span class="dv">10</span>, <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 100</code></pre>
-<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="data-and-programming.html#cb312-1"></a><span class="kw">power_of_num</span>(<span class="dt">num =</span> <span class="dv">10</span>, <span class="dt">power =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="data-and-programming.html#cb322-1"></a><span class="kw">power_of_num</span>(<span class="dt">num =</span> <span class="dv">10</span>, <span class="dt">power =</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 100</code></pre>
-<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="data-and-programming.html#cb314-1"></a><span class="kw">power_of_num</span>(<span class="dt">power =</span> <span class="dv">2</span>, <span class="dt">num =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="data-and-programming.html#cb324-1"></a><span class="kw">power_of_num</span>(<span class="dt">power =</span> <span class="dv">2</span>, <span class="dt">num =</span> <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## [1] 100</code></pre>
 <p>Note that without using the argument names, the order matters. The following code will not evaluate to the same output as the previous example.</p>
-<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="data-and-programming.html#cb316-1"></a><span class="kw">power_of_num</span>(<span class="dv">2</span>, <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="data-and-programming.html#cb326-1"></a><span class="kw">power_of_num</span>(<span class="dv">2</span>, <span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## [1] 1024</code></pre>
 <p>Also, the following line of code would produce an error since arguments without a default value must be specified.</p>
-<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="data-and-programming.html#cb318-1"></a><span class="kw">power_of_num</span>(<span class="dt">power =</span> <span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb328"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb328-1"><a href="data-and-programming.html#cb328-1"></a><span class="kw">power_of_num</span>(<span class="dt">power =</span> <span class="dv">5</span>)</span></code></pre></div>
 <p>To further illustrate a function with a default argument, we will write a function that calculates sample variance two ways.</p>
 <p>By default, it will calculate the unbiased estimate of <span class="math inline">\(\sigma^2\)</span>, which we will call <span class="math inline">\(s^2\)</span>.</p>
 <p><span class="math display">\[
@@ -1365,19 +1378,19 @@ s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2
 <p><span class="math display">\[
 \hat{\sigma}^2 = \frac{1}{n}\sum_{i=1}^{n}(x - \bar{x})^2
 \]</span></p>
-<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="data-and-programming.html#cb319-1"></a>get_var =<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">biased =</span> <span class="ot">FALSE</span>) {</span>
-<span id="cb319-2"><a href="data-and-programming.html#cb319-2"></a>  n =<span class="st"> </span><span class="kw">length</span>(x) <span class="op">-</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="op">!</span>biased</span>
-<span id="cb319-3"><a href="data-and-programming.html#cb319-3"></a>  (<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>n) <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</span>
-<span id="cb319-4"><a href="data-and-programming.html#cb319-4"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="data-and-programming.html#cb320-1"></a><span class="kw">get_var</span>(test_sample)</span></code></pre></div>
-<pre><code>## [1] 32.03756</code></pre>
-<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="data-and-programming.html#cb322-1"></a><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
-<pre><code>## [1] 32.03756</code></pre>
-<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="data-and-programming.html#cb324-1"></a><span class="kw">var</span>(test_sample)</span></code></pre></div>
-<pre><code>## [1] 32.03756</code></pre>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="data-and-programming.html#cb329-1"></a>get_var =<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">biased =</span> <span class="ot">FALSE</span>) {</span>
+<span id="cb329-2"><a href="data-and-programming.html#cb329-2"></a>  n =<span class="st"> </span><span class="kw">length</span>(x) <span class="op">-</span><span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span><span class="op">!</span>biased</span>
+<span id="cb329-3"><a href="data-and-programming.html#cb329-3"></a>  (<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>n) <span class="op">*</span><span class="st"> </span><span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</span>
+<span id="cb329-4"><a href="data-and-programming.html#cb329-4"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="data-and-programming.html#cb330-1"></a><span class="kw">get_var</span>(test_sample)</span></code></pre></div>
+<pre><code>## [1] 17.42356</code></pre>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="data-and-programming.html#cb332-1"></a><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 17.42356</code></pre>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="data-and-programming.html#cb334-1"></a><span class="kw">var</span>(test_sample)</span></code></pre></div>
+<pre><code>## [1] 17.42356</code></pre>
 <p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built-in function <code>var()</code>. Finally, let’s examine the biased estimate of <span class="math inline">\(\sigma^2\)</span>.</p>
-<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="data-and-programming.html#cb326-1"></a><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<pre><code>## [1] 28.8338</code></pre>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="data-and-programming.html#cb336-1"></a><span class="kw">get_var</span>(test_sample, <span class="dt">biased =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 15.6812</code></pre>
 
 </div>
 </div>

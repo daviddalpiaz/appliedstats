@@ -627,13 +627,13 @@ L(\boldsymbol{{\beta}}) = \prod_{i : y_i = 1}^{} \frac{e^{\beta_0 + \beta_1 x_{i
 </div>
 <div id="simulation-examples" class="section level3 hasAnchor">
 <h3><span class="header-section-number">17.2.3</span> Simulation Examples<a href="logistic-regression.html#simulation-examples" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb1423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1423-1"><a href="logistic-regression.html#cb1423-1"></a>sim_logistic_data =<span class="st"> </span><span class="cf">function</span>(<span class="dt">sample_size =</span> <span class="dv">25</span>, <span class="dt">beta_0 =</span> <span class="dv">-2</span>, <span class="dt">beta_1 =</span> <span class="dv">3</span>) {</span>
-<span id="cb1423-2"><a href="logistic-regression.html#cb1423-2"></a>  x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> sample_size)</span>
-<span id="cb1423-3"><a href="logistic-regression.html#cb1423-3"></a>  eta =<span class="st"> </span>beta_<span class="dv">0</span> <span class="op">+</span><span class="st"> </span>beta_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x</span>
-<span id="cb1423-4"><a href="logistic-regression.html#cb1423-4"></a>  p =<span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>eta))</span>
-<span id="cb1423-5"><a href="logistic-regression.html#cb1423-5"></a>  y =<span class="st"> </span><span class="kw">rbinom</span>(<span class="dt">n =</span> sample_size, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">prob =</span> p)</span>
-<span id="cb1423-6"><a href="logistic-regression.html#cb1423-6"></a>  <span class="kw">data.frame</span>(y, x)</span>
-<span id="cb1423-7"><a href="logistic-regression.html#cb1423-7"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb1433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1433-1"><a href="logistic-regression.html#cb1433-1"></a>sim_logistic_data =<span class="st"> </span><span class="cf">function</span>(<span class="dt">sample_size =</span> <span class="dv">25</span>, <span class="dt">beta_0 =</span> <span class="dv">-2</span>, <span class="dt">beta_1 =</span> <span class="dv">3</span>) {</span>
+<span id="cb1433-2"><a href="logistic-regression.html#cb1433-2"></a>  x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> sample_size)</span>
+<span id="cb1433-3"><a href="logistic-regression.html#cb1433-3"></a>  eta =<span class="st"> </span>beta_<span class="dv">0</span> <span class="op">+</span><span class="st"> </span>beta_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x</span>
+<span id="cb1433-4"><a href="logistic-regression.html#cb1433-4"></a>  p =<span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>eta))</span>
+<span id="cb1433-5"><a href="logistic-regression.html#cb1433-5"></a>  y =<span class="st"> </span><span class="kw">rbinom</span>(<span class="dt">n =</span> sample_size, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">prob =</span> p)</span>
+<span id="cb1433-6"><a href="logistic-regression.html#cb1433-6"></a>  <span class="kw">data.frame</span>(y, x)</span>
+<span id="cb1433-7"><a href="logistic-regression.html#cb1433-7"></a>}</span></code></pre></div>
 <p>You might think, why not simply use ordinary linear regression? Even with a binary response, our goal is still to model (some function of) <span class="math inline">\(\text{E}[Y \mid {\bf X} = {\bf x}]\)</span>. However, with a binary response coded as <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>, <span class="math inline">\(\text{E}[Y \mid {\bf X} = {\bf x}] = P[Y = 1 \mid {\bf X} = {\bf x}]\)</span> since</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -654,9 +654,9 @@ p_i &amp;= p({\bf x_i}) = \frac{1}{1 + e^{-\eta({\bf x_i})}} \\
 \eta({\bf x_i}) &amp;= -2 + 3 x_i
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb1424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1424-1"><a href="logistic-regression.html#cb1424-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb1424-2"><a href="logistic-regression.html#cb1424-2"></a>example_data =<span class="st"> </span><span class="kw">sim_logistic_data</span>()</span>
-<span id="cb1424-3"><a href="logistic-regression.html#cb1424-3"></a><span class="kw">head</span>(example_data)</span></code></pre></div>
+<div class="sourceCode" id="cb1434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1434-1"><a href="logistic-regression.html#cb1434-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb1434-2"><a href="logistic-regression.html#cb1434-2"></a>example_data =<span class="st"> </span><span class="kw">sim_logistic_data</span>()</span>
+<span id="cb1434-3"><a href="logistic-regression.html#cb1434-3"></a><span class="kw">head</span>(example_data)</span></code></pre></div>
 <pre><code>##   y          x
 ## 1 0 -0.6264538
 ## 2 1  0.1836433
@@ -665,21 +665,21 @@ p_i &amp;= p({\bf x_i}) = \frac{1}{1 + e^{-\eta({\bf x_i})}} \\
 ## 5 0  0.3295078
 ## 6 0 -0.8204684</code></pre>
 <p>After simulating a dataset, we’ll then fit both ordinary linear regression and logistic regression. Notice that currently the responses variable <code>y</code> is a numeric variable that only takes values <code>0</code> and <code>1</code>. Later we’ll see that we can also fit logistic regression when the response is a factor variable with only two levels. (Generally, having a factor response is preferred, but having a dummy response allows use to make the comparison to using ordinary linear regression.)</p>
-<div class="sourceCode" id="cb1426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1426-1"><a href="logistic-regression.html#cb1426-1"></a><span class="co"># ordinary linear regression</span></span>
-<span id="cb1426-2"><a href="logistic-regression.html#cb1426-2"></a>fit_lm  =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data)</span>
-<span id="cb1426-3"><a href="logistic-regression.html#cb1426-3"></a><span class="co"># logistic regression</span></span>
-<span id="cb1426-4"><a href="logistic-regression.html#cb1426-4"></a>fit_glm =<span class="st"> </span><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data, <span class="dt">family =</span> binomial)</span></code></pre></div>
+<div class="sourceCode" id="cb1436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1436-1"><a href="logistic-regression.html#cb1436-1"></a><span class="co"># ordinary linear regression</span></span>
+<span id="cb1436-2"><a href="logistic-regression.html#cb1436-2"></a>fit_lm  =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data)</span>
+<span id="cb1436-3"><a href="logistic-regression.html#cb1436-3"></a><span class="co"># logistic regression</span></span>
+<span id="cb1436-4"><a href="logistic-regression.html#cb1436-4"></a>fit_glm =<span class="st"> </span><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data, <span class="dt">family =</span> binomial)</span></code></pre></div>
 <p>Notice that the syntax is extremely similar. What’s changed?</p>
 <ul>
 <li><code>lm()</code> has become <code>glm()</code></li>
 <li>We’ve added <code>family = binomial</code> argument</li>
 </ul>
 <p>In a lot of ways, <code>lm()</code> is just a more specific version of <code>glm()</code>. For example</p>
-<div class="sourceCode" id="cb1427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1427-1"><a href="logistic-regression.html#cb1427-1"></a><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data)</span></code></pre></div>
+<div class="sourceCode" id="cb1437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1437-1"><a href="logistic-regression.html#cb1437-1"></a><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data)</span></code></pre></div>
 <p>would actually fit the ordinary linear regression that we have seen in the past. By default, <code>glm()</code> uses <code>family = gaussian</code> argument. That is, we’re fitting a GLM with a normally distributed response and the identity function as the link.</p>
 <p>The <code>family</code> argument to <code>glm()</code> actually specifies both the distribution and the link function. If not made explicit, the link function is chosen to be the <strong>canonical link function</strong>, which is essentially the most mathematical convenient link function. See <code>?glm</code> and <code>?family</code> for details. For example, the following code explicitly specifies the link function which was previously used by default.</p>
-<div class="sourceCode" id="cb1428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1428-1"><a href="logistic-regression.html#cb1428-1"></a><span class="co"># more detailed call to glm for logistic regression</span></span>
-<span id="cb1428-2"><a href="logistic-regression.html#cb1428-2"></a>fit_glm =<span class="st"> </span><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb1438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1438-1"><a href="logistic-regression.html#cb1438-1"></a><span class="co"># more detailed call to glm for logistic regression</span></span>
+<span id="cb1438-2"><a href="logistic-regression.html#cb1438-2"></a>fit_glm =<span class="st"> </span><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data, <span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>))</span></code></pre></div>
 <p>Making predictions with an object of type <code>glm</code> is slightly different than making predictions after fitting with <code>lm()</code>. In the case of logistic regression, with <code>family = binomial</code>, we have:</p>
 <table>
 <colgroup>
@@ -704,22 +704,22 @@ p_i &amp;= p({\bf x_i}) = \frac{1}{1 + e^{-\eta({\bf x_i})}} \\
 </tbody>
 </table>
 <p>That is, <code>type = "link"</code> will get you the log odds, while <code>type = "response"</code> will return the estimated mean, in this case, <span class="math inline">\(P[Y = 1 \mid {\bf X} = {\bf x}]\)</span> for each observation.</p>
-<div class="sourceCode" id="cb1429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1429-1"><a href="logistic-regression.html#cb1429-1"></a><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data, </span>
-<span id="cb1429-2"><a href="logistic-regression.html#cb1429-2"></a>     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">ylab =</span> <span class="st">&quot;Estimated Probability&quot;</span>, </span>
-<span id="cb1429-3"><a href="logistic-regression.html#cb1429-3"></a>     <span class="dt">main =</span> <span class="st">&quot;Ordinary vs Logistic Regression&quot;</span>)</span>
-<span id="cb1429-4"><a href="logistic-regression.html#cb1429-4"></a><span class="kw">grid</span>()</span>
-<span id="cb1429-5"><a href="logistic-regression.html#cb1429-5"></a><span class="kw">abline</span>(fit_lm, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</span>
-<span id="cb1429-6"><a href="logistic-regression.html#cb1429-6"></a><span class="kw">curve</span>(<span class="kw">predict</span>(fit_glm, <span class="kw">data.frame</span>(x), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>), </span>
-<span id="cb1429-7"><a href="logistic-regression.html#cb1429-7"></a>      <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb1429-8"><a href="logistic-regression.html#cb1429-8"></a><span class="kw">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Ordinary&quot;</span>, <span class="st">&quot;Logistic&quot;</span>, <span class="st">&quot;Data&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>), </span>
-<span id="cb1429-9"><a href="logistic-regression.html#cb1429-9"></a>       <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">20</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb1439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1439-1"><a href="logistic-regression.html#cb1439-1"></a><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data, </span>
+<span id="cb1439-2"><a href="logistic-regression.html#cb1439-2"></a>     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">ylab =</span> <span class="st">&quot;Estimated Probability&quot;</span>, </span>
+<span id="cb1439-3"><a href="logistic-regression.html#cb1439-3"></a>     <span class="dt">main =</span> <span class="st">&quot;Ordinary vs Logistic Regression&quot;</span>)</span>
+<span id="cb1439-4"><a href="logistic-regression.html#cb1439-4"></a><span class="kw">grid</span>()</span>
+<span id="cb1439-5"><a href="logistic-regression.html#cb1439-5"></a><span class="kw">abline</span>(fit_lm, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</span>
+<span id="cb1439-6"><a href="logistic-regression.html#cb1439-6"></a><span class="kw">curve</span>(<span class="kw">predict</span>(fit_glm, <span class="kw">data.frame</span>(x), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>), </span>
+<span id="cb1439-7"><a href="logistic-regression.html#cb1439-7"></a>      <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb1439-8"><a href="logistic-regression.html#cb1439-8"></a><span class="kw">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Ordinary&quot;</span>, <span class="st">&quot;Logistic&quot;</span>, <span class="st">&quot;Data&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>), </span>
+<span id="cb1439-9"><a href="logistic-regression.html#cb1439-9"></a>       <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">20</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</span></code></pre></div>
 <p><img src="logistic_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Since we only have a single predictor variable, we are able to graphically show this situation. First, note that the data, is plotted using black dots. The response <code>y</code> only takes values <code>0</code> and <code>1</code>.</p>
 <p>Next, we need to discuss the two added lines to the plot. The first, the solid orange line, is the fitted ordinary linear regression.</p>
 <p>The dashed blue curve is the estimated logistic regression. It is helpful to realize that we are not plotting an estimate of <span class="math inline">\(Y\)</span> for either. (Sometimes it might seem that way with ordinary linear regression, but that isn’t what is happening.) For both, we are plotting <span class="math inline">\(\hat{\text{E}}[Y \mid {\bf X} = {\bf x}]\)</span>, the estimated mean, which for a binary response happens to be an estimate of <span class="math inline">\(P[Y = 1 \mid {\bf X} = {\bf x}]\)</span>.</p>
 <p>We immediately see why ordinary linear regression is not a good idea. While it is estimating the mean, we see that it produces estimates that are less than 0! (And in other situations could produce estimates greater than 1!) If the mean is a probability, we don’t want probabilities less than 0 or greater than 1.</p>
 <p>Enter logistic regression. Since the output of the inverse logit function is restricted to be between 0 and 1, our estimates make much more sense as probabilities. Let’s look at our estimated coefficients. (With a lot of rounding, for simplicity.)</p>
-<div class="sourceCode" id="cb1430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1430-1"><a href="logistic-regression.html#cb1430-1"></a><span class="kw">round</span>(<span class="kw">coef</span>(fit_glm), <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1440-1"><a href="logistic-regression.html#cb1440-1"></a><span class="kw">round</span>(<span class="kw">coef</span>(fit_glm), <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## (Intercept)           x 
 ##        -2.3         3.7</code></pre>
 <p>Our estimated model is then:</p>
@@ -750,29 +750,29 @@ p_i &amp;= p({\bf x_i}) = \frac{1}{1 + e^{-\eta({\bf x_i})}} \\
 \end{aligned}
 \]</span></p>
 <p>In this model, as <span class="math inline">\(x\)</span> increases, the log odds decrease.</p>
-<div class="sourceCode" id="cb1432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1432-1"><a href="logistic-regression.html#cb1432-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb1432-2"><a href="logistic-regression.html#cb1432-2"></a>example_data =<span class="st"> </span><span class="kw">sim_logistic_data</span>(<span class="dt">sample_size =</span> <span class="dv">50</span>, <span class="dt">beta_0 =</span> <span class="dv">1</span>, <span class="dt">beta_1 =</span> <span class="dv">-4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1442-1"><a href="logistic-regression.html#cb1442-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb1442-2"><a href="logistic-regression.html#cb1442-2"></a>example_data =<span class="st"> </span><span class="kw">sim_logistic_data</span>(<span class="dt">sample_size =</span> <span class="dv">50</span>, <span class="dt">beta_0 =</span> <span class="dv">1</span>, <span class="dt">beta_1 =</span> <span class="dv">-4</span>)</span></code></pre></div>
 <p>We again simulate some observations form this model, then fit logistic regression.</p>
-<div class="sourceCode" id="cb1433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1433-1"><a href="logistic-regression.html#cb1433-1"></a>fit_glm =<span class="st"> </span><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data, <span class="dt">family =</span> binomial)</span></code></pre></div>
-<div class="sourceCode" id="cb1434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1434-1"><a href="logistic-regression.html#cb1434-1"></a><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data, </span>
-<span id="cb1434-2"><a href="logistic-regression.html#cb1434-2"></a>     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">ylab =</span> <span class="st">&quot;Estimated Probability&quot;</span>, </span>
-<span id="cb1434-3"><a href="logistic-regression.html#cb1434-3"></a>     <span class="dt">main =</span> <span class="st">&quot;Logistic Regression, Decreasing Probability&quot;</span>)</span>
-<span id="cb1434-4"><a href="logistic-regression.html#cb1434-4"></a><span class="kw">grid</span>()</span>
-<span id="cb1434-5"><a href="logistic-regression.html#cb1434-5"></a><span class="kw">curve</span>(<span class="kw">predict</span>(fit_glm, <span class="kw">data.frame</span>(x), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>), </span>
-<span id="cb1434-6"><a href="logistic-regression.html#cb1434-6"></a>      <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb1434-7"><a href="logistic-regression.html#cb1434-7"></a><span class="kw">curve</span>(boot<span class="op">::</span><span class="kw">inv.logit</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">4</span> <span class="op">*</span><span class="st"> </span>x), <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lty =</span> <span class="dv">1</span>)</span>
-<span id="cb1434-8"><a href="logistic-regression.html#cb1434-8"></a><span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;True Probability&quot;</span>, <span class="st">&quot;Estimated Probability&quot;</span>, <span class="st">&quot;Data&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>), </span>
-<span id="cb1434-9"><a href="logistic-regression.html#cb1434-9"></a>       <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">20</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb1443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1443-1"><a href="logistic-regression.html#cb1443-1"></a>fit_glm =<span class="st"> </span><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data, <span class="dt">family =</span> binomial)</span></code></pre></div>
+<div class="sourceCode" id="cb1444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1444-1"><a href="logistic-regression.html#cb1444-1"></a><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data, </span>
+<span id="cb1444-2"><a href="logistic-regression.html#cb1444-2"></a>     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">ylab =</span> <span class="st">&quot;Estimated Probability&quot;</span>, </span>
+<span id="cb1444-3"><a href="logistic-regression.html#cb1444-3"></a>     <span class="dt">main =</span> <span class="st">&quot;Logistic Regression, Decreasing Probability&quot;</span>)</span>
+<span id="cb1444-4"><a href="logistic-regression.html#cb1444-4"></a><span class="kw">grid</span>()</span>
+<span id="cb1444-5"><a href="logistic-regression.html#cb1444-5"></a><span class="kw">curve</span>(<span class="kw">predict</span>(fit_glm, <span class="kw">data.frame</span>(x), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>), </span>
+<span id="cb1444-6"><a href="logistic-regression.html#cb1444-6"></a>      <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb1444-7"><a href="logistic-regression.html#cb1444-7"></a><span class="kw">curve</span>(boot<span class="op">::</span><span class="kw">inv.logit</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="dv">4</span> <span class="op">*</span><span class="st"> </span>x), <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lty =</span> <span class="dv">1</span>)</span>
+<span id="cb1444-8"><a href="logistic-regression.html#cb1444-8"></a><span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;True Probability&quot;</span>, <span class="st">&quot;Estimated Probability&quot;</span>, <span class="st">&quot;Data&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>), </span>
+<span id="cb1444-9"><a href="logistic-regression.html#cb1444-9"></a>       <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">20</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</span></code></pre></div>
 <p><img src="logistic_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We see that this time, as <span class="math inline">\(x\)</span> increases, <span class="math inline">\(\hat{p}({\bf x})\)</span> decreases.</p>
 <p>Now let’s look at an example where the estimated probability doesn’t always simply increase or decrease. Much like ordinary linear regression, the linear combination of predictors can contain transformations of predictors (in this case a quadratic term) and interactions.</p>
-<div class="sourceCode" id="cb1435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1435-1"><a href="logistic-regression.html#cb1435-1"></a>sim_quadratic_logistic_data =<span class="st"> </span><span class="cf">function</span>(<span class="dt">sample_size =</span> <span class="dv">25</span>) {</span>
-<span id="cb1435-2"><a href="logistic-regression.html#cb1435-2"></a>  x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> sample_size)</span>
-<span id="cb1435-3"><a href="logistic-regression.html#cb1435-3"></a>  eta =<span class="st"> </span><span class="fl">-1.5</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>x <span class="op">^</span><span class="st"> </span><span class="dv">2</span></span>
-<span id="cb1435-4"><a href="logistic-regression.html#cb1435-4"></a>  p =<span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>eta))</span>
-<span id="cb1435-5"><a href="logistic-regression.html#cb1435-5"></a>  y =<span class="st"> </span><span class="kw">rbinom</span>(<span class="dt">n =</span> sample_size, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">prob =</span> p)</span>
-<span id="cb1435-6"><a href="logistic-regression.html#cb1435-6"></a>  <span class="kw">data.frame</span>(y, x)</span>
-<span id="cb1435-7"><a href="logistic-regression.html#cb1435-7"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb1445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1445-1"><a href="logistic-regression.html#cb1445-1"></a>sim_quadratic_logistic_data =<span class="st"> </span><span class="cf">function</span>(<span class="dt">sample_size =</span> <span class="dv">25</span>) {</span>
+<span id="cb1445-2"><a href="logistic-regression.html#cb1445-2"></a>  x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> sample_size)</span>
+<span id="cb1445-3"><a href="logistic-regression.html#cb1445-3"></a>  eta =<span class="st"> </span><span class="fl">-1.5</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>x <span class="op">^</span><span class="st"> </span><span class="dv">2</span></span>
+<span id="cb1445-4"><a href="logistic-regression.html#cb1445-4"></a>  p =<span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw">exp</span>(<span class="op">-</span>eta))</span>
+<span id="cb1445-5"><a href="logistic-regression.html#cb1445-5"></a>  y =<span class="st"> </span><span class="kw">rbinom</span>(<span class="dt">n =</span> sample_size, <span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">prob =</span> p)</span>
+<span id="cb1445-6"><a href="logistic-regression.html#cb1445-6"></a>  <span class="kw">data.frame</span>(y, x)</span>
+<span id="cb1445-7"><a href="logistic-regression.html#cb1445-7"></a>}</span></code></pre></div>
 <p><span class="math display">\[
 \log\left(\frac{p({\bf x})}{1 - p({\bf x})}\right) = -1.5 + 0.5x + x^2.
 \]</span></p>
@@ -784,19 +784,19 @@ p_i &amp;= p({\bf x_i}) = \frac{1}{1 + e^{-\eta({\bf x_i})}} \\
 \eta({\bf x_i}) &amp;= -1.5 + 0.5x_i + x_i^2
 \end{aligned}
 \]</span></p>
-<div class="sourceCode" id="cb1436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1436-1"><a href="logistic-regression.html#cb1436-1"></a><span class="kw">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb1436-2"><a href="logistic-regression.html#cb1436-2"></a>example_data =<span class="st"> </span><span class="kw">sim_quadratic_logistic_data</span>(<span class="dt">sample_size =</span> <span class="dv">50</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb1437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1437-1"><a href="logistic-regression.html#cb1437-1"></a>fit_glm =<span class="st"> </span><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> example_data, <span class="dt">family =</span> binomial)</span></code></pre></div>
-<div class="sourceCode" id="cb1438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1438-1"><a href="logistic-regression.html#cb1438-1"></a><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data, </span>
-<span id="cb1438-2"><a href="logistic-regression.html#cb1438-2"></a>     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">ylab =</span> <span class="st">&quot;Estimated Probability&quot;</span>, </span>
-<span id="cb1438-3"><a href="logistic-regression.html#cb1438-3"></a>     <span class="dt">main =</span> <span class="st">&quot;Logistic Regression, Quadratic Relationship&quot;</span>)</span>
-<span id="cb1438-4"><a href="logistic-regression.html#cb1438-4"></a><span class="kw">grid</span>()</span>
-<span id="cb1438-5"><a href="logistic-regression.html#cb1438-5"></a><span class="kw">curve</span>(<span class="kw">predict</span>(fit_glm, <span class="kw">data.frame</span>(x), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>), </span>
-<span id="cb1438-6"><a href="logistic-regression.html#cb1438-6"></a>      <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb1438-7"><a href="logistic-regression.html#cb1438-7"></a><span class="kw">curve</span>(boot<span class="op">::</span><span class="kw">inv.logit</span>(<span class="op">-</span><span class="fl">1.5</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>x <span class="op">^</span><span class="st"> </span><span class="dv">2</span>), </span>
-<span id="cb1438-8"><a href="logistic-regression.html#cb1438-8"></a>      <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lty =</span> <span class="dv">1</span>)</span>
-<span id="cb1438-9"><a href="logistic-regression.html#cb1438-9"></a><span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;True Probability&quot;</span>, <span class="st">&quot;Estimated Probability&quot;</span>, <span class="st">&quot;Data&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>), </span>
-<span id="cb1438-10"><a href="logistic-regression.html#cb1438-10"></a>       <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">20</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb1446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1446-1"><a href="logistic-regression.html#cb1446-1"></a><span class="kw">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb1446-2"><a href="logistic-regression.html#cb1446-2"></a>example_data =<span class="st"> </span><span class="kw">sim_quadratic_logistic_data</span>(<span class="dt">sample_size =</span> <span class="dv">50</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1447-1"><a href="logistic-regression.html#cb1447-1"></a>fit_glm =<span class="st"> </span><span class="kw">glm</span>(y <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x<span class="op">^</span><span class="dv">2</span>), <span class="dt">data =</span> example_data, <span class="dt">family =</span> binomial)</span></code></pre></div>
+<div class="sourceCode" id="cb1448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1448-1"><a href="logistic-regression.html#cb1448-1"></a><span class="kw">plot</span>(y <span class="op">~</span><span class="st"> </span>x, <span class="dt">data =</span> example_data, </span>
+<span id="cb1448-2"><a href="logistic-regression.html#cb1448-2"></a>     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">ylab =</span> <span class="st">&quot;Estimated Probability&quot;</span>, </span>
+<span id="cb1448-3"><a href="logistic-regression.html#cb1448-3"></a>     <span class="dt">main =</span> <span class="st">&quot;Logistic Regression, Quadratic Relationship&quot;</span>)</span>
+<span id="cb1448-4"><a href="logistic-regression.html#cb1448-4"></a><span class="kw">grid</span>()</span>
+<span id="cb1448-5"><a href="logistic-regression.html#cb1448-5"></a><span class="kw">curve</span>(<span class="kw">predict</span>(fit_glm, <span class="kw">data.frame</span>(x), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>), </span>
+<span id="cb1448-6"><a href="logistic-regression.html#cb1448-6"></a>      <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb1448-7"><a href="logistic-regression.html#cb1448-7"></a><span class="kw">curve</span>(boot<span class="op">::</span><span class="kw">inv.logit</span>(<span class="op">-</span><span class="fl">1.5</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.5</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>x <span class="op">^</span><span class="st"> </span><span class="dv">2</span>), </span>
+<span id="cb1448-8"><a href="logistic-regression.html#cb1448-8"></a>      <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lty =</span> <span class="dv">1</span>)</span>
+<span id="cb1448-9"><a href="logistic-regression.html#cb1448-9"></a><span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;True Probability&quot;</span>, <span class="st">&quot;Estimated Probability&quot;</span>, <span class="st">&quot;Data&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>), </span>
+<span id="cb1448-10"><a href="logistic-regression.html#cb1448-10"></a>       <span class="dt">pch =</span> <span class="kw">c</span>(<span class="ot">NA</span>, <span class="ot">NA</span>, <span class="dv">20</span>), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</span></code></pre></div>
 <p><img src="logistic_files/figure-html/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
@@ -875,10 +875,10 @@ D \overset{\text{approx}}{\sim} \chi^2_{k}
 <div id="saheart-example" class="section level3 hasAnchor">
 <h3><span class="header-section-number">17.3.4</span> <code>SAheart</code> Example<a href="logistic-regression.html#saheart-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To illustrate the use of logistic regression, we will use the <code>SAheart</code> dataset from the <code>ElemStatLearn</code> package.</p>
-<div class="sourceCode" id="cb1439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1439-1"><a href="logistic-regression.html#cb1439-1"></a><span class="co"># install.packages(&quot;bestglm&quot;)</span></span>
-<span id="cb1439-2"><a href="logistic-regression.html#cb1439-2"></a><span class="kw">library</span>(bestglm)</span></code></pre></div>
+<div class="sourceCode" id="cb1449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1449-1"><a href="logistic-regression.html#cb1449-1"></a><span class="co"># install.packages(&quot;bestglm&quot;)</span></span>
+<span id="cb1449-2"><a href="logistic-regression.html#cb1449-2"></a><span class="kw">library</span>(bestglm)</span></code></pre></div>
 <pre><code>## Loading required package: leaps</code></pre>
-<div class="sourceCode" id="cb1441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1441-1"><a href="logistic-regression.html#cb1441-1"></a><span class="kw">data</span>(<span class="st">&quot;SAheart&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1451-1"><a href="logistic-regression.html#cb1451-1"></a><span class="kw">data</span>(<span class="st">&quot;SAheart&quot;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -975,16 +975,16 @@ D \overset{\text{approx}}{\sim} \chi^2_{k}
 <p><span class="math display">\[
 \log\left(\frac{P[\texttt{chd} = 1]}{1 - P[\texttt{chd} = 1]}\right) = \beta_0 + \beta_{\texttt{ldl}} x_{\texttt{ldl}}
 \]</span></p>
-<div class="sourceCode" id="cb1442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1442-1"><a href="logistic-regression.html#cb1442-1"></a>chd_mod_ldl =<span class="st"> </span><span class="kw">glm</span>(chd <span class="op">~</span><span class="st"> </span>ldl, <span class="dt">data =</span> SAheart, <span class="dt">family =</span> binomial)</span>
-<span id="cb1442-2"><a href="logistic-regression.html#cb1442-2"></a><span class="kw">plot</span>(<span class="kw">jitter</span>(chd, <span class="dt">factor =</span> <span class="fl">0.1</span>) <span class="op">~</span><span class="st"> </span>ldl, <span class="dt">data =</span> SAheart, <span class="dt">pch =</span> <span class="dv">20</span>, </span>
-<span id="cb1442-3"><a href="logistic-regression.html#cb1442-3"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Probability of CHD&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Low Density Lipoprotein Cholesterol&quot;</span>)</span>
-<span id="cb1442-4"><a href="logistic-regression.html#cb1442-4"></a><span class="kw">grid</span>()</span>
-<span id="cb1442-5"><a href="logistic-regression.html#cb1442-5"></a><span class="kw">curve</span>(<span class="kw">predict</span>(chd_mod_ldl, <span class="kw">data.frame</span>(<span class="dt">ldl =</span> x), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>), </span>
-<span id="cb1442-6"><a href="logistic-regression.html#cb1442-6"></a>      <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1452-1"><a href="logistic-regression.html#cb1452-1"></a>chd_mod_ldl =<span class="st"> </span><span class="kw">glm</span>(chd <span class="op">~</span><span class="st"> </span>ldl, <span class="dt">data =</span> SAheart, <span class="dt">family =</span> binomial)</span>
+<span id="cb1452-2"><a href="logistic-regression.html#cb1452-2"></a><span class="kw">plot</span>(<span class="kw">jitter</span>(chd, <span class="dt">factor =</span> <span class="fl">0.1</span>) <span class="op">~</span><span class="st"> </span>ldl, <span class="dt">data =</span> SAheart, <span class="dt">pch =</span> <span class="dv">20</span>, </span>
+<span id="cb1452-3"><a href="logistic-regression.html#cb1452-3"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Probability of CHD&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Low Density Lipoprotein Cholesterol&quot;</span>)</span>
+<span id="cb1452-4"><a href="logistic-regression.html#cb1452-4"></a><span class="kw">grid</span>()</span>
+<span id="cb1452-5"><a href="logistic-regression.html#cb1452-5"></a><span class="kw">curve</span>(<span class="kw">predict</span>(chd_mod_ldl, <span class="kw">data.frame</span>(<span class="dt">ldl =</span> x), <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>), </span>
+<span id="cb1452-6"><a href="logistic-regression.html#cb1452-6"></a>      <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="logistic_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>As before, we plot the data in addition to the estimated probabilities. Note that we have “jittered” the data to make it easier to visualize, but the data do only take values <code>0</code> and <code>1</code>.</p>
 <p>As we would expect, this plot indicates that as <code>ldl</code> increases, so does the probability of <code>chd</code>.</p>
-<div class="sourceCode" id="cb1443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1443-1"><a href="logistic-regression.html#cb1443-1"></a><span class="kw">coef</span>(<span class="kw">summary</span>(chd_mod_ldl))</span></code></pre></div>
+<div class="sourceCode" id="cb1453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1453-1"><a href="logistic-regression.html#cb1453-1"></a><span class="kw">coef</span>(<span class="kw">summary</span>(chd_mod_ldl))</span></code></pre></div>
 <pre><code>##               Estimate Std. Error   z value     Pr(&gt;|z|)
 ## (Intercept) -1.9686681 0.27307908 -7.209150 5.630207e-13
 ## ldl          0.2746613 0.05163983  5.318787 1.044615e-07</code></pre>
@@ -994,16 +994,16 @@ H_0: \beta_{\texttt{ldl}} = 0
 \]</span></p>
 <p>we use the <code>summary()</code> function as we have done so many times before. Like the <span class="math inline">\(t\)</span>-test for ordinary linear regression, this returns the estimate of the parameter, its standard error, the relevant test statistic (<span class="math inline">\(z\)</span>), and its p-value. Here we have an incredibly low p-value, so we reject the null hypothesis. The <code>ldl</code> variable appears to be a significant predictor.</p>
 <p>When fitting logistic regression, we can use the same formula syntax as ordinary linear regression. So, to fit an additive model using all available predictors, we use:</p>
-<div class="sourceCode" id="cb1445"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1445-1"><a href="logistic-regression.html#cb1445-1"></a>chd_mod_additive =<span class="st"> </span><span class="kw">glm</span>(chd <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> SAheart, <span class="dt">family =</span> binomial)</span></code></pre></div>
+<div class="sourceCode" id="cb1455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1455-1"><a href="logistic-regression.html#cb1455-1"></a>chd_mod_additive =<span class="st"> </span><span class="kw">glm</span>(chd <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> SAheart, <span class="dt">family =</span> binomial)</span></code></pre></div>
 <p>We can then use the likelihood-ratio test to compare the two models. Specifically, we are testing</p>
 <p><span class="math display">\[
 H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{tobacco}} = \beta_{\texttt{adiposity}} = \beta_{\texttt{famhist}} = \beta_{\texttt{typea}} = \beta_{\texttt{obesity}} = \beta_{\texttt{alcohol}} = \beta_{\texttt{age}} = 0
 \]</span></p>
 <p>We could manually calculate the test statistic,</p>
-<div class="sourceCode" id="cb1446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1446-1"><a href="logistic-regression.html#cb1446-1"></a><span class="dv">-2</span> <span class="op">*</span><span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">logLik</span>(chd_mod_ldl) <span class="op">-</span><span class="st"> </span><span class="kw">logLik</span>(chd_mod_additive))</span></code></pre></div>
+<div class="sourceCode" id="cb1456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1456-1"><a href="logistic-regression.html#cb1456-1"></a><span class="dv">-2</span> <span class="op">*</span><span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">logLik</span>(chd_mod_ldl) <span class="op">-</span><span class="st"> </span><span class="kw">logLik</span>(chd_mod_additive))</span></code></pre></div>
 <pre><code>## [1] 92.13879</code></pre>
 <p>Or we could utilize the <code>anova()</code> function. By specifying <code>test = "LRT"</code>, <code>R</code> will use the likelihood-ratio test to compare the two models.</p>
-<div class="sourceCode" id="cb1448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1448-1"><a href="logistic-regression.html#cb1448-1"></a><span class="kw">anova</span>(chd_mod_ldl, chd_mod_additive, <span class="dt">test =</span> <span class="st">&quot;LRT&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1458-1"><a href="logistic-regression.html#cb1458-1"></a><span class="kw">anova</span>(chd_mod_ldl, chd_mod_additive, <span class="dt">test =</span> <span class="st">&quot;LRT&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model 1: chd ~ ldl
@@ -1016,8 +1016,8 @@ H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{tobacco}} = \beta_{\texttt{adiposity}
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>We see that the test statistic that we had just calculated appears in the output. The very small p-value suggests that we prefer the larger model.</p>
 <p>While we prefer the additive model compared to the model with only a single predictor, do we actually need all of the predictors in the additive model? To select a subset of predictors, we can use a stepwise procedure as we did with ordinary linear regression. Recall that AIC and BIC were defined in terms of likelihoods. Here we demonstrate using AIC with a backwards selection procedure.</p>
-<div class="sourceCode" id="cb1450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1450-1"><a href="logistic-regression.html#cb1450-1"></a>chd_mod_selected =<span class="st"> </span><span class="kw">step</span>(chd_mod_additive, <span class="dt">trace =</span> <span class="dv">0</span>)</span>
-<span id="cb1450-2"><a href="logistic-regression.html#cb1450-2"></a><span class="kw">coef</span>(chd_mod_selected)</span></code></pre></div>
+<div class="sourceCode" id="cb1460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1460-1"><a href="logistic-regression.html#cb1460-1"></a>chd_mod_selected =<span class="st"> </span><span class="kw">step</span>(chd_mod_additive, <span class="dt">trace =</span> <span class="dv">0</span>)</span>
+<span id="cb1460-2"><a href="logistic-regression.html#cb1460-2"></a><span class="kw">coef</span>(chd_mod_selected)</span></code></pre></div>
 <pre><code>##    (Intercept)        tobacco            ldl famhistPresent          typea 
 ##    -6.44644451     0.08037533     0.16199164     0.90817526     0.03711521 
 ##            age 
@@ -1026,7 +1026,7 @@ H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{tobacco}} = \beta_{\texttt{adiposity}
 <p><span class="math display">\[
 H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{adiposity}} = \beta_{\texttt{obesity}} = \beta_{\texttt{alcohol}} = 0
 \]</span></p>
-<div class="sourceCode" id="cb1452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1452-1"><a href="logistic-regression.html#cb1452-1"></a><span class="kw">anova</span>(chd_mod_selected, chd_mod_additive, <span class="dt">test =</span> <span class="st">&quot;LRT&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1462-1"><a href="logistic-regression.html#cb1462-1"></a><span class="kw">anova</span>(chd_mod_selected, chd_mod_additive, <span class="dt">test =</span> <span class="st">&quot;LRT&quot;</span>)</span></code></pre></div>
 <pre><code>## Analysis of Deviance Table
 ## 
 ## Model 1: chd ~ tobacco + ldl + famhist + typea + age
@@ -1040,7 +1040,7 @@ H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{adiposity}} = \beta_{\texttt{obesity}
 <div id="confidence-intervals-1" class="section level3 hasAnchor">
 <h3><span class="header-section-number">17.3.5</span> Confidence Intervals<a href="logistic-regression.html#confidence-intervals-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We can create confidence intervals for the <span class="math inline">\(\beta\)</span> parameters using the <code>confint()</code> function as we did with ordinary linear regression.</p>
-<div class="sourceCode" id="cb1454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1454-1"><a href="logistic-regression.html#cb1454-1"></a><span class="kw">confint</span>(chd_mod_selected, <span class="dt">level =</span> <span class="fl">0.99</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1464-1"><a href="logistic-regression.html#cb1464-1"></a><span class="kw">confint</span>(chd_mod_selected, <span class="dt">level =</span> <span class="fl">0.99</span>)</span></code></pre></div>
 <pre><code>## Waiting for profiling to be done...</code></pre>
 <pre><code>##                       0.5 %      99.5 %
 ## (Intercept)    -8.941825274 -4.18278990
@@ -1071,20 +1071,20 @@ H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{adiposity}} = \beta_{\texttt{obesity}
 \left(\text{logit}^{-1}(\hat{\eta}({\bf x}) - z_{\alpha/2} \cdot \text{SE}[\hat{\eta}({\bf x})] ), \ \text{logit}^{-1}(\hat{\eta}({\bf x}) + z_{\alpha/2} \cdot \text{SE}[\hat{\eta}({\bf x})])\right)
 \]</span></p>
 <p>To demonstrate creating these intervals, we’ll consider a new observation.</p>
-<div class="sourceCode" id="cb1457"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1457-1"><a href="logistic-regression.html#cb1457-1"></a>new_obs =<span class="st"> </span><span class="kw">data.frame</span>(</span>
-<span id="cb1457-2"><a href="logistic-regression.html#cb1457-2"></a>  <span class="dt">sbp =</span> <span class="fl">148.0</span>,</span>
-<span id="cb1457-3"><a href="logistic-regression.html#cb1457-3"></a>  <span class="dt">tobacco =</span> <span class="dv">5</span>,</span>
-<span id="cb1457-4"><a href="logistic-regression.html#cb1457-4"></a>  <span class="dt">ldl =</span> <span class="dv">12</span>,</span>
-<span id="cb1457-5"><a href="logistic-regression.html#cb1457-5"></a>  <span class="dt">adiposity =</span> <span class="fl">31.23</span>,</span>
-<span id="cb1457-6"><a href="logistic-regression.html#cb1457-6"></a>  <span class="dt">famhist =</span> <span class="st">&quot;Present&quot;</span>,</span>
-<span id="cb1457-7"><a href="logistic-regression.html#cb1457-7"></a>  <span class="dt">typea =</span> <span class="dv">47</span>,</span>
-<span id="cb1457-8"><a href="logistic-regression.html#cb1457-8"></a>  <span class="dt">obesity =</span> <span class="fl">28.50</span>,</span>
-<span id="cb1457-9"><a href="logistic-regression.html#cb1457-9"></a>  <span class="dt">alcohol =</span> <span class="fl">23.89</span>,</span>
-<span id="cb1457-10"><a href="logistic-regression.html#cb1457-10"></a>  <span class="dt">age =</span> <span class="dv">60</span></span>
-<span id="cb1457-11"><a href="logistic-regression.html#cb1457-11"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb1467"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1467-1"><a href="logistic-regression.html#cb1467-1"></a>new_obs =<span class="st"> </span><span class="kw">data.frame</span>(</span>
+<span id="cb1467-2"><a href="logistic-regression.html#cb1467-2"></a>  <span class="dt">sbp =</span> <span class="fl">148.0</span>,</span>
+<span id="cb1467-3"><a href="logistic-regression.html#cb1467-3"></a>  <span class="dt">tobacco =</span> <span class="dv">5</span>,</span>
+<span id="cb1467-4"><a href="logistic-regression.html#cb1467-4"></a>  <span class="dt">ldl =</span> <span class="dv">12</span>,</span>
+<span id="cb1467-5"><a href="logistic-regression.html#cb1467-5"></a>  <span class="dt">adiposity =</span> <span class="fl">31.23</span>,</span>
+<span id="cb1467-6"><a href="logistic-regression.html#cb1467-6"></a>  <span class="dt">famhist =</span> <span class="st">&quot;Present&quot;</span>,</span>
+<span id="cb1467-7"><a href="logistic-regression.html#cb1467-7"></a>  <span class="dt">typea =</span> <span class="dv">47</span>,</span>
+<span id="cb1467-8"><a href="logistic-regression.html#cb1467-8"></a>  <span class="dt">obesity =</span> <span class="fl">28.50</span>,</span>
+<span id="cb1467-9"><a href="logistic-regression.html#cb1467-9"></a>  <span class="dt">alcohol =</span> <span class="fl">23.89</span>,</span>
+<span id="cb1467-10"><a href="logistic-regression.html#cb1467-10"></a>  <span class="dt">age =</span> <span class="dv">60</span></span>
+<span id="cb1467-11"><a href="logistic-regression.html#cb1467-11"></a>)</span></code></pre></div>
 <p>Fist, we’ll use the <code>predict()</code> function to obtain <span class="math inline">\(\hat{\eta}({\bf x})\)</span> for this observation.</p>
-<div class="sourceCode" id="cb1458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1458-1"><a href="logistic-regression.html#cb1458-1"></a>eta_hat =<span class="st"> </span><span class="kw">predict</span>(chd_mod_selected, new_obs, <span class="dt">se.fit =</span> <span class="ot">TRUE</span>, <span class="dt">type =</span> <span class="st">&quot;link&quot;</span>)</span>
-<span id="cb1458-2"><a href="logistic-regression.html#cb1458-2"></a>eta_hat</span></code></pre></div>
+<div class="sourceCode" id="cb1468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1468-1"><a href="logistic-regression.html#cb1468-1"></a>eta_hat =<span class="st"> </span><span class="kw">predict</span>(chd_mod_selected, new_obs, <span class="dt">se.fit =</span> <span class="ot">TRUE</span>, <span class="dt">type =</span> <span class="st">&quot;link&quot;</span>)</span>
+<span id="cb1468-2"><a href="logistic-regression.html#cb1468-2"></a>eta_hat</span></code></pre></div>
 <pre><code>## $fit
 ##        1 
 ## 1.579545 
@@ -1095,14 +1095,14 @@ H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{adiposity}} = \beta_{\texttt{obesity}
 ## $residual.scale
 ## [1] 1</code></pre>
 <p>By setting <code>se.fit = TRUE</code>, <code>R</code> also computes <span class="math inline">\(\text{SE}[\hat{\eta}({\bf x})]\)</span>. Note that we used <code>type = "link"</code>, but this is actually a default value. We added it here to stress that the output from <code>predict()</code> will be the value of the link function.</p>
-<div class="sourceCode" id="cb1460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1460-1"><a href="logistic-regression.html#cb1460-1"></a>z_crit =<span class="st"> </span><span class="kw">round</span>(<span class="kw">qnorm</span>(<span class="fl">0.975</span>), <span class="dv">2</span>)</span>
-<span id="cb1460-2"><a href="logistic-regression.html#cb1460-2"></a><span class="kw">round</span>(z_crit, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1470-1"><a href="logistic-regression.html#cb1470-1"></a>z_crit =<span class="st"> </span><span class="kw">round</span>(<span class="kw">qnorm</span>(<span class="fl">0.975</span>), <span class="dv">2</span>)</span>
+<span id="cb1470-2"><a href="logistic-regression.html#cb1470-2"></a><span class="kw">round</span>(z_crit, <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 1.96</code></pre>
 <p>After obtaining the correct critical value, we can easily create a <span class="math inline">\(95\%\)</span> confidence interval for <span class="math inline">\(\eta({\bf x})\)</span>.</p>
-<div class="sourceCode" id="cb1462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1462-1"><a href="logistic-regression.html#cb1462-1"></a>eta_hat<span class="op">$</span>fit <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>z_crit <span class="op">*</span><span class="st"> </span>eta_hat<span class="op">$</span>se.fit</span></code></pre></div>
+<div class="sourceCode" id="cb1472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1472-1"><a href="logistic-regression.html#cb1472-1"></a>eta_hat<span class="op">$</span>fit <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>z_crit <span class="op">*</span><span class="st"> </span>eta_hat<span class="op">$</span>se.fit</span></code></pre></div>
 <pre><code>## [1] 0.773045 2.386045</code></pre>
 <p>Now we simply need to apply the correct transformation to make this a confidence interval for <span class="math inline">\(p({\bf x})\)</span>, the probability of coronary heart disease for this observation. Note that the <code>boot</code> package contains functions <code>logit()</code> and <code>inv.logit()</code> which are the logit and inverse logit transformations, respectively.</p>
-<div class="sourceCode" id="cb1464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1464-1"><a href="logistic-regression.html#cb1464-1"></a>boot<span class="op">::</span><span class="kw">inv.logit</span>(eta_hat<span class="op">$</span>fit <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>z_crit <span class="op">*</span><span class="st"> </span>eta_hat<span class="op">$</span>se.fit)</span></code></pre></div>
+<div class="sourceCode" id="cb1474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1474-1"><a href="logistic-regression.html#cb1474-1"></a>boot<span class="op">::</span><span class="kw">inv.logit</span>(eta_hat<span class="op">$</span>fit <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>z_crit <span class="op">*</span><span class="st"> </span>eta_hat<span class="op">$</span>se.fit)</span></code></pre></div>
 <pre><code>## [1] 0.6841792 0.9157570</code></pre>
 <p>Notice, as we would expect, the bounds of this interval are both between 0 and 1. Also, since both bounds of the interval for <span class="math inline">\(\eta({\bf x})\)</span> are positive, both bounds of the interval for <span class="math inline">\(p({\bf x})\)</span> are greater than 0.5.</p>
 </div>
@@ -1112,9 +1112,9 @@ H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{adiposity}} = \beta_{\texttt{obesity}
 <div id="interactions-1" class="section level4 hasAnchor">
 <h4><span class="header-section-number">17.3.7.1</span> Interactions<a href="logistic-regression.html#interactions-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Let’s add an interaction between LDL and family history for the model we selected.</p>
-<div class="sourceCode" id="cb1466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1466-1"><a href="logistic-regression.html#cb1466-1"></a>chd_mod_interaction =<span class="st"> </span><span class="kw">glm</span>(chd <span class="op">~</span><span class="st"> </span>alcohol <span class="op">+</span><span class="st"> </span>ldl <span class="op">+</span><span class="st"> </span>famhist <span class="op">+</span><span class="st"> </span>typea <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>ldl<span class="op">:</span>famhist, </span>
-<span id="cb1466-2"><a href="logistic-regression.html#cb1466-2"></a>                          <span class="dt">data =</span> SAheart, <span class="dt">family =</span> binomial)</span>
-<span id="cb1466-3"><a href="logistic-regression.html#cb1466-3"></a><span class="kw">summary</span>(chd_mod_interaction)</span></code></pre></div>
+<div class="sourceCode" id="cb1476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1476-1"><a href="logistic-regression.html#cb1476-1"></a>chd_mod_interaction =<span class="st"> </span><span class="kw">glm</span>(chd <span class="op">~</span><span class="st"> </span>alcohol <span class="op">+</span><span class="st"> </span>ldl <span class="op">+</span><span class="st"> </span>famhist <span class="op">+</span><span class="st"> </span>typea <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>ldl<span class="op">:</span>famhist, </span>
+<span id="cb1476-2"><a href="logistic-regression.html#cb1476-2"></a>                          <span class="dt">data =</span> SAheart, <span class="dt">family =</span> binomial)</span>
+<span id="cb1476-3"><a href="logistic-regression.html#cb1476-3"></a><span class="kw">summary</span>(chd_mod_interaction)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = chd ~ alcohol + ldl + famhist + typea + age + ldl:famhist, 
@@ -1148,9 +1148,9 @@ H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{adiposity}} = \beta_{\texttt{obesity}
 <div id="polynomial-terms" class="section level4 hasAnchor">
 <h4><span class="header-section-number">17.3.7.2</span> Polynomial Terms<a href="logistic-regression.html#polynomial-terms" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Let’s take the previous model, and now add a polynomial term.</p>
-<div class="sourceCode" id="cb1468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1468-1"><a href="logistic-regression.html#cb1468-1"></a>chd_mod_int_quad =<span class="st"> </span><span class="kw">glm</span>(chd <span class="op">~</span><span class="st"> </span>alcohol <span class="op">+</span><span class="st"> </span>ldl <span class="op">+</span><span class="st"> </span>famhist <span class="op">+</span><span class="st"> </span>typea <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>ldl<span class="op">:</span>famhist <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(ldl<span class="op">^</span><span class="dv">2</span>),</span>
-<span id="cb1468-2"><a href="logistic-regression.html#cb1468-2"></a>                       <span class="dt">data =</span> SAheart, <span class="dt">family =</span> binomial)</span>
-<span id="cb1468-3"><a href="logistic-regression.html#cb1468-3"></a><span class="kw">summary</span>(chd_mod_int_quad)</span></code></pre></div>
+<div class="sourceCode" id="cb1478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1478-1"><a href="logistic-regression.html#cb1478-1"></a>chd_mod_int_quad =<span class="st"> </span><span class="kw">glm</span>(chd <span class="op">~</span><span class="st"> </span>alcohol <span class="op">+</span><span class="st"> </span>ldl <span class="op">+</span><span class="st"> </span>famhist <span class="op">+</span><span class="st"> </span>typea <span class="op">+</span><span class="st"> </span>age <span class="op">+</span><span class="st"> </span>ldl<span class="op">:</span>famhist <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(ldl<span class="op">^</span><span class="dv">2</span>),</span>
+<span id="cb1478-2"><a href="logistic-regression.html#cb1478-2"></a>                       <span class="dt">data =</span> SAheart, <span class="dt">family =</span> binomial)</span>
+<span id="cb1478-3"><a href="logistic-regression.html#cb1478-3"></a><span class="kw">summary</span>(chd_mod_int_quad)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = chd ~ alcohol + ldl + famhist + typea + age + ldl:famhist + 
@@ -1200,11 +1200,11 @@ H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{adiposity}} = \beta_{\texttt{obesity}
 <h3><span class="header-section-number">17.3.8</span> Deviance<a href="logistic-regression.html#deviance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>You have probably noticed that the output from <code>summary()</code> is also very similar to that of ordinary linear regression. One difference, is the “deviance” being reported. The <code>Null deviance</code> is the deviance for the null model, that is, a model with no predictors. The <code>Residual deviance</code> is the deviance for the model that was fit.</p>
 <p><a href="https://en.wikipedia.org/wiki/Deviance_(statistics)" target="_blank"><strong>Deviance</strong></a> compares the model to a saturated model. (Without repeated observations, a saturated model is a model that fits perfectly, using a parameter for each observation.) Essentially, deviance is a generalized <em>residual sum of squares</em> for GLMs. Like RSS, deviance decreased as the model complexity increases.</p>
-<div class="sourceCode" id="cb1470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1470-1"><a href="logistic-regression.html#cb1470-1"></a><span class="kw">deviance</span>(chd_mod_ldl)</span></code></pre></div>
+<div class="sourceCode" id="cb1480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1480-1"><a href="logistic-regression.html#cb1480-1"></a><span class="kw">deviance</span>(chd_mod_ldl)</span></code></pre></div>
 <pre><code>## [1] 564.2788</code></pre>
-<div class="sourceCode" id="cb1472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1472-1"><a href="logistic-regression.html#cb1472-1"></a><span class="kw">deviance</span>(chd_mod_selected)</span></code></pre></div>
+<div class="sourceCode" id="cb1482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1482-1"><a href="logistic-regression.html#cb1482-1"></a><span class="kw">deviance</span>(chd_mod_selected)</span></code></pre></div>
 <pre><code>## [1] 475.6856</code></pre>
-<div class="sourceCode" id="cb1474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1474-1"><a href="logistic-regression.html#cb1474-1"></a><span class="kw">deviance</span>(chd_mod_additive)</span></code></pre></div>
+<div class="sourceCode" id="cb1484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1484-1"><a href="logistic-regression.html#cb1484-1"></a><span class="kw">deviance</span>(chd_mod_additive)</span></code></pre></div>
 <pre><code>## [1] 472.14</code></pre>
 <p>Note that these are nested, and we see that deviance does decrease as the model size becomes larger. So while a lower deviance is better, if the model becomes too big, it may be overfitting. Note that <code>R</code> also outputs AIC in the summary, which will penalize according to model size, to prevent overfitting.</p>
 </div>
@@ -1249,10 +1249,10 @@ C^B({\bf x}) = \underset{k}{\mathrm{argmax}} \ P[Y = k \mid {\bf X = x}].
 <div id="spam-example" class="section level3 hasAnchor">
 <h3><span class="header-section-number">17.4.1</span> <code>spam</code> Example<a href="logistic-regression.html#spam-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To illustrate the use of logistic regression as a classifier, we will use the <code>spam</code> dataset from the <code>kernlab</code> package.</p>
-<div class="sourceCode" id="cb1476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1476-1"><a href="logistic-regression.html#cb1476-1"></a><span class="co"># install.packages(&quot;kernlab&quot;)</span></span>
-<span id="cb1476-2"><a href="logistic-regression.html#cb1476-2"></a><span class="kw">library</span>(kernlab)</span>
-<span id="cb1476-3"><a href="logistic-regression.html#cb1476-3"></a><span class="kw">data</span>(<span class="st">&quot;spam&quot;</span>)</span>
-<span id="cb1476-4"><a href="logistic-regression.html#cb1476-4"></a>tibble<span class="op">::</span><span class="kw">as.tibble</span>(spam)</span></code></pre></div>
+<div class="sourceCode" id="cb1486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1486-1"><a href="logistic-regression.html#cb1486-1"></a><span class="co"># install.packages(&quot;kernlab&quot;)</span></span>
+<span id="cb1486-2"><a href="logistic-regression.html#cb1486-2"></a><span class="kw">library</span>(kernlab)</span>
+<span id="cb1486-3"><a href="logistic-regression.html#cb1486-3"></a><span class="kw">data</span>(<span class="st">&quot;spam&quot;</span>)</span>
+<span id="cb1486-4"><a href="logistic-regression.html#cb1486-4"></a>tibble<span class="op">::</span><span class="kw">as.tibble</span>(spam)</span></code></pre></div>
 <pre><code>## Warning: `as.tibble()` was deprecated in tibble 2.0.0.
 ## Please use `as_tibble()` instead.
 ## The signature and semantics have changed, see `?as_tibble`.
@@ -1280,30 +1280,30 @@ C^B({\bf x}) = \underset{k}{\mathrm{argmax}} \ P[Y = k \mid {\bf X = x}].
 ## #   cs &lt;dbl&gt;, meeting &lt;dbl&gt;, original &lt;dbl&gt;, project &lt;dbl&gt;, re &lt;dbl&gt;, …</code></pre>
 <p>This dataset, created in the late 1990s at Hewlett-Packard Labs, contains 4601 emails, of which 1813 are considered spam. The remaining are not spam. (Which for simplicity, we might call, ham.) Additional details can be obtained by using <code>?spam</code> of by visiting the <a href="https://archive.ics.uci.edu/ml/datasets/spambase" target="_blank">UCI Machine Learning Repository</a>.</p>
 <p>The response variable, <code>type</code>, is a <strong>factor</strong> with levels that label each email as <code>spam</code> or <code>nonspam</code>. When fitting models, <code>nonspam</code> will be the reference level, <span class="math inline">\(Y = 0\)</span>, as it comes first alphabetically.</p>
-<div class="sourceCode" id="cb1479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1479-1"><a href="logistic-regression.html#cb1479-1"></a><span class="kw">is.factor</span>(spam<span class="op">$</span>type)</span></code></pre></div>
+<div class="sourceCode" id="cb1489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1489-1"><a href="logistic-regression.html#cb1489-1"></a><span class="kw">is.factor</span>(spam<span class="op">$</span>type)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1481-1"><a href="logistic-regression.html#cb1481-1"></a><span class="kw">levels</span>(spam<span class="op">$</span>type)</span></code></pre></div>
+<div class="sourceCode" id="cb1491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1491-1"><a href="logistic-regression.html#cb1491-1"></a><span class="kw">levels</span>(spam<span class="op">$</span>type)</span></code></pre></div>
 <pre><code>## [1] &quot;nonspam&quot; &quot;spam&quot;</code></pre>
 <p>Many of the predictors (often called features in machine learning) are engineered based on the emails. For example, <code>charDollar</code> is the number of times an email contains the <code>$</code> character. Some variables are highly specific to this dataset, for example <code>george</code> and <code>num650</code>. (The name and area code for one of the researchers whose emails were used.) We should keep in mind that this dataset was created based on emails send to academic type researcher in the 1990s. Any results we derive probably won’t generalize to modern emails for the general public.</p>
 <p>To get started, we’ll first test-train split the data.</p>
-<div class="sourceCode" id="cb1483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1483-1"><a href="logistic-regression.html#cb1483-1"></a><span class="kw">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb1483-2"><a href="logistic-regression.html#cb1483-2"></a><span class="co"># spam_idx = sample(nrow(spam), round(nrow(spam) / 2))</span></span>
-<span id="cb1483-3"><a href="logistic-regression.html#cb1483-3"></a>spam_idx =<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(spam), <span class="dv">1000</span>)</span>
-<span id="cb1483-4"><a href="logistic-regression.html#cb1483-4"></a>spam_trn =<span class="st"> </span>spam[spam_idx, ]</span>
-<span id="cb1483-5"><a href="logistic-regression.html#cb1483-5"></a>spam_tst =<span class="st"> </span>spam[<span class="op">-</span>spam_idx, ]</span></code></pre></div>
+<div class="sourceCode" id="cb1493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1493-1"><a href="logistic-regression.html#cb1493-1"></a><span class="kw">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb1493-2"><a href="logistic-regression.html#cb1493-2"></a><span class="co"># spam_idx = sample(nrow(spam), round(nrow(spam) / 2))</span></span>
+<span id="cb1493-3"><a href="logistic-regression.html#cb1493-3"></a>spam_idx =<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(spam), <span class="dv">1000</span>)</span>
+<span id="cb1493-4"><a href="logistic-regression.html#cb1493-4"></a>spam_trn =<span class="st"> </span>spam[spam_idx, ]</span>
+<span id="cb1493-5"><a href="logistic-regression.html#cb1493-5"></a>spam_tst =<span class="st"> </span>spam[<span class="op">-</span>spam_idx, ]</span></code></pre></div>
 <p>We’ve used a somewhat small train set relative to the total size of the dataset. In practice it should likely be larger, but this is simply to keep training time low for illustration and rendering of this document.</p>
-<div class="sourceCode" id="cb1484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1484-1"><a href="logistic-regression.html#cb1484-1"></a>fit_caps =<span class="st"> </span><span class="kw">glm</span>(type <span class="op">~</span><span class="st"> </span>capitalTotal, </span>
-<span id="cb1484-2"><a href="logistic-regression.html#cb1484-2"></a>               <span class="dt">data =</span> spam_trn, <span class="dt">family =</span> binomial)</span>
-<span id="cb1484-3"><a href="logistic-regression.html#cb1484-3"></a>fit_selected =<span class="st"> </span><span class="kw">glm</span>(type <span class="op">~</span><span class="st"> </span>edu <span class="op">+</span><span class="st"> </span>money <span class="op">+</span><span class="st"> </span>capitalTotal <span class="op">+</span><span class="st"> </span>charDollar, </span>
-<span id="cb1484-4"><a href="logistic-regression.html#cb1484-4"></a>                   <span class="dt">data =</span> spam_trn, <span class="dt">family =</span> binomial)</span>
-<span id="cb1484-5"><a href="logistic-regression.html#cb1484-5"></a>fit_additive =<span class="st"> </span><span class="kw">glm</span>(type <span class="op">~</span><span class="st"> </span>., </span>
-<span id="cb1484-6"><a href="logistic-regression.html#cb1484-6"></a>                   <span class="dt">data =</span> spam_trn, <span class="dt">family =</span> binomial)</span>
-<span id="cb1484-7"><a href="logistic-regression.html#cb1484-7"></a>fit_over =<span class="st"> </span><span class="kw">glm</span>(type <span class="op">~</span><span class="st"> </span>capitalTotal <span class="op">*</span><span class="st"> </span>(.), </span>
-<span id="cb1484-8"><a href="logistic-regression.html#cb1484-8"></a>               <span class="dt">data =</span> spam_trn, <span class="dt">family =</span> binomial, <span class="dt">maxit =</span> <span class="dv">50</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1494-1"><a href="logistic-regression.html#cb1494-1"></a>fit_caps =<span class="st"> </span><span class="kw">glm</span>(type <span class="op">~</span><span class="st"> </span>capitalTotal, </span>
+<span id="cb1494-2"><a href="logistic-regression.html#cb1494-2"></a>               <span class="dt">data =</span> spam_trn, <span class="dt">family =</span> binomial)</span>
+<span id="cb1494-3"><a href="logistic-regression.html#cb1494-3"></a>fit_selected =<span class="st"> </span><span class="kw">glm</span>(type <span class="op">~</span><span class="st"> </span>edu <span class="op">+</span><span class="st"> </span>money <span class="op">+</span><span class="st"> </span>capitalTotal <span class="op">+</span><span class="st"> </span>charDollar, </span>
+<span id="cb1494-4"><a href="logistic-regression.html#cb1494-4"></a>                   <span class="dt">data =</span> spam_trn, <span class="dt">family =</span> binomial)</span>
+<span id="cb1494-5"><a href="logistic-regression.html#cb1494-5"></a>fit_additive =<span class="st"> </span><span class="kw">glm</span>(type <span class="op">~</span><span class="st"> </span>., </span>
+<span id="cb1494-6"><a href="logistic-regression.html#cb1494-6"></a>                   <span class="dt">data =</span> spam_trn, <span class="dt">family =</span> binomial)</span>
+<span id="cb1494-7"><a href="logistic-regression.html#cb1494-7"></a>fit_over =<span class="st"> </span><span class="kw">glm</span>(type <span class="op">~</span><span class="st"> </span>capitalTotal <span class="op">*</span><span class="st"> </span>(.), </span>
+<span id="cb1494-8"><a href="logistic-regression.html#cb1494-8"></a>               <span class="dt">data =</span> spam_trn, <span class="dt">family =</span> binomial, <span class="dt">maxit =</span> <span class="dv">50</span>)</span></code></pre></div>
 <p>We’ll fit four logistic regressions, each more complex than the previous. Note that we’re suppressing two warnings. The first we briefly mentioned previously.</p>
 <pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
 <p>Note that, when we receive this warning, we should be highly suspicious of the parameter estimates.</p>
-<div class="sourceCode" id="cb1486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1486-1"><a href="logistic-regression.html#cb1486-1"></a><span class="kw">coef</span>(fit_selected)</span></code></pre></div>
+<div class="sourceCode" id="cb1496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1496-1"><a href="logistic-regression.html#cb1496-1"></a><span class="kw">coef</span>(fit_selected)</span></code></pre></div>
 <pre><code>##   (Intercept)           edu         money  capitalTotal    charDollar 
 ## -1.1199744712 -1.9837988840  0.9784675298  0.0007757011 11.5772904667</code></pre>
 <p>However, the model can still be used to create a classifier, and we will evaluate that classifier on its own merits.</p>
@@ -1325,14 +1325,14 @@ I(y_i \neq \hat{C}({\bf x_i})) =
 \end{cases}
 \]</span></p>
 <p>When using this metric on the training data, it will have the same issues as RSS did for ordinary linear regression, that is, it will only go down.</p>
-<div class="sourceCode" id="cb1489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1489-1"><a href="logistic-regression.html#cb1489-1"></a><span class="co"># training misclassification rate</span></span>
-<span id="cb1489-2"><a href="logistic-regression.html#cb1489-2"></a><span class="kw">mean</span>(<span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_caps) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;spam&quot;</span>, <span class="st">&quot;nonspam&quot;</span>) <span class="op">!=</span><span class="st"> </span>spam_trn<span class="op">$</span>type)</span></code></pre></div>
+<div class="sourceCode" id="cb1499"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1499-1"><a href="logistic-regression.html#cb1499-1"></a><span class="co"># training misclassification rate</span></span>
+<span id="cb1499-2"><a href="logistic-regression.html#cb1499-2"></a><span class="kw">mean</span>(<span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_caps) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;spam&quot;</span>, <span class="st">&quot;nonspam&quot;</span>) <span class="op">!=</span><span class="st"> </span>spam_trn<span class="op">$</span>type)</span></code></pre></div>
 <pre><code>## [1] 0.339</code></pre>
-<div class="sourceCode" id="cb1491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1491-1"><a href="logistic-regression.html#cb1491-1"></a><span class="kw">mean</span>(<span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_selected) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;spam&quot;</span>, <span class="st">&quot;nonspam&quot;</span>) <span class="op">!=</span><span class="st"> </span>spam_trn<span class="op">$</span>type)</span></code></pre></div>
+<div class="sourceCode" id="cb1501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1501-1"><a href="logistic-regression.html#cb1501-1"></a><span class="kw">mean</span>(<span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_selected) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;spam&quot;</span>, <span class="st">&quot;nonspam&quot;</span>) <span class="op">!=</span><span class="st"> </span>spam_trn<span class="op">$</span>type)</span></code></pre></div>
 <pre><code>## [1] 0.224</code></pre>
-<div class="sourceCode" id="cb1493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1493-1"><a href="logistic-regression.html#cb1493-1"></a><span class="kw">mean</span>(<span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_additive) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;spam&quot;</span>, <span class="st">&quot;nonspam&quot;</span>) <span class="op">!=</span><span class="st"> </span>spam_trn<span class="op">$</span>type)</span></code></pre></div>
+<div class="sourceCode" id="cb1503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1503-1"><a href="logistic-regression.html#cb1503-1"></a><span class="kw">mean</span>(<span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_additive) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;spam&quot;</span>, <span class="st">&quot;nonspam&quot;</span>) <span class="op">!=</span><span class="st"> </span>spam_trn<span class="op">$</span>type)</span></code></pre></div>
 <pre><code>## [1] 0.066</code></pre>
-<div class="sourceCode" id="cb1495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1495-1"><a href="logistic-regression.html#cb1495-1"></a><span class="kw">mean</span>(<span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_over) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;spam&quot;</span>, <span class="st">&quot;nonspam&quot;</span>) <span class="op">!=</span><span class="st"> </span>spam_trn<span class="op">$</span>type)</span></code></pre></div>
+<div class="sourceCode" id="cb1505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1505-1"><a href="logistic-regression.html#cb1505-1"></a><span class="kw">mean</span>(<span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_over) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;spam&quot;</span>, <span class="st">&quot;nonspam&quot;</span>) <span class="op">!=</span><span class="st"> </span>spam_trn<span class="op">$</span>type)</span></code></pre></div>
 <pre><code>## [1] 0.136</code></pre>
 <p>Because of this, training data isn’t useful for evaluating, as it would suggest that we should always use the largest possible model, when in reality, that model is likely overfitting. Recall, a model that is too complex will overfit. A model that is too simple will underfit. (We’re looking for something in the middle.)</p>
 <p>To overcome this, we’ll use cross-validation as we did with ordinary linear regression, but this time we’ll cross-validate the misclassification rate. To do so, we’ll use the <code>cv.glm()</code> function from the <code>boot</code> library. It takes arguments for the data (in this case training), a model fit via <code>glm()</code>, and <code>K</code>, the number of folds. See <code>?cv.glm</code> for details.</p>
@@ -1344,15 +1344,15 @@ I(y_i \neq \hat{C}({\bf x_i})) =
 <li>Evaluate misclassification rate on held-out data</li>
 </ul>
 <p>The 5-fold cross-validated misclassification rate will be the average of these misclassification rates. By only needing to refit the model 5 times, instead of <span class="math inline">\(n\)</span> times, we will save a lot of computation time.</p>
-<div class="sourceCode" id="cb1497"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1497-1"><a href="logistic-regression.html#cb1497-1"></a><span class="kw">library</span>(boot)</span>
-<span id="cb1497-2"><a href="logistic-regression.html#cb1497-2"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb1497-3"><a href="logistic-regression.html#cb1497-3"></a><span class="kw">cv.glm</span>(spam_trn, fit_caps, <span class="dt">K =</span> <span class="dv">5</span>)<span class="op">$</span>delta[<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb1507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1507-1"><a href="logistic-regression.html#cb1507-1"></a><span class="kw">library</span>(boot)</span>
+<span id="cb1507-2"><a href="logistic-regression.html#cb1507-2"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb1507-3"><a href="logistic-regression.html#cb1507-3"></a><span class="kw">cv.glm</span>(spam_trn, fit_caps, <span class="dt">K =</span> <span class="dv">5</span>)<span class="op">$</span>delta[<span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## [1] 0.2166961</code></pre>
-<div class="sourceCode" id="cb1499"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1499-1"><a href="logistic-regression.html#cb1499-1"></a><span class="kw">cv.glm</span>(spam_trn, fit_selected, <span class="dt">K =</span> <span class="dv">5</span>)<span class="op">$</span>delta[<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb1509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1509-1"><a href="logistic-regression.html#cb1509-1"></a><span class="kw">cv.glm</span>(spam_trn, fit_selected, <span class="dt">K =</span> <span class="dv">5</span>)<span class="op">$</span>delta[<span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## [1] 0.1587043</code></pre>
-<div class="sourceCode" id="cb1501"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1501-1"><a href="logistic-regression.html#cb1501-1"></a><span class="kw">cv.glm</span>(spam_trn, fit_additive, <span class="dt">K =</span> <span class="dv">5</span>)<span class="op">$</span>delta[<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb1511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1511-1"><a href="logistic-regression.html#cb1511-1"></a><span class="kw">cv.glm</span>(spam_trn, fit_additive, <span class="dt">K =</span> <span class="dv">5</span>)<span class="op">$</span>delta[<span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## [1] 0.08684467</code></pre>
-<div class="sourceCode" id="cb1503"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1503-1"><a href="logistic-regression.html#cb1503-1"></a><span class="kw">cv.glm</span>(spam_trn, fit_over, <span class="dt">K =</span> <span class="dv">5</span>)<span class="op">$</span>delta[<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb1513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1513-1"><a href="logistic-regression.html#cb1513-1"></a><span class="kw">cv.glm</span>(spam_trn, fit_over, <span class="dt">K =</span> <span class="dv">5</span>)<span class="op">$</span>delta[<span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## [1] 0.14</code></pre>
 <p>Note that we’re suppressing warnings again here. (Now there would be a lot more, since were fitting a total of 20 models.)</p>
 <p>Based on these results, <code>fit_caps</code> and <code>fit_selected</code> are underfitting relative to <code>fit_additive</code>. Similarly, <code>fit_over</code> is overfitting relative to <code>fit_additive</code>. Thus, based on these results, we prefer the classifier created based on the logistic regression fit and stored in <code>fit_additive</code>.</p>
@@ -1363,22 +1363,22 @@ I(y_i \neq \hat{C}({\bf x_i})) =
 <p class="caption">Confusion Matrix</p>
 </div>
 <p>It further breaks down the classification errors into false positives and false negatives.</p>
-<div class="sourceCode" id="cb1505"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1505-1"><a href="logistic-regression.html#cb1505-1"></a>make_conf_mat =<span class="st"> </span><span class="cf">function</span>(predicted, actual) {</span>
-<span id="cb1505-2"><a href="logistic-regression.html#cb1505-2"></a>  <span class="kw">table</span>(<span class="dt">predicted =</span> predicted, <span class="dt">actual =</span> actual)</span>
-<span id="cb1505-3"><a href="logistic-regression.html#cb1505-3"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb1515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1515-1"><a href="logistic-regression.html#cb1515-1"></a>make_conf_mat =<span class="st"> </span><span class="cf">function</span>(predicted, actual) {</span>
+<span id="cb1515-2"><a href="logistic-regression.html#cb1515-2"></a>  <span class="kw">table</span>(<span class="dt">predicted =</span> predicted, <span class="dt">actual =</span> actual)</span>
+<span id="cb1515-3"><a href="logistic-regression.html#cb1515-3"></a>}</span></code></pre></div>
 <p>Let’s explicitly store the predicted values of our classifier on the test dataset.</p>
-<div class="sourceCode" id="cb1506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1506-1"><a href="logistic-regression.html#cb1506-1"></a>spam_tst_pred =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_additive, spam_tst) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, </span>
-<span id="cb1506-2"><a href="logistic-regression.html#cb1506-2"></a>                       <span class="st">&quot;spam&quot;</span>, </span>
-<span id="cb1506-3"><a href="logistic-regression.html#cb1506-3"></a>                       <span class="st">&quot;nonspam&quot;</span>)</span>
-<span id="cb1506-4"><a href="logistic-regression.html#cb1506-4"></a>spam_tst_pred =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_additive, spam_tst, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>, </span>
-<span id="cb1506-5"><a href="logistic-regression.html#cb1506-5"></a>                       <span class="st">&quot;spam&quot;</span>, </span>
-<span id="cb1506-6"><a href="logistic-regression.html#cb1506-6"></a>                       <span class="st">&quot;nonspam&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1516-1"><a href="logistic-regression.html#cb1516-1"></a>spam_tst_pred =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_additive, spam_tst) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, </span>
+<span id="cb1516-2"><a href="logistic-regression.html#cb1516-2"></a>                       <span class="st">&quot;spam&quot;</span>, </span>
+<span id="cb1516-3"><a href="logistic-regression.html#cb1516-3"></a>                       <span class="st">&quot;nonspam&quot;</span>)</span>
+<span id="cb1516-4"><a href="logistic-regression.html#cb1516-4"></a>spam_tst_pred =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_additive, spam_tst, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>, </span>
+<span id="cb1516-5"><a href="logistic-regression.html#cb1516-5"></a>                       <span class="st">&quot;spam&quot;</span>, </span>
+<span id="cb1516-6"><a href="logistic-regression.html#cb1516-6"></a>                       <span class="st">&quot;nonspam&quot;</span>)</span></code></pre></div>
 <p>The previous two lines of code produce the same output, that is the same predictions, since</p>
 <p><span class="math display">\[
 \eta({\bf x}) = 0 \iff p({\bf x}) = 0.5
 \]</span>
 Now we’ll use these predictions to create a confusion matrix.</p>
-<div class="sourceCode" id="cb1507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1507-1"><a href="logistic-regression.html#cb1507-1"></a>(<span class="dt">conf_mat_50 =</span> <span class="kw">make_conf_mat</span>(<span class="dt">predicted =</span> spam_tst_pred, <span class="dt">actual =</span> spam_tst<span class="op">$</span>type))</span></code></pre></div>
+<div class="sourceCode" id="cb1517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1517-1"><a href="logistic-regression.html#cb1517-1"></a>(<span class="dt">conf_mat_50 =</span> <span class="kw">make_conf_mat</span>(<span class="dt">predicted =</span> spam_tst_pred, <span class="dt">actual =</span> spam_tst<span class="op">$</span>type))</span></code></pre></div>
 <pre><code>##          actual
 ## predicted nonspam spam
 ##   nonspam    2057  157
@@ -1386,16 +1386,16 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 <p><span class="math display">\[
 \text{Prev} = \frac{\text{P}}{\text{Total Obs}}= \frac{\text{TP + FN}}{\text{Total Obs}}
 \]</span></p>
-<div class="sourceCode" id="cb1509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1509-1"><a href="logistic-regression.html#cb1509-1"></a><span class="kw">table</span>(spam_tst<span class="op">$</span>type) <span class="op">/</span><span class="st"> </span><span class="kw">nrow</span>(spam_tst)</span></code></pre></div>
+<div class="sourceCode" id="cb1519"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1519-1"><a href="logistic-regression.html#cb1519-1"></a><span class="kw">table</span>(spam_tst<span class="op">$</span>type) <span class="op">/</span><span class="st"> </span><span class="kw">nrow</span>(spam_tst)</span></code></pre></div>
 <pre><code>## 
 ##   nonspam      spam 
 ## 0.6064982 0.3935018</code></pre>
 <p>First, note that to be a reasonable classifier, it needs to outperform the obvious classifier of simply classifying all observations to the majority class. In this case, classifying everything as non-spam for a test misclassification rate of 0.3935018</p>
 <p>Next, we can see that using the classifier create from <code>fit_additive</code>, only a total of <span class="math inline">\(137 + 161 = 298\)</span> from the total of 3601 email in the test set are misclassified. Overall, the accuracy in the test set it</p>
-<div class="sourceCode" id="cb1511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1511-1"><a href="logistic-regression.html#cb1511-1"></a><span class="kw">mean</span>(spam_tst_pred <span class="op">==</span><span class="st"> </span>spam_tst<span class="op">$</span>type)</span></code></pre></div>
+<div class="sourceCode" id="cb1521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1521-1"><a href="logistic-regression.html#cb1521-1"></a><span class="kw">mean</span>(spam_tst_pred <span class="op">==</span><span class="st"> </span>spam_tst<span class="op">$</span>type)</span></code></pre></div>
 <pre><code>## [1] 0.921133</code></pre>
 <p>In other words, the test misclassification is</p>
-<div class="sourceCode" id="cb1513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1513-1"><a href="logistic-regression.html#cb1513-1"></a><span class="kw">mean</span>(spam_tst_pred <span class="op">!=</span><span class="st"> </span>spam_tst<span class="op">$</span>type)</span></code></pre></div>
+<div class="sourceCode" id="cb1523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1523-1"><a href="logistic-regression.html#cb1523-1"></a><span class="kw">mean</span>(spam_tst_pred <span class="op">!=</span><span class="st"> </span>spam_tst<span class="op">$</span>type)</span></code></pre></div>
 <pre><code>## [1] 0.07886698</code></pre>
 <p>This seems like a decent classifier…</p>
 <p>However, are all errors created equal? In this case, absolutely not. The 137 non-spam emails that were marked as spam (false positives) are a problem. We can’t allow important information, say, a job offer, miss our inbox and get sent to the spam folder. On the other hand, the 161 spam email that would make it to an inbox (false negatives) are easily dealt with, just delete them.</p>
@@ -1405,20 +1405,20 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 \text{Sens} = \text{True Positive Rate} = \frac{\text{TP}}{\text{P}} = \frac{\text{TP}}{\text{TP + FN}}
 \]</span></p>
 <p>Here we have an <code>R</code> function to calculate the sensitivity based on the confusion matrix. Note that this function is good for illustrative purposes, but is easily broken. (Think about what happens if there are no “positives” predicted.)</p>
-<div class="sourceCode" id="cb1515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1515-1"><a href="logistic-regression.html#cb1515-1"></a>get_sens =<span class="st"> </span><span class="cf">function</span>(conf_mat) {</span>
-<span id="cb1515-2"><a href="logistic-regression.html#cb1515-2"></a>  conf_mat[<span class="dv">2</span>, <span class="dv">2</span>] <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(conf_mat[, <span class="dv">2</span>])</span>
-<span id="cb1515-3"><a href="logistic-regression.html#cb1515-3"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb1525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1525-1"><a href="logistic-regression.html#cb1525-1"></a>get_sens =<span class="st"> </span><span class="cf">function</span>(conf_mat) {</span>
+<span id="cb1525-2"><a href="logistic-regression.html#cb1525-2"></a>  conf_mat[<span class="dv">2</span>, <span class="dv">2</span>] <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(conf_mat[, <span class="dv">2</span>])</span>
+<span id="cb1525-3"><a href="logistic-regression.html#cb1525-3"></a>}</span></code></pre></div>
 <p><strong>Specificity</strong> is essentially the true negative rate. So when specificity is high, the number of false positives is low.</p>
 <p><span class="math display">\[
 \text{Spec} = \text{True Negative Rate} = \frac{\text{TN}}{\text{N}} = \frac{\text{TN}}{\text{TN + FP}}
 \]</span></p>
-<div class="sourceCode" id="cb1516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1516-1"><a href="logistic-regression.html#cb1516-1"></a>get_spec =<span class="st">  </span><span class="cf">function</span>(conf_mat) {</span>
-<span id="cb1516-2"><a href="logistic-regression.html#cb1516-2"></a>  conf_mat[<span class="dv">1</span>, <span class="dv">1</span>] <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(conf_mat[, <span class="dv">1</span>])</span>
-<span id="cb1516-3"><a href="logistic-regression.html#cb1516-3"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb1526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1526-1"><a href="logistic-regression.html#cb1526-1"></a>get_spec =<span class="st">  </span><span class="cf">function</span>(conf_mat) {</span>
+<span id="cb1526-2"><a href="logistic-regression.html#cb1526-2"></a>  conf_mat[<span class="dv">1</span>, <span class="dv">1</span>] <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(conf_mat[, <span class="dv">1</span>])</span>
+<span id="cb1526-3"><a href="logistic-regression.html#cb1526-3"></a>}</span></code></pre></div>
 <p>We calculate both based on the confusion matrix we had created for our classifier.</p>
-<div class="sourceCode" id="cb1517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1517-1"><a href="logistic-regression.html#cb1517-1"></a><span class="kw">get_sens</span>(conf_mat_<span class="dv">50</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1527-1"><a href="logistic-regression.html#cb1527-1"></a><span class="kw">get_sens</span>(conf_mat_<span class="dv">50</span>)</span></code></pre></div>
 <pre><code>## [1] 0.8892025</code></pre>
-<div class="sourceCode" id="cb1519"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1519-1"><a href="logistic-regression.html#cb1519-1"></a><span class="kw">get_spec</span>(conf_mat_<span class="dv">50</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1529-1"><a href="logistic-regression.html#cb1529-1"></a><span class="kw">get_spec</span>(conf_mat_<span class="dv">50</span>)</span></code></pre></div>
 <pre><code>## [1] 0.9418498</code></pre>
 <p>Recall that we had created this classifier using a probability of <span class="math inline">\(0.5\)</span> as a “cutoff” for how observations should be classified. Now we’ll modify this cutoff. We’ll see that by modifying the cutoff, <span class="math inline">\(c\)</span>, we can improve sensitivity or specificity at the expense of the overall accuracy (misclassification rate).</p>
 <p><span class="math display">\[
@@ -1430,34 +1430,34 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 \]</span></p>
 <p>Additionally, if we change the cutoff to improve sensitivity, we’ll decrease specificity, and vice versa.</p>
 <p>First let’s see what happens when we lower the cutoff from <span class="math inline">\(0.5\)</span> to <span class="math inline">\(0.1\)</span> to create a new classifier, and thus new predictions.</p>
-<div class="sourceCode" id="cb1521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1521-1"><a href="logistic-regression.html#cb1521-1"></a>spam_tst_pred_<span class="dv">10</span> =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_additive, spam_tst, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.1</span>, </span>
-<span id="cb1521-2"><a href="logistic-regression.html#cb1521-2"></a>                          <span class="st">&quot;spam&quot;</span>, </span>
-<span id="cb1521-3"><a href="logistic-regression.html#cb1521-3"></a>                          <span class="st">&quot;nonspam&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1531-1"><a href="logistic-regression.html#cb1531-1"></a>spam_tst_pred_<span class="dv">10</span> =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_additive, spam_tst, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.1</span>, </span>
+<span id="cb1531-2"><a href="logistic-regression.html#cb1531-2"></a>                          <span class="st">&quot;spam&quot;</span>, </span>
+<span id="cb1531-3"><a href="logistic-regression.html#cb1531-3"></a>                          <span class="st">&quot;nonspam&quot;</span>)</span></code></pre></div>
 <p>This is essentially <em>decreasing</em> the threshold for an email to be labeled as spam, so far <em>more</em> emails will be labeled as spam. We see that in the following confusion matrix.</p>
-<div class="sourceCode" id="cb1522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1522-1"><a href="logistic-regression.html#cb1522-1"></a>(<span class="dt">conf_mat_10 =</span> <span class="kw">make_conf_mat</span>(<span class="dt">predicted =</span> spam_tst_pred_<span class="dv">10</span>, <span class="dt">actual =</span> spam_tst<span class="op">$</span>type))</span></code></pre></div>
+<div class="sourceCode" id="cb1532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1532-1"><a href="logistic-regression.html#cb1532-1"></a>(<span class="dt">conf_mat_10 =</span> <span class="kw">make_conf_mat</span>(<span class="dt">predicted =</span> spam_tst_pred_<span class="dv">10</span>, <span class="dt">actual =</span> spam_tst<span class="op">$</span>type))</span></code></pre></div>
 <pre><code>##          actual
 ## predicted nonspam spam
 ##   nonspam    1583   29
 ##   spam        601 1388</code></pre>
 <p>Unfortunately, while this does greatly reduce false negatives, false positives have almost quadrupled. We see this reflected in the sensitivity and specificity.</p>
-<div class="sourceCode" id="cb1524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1524-1"><a href="logistic-regression.html#cb1524-1"></a><span class="kw">get_sens</span>(conf_mat_<span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1534-1"><a href="logistic-regression.html#cb1534-1"></a><span class="kw">get_sens</span>(conf_mat_<span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## [1] 0.9795342</code></pre>
-<div class="sourceCode" id="cb1526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1526-1"><a href="logistic-regression.html#cb1526-1"></a><span class="kw">get_spec</span>(conf_mat_<span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1536-1"><a href="logistic-regression.html#cb1536-1"></a><span class="kw">get_spec</span>(conf_mat_<span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## [1] 0.7248168</code></pre>
 <p>This classifier, using <span class="math inline">\(0.1\)</span> instead of <span class="math inline">\(0.5\)</span> has a higher sensitivity, but a much lower specificity. Clearly, we should have moved the cutoff in the other direction. Let’s try <span class="math inline">\(0.9\)</span>.</p>
-<div class="sourceCode" id="cb1528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1528-1"><a href="logistic-regression.html#cb1528-1"></a>spam_tst_pred_<span class="dv">90</span> =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_additive, spam_tst, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.9</span>, </span>
-<span id="cb1528-2"><a href="logistic-regression.html#cb1528-2"></a>                          <span class="st">&quot;spam&quot;</span>, </span>
-<span id="cb1528-3"><a href="logistic-regression.html#cb1528-3"></a>                          <span class="st">&quot;nonspam&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1538-1"><a href="logistic-regression.html#cb1538-1"></a>spam_tst_pred_<span class="dv">90</span> =<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_additive, spam_tst, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.9</span>, </span>
+<span id="cb1538-2"><a href="logistic-regression.html#cb1538-2"></a>                          <span class="st">&quot;spam&quot;</span>, </span>
+<span id="cb1538-3"><a href="logistic-regression.html#cb1538-3"></a>                          <span class="st">&quot;nonspam&quot;</span>)</span></code></pre></div>
 <p>This is essentially <em>increasing</em> the threshold for an email to be labeled as spam, so far <em>fewer</em> emails will be labeled as spam. Again, we see that in the following confusion matrix.</p>
-<div class="sourceCode" id="cb1529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1529-1"><a href="logistic-regression.html#cb1529-1"></a>(<span class="dt">conf_mat_90 =</span> <span class="kw">make_conf_mat</span>(<span class="dt">predicted =</span> spam_tst_pred_<span class="dv">90</span>, <span class="dt">actual =</span> spam_tst<span class="op">$</span>type))</span></code></pre></div>
+<div class="sourceCode" id="cb1539"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1539-1"><a href="logistic-regression.html#cb1539-1"></a>(<span class="dt">conf_mat_90 =</span> <span class="kw">make_conf_mat</span>(<span class="dt">predicted =</span> spam_tst_pred_<span class="dv">90</span>, <span class="dt">actual =</span> spam_tst<span class="op">$</span>type))</span></code></pre></div>
 <pre><code>##          actual
 ## predicted nonspam spam
 ##   nonspam    2136  537
 ##   spam         48  880</code></pre>
 <p>This is the result we’re looking for. We have far fewer false positives. While sensitivity is greatly reduced, specificity has gone up.</p>
-<div class="sourceCode" id="cb1531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1531-1"><a href="logistic-regression.html#cb1531-1"></a><span class="kw">get_sens</span>(conf_mat_<span class="dv">90</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1541-1"><a href="logistic-regression.html#cb1541-1"></a><span class="kw">get_sens</span>(conf_mat_<span class="dv">90</span>)</span></code></pre></div>
 <pre><code>## [1] 0.6210303</code></pre>
-<div class="sourceCode" id="cb1533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1533-1"><a href="logistic-regression.html#cb1533-1"></a><span class="kw">get_spec</span>(conf_mat_<span class="dv">90</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1543-1"><a href="logistic-regression.html#cb1543-1"></a><span class="kw">get_spec</span>(conf_mat_<span class="dv">90</span>)</span></code></pre></div>
 <pre><code>## [1] 0.978022</code></pre>
 <p>While this is far fewer false positives, is it acceptable though? Still probably not. Also, don’t forget, this would actually be a terrible spam detector today since this is based on data from a very different era of the internet, for a very specific set of people. Spam has changed a lot since 90s! (Ironically, machine learning is probably partially to blame.)</p>
 <p>This chapter has provided a rather quick introduction to classification, and thus, machine learning. For a more complete coverage of machine learning, <a href="http://www-bcf.usc.edu/~gareth/ISL/" target="_blank">An Introduction to Statistical Learning</a> is a highly recommended resource. Additionally, <a href="https://daviddalpiaz.github.io/r4sl/" target="_blank"><code>R</code> for Statistical Learning</a> has been written as a supplement which provides additional detail on how to perform these methods using <code>R</code>. The <a href="https://daviddalpiaz.github.io/r4sl/classification-overview.html" target="_blank">classification</a> and <a href="https://daviddalpiaz.github.io/r4sl/logistic-regression.html" target="_blank">logistic regression</a> chapters might be useful.</p>

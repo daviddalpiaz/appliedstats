@@ -416,8 +416,6 @@ x[x != 3]
 ## [1] 1 5 7 8 9
 ```
 
-- TODO: coercion
-
 
 ```r
 sum(x > 3)
@@ -435,7 +433,7 @@ as.numeric(x > 3)
 ## [1] 0 0 1 1 1 1
 ```
 
-Here we see that using the `sum()` function on a vector of logical `TRUE` and `FALSE` values that is the result of `x > 3` results in a numeric result. `R` is first automatically coercing the logical to numeric where `TRUE` is `1` and `FALSE` is `0`. This coercion from logical to numeric happens for most mathematical operations.
+Here we see that using the `sum()` function on a vector of logical `TRUE` and `FALSE` values that is the result of `x > 3` results in a numeric result. `R` is first automatically coercing the logical to numeric where `TRUE` is `1` and `FALSE` is `0`. This coercion from logical to numeric happens for most mathematical operations. If you are interested in more detail, check out [Advanced R](https://adv-r.hadley.nz/vectors-chap.html?q=coercion#testing-and-coercion).
 
 
 ```r
@@ -631,6 +629,56 @@ identical(x + y, rep(x, 10) + y)
 # ?any
 # ?all.equal
 ```
+
+
+```r
+x = c(1, 3, 5)
+y = c(1, 2, 4)
+x == y
+```
+
+```
+## [1]  TRUE FALSE FALSE
+```
+
+```r
+all(x == y)
+```
+
+```
+## [1] FALSE
+```
+
+```r
+any(x == y)
+```
+
+```
+## [1] TRUE
+```
+
+While `all` returns `TRUE` only when all of its arguments are `TRUE`, `any` returns `TRUE` when at least one of its arguments is `TRUE`.
+
+
+```r
+x = c(10 ^ (-8))
+y = c(10 ^ (-9))
+all(x == y)
+```
+
+```
+## [1] FALSE
+```
+
+```r
+all.equal(x, y)
+```
+
+```
+## [1] TRUE
+```
+
+The `all.equal` function tests "near equality" with a default tolerance value around `1.5e-8` and returns `TRUE` if all of its arguments have differences smaller than the tolerance.
 
 ### Matrices
 
@@ -1901,8 +1949,8 @@ To test our function, we will take a random sample of size `n = 10` from a norma
 ```
 
 ```
-##  [1]  4.701633  6.049543 12.079015 -3.194721  7.164567  6.830981 -6.414625
-##  [8]  9.766818  8.701077  4.605073
+##  [1] -1.500871  1.248015 -3.142213  5.371067  3.342021 -4.664671  2.952444
+##  [8] -1.037454  7.530975  6.276694
 ```
 
 ```r
@@ -1910,8 +1958,8 @@ standardize(x = test_sample)
 ```
 
 ```
-##  [1] -0.05732897  0.17876496  1.23485982 -1.44041844  0.37406738  0.31563805
-##  [7] -2.00440234  0.82986593  0.64319560 -0.07424200
+##  [1] -0.75736793 -0.09401379 -1.15345240  0.90095049  0.41130630 -1.52084790
+##  [7]  0.31729453 -0.64553729  1.42217392  1.11949406
 ```
 
 This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.
@@ -2013,7 +2061,7 @@ get_var(test_sample)
 ```
 
 ```
-## [1] 32.59512
+## [1] 17.17207
 ```
 
 ```r
@@ -2021,7 +2069,7 @@ get_var(test_sample, biased = FALSE)
 ```
 
 ```
-## [1] 32.59512
+## [1] 17.17207
 ```
 
 ```r
@@ -2029,7 +2077,7 @@ var(test_sample)
 ```
 
 ```
-## [1] 32.59512
+## [1] 17.17207
 ```
 
 We see the function is working as expected, and when returning the unbiased estimate it matches `R`'s built-in function `var()`. Finally, let's examine the biased estimate of $\sigma^2$.
@@ -2040,7 +2088,7 @@ get_var(test_sample, biased = TRUE)
 ```
 
 ```
-## [1] 29.33561
+## [1] 15.45486
 ```
 
 

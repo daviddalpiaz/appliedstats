@@ -472,7 +472,7 @@ H_0: \mu_1 = \mu_2 \quad \text{vs} \quad H_1: \mu_1 \neq \mu_2
 \]</span></p>
 <p>For the stated model and assuming the null hypothesis is true, the <span class="math inline">\(t\)</span> test statistic would follow a <span class="math inline">\(t\)</span> distribution with degrees of freedom <span class="math inline">\(n_1 + n_2 - 2\)</span>.</p>
 <p>As an example, suppose we are interested in the effect of <a href="https://en.wikipedia.org/wiki/Melatonin" target="_blank">melatotin</a> on sleep duration. A researcher obtains a random sample of 20 adult males. Of these subjects, 10 are randomly chosen for the control group, which will receive a placebo. The remaining 10 will be given 5mg of melatonin before bed. The sleep duration in hours of each subject is then measured. The researcher chooses a significance level of <span class="math inline">\(\alpha = 0.10\)</span>. Was sleep duration affected by the melatonin?</p>
-<div class="sourceCode" id="cb797"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb797-1"><a href="analysis-of-variance.html#cb797-1"></a>melatonin</span></code></pre></div>
+<div class="sourceCode" id="cb807"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb807-1"><a href="analysis-of-variance.html#cb807-1"></a>melatonin</span></code></pre></div>
 <pre><code>##        sleep     group
 ## 1   8.145150   control
 ## 2   7.522362 treatment
@@ -499,7 +499,7 @@ H_0: \mu_1 = \mu_2 \quad \text{vs} \quad H_1: \mu_1 \neq \mu_2
 H_0: \mu_C = \mu_T \quad \text{vs} \quad H_1: \mu_C \neq \mu_T
 \]</span></p>
 <p>To do so in <code>R</code>, we use the <code>t.test()</code> function, with the <code>var.equal</code> argument set to <code>TRUE</code>.</p>
-<div class="sourceCode" id="cb799"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb799-1"><a href="analysis-of-variance.html#cb799-1"></a><span class="kw">t.test</span>(sleep <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> melatonin, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb809"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb809-1"><a href="analysis-of-variance.html#cb809-1"></a><span class="kw">t.test</span>(sleep <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> melatonin, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>## 
 ##  Two Sample t-test
 ## 
@@ -512,12 +512,12 @@ H_0: \mu_C = \mu_T \quad \text{vs} \quad H_1: \mu_C \neq \mu_T
 ##   mean in group control mean in group treatment 
 ##                6.827152                8.333456</code></pre>
 <p>At a significance level of <span class="math inline">\(\alpha = 0.10\)</span>, we reject the null hypothesis. It seems that the melatonin had a <strong>statistically significant</strong> effect. Be aware that statistical significance is not always the same as scientific or <strong>practical significance</strong>. To determine practical significance, we need to investigate the <strong>effect size</strong> in the context of the situation. Here the effect size is the difference of the sample means.</p>
-<div class="sourceCode" id="cb801"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb801-1"><a href="analysis-of-variance.html#cb801-1"></a><span class="kw">t.test</span>(sleep <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> melatonin, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)<span class="op">$</span>estimate</span></code></pre></div>
+<div class="sourceCode" id="cb811"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb811-1"><a href="analysis-of-variance.html#cb811-1"></a><span class="kw">t.test</span>(sleep <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> melatonin, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>)<span class="op">$</span>estimate</span></code></pre></div>
 <pre><code>##   mean in group control mean in group treatment 
 ##                6.827152                8.333456</code></pre>
 <p>Here we see that the subjects in the melatonin group sleep an average of about 1.5 hours longer than the control group. An hour and a half of sleep is certainly important!</p>
 <p>With a big enough sample size, we could make an effect size of say, four minutes statistically significant. Is it worth taking a pill every night to get an extra four minutes of sleep? (Probably not.)</p>
-<div class="sourceCode" id="cb803"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb803-1"><a href="analysis-of-variance.html#cb803-1"></a><span class="kw">boxplot</span>(sleep <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> melatonin, <span class="dt">col =</span> <span class="dv">5</span><span class="op">:</span><span class="dv">6</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb813"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb813-1"><a href="analysis-of-variance.html#cb813-1"></a><span class="kw">boxplot</span>(sleep <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> melatonin, <span class="dt">col =</span> <span class="dv">5</span><span class="op">:</span><span class="dv">6</span>)</span></code></pre></div>
 <p><img src="anova_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 <!-- TODO: other parametarization, explain identify -->
 </div>
@@ -665,14 +665,14 @@ SSW = \sum_{i = 1}^{g} \sum_{j = 1}^{n_i} (y_{ij} - \bar{y}_i)^2 = \sum_{i = 1}^
 H_0: \mu_A = \mu_B = \mu_C = \mu_D 
 \]</span></p>
 <p>where, for example, <span class="math inline">\(\mu_A\)</span> is the mean blood coagulation time for an animal that ate diet <code>A</code>.</p>
-<div class="sourceCode" id="cb804"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb804-1"><a href="analysis-of-variance.html#cb804-1"></a><span class="kw">library</span>(faraway)</span>
-<span id="cb804-2"><a href="analysis-of-variance.html#cb804-2"></a><span class="kw">names</span>(coagulation)</span></code></pre></div>
+<div class="sourceCode" id="cb814"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb814-1"><a href="analysis-of-variance.html#cb814-1"></a><span class="kw">library</span>(faraway)</span>
+<span id="cb814-2"><a href="analysis-of-variance.html#cb814-2"></a><span class="kw">names</span>(coagulation)</span></code></pre></div>
 <pre><code>## [1] &quot;coag&quot; &quot;diet&quot;</code></pre>
-<div class="sourceCode" id="cb806"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb806-1"><a href="analysis-of-variance.html#cb806-1"></a><span class="kw">plot</span>(coag <span class="op">~</span><span class="st"> </span>diet, <span class="dt">data =</span> coagulation, <span class="dt">col =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb816"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb816-1"><a href="analysis-of-variance.html#cb816-1"></a><span class="kw">plot</span>(coag <span class="op">~</span><span class="st"> </span>diet, <span class="dt">data =</span> coagulation, <span class="dt">col =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">5</span>)</span></code></pre></div>
 <p><img src="anova_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We first load the data and create the relevant boxplot. The plot alone suggests a difference of means. The <code>aov()</code> function is used to obtain the relevant sums of squares. Using the <code>summary()</code> function on the output from <code>aov()</code> creates the desired ANOVA table. (Without the unneeded row for total.)</p>
-<div class="sourceCode" id="cb807"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb807-1"><a href="analysis-of-variance.html#cb807-1"></a>coag_aov =<span class="st"> </span><span class="kw">aov</span>(coag <span class="op">~</span><span class="st"> </span>diet, <span class="dt">data =</span> coagulation)</span>
-<span id="cb807-2"><a href="analysis-of-variance.html#cb807-2"></a>coag_aov</span></code></pre></div>
+<div class="sourceCode" id="cb817"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb817-1"><a href="analysis-of-variance.html#cb817-1"></a>coag_aov =<span class="st"> </span><span class="kw">aov</span>(coag <span class="op">~</span><span class="st"> </span>diet, <span class="dt">data =</span> coagulation)</span>
+<span id="cb817-2"><a href="analysis-of-variance.html#cb817-2"></a>coag_aov</span></code></pre></div>
 <pre><code>## Call:
 ##    aov(formula = coag ~ diet, data = coagulation)
 ## 
@@ -683,15 +683,15 @@ H_0: \mu_A = \mu_B = \mu_C = \mu_D
 ## 
 ## Residual standard error: 2.366432
 ## Estimated effects may be unbalanced</code></pre>
-<div class="sourceCode" id="cb809"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb809-1"><a href="analysis-of-variance.html#cb809-1"></a><span class="kw">summary</span>(coag_aov)</span></code></pre></div>
+<div class="sourceCode" id="cb819"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb819-1"><a href="analysis-of-variance.html#cb819-1"></a><span class="kw">summary</span>(coag_aov)</span></code></pre></div>
 <pre><code>##             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
 ## diet         3    228    76.0   13.57 4.66e-05 ***
 ## Residuals   20    112     5.6                     
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>Were we to run this experiment, we would have pre-specified a significance level. However, notice that the p-value of this test is incredibly low, so using any reasonable significance level we would reject the null hypothesis. Thus we believe the diets had an effect on blood coagulation time.</p>
-<div class="sourceCode" id="cb811"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb811-1"><a href="analysis-of-variance.html#cb811-1"></a>diets =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">diet =</span> <span class="kw">unique</span>(coagulation<span class="op">$</span>diet))</span>
-<span id="cb811-2"><a href="analysis-of-variance.html#cb811-2"></a><span class="kw">data.frame</span>(diets, <span class="dt">coag =</span> <span class="kw">predict</span>(coag_aov, diets))</span></code></pre></div>
+<div class="sourceCode" id="cb821"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb821-1"><a href="analysis-of-variance.html#cb821-1"></a>diets =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">diet =</span> <span class="kw">unique</span>(coagulation<span class="op">$</span>diet))</span>
+<span id="cb821-2"><a href="analysis-of-variance.html#cb821-2"></a><span class="kw">data.frame</span>(diets, <span class="dt">coag =</span> <span class="kw">predict</span>(coag_aov, diets))</span></code></pre></div>
 <pre><code>##   diet coag
 ## 1    A   61
 ## 2    B   66
@@ -701,56 +701,56 @@ H_0: \mu_A = \mu_B = \mu_C = \mu_D
 <div id="factor-variables-1" class="section level3 hasAnchor">
 <h3><span class="header-section-number">12.3.1</span> Factor Variables<a href="analysis-of-variance.html#factor-variables-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>When performing ANOVA in <code>R</code>, be sure the grouping variable is a factor variable. If it is not, your result might not be ANOVA, but instead a linear regression with the predictor variable considered numeric.</p>
-<div class="sourceCode" id="cb813"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb813-1"><a href="analysis-of-variance.html#cb813-1"></a><span class="kw">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb813-2"><a href="analysis-of-variance.html#cb813-2"></a>response =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">15</span>)</span>
-<span id="cb813-3"><a href="analysis-of-variance.html#cb813-3"></a>group    =<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">5</span>), <span class="kw">rep</span>(<span class="dv">2</span>, <span class="dv">5</span>), <span class="kw">rep</span>(<span class="dv">3</span>, <span class="dv">5</span>))</span>
-<span id="cb813-4"><a href="analysis-of-variance.html#cb813-4"></a>bad =<span class="st"> </span><span class="kw">data.frame</span>(response, group)</span>
-<span id="cb813-5"><a href="analysis-of-variance.html#cb813-5"></a><span class="kw">summary</span>(<span class="kw">aov</span>(response <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> bad)) <span class="co"># wrong DF!</span></span></code></pre></div>
+<div class="sourceCode" id="cb823"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb823-1"><a href="analysis-of-variance.html#cb823-1"></a><span class="kw">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb823-2"><a href="analysis-of-variance.html#cb823-2"></a>response =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">15</span>)</span>
+<span id="cb823-3"><a href="analysis-of-variance.html#cb823-3"></a>group    =<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">5</span>), <span class="kw">rep</span>(<span class="dv">2</span>, <span class="dv">5</span>), <span class="kw">rep</span>(<span class="dv">3</span>, <span class="dv">5</span>))</span>
+<span id="cb823-4"><a href="analysis-of-variance.html#cb823-4"></a>bad =<span class="st"> </span><span class="kw">data.frame</span>(response, group)</span>
+<span id="cb823-5"><a href="analysis-of-variance.html#cb823-5"></a><span class="kw">summary</span>(<span class="kw">aov</span>(response <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> bad)) <span class="co"># wrong DF!</span></span></code></pre></div>
 <pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)
 ## group        1  0.017  0.0173   0.015  0.903
 ## Residuals   13 14.698  1.1306</code></pre>
-<div class="sourceCode" id="cb815"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb815-1"><a href="analysis-of-variance.html#cb815-1"></a>good =<span class="st"> </span><span class="kw">data.frame</span>(response, <span class="dt">group =</span> <span class="kw">as.factor</span>(group))</span>
-<span id="cb815-2"><a href="analysis-of-variance.html#cb815-2"></a><span class="kw">summary</span>(<span class="kw">aov</span>(response <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> good))</span></code></pre></div>
+<div class="sourceCode" id="cb825"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb825-1"><a href="analysis-of-variance.html#cb825-1"></a>good =<span class="st"> </span><span class="kw">data.frame</span>(response, <span class="dt">group =</span> <span class="kw">as.factor</span>(group))</span>
+<span id="cb825-2"><a href="analysis-of-variance.html#cb825-2"></a><span class="kw">summary</span>(<span class="kw">aov</span>(response <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> good))</span></code></pre></div>
 <pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)
 ## group        2  0.232  0.1158   0.096  0.909
 ## Residuals   12 14.484  1.2070</code></pre>
-<div class="sourceCode" id="cb817"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb817-1"><a href="analysis-of-variance.html#cb817-1"></a><span class="kw">is.factor</span>(bad<span class="op">$</span>group)  <span class="co"># 1, 2, and 3 are numbers.</span></span></code></pre></div>
+<div class="sourceCode" id="cb827"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb827-1"><a href="analysis-of-variance.html#cb827-1"></a><span class="kw">is.factor</span>(bad<span class="op">$</span>group)  <span class="co"># 1, 2, and 3 are numbers.</span></span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb819"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb819-1"><a href="analysis-of-variance.html#cb819-1"></a><span class="kw">is.factor</span>(good<span class="op">$</span>group) <span class="co"># 1, 2, and 3 are labels.</span></span></code></pre></div>
+<div class="sourceCode" id="cb829"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb829-1"><a href="analysis-of-variance.html#cb829-1"></a><span class="kw">is.factor</span>(good<span class="op">$</span>group) <span class="co"># 1, 2, and 3 are labels.</span></span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 </div>
 <div id="some-simulation" class="section level3 hasAnchor">
 <h3><span class="header-section-number">12.3.2</span> Some Simulation<a href="analysis-of-variance.html#some-simulation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Here we verify the distribution of the test statistic under the null hypothesis. We simulate from a null model (equal variance) to obtain an empirical distribution of the <span class="math inline">\(F\)</span> statistic. We add the curve for the expected distribution.</p>
-<div class="sourceCode" id="cb821"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb821-1"><a href="analysis-of-variance.html#cb821-1"></a><span class="kw">library</span>(broom)</span>
-<span id="cb821-2"><a href="analysis-of-variance.html#cb821-2"></a></span>
-<span id="cb821-3"><a href="analysis-of-variance.html#cb821-3"></a>sim_anova =<span class="st"> </span><span class="cf">function</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mu_a =</span> <span class="dv">0</span>, <span class="dt">mu_b =</span> <span class="dv">0</span>, <span class="dt">mu_c =</span> <span class="dv">0</span>, <span class="dt">mu_d =</span> <span class="dv">0</span>, <span class="dt">sigma =</span> <span class="dv">1</span>, <span class="dt">stat =</span> <span class="ot">TRUE</span>) {</span>
-<span id="cb821-4"><a href="analysis-of-variance.html#cb821-4"></a>  </span>
-<span id="cb821-5"><a href="analysis-of-variance.html#cb821-5"></a>  <span class="co"># create data from one-way ANOVA model with four groups of equal size</span></span>
-<span id="cb821-6"><a href="analysis-of-variance.html#cb821-6"></a>  <span class="co"># response simulated from normal with group mean, shared variance</span></span>
-<span id="cb821-7"><a href="analysis-of-variance.html#cb821-7"></a>  <span class="co"># group variable indicates group A, B, C or D</span></span>
-<span id="cb821-8"><a href="analysis-of-variance.html#cb821-8"></a>  sim_data =<span class="st"> </span><span class="kw">data.frame</span>(</span>
-<span id="cb821-9"><a href="analysis-of-variance.html#cb821-9"></a>    <span class="dt">response =</span> <span class="kw">c</span>(<span class="kw">rnorm</span>(<span class="dt">n =</span> n, <span class="dt">mean =</span> mu_a, <span class="dt">sd =</span> sigma),</span>
-<span id="cb821-10"><a href="analysis-of-variance.html#cb821-10"></a>                 <span class="kw">rnorm</span>(<span class="dt">n =</span> n, <span class="dt">mean =</span> mu_b, <span class="dt">sd =</span> sigma),</span>
-<span id="cb821-11"><a href="analysis-of-variance.html#cb821-11"></a>                 <span class="kw">rnorm</span>(<span class="dt">n =</span> n, <span class="dt">mean =</span> mu_c, <span class="dt">sd =</span> sigma),</span>
-<span id="cb821-12"><a href="analysis-of-variance.html#cb821-12"></a>                 <span class="kw">rnorm</span>(<span class="dt">n =</span> n, <span class="dt">mean =</span> mu_d, <span class="dt">sd =</span> sigma)),</span>
-<span id="cb821-13"><a href="analysis-of-variance.html#cb821-13"></a>    <span class="dt">group =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;A&quot;</span>, <span class="dt">times =</span> n), <span class="kw">rep</span>(<span class="st">&quot;B&quot;</span>, <span class="dt">times =</span> n), </span>
-<span id="cb821-14"><a href="analysis-of-variance.html#cb821-14"></a>              <span class="kw">rep</span>(<span class="st">&quot;C&quot;</span>, <span class="dt">times =</span> n), <span class="kw">rep</span>(<span class="st">&quot;D&quot;</span>, <span class="dt">times =</span> n))</span>
-<span id="cb821-15"><a href="analysis-of-variance.html#cb821-15"></a>  )</span>
-<span id="cb821-16"><a href="analysis-of-variance.html#cb821-16"></a>  </span>
-<span id="cb821-17"><a href="analysis-of-variance.html#cb821-17"></a>  <span class="co"># obtain F-statistic and p-value for testing difference of means</span></span>
-<span id="cb821-18"><a href="analysis-of-variance.html#cb821-18"></a>  <span class="co"># use lm instead of aov for better result formatting with glance</span></span>
-<span id="cb821-19"><a href="analysis-of-variance.html#cb821-19"></a>  aov_results =<span class="st"> </span><span class="kw">lm</span>(response <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> sim_data)</span>
-<span id="cb821-20"><a href="analysis-of-variance.html#cb821-20"></a>  f_stat =<span class="st"> </span><span class="kw">glance</span>(aov_results)<span class="op">$</span>statistic</span>
-<span id="cb821-21"><a href="analysis-of-variance.html#cb821-21"></a>  p_val  =<span class="st"> </span><span class="kw">glance</span>(aov_results)<span class="op">$</span>p.value</span>
-<span id="cb821-22"><a href="analysis-of-variance.html#cb821-22"></a>  </span>
-<span id="cb821-23"><a href="analysis-of-variance.html#cb821-23"></a>  <span class="co"># return f_stat if stat = TRUE, otherwise, p-value</span></span>
-<span id="cb821-24"><a href="analysis-of-variance.html#cb821-24"></a>  <span class="kw">ifelse</span>(stat, f_stat, p_val)</span>
-<span id="cb821-25"><a href="analysis-of-variance.html#cb821-25"></a>  </span>
-<span id="cb821-26"><a href="analysis-of-variance.html#cb821-26"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb822"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb822-1"><a href="analysis-of-variance.html#cb822-1"></a>f_stats =<span class="st"> </span><span class="kw">replicate</span>(<span class="dt">n =</span> <span class="dv">5000</span>, <span class="kw">sim_anova</span>(<span class="dt">stat =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
-<div class="sourceCode" id="cb823"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb823-1"><a href="analysis-of-variance.html#cb823-1"></a><span class="kw">hist</span>(f_stats, <span class="dt">breaks =</span> <span class="dv">100</span>, <span class="dt">prob =</span> <span class="ot">TRUE</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Empirical Distribution of F&quot;</span>)</span>
-<span id="cb823-2"><a href="analysis-of-variance.html#cb823-2"></a><span class="kw">curve</span>(<span class="kw">df</span>(x, <span class="dt">df1 =</span> <span class="dv">4</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">df2 =</span> <span class="dv">40</span> <span class="op">-</span><span class="st"> </span><span class="dv">4</span>), <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb831"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb831-1"><a href="analysis-of-variance.html#cb831-1"></a><span class="kw">library</span>(broom)</span>
+<span id="cb831-2"><a href="analysis-of-variance.html#cb831-2"></a></span>
+<span id="cb831-3"><a href="analysis-of-variance.html#cb831-3"></a>sim_anova =<span class="st"> </span><span class="cf">function</span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mu_a =</span> <span class="dv">0</span>, <span class="dt">mu_b =</span> <span class="dv">0</span>, <span class="dt">mu_c =</span> <span class="dv">0</span>, <span class="dt">mu_d =</span> <span class="dv">0</span>, <span class="dt">sigma =</span> <span class="dv">1</span>, <span class="dt">stat =</span> <span class="ot">TRUE</span>) {</span>
+<span id="cb831-4"><a href="analysis-of-variance.html#cb831-4"></a>  </span>
+<span id="cb831-5"><a href="analysis-of-variance.html#cb831-5"></a>  <span class="co"># create data from one-way ANOVA model with four groups of equal size</span></span>
+<span id="cb831-6"><a href="analysis-of-variance.html#cb831-6"></a>  <span class="co"># response simulated from normal with group mean, shared variance</span></span>
+<span id="cb831-7"><a href="analysis-of-variance.html#cb831-7"></a>  <span class="co"># group variable indicates group A, B, C or D</span></span>
+<span id="cb831-8"><a href="analysis-of-variance.html#cb831-8"></a>  sim_data =<span class="st"> </span><span class="kw">data.frame</span>(</span>
+<span id="cb831-9"><a href="analysis-of-variance.html#cb831-9"></a>    <span class="dt">response =</span> <span class="kw">c</span>(<span class="kw">rnorm</span>(<span class="dt">n =</span> n, <span class="dt">mean =</span> mu_a, <span class="dt">sd =</span> sigma),</span>
+<span id="cb831-10"><a href="analysis-of-variance.html#cb831-10"></a>                 <span class="kw">rnorm</span>(<span class="dt">n =</span> n, <span class="dt">mean =</span> mu_b, <span class="dt">sd =</span> sigma),</span>
+<span id="cb831-11"><a href="analysis-of-variance.html#cb831-11"></a>                 <span class="kw">rnorm</span>(<span class="dt">n =</span> n, <span class="dt">mean =</span> mu_c, <span class="dt">sd =</span> sigma),</span>
+<span id="cb831-12"><a href="analysis-of-variance.html#cb831-12"></a>                 <span class="kw">rnorm</span>(<span class="dt">n =</span> n, <span class="dt">mean =</span> mu_d, <span class="dt">sd =</span> sigma)),</span>
+<span id="cb831-13"><a href="analysis-of-variance.html#cb831-13"></a>    <span class="dt">group =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;A&quot;</span>, <span class="dt">times =</span> n), <span class="kw">rep</span>(<span class="st">&quot;B&quot;</span>, <span class="dt">times =</span> n), </span>
+<span id="cb831-14"><a href="analysis-of-variance.html#cb831-14"></a>              <span class="kw">rep</span>(<span class="st">&quot;C&quot;</span>, <span class="dt">times =</span> n), <span class="kw">rep</span>(<span class="st">&quot;D&quot;</span>, <span class="dt">times =</span> n))</span>
+<span id="cb831-15"><a href="analysis-of-variance.html#cb831-15"></a>  )</span>
+<span id="cb831-16"><a href="analysis-of-variance.html#cb831-16"></a>  </span>
+<span id="cb831-17"><a href="analysis-of-variance.html#cb831-17"></a>  <span class="co"># obtain F-statistic and p-value for testing difference of means</span></span>
+<span id="cb831-18"><a href="analysis-of-variance.html#cb831-18"></a>  <span class="co"># use lm instead of aov for better result formatting with glance</span></span>
+<span id="cb831-19"><a href="analysis-of-variance.html#cb831-19"></a>  aov_results =<span class="st"> </span><span class="kw">lm</span>(response <span class="op">~</span><span class="st"> </span>group, <span class="dt">data =</span> sim_data)</span>
+<span id="cb831-20"><a href="analysis-of-variance.html#cb831-20"></a>  f_stat =<span class="st"> </span><span class="kw">glance</span>(aov_results)<span class="op">$</span>statistic</span>
+<span id="cb831-21"><a href="analysis-of-variance.html#cb831-21"></a>  p_val  =<span class="st"> </span><span class="kw">glance</span>(aov_results)<span class="op">$</span>p.value</span>
+<span id="cb831-22"><a href="analysis-of-variance.html#cb831-22"></a>  </span>
+<span id="cb831-23"><a href="analysis-of-variance.html#cb831-23"></a>  <span class="co"># return f_stat if stat = TRUE, otherwise, p-value</span></span>
+<span id="cb831-24"><a href="analysis-of-variance.html#cb831-24"></a>  <span class="kw">ifelse</span>(stat, f_stat, p_val)</span>
+<span id="cb831-25"><a href="analysis-of-variance.html#cb831-25"></a>  </span>
+<span id="cb831-26"><a href="analysis-of-variance.html#cb831-26"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb832"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb832-1"><a href="analysis-of-variance.html#cb832-1"></a>f_stats =<span class="st"> </span><span class="kw">replicate</span>(<span class="dt">n =</span> <span class="dv">5000</span>, <span class="kw">sim_anova</span>(<span class="dt">stat =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb833"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb833-1"><a href="analysis-of-variance.html#cb833-1"></a><span class="kw">hist</span>(f_stats, <span class="dt">breaks =</span> <span class="dv">100</span>, <span class="dt">prob =</span> <span class="ot">TRUE</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Empirical Distribution of F&quot;</span>)</span>
+<span id="cb833-2"><a href="analysis-of-variance.html#cb833-2"></a><span class="kw">curve</span>(<span class="kw">df</span>(x, <span class="dt">df1 =</span> <span class="dv">4</span> <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">df2 =</span> <span class="dv">40</span> <span class="op">-</span><span class="st"> </span><span class="dv">4</span>), <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="anova_files/figure-html/sim-anova-graphs-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="power" class="section level3 hasAnchor">
@@ -771,30 +771,30 @@ H_0: \mu_A = \mu_B = \mu_C = \mu_D
 <li><strong>Balanced design</strong>. An equal number of observations per group leads to higher power.</li>
 </ul>
 <p>The following simulations look at the effect of significance level, effect size, and noise level on the power of an ANOVA <span class="math inline">\(F\)</span>-test. Homework will look into sample size and balance.</p>
-<div class="sourceCode" id="cb824"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb824-1"><a href="analysis-of-variance.html#cb824-1"></a>p_vals =<span class="st"> </span><span class="kw">replicate</span>(<span class="dt">n =</span> <span class="dv">1000</span>, <span class="kw">sim_anova</span>(<span class="dt">mu_a =</span> <span class="dv">-1</span>, <span class="dt">mu_b =</span> <span class="dv">0</span>, <span class="dt">mu_c =</span> <span class="dv">0</span>, <span class="dt">mu_d =</span> <span class="dv">1</span>,</span>
-<span id="cb824-2"><a href="analysis-of-variance.html#cb824-2"></a>                                     <span class="dt">sigma =</span> <span class="fl">1.5</span>, <span class="dt">stat =</span> <span class="ot">FALSE</span>))</span>
-<span id="cb824-3"><a href="analysis-of-variance.html#cb824-3"></a><span class="kw">mean</span>(p_vals <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb834"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb834-1"><a href="analysis-of-variance.html#cb834-1"></a>p_vals =<span class="st"> </span><span class="kw">replicate</span>(<span class="dt">n =</span> <span class="dv">1000</span>, <span class="kw">sim_anova</span>(<span class="dt">mu_a =</span> <span class="dv">-1</span>, <span class="dt">mu_b =</span> <span class="dv">0</span>, <span class="dt">mu_c =</span> <span class="dv">0</span>, <span class="dt">mu_d =</span> <span class="dv">1</span>,</span>
+<span id="cb834-2"><a href="analysis-of-variance.html#cb834-2"></a>                                     <span class="dt">sigma =</span> <span class="fl">1.5</span>, <span class="dt">stat =</span> <span class="ot">FALSE</span>))</span>
+<span id="cb834-3"><a href="analysis-of-variance.html#cb834-3"></a><span class="kw">mean</span>(p_vals <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)</span></code></pre></div>
 <pre><code>## [1] 0.661</code></pre>
-<div class="sourceCode" id="cb826"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb826-1"><a href="analysis-of-variance.html#cb826-1"></a><span class="kw">mean</span>(p_vals <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.01</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb836"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb836-1"><a href="analysis-of-variance.html#cb836-1"></a><span class="kw">mean</span>(p_vals <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.01</span>)</span></code></pre></div>
 <pre><code>## [1] 0.384</code></pre>
-<div class="sourceCode" id="cb828"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb828-1"><a href="analysis-of-variance.html#cb828-1"></a>p_vals =<span class="st"> </span><span class="kw">replicate</span>(<span class="dt">n =</span> <span class="dv">1000</span>, <span class="kw">sim_anova</span>(<span class="dt">mu_a =</span> <span class="dv">-1</span>, <span class="dt">mu_b =</span> <span class="dv">0</span>, <span class="dt">mu_c =</span> <span class="dv">0</span>, <span class="dt">mu_d =</span> <span class="dv">1</span>,</span>
-<span id="cb828-2"><a href="analysis-of-variance.html#cb828-2"></a>                                     <span class="dt">sigma =</span> <span class="fl">2.0</span>, <span class="dt">stat =</span> <span class="ot">FALSE</span>))</span>
-<span id="cb828-3"><a href="analysis-of-variance.html#cb828-3"></a><span class="kw">mean</span>(p_vals <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb838"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb838-1"><a href="analysis-of-variance.html#cb838-1"></a>p_vals =<span class="st"> </span><span class="kw">replicate</span>(<span class="dt">n =</span> <span class="dv">1000</span>, <span class="kw">sim_anova</span>(<span class="dt">mu_a =</span> <span class="dv">-1</span>, <span class="dt">mu_b =</span> <span class="dv">0</span>, <span class="dt">mu_c =</span> <span class="dv">0</span>, <span class="dt">mu_d =</span> <span class="dv">1</span>,</span>
+<span id="cb838-2"><a href="analysis-of-variance.html#cb838-2"></a>                                     <span class="dt">sigma =</span> <span class="fl">2.0</span>, <span class="dt">stat =</span> <span class="ot">FALSE</span>))</span>
+<span id="cb838-3"><a href="analysis-of-variance.html#cb838-3"></a><span class="kw">mean</span>(p_vals <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)</span></code></pre></div>
 <pre><code>## [1] 0.425</code></pre>
-<div class="sourceCode" id="cb830"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb830-1"><a href="analysis-of-variance.html#cb830-1"></a><span class="kw">mean</span>(p_vals <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.01</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb840"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb840-1"><a href="analysis-of-variance.html#cb840-1"></a><span class="kw">mean</span>(p_vals <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.01</span>)</span></code></pre></div>
 <pre><code>## [1] 0.19</code></pre>
-<div class="sourceCode" id="cb832"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb832-1"><a href="analysis-of-variance.html#cb832-1"></a>p_vals =<span class="st"> </span><span class="kw">replicate</span>(<span class="dt">n =</span> <span class="dv">1000</span>, <span class="kw">sim_anova</span>(<span class="dt">mu_a =</span> <span class="dv">-2</span>, <span class="dt">mu_b =</span> <span class="dv">0</span>, <span class="dt">mu_c =</span> <span class="dv">0</span>, <span class="dt">mu_d =</span> <span class="dv">2</span>,</span>
-<span id="cb832-2"><a href="analysis-of-variance.html#cb832-2"></a>                                     <span class="dt">sigma =</span> <span class="fl">2.0</span>, <span class="dt">stat =</span> <span class="ot">FALSE</span>))</span>
-<span id="cb832-3"><a href="analysis-of-variance.html#cb832-3"></a><span class="kw">mean</span>(p_vals <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb842"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb842-1"><a href="analysis-of-variance.html#cb842-1"></a>p_vals =<span class="st"> </span><span class="kw">replicate</span>(<span class="dt">n =</span> <span class="dv">1000</span>, <span class="kw">sim_anova</span>(<span class="dt">mu_a =</span> <span class="dv">-2</span>, <span class="dt">mu_b =</span> <span class="dv">0</span>, <span class="dt">mu_c =</span> <span class="dv">0</span>, <span class="dt">mu_d =</span> <span class="dv">2</span>,</span>
+<span id="cb842-2"><a href="analysis-of-variance.html#cb842-2"></a>                                     <span class="dt">sigma =</span> <span class="fl">2.0</span>, <span class="dt">stat =</span> <span class="ot">FALSE</span>))</span>
+<span id="cb842-3"><a href="analysis-of-variance.html#cb842-3"></a><span class="kw">mean</span>(p_vals <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)</span></code></pre></div>
 <pre><code>## [1] 0.956</code></pre>
-<div class="sourceCode" id="cb834"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb834-1"><a href="analysis-of-variance.html#cb834-1"></a><span class="kw">mean</span>(p_vals <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.01</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb844"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb844-1"><a href="analysis-of-variance.html#cb844-1"></a><span class="kw">mean</span>(p_vals <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.01</span>)</span></code></pre></div>
 <pre><code>## [1] 0.837</code></pre>
 </div>
 </div>
 <div id="post-hoc-testing" class="section level2 hasAnchor">
 <h2><span class="header-section-number">12.4</span> Post Hoc Testing<a href="analysis-of-variance.html#post-hoc-testing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Suppose we reject the null hypothesis from the ANOVA test for equal means. That tells us that the means are different. But which means? All of them? Some of them? The obvious strategy is to test all possible comparisons of two means. We can do this easily in <code>R</code>.</p>
-<div class="sourceCode" id="cb836"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb836-1"><a href="analysis-of-variance.html#cb836-1"></a><span class="kw">with</span>(coagulation, <span class="kw">pairwise.t.test</span>(coag, diet, <span class="dt">p.adj =</span> <span class="st">&quot;none&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb846"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb846-1"><a href="analysis-of-variance.html#cb846-1"></a><span class="kw">with</span>(coagulation, <span class="kw">pairwise.t.test</span>(coag, diet, <span class="dt">p.adj =</span> <span class="st">&quot;none&quot;</span>))</span></code></pre></div>
 <pre><code>## 
 ##  Pairwise comparisons using t tests with pooled SD 
 ## 
@@ -806,7 +806,7 @@ H_0: \mu_A = \mu_B = \mu_C = \mu_D
 ## D 1.00000 0.00086 2.3e-05
 ## 
 ## P value adjustment method: none</code></pre>
-<div class="sourceCode" id="cb838"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb838-1"><a href="analysis-of-variance.html#cb838-1"></a><span class="co"># pairwise.t.test(coagulation$coag, coagulation$diet, p.adj = &quot;none&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb848"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb848-1"><a href="analysis-of-variance.html#cb848-1"></a><span class="co"># pairwise.t.test(coagulation$coag, coagulation$diet, p.adj = &quot;none&quot;)</span></span></code></pre></div>
 <p>Notice the <code>pairwise.t.test()</code> function does not have a <code>data</code> argument. To avoid using <code>attach()</code> or the <code>$</code> operator, we introduce the <code>with()</code> function. The commented line would perform the same operation.</p>
 <p>Also note that we are using the argument <code>p.adj = "none"</code>. What is this? An adjustment (in this case not an adjustment) to the p-value of each test. Why would we need to do this?</p>
 <p>The adjustment is an attempt to correct for the <a href="https://en.wikipedia.org/wiki/Multiple_comparisons_problem" target="_blank">multiple testing problem</a>. (See also: <a href="https://xkcd.com/882/" target="_blank">Relevant XKCD</a>. ) Imagine that you knew ahead of time that you were going to perform 100 <span class="math inline">\(t\)</span>-tests. Suppose you wish to do this with a false positive rate of <span class="math inline">\(\alpha = 0.05\)</span>. If we use this significance level for each test, for 100 tests, we then expect 5 false positives. That means, with 100 tests, we’re almost guaranteed to have at least one error.</p>
@@ -815,7 +815,7 @@ H_0: \mu_A = \mu_B = \mu_C = \mu_D
 <p><span class="math display">\[
 \text{p-value-bonf} = \min(1, n_{tests} \cdot \text{p-value})
 \]</span></p>
-<div class="sourceCode" id="cb839"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb839-1"><a href="analysis-of-variance.html#cb839-1"></a><span class="kw">with</span>(coagulation, <span class="kw">pairwise.t.test</span>(coag, diet, <span class="dt">p.adj =</span> <span class="st">&quot;bonferroni&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb849"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb849-1"><a href="analysis-of-variance.html#cb849-1"></a><span class="kw">with</span>(coagulation, <span class="kw">pairwise.t.test</span>(coag, diet, <span class="dt">p.adj =</span> <span class="st">&quot;bonferroni&quot;</span>))</span></code></pre></div>
 <pre><code>## 
 ##  Pairwise comparisons using t tests with pooled SD 
 ## 
@@ -829,31 +829,31 @@ H_0: \mu_A = \mu_B = \mu_C = \mu_D
 ## P value adjustment method: bonferroni</code></pre>
 <p>We see that these p-values are much higher than the unadjusted p-values, thus, we are less likely to reject each tests. As a result, the FWER is 0.05, instead of an error rate of 0.05 for each test.</p>
 <p>We can simulate the 100 test scenario to illustrate this point.</p>
-<div class="sourceCode" id="cb841"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb841-1"><a href="analysis-of-variance.html#cb841-1"></a>get_p_val =<span class="st"> </span><span class="cf">function</span>() {</span>
-<span id="cb841-2"><a href="analysis-of-variance.html#cb841-2"></a>  </span>
-<span id="cb841-3"><a href="analysis-of-variance.html#cb841-3"></a>  <span class="co"># create data for two groups, equal mean</span></span>
-<span id="cb841-4"><a href="analysis-of-variance.html#cb841-4"></a>  y =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb841-5"><a href="analysis-of-variance.html#cb841-5"></a>  g =<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;A&quot;</span>, <span class="dv">10</span>), <span class="kw">rep</span>(<span class="st">&quot;B&quot;</span>, <span class="dv">10</span>))</span>
-<span id="cb841-6"><a href="analysis-of-variance.html#cb841-6"></a>  </span>
-<span id="cb841-7"><a href="analysis-of-variance.html#cb841-7"></a>  <span class="co"># p-value of t-test when null is true</span></span>
-<span id="cb841-8"><a href="analysis-of-variance.html#cb841-8"></a>  <span class="kw">glance</span>(<span class="kw">t.test</span>(y <span class="op">~</span><span class="st"> </span>g, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>))<span class="op">$</span>p.value</span>
-<span id="cb841-9"><a href="analysis-of-variance.html#cb841-9"></a>  </span>
-<span id="cb841-10"><a href="analysis-of-variance.html#cb841-10"></a>}</span></code></pre></div>
-<div class="sourceCode" id="cb842"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb842-1"><a href="analysis-of-variance.html#cb842-1"></a><span class="kw">set.seed</span>(<span class="dv">1337</span>)</span>
-<span id="cb842-2"><a href="analysis-of-variance.html#cb842-2"></a></span>
-<span id="cb842-3"><a href="analysis-of-variance.html#cb842-3"></a><span class="co"># FWER with 100 tests</span></span>
-<span id="cb842-4"><a href="analysis-of-variance.html#cb842-4"></a><span class="co"># desired rate = 0.05</span></span>
-<span id="cb842-5"><a href="analysis-of-variance.html#cb842-5"></a><span class="co"># no adjustment</span></span>
-<span id="cb842-6"><a href="analysis-of-variance.html#cb842-6"></a><span class="kw">mean</span>(<span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">any</span>(<span class="kw">replicate</span>(<span class="dv">100</span>, <span class="kw">get_p_val</span>()) <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb851"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb851-1"><a href="analysis-of-variance.html#cb851-1"></a>get_p_val =<span class="st"> </span><span class="cf">function</span>() {</span>
+<span id="cb851-2"><a href="analysis-of-variance.html#cb851-2"></a>  </span>
+<span id="cb851-3"><a href="analysis-of-variance.html#cb851-3"></a>  <span class="co"># create data for two groups, equal mean</span></span>
+<span id="cb851-4"><a href="analysis-of-variance.html#cb851-4"></a>  y =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb851-5"><a href="analysis-of-variance.html#cb851-5"></a>  g =<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;A&quot;</span>, <span class="dv">10</span>), <span class="kw">rep</span>(<span class="st">&quot;B&quot;</span>, <span class="dv">10</span>))</span>
+<span id="cb851-6"><a href="analysis-of-variance.html#cb851-6"></a>  </span>
+<span id="cb851-7"><a href="analysis-of-variance.html#cb851-7"></a>  <span class="co"># p-value of t-test when null is true</span></span>
+<span id="cb851-8"><a href="analysis-of-variance.html#cb851-8"></a>  <span class="kw">glance</span>(<span class="kw">t.test</span>(y <span class="op">~</span><span class="st"> </span>g, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>))<span class="op">$</span>p.value</span>
+<span id="cb851-9"><a href="analysis-of-variance.html#cb851-9"></a>  </span>
+<span id="cb851-10"><a href="analysis-of-variance.html#cb851-10"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb852"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb852-1"><a href="analysis-of-variance.html#cb852-1"></a><span class="kw">set.seed</span>(<span class="dv">1337</span>)</span>
+<span id="cb852-2"><a href="analysis-of-variance.html#cb852-2"></a></span>
+<span id="cb852-3"><a href="analysis-of-variance.html#cb852-3"></a><span class="co"># FWER with 100 tests</span></span>
+<span id="cb852-4"><a href="analysis-of-variance.html#cb852-4"></a><span class="co"># desired rate = 0.05</span></span>
+<span id="cb852-5"><a href="analysis-of-variance.html#cb852-5"></a><span class="co"># no adjustment</span></span>
+<span id="cb852-6"><a href="analysis-of-variance.html#cb852-6"></a><span class="kw">mean</span>(<span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">any</span>(<span class="kw">replicate</span>(<span class="dv">100</span>, <span class="kw">get_p_val</span>()) <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)))</span></code></pre></div>
 <pre><code>## [1] 0.994</code></pre>
-<div class="sourceCode" id="cb844"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb844-1"><a href="analysis-of-variance.html#cb844-1"></a><span class="co"># FWER with 100 tests</span></span>
-<span id="cb844-2"><a href="analysis-of-variance.html#cb844-2"></a><span class="co"># desired rate = 0.05</span></span>
-<span id="cb844-3"><a href="analysis-of-variance.html#cb844-3"></a><span class="co"># bonferroni adjustment</span></span>
-<span id="cb844-4"><a href="analysis-of-variance.html#cb844-4"></a><span class="kw">mean</span>(<span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">any</span>(<span class="kw">p.adjust</span>(<span class="kw">replicate</span>(<span class="dv">100</span>, <span class="kw">get_p_val</span>()), <span class="st">&quot;bonferroni&quot;</span>) <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb854"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb854-1"><a href="analysis-of-variance.html#cb854-1"></a><span class="co"># FWER with 100 tests</span></span>
+<span id="cb854-2"><a href="analysis-of-variance.html#cb854-2"></a><span class="co"># desired rate = 0.05</span></span>
+<span id="cb854-3"><a href="analysis-of-variance.html#cb854-3"></a><span class="co"># bonferroni adjustment</span></span>
+<span id="cb854-4"><a href="analysis-of-variance.html#cb854-4"></a><span class="kw">mean</span>(<span class="kw">replicate</span>(<span class="dv">1000</span>, <span class="kw">any</span>(<span class="kw">p.adjust</span>(<span class="kw">replicate</span>(<span class="dv">100</span>, <span class="kw">get_p_val</span>()), <span class="st">&quot;bonferroni&quot;</span>) <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>)))</span></code></pre></div>
 <pre><code>## [1] 0.058</code></pre>
 <p>For the specific case of testing all two-way mean differences after an ANOVA test, there are <a href="https://en.wikipedia.org/wiki/Post_hoc_analysis" target="_blank">a number of potential methods</a> for making an adjustment of this type. The pros and cons of the potential methods are beyond the scope of this course. We choose a method for its ease of use, and to a lesser extent, its developer.</p>
 <p>Tukey’s Honest Significance difference can be applied directly to an object which was created using <code>aov()</code>. It will adjust the p-values of the pairwise comparisons of the means to control the FWER, in this case, for 0.05. Notice it also gives confidence intervals for the difference of the means.</p>
-<div class="sourceCode" id="cb846"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb846-1"><a href="analysis-of-variance.html#cb846-1"></a><span class="kw">TukeyHSD</span>(coag_aov, <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb856"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb856-1"><a href="analysis-of-variance.html#cb856-1"></a><span class="kw">TukeyHSD</span>(coag_aov, <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</span></code></pre></div>
 <pre><code>##   Tukey multiple comparisons of means
 ##     95% family-wise confidence level
 ## 
@@ -869,7 +869,7 @@ H_0: \mu_A = \mu_B = \mu_C = \mu_D
 ## D-C   -7 -10.5770944 -3.422906 0.0001268</code></pre>
 <p>Based on these results, we see no difference between <code>A</code> and <code>D</code> as well as <code>B</code> and <code>C</code>. All other pairwise comparisons are significant. If you return to the original boxplot, these results should not be surprising.</p>
 <p>Also, nicely, we can easily produce a plot of these confidence intervals.</p>
-<div class="sourceCode" id="cb848"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb848-1"><a href="analysis-of-variance.html#cb848-1"></a><span class="kw">plot</span>(<span class="kw">TukeyHSD</span>(coag_aov, <span class="dt">conf.level =</span> <span class="fl">0.95</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb858"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb858-1"><a href="analysis-of-variance.html#cb858-1"></a><span class="kw">plot</span>(<span class="kw">TukeyHSD</span>(coag_aov, <span class="dt">conf.level =</span> <span class="fl">0.95</span>))</span></code></pre></div>
 <p><img src="anova_files/figure-html/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The creator of this method, <a href="https://en.wikipedia.org/wiki/John_Tukey" target="_blank">John Tukey</a>, is an important figure in the history of data science. He essentially <a href="https://projecteuclid.org/euclid.aoms/1177704711" target="_blank">predicted the rise of data science over 50 years ago</a>. For some retrospective thoughts on those 50 years, see <a href="http://courses.csail.mit.edu/18.337/2015/docs/50YearsDataScience.pdf" target="_blank">this paper from David Donoho</a>.</p>
 </div>
@@ -1021,27 +1021,27 @@ y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}.
 </table>
 <p>The question then, is which of these models should we use if we have two factors? The most important question to consider is whether or not we should model the <strong>interaction</strong>. Is the effect of Factor A the <em>same</em> for all levels of Factor B? In the additive model, yes. In the interaction model, no. Both models would use a different mean for each group, but in a very specific way in both cases.</p>
 <p>Let’s discuss these comparisons by looking at some examples. We’ll first look at the <code>rats</code> data from the <code>faraway</code> package. There are two factors here: <code>poison</code> and <code>treat</code>. We use the <code>levels()</code> function to extract the levels of a factor variable.</p>
-<div class="sourceCode" id="cb849"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb849-1"><a href="analysis-of-variance.html#cb849-1"></a><span class="kw">levels</span>(rats<span class="op">$</span>poison)</span></code></pre></div>
+<div class="sourceCode" id="cb859"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb859-1"><a href="analysis-of-variance.html#cb859-1"></a><span class="kw">levels</span>(rats<span class="op">$</span>poison)</span></code></pre></div>
 <pre><code>## [1] &quot;I&quot;   &quot;II&quot;  &quot;III&quot;</code></pre>
-<div class="sourceCode" id="cb851"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb851-1"><a href="analysis-of-variance.html#cb851-1"></a><span class="kw">levels</span>(rats<span class="op">$</span>treat)</span></code></pre></div>
+<div class="sourceCode" id="cb861"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb861-1"><a href="analysis-of-variance.html#cb861-1"></a><span class="kw">levels</span>(rats<span class="op">$</span>treat)</span></code></pre></div>
 <pre><code>## [1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot;</code></pre>
 <p>Here, 48 rats were randomly assigned both one of three poisons and one of four possible treatments. The experimenters then measures their survival time in tens of hours. A total of 12 groups, each with 4 replicates.</p>
 <p>Before running any tests, we should first look at the data. We will create <strong>interaction plots</strong>, which will help us visualize the effect of one factor, as we move through the levels of another factor.</p>
-<div class="sourceCode" id="cb853"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb853-1"><a href="analysis-of-variance.html#cb853-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb853-2"><a href="analysis-of-variance.html#cb853-2"></a><span class="kw">with</span>(rats, <span class="kw">interaction.plot</span>(poison, treat, time, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>))</span>
-<span id="cb853-3"><a href="analysis-of-variance.html#cb853-3"></a><span class="kw">with</span>(rats, <span class="kw">interaction.plot</span>(treat, poison, time, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb863"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb863-1"><a href="analysis-of-variance.html#cb863-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb863-2"><a href="analysis-of-variance.html#cb863-2"></a><span class="kw">with</span>(rats, <span class="kw">interaction.plot</span>(poison, treat, time, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>))</span>
+<span id="cb863-3"><a href="analysis-of-variance.html#cb863-3"></a><span class="kw">with</span>(rats, <span class="kw">interaction.plot</span>(treat, poison, time, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>))</span></code></pre></div>
 <p><img src="anova_files/figure-html/unnamed-chunk-27-1.png" width="1440" style="display: block; margin: auto;" /></p>
 <p>If there is not interaction, thus an additive model, we would expect to see parallel lines. That would mean, when we change the level of one factor, there can be an effect on the response. However, the difference between the levels of the other factor should still be the same.</p>
 <p>The obvious indication of interaction would be lines that cross while heading in different directions. Here we don’t see that, but the lines aren’t strictly parallel, and there is some overlap on the right panel. However, is this interaction effect significant?</p>
 <p>Let’s fit each of the possible models, then investigate their estimates for each of the group means.</p>
-<div class="sourceCode" id="cb854"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb854-1"><a href="analysis-of-variance.html#cb854-1"></a>rats_int   =<span class="st"> </span><span class="kw">aov</span>(time <span class="op">~</span><span class="st"> </span>poison <span class="op">*</span><span class="st"> </span>treat, <span class="dt">data =</span> rats) <span class="co"># interaction model</span></span>
-<span id="cb854-2"><a href="analysis-of-variance.html#cb854-2"></a>rats_add   =<span class="st"> </span><span class="kw">aov</span>(time <span class="op">~</span><span class="st"> </span>poison <span class="op">+</span><span class="st"> </span>treat, <span class="dt">data =</span> rats) <span class="co"># additive model</span></span>
-<span id="cb854-3"><a href="analysis-of-variance.html#cb854-3"></a>rats_pois  =<span class="st"> </span><span class="kw">aov</span>(time <span class="op">~</span><span class="st"> </span>poison , <span class="dt">data =</span> rats)        <span class="co"># single factor model   </span></span>
-<span id="cb854-4"><a href="analysis-of-variance.html#cb854-4"></a>rats_treat =<span class="st"> </span><span class="kw">aov</span>(time <span class="op">~</span><span class="st"> </span>treat, <span class="dt">data =</span> rats)          <span class="co"># single factor model</span></span>
-<span id="cb854-5"><a href="analysis-of-variance.html#cb854-5"></a>rats_null  =<span class="st"> </span><span class="kw">aov</span>(time <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> rats)              <span class="co"># null model</span></span></code></pre></div>
+<div class="sourceCode" id="cb864"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb864-1"><a href="analysis-of-variance.html#cb864-1"></a>rats_int   =<span class="st"> </span><span class="kw">aov</span>(time <span class="op">~</span><span class="st"> </span>poison <span class="op">*</span><span class="st"> </span>treat, <span class="dt">data =</span> rats) <span class="co"># interaction model</span></span>
+<span id="cb864-2"><a href="analysis-of-variance.html#cb864-2"></a>rats_add   =<span class="st"> </span><span class="kw">aov</span>(time <span class="op">~</span><span class="st"> </span>poison <span class="op">+</span><span class="st"> </span>treat, <span class="dt">data =</span> rats) <span class="co"># additive model</span></span>
+<span id="cb864-3"><a href="analysis-of-variance.html#cb864-3"></a>rats_pois  =<span class="st"> </span><span class="kw">aov</span>(time <span class="op">~</span><span class="st"> </span>poison , <span class="dt">data =</span> rats)        <span class="co"># single factor model   </span></span>
+<span id="cb864-4"><a href="analysis-of-variance.html#cb864-4"></a>rats_treat =<span class="st"> </span><span class="kw">aov</span>(time <span class="op">~</span><span class="st"> </span>treat, <span class="dt">data =</span> rats)          <span class="co"># single factor model</span></span>
+<span id="cb864-5"><a href="analysis-of-variance.html#cb864-5"></a>rats_null  =<span class="st"> </span><span class="kw">aov</span>(time <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> rats)              <span class="co"># null model</span></span></code></pre></div>
 <p>To get the estimates, we’ll create a table which we will predict on.</p>
-<div class="sourceCode" id="cb855"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb855-1"><a href="analysis-of-variance.html#cb855-1"></a>rats_table =<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">poison =</span> <span class="kw">unique</span>(rats<span class="op">$</span>poison), <span class="dt">treat =</span> <span class="kw">unique</span>(rats<span class="op">$</span>treat))</span>
-<span id="cb855-2"><a href="analysis-of-variance.html#cb855-2"></a>rats_table</span></code></pre></div>
+<div class="sourceCode" id="cb865"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb865-1"><a href="analysis-of-variance.html#cb865-1"></a>rats_table =<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">poison =</span> <span class="kw">unique</span>(rats<span class="op">$</span>poison), <span class="dt">treat =</span> <span class="kw">unique</span>(rats<span class="op">$</span>treat))</span>
+<span id="cb865-2"><a href="analysis-of-variance.html#cb865-2"></a>rats_table</span></code></pre></div>
 <pre><code>##    poison treat
 ## 1       I     A
 ## 2      II     A
@@ -1055,21 +1055,21 @@ y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}.
 ## 10      I     D
 ## 11     II     D
 ## 12    III     D</code></pre>
-<div class="sourceCode" id="cb857"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb857-1"><a href="analysis-of-variance.html#cb857-1"></a><span class="kw">matrix</span>(<span class="kw">paste0</span>(rats_table<span class="op">$</span>poison, <span class="st">&quot;-&quot;</span>, rats_table<span class="op">$</span>treat) , <span class="dv">4</span>, <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb867"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb867-1"><a href="analysis-of-variance.html#cb867-1"></a><span class="kw">matrix</span>(<span class="kw">paste0</span>(rats_table<span class="op">$</span>poison, <span class="st">&quot;-&quot;</span>, rats_table<span class="op">$</span>treat) , <span class="dv">4</span>, <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>##      [,1]  [,2]   [,3]   
 ## [1,] &quot;I-A&quot; &quot;II-A&quot; &quot;III-A&quot;
 ## [2,] &quot;I-B&quot; &quot;II-B&quot; &quot;III-B&quot;
 ## [3,] &quot;I-C&quot; &quot;II-C&quot; &quot;III-C&quot;
 ## [4,] &quot;I-D&quot; &quot;II-D&quot; &quot;III-D&quot;</code></pre>
 <p>Since we’ll be repeating ourselves a number of times, we write a function to perform the prediction. Some housekeeping is done to keep the estimates in order, and provide row and column names. Above, we’ve shown where each of the estimates will be placed in the resulting matrix.</p>
-<div class="sourceCode" id="cb859"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb859-1"><a href="analysis-of-variance.html#cb859-1"></a>get_est_means =<span class="st"> </span><span class="cf">function</span>(model, table) {</span>
-<span id="cb859-2"><a href="analysis-of-variance.html#cb859-2"></a>  mat =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">predict</span>(model, table), <span class="dt">nrow =</span> <span class="dv">4</span>, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb859-3"><a href="analysis-of-variance.html#cb859-3"></a>  <span class="kw">colnames</span>(mat) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;II&quot;</span>, <span class="st">&quot;III&quot;</span>)</span>
-<span id="cb859-4"><a href="analysis-of-variance.html#cb859-4"></a>  <span class="kw">rownames</span>(mat) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;D&quot;</span>)</span>
-<span id="cb859-5"><a href="analysis-of-variance.html#cb859-5"></a>  mat</span>
-<span id="cb859-6"><a href="analysis-of-variance.html#cb859-6"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb869"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb869-1"><a href="analysis-of-variance.html#cb869-1"></a>get_est_means =<span class="st"> </span><span class="cf">function</span>(model, table) {</span>
+<span id="cb869-2"><a href="analysis-of-variance.html#cb869-2"></a>  mat =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">predict</span>(model, table), <span class="dt">nrow =</span> <span class="dv">4</span>, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">byrow =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb869-3"><a href="analysis-of-variance.html#cb869-3"></a>  <span class="kw">colnames</span>(mat) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;II&quot;</span>, <span class="st">&quot;III&quot;</span>)</span>
+<span id="cb869-4"><a href="analysis-of-variance.html#cb869-4"></a>  <span class="kw">rownames</span>(mat) =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;D&quot;</span>)</span>
+<span id="cb869-5"><a href="analysis-of-variance.html#cb869-5"></a>  mat</span>
+<span id="cb869-6"><a href="analysis-of-variance.html#cb869-6"></a>}</span></code></pre></div>
 <p>First, we obtain the estimates from the <strong>interaction</strong> model. Note that each cell has a different value.</p>
-<div class="sourceCode" id="cb860"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb860-1"><a href="analysis-of-variance.html#cb860-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">get_est_means</span>(<span class="dt">model =</span> rats_int, <span class="dt">table =</span> rats_table))</span></code></pre></div>
+<div class="sourceCode" id="cb870"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb870-1"><a href="analysis-of-variance.html#cb870-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">get_est_means</span>(<span class="dt">model =</span> rats_int, <span class="dt">table =</span> rats_table))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1107,7 +1107,7 @@ y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}.
 </tbody>
 </table>
 <p>Next, we obtain the estimates from the <strong>additive</strong> model. Again, each cell has a different value. We also see that these estimates are somewhat close to those from the interaction model.</p>
-<div class="sourceCode" id="cb861"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb861-1"><a href="analysis-of-variance.html#cb861-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">get_est_means</span>(<span class="dt">model =</span> rats_add, <span class="dt">table =</span> rats_table))</span></code></pre></div>
+<div class="sourceCode" id="cb871"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb871-1"><a href="analysis-of-variance.html#cb871-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">get_est_means</span>(<span class="dt">model =</span> rats_add, <span class="dt">table =</span> rats_table))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1145,17 +1145,17 @@ y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}.
 </tbody>
 </table>
 <p>To understand the difference, let’s consider the effect of the treatments.</p>
-<div class="sourceCode" id="cb862"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb862-1"><a href="analysis-of-variance.html#cb862-1"></a>additive_means =<span class="st"> </span><span class="kw">get_est_means</span>(<span class="dt">model =</span> rats_add, <span class="dt">table =</span> rats_table)</span>
-<span id="cb862-2"><a href="analysis-of-variance.html#cb862-2"></a>additive_means[<span class="st">&quot;A&quot;</span>,] <span class="op">-</span><span class="st"> </span>additive_means[<span class="st">&quot;B&quot;</span>,]</span></code></pre></div>
+<div class="sourceCode" id="cb872"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb872-1"><a href="analysis-of-variance.html#cb872-1"></a>additive_means =<span class="st"> </span><span class="kw">get_est_means</span>(<span class="dt">model =</span> rats_add, <span class="dt">table =</span> rats_table)</span>
+<span id="cb872-2"><a href="analysis-of-variance.html#cb872-2"></a>additive_means[<span class="st">&quot;A&quot;</span>,] <span class="op">-</span><span class="st"> </span>additive_means[<span class="st">&quot;B&quot;</span>,]</span></code></pre></div>
 <pre><code>##       I      II     III 
 ## -0.3625 -0.3625 -0.3625</code></pre>
-<div class="sourceCode" id="cb864"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb864-1"><a href="analysis-of-variance.html#cb864-1"></a>interaction_means =<span class="st"> </span><span class="kw">get_est_means</span>(<span class="dt">model =</span> rats_int, <span class="dt">table =</span> rats_table)</span>
-<span id="cb864-2"><a href="analysis-of-variance.html#cb864-2"></a>interaction_means[<span class="st">&quot;A&quot;</span>,] <span class="op">-</span><span class="st"> </span>interaction_means[<span class="st">&quot;B&quot;</span>,]</span></code></pre></div>
+<div class="sourceCode" id="cb874"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb874-1"><a href="analysis-of-variance.html#cb874-1"></a>interaction_means =<span class="st"> </span><span class="kw">get_est_means</span>(<span class="dt">model =</span> rats_int, <span class="dt">table =</span> rats_table)</span>
+<span id="cb874-2"><a href="analysis-of-variance.html#cb874-2"></a>interaction_means[<span class="st">&quot;A&quot;</span>,] <span class="op">-</span><span class="st"> </span>interaction_means[<span class="st">&quot;B&quot;</span>,]</span></code></pre></div>
 <pre><code>##       I      II     III 
 ## -0.4675 -0.4950 -0.1250</code></pre>
 <p>This is the key difference between the interaction and additive models. The difference between the effect of treatments <code>A</code> and <code>B</code> is the <strong>same</strong> for each poison in the additive model. They are <strong>different</strong> in the interaction model.</p>
 <p>The remaining three models are much simpler, having either only row or only column effects. Or no effects in the case of the null model.</p>
-<div class="sourceCode" id="cb866"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb866-1"><a href="analysis-of-variance.html#cb866-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">get_est_means</span>(<span class="dt">model =</span> rats_pois, <span class="dt">table =</span> rats_table))</span></code></pre></div>
+<div class="sourceCode" id="cb876"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb876-1"><a href="analysis-of-variance.html#cb876-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">get_est_means</span>(<span class="dt">model =</span> rats_pois, <span class="dt">table =</span> rats_table))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1192,7 +1192,7 @@ y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}.
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb867"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb867-1"><a href="analysis-of-variance.html#cb867-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">get_est_means</span>(<span class="dt">model =</span> rats_treat, <span class="dt">table =</span> rats_table))</span></code></pre></div>
+<div class="sourceCode" id="cb877"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb877-1"><a href="analysis-of-variance.html#cb877-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">get_est_means</span>(<span class="dt">model =</span> rats_treat, <span class="dt">table =</span> rats_table))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1229,7 +1229,7 @@ y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}.
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb868"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb868-1"><a href="analysis-of-variance.html#cb868-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">get_est_means</span>(<span class="dt">model =</span> rats_null, <span class="dt">table =</span> rats_table))</span></code></pre></div>
+<div class="sourceCode" id="cb878"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb878-1"><a href="analysis-of-variance.html#cb878-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">get_est_means</span>(<span class="dt">model =</span> rats_null, <span class="dt">table =</span> rats_table))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -1347,7 +1347,7 @@ H_0: \text{ All }\alpha_{i} = 0. \quad \text{vs} \quad H_1: \text{ Not all } \al
 <img src="images/hierarchy.png" alt="" />
 <p class="caption">Model Hierarchy</p>
 </div>
-<div class="sourceCode" id="cb869"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb869-1"><a href="analysis-of-variance.html#cb869-1"></a><span class="kw">summary</span>(<span class="kw">aov</span>(time <span class="op">~</span><span class="st"> </span>poison <span class="op">*</span><span class="st"> </span>treat, <span class="dt">data =</span> rats))</span></code></pre></div>
+<div class="sourceCode" id="cb879"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb879-1"><a href="analysis-of-variance.html#cb879-1"></a><span class="kw">summary</span>(<span class="kw">aov</span>(time <span class="op">~</span><span class="st"> </span>poison <span class="op">*</span><span class="st"> </span>treat, <span class="dt">data =</span> rats))</span></code></pre></div>
 <pre><code>##              Df Sum Sq Mean Sq F value   Pr(&gt;F)    
 ## poison        2 1.0330  0.5165  23.222 3.33e-07 ***
 ## treat         3 0.9212  0.3071  13.806 3.78e-06 ***
@@ -1360,7 +1360,7 @@ H_0: \text{ All }\alpha_{i} = 0. \quad \text{vs} \quad H_1: \text{ Not all } \al
 <!-- - TODO: correct if int is not significant? -->
 <!-- - TODO: here we pick the full additive model -->
 <p>Within the additive model, we could do further testing about the main effects.</p>
-<div class="sourceCode" id="cb871"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb871-1"><a href="analysis-of-variance.html#cb871-1"></a><span class="kw">TukeyHSD</span>(<span class="kw">aov</span>(time <span class="op">~</span><span class="st"> </span>poison <span class="op">+</span><span class="st"> </span>treat, <span class="dt">data =</span> rats))</span></code></pre></div>
+<div class="sourceCode" id="cb881"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb881-1"><a href="analysis-of-variance.html#cb881-1"></a><span class="kw">TukeyHSD</span>(<span class="kw">aov</span>(time <span class="op">~</span><span class="st"> </span>poison <span class="op">+</span><span class="st"> </span>treat, <span class="dt">data =</span> rats))</span></code></pre></div>
 <pre><code>##   Tukey multiple comparisons of means
 ##     95% family-wise confidence level
 ## 
@@ -1381,12 +1381,12 @@ H_0: \text{ All }\alpha_{i} = 0. \quad \text{vs} \quad H_1: \text{ Not all } \al
 ## D-B -0.14250000 -0.31523865  0.03023865 0.1380432
 ## D-C  0.14166667 -0.03107198  0.31440532 0.1416151</code></pre>
 <p>For an example <strong>with</strong> interaction, we investigate the <code>warpbreaks</code> dataset, a default dataset in <code>R</code>.</p>
-<div class="sourceCode" id="cb873"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb873-1"><a href="analysis-of-variance.html#cb873-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb873-2"><a href="analysis-of-variance.html#cb873-2"></a><span class="kw">with</span>(warpbreaks, <span class="kw">interaction.plot</span>(wool, tension, breaks, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>))</span>
-<span id="cb873-3"><a href="analysis-of-variance.html#cb873-3"></a><span class="kw">with</span>(warpbreaks, <span class="kw">interaction.plot</span>(tension, wool, breaks, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb883"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb883-1"><a href="analysis-of-variance.html#cb883-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb883-2"><a href="analysis-of-variance.html#cb883-2"></a><span class="kw">with</span>(warpbreaks, <span class="kw">interaction.plot</span>(wool, tension, breaks, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>))</span>
+<span id="cb883-3"><a href="analysis-of-variance.html#cb883-3"></a><span class="kw">with</span>(warpbreaks, <span class="kw">interaction.plot</span>(tension, wool, breaks, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">3</span>))</span></code></pre></div>
 <p><img src="anova_files/figure-html/unnamed-chunk-42-1.png" width="1440" style="display: block; margin: auto;" /></p>
 <p>Either plot makes it rather clear that the <code>wool</code> and <code>tensions</code> factors interact.</p>
-<div class="sourceCode" id="cb874"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb874-1"><a href="analysis-of-variance.html#cb874-1"></a><span class="kw">summary</span>(<span class="kw">aov</span>(breaks <span class="op">~</span><span class="st"> </span>wool <span class="op">*</span><span class="st"> </span>tension, <span class="dt">data =</span> warpbreaks))</span></code></pre></div>
+<div class="sourceCode" id="cb884"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb884-1"><a href="analysis-of-variance.html#cb884-1"></a><span class="kw">summary</span>(<span class="kw">aov</span>(breaks <span class="op">~</span><span class="st"> </span>wool <span class="op">*</span><span class="st"> </span>tension, <span class="dt">data =</span> warpbreaks))</span></code></pre></div>
 <pre><code>##              Df Sum Sq Mean Sq F value   Pr(&gt;F)    
 ## wool          1    451   450.7   3.765 0.058213 .  
 ## tension       2   2034  1017.1   8.498 0.000693 ***
