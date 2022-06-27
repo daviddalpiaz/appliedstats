@@ -263,7 +263,7 @@ $$
 \end{aligned}
 $$
 
-Here, we have defined some notation for the expression we've obtained. Note that they have alternative forms which are much easier to work with. (We won't do it here, but you can try to prove the equalities below on your own, for "fun.") We use the capital letter $S$ to denote "summation" which replaces the capital letter $\Sigma$ when we calculate these values based on observed data, $(x_i ,y_i)$. The subscripts such as $xy$ denote over which variables the function $(z - \bar{z})$ is applied.
+Here, we have defined some notation for the expression we've obtained. Note that they have alternative forms which are much easier to work with. (We won't do it here, but you can try to prove the equalities below on your own, for "fun"). We use the capital letter $S$ to denote "summation" which replaces the capital letter $\Sigma$ when we calculate these values based on observed data, $(x_i ,y_i)$. The subscripts such as $xy$ denote over which variables the function $(z - \bar{z})$ is applied.
 
 $$
 \begin{aligned}
@@ -1309,4 +1309,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`slr.Rmd`](slr.Rmd){target="_blank"}
 
-The file was created using `R` version `4.2.0`.
+The file was created using `R` version `4.2.1`.
