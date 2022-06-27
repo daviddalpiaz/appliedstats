@@ -104,7 +104,7 @@ In order to correct for this, we would like to find some function of $Y$, $g(Y)$
   \text{Var}[g(Y) \mid X = x] = c
 \]
 
-where $c$ is a constant that does not depend on the mean, $\text{E}[Y \mid X = x]$. A transformation that accomplishes this is called a **variance stabilizaing transformation.**
+where $c$ is a constant that does not depend on the mean, $\text{E}[Y \mid X = x]$. A transformation that accomplishes this is called a **variance stabilizing transformation.**
 
 A common variance stabilizing transformation (VST) when we see increasing variance in a fitted versus residuals plot is $\log(Y)$. Also, if the values of a variable range over more than one order of magnitude and the variable is *strictly positive*, then replacing the variable by its logarithm is likely to be helpful.
 
@@ -264,7 +264,7 @@ plot(fitted(savings_model), resid(savings_model), col = "dodgerblue",
 abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
 ```
 
-Looking at a fitted versus residuals plot verifies that there likely are not any issue with the assumptions of this model, which Breusch-Pagan and Shapiro-Wilk tests verify.
+Looking at a fitted versus residuals plot verifies that there likely are not any issues with the assumptions of this model, which Breusch-Pagan and Shapiro-Wilk tests verify.
 
 ```{r, message = FALSE, warning = FALSE}
 library(lmtest)
@@ -310,7 +310,7 @@ abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
 
 The resulting fitted versus residuals plot looks much better!
 
-Lastly, we return to the `initech` data, and the `initech_fit` model we had used earlier. Recall, that this was the untransformed model, that we used a $\log$ transform to fix.
+Lastly, we return to the `initech` data, and the `initech_fit` model we had used earlier. Recall that this was the untransformed model, that we used a $\log$ transform to fix.
 
 ```{r}
 boxcox(initech_fit)
@@ -661,7 +661,7 @@ plot(fitted(fit6), resid(fit6), xlab = "Fitted", ylab = "Residuals",
   abline(h = 0, col = "darkorange", lwd = 2)
 ```
 
-Again the sixth order term is significant with the other terms in the model and here we see less pattern in the residuals plot. Let's now test for which of the previous two models we prefer. We will test
+Again the sixth order term is significant with the other terms in the model and here we see less pattern in the residuals plot. Let's now test which of the previous two models we prefer. We will test
 
 \[
 H_0: \beta_5 = \beta_6 = 0.
