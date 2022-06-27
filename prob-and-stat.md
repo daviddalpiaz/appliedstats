@@ -67,8 +67,8 @@ rnorm(n = 10, mean = 2, sd = 5)
 ```
 
 ```
-##  [1] -1.7097612 -0.3948298 10.5416086  2.8046328  6.7455664  8.3028025
-##  [7] -0.8645684 -2.3484237  2.5153850 -0.4002090
+##  [1]  4.1551233  1.3341629  1.8770998  0.1786026 -0.8530040  6.8331239
+##  [7]  8.5084384  8.0554139  6.5199851 -3.0178807
 ```
 
 These functions exist for many other distributions, including but not limited to:
@@ -583,7 +583,7 @@ hist(differences, breaks = 20,
 
 ![](prob-and-stat_files/figure-latex/unnamed-chunk-30-1.pdf)<!-- --> 
 
-Also the sample mean and variance are very close to to what we would expect.
+Also the sample mean and variance are very close to what we would expect.
 
 
 ```r
