@@ -17,7 +17,7 @@ After reading this chapter you will be able to:
 
 ## Modeling
 
-Let's consider a simple example of how the speed of a car affects its stopping distance, that is, how far it travels before it comes to a stop. To examine this relationship, we will use the `cars` dataset which, is a default `R` dataset. Thus, we don't need to load a package first; it is immediately available.
+Let's consider a simple example of how the speed of a car affects its stopping distance, that is, how far it travels before it comes to a stop. To examine this relationship, we will use the `cars` dataset, which is a default `R` dataset. Thus, we don't need to load a package first; it is immediately available.
 
 To get a first look at the data you can use the `View()` function inside RStudio.
 
@@ -124,7 +124,7 @@ We could also try to model the data with a very "wiggly" function that tries to 
 
 \begin{center}\includegraphics{slr_files/figure-latex/overfit_plot-1} \end{center}
 
-Lastly, we could try to model the data with a well chosen line rather than one of the two extremes previously attempted. The line on the plot below seems to summarize the relationship between stopping distance and speed quite well. As speed increases, the distance required to come to a stop increases. There is still some variation about this line, but it seems to capture the overall trend.
+Lastly, we could try to model the data with a well-chosen line rather than one of the two extremes previously attempted. The line on the plot below seems to summarize the relationship between stopping distance and speed quite well. As speed increases, the distance required to come to a stop increases. There is still some variation about this line, but it seems to capture the overall trend.
 
 
 \begin{center}\includegraphics{slr_files/figure-latex/goodfit_plot-1} \end{center}
@@ -194,7 +194,7 @@ As a side note, we will often refer to simple linear regression as **SLR**. Some
 - **Linear** tells us that our model for $Y$ is a linear combination of the predictors $X$. (In this case just the one.) Right now, this always results in a model that is a line, but later we will see how this is not always the case.
 - **Regression** simply means that we are attempting to measure the relationship between a response variable and (one or more) predictor variables. In the case of SLR, both the response and the predictor are *numeric* variables. 
 
-So SLR models $Y$ as a linear function of $X$, but how do we actually define a good line? There are an infinite number of lines we could use, so we will attempt to find one with "small errors." That is a line with as many points as close to it as possible. The questions now becomes, how do we find such a line? There are many approaches we could take.
+So SLR models $Y$ as a linear function of $X$, but how do we actually define a good line? There are an infinite number of lines we could use, so we will attempt to find one with "small errors." That is a line with as many points as close to it as possible. The question now becomes, how do we find such a line? There are many approaches we could take.
 
 We could find the line that has the smallest maximum distance from any of the points to the line. That is,
 
@@ -236,7 +236,7 @@ $$
 \end{aligned}
 $$
 
-We then set each of the partial derivatives equal to zero and solving the resulting system of equations.
+We then set each of the partial derivatives equal to zero and solve the resulting system of equations.
 
 $$
 \begin{aligned}
@@ -283,7 +283,7 @@ $$
 
 Traditionally we would now calculate $\hat{\beta}_0$ and $\hat{\beta}_1$ by hand for the `cars` dataset. However because we are living in the 21st century and are intelligent (or lazy or efficient, depending on your perspective), we will utilize `R` to do the number crunching for us.
 
-To keep some notation consistent with above mathematics, we will store the response variable as `y` and the predictor variable as `x`.
+To keep some notation consistent with the above mathematics, we will store the response variable as `y` and the predictor variable as `x`.
 
 
 ```r
@@ -589,7 +589,7 @@ $$
 \sum_{i=1}^{n}(y_i - \bar{y})^2 = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2.
 $$
 
-This should be somewhat alarming or amazing. How is this true? For now we will leave this questions unanswered. (Think about this, and maybe try to prove it.) We will now define three of the quantities seen in this equation. 
+This should be somewhat alarming or amazing. How is this true? For now we will leave this question unanswered. (Think about this, and maybe try to prove it.) We will now define three of the quantities seen in this equation. 
 
 #### Sum of Squares Total {-}
 
@@ -597,7 +597,7 @@ $$
 \text{SST} = \sum_{i=1}^{n}(y_i - \bar{y})^2
 $$
 
-The quantity "Sum of Squares Total," or $\text{SST}$, represents the **total variation** of the observed $y$ values. This should be a familiar looking expression. Note that,
+The quantity "Sum of Squares Total," or $\text{SST}$, represents the **total variation** of the observed $y$ values. This should be a familiar-looking expression. Note that,
 
 $$
 s ^ 2 = \frac{1}{n - 1}\sum_{i=1}^{n}(y_i - \bar{y})^2 = \frac{1}{n - 1} \text{SST}.
@@ -658,7 +658,7 @@ s2_e == SSE / (n - 2)
 ## [1] TRUE
 ```
 
-These three measures also do not have an important practical interpretation individually. But together, they're about to reveal a new statistic to help measure the strength of a SLR model.
+These three measures also do not have an important practical interpretation individually. But together, they're about to reveal a new statistic to help measure the strength of an SLR model.
 
 ###  Coefficient of Determination
 
@@ -717,7 +717,7 @@ We'll continue using the `cars` data, and essentially use the `lm()` function to
 stop_dist_model = lm(dist ~ speed, data = cars)
 ```
 
-This line of code fits our very first linear model. The syntax should look somewhat familiar. We use the `dist ~ speed` syntax to tell `R` we would like to model the response variable `dist` as a linear function of the predictor variable `speed`. In general, you should think of the syntax as `response ~ predictor`. The `data = cars` argument then tells `R` that that `dist` and `speed` variables are from the dataset `cars`. We then store this result in a variable `stop_dist_model`.
+This line of code fits our very first linear model. The syntax should look somewhat familiar. We use the `dist ~ speed` syntax to tell `R` we would like to model the response variable `dist` as a linear function of the predictor variable `speed`. In general, you should think of the syntax as `response ~ predictor`. The `data = cars` argument then tells `R` that the `dist` and `speed` variables are from the dataset `cars`. We then store this result in a variable `stop_dist_model`.
 
 The variable `stop_dist_model` now contains a wealth of information, and we will now see how to extract and use that information. The first thing we will do is simply output whatever is stored immediately in the variable `stop_dist_model`.
 
@@ -931,7 +931,7 @@ $$
 s_e = \text{RSE} = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 $$
 
-Often it is useful to talk about $s_e$ (or RSE) instead of $s_e^2$ because of their units. The units of $s_e$ in the `cars` example is feet, while the units of $s_e^2$ is feet-squared.
+Often it is useful to talk about $s_e$ (or RSE) instead of $s_e^2$ because of their units. The unit of $s_e$ in the `cars` example is feet, while the unit of $s_e^2$ is feet-squared.
 
 Another useful function, which we will use almost as often as `lm()` is the `predict()` function.
 
@@ -1192,7 +1192,7 @@ x_vals = seq(from = 0, to = 10, length.out = num_obs)
 # x_vals = runif(num_obs, 0, 10)
 ```
 
-We then generate the $y$ values according the specified functional relationship.
+We then generate the $y$ values according to the specified functional relationship.
 
 
 ```r
@@ -1224,7 +1224,7 @@ abline(sim_fit)
 
 \begin{center}\includegraphics{slr_files/figure-latex/unnamed-chunk-51-1} \end{center}
 
-We should say here, that we're being sort of lazy, and not the good kinda of lazy that could be considered efficient. Any time you simulate data, you should consider doing two things: writing a function, and storing the data in a data frame.
+We should say here, that we're being sort of lazy, and not the good kind of lazy that could be considered efficient. Any time you simulate data, you should consider doing two things: writing a function, and storing the data in a data frame.
 
 The function below, `sim_slr()`, can be used for the same task as above, but is much more flexible. Notice that we provide `x` to the function, instead of generating `x` inside the function. In the SLR model, the $x_i$ are considered known values. That is, they are not random, so we do not assume a distribution for the $x_i$. Because of this, we will repeatedly use the same `x` values across all simulations.
 
@@ -1300,7 +1300,7 @@ legend("topright", c("Estimate", "Truth"), lty = c(1, 2), lwd = 2,
 
 ## History
 
-For some brief background on the history of linear regression, see ["Galton, Pearson, and the Peas: A Brief History of Linear Regression for Statistics Instructors"](http://www.amstat.org/publications/jse/v9n3/stanton.html){target="_blank"} from the [Journal of Statistics Education](http://www.amstat.org/publications/jse/){target="_blank"} as well as the [Wikipedia page on the history of regression analysis](https://en.wikipedia.org/wiki/Regression_analysis#History){target="_blank"} and lastly the article for [regression to the mean](https://en.wikipedia.org/wiki/Regression_toward_the_mean){target="_blank"} which details the origins of the term "regression."
+For some brief background on the history of linear regression, see ["Galton, Pearson, and the Peas: A Brief History of Linear Regression for Statistics Instructors"](https://www.tandfonline.com/doi/full/10.1080/10691898.2001.11910537){target="_blank"} from the [Journal of Statistics Education](https://www.tandfonline.com/journals/ujse20){target="_blank"} as well as the [Wikipedia page on the history of regression analysis](https://en.wikipedia.org/wiki/Regression_analysis#History){target="_blank"} and lastly the article for [regression toward the mean](https://en.wikipedia.org/wiki/Regression_toward_the_mean){target="_blank"} which details the origins of the term "regression."
 
 
 ## `R` Markdown

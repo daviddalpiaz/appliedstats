@@ -439,7 +439,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>In an <strong>experiment</strong>, the predictor data are values determined by the experimenter. The experiment is run and the response is observed.</li>
 </ul>
 <p>In an experiment, the predictors, which are controlled by the experimenter, are called <strong>factors</strong>. The possible values of these factors are called <strong>levels</strong>. Subjects are <em>randomly</em> assigned to a level of each of the factors.</p>
-<p>The design of experiments could be a course by itself. The Wikipedia article on <a href="https://en.wikipedia.org/wiki/Design_of_experiments" target="_blank">design of experiments</a> gives a good overview. Originally, most of the methodology was developed for agricultural applications by <a href="https://en.wikipedia.org/wiki/Ronald_Fisher" target="_blank">R. A. Fisher</a>, but are still in use today, now in a wide variety of application areas. Notably, these methods have seen a resurgence as a part of “A/B Testing.”</p>
+<p>The design of experiments could be a course by itself. The Wikipedia article on <a href="https://en.wikipedia.org/wiki/Design_of_experiments" target="_blank">design of experiments</a> gives a good overview. Originally, most of the methodology was developed for agricultural applications by <a href="https://en.wikipedia.org/wiki/Ronald_Fisher" target="_blank">R. A. Fisher</a>, but is still in use today, now in a wide variety of application areas. Notably, these methods have seen a resurgence as a part of “A/B Testing.”</p>
 <!-- TODO: In the future, discuss the Morrow Plots: http://cropsci.illinois.edu/research/morrow -->
 </div>
 <div id="two-sample-t-test" class="section level2 hasAnchor">
@@ -471,7 +471,7 @@ y_{2j} \sim N(\mu_2, \sigma^2)
 H_0: \mu_1 = \mu_2 \quad \text{vs} \quad H_1: \mu_1 \neq \mu_2
 \]</span></p>
 <p>For the stated model and assuming the null hypothesis is true, the <span class="math inline">\(t\)</span> test statistic would follow a <span class="math inline">\(t\)</span> distribution with degrees of freedom <span class="math inline">\(n_1 + n_2 - 2\)</span>.</p>
-<p>As an example, suppose we are interested in the effect of <a href="https://en.wikipedia.org/wiki/Melatonin" target="_blank">melatotin</a> on sleep duration. A researcher obtains a random sample of 20 adult males. Of these subjects, 10 are randomly chosen for the control group, which will receive a placebo. The remaining 10 will be given 5mg of melatonin before bed. The sleep duration in hours of each subject is then measured. The researcher chooses a significance level of <span class="math inline">\(\alpha = 0.10\)</span>. Was sleep duration affected by the melatonin?</p>
+<p>As an example, suppose we are interested in the effect of <a href="https://en.wikipedia.org/wiki/Melatonin" target="_blank">melatonin</a> on sleep duration. A researcher obtains a random sample of 20 adult males. Of these subjects, 10 are randomly chosen for the control group, which will receive a placebo. The remaining 10 will be given 5mg of melatonin before bed. The sleep duration in hours of each subject is then measured. The researcher chooses a significance level of <span class="math inline">\(\alpha = 0.10\)</span>. Was sleep duration affected by the melatonin?</p>
 <div class="sourceCode" id="cb807"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb807-1"><a href="analysis-of-variance.html#cb807-1"></a>melatonin</span></code></pre></div>
 <pre><code>##        sleep     group
 ## 1   8.145150   control
@@ -553,12 +553,12 @@ y_{ij} \sim N(\mu_i,\sigma^{2})
 \mu_i = \mu + \alpha_i.
 \]</span></p>
 <p>Here <span class="math inline">\(\alpha_i\)</span> measures the effect of group <span class="math inline">\(i\)</span>. It is the difference between the overall mean and the mean of group <span class="math inline">\(i\)</span>.</p>
-<p>Essentially, the assumptions here are the same as the two sample case, however now, we simply have more groups.</p>
+<p>Essentially, the assumptions here are the same as the two-sample case, however now, we simply have more groups.</p>
 <p>Much like the two-sample case, we would again like to test if the means of the groups are equal.</p>
 <p><span class="math display">\[
 H_0: \mu_1 = \mu_2 = \ldots \mu_g \quad \text{vs} \quad H_1: \text{ Not all } \mu_i \text{ are equal.}
 \]</span></p>
-<p>Notice that the alternative simply indicates the some of the means are not equal, not specifically which are not equal. More on that later.</p>
+<p>Notice that the alternative simply indicates that some of the means are not equal, not specifically which are not equal. More on that later.</p>
 <p>Alternatively, we could write</p>
 <p><span class="math display">\[
 H_0: \alpha_1 = \alpha_2 = \ldots = \alpha_g = 0 \quad \text{vs} \quad H_1: \text{ Not all } \alpha_i \text{ are } 0.
@@ -627,7 +627,7 @@ SSW = \sum_{i = 1}^{g} \sum_{j = 1}^{n_i} (y_{ij} - \bar{y}_i)^2 = \sum_{i = 1}^
 <p><img src="anova_files/figure-html/unnamed-chunk-9-1.png" width="960" style="display: block; margin: auto;" /></p>
 <p>The left panel shows the three normal distributions we are sampling from. The ticks along the <span class="math inline">\(x\)</span>-axis show the randomly sampled observations. The right panel, re-displays only the sampled values in a boxplot. Note that the mid-line of the boxes is usually the sample median. These boxplots have been modified to use the sample mean.</p>
 <p>Here the sample means vary a lot around the overall sample mean, which is the solid grey line on the right panel. Within the groups there is variability, but it is still obvious that the sample means are very different.</p>
-<p>As a result, we we obtain a <em>large</em> test statistic, thus <em>small</em> p-value.</p>
+<p>As a result, we obtain a <em>large</em> test statistic, thus <em>small</em> p-value.</p>
 <ul>
 <li><span class="math inline">\(F = 374.4469511\)</span></li>
 <li><span class="math inline">\(\text{p-value} = 1.6349862\times 10^{-33}\)</span></li>
@@ -635,7 +635,7 @@ SSW = \sum_{i = 1}^{g} \sum_{j = 1}^{n_i} (y_{ij} - \bar{y}_i)^2 = \sum_{i = 1}^
 <p>Now consider <span class="math inline">\(\mu_A = 0, \mu_B = 0, \mu_C = 0\)</span> with <span class="math inline">\(\sigma = 1\)</span>. That is, equal means for the groups.</p>
 <p><img src="anova_files/figure-html/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>
 <p>Here the sample means vary only a tiny bit around the overall sample mean. Within the groups there is variability, this time much larger than the variability of the sample means.</p>
-<p>As a result, we we obtain a <em>small</em> test statistic, thus <em>large</em> p-value.</p>
+<p>As a result, we obtain a <em>small</em> test statistic, thus <em>large</em> p-value.</p>
 <ul>
 <li><span class="math inline">\(F = 2.667892\)</span></li>
 <li><span class="math inline">\(\text{p-value} = 0.0780579\)</span></li>
@@ -766,8 +766,8 @@ H_0: \mu_A = \mu_B = \mu_C = \mu_D
 <ul>
 <li><strong>Effect size</strong>. It is easier to detect larger effects.</li>
 <li><strong>Noise level</strong> <span class="math inline">\(\sigma\)</span>. The less noise, the easier it is to detect signal (effect). We don’t have much ability to control this, except maybe to measure more accurately.</li>
-<li><strong>Significance level</strong> <span class="math inline">\(\alpha\)</span>. Lower significance level makes rejecting more difficult. (But also allows for less false positives.)</li>
-<li><strong>Sample size</strong>. Large samples means easier to detect effects.</li>
+<li><strong>Significance level</strong> <span class="math inline">\(\alpha\)</span>. Lower significance level makes rejecting more difficult. (But also allows for fewer false positives.)</li>
+<li><strong>Sample size</strong>. Large samples mean easier to detect effects.</li>
 <li><strong>Balanced design</strong>. An equal number of observations per group leads to higher power.</li>
 </ul>
 <p>The following simulations look at the effect of significance level, effect size, and noise level on the power of an ANOVA <span class="math inline">\(F\)</span>-test. Homework will look into sample size and balance.</p>
@@ -810,7 +810,7 @@ H_0: \mu_A = \mu_B = \mu_C = \mu_D
 <p>Notice the <code>pairwise.t.test()</code> function does not have a <code>data</code> argument. To avoid using <code>attach()</code> or the <code>$</code> operator, we introduce the <code>with()</code> function. The commented line would perform the same operation.</p>
 <p>Also note that we are using the argument <code>p.adj = "none"</code>. What is this? An adjustment (in this case not an adjustment) to the p-value of each test. Why would we need to do this?</p>
 <p>The adjustment is an attempt to correct for the <a href="https://en.wikipedia.org/wiki/Multiple_comparisons_problem" target="_blank">multiple testing problem</a>. (See also: <a href="https://xkcd.com/882/" target="_blank">Relevant XKCD</a>. ) Imagine that you knew ahead of time that you were going to perform 100 <span class="math inline">\(t\)</span>-tests. Suppose you wish to do this with a false positive rate of <span class="math inline">\(\alpha = 0.05\)</span>. If we use this significance level for each test, for 100 tests, we then expect 5 false positives. That means, with 100 tests, we’re almost guaranteed to have at least one error.</p>
-<p>What we’d really like, is for the <a href="https://en.wikipedia.org/wiki/Family-wise_error_rate" target="_blank">family-wise error rate</a> to be 0.05. If we consider the 100 tests to be a single “experiment” the FWER is the rate of one or more false positives for in the full experiment (100 tests). Consider it an error rate for an entire procedure, instead of a single test.</p>
+<p>What we’d really like is for the <a href="https://en.wikipedia.org/wiki/Family-wise_error_rate" target="_blank">family-wise error rate</a> to be 0.05. If we consider the 100 tests to be a single “experiment” the FWER is the rate of one or more false positives for in the full experiment (100 tests). Consider it an error rate for an entire procedure, instead of a single test.</p>
 <p>With this in mind, one of the simplest adjustments we can make, is to increase the p-values for each test, depending on the number of tests. In particular the Bonferroni correction simply multiplies by the number of tests.</p>
 <p><span class="math display">\[
 \text{p-value-bonf} = \min(1, n_{tests} \cdot \text{p-value})
@@ -827,7 +827,7 @@ H_0: \mu_A = \mu_B = \mu_C = \mu_D
 ## D 1.00000 0.00518 0.00014
 ## 
 ## P value adjustment method: bonferroni</code></pre>
-<p>We see that these p-values are much higher than the unadjusted p-values, thus, we are less likely to reject each tests. As a result, the FWER is 0.05, instead of an error rate of 0.05 for each test.</p>
+<p>We see that these p-values are much higher than the unadjusted p-values, thus, we are less likely to reject each test. As a result, the FWER is 0.05, instead of an error rate of 0.05 for each test.</p>
 <p>We can simulate the 100 test scenario to illustrate this point.</p>
 <div class="sourceCode" id="cb851"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb851-1"><a href="analysis-of-variance.html#cb851-1"></a>get_p_val =<span class="st"> </span><span class="cf">function</span>() {</span>
 <span id="cb851-2"><a href="analysis-of-variance.html#cb851-2"></a>  </span>
@@ -1025,7 +1025,7 @@ y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}.
 <pre><code>## [1] &quot;I&quot;   &quot;II&quot;  &quot;III&quot;</code></pre>
 <div class="sourceCode" id="cb861"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb861-1"><a href="analysis-of-variance.html#cb861-1"></a><span class="kw">levels</span>(rats<span class="op">$</span>treat)</span></code></pre></div>
 <pre><code>## [1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot;</code></pre>
-<p>Here, 48 rats were randomly assigned both one of three poisons and one of four possible treatments. The experimenters then measures their survival time in tens of hours. A total of 12 groups, each with 4 replicates.</p>
+<p>Here, 48 rats were randomly assigned both one of three poisons and one of four possible treatments. The experimenters then measured their survival time in tens of hours. A total of 12 groups, each with 4 replicates.</p>
 <p>Before running any tests, we should first look at the data. We will create <strong>interaction plots</strong>, which will help us visualize the effect of one factor, as we move through the levels of another factor.</p>
 <div class="sourceCode" id="cb863"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb863-1"><a href="analysis-of-variance.html#cb863-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb863-2"><a href="analysis-of-variance.html#cb863-2"></a><span class="kw">with</span>(rats, <span class="kw">interaction.plot</span>(poison, treat, time, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>))</span>

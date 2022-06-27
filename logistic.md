@@ -99,9 +99,9 @@ $$
 \log\left(\frac{p({\bf x})}{1 - p({\bf x})}\right) = \beta_0 + \beta_1 x_1 + \ldots  + \beta_{p - 1} x_{p - 1}
 $$
 
-Immediately we notice some similarities to ordinary linear regression, in particular, the right hand side. This is our usual linear combination of the predictors. We have our usual $p - 1$ predictors for a total of $p$ $\beta$ parameters. (Note, many more machine learning focused texts will use $p$ as the number of predictors. This is an arbitrary choice, but you should be aware of it.)
+Immediately we notice some similarities to ordinary linear regression, in particular, the right-hand side. This is our usual linear combination of the predictors. We have our usual $p - 1$ predictors for a total of $p$ $\beta$ parameters. (Note, many more machine learning focused texts will use $p$ as the number of predictors. This is an arbitrary choice, but you should be aware of it.)
 
-The left hand side is called the **log odds**, which is the log of the odds. The odds are the probability for a positive event $(Y = 1)$ divided by the probability of a negative event $(Y = 0)$. So when the odds are $1$, the two events have equal probability. Odds greater than $1$ favor a positive event. The opposite is true when the odds are less than $1$.
+The left-hand side is called the **log odds**, which is the log of the odds. The odds are the probability for a positive event $(Y = 1)$ divided by the probability of a negative event $(Y = 0)$. So when the odds are $1$, the two events have equal probability. Odds greater than $1$ favor a positive event. The opposite is true when the odds are less than $1$.
 
 $$
 \frac{p({\bf x})}{1 - p({\bf x})} = \frac{P[Y = 1 \mid {\bf X} = {\bf x}]}{P[Y = 0 \mid {\bf X} = {\bf x}]}
@@ -121,7 +121,7 @@ $$
 
 Note that for $x \in (-\infty, \infty))$, this function outputs values between 0 and 1.
 
-Students often ask, where is the error term? The answer is that its something that is specific to the normal model. First notice that the model with the error term,
+Students often ask, where is the error term? The answer is that it's something that is specific to the normal model. First notice that the model with the error term,
 
 $$
 Y = \beta_0 + \beta_1x_1 + \ldots + \beta_qx_q + \epsilon, \ \ \epsilon \sim N(0, \sigma^2)
@@ -276,7 +276,7 @@ head(example_data)
 ## 6 0 -0.8204684
 ```
 
-After simulating a dataset, we'll then fit both ordinary linear regression and logistic regression. Notice that currently the responses variable `y` is a numeric variable that only takes values `0` and `1`. Later we'll see that we can also fit logistic regression when the response is a factor variable with only two levels. (Generally, having a factor response is preferred, but having a dummy response allows use to make the comparison to using ordinary linear regression.)
+After simulating a dataset, we'll then fit both ordinary linear regression and logistic regression. Notice that currently the responses variable `y` is a numeric variable that only takes values `0` and `1`. Later we'll see that we can also fit logistic regression when the response is a factor variable with only two levels. (Generally, having a factor response is preferred, but having a dummy response allows us to make the comparison to using ordinary linear regression.)
 
 
 ```r
@@ -990,7 +990,7 @@ You may have realized this before we actually explicitly wrote it down!
 
 You have probably noticed that the output from `summary()` is also very similar to that of ordinary linear regression. One difference, is the "deviance" being reported. The `Null deviance` is the deviance for the null model, that is, a model with no predictors. The `Residual deviance` is the deviance for the model that was fit.
 
-[**Deviance**](https://en.wikipedia.org/wiki/Deviance_(statistics)){target="_blank"} compares the model to a saturated model. (Without repeated observations, a saturated model is a model that fits perfectly, using a parameter for each observation.) Essentially, deviance is a generalized *residual sum of squares* for GLMs. Like RSS, deviance decreased as the model complexity increases.
+[**Deviance**](https://en.wikipedia.org/wiki/Deviance_(statistics)){target="_blank"} compares the model to a saturated model. (Without repeated observations, a saturated model is a model that fits perfectly, using a parameter for each observation.) Essentially, deviance is a generalized *residual sum of squares* for GLMs. Like RSS, deviance decreases as the model complexity increases.
 
 
 ```r
@@ -1114,7 +1114,7 @@ tibble::as.tibble(spam)
 ## #   cs <dbl>, meeting <dbl>, original <dbl>, project <dbl>, re <dbl>, ...
 ```
 
-This dataset, created in the late 1990s at Hewlett-Packard Labs, contains 4601 emails, of which 1813 are considered spam. The remaining are not spam. (Which for simplicity, we might call, ham.) Additional details can be obtained by using `?spam` of by visiting the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/spambase){target="_blank"}. 
+This dataset, created in the late 1990s at Hewlett-Packard Labs, contains 4601 emails, of which 1813 are considered spam. The remaining are not spam. (Which for simplicity, we might call, ham.) Additional details can be obtained by using `?spam` or by visiting the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/spambase){target="_blank"}. 
 
 The response variable, `type`, is a **factor** with levels that label each email as `spam` or `nonspam`. When fitting models, `nonspam` will be the reference level, $Y = 0$, as it comes first alphabetically.
 
@@ -1135,7 +1135,7 @@ levels(spam$type)
 ## [1] "nonspam" "spam"
 ```
 
-Many of the predictors (often called features in machine learning) are engineered based on the emails. For example, `charDollar` is the number of times an email contains the `$` character. Some variables are highly specific to this dataset, for example `george` and `num650`. (The name and area code for one of the researchers whose emails were used.) We should keep in mind that this dataset was created based on emails send to academic type researcher in the 1990s. Any results we derive probably won't generalize to modern emails for the general public.
+Many of the predictors (often called features in machine learning) are engineered based on the emails. For example, `charDollar` is the number of times an email contains the `$` character. Some variables are highly specific to this dataset, for example `george` and `num650`. (The name and area code for one of the researchers whose emails were used.) We should keep in mind that this dataset was created based on emails sent to academic type researchers in the 1990s. Any results we derive probably won't generalize to modern emails for the general public.
 
 To get started, we'll first test-train split the data.
 
@@ -1248,7 +1248,7 @@ Because of this, training data isn't useful for evaluating, as it would suggest 
 
 To overcome this, we'll use cross-validation as we did with ordinary linear regression, but this time we'll cross-validate the misclassification rate. To do so, we'll use the `cv.glm()` function from the `boot` library. It takes arguments for the data (in this case training), a model fit via `glm()`, and `K`, the number of folds. See `?cv.glm` for details.
 
-Previously, for cross-validating RMSE in ordinary linear regression, we used LOOCV. We certainly could do that here. However, with logistic regression, we no longer have the clever trick that would allow use to obtain a LOOCV metric without needing to fit the model $n$ times. So instead, we'll use 5-fold cross-validation. (5 and 10 fold are the most common in practice.) Instead of leaving a single observation out repeatedly, we'll leave out a fifth of the data.
+Previously, for cross-validating RMSE in ordinary linear regression, we used LOOCV. We certainly could do that here. However, with logistic regression, we no longer have the clever trick that would allow us to obtain a LOOCV metric without needing to fit the model $n$ times. So instead, we'll use 5-fold cross-validation. (5 and 10 fold are the most common in practice.) Instead of leaving a single observation out repeatedly, we'll leave out a fifth of the data.
 
 Essentially we'll repeat the following process 5 times:
 
@@ -1360,7 +1360,7 @@ table(spam_tst$type) / nrow(spam_tst)
 
 First, note that to be a reasonable classifier, it needs to outperform the obvious classifier of simply classifying all observations to the majority class. In this case, classifying everything as non-spam for a test misclassification rate of 0.3935018
 
-Next, we can see that using the classifier create from `fit_additive`, only a total of $137 + 161 = 298$ from the total of 3601 email in the test set are misclassified. Overall, the accuracy in the test set it
+Next, we can see that using the classifier created from `fit_additive`, only a total of $137 + 161 = 298$ from the total of 3601 emails in the test set are misclassified. Overall, the accuracy in the test set it
 
 
 ```r
@@ -1384,9 +1384,9 @@ mean(spam_tst_pred != spam_tst$type)
 
 This seems like a decent classifier...
 
-However, are all errors created equal? In this case, absolutely not. The 137 non-spam emails that were marked as spam (false positives) are a problem. We can't allow important information, say, a job offer, miss our inbox and get sent to the spam folder. On the other hand, the 161 spam email that would make it to an inbox (false negatives) are easily dealt with, just delete them.
+However, are all errors created equal? In this case, absolutely not. The 137 non-spam emails that were marked as spam (false positives) are a problem. We can't allow important information, say, a job offer, to miss our inbox and get sent to the spam folder. On the other hand, the 161 spam email that would make it to an inbox (false negatives) are easily dealt with, just delete them.
 
-Instead of simply evaluating a classifier based on its misclassification rate (or accuracy), we'll define two additional metrics, sensitivity and specificity. Note that these are simply two of many more metrics that can be considered. The [Wikipedia page for sensitivity and specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity){target="_blank"} details a large number of metrics that can be derived form a confusion matrix.
+Instead of simply evaluating a classifier based on its misclassification rate (or accuracy), we'll define two additional metrics, sensitivity and specificity. Note that these are simply two of many more metrics that can be considered. The [Wikipedia page for sensitivity and specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity){target="_blank"} details a large number of metrics that can be derived from a confusion matrix.
 
 **Sensitivity** is essentially the true positive rate. So when sensitivity is high, the number of false negatives is low.
 
@@ -1531,11 +1531,11 @@ get_spec(conf_mat_90)
 ## [1] 0.978022
 ```
 
-While this is far fewer false positives, is it acceptable though? Still probably not. Also, don't forget, this would actually be a terrible spam detector today since this is based on data from a very different era of the internet, for a very specific set of people. Spam has changed a lot since 90s! (Ironically, machine learning is probably partially to blame.)
+While this is far fewer false positives, is it acceptable though? Still probably not. Also, don't forget, this would actually be a terrible spam detector today since this is based on data from a very different era of the internet, for a very specific set of people. Spam has changed a lot since the 90s! (Ironically, machine learning is probably partially to blame.)
 
 This chapter has provided a rather quick introduction to classification, and thus, machine learning. For a more complete coverage of machine learning, [An Introduction to Statistical Learning](http://www-bcf.usc.edu/~gareth/ISL/){target="_blank"} is a highly recommended resource. Additionally, [`R` for Statistical Learning](https://daviddalpiaz.github.io/r4sl/){target="_blank"} has been written as a supplement which provides additional detail on how to perform these methods using `R`. The [classification](https://daviddalpiaz.github.io/r4sl/classification-overview.html){target="_blank"} and [logistic regression](https://daviddalpiaz.github.io/r4sl/logistic-regression.html){target="_blank"} chapters might be useful.
 
-We should note that the code to perform classification using logistic regression is presented in a way that illustrates the concepts to the reader. In practice, you may to prefer to use a more general machine learning pipeline such as [`caret`](http://topepo.github.io/caret/index.html){target="_blank"} in `R`. This will streamline processes for creating predictions and generating evaluation metrics.
+We should note that the code to perform classification using logistic regression is presented in a way that illustrates the concepts to the reader. In practice, you may prefer to use a more general machine learning pipeline such as [`caret`](http://topepo.github.io/caret/index.html){target="_blank"} in `R`. This will streamline processes for creating predictions and generating evaluation metrics.
 
 ## `R` Markdown
 

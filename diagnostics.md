@@ -65,7 +65,7 @@ We then used this fact to define
 
 which we used to perform hypothesis testing.
 
-So far we have looked at various metrics such as RMSE, RSE and $R^2$ to determine how well our model fit our data. Each of these in some way considers the expression
+So far we have looked at various metrics such as RMSE, RSE, and $R^2$ to determine how well our model fits our data. Each of these in some way considers the expression
 
 \[
 \sum_{i = 1}^n (y_i - \hat{y}_i)^2.
@@ -272,7 +272,7 @@ This time on the fitted versus residuals plot, for any fitted value, the spread 
 
 Constant variance is often called **homoscedasticity**. Conversely, non-constant variance is called **heteroscedasticity**. We've seen how we can use a fitted versus residuals plot to look for these attributes.
 
-While a fitted versus residuals plot can give us an idea about homoscedasticity, sometimes we would prefer a more formal test. There are many tests for constant variance, but here we will present one, the [**Breusch-Pagan Test**](https://en.wikipedia.org/wiki/Breusch%E2%80%93Pagan_test){target="_blank"}. The exact details of the test will omitted here, but importantly the null and alternative can be considered to be,
+While a fitted versus residuals plot can give us an idea about homoscedasticity, sometimes we would prefer a more formal test. There are many tests for constant variance, but here we will present one, the [**Breusch-Pagan Test**](https://en.wikipedia.org/wiki/Breusch%E2%80%93Pagan_test){target="_blank"}. The exact details of the test will be omitted here, but importantly the null and alternative can be considered to be,
 
 - $H_0$: Homoscedasticity. The errors have constant variance about the true model.
 - $H_1$: Heteroscedasticity.  The errors have non-constant variance about the true model.
@@ -369,7 +369,7 @@ hist(resid(fit_3),
 
 \begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-14-1} \end{center}
 
-Above are histograms for each of the three regression we have been considering. Notice that the first, for `fit_1` appears very normal. The third, for `fit_3`, appears to be very non-normal. However `fit_2` is not as clear. It does have a rough bell shape, however, it also has a very sharp peak. For this reason we will usually use more powerful tools such as **Q-Q plots** and the **Shapiro-Wilk test** for assessing the normality of errors.
+Above are histograms for each of the three regression models we have been considering. Notice that the first, for `fit_1` appears very normal. The third, for `fit_3`, appears to be very non-normal. However `fit_2` is not as clear. It does have a rough bell shape, however, it also has a very sharp peak. For this reason we will usually use more powerful tools such as **Q-Q plots** and the **Shapiro-Wilk test** for assessing the normality of errors.
 
 ### Q-Q Plots
 
@@ -469,7 +469,7 @@ qq_plot(rt(100, df = 4))
 
 \begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-19-1} \end{center}
 
-Recall, that as the degrees of freedom for a $t$ distribution become larger, the distribution becomes more and more similar to a normal. Here, using 4 degrees of freedom, we have a distribution that is somewhat normal, it is symmetrical and roughly bell-shaped, however it has "fat tails." This presents itself clearly in the third panel. While many of the points are close to the line, at the edges, there are large discrepancies. This indicates that the values are too small (negative) or too large (positive) compared to what we would expect for a normal distribution. So for the sample size of `100`, we would conclude that that normality assumption is violated. (If these were residuals of a model.) For sample sizes of `10` and `25` we may be suspicious, but not entirely confident. Reading Q-Q plots, is a bit of an art, not completely a science.
+Recall that as the degrees of freedom for a $t$ distribution become larger, the distribution becomes more and more similar to a normal. Here, using 4 degrees of freedom, we have a distribution that is somewhat normal, it is symmetrical and roughly bell-shaped, however it has "fat tails." This presents itself clearly in the third panel. While many of the points are close to the line, at the edges, there are large discrepancies. This indicates that the values are too small (negative) or too large (positive) compared to what we would expect for a normal distribution. So for the sample size of `100`, we would conclude that the normality assumption is violated. (If these were residuals of a model.) For sample sizes of `10` and `25` we may be suspicious, but not entirely confident. Reading Q-Q plots, is a bit of an art, not completely a science.
 
 Next, we simulate data from an exponential distribution.
 
@@ -488,7 +488,7 @@ qq_plot(rexp(100))
 
 This is a distribution that is not very similar to a normal, so in all three cases, we see points that are far from the lines, so we would think that the normality assumption is violated.
 
-For a better understanding of which Q-Q plots are "good," repeat the simulations above a number of times (without setting the seed) and pay attention to the differences between those that are simulated from normal, and those that are not. Also consider different samples sizes and distribution parameters.
+For a better understanding of which Q-Q plots are "good," repeat the simulations above a number of times (without setting the seed) and pay attention to the differences between those that are simulated from normal, and those that are not. Also consider different sample sizes and distribution parameters.
 
 Returning to our three regressions, recall,
 
@@ -570,7 +570,7 @@ For details, see: [Wikipedia: Shapiro–Wilk test.](https://en.wikipedia.org/wik
 
 In the above examples, we see we fail to reject for the data sampled from normal, and reject on the non-normal data, for any reasonable $\alpha$.
 
-Returning again to `fit_1`, `fit_2` and `fit_3`, we see the result of running `shapiro.test()` on the residuals of each, returns a result for each that matches for decisions based on the Q-Q plots.
+Returning again to `fit_1`, `fit_2`, and `fit_3`, we see the result of running `shapiro.test()` on the residuals of each, returns a result for each that matches decisions based on the Q-Q plots.
 
 
 ```r
@@ -748,7 +748,7 @@ H = X \left(X^\top X\right)^{-1} X^\top
 
 which we will refer to as the *hat matrix*. The hat matrix is used to project onto the subspace spanned by the columns of $X$. It is also simply known as a projection matrix.
 
-The hat matrix, is a matrix that takes the original $y$ values, and adds a hat!
+The hat matrix is a matrix that takes the original $y$ values, and adds a hat!
 
 \[
 \hat{y} = H y
@@ -764,7 +764,7 @@ where $h_i$ is the leverage for the $i$th observation.
 
 Large values of $h_i$ indicate extreme values in $X$, which may influence regression. Note that leverages only depend on $X$.
 
-Here, $p$ the number of $\beta$s  is also the trace (and rank) of the hat matrix.
+Here, $p$, the number of $\beta$s, is also the trace (and rank) of the hat matrix.
 
 \[
 \sum_{i = 1}^n h_i = p
@@ -1041,7 +1041,7 @@ We see that in the second and third plots, the added point is a point of high le
 
 ### Outliers
 
-Outliers are points which do not fit the model well. They may or may not have a large affect on the model. To identify outliers, we will look for observations with large residuals.
+Outliers are points which do not fit the model well. They may or may not have a large effect on the model. To identify outliers, we will look for observations with large residuals.
 
 Note,
 
@@ -1237,7 +1237,7 @@ cooks.distance(model_3)[11] > 4 / length(cooks.distance(model_3))
 ## TRUE
 ```
 
-And, as expected, the added point in the third plot, with high leverage and a large residual is considered influential!
+And, as expected, the added point in the third plot, with high leverage and a large residual, is considered influential!
 
 ## Data Analysis Examples
 
@@ -1375,7 +1375,7 @@ coef(mpg_hp_add_fix)
 ## 27.22190933 -0.06286249  4.29765867
 ```
 
-It seems there isn't much of a change in the coefficients as a results of removing the supposed influential points. Notice we did not create a new dataset to accomplish this. We instead used the `subset` argument to `lm()`. Think about what the code `cd_mpg_hp_add <= 4 / length(cd_mpg_hp_add)` does here.
+It seems there isn't much of a change in the coefficients as a result of removing the supposed influential points. Notice we did not create a new dataset to accomplish this. We instead used the `subset` argument to `lm()`. Think about what the code `cd_mpg_hp_add <= 4 / length(cd_mpg_hp_add)` does here.
 
 
 ```r
@@ -1387,7 +1387,7 @@ plot(mpg_hp_add)
 
 \begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-59-1} \end{center}
 
-Notice that, calling `plot()` on a variable which stores an object created by `lm()` outputs four diagnostic plots by default. Use `?plot.lm` to learn more. The first two should already be familiar.
+Notice that calling `plot()` on a variable which stores an object created by `lm()` outputs four diagnostic plots by default. Use `?plot.lm` to learn more. The first two should already be familiar.
 
 ### Suspect Diagnostics
 

@@ -17,7 +17,7 @@ So far in each of our analyses, we have only used numeric variables as predictor
 
 ## Dummy Variables
 
-For this chapter, we will briefly use the built in dataset `mtcars` before returning to our `autompg` dataset that we created in the last chapter. The `mtcars` dataset is somewhat smaller, so we'll quickly take a look at the entire dataset.
+For this chapter, we will briefly use the built-in dataset `mtcars` before returning to our `autompg` dataset that we created in the last chapter. The `mtcars` dataset is somewhat smaller, so we'll quickly take a look at the entire dataset.
 
 
 ```r
@@ -135,7 +135,7 @@ x_2 =
   \end{cases}.
 \]
 
-In this case, we call $x_2$ a **dummy variable**. A dummy variable is somewhat unfortunately named, as it is in no way "dumb". In fact, it is actually somewhat clever. A dummy variable is a numerical variable that is used in a regression analysis to "code" for a binary categorical variable. Let's see how this works.
+In this case, we call $x_2$ a **dummy variable**. A dummy variable is somewhat unfortunately named, as it is in no way "dumb." In fact, it is actually somewhat clever. A dummy variable is a numerical variable that is used in a regression analysis to "code" for a binary categorical variable. Let's see how this works.
 
 First, note that `am` is already a dummy variable, since it uses the values `0` and `1` to represent automatic and manual transmissions. Often, a variable like `am` would store the character values `auto` and `man` and we would either have to convert these to `0` and `1`, or, as we will see later, `R` will take care of creating dummy variables for us.
 
@@ -259,7 +259,7 @@ Recapping some interpretations:
 - $\hat{\beta}_0 + \hat{\beta}_2 = 31.8619991$ is the estimated average `mpg` for a car with a manual transmission and **0** `hp`.
 
 - $\hat{\beta}_2 = 5.2770853$ is the estimated **difference** in average `mpg` for cars with manual transmissions as compared to those with automatic transmission, for **any** `hp`.
-- $\hat{\beta}_1 = -0.0588878$ is the estimated change in average `mpg` for an increase in one `hp`, for **either** transmission types.
+- $\hat{\beta}_1 = -0.0588878$ is the estimated change in average `mpg` for an increase in one `hp`, for **either** transmission type.
 
 We should take special notice of those last two. In the model,
 
@@ -482,7 +482,7 @@ H_0: \beta_3 = 0.
 
 In this case, testing for $\beta_3 = 0$ is testing for two lines with parallel slopes versus two lines with possibly different slopes. The `disp:domestic` line in the `summary()` output uses a $t$-test to perform the test.
 
-We could also use an ANOVA $F$-test. The additive model, without interaction is our null model, and the interaction model is the alternative.
+We could also use an ANOVA $F$-test. The additive model without interaction is our null model, and the interaction model is the alternative.
 
 
 ```r
@@ -739,7 +739,7 @@ where
 
 - $Y$ is `mpg`, the fuel efficiency in miles per gallon,
 - $x_1$ is `disp`, the displacement in cubic inches,
-- $x_2$ is `domestic` a dummy variable where `1` indicates a domestic car.
+- $x_2$ is `domestic`, a dummy variable where `1` indicates a domestic car.
 
 
 ```r
@@ -781,9 +781,9 @@ Now let's try to do the same, but using our new factor variable.
 ##           33.47937            -0.05441            12.57547            -0.10252
 ```
 
-It seems that it doesn't produce the same results. Right away we notice that the intercept is different, as is the the coefficient in front of `disp`. We also notice that the remaining two coefficients are of the same magnitude as their respective counterparts using the domestic variable, but with a different sign. Why is this happening?
+It seems that it doesn't produce the same results. Right away we notice that the intercept is different, as is the coefficient in front of `disp`. We also notice that the remaining two coefficients are of the same magnitude as their respective counterparts using the domestic variable, but with a different sign. Why is this happening?
 
-It turns out, that by using a factor variable, `R` is automatically creating a dummy variable for us. However, it is not the dummy variable that we had originally used ourselves.
+It turns out that by using a factor variable, `R` is automatically creating a dummy variable for us. However, it is not the dummy variable that we had originally used ourselves.
 
 `R` is fitting the model
 
@@ -832,7 +832,7 @@ levels(autompg$cyl)
 
 Here the `cyl` variable has three possible levels: `4`, `6`, and `8`. You may wonder, why not simply use `cyl` as a numerical variable? You certainly could. 
 
-However, that would force the difference in average `mpg` between `4` and `6` cylinders to be the same as the difference in average mpg between `6` and `8` cylinders. That usually make senses for a continuous variable, but not for a discrete variable with so few possible values. In the case of this variable, there is no such thing as a 7-cylinder engine or a 6.23-cylinder engine in personal vehicles. For these reasons, we will simply consider `cyl` to be categorical. This is a decision that will commonly need to be made with ordinal variables. Often, with a large number of categories, the decision to treat them as numerical variables is appropriate because, otherwise, a large number of dummy variables are then needed to represent these variables.
+However, that would force the difference in average `mpg` between `4` and `6` cylinders to be the same as the difference in average mpg between `6` and `8` cylinders. That usually makes sense for a continuous variable, but not for a discrete variable with so few possible values. In the case of this variable, there is no such thing as a 7-cylinder engine or a 6.23-cylinder engine in personal vehicles. For these reasons, we will simply consider `cyl` to be categorical. This is a decision that will commonly need to be made with ordinal variables. Often, with a large number of categories, the decision to treat them as numerical variables is appropriate because, otherwise, a large number of dummy variables are then needed to represent these variables.
 
 Let's define three dummy variables related to the `cyl` factor variable.
 
@@ -887,7 +887,7 @@ where
 
 - $Y$ is `mpg`, the fuel efficiency in miles per gallon,
 - $x$ is `disp`, the displacement in cubic inches,
-- $v_2$ and $v_3$ are the dummy variables define above.
+- $v_2$ and $v_3$ are the dummy variables defined above.
 
 Why doesn't `R` use $v_1$? Essentially because it doesn't need to. To create three lines, it only needs two dummy variables since it is using a reference level, which in this case is a 4 cylinder car. The three "sub models" are then:
 
@@ -1145,7 +1145,7 @@ What is happening here? Notice that `R` is essentially ignoring `v3`, but why? W
 \boldsymbol{1} = v_1 + v_2 + v_3
 \]
 
-which means that $\boldsymbol{1}$, $v_1$, $v_2$, and $v_3$ are linearly dependent. This would make the $X^\top X$ matrix singular, but we need to be able to invert it to solve the normal equations and obtain $\hat{\beta}.$ With the intercept, `v1`, and `v2`, `R` can make the necessary "three intercepts". So, in this case `v3` is the reference level.
+which means that $\boldsymbol{1}$, $v_1$, $v_2$, and $v_3$ are linearly dependent. This would make the $X^\top X$ matrix singular, but we need to be able to invert it to solve the normal equations and obtain $\hat{\beta}.$ With the intercept, `v1`, and `v2`, `R` can make the necessary "three intercepts." So, in this case `v3` is the reference level.
 
 If we remove the intercept, then we can directly obtain all "three intercepts" without a reference level.
 
@@ -1415,7 +1415,7 @@ mean(resid(two_way_int_mod) ^ 2)
 ## [1] 14.81259
 ```
 
-However, it is not much smaller. We could even say that, the difference is insignificant. This is an idea we will return to later in greater detail.
+However, it is not much smaller. We could even say that the difference is insignificant. This is an idea we will return to later in greater detail.
 
 Now that we have chosen the model without the three-way interaction, can we go further? Do we need the two-way interactions? Let's test
 

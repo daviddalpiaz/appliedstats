@@ -33,7 +33,7 @@ The biggest difference between an observational study and an experiment is *how*
 
 In an experiment, the predictors, which are controlled by the experimenter, are called **factors**. The possible values of these factors are called **levels**. Subjects are *randomly* assigned to a level of each of the factors.
 
-The design of experiments could be a course by itself. The Wikipedia article on [design of experiments](https://en.wikipedia.org/wiki/Design_of_experiments){target="_blank"} gives a good overview. Originally, most of the methodology was developed for agricultural applications by [R. A. Fisher](https://en.wikipedia.org/wiki/Ronald_Fisher){target="_blank"}, but are still in use today, now in a wide variety of application areas. Notably, these methods have seen a resurgence as a part of "A/B Testing."
+The design of experiments could be a course by itself. The Wikipedia article on [design of experiments](https://en.wikipedia.org/wiki/Design_of_experiments){target="_blank"} gives a good overview. Originally, most of the methodology was developed for agricultural applications by [R. A. Fisher](https://en.wikipedia.org/wiki/Ronald_Fisher){target="_blank"}, but is still in use today, now in a wide variety of application areas. Notably, these methods have seen a resurgence as a part of "A/B Testing."
 
 <!-- TODO: In the future, discuss the Morrow Plots: http://cropsci.illinois.edu/research/morrow -->
 
@@ -81,7 +81,7 @@ For the stated model and assuming the null hypothesis is true, the $t$ test stat
 
 
 
-As an example, suppose we are interested in the effect of [melatotin](https://en.wikipedia.org/wiki/Melatonin){target="_blank"} on sleep duration. A researcher obtains a random sample of 20 adult males. Of these subjects, 10 are randomly chosen for the control group, which will receive a placebo. The remaining 10 will be given 5mg of melatonin before bed. The sleep duration in hours of each subject is then measured. The researcher chooses a significance level of $\alpha = 0.10$. Was sleep duration affected by the melatonin?
+As an example, suppose we are interested in the effect of [melatonin](https://en.wikipedia.org/wiki/Melatonin){target="_blank"} on sleep duration. A researcher obtains a random sample of 20 adult males. Of these subjects, 10 are randomly chosen for the control group, which will receive a placebo. The remaining 10 will be given 5mg of melatonin before bed. The sleep duration in hours of each subject is then measured. The researcher chooses a significance level of $\alpha = 0.10$. Was sleep duration affected by the melatonin?
 
 
 ```r
@@ -211,7 +211,7 @@ where the mean of each group is given by
 
 Here $\alpha_i$ measures the effect of group $i$. It is the difference between the overall mean and the mean of group $i$.
 
-Essentially, the assumptions here are the same as the two sample case, however now, we simply have more groups.
+Essentially, the assumptions here are the same as the two-sample case, however now, we simply have more groups.
 
 Much like the two-sample case, we would again like to test if the means of the groups are equal.
 
@@ -219,7 +219,7 @@ Much like the two-sample case, we would again like to test if the means of the g
 H_0: \mu_1 = \mu_2 = \ldots \mu_g \quad \text{vs} \quad H_1: \text{ Not all } \mu_i \text{ are equal.}
 \]
 
-Notice that the alternative simply indicates the some of the means are not equal, not specifically which are not equal. More on that later.
+Notice that the alternative simply indicates that some of the means are not equal, not specifically which are not equal. More on that later.
 
 Alternatively, we could write
 
@@ -284,7 +284,7 @@ The left panel shows the three normal distributions we are sampling from. The ti
 
 Here the sample means vary a lot around the overall sample mean, which is the solid grey line on the right panel. Within the groups there is variability, but it is still obvious that the sample means are very different.
 
-As a result, we we obtain a *large* test statistic, thus *small* p-value. 
+As a result, we obtain a *large* test statistic, thus *small* p-value. 
 
 - $F = 374.4469511$
 - $\text{p-value} = \ensuremath{1.6349862\times 10^{-33}}$
@@ -296,7 +296,7 @@ Now consider $\mu_A = 0, \mu_B = 0, \mu_C = 0$ with $\sigma = 1$. That is, equal
 
 Here the sample means vary only a tiny bit around the overall sample mean. Within the groups there is variability, this time much larger than the variability of the sample means.
 
-As a result, we we obtain a *small* test statistic, thus *large* p-value. 
+As a result, we obtain a *small* test statistic, thus *large* p-value. 
 
 - $F = 2.667892$
 - $\text{p-value} = 0.0780579$
@@ -520,8 +520,8 @@ A number of things can affect the power of a test:
 
 - **Effect size**. It is easier to detect larger effects.
 - **Noise level** $\sigma$. The less noise, the easier it is to detect signal (effect). We don't have much ability to control this, except maybe to measure more accurately.
-- **Significance level** $\alpha$. Lower significance level makes rejecting more difficult. (But also allows for less false positives.)
-- **Sample size**. Large samples means easier to detect effects.
+- **Significance level** $\alpha$. Lower significance level makes rejecting more difficult. (But also allows for fewer false positives.)
+- **Sample size**. Large samples mean easier to detect effects.
 - **Balanced design**. An equal number of observations per group leads to higher power.
 
 The following simulations look at the effect of significance level, effect size, and noise level on the power of an ANOVA $F$-test. Homework will look into sample size and balance.
@@ -616,7 +616,7 @@ Also note that we are using the argument `p.adj = "none"`. What is this? An adju
 
 The adjustment is an attempt to correct for the [multiple testing problem](https://en.wikipedia.org/wiki/Multiple_comparisons_problem){target="_blank"}. (See also: [Relevant XKCD](https://xkcd.com/882/){target="_blank"}. ) Imagine that you knew ahead of time that you were going to perform 100 $t$-tests. Suppose you wish to do this with a false positive rate of $\alpha = 0.05$. If we use this significance level for each test, for 100 tests, we then expect 5 false positives. That means, with 100 tests, we're almost guaranteed to have at least one error.
 
-What we'd really like, is for the [family-wise error rate](https://en.wikipedia.org/wiki/Family-wise_error_rate){target="_blank"} to be 0.05. If we consider the 100 tests to be a single "experiment" the FWER is the rate of one or more false positives for in the full experiment (100 tests). Consider it an error rate for an entire procedure, instead of a single test.
+What we'd really like is for the [family-wise error rate](https://en.wikipedia.org/wiki/Family-wise_error_rate){target="_blank"} to be 0.05. If we consider the 100 tests to be a single "experiment" the FWER is the rate of one or more false positives for in the full experiment (100 tests). Consider it an error rate for an entire procedure, instead of a single test.
 
 With this in mind, one of the simplest adjustments we can make, is to increase the p-values for each test, depending on the number of tests. In particular the Bonferroni correction simply multiplies by the number of tests.
 
@@ -643,7 +643,7 @@ with(coagulation, pairwise.t.test(coag, diet, p.adj = "bonferroni"))
 ## P value adjustment method: bonferroni
 ```
 
-We see that these p-values are much higher than the unadjusted p-values, thus, we are less likely to reject each tests. As a result, the FWER is 0.05, instead of an error rate of 0.05 for each test.
+We see that these p-values are much higher than the unadjusted p-values, thus, we are less likely to reject each test. As a result, the FWER is 0.05, instead of an error rate of 0.05 for each test.
 
 We can simulate the 100 test scenario to illustrate this point.
 
@@ -828,7 +828,7 @@ levels(rats$treat)
 ## [1] "A" "B" "C" "D"
 ```
 
-Here, 48 rats were randomly assigned both one of three poisons and one of four possible treatments. The experimenters then measures their survival time in tens of hours. A total of 12 groups, each with 4 replicates.
+Here, 48 rats were randomly assigned both one of three poisons and one of four possible treatments. The experimenters then measured their survival time in tens of hours. A total of 12 groups, each with 4 replicates.
 
 Before running any tests, we should first look at the data. We will create **interaction plots**, which will help us visualize the effect of one factor, as we move through the levels of another factor.
 

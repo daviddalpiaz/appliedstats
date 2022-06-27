@@ -490,7 +490,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[
   \text{Var}[g(Y) \mid X = x] = c
 \]</span></p>
-<p>where <span class="math inline">\(c\)</span> is a constant that does not depend on the mean, <span class="math inline">\(\text{E}[Y \mid X = x]\)</span>. A transformation that accomplishes this is called a <strong>variance stabilizaing transformation.</strong></p>
+<p>where <span class="math inline">\(c\)</span> is a constant that does not depend on the mean, <span class="math inline">\(\text{E}[Y \mid X = x]\)</span>. A transformation that accomplishes this is called a <strong>variance stabilizing transformation.</strong></p>
 <p>A common variance stabilizing transformation (VST) when we see increasing variance in a fitted versus residuals plot is <span class="math inline">\(\log(Y)\)</span>. Also, if the values of a variable range over more than one order of magnitude and the variable is <em>strictly positive</em>, then replacing the variable by its logarithm is likely to be helpful.</p>
 <p>A reminder, that for our purposes, <span class="math inline">\(\log\)</span> and <span class="math inline">\(\ln\)</span> are both the natural log. <code>R</code> uses <code>log</code> to mean the natural log, unless a different base is specified.</p>
 <p>We will now use a model with a log transformed response for the <em>Initech</em> data,</p>
@@ -607,7 +607,7 @@ g_\lambda(y) = \left\{
 <span id="cb1049-2"><a href="transformations.html#cb1049-2"></a>     <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="fl">1.5</span>, <span class="dt">xlab =</span> <span class="st">&quot;Fitted&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)</span>
 <span id="cb1049-3"><a href="transformations.html#cb1049-3"></a><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="transformations_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Looking at a fitted versus residuals plot verifies that there likely are not any issue with the assumptions of this model, which Breusch-Pagan and Shapiro-Wilk tests verify.</p>
+<p>Looking at a fitted versus residuals plot verifies that there likely are not any issues with the assumptions of this model, which Breusch-Pagan and Shapiro-Wilk tests verify.</p>
 <div class="sourceCode" id="cb1050"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1050-1"><a href="transformations.html#cb1050-1"></a><span class="kw">library</span>(lmtest)</span>
 <span id="cb1050-2"><a href="transformations.html#cb1050-2"></a><span class="kw">bptest</span>(savings_model)</span></code></pre></div>
 <pre><code>## 
@@ -641,7 +641,7 @@ g_\lambda(y) = \left\{
 <span id="cb1058-3"><a href="transformations.html#cb1058-3"></a><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="transformations_files/figure-html/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The resulting fitted versus residuals plot looks much better!</p>
-<p>Lastly, we return to the <code>initech</code> data, and the <code>initech_fit</code> model we had used earlier. Recall, that this was the untransformed model, that we used a <span class="math inline">\(\log\)</span> transform to fix.</p>
+<p>Lastly, we return to the <code>initech</code> data, and the <code>initech_fit</code> model we had used earlier. Recall that this was the untransformed model, that we used a <span class="math inline">\(\log\)</span> transform to fix.</p>
 <div class="sourceCode" id="cb1059"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1059-1"><a href="transformations.html#cb1059-1"></a><span class="kw">boxcox</span>(initech_fit)</span></code></pre></div>
 <p><img src="transformations_files/figure-html/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Using the Box-Cox method, we see that <span class="math inline">\(\lambda = 0\)</span> is both in the interval, and extremely close to the maximum, which suggests a transformation of the form</p>
@@ -1034,7 +1034,7 @@ E[\hat{\beta}] = \beta,
 <span id="cb1097-4"><a href="transformations.html#cb1097-4"></a>     <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">cex =</span> <span class="dv">2</span>)</span>
 <span id="cb1097-5"><a href="transformations.html#cb1097-5"></a>  <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="transformations_files/figure-html/unnamed-chunk-52-1.png" width="768" style="display: block; margin: auto;" /></p>
-<p>Again the sixth order term is significant with the other terms in the model and here we see less pattern in the residuals plot. Let’s now test for which of the previous two models we prefer. We will test</p>
+<p>Again the sixth order term is significant with the other terms in the model and here we see less pattern in the residuals plot. Let’s now test which of the previous two models we prefer. We will test</p>
 <p><span class="math display">\[
 H_0: \beta_5 = \beta_6 = 0.
 \]</span></p>

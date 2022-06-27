@@ -460,7 +460,7 @@ C = \left(X^\top X\right)^{-1}.
 \frac{\hat{\beta}_j - \beta_j}{s_e \sqrt{C_{jj}}} \sim t_{n-p},
 \]</span></p>
 <p>which we used to perform hypothesis testing.</p>
-<p>So far we have looked at various metrics such as RMSE, RSE and <span class="math inline">\(R^2\)</span> to determine how well our model fit our data. Each of these in some way considers the expression</p>
+<p>So far we have looked at various metrics such as RMSE, RSE, and <span class="math inline">\(R^2\)</span> to determine how well our model fits our data. Each of these in some way considers the expression</p>
 <p><span class="math display">\[
 \sum_{i = 1}^n (y_i - \hat{y}_i)^2.
 \]</span></p>
@@ -587,7 +587,7 @@ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)
 <div id="breusch-pagan-test" class="section level3 hasAnchor">
 <h3><span class="header-section-number">13.2.2</span> Breusch-Pagan Test<a href="model-diagnostics.html#breusch-pagan-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Constant variance is often called <strong>homoscedasticity</strong>. Conversely, non-constant variance is called <strong>heteroscedasticity</strong>. We’ve seen how we can use a fitted versus residuals plot to look for these attributes.</p>
-<p>While a fitted versus residuals plot can give us an idea about homoscedasticity, sometimes we would prefer a more formal test. There are many tests for constant variance, but here we will present one, the <a href="https://en.wikipedia.org/wiki/Breusch%E2%80%93Pagan_test" target="_blank"><strong>Breusch-Pagan Test</strong></a>. The exact details of the test will omitted here, but importantly the null and alternative can be considered to be,</p>
+<p>While a fitted versus residuals plot can give us an idea about homoscedasticity, sometimes we would prefer a more formal test. There are many tests for constant variance, but here we will present one, the <a href="https://en.wikipedia.org/wiki/Breusch%E2%80%93Pagan_test" target="_blank"><strong>Breusch-Pagan Test</strong></a>. The exact details of the test will be omitted here, but importantly the null and alternative can be considered to be,</p>
 <ul>
 <li><span class="math inline">\(H_0\)</span>: Homoscedasticity. The errors have constant variance about the true model.</li>
 <li><span class="math inline">\(H_1\)</span>: Heteroscedasticity. The errors have non-constant variance about the true model.</li>
@@ -647,7 +647,7 @@ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)
 <span id="cb902-18"><a href="model-diagnostics.html#cb902-18"></a>     <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
 <span id="cb902-19"><a href="model-diagnostics.html#cb902-19"></a>     <span class="dt">breaks =</span> <span class="dv">20</span>)</span></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-14-1.png" width="1440" style="display: block; margin: auto;" /></p>
-<p>Above are histograms for each of the three regression we have been considering. Notice that the first, for <code>fit_1</code> appears very normal. The third, for <code>fit_3</code>, appears to be very non-normal. However <code>fit_2</code> is not as clear. It does have a rough bell shape, however, it also has a very sharp peak. For this reason we will usually use more powerful tools such as <strong>Q-Q plots</strong> and the <strong>Shapiro-Wilk test</strong> for assessing the normality of errors.</p>
+<p>Above are histograms for each of the three regression models we have been considering. Notice that the first, for <code>fit_1</code> appears very normal. The third, for <code>fit_3</code>, appears to be very non-normal. However <code>fit_2</code> is not as clear. It does have a rough bell shape, however, it also has a very sharp peak. For this reason we will usually use more powerful tools such as <strong>Q-Q plots</strong> and the <strong>Shapiro-Wilk test</strong> for assessing the normality of errors.</p>
 </div>
 <div id="q-q-plots" class="section level3 hasAnchor">
 <h3><span class="header-section-number">13.2.4</span> Q-Q Plots<a href="model-diagnostics.html#q-q-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -704,7 +704,7 @@ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)
 <span id="cb907-4"><a href="model-diagnostics.html#cb907-4"></a><span class="kw">qq_plot</span>(<span class="kw">rt</span>(<span class="dv">25</span>, <span class="dt">df =</span> <span class="dv">4</span>))</span>
 <span id="cb907-5"><a href="model-diagnostics.html#cb907-5"></a><span class="kw">qq_plot</span>(<span class="kw">rt</span>(<span class="dv">100</span>, <span class="dt">df =</span> <span class="dv">4</span>))</span></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-19-1.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>Recall, that as the degrees of freedom for a <span class="math inline">\(t\)</span> distribution become larger, the distribution becomes more and more similar to a normal. Here, using 4 degrees of freedom, we have a distribution that is somewhat normal, it is symmetrical and roughly bell-shaped, however it has “fat tails.” This presents itself clearly in the third panel. While many of the points are close to the line, at the edges, there are large discrepancies. This indicates that the values are too small (negative) or too large (positive) compared to what we would expect for a normal distribution. So for the sample size of <code>100</code>, we would conclude that that normality assumption is violated. (If these were residuals of a model.) For sample sizes of <code>10</code> and <code>25</code> we may be suspicious, but not entirely confident. Reading Q-Q plots, is a bit of an art, not completely a science.</p>
+<p>Recall that as the degrees of freedom for a <span class="math inline">\(t\)</span> distribution become larger, the distribution becomes more and more similar to a normal. Here, using 4 degrees of freedom, we have a distribution that is somewhat normal, it is symmetrical and roughly bell-shaped, however it has “fat tails.” This presents itself clearly in the third panel. While many of the points are close to the line, at the edges, there are large discrepancies. This indicates that the values are too small (negative) or too large (positive) compared to what we would expect for a normal distribution. So for the sample size of <code>100</code>, we would conclude that the normality assumption is violated. (If these were residuals of a model.) For sample sizes of <code>10</code> and <code>25</code> we may be suspicious, but not entirely confident. Reading Q-Q plots, is a bit of an art, not completely a science.</p>
 <p>Next, we simulate data from an exponential distribution.</p>
 <div class="sourceCode" id="cb908"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb908-1"><a href="model-diagnostics.html#cb908-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
 <span id="cb908-2"><a href="model-diagnostics.html#cb908-2"></a><span class="kw">set.seed</span>(<span class="dv">420</span>)</span>
@@ -713,7 +713,7 @@ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)
 <span id="cb908-5"><a href="model-diagnostics.html#cb908-5"></a><span class="kw">qq_plot</span>(<span class="kw">rexp</span>(<span class="dv">100</span>))</span></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-20-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>This is a distribution that is not very similar to a normal, so in all three cases, we see points that are far from the lines, so we would think that the normality assumption is violated.</p>
-<p>For a better understanding of which Q-Q plots are “good,” repeat the simulations above a number of times (without setting the seed) and pay attention to the differences between those that are simulated from normal, and those that are not. Also consider different samples sizes and distribution parameters.</p>
+<p>For a better understanding of which Q-Q plots are “good,” repeat the simulations above a number of times (without setting the seed) and pay attention to the differences between those that are simulated from normal, and those that are not. Also consider different sample sizes and distribution parameters.</p>
 <p>Returning to our three regressions, recall,</p>
 <ul>
 <li><code>fit_1</code> had no violation of assumptions,</li>
@@ -753,7 +753,7 @@ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)
 <p>This gives us the value of the test statistic and its p-value. The null hypothesis assumes the data were sampled from a normal distribution, thus a small p-value indicates we believe there is only a small probability the data could have been sampled from a normal distribution.</p>
 <p>For details, see: <a href="https://en.wikipedia.org/wiki/Shapiro-Wilk_test" target="_blank">Wikipedia: Shapiro–Wilk test.</a></p>
 <p>In the above examples, we see we fail to reject for the data sampled from normal, and reject on the non-normal data, for any reasonable <span class="math inline">\(\alpha\)</span>.</p>
-<p>Returning again to <code>fit_1</code>, <code>fit_2</code> and <code>fit_3</code>, we see the result of running <code>shapiro.test()</code> on the residuals of each, returns a result for each that matches for decisions based on the Q-Q plots.</p>
+<p>Returning again to <code>fit_1</code>, <code>fit_2</code>, and <code>fit_3</code>, we see the result of running <code>shapiro.test()</code> on the residuals of each, returns a result for each that matches decisions based on the Q-Q plots.</p>
 <div class="sourceCode" id="cb916"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb916-1"><a href="model-diagnostics.html#cb916-1"></a><span class="kw">shapiro.test</span>(<span class="kw">resid</span>(fit_<span class="dv">1</span>))</span></code></pre></div>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
@@ -857,7 +857,7 @@ Y_i = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{p-1} x_{i(p-1)
 H = X \left(X^\top X\right)^{-1} X^\top
 \]</span></p>
 <p>which we will refer to as the <em>hat matrix</em>. The hat matrix is used to project onto the subspace spanned by the columns of <span class="math inline">\(X\)</span>. It is also simply known as a projection matrix.</p>
-<p>The hat matrix, is a matrix that takes the original <span class="math inline">\(y\)</span> values, and adds a hat!</p>
+<p>The hat matrix is a matrix that takes the original <span class="math inline">\(y\)</span> values, and adds a hat!</p>
 <p><span class="math display">\[
 \hat{y} = H y
 \]</span></p>
@@ -867,7 +867,7 @@ H_{ii} = h_i,
 \]</span></p>
 <p>where <span class="math inline">\(h_i\)</span> is the leverage for the <span class="math inline">\(i\)</span>th observation.</p>
 <p>Large values of <span class="math inline">\(h_i\)</span> indicate extreme values in <span class="math inline">\(X\)</span>, which may influence regression. Note that leverages only depend on <span class="math inline">\(X\)</span>.</p>
-<p>Here, <span class="math inline">\(p\)</span> the number of <span class="math inline">\(\beta\)</span>s is also the trace (and rank) of the hat matrix.</p>
+<p>Here, <span class="math inline">\(p\)</span>, the number of <span class="math inline">\(\beta\)</span>s, is also the trace (and rank) of the hat matrix.</p>
 <p><span class="math display">\[
 \sum_{i = 1}^n h_i = p
 \]</span></p>
@@ -987,7 +987,7 @@ h_i = \frac{1}{n} + \frac{(x_i - \bar{x})^2}{S_{xx}}.
 </div>
 <div id="outliers" class="section level3 hasAnchor">
 <h3><span class="header-section-number">13.3.2</span> Outliers<a href="model-diagnostics.html#outliers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Outliers are points which do not fit the model well. They may or may not have a large affect on the model. To identify outliers, we will look for observations with large residuals.</p>
+<p>Outliers are points which do not fit the model well. They may or may not have a large effect on the model. To identify outliers, we will look for observations with large residuals.</p>
 <p>Note,</p>
 <p><span class="math display">\[
 e = y - \hat{y} = Iy - Hy = (I - H) y
@@ -1081,7 +1081,7 @@ D_i &gt; \frac{4}{n}
 <div class="sourceCode" id="cb992"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb992-1"><a href="model-diagnostics.html#cb992-1"></a><span class="kw">cooks.distance</span>(model_<span class="dv">3</span>)[<span class="dv">11</span>] <span class="op">&gt;</span><span class="st"> </span><span class="dv">4</span> <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(<span class="kw">cooks.distance</span>(model_<span class="dv">3</span>))</span></code></pre></div>
 <pre><code>##   11 
 ## TRUE</code></pre>
-<p>And, as expected, the added point in the third plot, with high leverage and a large residual is considered influential!</p>
+<p>And, as expected, the added point in the third plot, with high leverage and a large residual, is considered influential!</p>
 </div>
 </div>
 <div id="data-analysis-examples" class="section level2 hasAnchor">
@@ -1138,11 +1138,11 @@ D_i &gt; \frac{4}{n}
 <span id="cb1011-4"><a href="model-diagnostics.html#cb1011-4"></a><span class="kw">coef</span>(mpg_hp_add_fix)</span></code></pre></div>
 <pre><code>## (Intercept)          hp          am 
 ## 27.22190933 -0.06286249  4.29765867</code></pre>
-<p>It seems there isn’t much of a change in the coefficients as a results of removing the supposed influential points. Notice we did not create a new dataset to accomplish this. We instead used the <code>subset</code> argument to <code>lm()</code>. Think about what the code <code>cd_mpg_hp_add &lt;= 4 / length(cd_mpg_hp_add)</code> does here.</p>
+<p>It seems there isn’t much of a change in the coefficients as a result of removing the supposed influential points. Notice we did not create a new dataset to accomplish this. We instead used the <code>subset</code> argument to <code>lm()</code>. Think about what the code <code>cd_mpg_hp_add &lt;= 4 / length(cd_mpg_hp_add)</code> does here.</p>
 <div class="sourceCode" id="cb1013"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1013-1"><a href="model-diagnostics.html#cb1013-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb1013-2"><a href="model-diagnostics.html#cb1013-2"></a><span class="kw">plot</span>(mpg_hp_add)</span></code></pre></div>
 <p><img src="diagnostics_files/figure-html/unnamed-chunk-59-1.png" width="768" style="display: block; margin: auto;" /></p>
-<p>Notice that, calling <code>plot()</code> on a variable which stores an object created by <code>lm()</code> outputs four diagnostic plots by default. Use <code>?plot.lm</code> to learn more. The first two should already be familiar.</p>
+<p>Notice that calling <code>plot()</code> on a variable which stores an object created by <code>lm()</code> outputs four diagnostic plots by default. Use <code>?plot.lm</code> to learn more. The first two should already be familiar.</p>
 </div>
 <div id="suspect-diagnostics" class="section level3 hasAnchor">
 <h3><span class="header-section-number">13.4.2</span> Suspect Diagnostics<a href="model-diagnostics.html#suspect-diagnostics" class="anchor-section" aria-label="Anchor link to header"></a></h3>

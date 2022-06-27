@@ -416,8 +416,6 @@ x[x != 3]
 ## [1] 1 5 7 8 9
 ```
 
-- TODO: coercion
-
 
 ```r
 sum(x > 3)
@@ -435,7 +433,7 @@ as.numeric(x > 3)
 ## [1] 0 0 1 1 1 1
 ```
 
-Here we see that using the `sum()` function on a vector of logical `TRUE` and `FALSE` values that is the result of `x > 3` results in a numeric result. `R` is first automatically coercing the logical to numeric where `TRUE` is `1` and `FALSE` is `0`. This coercion from logical to numeric happens for most mathematical operations.
+Here we see that using the `sum()` function on a vector of logical `TRUE` and `FALSE` values that is the result of `x > 3` results in a numeric result. `R` is first automatically coercing the logical to numeric where `TRUE` is `1` and `FALSE` is `0`. This coercion from logical to numeric happens for most mathematical operations. If you are interested in more detail, check out [Advanced R](https://adv-r.hadley.nz/vectors-chap.html?q=coercion#testing-and-coercion).
 
 
 ```r
@@ -1951,8 +1949,8 @@ To test our function, we will take a random sample of size `n = 10` from a norma
 ```
 
 ```
-##  [1]  6.48568189  0.07964313 -4.24217180 -5.04583906  0.59754924 -7.08188413
-##  [7]  1.93944568  1.15005883 -0.83372848  0.53309133
+##  [1] -0.002619895  9.927012718 -4.044185795  4.004538882  6.088328725
+##  [6]  1.626389122 -1.039459959 -2.664786679  0.791693799 -6.370443099
 ```
 
 ```r
@@ -1960,8 +1958,8 @@ standardize(x = test_sample)
 ```
 
 ```
-##  [1]  1.82032270  0.18425643 -0.91951079 -1.12476289  0.31652674 -1.64475735
-##  [7]  0.65923955  0.45763458 -0.04901354  0.30006456
+##  [1] -0.171438826  1.869065258 -1.001966203  0.652018009  1.080229389
+##  [6]  0.163316716 -0.384505761 -0.718504605 -0.008210196 -1.480003782
 ```
 
 This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.
@@ -2063,7 +2061,7 @@ get_var(test_sample)
 ```
 
 ```
-## [1] 15.33124
+## [1] 23.68053
 ```
 
 ```r
@@ -2071,7 +2069,7 @@ get_var(test_sample, biased = FALSE)
 ```
 
 ```
-## [1] 15.33124
+## [1] 23.68053
 ```
 
 ```r
@@ -2079,7 +2077,7 @@ var(test_sample)
 ```
 
 ```
-## [1] 15.33124
+## [1] 23.68053
 ```
 
 We see the function is working as expected, and when returning the unbiased estimate it matches `R`'s built-in function `var()`. Finally, let's examine the biased estimate of $\sigma^2$.
@@ -2090,7 +2088,7 @@ get_var(test_sample, biased = TRUE)
 ```
 
 ```
-## [1] 13.79812
+## [1] 21.31248
 ```
 
 

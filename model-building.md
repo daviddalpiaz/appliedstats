@@ -111,7 +111,7 @@ A **family** of models is a broader grouping of many possible *forms* of a model
 
 For example, there are several families of *non-parametric* regression. Smoothing is a broad family of models. As are regression trees. 
 
-In linear regression, we specified models with parameters, $\beta_j$ and fit the model by finding the best values of these parameters. This is a *parametric* approach. A non-parametric approach skips the step of specifying a model with parameters, and are often described as more of an algorithm. Non-parametric models are often used in machine learning.
+In linear regression, we specified models with parameters, $\beta_j$ and fit the model by finding the best values of these parameters. This is a *parametric* approach. A non-parametric approach skips the step of specifying a model with parameters, and is often described as more of an algorithm. Non-parametric models are often used in machine learning.
 
 
 \begin{center}\includegraphics{model-building_files/figure-latex/unnamed-chunk-2-1} \end{center}
@@ -157,7 +157,7 @@ for the assumed **family** and **form**. Fitting a model only gives us the best 
 
 ## Explanation versus Prediction
 
-What is the purpose of fitting a model to data? Usually it is to accomplish one of two goals. We can use a model to **explain** the relationship between the response and the predictors. Models can also be used to **predict** the response based on the predictors. Often, a good model will do both, but we'll discuss both goals separately since the process of finding models for explaining and predicting have some differences. 
+What is the purpose of fitting a model to data? Usually it is to accomplish one of two goals. We can use a model to **explain** the relationship between the response and the predictors. Models can also be used to **predict** the response based on the predictors. Often, a good model will do both, but we'll discuss both goals separately since the processes of finding models for explaining and predicting have some differences. 
 
 For our purposes, since we are only considering linear models, searching for a good model is essentially searching for a good **form** of a model.
 
@@ -165,9 +165,9 @@ For our purposes, since we are only considering linear models, searching for a g
 
 If the goal of a model is to explain the relationship between the response and the predictors, we are looking for a model that is **small** and **interpretable**, but still fits the data well. When discussing linear models, the **size** of a model is essentially the number of $\beta$ parameters used.
 
-Suppose we would like to find a model that explains fuel efficiency (`mpg`) based on a car's attributes (`wt`, `year`, `cyl`, `disp`, `hp`, `acc`). Perhaps we are a car manufacturer trying to engineer a fuel efficient vehicle. If this is the case, we are interested in both which predictor variables are useful for explaining the car's fuel efficiency, as well as how those variables effect fuel efficiency. By understanding this relationship, we can use this knowledge to our advantage when designing a car.
+Suppose we would like to find a model that explains fuel efficiency (`mpg`) based on a car's attributes (`wt`, `year`, `cyl`, `disp`, `hp`, `acc`). Perhaps we are a car manufacturer trying to engineer a fuel-efficient vehicle. If this is the case, we are interested in both which predictor variables are useful for explaining the car's fuel efficiency, as well as how those variables affect fuel efficiency. By understanding this relationship, we can use this knowledge to our advantage when designing a car.
 
-To explain a relationship, we are interested in keeping models as small as possible, since smaller models are easy to interpret. The fewer predictors the less considerations we need to make in our design process. 
+To explain a relationship, we are interested in keeping models as small as possible, since smaller models are easy to interpret. The fewer predictors the fewer considerations we need to make in our design process. 
 
 Note that *linear* models of any size are rather interpretable to begin with. Later in your data analysis careers, you will see more complicated models that may fit data better, but are much harder, if not impossible to interpret. These models aren't nearly as useful for explaining a relationship. This is another reason to always attempt a linear model. If it fits as well as more complicated methods, it will be the easiest to understand.
 
@@ -183,7 +183,7 @@ Our additional assumption is about the error term.
 \epsilon \sim N(0, \sigma^2)
 \]
 
-This assumption, that the errors are normally distributed with some common variance is the key to all of the inference we have done so far. We will discuss this in great detail later.
+This assumption that the errors are normally distributed with some common variance is the key to all of the inference we have done so far. We will discuss this in great detail later.
 
 So with our inference tools (ANOVA and $t$-test) we have two potential strategies. Start with a very small model (no predictors) and attempt to add predictors. Or, start with a big model (all predictors) and attempt to remove predictors.
 
@@ -204,7 +204,7 @@ plot(mpg ~ hp, data = autompg, col = "dodgerblue", pch = 20, cex = 1.5)
 
 \begin{center}\includegraphics{model-building_files/figure-latex/unnamed-chunk-5-1} \end{center}
 
-Does an increase in horsepower cause a drop in fuel efficiency? Or, perhaps the causality is reversed and an increase in fuel efficiency cause a decrease in horsepower. Or, perhaps there is a third variable that explains both!
+Does an increase in horsepower cause a drop in fuel efficiency? Or, perhaps the causality is reversed and an increase in fuel efficiency causes a decrease in horsepower. Or, perhaps there is a third variable that explains both!
 
 The issue here is that we have **observational** data. With observational data, we can only detect *associations*. To speak with confidence about *causality*, we would need to run **experiments**. Often, this decision is made for us, before we ever see data, so we can only modify our interpretation.
 
@@ -233,11 +233,11 @@ Suppose instead of the manufacturer who would like to build a car, we are a cons
 
 #### Test-Train Split
 
-The trouble with using RMSE to identify how well a model fits data, is that RMSE is **always** (equal or) lower for a larger model. This would suggest that we should always use the largest model possible when looking for a model that predicts well. The problem with this is the potential to **overfit** to the data. So, we want a model that fits well, but does not overfit. To understand overfitting, we need to think about applying a model to seen and unseen data.
+The trouble with using RMSE to identify how well a model fits data is that RMSE is **always** (equal or) lower for a larger model. This would suggest that we should always use the largest model possible when looking for a model that predicts well. The problem with this is the potential to **overfit** to the data. So, we want a model that fits well, but does not overfit. To understand overfitting, we need to think about applying a model to seen and unseen data.
 
 Suppose we fit a model using all data available and we evaluate RMSE on this fitted model and all of the seen data. We will call this data the **training** data, and this RMSE the **train** RMSE.
 
-Now, suppose we magically encounter some additional data. To truly asses how well the model predicts, we should evaluate how well our models predicts the response of this data. We will call this data the  **test** data and this RMSE the **test** RMSE.
+Now, suppose we magically encounter some additional data. To truly assess how well the model predicts, we should evaluate how well our model predicts the response of this data. We will call this data the  **test** data and this RMSE the **test** RMSE.
 
 - Train RMSE: model fit on seen data, evaluated on **seen** data
 - Test RMSE: model fit on seen data, evaluated on **unseen** data
@@ -254,7 +254,7 @@ The left panel shows the data that was used to fit the two models. Clearly the "
 | Simple  | 1.71 | 1.45 |
 | Complex | 1.41 | 2.07 |
 
-The more "complex", wiggly, model fits the training data much better as it has a much lower train RMSE. However, we see that the "simple" model fits the test data much better, with a much lower test RMSE. This means that the complex model has *overfit* the data, and we prefer the simple model. When choosing a model for prediction, we prefer a model that predicts unseen data.
+The more "complex," wiggly, model fits the training data much better as it has a much lower train RMSE. However, we see that the "simple" model fits the test data much better, with a much lower test RMSE. This means that the complex model has *overfit* to the data, and we prefer the simple model. When choosing a model for prediction, we prefer a model that predicts unseen data.
 
 In practice, you can't simply generate more data to evaluate your models. Instead we split existing data into data used to fit the model (train) and data used to evaluate the model (test). Never fit a model with test data.
 

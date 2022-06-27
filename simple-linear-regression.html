@@ -428,7 +428,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <div id="modeling" class="section level2 hasAnchor">
 <h2><span class="header-section-number">7.1</span> Modeling<a href="simple-linear-regression.html#modeling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Let’s consider a simple example of how the speed of a car affects its stopping distance, that is, how far it travels before it comes to a stop. To examine this relationship, we will use the <code>cars</code> dataset which, is a default <code>R</code> dataset. Thus, we don’t need to load a package first; it is immediately available.</p>
+<p>Let’s consider a simple example of how the speed of a car affects its stopping distance, that is, how far it travels before it comes to a stop. To examine this relationship, we will use the <code>cars</code> dataset, which is a default <code>R</code> dataset. Thus, we don’t need to load a package first; it is immediately available.</p>
 <p>To get a first look at the data you can use the <code>View()</code> function inside RStudio.</p>
 <div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="simple-linear-regression.html#cb422-1"></a><span class="kw">View</span>(cars)</span></code></pre></div>
 <p>We could also take a look at the variable names, the dimension of the data frame, and some sample observations with <code>str()</code>.</p>
@@ -475,7 +475,7 @@ Y = f(X) + \epsilon.
 <p><img src="slr_files/figure-html/underfit_plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We could also try to model the data with a very “wiggly” function that tries to go through as many of the data points as possible. This also doesn’t seem to work very well. The stopping distance for a speed of 5 mph shouldn’t be off the chart! (Even in 1920.) This is an example of <strong>overfitting</strong>. (Note that in this example no function will go through every point, since there are some <span class="math inline">\(x\)</span> values that have several possible <span class="math inline">\(y\)</span> values in the data.)</p>
 <p><img src="slr_files/figure-html/overfit_plot-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Lastly, we could try to model the data with a well chosen line rather than one of the two extremes previously attempted. The line on the plot below seems to summarize the relationship between stopping distance and speed quite well. As speed increases, the distance required to come to a stop increases. There is still some variation about this line, but it seems to capture the overall trend.</p>
+<p>Lastly, we could try to model the data with a well-chosen line rather than one of the two extremes previously attempted. The line on the plot below seems to summarize the relationship between stopping distance and speed quite well. As speed increases, the distance required to come to a stop increases. There is still some variation about this line, but it seems to capture the overall trend.</p>
 <p><img src="slr_files/figure-html/goodfit_plot-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>With this in mind, we would like to restrict our choice of <span class="math inline">\(f(X)\)</span> to <em>linear</em> functions of <span class="math inline">\(X\)</span>. We will write our model using <span class="math inline">\(\beta_1\)</span> for the slope, and <span class="math inline">\(\beta_0\)</span> for the intercept,</p>
 <p><span class="math display">\[
@@ -526,7 +526,7 @@ Y_i \mid X_i \sim N(\beta_0 + \beta_1 x_i, \sigma^2)
 <li><strong>Linear</strong> tells us that our model for <span class="math inline">\(Y\)</span> is a linear combination of the predictors <span class="math inline">\(X\)</span>. (In this case just the one.) Right now, this always results in a model that is a line, but later we will see how this is not always the case.</li>
 <li><strong>Regression</strong> simply means that we are attempting to measure the relationship between a response variable and (one or more) predictor variables. In the case of SLR, both the response and the predictor are <em>numeric</em> variables.</li>
 </ul>
-<p>So SLR models <span class="math inline">\(Y\)</span> as a linear function of <span class="math inline">\(X\)</span>, but how do we actually define a good line? There are an infinite number of lines we could use, so we will attempt to find one with “small errors.” That is a line with as many points as close to it as possible. The questions now becomes, how do we find such a line? There are many approaches we could take.</p>
+<p>So SLR models <span class="math inline">\(Y\)</span> as a linear function of <span class="math inline">\(X\)</span>, but how do we actually define a good line? There are an infinite number of lines we could use, so we will attempt to find one with “small errors.” That is a line with as many points as close to it as possible. The question now becomes, how do we find such a line? There are many approaches we could take.</p>
 <p>We could find the line that has the smallest maximum distance from any of the points to the line. That is,</p>
 <p><span class="math display">\[
 \underset{\beta_0, \beta_1}{\mathrm{argmin}} \max|y_i - (\beta_0 + \beta_1 x_i)|.
@@ -556,7 +556,7 @@ f(\beta_0, \beta_1) = \sum_{i = 1}^{n}(y_i - (\beta_0 + \beta_1 x_i))^2 = \sum_{
 \frac{\partial f}{\partial \beta_1} &amp;= -2 \sum_{i = 1}^{n}(x_i)(y_i - \beta_0 - \beta_1 x_i)
 \end{aligned}
 \]</span></p>
-<p>We then set each of the partial derivatives equal to zero and solving the resulting system of equations.</p>
+<p>We then set each of the partial derivatives equal to zero and solve the resulting system of equations.</p>
 <p><span class="math display">\[
 \begin{aligned}
 \sum_{i = 1}^{n}(y_i - \beta_0 - \beta_1 x_i) &amp;= 0 \\
@@ -591,7 +591,7 @@ S_{yy} &amp;= \sum_{i = 1}^{n} y_i^2 - \frac{(\sum_{i = 1}^{n} y_i)^2}{n}  = \su
 \hat{\beta}_1 = \frac{S_{xy}}{S_{xx}} = \frac{\sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i = 1}^{n}(x_i - \bar{x})^2}
 \]</span></p>
 <p>Traditionally we would now calculate <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> by hand for the <code>cars</code> dataset. However because we are living in the 21st century and are intelligent (or lazy or efficient, depending on your perspective), we will utilize <code>R</code> to do the number crunching for us.</p>
-<p>To keep some notation consistent with above mathematics, we will store the response variable as <code>y</code> and the predictor variable as <code>x</code>.</p>
+<p>To keep some notation consistent with the above mathematics, we will store the response variable as <code>y</code> and the predictor variable as <code>x</code>.</p>
 <div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="simple-linear-regression.html#cb433-1"></a>x =<span class="st"> </span>cars<span class="op">$</span>speed</span>
 <span id="cb433-2"><a href="simple-linear-regression.html#cb433-2"></a>y =<span class="st"> </span>cars<span class="op">$</span>dist</span></code></pre></div>
 <p>We then calculate the three sums of squares defined above.</p>
@@ -732,13 +732,13 @@ y_i - \bar{y} = (y_i - \hat{y}_i) + (\hat{y}_i - \bar{y}).
 <p><span class="math display">\[
 \sum_{i=1}^{n}(y_i - \bar{y})^2 = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2.
 \]</span></p>
-<p>This should be somewhat alarming or amazing. How is this true? For now we will leave this questions unanswered. (Think about this, and maybe try to prove it.) We will now define three of the quantities seen in this equation.</p>
+<p>This should be somewhat alarming or amazing. How is this true? For now we will leave this question unanswered. (Think about this, and maybe try to prove it.) We will now define three of the quantities seen in this equation.</p>
 <div id="sum-of-squares-total" class="section level4 unnumbered hasAnchor">
 <h4>Sum of Squares Total<a href="simple-linear-regression.html#sum-of-squares-total" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p><span class="math display">\[
 \text{SST} = \sum_{i=1}^{n}(y_i - \bar{y})^2
 \]</span></p>
-<p>The quantity “Sum of Squares Total,” or <span class="math inline">\(\text{SST}\)</span>, represents the <strong>total variation</strong> of the observed <span class="math inline">\(y\)</span> values. This should be a familiar looking expression. Note that,</p>
+<p>The quantity “Sum of Squares Total,” or <span class="math inline">\(\text{SST}\)</span>, represents the <strong>total variation</strong> of the observed <span class="math inline">\(y\)</span> values. This should be a familiar-looking expression. Note that,</p>
 <p><span class="math display">\[
 s ^ 2 = \frac{1}{n - 1}\sum_{i=1}^{n}(y_i - \bar{y})^2 = \frac{1}{n - 1} \text{SST}.
 \]</span></p>
@@ -771,7 +771,7 @@ s_e^2 = \frac{\text{SSE}}{n - 2}.
 <p>We can use <code>R</code> to verify that this matches our previous calculation of <span class="math inline">\(s_e^2\)</span>.</p>
 <div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="simple-linear-regression.html#cb472-1"></a>s2_e <span class="op">==</span><span class="st"> </span>SSE <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<p>These three measures also do not have an important practical interpretation individually. But together, they’re about to reveal a new statistic to help measure the strength of a SLR model.</p>
+<p>These three measures also do not have an important practical interpretation individually. But together, they’re about to reveal a new statistic to help measure the strength of an SLR model.</p>
 </div>
 <div id="coefficient-of-determination" class="section level3 hasAnchor">
 <h3><span class="header-section-number">7.3.1</span> Coefficient of Determination<a href="simple-linear-regression.html#coefficient-of-determination" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -801,7 +801,7 @@ R^2 &amp;= \frac{\text{SSReg}}{\text{SST}} = \frac{\sum_{i=1}^{n}(\hat{y}_i - \b
 <p>The <code>lm()</code> command is used to fit <strong>linear models</strong> which actually account for a broader class of models than simple linear regression, but we will use SLR as our first demonstration of <code>lm()</code>. The <code>lm()</code> function will be one of our most commonly used tools, so you may want to take a look at the documentation by using <code>?lm</code>. You’ll notice there is a lot of information there, but we will start with just the very basics. This is documentation you will want to return to often.</p>
 <p>We’ll continue using the <code>cars</code> data, and essentially use the <code>lm()</code> function to check the work we had previously done.</p>
 <div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="simple-linear-regression.html#cb476-1"></a>stop_dist_model =<span class="st"> </span><span class="kw">lm</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars)</span></code></pre></div>
-<p>This line of code fits our very first linear model. The syntax should look somewhat familiar. We use the <code>dist ~ speed</code> syntax to tell <code>R</code> we would like to model the response variable <code>dist</code> as a linear function of the predictor variable <code>speed</code>. In general, you should think of the syntax as <code>response ~ predictor</code>. The <code>data = cars</code> argument then tells <code>R</code> that that <code>dist</code> and <code>speed</code> variables are from the dataset <code>cars</code>. We then store this result in a variable <code>stop_dist_model</code>.</p>
+<p>This line of code fits our very first linear model. The syntax should look somewhat familiar. We use the <code>dist ~ speed</code> syntax to tell <code>R</code> we would like to model the response variable <code>dist</code> as a linear function of the predictor variable <code>speed</code>. In general, you should think of the syntax as <code>response ~ predictor</code>. The <code>data = cars</code> argument then tells <code>R</code> that the <code>dist</code> and <code>speed</code> variables are from the dataset <code>cars</code>. We then store this result in a variable <code>stop_dist_model</code>.</p>
 <p>The variable <code>stop_dist_model</code> now contains a wealth of information, and we will now see how to extract and use that information. The first thing we will do is simply output whatever is stored immediately in the variable <code>stop_dist_model</code>.</p>
 <div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="simple-linear-regression.html#cb477-1"></a>stop_dist_model</span></code></pre></div>
 <pre><code>## 
@@ -919,7 +919,7 @@ R^2 &amp;= \frac{\text{SSReg}}{\text{SST}} = \frac{\sum_{i=1}^{n}(\hat{y}_i - \b
 <p><span class="math display">\[
 s_e = \text{RSE} = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 \]</span></p>
-<p>Often it is useful to talk about <span class="math inline">\(s_e\)</span> (or RSE) instead of <span class="math inline">\(s_e^2\)</span> because of their units. The units of <span class="math inline">\(s_e\)</span> in the <code>cars</code> example is feet, while the units of <span class="math inline">\(s_e^2\)</span> is feet-squared.</p>
+<p>Often it is useful to talk about <span class="math inline">\(s_e\)</span> (or RSE) instead of <span class="math inline">\(s_e^2\)</span> because of their units. The unit of <span class="math inline">\(s_e\)</span> in the <code>cars</code> example is feet, while the unit of <span class="math inline">\(s_e^2\)</span> is feet-squared.</p>
 <p>Another useful function, which we will use almost as often as <code>lm()</code> is the <code>predict()</code> function.</p>
 <div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="simple-linear-regression.html#cb500-1"></a><span class="kw">predict</span>(stop_dist_model, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">speed =</span> <span class="dv">8</span>))</span></code></pre></div>
 <pre><code>##        1 
@@ -1083,7 +1083,7 @@ Y \mid X \sim N(\mu = 5 - 2 x, \sigma^ 2 = 9).
 <div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="simple-linear-regression.html#cb513-1"></a>x_vals =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">10</span>, <span class="dt">length.out =</span> num_obs)</span>
 <span id="cb513-2"><a href="simple-linear-regression.html#cb513-2"></a><span class="co"># set.seed(1)</span></span>
 <span id="cb513-3"><a href="simple-linear-regression.html#cb513-3"></a><span class="co"># x_vals = runif(num_obs, 0, 10)</span></span></code></pre></div>
-<p>We then generate the <span class="math inline">\(y\)</span> values according the specified functional relationship.</p>
+<p>We then generate the <span class="math inline">\(y\)</span> values according to the specified functional relationship.</p>
 <div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="simple-linear-regression.html#cb514-1"></a>y_vals =<span class="st"> </span>beta_<span class="dv">0</span> <span class="op">+</span><span class="st"> </span>beta_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x_vals <span class="op">+</span><span class="st"> </span>epsilon</span></code></pre></div>
 <p>The data, <span class="math inline">\((x_i, y_i)\)</span>, represent a possible sample from the true distribution. Now to check how well the method of least squares works, we use <code>lm()</code> to fit the model to our simulated data, then take a look at the estimated coefficients.</p>
 <div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="simple-linear-regression.html#cb515-1"></a>sim_fit =<span class="st"> </span><span class="kw">lm</span>(y_vals <span class="op">~</span><span class="st"> </span>x_vals)</span>
@@ -1094,7 +1094,7 @@ Y \mid X \sim N(\mu = 5 - 2 x, \sigma^ 2 = 9).
 <div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb517-1"><a href="simple-linear-regression.html#cb517-1"></a><span class="kw">plot</span>(y_vals <span class="op">~</span><span class="st"> </span>x_vals)</span>
 <span id="cb517-2"><a href="simple-linear-regression.html#cb517-2"></a><span class="kw">abline</span>(sim_fit)</span></code></pre></div>
 <p><img src="slr_files/figure-html/unnamed-chunk-51-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>We should say here, that we’re being sort of lazy, and not the good kinda of lazy that could be considered efficient. Any time you simulate data, you should consider doing two things: writing a function, and storing the data in a data frame.</p>
+<p>We should say here, that we’re being sort of lazy, and not the good kind of lazy that could be considered efficient. Any time you simulate data, you should consider doing two things: writing a function, and storing the data in a data frame.</p>
 <p>The function below, <code>sim_slr()</code>, can be used for the same task as above, but is much more flexible. Notice that we provide <code>x</code> to the function, instead of generating <code>x</code> inside the function. In the SLR model, the <span class="math inline">\(x_i\)</span> are considered known values. That is, they are not random, so we do not assume a distribution for the <span class="math inline">\(x_i\)</span>. Because of this, we will repeatedly use the same <code>x</code> values across all simulations.</p>
 <div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="simple-linear-regression.html#cb518-1"></a>sim_slr =<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">beta_0 =</span> <span class="dv">10</span>, <span class="dt">beta_1 =</span> <span class="dv">5</span>, <span class="dt">sigma =</span> <span class="dv">1</span>) {</span>
 <span id="cb518-2"><a href="simple-linear-regression.html#cb518-2"></a>  n =<span class="st"> </span><span class="kw">length</span>(x)</span>
@@ -1135,7 +1135,7 @@ Y \mid X \sim N(\mu = 5 - 2 x, \sigma^ 2 = 9).
 </div>
 <div id="history" class="section level2 hasAnchor">
 <h2><span class="header-section-number">7.7</span> History<a href="simple-linear-regression.html#history" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>For some brief background on the history of linear regression, see <a href="http://www.amstat.org/publications/jse/v9n3/stanton.html" target="_blank">“Galton, Pearson, and the Peas: A Brief History of Linear Regression for Statistics Instructors”</a> from the <a href="http://www.amstat.org/publications/jse/" target="_blank">Journal of Statistics Education</a> as well as the <a href="https://en.wikipedia.org/wiki/Regression_analysis#History" target="_blank">Wikipedia page on the history of regression analysis</a> and lastly the article for <a href="https://en.wikipedia.org/wiki/Regression_toward_the_mean" target="_blank">regression to the mean</a> which details the origins of the term “regression.”</p>
+<p>For some brief background on the history of linear regression, see <a href="https://www.tandfonline.com/doi/full/10.1080/10691898.2001.11910537" target="_blank">“Galton, Pearson, and the Peas: A Brief History of Linear Regression for Statistics Instructors”</a> from the <a href="https://www.tandfonline.com/journals/ujse20" target="_blank">Journal of Statistics Education</a> as well as the <a href="https://en.wikipedia.org/wiki/Regression_analysis#History" target="_blank">Wikipedia page on the history of regression analysis</a> and lastly the article for <a href="https://en.wikipedia.org/wiki/Regression_toward_the_mean" target="_blank">regression toward the mean</a> which details the origins of the term “regression.”</p>
 </div>
 <div id="r-markdown" class="section level2 hasAnchor">
 <h2><span class="header-section-number">7.8</span> <code>R</code> Markdown<a href="simple-linear-regression.html#r-markdown" class="anchor-section" aria-label="Anchor link to header"></a></h2>

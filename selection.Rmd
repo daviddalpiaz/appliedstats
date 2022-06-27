@@ -14,15 +14,15 @@ After reading this chapter you will be able to:
 - Use variable selection procedures to find a good model from a set of possible models.
 - Understand the two uses of models: explanation and prediction.
 
-Last chapter we saw how correlation between predictor variables can have undesirable effects on models. We used variance inflation factors to assess the severity of the collinearity issues caused by these correlations. We also saw how fitting a smaller model, leaving out some of the correlated predictors, results in a model which no longer suffers from collinearity issues. But how should we chose this smaller model?
+Last chapter we saw how correlation between predictor variables can have undesirable effects on models. We used variance inflation factors to assess the severity of the collinearity issues caused by these correlations. We also saw how fitting a smaller model, leaving out some of the correlated predictors, results in a model which no longer suffers from collinearity issues. But how should we choose this smaller model?
 
 This chapter, we will discuss several *criteria* and *procedures* for choosing a "good" model from among a choice of many.
 
 ## Quality Criterion
 
-So far, we have seen criteria such as $R^2$ and $\text{RMSE}$ for assessing quality of fit. However, both of these have a fatal flaw. By increasing the size of a model, that is adding predictors, that can at worst not improve. It is impossible to add a predictor to a model and make $R^2$ or $\text{RMSE}$ worse. That means, if we were to use either of these to chose between models, we would *always* simply choose the larger model. Eventually we would simply be fitting to noise.
+So far, we have seen criteria such as $R^2$ and $\text{RMSE}$ for assessing quality of fit. However, both of these have a fatal flaw. By increasing the size of a model, that is adding predictors, that can at worst not improve. It is impossible to add a predictor to a model and make $R^2$ or $\text{RMSE}$ worse. That means, if we were to use either of these to choose between models, we would *always* simply choose the larger model. Eventually we would simply be fitting to noise.
 
-This suggests that we need a quality criteria that takes into account the size of the model, since our preference is for small models that still fit well. We are willing to sacrifice a small amount of "goodness-of-fit" for obtaining a smaller model. (Here we use "goodness-of-fit" to simply mean how far the data is from the model, the smaller the errors the better. Often in statistics, goodness-of-fit can have a more precise meaning.) We will look at three criteria that do this explicitly: $\text{AIC}$, $\text{BIC}$, and Adjusted $R^2$. We will also look at one, Cross-Validated $\text{RMSE}$, which implicitly considers the size of the model.
+This suggests that we need a quality criterion that takes into account the size of the model, since our preference is for small models that still fit well. We are willing to sacrifice a small amount of "goodness-of-fit" for obtaining a smaller model. (Here we use "goodness-of-fit" to simply mean how far the data is from the model, the smaller the errors the better. Often in statistics, goodness-of-fit can have a more precise meaning.) We will look at three criteria that do this explicitly: $\text{AIC}$, $\text{BIC}$, and Adjusted $R^2$. We will also look at one, Cross-Validated $\text{RMSE}$, which implicitly considers the size of the model.
 
 ### Akaike Information Criterion
 
@@ -50,7 +50,7 @@ The likelihood portion of $\text{AIC}$ is given by
 -2 \log L(\boldsymbol{\hat{\beta}}, \hat{\sigma}^2) = n + n \log(2\pi) + n \log\left(\frac{\text{RSS}}{n}\right).
 \]
 
-For the sake of comparing models, the only term here that will change is $n \log\left(\frac{\text{RSS}}{n}\right)$, which is function of $\text{RSS}$. The 
+For the sake of comparing models, the only term here that will change is $n \log\left(\frac{\text{RSS}}{n}\right)$, which is a function of $\text{RSS}$. The 
 
 \[
 n + n \log(2\pi)
@@ -96,7 +96,7 @@ whereas for $\text{BIC}$, the penalty is
 
 So, for any dataset where $log(n) > 2$ the $\text{BIC}$ penalty will be larger than the $\text{AIC}$ penalty, thus $\text{BIC}$ will likely prefer a smaller model.  
 
-Note that, sometimes the penalty is considered a general expression of the form
+Note that sometimes the penalty is considered a general expression of the form
 
 \[
 k \cdot p.
@@ -239,9 +239,9 @@ lines(xplot, predict(fit_big_removed, newdata = data.frame(x = xplot)),
       col = "darkorange", lwd = 2, lty = 2)
 ```
 
-We see that on average, the solid blue line for the quadratic model has similar errors as before. It has changed very slightly. However, the dashed orange line for the large model, has a huge error at the point that was removed and is much different that the previous fit.
+We see that on average, the solid blue line for the quadratic model has similar errors as before. It has changed very slightly. However, the dashed orange line for the large model, has a huge error at the point that was removed and is much different than the previous fit.
 
-This is the purpose of cross-validation. By assessing how the model fits points that were not used to perform the regression, we get an idea of how well the model will work for future observations. It assess how well the model works in general, not simply on the observed data.
+This is the purpose of cross-validation. By assessing how the model fits points that were not used to perform the regression, we get an idea of how well the model will work for future observations. It assesses how well the model works in general, not simply on the observed data.
 
 ## Selection Procedures
 
@@ -265,7 +265,7 @@ If we had 10 or more predictors, we would already be considering over 1000 model
 
 ### Backward Search
 
-Backward selection procedures start with all possible predictors in the model, then considers how deleting a single predictor will effect a chosen metric. Let's try this on the `seatpos` data. We will use the `step()` function in `R` which by default uses $\text{AIC}$ as its metric of choice.
+Backward selection procedures start with all possible predictors in the model, then consider how deleting a single predictor will affect a chosen metric. Let's try this on the `seatpos` data. We will use the `step()` function in `R` which by default uses $\text{AIC}$ as its metric of choice.
 
 ```{r}
 hipcenter_mod_back_aic = step(hipcenter_mod, direction = "backward")
@@ -273,7 +273,7 @@ hipcenter_mod_back_aic = step(hipcenter_mod, direction = "backward")
 
 We start with the model `hipcenter ~ .`, which is otherwise known as `hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg`. `R` will then repeatedly attempt to delete a predictor until it stops, or reaches the model `hipcenter ~ 1`, which contains no predictors.
 
-At each "step", `R` reports the current model, its $\text{AIC}$, and the possible steps with their $\text{RSS}$ and more importantly $\text{AIC}$.
+At each "step," `R` reports the current model, its $\text{AIC}$, and the possible steps with their $\text{RSS}$ and more importantly $\text{AIC}$.
 
 In this example, at the first step, the current model is `hipcenter ~ Age + Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg` which has an AIC of `283.62`. Note that when `R` is calculating this value, it is using `extractAIC()`, which uses the expression
 
@@ -290,7 +290,7 @@ n = length(resid(hipcenter_mod))
 n * log(mean(resid(hipcenter_mod) ^ 2)) + 2 * p
 ```
 
-Returning to the first step, `R` then gives us a row which shows the effect of deleting each of the current predictors. The `-` signs at the beginning of each row indicates we are considering removing a predictor. There is also a row with `<none>` which is a row for keeping the current model. Notice that this row has the smallest $\text{RSS}$, as it is the largest model.
+Returning to the first step, `R` then gives us a row which shows the effect of deleting each of the current predictors. The `-` signs at the beginning of each row indicate we are considering removing a predictor. There is also a row with `<none>` which is a row for keeping the current model. Notice that this row has the smallest $\text{RSS}$, as it is the largest model.
 
 We see that every row above `<none>` has a smaller $\text{AIC}$ than the row for `<none>` with the one at the top, `Ht`, giving the lowest $\text{AIC}$. Thus we remove `Ht` from the model, and continue the process.
 
@@ -589,7 +589,7 @@ We'll try backwards search with both $\text{AIC}$ and $\text{BIC}$ to attempt to
 autompg_mod_back_aic = step(autompg_big_mod, direction = "backward", trace = 0)
 ```
 
-Notice that we used `trace = 0` in the function call. This suppress the output for each step, and simply stores the chosen model. This is useful, as this code would otherwise create a large amount of output. If we had viewed the output, which you can try on your own by removing `trace = 0`, we would see that `R` only considers the `cyl` variable as a single variable, despite the fact that it is coded using two dummy variables. So removing `cyl` would actually remove two parameters from the resulting model.
+Notice that we used `trace = 0` in the function call. This suppresses the output for each step, and simply stores the chosen model. This is useful, as this code would otherwise create a large amount of output. If we had viewed the output, which you can try on your own by removing `trace = 0`, we would see that `R` only considers the `cyl` variable as a single variable, despite the fact that it is coded using two dummy variables. So removing `cyl` would actually remove two parameters from the resulting model.
 
 You should also notice that `R` respects hierarchy when attempting to remove variables. That is, for example, `R` will not consider removing `hp` if `hp:disp` or `I(hp ^ 2)` are currently in the model.
 
@@ -638,25 +638,25 @@ Notice this is a somewhat "large" model, which uses `r length(coef(autompg_mod_b
 
 ### Explanation
 
-Suppose we would like to use this model for explanation. Perhaps we are a car manufacturer trying to engineer a fuel efficient vehicle. If this is the case, we are interested in both what predictor variables are useful for explaining the car's fuel efficiency, as well as how those variables effect fuel efficiency. By understanding this relationship, we can use this knowledge to our advantage when designing a car.
+Suppose we would like to use this model for explanation. Perhaps we are a car manufacturer trying to engineer a fuel efficient vehicle. If this is the case, we are interested in both what predictor variables are useful for explaining the car's fuel efficiency, as well as how those variables affect fuel efficiency. By understanding this relationship, we can use this knowledge to our advantage when designing a car.
 
-To explain a relationship, we are interested in keeping models as small as possible, since smaller models are easy to interpret. The fewer predictors the less considerations we need to make in our design process. Also the fewer interactions and polynomial terms, the easier it is to interpret any one parameter, since the parameter interpretations are conditional on which parameters are in the model.
+To explain a relationship, we are interested in keeping models as small as possible, since smaller models are easy to interpret. The fewer predictors the fewer considerations we need to make in our design process. Also the fewer interactions and polynomial terms, the easier it is to interpret any one parameter, since the parameter interpretations are conditional on which parameters are in the model.
 
 Note that *linear* models are rather interpretable to begin with. Later in your data analysis careers, you will see more complicated models that may fit data better, but are much harder, if not impossible to interpret. These models aren't very useful for explaining a relationship.
 
-To find small and interpretable models, we would use selection criterion that *explicitly* penalize larger models, such as AIC and BIC. In this case we still obtained a somewhat large model, but much smaller than the model we used to start the selection process.
+To find small and interpretable models, we would use selection criteria that *explicitly* penalize larger models, such as AIC and BIC. In this case we still obtained a somewhat large model, but much smaller than the model we used to start the selection process.
 
 #### Correlation and Causation
 
 A word of caution when using a model to *explain* a relationship. There are two terms often used to describe a relationship between two variables: *causation* and *correlation*. [Correlation](https://xkcd.com/552/){target="_blank"} is often also referred to as association.
 
-Just because two variable are correlated does not necessarily mean that one causes the other. For example, considering modeling `mpg` as only a function of `hp`.
+Just because two variables are correlated does not necessarily mean that one causes the other. For example, considering modeling `mpg` as only a function of `hp`.
 
 ```{r}
 plot(mpg ~ hp, data = autompg, col = "dodgerblue", pch = 20, cex = 1.5)
 ```
 
-Does an increase in horsepower cause a drop in fuel efficiency? Or, perhaps the causality is reversed and an increase in fuel efficiency cause a decrease in horsepower. Or, perhaps there is a third variable that explains both!
+Does an increase in horsepower cause a drop in fuel efficiency? Or, perhaps the causality is reversed and an increase in fuel efficiency causes a decrease in horsepower. Or, perhaps there is a third variable that explains both!
 
 The issue here is that we have **observational** data. With observational data, we can only detect associations. To speak with confidence about causality, we would need to run **experiments**.
 
@@ -666,7 +666,7 @@ This is a concept that you should encounter often in your statistics education. 
 
 Suppose now instead of the manufacturer who would like to build a car, we are a consumer who wishes to purchase a new car. However this particular car is so new, it has not been rigorously tested, so we are unsure of what fuel efficiency to expect. (And, as skeptics, we don't trust what the manufacturer is telling us.)
 
-In this case, we would like to use the model to help *predict* the fuel efficiency of this car based on its attributes, which are the predictors of the model. The smaller the errors the model makes, the more confident we are in its prediction. Thus, to find models for prediction, we would use selection criterion that *implicitly* penalize larger models, such as LOOCV $\text{RMSE}$. So long as the model does not over-fit, we do not actually care how large the model becomes. Explaining the relationship between the variables is not our goal here, we simply want to know what kind of fuel efficiency we should expect!
+In this case, we would like to use the model to help *predict* the fuel efficiency of this car based on its attributes, which are the predictors of the model. The smaller the errors the model makes, the more confident we are in its prediction. Thus, to find models for prediction, we would use selection criteria that *implicitly* penalize larger models, such as LOOCV $\text{RMSE}$. So long as the model does not over-fit, we do not actually care how large the model becomes. Explaining the relationship between the variables is not our goal here, we simply want to know what kind of fuel efficiency we should expect!
 
 If we **only** care about prediction, we don't need to worry about correlation vs causation, and we don't need to worry about model assumptions. 
 
