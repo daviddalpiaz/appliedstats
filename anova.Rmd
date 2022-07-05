@@ -609,7 +609,7 @@ The creator of this method, [John Tukey](https://en.wikipedia.org/wiki/John_Tuke
 What if there is more than one factor variable? Why do we need to limit ourselves to experiments with only one factor? We don't! Consider the model
 
 \[
-y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}.
+y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}
 \]
 
 where $\epsilon_{ijk}$ are $N(0, \sigma^2)$ random variables.
@@ -617,7 +617,7 @@ where $\epsilon_{ijk}$ are $N(0, \sigma^2)$ random variables.
 We add constraints
 
 \[
-\sum \alpha_i = 0 \quad \quad \sum \beta_j = 0.
+\sum_{i=1}^{I} \alpha_i = 0 \quad \quad \sum_{j=1}^{J} \beta_j = 0.
 \]
 
 and
@@ -861,7 +861,7 @@ Either plot makes it rather clear that the `wool` and `tensions` factors interac
 summary(aov(breaks ~ wool * tension, data = warpbreaks))
 ```
 
-Using an $\alpha$ of $0.05$ the ANOVA test finds that the interaction is significant, so we use the interaction model here.
+Using an $\alpha$ of $0.05$, the ANOVA test finds that the interaction is significant, so we use the interaction model here.
 
 <!-- TODO: two-way calculation details in an appendix -->
 
