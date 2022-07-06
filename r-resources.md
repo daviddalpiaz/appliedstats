@@ -18,7 +18,7 @@ So far, we have seen a lot of `R`, and a lot of `R` quickly. Again, the precedin
 - [`R` for Data Science](http://r4ds.had.co.nz/){target="_blank"} by Hadley Wickham and Garrett Grolemund.
     - Similar to Advanced `R`, but focuses more on data analysis, while still introducing programming concepts. Especially useful for working in the [tidyverse](http://tidyverse.org/){target="_blank"}. 
 - [The Art of `R` Programming](https://www.nostarch.com/artofr.htm){target="_blank"} by Norman Matloff.
-    - Gentle introduction to the programming side of `R`. (Whereas we will focus more on the data analysis side.) A [free electronic version](https://vufind.carli.illinois.edu/vf-uiu/Record/uiu_8490009){target="_blank"} is available through the Illinois library.
+    - Gentle introduction to the programming side of `R`. (Whereas we will focus more on the data analysis side.) A [free electronic version](https://i-share-uiu.primo.exlibrisgroup.com/discovery/fulldisplay?docid=alma99954930920805899&context=L&vid=01CARLI_UIU:CARLI_UIU&search_scope=MyInstitution&tab=LibraryCatalog&lang=en){target="_blank"} is available through the Illinois library.
 
 ## Advanced References
 

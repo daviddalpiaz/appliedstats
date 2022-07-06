@@ -767,7 +767,7 @@ lines(xplot, predict(mark_mod_poly3, newdata = data.frame(advert = xplot)),
 
 \begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-38-1} \end{center}
 
-The previous plot was made using base graphics in `R`. The next plot was made using the package [`ggplot2`](http://ggplot2.org/){target="_blank"}, an increasingly popular plotting method in `R`.
+The previous plot was made using base graphics in `R`. The next plot was made using the package [`ggplot2`](https://ggplot2.tidyverse.org/){target="_blank"}, an increasingly popular plotting method in `R`.
 
 
 ```r
