@@ -525,11 +525,11 @@ H_0: \mu_C = \mu_T \quad \text{vs} \quad H_1: \mu_C \neq \mu_T
 <h2><span class="header-section-number">12.3</span> One-Way ANOVA<a href="analysis-of-variance.html#one-way-anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>What if there are more than two groups? Consider the model</p>
 <p><span class="math display">\[
-y_{ij} = \mu + \alpha_i + e_{ij}.
+y_{ij} = \mu + \alpha_i + e_{ij}
 \]</span></p>
 <p>where</p>
 <p><span class="math display">\[
-\sum \alpha_i = 0
+\sum_{i=1}^{g} \alpha_i = 0
 \]</span></p>
 <p>and</p>
 <p><span class="math display">\[
@@ -563,7 +563,7 @@ H_0: \mu_1 = \mu_2 = \ldots \mu_g \quad \text{vs} \quad H_1: \text{ Not all } \m
 <p><span class="math display">\[
 H_0: \alpha_1 = \alpha_2 = \ldots = \alpha_g = 0 \quad \text{vs} \quad H_1: \text{ Not all } \alpha_i \text{ are } 0.
 \]</span></p>
-<p>This test is called <strong>Analysis of Variance</strong>. Analysis of Variance (ANOVA) compares the variation due to specific sources (between groups) with the variation among individuals who should be similar (within groups). In particular, ANOVA tests whether several populations have the same mean by comparing how far apart the sample means are with how much variation there is within the samples. We use variability of means to test for equality of means, thus the use of <em>variance</em> in the name for a test about means.</p>
+<p>This test is called <strong>Analysis of Variance (ANOVA)</strong>. ANOVA compares the variation due to specific sources (between groups) with the variation among individuals who should be similar (within groups). In particular, ANOVA tests whether several populations have the same mean by comparing how far apart the sample means are with how much variation there is within the samples. We use variability of means to test for equality of means, thus the use of <em>variance</em> in the name for a test about means.</p>
 <p>We’ll leave out most of the details about how the estimation is done, but we’ll see later, that it is done via least squares. We’ll use <code>R</code> to obtain these estimates, but they are actually rather simple. We only need to think about the sample means of the groups.</p>
 <ul>
 <li><span class="math inline">\(\bar{y}_i\)</span> is the sample mean of group <span class="math inline">\(i\)</span>.</li>
@@ -622,10 +622,10 @@ SSW = \sum_{i = 1}^{g} \sum_{j = 1}^{n_i} (y_{ij} - \bar{y}_i)^2 = \sum_{i = 1}^
 <!-- TODO: This should be a Shiny app. -->
 <!-- TODO: Should output entire ANOVA table. -->
 <!-- TODO: Do with ggplot2 and custom boxplots with show min, sd, mean, sd, max -->
-<p>Let’s see what this looks like in a few situations. In each of the following examples, we’ll consider sampling 20 observations (<span class="math inline">\(n_i = 20\)</span>) from three populations (groups).</p>
+<p>Let’s see what this looks like in a few situations. In each of the following examples, we’ll consider sampling 20 observations (<span class="math inline">\(n_i = 20\)</span>) from three populations (groups; <span class="math inline">\(g = 3\)</span>).</p>
 <p>First, consider <span class="math inline">\(\mu_A = -5, \mu_B = 0, \mu_C = 5\)</span> with <span class="math inline">\(\sigma = 1\)</span>.</p>
 <p><img src="anova_files/figure-html/unnamed-chunk-9-1.png" width="960" style="display: block; margin: auto;" /></p>
-<p>The left panel shows the three normal distributions we are sampling from. The ticks along the <span class="math inline">\(x\)</span>-axis show the randomly sampled observations. The right panel, re-displays only the sampled values in a boxplot. Note that the mid-line of the boxes is usually the sample median. These boxplots have been modified to use the sample mean.</p>
+<p>The left panel shows the three normal distributions we are sampling from. The ticks along the <span class="math inline">\(x\)</span>-axis show the randomly sampled observations. The right panel re-displays only the sampled values in a boxplot. Note that the mid-line of the boxes is usually the sample median. These boxplots have been modified to use the sample mean.</p>
 <p>Here the sample means vary a lot around the overall sample mean, which is the solid grey line on the right panel. Within the groups there is variability, but it is still obvious that the sample means are very different.</p>
 <p>As a result, we obtain a <em>large</em> test statistic, thus <em>small</em> p-value.</p>
 <ul>
@@ -652,7 +652,6 @@ SSW = \sum_{i = 1}^{g} \sum_{j = 1}^{n_i} (y_{ij} - \bar{y}_i)^2 = \sum_{i = 1}^
 <p>Above, there isn’t obvious separation between the groups like the first example, but it is still obvious the means are different. Below, there is more noise. Visually it is somewhat hard to tell, but the test still suggests a difference of means. (At an <span class="math inline">\(\alpha\)</span> of 0.05.)</p>
 <ul>
 <li><span class="math inline">\(\mu_A = -1, \mu_B = 0, \mu_C = 1, \sigma = 2\)</span></li>
-<li><span class="math inline">\(n_i = 20\)</span> for each group.</li>
 </ul>
 <p><img src="anova_files/figure-html/unnamed-chunk-12-1.png" width="960" style="display: block; margin: auto;" /></p>
 <ul>
@@ -670,7 +669,7 @@ H_0: \mu_A = \mu_B = \mu_C = \mu_D
 <pre><code>## [1] &quot;coag&quot; &quot;diet&quot;</code></pre>
 <div class="sourceCode" id="cb816"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb816-1"><a href="analysis-of-variance.html#cb816-1"></a><span class="kw">plot</span>(coag <span class="op">~</span><span class="st"> </span>diet, <span class="dt">data =</span> coagulation, <span class="dt">col =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">5</span>)</span></code></pre></div>
 <p><img src="anova_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>We first load the data and create the relevant boxplot. The plot alone suggests a difference of means. The <code>aov()</code> function is used to obtain the relevant sums of squares. Using the <code>summary()</code> function on the output from <code>aov()</code> creates the desired ANOVA table. (Without the unneeded row for total.)</p>
+<p>We first load the data and create the relevant boxplot. The plot alone suggests a difference of means. The <code>aov()</code> function is used to obtain the relevant sums of squares. Using the <code>summary()</code> function on the output from <code>aov()</code> creates the desired ANOVA table (without the unneeded row for total).</p>
 <div class="sourceCode" id="cb817"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb817-1"><a href="analysis-of-variance.html#cb817-1"></a>coag_aov =<span class="st"> </span><span class="kw">aov</span>(coag <span class="op">~</span><span class="st"> </span>diet, <span class="dt">data =</span> coagulation)</span>
 <span id="cb817-2"><a href="analysis-of-variance.html#cb817-2"></a>coag_aov</span></code></pre></div>
 <pre><code>## Call:
@@ -810,7 +809,7 @@ H_0: \mu_A = \mu_B = \mu_C = \mu_D
 <p>Notice the <code>pairwise.t.test()</code> function does not have a <code>data</code> argument. To avoid using <code>attach()</code> or the <code>$</code> operator, we introduce the <code>with()</code> function. The commented line would perform the same operation.</p>
 <p>Also note that we are using the argument <code>p.adj = "none"</code>. What is this? An adjustment (in this case not an adjustment) to the p-value of each test. Why would we need to do this?</p>
 <p>The adjustment is an attempt to correct for the <a href="https://en.wikipedia.org/wiki/Multiple_comparisons_problem" target="_blank">multiple testing problem</a>. (See also: <a href="https://xkcd.com/882/" target="_blank">Relevant XKCD</a>. ) Imagine that you knew ahead of time that you were going to perform 100 <span class="math inline">\(t\)</span>-tests. Suppose you wish to do this with a false positive rate of <span class="math inline">\(\alpha = 0.05\)</span>. If we use this significance level for each test, for 100 tests, we then expect 5 false positives. That means, with 100 tests, we’re almost guaranteed to have at least one error.</p>
-<p>What we’d really like is for the <a href="https://en.wikipedia.org/wiki/Family-wise_error_rate" target="_blank">family-wise error rate</a> to be 0.05. If we consider the 100 tests to be a single “experiment” the FWER is the rate of one or more false positives for in the full experiment (100 tests). Consider it an error rate for an entire procedure, instead of a single test.</p>
+<p>What we’d really like is for the <a href="https://en.wikipedia.org/wiki/Family-wise_error_rate" target="_blank">family-wise error rate (FWER)</a> to be 0.05. If we consider the 100 tests to be a single “experiment,” the FWER is the rate of one or more false positives for the full experiment (100 tests). Consider it an error rate for an entire procedure, instead of a single test.</p>
 <p>With this in mind, one of the simplest adjustments we can make, is to increase the p-values for each test, depending on the number of tests. In particular the Bonferroni correction simply multiplies by the number of tests.</p>
 <p><span class="math display">\[
 \text{p-value-bonf} = \min(1, n_{tests} \cdot \text{p-value})
@@ -828,7 +827,7 @@ H_0: \mu_A = \mu_B = \mu_C = \mu_D
 ## 
 ## P value adjustment method: bonferroni</code></pre>
 <p>We see that these p-values are much higher than the unadjusted p-values, thus, we are less likely to reject each test. As a result, the FWER is 0.05, instead of an error rate of 0.05 for each test.</p>
-<p>We can simulate the 100 test scenario to illustrate this point.</p>
+<p>We can simulate the 100 test scenarios to illustrate this point.</p>
 <div class="sourceCode" id="cb851"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb851-1"><a href="analysis-of-variance.html#cb851-1"></a>get_p_val =<span class="st"> </span><span class="cf">function</span>() {</span>
 <span id="cb851-2"><a href="analysis-of-variance.html#cb851-2"></a>  </span>
 <span id="cb851-3"><a href="analysis-of-variance.html#cb851-3"></a>  <span class="co"># create data for two groups, equal mean</span></span>
@@ -877,12 +876,12 @@ H_0: \mu_A = \mu_B = \mu_C = \mu_D
 <h2><span class="header-section-number">12.5</span> Two-Way ANOVA<a href="analysis-of-variance.html#two-way-anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>What if there is more than one factor variable? Why do we need to limit ourselves to experiments with only one factor? We don’t! Consider the model</p>
 <p><span class="math display">\[
-y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}.
+y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}
 \]</span></p>
 <p>where <span class="math inline">\(\epsilon_{ijk}\)</span> are <span class="math inline">\(N(0, \sigma^2)\)</span> random variables.</p>
 <p>We add constraints</p>
 <p><span class="math display">\[
-\sum \alpha_i = 0 \quad \quad \sum \beta_j = 0.
+\sum_{i=1}^{I} \alpha_i = 0 \quad \quad \sum_{j=1}^{J} \beta_j = 0.
 \]</span></p>
 <p>and</p>
 <p><span class="math display">\[
@@ -1394,7 +1393,7 @@ H_0: \text{ All }\alpha_{i} = 0. \quad \text{vs} \quad H_1: \text{ Not all } \al
 ## Residuals    48   5745   119.7                     
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<p>Using an <span class="math inline">\(\alpha\)</span> of <span class="math inline">\(0.05\)</span> the ANOVA test finds that the interaction is significant, so we use the interaction model here.</p>
+<p>Using an <span class="math inline">\(\alpha\)</span> of <span class="math inline">\(0.05\)</span>, the ANOVA test finds that the interaction is significant, so we use the interaction model here.</p>
 <!-- TODO: two-way calculation details in an appendix -->
 </div>
 <div id="r-markdown-5" class="section level2 hasAnchor">
