@@ -544,10 +544,13 @@ The Likelihood-Ratio Test is actually a rather general test, however, here we ha
 
 ### `SAheart` Example
 
-To illustrate the use of logistic regression, we will use the `SAheart` dataset from the `ElemStatLearn` package. 
+To illustrate the use of logistic regression, we will use the `SAheart` dataset from the `bestglm` package. 
 
 ```{r}
-# install.packages("bestglm")
+# "leaps" is required for "bestglm"
+if (!require("leaps")) install.packages("leaps")
+library(leaps) 
+if (!require("bestglm")) install.packages("bestglm")
 library(bestglm)
 data("SAheart")
 ```
