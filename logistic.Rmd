@@ -870,7 +870,7 @@ fit_selected = glm(type ~ edu + money + capitalTotal + charDollar,
 fit_additive = glm(type ~ ., 
                    data = spam_trn, family = binomial)
 fit_over = glm(type ~ capitalTotal * (.), 
-               data = spam_trn, family = binomial, maxit = 50)
+               data = spam_trn, family = binomial, maxit = 75)
 ```
 
 We'll fit four logistic regressions, each more complex than the previous. Note that we're suppressing two warnings. The first we briefly mentioned previously.
@@ -893,7 +893,7 @@ We also, "suppressed" the warning:
 message("Warning: glm.fit: algorithm did not converge")
 ```
 
-In reality, we didn't actually suppress it, but instead changed `maxit` to `50`, when fitting the model `fit_over`. This was enough additional iterations to allow the iteratively reweighted least squares algorithm to converge when fitting the model.
+In reality, we didn't actually suppress it, but instead changed `maxit` to `75`, when fitting the model `fit_over`. This was enough additional iterations to allow the iteratively reweighted least squares algorithm to converge when fitting the model.
 
 ### Evaluating Classifiers
 
