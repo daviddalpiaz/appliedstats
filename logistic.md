@@ -543,7 +543,7 @@ We'll skip some of the exact details of the calculations, as `R` will obtain the
 Consider the following **full** model,
 
 $$
-\log\left(\frac{p({\bf x_i})}{1 - p({\bf x_i})}\right) = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{(p-1)} x_{i(p-1)} + \epsilon_i
+\log\left(\frac{p({\bf x_i})}{1 - p({\bf x_i})}\right) = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{(p-1)} x_{i(p-1)}
 $$
 
 This model has $p - 1$ predictors, for a total of $p$ $\beta$-parameters. We will denote the MLE of these $\beta$-parameters as $\hat{\beta}_{\text{Full}}$
@@ -551,7 +551,7 @@ This model has $p - 1$ predictors, for a total of $p$ $\beta$-parameters. We wil
 Now consider a **null** (or **reduced**) model,
 
 $$
-\log\left(\frac{p({\bf x_i})}{1 - p({\bf x_i})}\right) = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{(q-1)} x_{i(q-1)} + \epsilon_i
+\log\left(\frac{p({\bf x_i})}{1 - p({\bf x_i})}\right) = \beta_0 + \beta_1 x_{i1} + \beta_2 x_{i2} + \cdots + \beta_{(q-1)} x_{i(q-1)}
 $$
 
 where $q < p$. This model has $q - 1$ predictors, for a total of $q$ $\beta$-parameters. We will denote the MLE of these $\beta$-parameters as $\hat{\beta}_{\text{Null}}$
