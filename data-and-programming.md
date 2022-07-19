@@ -1652,6 +1652,7 @@ mpg
 ##  9 audi         a4 quattro   1.8  1999     4 auto~ 4        16    25 p     comp~
 ## 10 audi         a4 quattro   2    2008     4 manu~ 4        20    28 p     comp~
 ## # ... with 224 more rows
+## # i Use `print(n = ...)` to see more rows
 ```
 
 The function `str()` will display the "structure" of the data frame. It will display the number of **observations** and **variables**, list the variables, give the type of each variable, and show some elements of each variable. This information can also be found in the "Environment" window in RStudio.
@@ -1949,8 +1950,8 @@ To test our function, we will take a random sample of size `n = 10` from a norma
 ```
 
 ```
-##  [1]  1.4279606  7.1717028 -5.9476035  8.5580959  6.9566924  0.3375468
-##  [7] -0.9899317  0.2259585 -2.0426017 -5.6923254
+##  [1]  2.2747169 -0.9017002 -4.6486935  0.4467826 -2.1009983 -8.6507654
+##  [7]  5.6401690  6.0386568  5.1863966 -2.3809600
 ```
 
 ```r
@@ -1958,8 +1959,8 @@ standardize(x = test_sample)
 ```
 
 ```
-##  [1]  0.08308139  1.19956633 -1.35060174  1.46905737  1.15777200 -0.12887634
-##  [7] -0.38691539 -0.15056719 -0.59153639 -1.30098005
+##  [1]  0.45458103 -0.20645530 -0.98623286  0.07417414 -0.45603826 -1.81909417
+##  [7]  1.15495699  1.23788530  1.06052353 -0.51430041
 ```
 
 This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.
@@ -2061,7 +2062,7 @@ get_var(test_sample)
 ```
 
 ```
-## [1] 26.46575
+## [1] 23.09002
 ```
 
 ```r
@@ -2069,7 +2070,7 @@ get_var(test_sample, biased = FALSE)
 ```
 
 ```
-## [1] 26.46575
+## [1] 23.09002
 ```
 
 ```r
@@ -2077,7 +2078,7 @@ var(test_sample)
 ```
 
 ```
-## [1] 26.46575
+## [1] 23.09002
 ```
 
 We see the function is working as expected, and when returning the unbiased estimate it matches `R`'s built-in function `var()`. Finally, let's examine the biased estimate of $\sigma^2$.
@@ -2088,7 +2089,7 @@ get_var(test_sample, biased = TRUE)
 ```
 
 ```
-## [1] 23.81917
+## [1] 20.78102
 ```
 
 
