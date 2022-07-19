@@ -319,6 +319,34 @@ That is, `type = "link"` will get you the log odds, while `type = "response"` wi
 
 
 ```r
+predict(fit_glm, data.frame(x = 1.2)) # type = "link" as default
+```
+
+```
+##        1 
+## 2.076166
+```
+
+```r
+predict(fit_glm, data.frame(x = 1.2), type = "link")
+```
+
+```
+##        1 
+## 2.076166
+```
+
+```r
+predict(fit_glm, data.frame(x = 1.2), type = "response")
+```
+
+```
+##        1 
+## 0.888565
+```
+
+
+```r
 plot(y ~ x, data = example_data, 
      pch = 20, ylab = "Estimated Probability", 
      main = "Ordinary vs Logistic Regression")
@@ -332,7 +360,7 @@ legend("topleft", c("Ordinary", "Logistic", "Data"), lty = c(1, 2, 0),
 
 
 
-\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-8-1} \end{center}
+\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
 Since we only have a single predictor variable, we are able to graphically show this situation. First, note that the data, is plotted using black dots. The response `y` only takes values `0` and `1`.
 
@@ -422,7 +450,7 @@ legend("bottomleft", c("True Probability", "Estimated Probability", "Data"), lty
 
 
 
-\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-12-1} \end{center}
+\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-13-1} \end{center}
 
 We see that this time, as $x$ increases, $\hat{p}({\bf x})$ decreases.
 
@@ -480,7 +508,7 @@ legend("bottomleft", c("True Probability", "Estimated Probability", "Data"), lty
 
 
 
-\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-16-1} \end{center}
+\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-17-1} \end{center}
 
 ## Working with Logistic Regression
 
@@ -641,7 +669,7 @@ curve(predict(chd_mod_ldl, data.frame(ldl = x), type = "response"),
 
 
 
-\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-19-1} \end{center}
+\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-20-1} \end{center}
 
 As before, we plot the data in addition to the estimated probabilities. Note that we have "jittered" the data to make it easier to visualize, but the data do only take values `0` and `1`.
 
