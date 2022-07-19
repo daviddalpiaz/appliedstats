@@ -612,19 +612,19 @@ The Likelihood-Ratio Test is actually a rather general test, however, here we ha
 
 ### `SAheart` Example
 
-To illustrate the use of logistic regression, we will use the `SAheart` dataset from the `ElemStatLearn` package. 
+To illustrate the use of logistic regression, we will use the `SAheart` dataset from the `bestglm` package. 
 
 
 ```r
-# install.packages("bestglm")
+# "leaps" is required for "bestglm"
+if (!require("leaps")) install.packages("leaps")
+if (!require("bestglm")) install.packages("bestglm")
+```
+
+
+```r
+library(leaps)
 library(bestglm)
-```
-
-```
-## Loading required package: leaps
-```
-
-```r
 data("SAheart")
 ```
 
@@ -669,7 +669,7 @@ curve(predict(chd_mod_ldl, data.frame(ldl = x), type = "response"),
 
 
 
-\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-20-1} \end{center}
+\begin{center}\includegraphics{logistic_files/figure-latex/unnamed-chunk-21-1} \end{center}
 
 As before, we plot the data in addition to the estimated probabilities. Note that we have "jittered" the data to make it easier to visualize, but the data do only take values `0` and `1`.
 
