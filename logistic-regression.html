@@ -1104,15 +1104,15 @@ H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{adiposity}} = \beta_{\texttt{obesity}
 ## $residual.scale
 ## [1] 1</code></pre>
 <p>By setting <code>se.fit = TRUE</code>, <code>R</code> also computes <span class="math inline">\(\text{SE}[\hat{\eta}({\bf x})]\)</span>. Note that we used <code>type = "link"</code>, but this is actually a default value. We added it here to stress that the output from <code>predict()</code> will be the value of the link function.</p>
-<div class="sourceCode" id="cb1476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1476-1"><a href="logistic-regression.html#cb1476-1"></a>z_crit =<span class="st"> </span><span class="kw">round</span>(<span class="kw">qnorm</span>(<span class="fl">0.975</span>), <span class="dv">2</span>)</span>
+<div class="sourceCode" id="cb1476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1476-1"><a href="logistic-regression.html#cb1476-1"></a>z_crit =<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>)</span>
 <span id="cb1476-2"><a href="logistic-regression.html#cb1476-2"></a><span class="kw">round</span>(z_crit, <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 1.96</code></pre>
 <p>After obtaining the correct critical value, we can easily create a <span class="math inline">\(95\%\)</span> confidence interval for <span class="math inline">\(\eta({\bf x})\)</span>.</p>
 <div class="sourceCode" id="cb1478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1478-1"><a href="logistic-regression.html#cb1478-1"></a>eta_hat<span class="op">$</span>fit <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>z_crit <span class="op">*</span><span class="st"> </span>eta_hat<span class="op">$</span>se.fit</span></code></pre></div>
-<pre><code>## [1] 0.773045 2.386045</code></pre>
+<pre><code>## [1] 0.7730599 2.3860302</code></pre>
 <p>Now we simply need to apply the correct transformation to make this a confidence interval for <span class="math inline">\(p({\bf x})\)</span>, the probability of coronary heart disease for this observation. Note that the <code>boot</code> package contains functions <code>logit()</code> and <code>inv.logit()</code> which are the logit and inverse logit transformations, respectively.</p>
 <div class="sourceCode" id="cb1480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1480-1"><a href="logistic-regression.html#cb1480-1"></a>boot<span class="op">::</span><span class="kw">inv.logit</span>(eta_hat<span class="op">$</span>fit <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="op">*</span><span class="st"> </span>z_crit <span class="op">*</span><span class="st"> </span>eta_hat<span class="op">$</span>se.fit)</span></code></pre></div>
-<pre><code>## [1] 0.6841792 0.9157570</code></pre>
+<pre><code>## [1] 0.6841824 0.9157558</code></pre>
 <p>Notice, as we would expect, the bounds of this interval are both between 0 and 1. Also, since both bounds of the interval for <span class="math inline">\(\eta({\bf x})\)</span> are positive, both bounds of the interval for <span class="math inline">\(p({\bf x})\)</span> are greater than 0.5.</p>
 </div>
 <div id="formula-syntax" class="section level3 hasAnchor">

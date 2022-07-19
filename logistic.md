@@ -873,7 +873,7 @@ By setting `se.fit = TRUE`, `R` also computes $\text{SE}[\hat{\eta}({\bf x})]$. 
 
 
 ```r
-z_crit = round(qnorm(0.975), 2)
+z_crit = qnorm(0.975)
 round(z_crit, 2)
 ```
 
@@ -889,7 +889,7 @@ eta_hat$fit + c(-1, 1) * z_crit * eta_hat$se.fit
 ```
 
 ```
-## [1] 0.773045 2.386045
+## [1] 0.7730599 2.3860302
 ```
 
 Now we simply need to apply the correct transformation to make this a confidence interval for $p({\bf x})$, the probability of coronary heart disease for this observation. Note that the `boot` package contains functions `logit()` and `inv.logit()` which are the logit and inverse logit transformations, respectively.
@@ -900,7 +900,7 @@ boot::inv.logit(eta_hat$fit + c(-1, 1) * z_crit * eta_hat$se.fit)
 ```
 
 ```
-## [1] 0.6841792 0.9157570
+## [1] 0.6841824 0.9157558
 ```
 
 Notice, as we would expect, the bounds of this interval are both between 0 and 1. Also, since both bounds of the interval for $\eta({\bf x})$ are positive, both bounds of the interval for $p({\bf x})$ are greater than 0.5.
