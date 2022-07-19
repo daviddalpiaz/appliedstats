@@ -304,6 +304,12 @@ Making predictions with an object of type  `glm` is slightly different than maki
 That is, `type = "link"` will get you the log odds, while `type = "response"` will return the estimated mean, in this case, $P[Y = 1 \mid {\bf X} = {\bf x}]$ for each observation.
 
 ```{r}
+predict(fit_glm, data.frame(x = 1.2)) # type = "link" as default
+predict(fit_glm, data.frame(x = 1.2), type = "link")
+predict(fit_glm, data.frame(x = 1.2), type = "response")
+```
+
+```{r}
 plot(y ~ x, data = example_data, 
      pch = 20, ylab = "Estimated Probability", 
      main = "Ordinary vs Logistic Regression")
