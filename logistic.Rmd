@@ -876,7 +876,7 @@ fit_selected = glm(type ~ edu + money + capitalTotal + charDollar,
 fit_additive = glm(type ~ ., 
                    data = spam_trn, family = binomial)
 fit_over = glm(type ~ capitalTotal * (.), 
-               data = spam_trn, family = binomial, maxit = 50)
+               data = spam_trn, family = binomial, maxit = 75)
 ```
 
 We'll fit four logistic regressions, each more complex than the previous. Note that we're suppressing two warnings. The first we briefly mentioned previously.
@@ -899,7 +899,7 @@ We also, "suppressed" the warning:
 message("Warning: glm.fit: algorithm did not converge")
 ```
 
-In reality, we didn't actually suppress it, but instead changed `maxit` to `50`, when fitting the model `fit_over`. This was enough additional iterations to allow the iteratively reweighted least squares algorithm to converge when fitting the model.
+In reality, we didn't actually suppress it, but instead changed `maxit` to `75`, when fitting the model `fit_over`. This was enough additional iterations to allow the iteratively reweighted least squares algorithm to converge when fitting the model.
 
 ### Evaluating Classifiers
 
@@ -929,7 +929,7 @@ mean(ifelse(predict(fit_over) > 0, "spam", "nonspam") != spam_trn$type)
 
 Because of this, training data isn't useful for evaluating, as it would suggest that we should always use the largest possible model, when in reality, that model is likely overfitting. Recall, a model that is too complex will overfit. A model that is too simple will underfit. (We're looking for something in the middle.)
 
-To overcome this, we'll use cross-validation as we did with ordinary linear regression, but this time we'll cross-validate the misclassification rate. To do so, we'll use the `cv.glm()` function from the `boot` library. It takes arguments for the data (in this case training), a model fit via `glm()`, and `K`, the number of folds. See `?cv.glm` for details.
+To overcome this, we'll use cross-validation as we did with ordinary linear regression, but this time we'll cross-validate the misclassification rate. To do so, we'll use the `cv.glm()` function from the `boot` library. It takes arguments for the data (in this case training), a model fit via `glm()`, and `K`, the number of folds. It returns `delta`, a vector of the average mean-squared error (MSE) and the bias-corrected MSE. See `?cv.glm` for details.
 
 Previously, for cross-validating RMSE in ordinary linear regression, we used LOOCV. We certainly could do that here. However, with logistic regression, we no longer have the clever trick that would allow us to obtain a LOOCV metric without needing to fit the model $n$ times. So instead, we'll use 5-fold cross-validation. (5 and 10 fold are the most common in practice.) Instead of leaving a single observation out repeatedly, we'll leave out a fifth of the data.
 

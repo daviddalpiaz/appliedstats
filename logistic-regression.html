@@ -1309,7 +1309,7 @@ C^B({\bf x}) = \underset{k}{\mathrm{argmax}} \ P[Y = k \mid {\bf X = x}].
 <span id="cb1500-5"><a href="logistic-regression.html#cb1500-5"></a>fit_additive =<span class="st"> </span><span class="kw">glm</span>(type <span class="op">~</span><span class="st"> </span>., </span>
 <span id="cb1500-6"><a href="logistic-regression.html#cb1500-6"></a>                   <span class="dt">data =</span> spam_trn, <span class="dt">family =</span> binomial)</span>
 <span id="cb1500-7"><a href="logistic-regression.html#cb1500-7"></a>fit_over =<span class="st"> </span><span class="kw">glm</span>(type <span class="op">~</span><span class="st"> </span>capitalTotal <span class="op">*</span><span class="st"> </span>(.), </span>
-<span id="cb1500-8"><a href="logistic-regression.html#cb1500-8"></a>               <span class="dt">data =</span> spam_trn, <span class="dt">family =</span> binomial, <span class="dt">maxit =</span> <span class="dv">50</span>)</span></code></pre></div>
+<span id="cb1500-8"><a href="logistic-regression.html#cb1500-8"></a>               <span class="dt">data =</span> spam_trn, <span class="dt">family =</span> binomial, <span class="dt">maxit =</span> <span class="dv">75</span>)</span></code></pre></div>
 <p>We’ll fit four logistic regressions, each more complex than the previous. Note that we’re suppressing two warnings. The first we briefly mentioned previously.</p>
 <pre><code>## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
 <p>Note that, when we receive this warning, we should be highly suspicious of the parameter estimates.</p>
@@ -1319,7 +1319,7 @@ C^B({\bf x}) = \underset{k}{\mathrm{argmax}} \ P[Y = k \mid {\bf X = x}].
 <p>However, the model can still be used to create a classifier, and we will evaluate that classifier on its own merits.</p>
 <p>We also, “suppressed” the warning:</p>
 <pre><code>## Warning: glm.fit: algorithm did not converge</code></pre>
-<p>In reality, we didn’t actually suppress it, but instead changed <code>maxit</code> to <code>50</code>, when fitting the model <code>fit_over</code>. This was enough additional iterations to allow the iteratively reweighted least squares algorithm to converge when fitting the model.</p>
+<p>In reality, we didn’t actually suppress it, but instead changed <code>maxit</code> to <code>75</code>, when fitting the model <code>fit_over</code>. This was enough additional iterations to allow the iteratively reweighted least squares algorithm to converge when fitting the model.</p>
 </div>
 <div id="evaluating-classifiers" class="section level3 hasAnchor">
 <h3><span class="header-section-number">17.4.2</span> Evaluating Classifiers<a href="logistic-regression.html#evaluating-classifiers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1343,9 +1343,9 @@ I(y_i \neq \hat{C}({\bf x_i})) =
 <div class="sourceCode" id="cb1509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1509-1"><a href="logistic-regression.html#cb1509-1"></a><span class="kw">mean</span>(<span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_additive) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;spam&quot;</span>, <span class="st">&quot;nonspam&quot;</span>) <span class="op">!=</span><span class="st"> </span>spam_trn<span class="op">$</span>type)</span></code></pre></div>
 <pre><code>## [1] 0.066</code></pre>
 <div class="sourceCode" id="cb1511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1511-1"><a href="logistic-regression.html#cb1511-1"></a><span class="kw">mean</span>(<span class="kw">ifelse</span>(<span class="kw">predict</span>(fit_over) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;spam&quot;</span>, <span class="st">&quot;nonspam&quot;</span>) <span class="op">!=</span><span class="st"> </span>spam_trn<span class="op">$</span>type)</span></code></pre></div>
-<pre><code>## [1] 0.136</code></pre>
+<pre><code>## [1] 0.118</code></pre>
 <p>Because of this, training data isn’t useful for evaluating, as it would suggest that we should always use the largest possible model, when in reality, that model is likely overfitting. Recall, a model that is too complex will overfit. A model that is too simple will underfit. (We’re looking for something in the middle.)</p>
-<p>To overcome this, we’ll use cross-validation as we did with ordinary linear regression, but this time we’ll cross-validate the misclassification rate. To do so, we’ll use the <code>cv.glm()</code> function from the <code>boot</code> library. It takes arguments for the data (in this case training), a model fit via <code>glm()</code>, and <code>K</code>, the number of folds. See <code>?cv.glm</code> for details.</p>
+<p>To overcome this, we’ll use cross-validation as we did with ordinary linear regression, but this time we’ll cross-validate the misclassification rate. To do so, we’ll use the <code>cv.glm()</code> function from the <code>boot</code> library. It takes arguments for the data (in this case training), a model fit via <code>glm()</code>, and <code>K</code>, the number of folds. It returns <code>delta</code>, a vector of the average mean-squared error (MSE) and the bias-corrected MSE. See <code>?cv.glm</code> for details.</p>
 <p>Previously, for cross-validating RMSE in ordinary linear regression, we used LOOCV. We certainly could do that here. However, with logistic regression, we no longer have the clever trick that would allow us to obtain a LOOCV metric without needing to fit the model <span class="math inline">\(n\)</span> times. So instead, we’ll use 5-fold cross-validation. (5 and 10 fold are the most common in practice.) Instead of leaving a single observation out repeatedly, we’ll leave out a fifth of the data.</p>
 <p>Essentially we’ll repeat the following process 5 times:</p>
 <ul>
@@ -1363,7 +1363,7 @@ I(y_i \neq \hat{C}({\bf x_i})) =
 <div class="sourceCode" id="cb1517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1517-1"><a href="logistic-regression.html#cb1517-1"></a><span class="kw">cv.glm</span>(spam_trn, fit_additive, <span class="dt">K =</span> <span class="dv">5</span>)<span class="op">$</span>delta[<span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## [1] 0.08684467</code></pre>
 <div class="sourceCode" id="cb1519"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1519-1"><a href="logistic-regression.html#cb1519-1"></a><span class="kw">cv.glm</span>(spam_trn, fit_over, <span class="dt">K =</span> <span class="dv">5</span>)<span class="op">$</span>delta[<span class="dv">1</span>]</span></code></pre></div>
-<pre><code>## [1] 0.14</code></pre>
+<pre><code>## [1] 0.161</code></pre>
 <p>Note that we’re suppressing warnings again here. (Now there would be a lot more, since were fitting a total of 20 models.)</p>
 <p>Based on these results, <code>fit_caps</code> and <code>fit_selected</code> are underfitting relative to <code>fit_additive</code>. Similarly, <code>fit_over</code> is overfitting relative to <code>fit_additive</code>. Thus, based on these results, we prefer the classifier created based on the logistic regression fit and stored in <code>fit_additive</code>.</p>
 <p>Going forward, to evaluate and report on the efficacy of this classifier, we’ll use the test dataset. We’re going to take the position that the test data set should <strong>never</strong> be used in training, which is why we used cross-validation within the training dataset to select a model. Even though cross-validation uses hold-out sets to generate metrics, at some point all of the data is used for training.</p>
