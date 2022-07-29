@@ -945,7 +945,7 @@ library(leaps)
 all_hipcenter_mod = summary(regsubsets(hipcenter ~ ., data = seatpos))
 ```
 
-A few points about this line of code. First, note that we immediately use `summary()` and store those results. That is simply the intended use of `regsubsets()`. Second, inside of `regsubsets()` we specify the model `hipcenter ~ .`. This will be the largest model considered, that is the model using all first-order predictors, and `R` will check all possible subsets.
+A few points about this line of code. First, note that we immediately use `summary()` and store those results. That is simply the intended use of `regsubsets()`. Second, inside of `regsubsets()` we specify the model `hipcenter ~ .`. This will be the largest model considered, that is the model using all first-order predictors, and `R` will check all possible subsets. Third, `regsubsets()` has an argument of `nvmax` to set the maximum size of subsets to examine with $8$ as default. You need to change it if you investigate the subsets with more than $8$ predictors, although increasing `nvmax` will significantly increase computation time.
 
 We'll now look at the information stored in `all_hipcenter_mod`.
 
