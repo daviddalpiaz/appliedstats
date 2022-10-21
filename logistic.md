@@ -1113,10 +1113,8 @@ tibble::as.tibble(spam)
 
 ```
 ## Warning: `as.tibble()` was deprecated in tibble 2.0.0.
-## Please use `as_tibble()` instead.
-## The signature and semantics have changed, see `?as_tibble`.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+## i Please use `as_tibble()` instead.
+## i The signature and semantics have changed, see `?as_tibble`.
 ```
 
 ```
@@ -1140,7 +1138,6 @@ tibble::as.tibble(spam)
 ## #   telnet <dbl>, num857 <dbl>, data <dbl>, num415 <dbl>, num85 <dbl>,
 ## #   technology <dbl>, num1999 <dbl>, parts <dbl>, pm <dbl>, direct <dbl>,
 ## #   cs <dbl>, meeting <dbl>, original <dbl>, project <dbl>, re <dbl>, ...
-## # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
 ```
 
 This dataset, created in the late 1990s at Hewlett-Packard Labs, contains 4601 emails, of which 1813 are considered spam. The remaining are not spam. (Which for simplicity, we might call, ham.) Additional details can be obtained by using `?spam` or by visiting the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/spambase){target="_blank"}. 

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Simple Linear Regression | Applied Statistics with R</title>
   <meta name="description" content="Chapter 7 Simple Linear Regression | Applied Statistics with R" />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Simple Linear Regression | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -48,25 +48,24 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -86,7 +85,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -136,21 +135,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Applied Statistics with R</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i><b>1.1</b> About This Book</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#conventions"><i class="fa fa-check"></i><b>1.2</b> Conventions</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i><b>1.4</b> License</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>2</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="2" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>2</b> Introduction to <code>R</code></a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#getting-started"><i class="fa fa-check"></i><b>2.1</b> Getting Started</a></li>
 <li class="chapter" data-level="2.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#basic-calculations"><i class="fa fa-check"></i><b>2.2</b> Basic Calculations</a></li>
 <li class="chapter" data-level="2.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#getting-help"><i class="fa fa-check"></i><b>2.3</b> Getting Help</a></li>
 <li class="chapter" data-level="2.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#installing-packages"><i class="fa fa-check"></i><b>2.4</b> Installing Packages</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="data-and-programming.html"><a href="data-and-programming.html"><i class="fa fa-check"></i><b>3</b> Data and Programming</a><ul>
+<li class="chapter" data-level="3" data-path="data-and-programming.html"><a href="data-and-programming.html"><i class="fa fa-check"></i><b>3</b> Data and Programming</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="data-and-programming.html"><a href="data-and-programming.html#data-types"><i class="fa fa-check"></i><b>3.1</b> Data Types</a></li>
-<li class="chapter" data-level="3.2" data-path="data-and-programming.html"><a href="data-and-programming.html#data-structures"><i class="fa fa-check"></i><b>3.2</b> Data Structures</a><ul>
+<li class="chapter" data-level="3.2" data-path="data-and-programming.html"><a href="data-and-programming.html#data-structures"><i class="fa fa-check"></i><b>3.2</b> Data Structures</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="data-and-programming.html"><a href="data-and-programming.html#vectors"><i class="fa fa-check"></i><b>3.2.1</b> Vectors</a></li>
 <li class="chapter" data-level="3.2.2" data-path="data-and-programming.html"><a href="data-and-programming.html#vectorization"><i class="fa fa-check"></i><b>3.2.2</b> Vectorization</a></li>
 <li class="chapter" data-level="3.2.3" data-path="data-and-programming.html"><a href="data-and-programming.html#logical-operators"><i class="fa fa-check"></i><b>3.2.3</b> Logical Operators</a></li>
@@ -159,40 +162,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.6" data-path="data-and-programming.html"><a href="data-and-programming.html#lists"><i class="fa fa-check"></i><b>3.2.6</b> Lists</a></li>
 <li class="chapter" data-level="3.2.7" data-path="data-and-programming.html"><a href="data-and-programming.html#data-frames"><i class="fa fa-check"></i><b>3.2.7</b> Data Frames</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="data-and-programming.html"><a href="data-and-programming.html#programming-basics"><i class="fa fa-check"></i><b>3.3</b> Programming Basics</a><ul>
+<li class="chapter" data-level="3.3" data-path="data-and-programming.html"><a href="data-and-programming.html#programming-basics"><i class="fa fa-check"></i><b>3.3</b> Programming Basics</a>
+<ul>
 <li class="chapter" data-level="3.3.1" data-path="data-and-programming.html"><a href="data-and-programming.html#control-flow"><i class="fa fa-check"></i><b>3.3.1</b> Control Flow</a></li>
 <li class="chapter" data-level="3.3.2" data-path="data-and-programming.html"><a href="data-and-programming.html#functions"><i class="fa fa-check"></i><b>3.3.2</b> Functions</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="summarizing-data.html"><a href="summarizing-data.html"><i class="fa fa-check"></i><b>4</b> Summarizing Data</a><ul>
-<li class="chapter" data-level="4.1" data-path="summarizing-data.html"><a href="summarizing-data.html#summary-statistics"><i class="fa fa-check"></i><b>4.1</b> Summary Statistics</a><ul>
+<li class="chapter" data-level="4" data-path="summarizing-data.html"><a href="summarizing-data.html"><i class="fa fa-check"></i><b>4</b> Summarizing Data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="summarizing-data.html"><a href="summarizing-data.html#summary-statistics"><i class="fa fa-check"></i><b>4.1</b> Summary Statistics</a>
+<ul>
 <li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#central-tendency"><i class="fa fa-check"></i>Central Tendency</a></li>
 <li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#spread"><i class="fa fa-check"></i>Spread</a></li>
 <li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical"><i class="fa fa-check"></i>Categorical</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="summarizing-data.html"><a href="summarizing-data.html#plotting"><i class="fa fa-check"></i><b>4.2</b> Plotting</a><ul>
+<li class="chapter" data-level="4.2" data-path="summarizing-data.html"><a href="summarizing-data.html#plotting"><i class="fa fa-check"></i><b>4.2</b> Plotting</a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="summarizing-data.html"><a href="summarizing-data.html#histograms"><i class="fa fa-check"></i><b>4.2.1</b> Histograms</a></li>
 <li class="chapter" data-level="4.2.2" data-path="summarizing-data.html"><a href="summarizing-data.html#barplots"><i class="fa fa-check"></i><b>4.2.2</b> Barplots</a></li>
 <li class="chapter" data-level="4.2.3" data-path="summarizing-data.html"><a href="summarizing-data.html#boxplots"><i class="fa fa-check"></i><b>4.2.3</b> Boxplots</a></li>
 <li class="chapter" data-level="4.2.4" data-path="summarizing-data.html"><a href="summarizing-data.html#scatterplots"><i class="fa fa-check"></i><b>4.2.4</b> Scatterplots</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html"><i class="fa fa-check"></i><b>5</b> Probability and Statistics in <code>R</code></a><ul>
-<li class="chapter" data-level="5.1" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#probability-in-r"><i class="fa fa-check"></i><b>5.1</b> Probability in <code>R</code></a><ul>
+<li class="chapter" data-level="5" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html"><i class="fa fa-check"></i><b>5</b> Probability and Statistics in <code>R</code></a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#probability-in-r"><i class="fa fa-check"></i><b>5.1</b> Probability in <code>R</code></a>
+<ul>
 <li class="chapter" data-level="5.1.1" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#distributions"><i class="fa fa-check"></i><b>5.1.1</b> Distributions</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#hypothesis-tests-in-r"><i class="fa fa-check"></i><b>5.2</b> Hypothesis Tests in <code>R</code></a><ul>
+<li class="chapter" data-level="5.2" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#hypothesis-tests-in-r"><i class="fa fa-check"></i><b>5.2</b> Hypothesis Tests in <code>R</code></a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#one-sample-t-test-review"><i class="fa fa-check"></i><b>5.2.1</b> One Sample t-Test: Review</a></li>
 <li class="chapter" data-level="5.2.2" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#one-sample-t-test-example"><i class="fa fa-check"></i><b>5.2.2</b> One Sample t-Test: Example</a></li>
 <li class="chapter" data-level="5.2.3" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#two-sample-t-test-review"><i class="fa fa-check"></i><b>5.2.3</b> Two Sample t-Test: Review</a></li>
 <li class="chapter" data-level="5.2.4" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#two-sample-t-test-example"><i class="fa fa-check"></i><b>5.2.4</b> Two Sample t-Test: Example</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#simulation"><i class="fa fa-check"></i><b>5.3</b> Simulation</a><ul>
+<li class="chapter" data-level="5.3" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#simulation"><i class="fa fa-check"></i><b>5.3</b> Simulation</a>
+<ul>
 <li class="chapter" data-level="5.3.1" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#paired-differences"><i class="fa fa-check"></i><b>5.3.1</b> Paired Differences</a></li>
 <li class="chapter" data-level="5.3.2" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#distribution-of-a-sample-mean"><i class="fa fa-check"></i><b>5.3.2</b> Distribution of a Sample Mean</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="r-resources.html"><a href="r-resources.html"><i class="fa fa-check"></i><b>6</b> <code>R</code> Resources</a><ul>
+<li class="chapter" data-level="6" data-path="r-resources.html"><a href="r-resources.html"><i class="fa fa-check"></i><b>6</b> <code>R</code> Resources</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="r-resources.html"><a href="r-resources.html#beginner-tutorials-and-references"><i class="fa fa-check"></i><b>6.1</b> Beginner Tutorials and References</a></li>
 <li class="chapter" data-level="6.2" data-path="r-resources.html"><a href="r-resources.html#intermediate-references"><i class="fa fa-check"></i><b>6.2</b> Intermediate References</a></li>
 <li class="chapter" data-level="6.3" data-path="r-resources.html"><a href="r-resources.html#advanced-references"><i class="fa fa-check"></i><b>6.3</b> Advanced References</a></li>
@@ -200,16 +212,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5" data-path="r-resources.html"><a href="r-resources.html#rstudio-and-rmarkdown-videos"><i class="fa fa-check"></i><b>6.5</b> RStudio and RMarkdown Videos</a></li>
 <li class="chapter" data-level="6.6" data-path="r-resources.html"><a href="r-resources.html#rmarkdown-template"><i class="fa fa-check"></i><b>6.6</b> RMarkdown Template</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> Simple Linear Regression</a><ul>
-<li class="chapter" data-level="7.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#modeling"><i class="fa fa-check"></i><b>7.1</b> Modeling</a><ul>
+<li class="chapter" data-level="7" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> Simple Linear Regression</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#modeling"><i class="fa fa-check"></i><b>7.1</b> Modeling</a>
+<ul>
 <li class="chapter" data-level="7.1.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#simple-linear-regression-model"><i class="fa fa-check"></i><b>7.1.1</b> Simple Linear Regression Model</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#least-squares-approach"><i class="fa fa-check"></i><b>7.2</b> Least Squares Approach</a><ul>
+<li class="chapter" data-level="7.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#least-squares-approach"><i class="fa fa-check"></i><b>7.2</b> Least Squares Approach</a>
+<ul>
 <li class="chapter" data-level="7.2.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#making-predictions"><i class="fa fa-check"></i><b>7.2.1</b> Making Predictions</a></li>
 <li class="chapter" data-level="7.2.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#residuals"><i class="fa fa-check"></i><b>7.2.2</b> Residuals</a></li>
 <li class="chapter" data-level="7.2.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#variance-estimation"><i class="fa fa-check"></i><b>7.2.3</b> Variance Estimation</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#decomposition-of-variation"><i class="fa fa-check"></i><b>7.3</b> Decomposition of Variation</a><ul>
+<li class="chapter" data-level="7.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#decomposition-of-variation"><i class="fa fa-check"></i><b>7.3</b> Decomposition of Variation</a>
+<ul>
 <li class="chapter" data-level="7.3.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#coefficient-of-determination"><i class="fa fa-check"></i><b>7.3.1</b> Coefficient of Determination</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#the-lm-function"><i class="fa fa-check"></i><b>7.4</b> The <code>lm</code> Function</a></li>
@@ -218,15 +234,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.7" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#history"><i class="fa fa-check"></i><b>7.7</b> History</a></li>
 <li class="chapter" data-level="7.8" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#r-markdown"><i class="fa fa-check"></i><b>7.8</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html"><i class="fa fa-check"></i><b>8</b> Inference for Simple Linear Regression</a><ul>
+<li class="chapter" data-level="8" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html"><i class="fa fa-check"></i><b>8</b> Inference for Simple Linear Regression</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#gaussmarkov-theorem"><i class="fa fa-check"></i><b>8.1</b> Gauss–Markov Theorem</a></li>
-<li class="chapter" data-level="8.2" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#sampling-distributions"><i class="fa fa-check"></i><b>8.2</b> Sampling Distributions</a><ul>
+<li class="chapter" data-level="8.2" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#sampling-distributions"><i class="fa fa-check"></i><b>8.2</b> Sampling Distributions</a>
+<ul>
 <li class="chapter" data-level="8.2.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#simulating-sampling-distributions"><i class="fa fa-check"></i><b>8.2.1</b> Simulating Sampling Distributions</a></li>
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#standard-errors"><i class="fa fa-check"></i><b>8.3</b> Standard Errors</a></li>
 <li class="chapter" data-level="8.4" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-intervals-for-slope-and-intercept"><i class="fa fa-check"></i><b>8.4</b> Confidence Intervals for Slope and Intercept</a></li>
 <li class="chapter" data-level="8.5" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#hypothesis-tests"><i class="fa fa-check"></i><b>8.5</b> Hypothesis Tests</a></li>
-<li class="chapter" data-level="8.6" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#cars-example"><i class="fa fa-check"></i><b>8.6</b> <code>cars</code> Example</a><ul>
+<li class="chapter" data-level="8.6" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#cars-example"><i class="fa fa-check"></i><b>8.6</b> <code>cars</code> Example</a>
+<ul>
 <li class="chapter" data-level="8.6.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#tests-in-r"><i class="fa fa-check"></i><b>8.6.1</b> Tests in <code>R</code></a></li>
 <li class="chapter" data-level="8.6.2" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#significance-of-regression-t-test"><i class="fa fa-check"></i><b>8.6.2</b> Significance of Regression, t-Test</a></li>
 <li class="chapter" data-level="8.6.3" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-intervals-in-r"><i class="fa fa-check"></i><b>8.6.3</b> Confidence Intervals in <code>R</code></a></li>
@@ -237,9 +256,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.10" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#significance-of-regression-f-test"><i class="fa fa-check"></i><b>8.10</b> Significance of Regression, F-Test</a></li>
 <li class="chapter" data-level="8.11" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#r-markdown-1"><i class="fa fa-check"></i><b>8.11</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html"><i class="fa fa-check"></i><b>9</b> Multiple Linear Regression</a><ul>
+<li class="chapter" data-level="9" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html"><i class="fa fa-check"></i><b>9</b> Multiple Linear Regression</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#matrix-approach-to-regression"><i class="fa fa-check"></i><b>9.1</b> Matrix Approach to Regression</a></li>
-<li class="chapter" data-level="9.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#sampling-distribution"><i class="fa fa-check"></i><b>9.2</b> Sampling Distribution</a><ul>
+<li class="chapter" data-level="9.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#sampling-distribution"><i class="fa fa-check"></i><b>9.2</b> Sampling Distribution</a>
+<ul>
 <li class="chapter" data-level="9.2.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#single-parameter-tests"><i class="fa fa-check"></i><b>9.2.1</b> Single Parameter Tests</a></li>
 <li class="chapter" data-level="9.2.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#confidence-intervals"><i class="fa fa-check"></i><b>9.2.2</b> Confidence Intervals</a></li>
 <li class="chapter" data-level="9.2.3" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#confidence-intervals-for-mean-response"><i class="fa fa-check"></i><b>9.2.3</b> Confidence Intervals for Mean Response</a></li>
@@ -250,34 +271,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.5" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#simulation-1"><i class="fa fa-check"></i><b>9.5</b> Simulation</a></li>
 <li class="chapter" data-level="9.6" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#r-markdown-2"><i class="fa fa-check"></i><b>9.6</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="model-building.html"><a href="model-building.html"><i class="fa fa-check"></i><b>10</b> Model Building</a><ul>
-<li class="chapter" data-level="10.1" data-path="model-building.html"><a href="model-building.html#family-form-and-fit"><i class="fa fa-check"></i><b>10.1</b> Family, Form, and Fit</a><ul>
+<li class="chapter" data-level="10" data-path="model-building.html"><a href="model-building.html"><i class="fa fa-check"></i><b>10</b> Model Building</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="model-building.html"><a href="model-building.html#family-form-and-fit"><i class="fa fa-check"></i><b>10.1</b> Family, Form, and Fit</a>
+<ul>
 <li class="chapter" data-level="10.1.1" data-path="model-building.html"><a href="model-building.html#fit"><i class="fa fa-check"></i><b>10.1.1</b> Fit</a></li>
 <li class="chapter" data-level="10.1.2" data-path="model-building.html"><a href="model-building.html#form"><i class="fa fa-check"></i><b>10.1.2</b> Form</a></li>
 <li class="chapter" data-level="10.1.3" data-path="model-building.html"><a href="model-building.html#family"><i class="fa fa-check"></i><b>10.1.3</b> Family</a></li>
 <li class="chapter" data-level="10.1.4" data-path="model-building.html"><a href="model-building.html#assumed-model-fitted-model"><i class="fa fa-check"></i><b>10.1.4</b> Assumed Model, Fitted Model</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="model-building.html"><a href="model-building.html#explanation-versus-prediction"><i class="fa fa-check"></i><b>10.2</b> Explanation versus Prediction</a><ul>
+<li class="chapter" data-level="10.2" data-path="model-building.html"><a href="model-building.html#explanation-versus-prediction"><i class="fa fa-check"></i><b>10.2</b> Explanation versus Prediction</a>
+<ul>
 <li class="chapter" data-level="10.2.1" data-path="model-building.html"><a href="model-building.html#explanation"><i class="fa fa-check"></i><b>10.2.1</b> Explanation</a></li>
 <li class="chapter" data-level="10.2.2" data-path="model-building.html"><a href="model-building.html#prediction"><i class="fa fa-check"></i><b>10.2.2</b> Prediction</a></li>
 </ul></li>
 <li class="chapter" data-level="10.3" data-path="model-building.html"><a href="model-building.html#summary"><i class="fa fa-check"></i><b>10.3</b> Summary</a></li>
 <li class="chapter" data-level="10.4" data-path="model-building.html"><a href="model-building.html#r-markdown-3"><i class="fa fa-check"></i><b>10.4</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html"><i class="fa fa-check"></i><b>11</b> Categorical Predictors and Interactions</a><ul>
+<li class="chapter" data-level="11" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html"><i class="fa fa-check"></i><b>11</b> Categorical Predictors and Interactions</a>
+<ul>
 <li class="chapter" data-level="11.1" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#dummy-variables"><i class="fa fa-check"></i><b>11.1</b> Dummy Variables</a></li>
 <li class="chapter" data-level="11.2" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#interactions"><i class="fa fa-check"></i><b>11.2</b> Interactions</a></li>
-<li class="chapter" data-level="11.3" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#factor-variables"><i class="fa fa-check"></i><b>11.3</b> Factor Variables</a><ul>
+<li class="chapter" data-level="11.3" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#factor-variables"><i class="fa fa-check"></i><b>11.3</b> Factor Variables</a>
+<ul>
 <li class="chapter" data-level="11.3.1" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#factors-with-more-than-two-levels"><i class="fa fa-check"></i><b>11.3.1</b> Factors with More Than Two Levels</a></li>
 </ul></li>
 <li class="chapter" data-level="11.4" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#parameterization"><i class="fa fa-check"></i><b>11.4</b> Parameterization</a></li>
 <li class="chapter" data-level="11.5" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#building-larger-models"><i class="fa fa-check"></i><b>11.5</b> Building Larger Models</a></li>
 <li class="chapter" data-level="11.6" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#r-markdown-4"><i class="fa fa-check"></i><b>11.6</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html"><i class="fa fa-check"></i><b>12</b> Analysis of Variance</a><ul>
+<li class="chapter" data-level="12" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html"><i class="fa fa-check"></i><b>12</b> Analysis of Variance</a>
+<ul>
 <li class="chapter" data-level="12.1" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#experiments"><i class="fa fa-check"></i><b>12.1</b> Experiments</a></li>
 <li class="chapter" data-level="12.2" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#two-sample-t-test"><i class="fa fa-check"></i><b>12.2</b> Two-Sample t-Test</a></li>
-<li class="chapter" data-level="12.3" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#one-way-anova"><i class="fa fa-check"></i><b>12.3</b> One-Way ANOVA</a><ul>
+<li class="chapter" data-level="12.3" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#one-way-anova"><i class="fa fa-check"></i><b>12.3</b> One-Way ANOVA</a>
+<ul>
 <li class="chapter" data-level="12.3.1" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#factor-variables-1"><i class="fa fa-check"></i><b>12.3.1</b> Factor Variables</a></li>
 <li class="chapter" data-level="12.3.2" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#some-simulation"><i class="fa fa-check"></i><b>12.3.2</b> Some Simulation</a></li>
 <li class="chapter" data-level="12.3.3" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#power"><i class="fa fa-check"></i><b>12.3.3</b> Power</a></li>
@@ -286,36 +314,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.5" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#two-way-anova"><i class="fa fa-check"></i><b>12.5</b> Two-Way ANOVA</a></li>
 <li class="chapter" data-level="12.6" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#r-markdown-5"><i class="fa fa-check"></i><b>12.6</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i><b>13</b> Model Diagnostics</a><ul>
+<li class="chapter" data-level="13" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i><b>13</b> Model Diagnostics</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#model-assumptions"><i class="fa fa-check"></i><b>13.1</b> Model Assumptions</a></li>
-<li class="chapter" data-level="13.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#checking-assumptions"><i class="fa fa-check"></i><b>13.2</b> Checking Assumptions</a><ul>
+<li class="chapter" data-level="13.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#checking-assumptions"><i class="fa fa-check"></i><b>13.2</b> Checking Assumptions</a>
+<ul>
 <li class="chapter" data-level="13.2.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#fitted-versus-residuals-plot"><i class="fa fa-check"></i><b>13.2.1</b> Fitted versus Residuals Plot</a></li>
 <li class="chapter" data-level="13.2.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#breusch-pagan-test"><i class="fa fa-check"></i><b>13.2.2</b> Breusch-Pagan Test</a></li>
 <li class="chapter" data-level="13.2.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#histograms-1"><i class="fa fa-check"></i><b>13.2.3</b> Histograms</a></li>
 <li class="chapter" data-level="13.2.4" data-path="model-diagnostics.html"><a href="model-diagnostics.html#q-q-plots"><i class="fa fa-check"></i><b>13.2.4</b> Q-Q Plots</a></li>
 <li class="chapter" data-level="13.2.5" data-path="model-diagnostics.html"><a href="model-diagnostics.html#shapiro-wilk-test"><i class="fa fa-check"></i><b>13.2.5</b> Shapiro-Wilk Test</a></li>
 </ul></li>
-<li class="chapter" data-level="13.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#unusual-observations"><i class="fa fa-check"></i><b>13.3</b> Unusual Observations</a><ul>
+<li class="chapter" data-level="13.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#unusual-observations"><i class="fa fa-check"></i><b>13.3</b> Unusual Observations</a>
+<ul>
 <li class="chapter" data-level="13.3.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#leverage"><i class="fa fa-check"></i><b>13.3.1</b> Leverage</a></li>
 <li class="chapter" data-level="13.3.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#outliers"><i class="fa fa-check"></i><b>13.3.2</b> Outliers</a></li>
 <li class="chapter" data-level="13.3.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#influence"><i class="fa fa-check"></i><b>13.3.3</b> Influence</a></li>
 </ul></li>
-<li class="chapter" data-level="13.4" data-path="model-diagnostics.html"><a href="model-diagnostics.html#data-analysis-examples"><i class="fa fa-check"></i><b>13.4</b> Data Analysis Examples</a><ul>
+<li class="chapter" data-level="13.4" data-path="model-diagnostics.html"><a href="model-diagnostics.html#data-analysis-examples"><i class="fa fa-check"></i><b>13.4</b> Data Analysis Examples</a>
+<ul>
 <li class="chapter" data-level="13.4.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#good-diagnostics"><i class="fa fa-check"></i><b>13.4.1</b> Good Diagnostics</a></li>
 <li class="chapter" data-level="13.4.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#suspect-diagnostics"><i class="fa fa-check"></i><b>13.4.2</b> Suspect Diagnostics</a></li>
 </ul></li>
 <li class="chapter" data-level="13.5" data-path="model-diagnostics.html"><a href="model-diagnostics.html#r-markdown-6"><i class="fa fa-check"></i><b>13.5</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="transformations.html"><a href="transformations.html"><i class="fa fa-check"></i><b>14</b> Transformations</a><ul>
-<li class="chapter" data-level="14.1" data-path="transformations.html"><a href="transformations.html#response-transformation"><i class="fa fa-check"></i><b>14.1</b> Response Transformation</a><ul>
+<li class="chapter" data-level="14" data-path="transformations.html"><a href="transformations.html"><i class="fa fa-check"></i><b>14</b> Transformations</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="transformations.html"><a href="transformations.html#response-transformation"><i class="fa fa-check"></i><b>14.1</b> Response Transformation</a>
+<ul>
 <li class="chapter" data-level="14.1.1" data-path="transformations.html"><a href="transformations.html#variance-stabilizing-transformations"><i class="fa fa-check"></i><b>14.1.1</b> Variance Stabilizing Transformations</a></li>
 <li class="chapter" data-level="14.1.2" data-path="transformations.html"><a href="transformations.html#box-cox-transformations"><i class="fa fa-check"></i><b>14.1.2</b> Box-Cox Transformations</a></li>
 </ul></li>
-<li class="chapter" data-level="14.2" data-path="transformations.html"><a href="transformations.html#predictor-transformation"><i class="fa fa-check"></i><b>14.2</b> Predictor Transformation</a><ul>
+<li class="chapter" data-level="14.2" data-path="transformations.html"><a href="transformations.html#predictor-transformation"><i class="fa fa-check"></i><b>14.2</b> Predictor Transformation</a>
+<ul>
 <li class="chapter" data-level="14.2.1" data-path="transformations.html"><a href="transformations.html#polynomials"><i class="fa fa-check"></i><b>14.2.1</b> Polynomials</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="transformations.html"><a href="transformations.html#response-transformations"><i class="fa fa-check"></i>Response Transformations</a></li>
-<li class="chapter" data-level="" data-path="transformations.html"><a href="transformations.html#predictor-transformations"><i class="fa fa-check"></i>Predictor Transformations</a><ul>
+<li class="chapter" data-level="" data-path="transformations.html"><a href="transformations.html#predictor-transformations"><i class="fa fa-check"></i>Predictor Transformations</a>
+<ul>
 <li class="chapter" data-level="14.2.2" data-path="transformations.html"><a href="transformations.html#a-quadratic-model"><i class="fa fa-check"></i><b>14.2.2</b> A Quadratic Model</a></li>
 <li class="chapter" data-level="14.2.3" data-path="transformations.html"><a href="transformations.html#overfitting-and-extrapolation"><i class="fa fa-check"></i><b>14.2.3</b> Overfitting and Extrapolation</a></li>
 <li class="chapter" data-level="14.2.4" data-path="transformations.html"><a href="transformations.html#comparing-polynomial-models"><i class="fa fa-check"></i><b>14.2.4</b> Comparing Polynomial Models</a></li>
@@ -325,42 +361,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="14.3" data-path="transformations.html"><a href="transformations.html#r-markdown-7"><i class="fa fa-check"></i><b>14.3</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="collinearity.html"><a href="collinearity.html"><i class="fa fa-check"></i><b>15</b> Collinearity</a><ul>
+<li class="chapter" data-level="15" data-path="collinearity.html"><a href="collinearity.html"><i class="fa fa-check"></i><b>15</b> Collinearity</a>
+<ul>
 <li class="chapter" data-level="15.1" data-path="collinearity.html"><a href="collinearity.html#exact-collinearity"><i class="fa fa-check"></i><b>15.1</b> Exact Collinearity</a></li>
-<li class="chapter" data-level="15.2" data-path="collinearity.html"><a href="collinearity.html#collinearity-1"><i class="fa fa-check"></i><b>15.2</b> Collinearity</a><ul>
+<li class="chapter" data-level="15.2" data-path="collinearity.html"><a href="collinearity.html#collinearity-1"><i class="fa fa-check"></i><b>15.2</b> Collinearity</a>
+<ul>
 <li class="chapter" data-level="15.2.1" data-path="collinearity.html"><a href="collinearity.html#variance-inflation-factor."><i class="fa fa-check"></i><b>15.2.1</b> Variance Inflation Factor.</a></li>
 </ul></li>
 <li class="chapter" data-level="15.3" data-path="collinearity.html"><a href="collinearity.html#simulation-2"><i class="fa fa-check"></i><b>15.3</b> Simulation</a></li>
 <li class="chapter" data-level="15.4" data-path="collinearity.html"><a href="collinearity.html#r-markdown-8"><i class="fa fa-check"></i><b>15.4</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html"><i class="fa fa-check"></i><b>16</b> Variable Selection and Model Building</a><ul>
-<li class="chapter" data-level="16.1" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#quality-criterion"><i class="fa fa-check"></i><b>16.1</b> Quality Criterion</a><ul>
+<li class="chapter" data-level="16" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html"><i class="fa fa-check"></i><b>16</b> Variable Selection and Model Building</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#quality-criterion"><i class="fa fa-check"></i><b>16.1</b> Quality Criterion</a>
+<ul>
 <li class="chapter" data-level="16.1.1" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#akaike-information-criterion"><i class="fa fa-check"></i><b>16.1.1</b> Akaike Information Criterion</a></li>
 <li class="chapter" data-level="16.1.2" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#bayesian-information-criterion"><i class="fa fa-check"></i><b>16.1.2</b> Bayesian Information Criterion</a></li>
 <li class="chapter" data-level="16.1.3" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#adjusted-r-squared"><i class="fa fa-check"></i><b>16.1.3</b> Adjusted R-Squared</a></li>
 <li class="chapter" data-level="16.1.4" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#cross-validated-rmse"><i class="fa fa-check"></i><b>16.1.4</b> Cross-Validated RMSE</a></li>
 </ul></li>
-<li class="chapter" data-level="16.2" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#selection-procedures"><i class="fa fa-check"></i><b>16.2</b> Selection Procedures</a><ul>
+<li class="chapter" data-level="16.2" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#selection-procedures"><i class="fa fa-check"></i><b>16.2</b> Selection Procedures</a>
+<ul>
 <li class="chapter" data-level="16.2.1" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#backward-search"><i class="fa fa-check"></i><b>16.2.1</b> Backward Search</a></li>
 <li class="chapter" data-level="16.2.2" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#forward-search"><i class="fa fa-check"></i><b>16.2.2</b> Forward Search</a></li>
 <li class="chapter" data-level="16.2.3" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#stepwise-search"><i class="fa fa-check"></i><b>16.2.3</b> Stepwise Search</a></li>
 <li class="chapter" data-level="16.2.4" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#exhaustive-search"><i class="fa fa-check"></i><b>16.2.4</b> Exhaustive Search</a></li>
 </ul></li>
 <li class="chapter" data-level="16.3" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#higher-order-terms"><i class="fa fa-check"></i><b>16.3</b> Higher Order Terms</a></li>
-<li class="chapter" data-level="16.4" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#explanation-versus-prediction-1"><i class="fa fa-check"></i><b>16.4</b> Explanation versus Prediction</a><ul>
+<li class="chapter" data-level="16.4" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#explanation-versus-prediction-1"><i class="fa fa-check"></i><b>16.4</b> Explanation versus Prediction</a>
+<ul>
 <li class="chapter" data-level="16.4.1" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#explanation-1"><i class="fa fa-check"></i><b>16.4.1</b> Explanation</a></li>
 <li class="chapter" data-level="16.4.2" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#prediction-1"><i class="fa fa-check"></i><b>16.4.2</b> Prediction</a></li>
 </ul></li>
 <li class="chapter" data-level="16.5" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#r-markdown-9"><i class="fa fa-check"></i><b>16.5</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>17</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="17" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>17</b> Logistic Regression</a>
+<ul>
 <li class="chapter" data-level="17.1" data-path="logistic-regression.html"><a href="logistic-regression.html#generalized-linear-models"><i class="fa fa-check"></i><b>17.1</b> Generalized Linear Models</a></li>
-<li class="chapter" data-level="17.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-response"><i class="fa fa-check"></i><b>17.2</b> Binary Response</a><ul>
+<li class="chapter" data-level="17.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-response"><i class="fa fa-check"></i><b>17.2</b> Binary Response</a>
+<ul>
 <li class="chapter" data-level="17.2.1" data-path="logistic-regression.html"><a href="logistic-regression.html#fitting-logistic-regression"><i class="fa fa-check"></i><b>17.2.1</b> Fitting Logistic Regression</a></li>
 <li class="chapter" data-level="17.2.2" data-path="logistic-regression.html"><a href="logistic-regression.html#fitting-issues"><i class="fa fa-check"></i><b>17.2.2</b> Fitting Issues</a></li>
 <li class="chapter" data-level="17.2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#simulation-examples"><i class="fa fa-check"></i><b>17.2.3</b> Simulation Examples</a></li>
 </ul></li>
-<li class="chapter" data-level="17.3" data-path="logistic-regression.html"><a href="logistic-regression.html#working-with-logistic-regression"><i class="fa fa-check"></i><b>17.3</b> Working with Logistic Regression</a><ul>
+<li class="chapter" data-level="17.3" data-path="logistic-regression.html"><a href="logistic-regression.html#working-with-logistic-regression"><i class="fa fa-check"></i><b>17.3</b> Working with Logistic Regression</a>
+<ul>
 <li class="chapter" data-level="17.3.1" data-path="logistic-regression.html"><a href="logistic-regression.html#testing-with-glms"><i class="fa fa-check"></i><b>17.3.1</b> Testing with GLMs</a></li>
 <li class="chapter" data-level="17.3.2" data-path="logistic-regression.html"><a href="logistic-regression.html#wald-test"><i class="fa fa-check"></i><b>17.3.2</b> Wald Test</a></li>
 <li class="chapter" data-level="17.3.3" data-path="logistic-regression.html"><a href="logistic-regression.html#likelihood-ratio-test"><i class="fa fa-check"></i><b>17.3.3</b> Likelihood-Ratio Test</a></li>
@@ -370,20 +415,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="17.3.7" data-path="logistic-regression.html"><a href="logistic-regression.html#formula-syntax"><i class="fa fa-check"></i><b>17.3.7</b> Formula Syntax</a></li>
 <li class="chapter" data-level="17.3.8" data-path="logistic-regression.html"><a href="logistic-regression.html#deviance"><i class="fa fa-check"></i><b>17.3.8</b> Deviance</a></li>
 </ul></li>
-<li class="chapter" data-level="17.4" data-path="logistic-regression.html"><a href="logistic-regression.html#classification"><i class="fa fa-check"></i><b>17.4</b> Classification</a><ul>
+<li class="chapter" data-level="17.4" data-path="logistic-regression.html"><a href="logistic-regression.html#classification"><i class="fa fa-check"></i><b>17.4</b> Classification</a>
+<ul>
 <li class="chapter" data-level="17.4.1" data-path="logistic-regression.html"><a href="logistic-regression.html#spam-example"><i class="fa fa-check"></i><b>17.4.1</b> <code>spam</code> Example</a></li>
 <li class="chapter" data-level="17.4.2" data-path="logistic-regression.html"><a href="logistic-regression.html#evaluating-classifiers"><i class="fa fa-check"></i><b>17.4.2</b> Evaluating Classifiers</a></li>
 </ul></li>
 <li class="chapter" data-level="17.5" data-path="logistic-regression.html"><a href="logistic-regression.html#r-markdown-10"><i class="fa fa-check"></i><b>17.5</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="beyond.html"><a href="beyond.html"><i class="fa fa-check"></i><b>18</b> Beyond</a><ul>
+<li class="chapter" data-level="18" data-path="beyond.html"><a href="beyond.html"><i class="fa fa-check"></i><b>18</b> Beyond</a>
+<ul>
 <li class="chapter" data-level="18.1" data-path="beyond.html"><a href="beyond.html#whats-next"><i class="fa fa-check"></i><b>18.1</b> What’s Next</a></li>
 <li class="chapter" data-level="18.2" data-path="beyond.html"><a href="beyond.html#rstudio"><i class="fa fa-check"></i><b>18.2</b> RStudio</a></li>
 <li class="chapter" data-level="18.3" data-path="beyond.html"><a href="beyond.html#tidy-data"><i class="fa fa-check"></i><b>18.3</b> Tidy Data</a></li>
 <li class="chapter" data-level="18.4" data-path="beyond.html"><a href="beyond.html#visualization"><i class="fa fa-check"></i><b>18.4</b> Visualization</a></li>
 <li class="chapter" data-level="18.5" data-path="beyond.html"><a href="beyond.html#web-applications"><i class="fa fa-check"></i><b>18.5</b> Web Applications</a></li>
 <li class="chapter" data-level="18.6" data-path="beyond.html"><a href="beyond.html#experimental-design"><i class="fa fa-check"></i><b>18.6</b> Experimental Design</a></li>
-<li class="chapter" data-level="18.7" data-path="beyond.html"><a href="beyond.html#machine-learning"><i class="fa fa-check"></i><b>18.7</b> Machine Learning</a><ul>
+<li class="chapter" data-level="18.7" data-path="beyond.html"><a href="beyond.html#machine-learning"><i class="fa fa-check"></i><b>18.7</b> Machine Learning</a>
+<ul>
 <li class="chapter" data-level="18.7.1" data-path="beyond.html"><a href="beyond.html#deep-learning"><i class="fa fa-check"></i><b>18.7.1</b> Deep Learning</a></li>
 </ul></li>
 <li class="chapter" data-level="18.8" data-path="beyond.html"><a href="beyond.html#time-series"><i class="fa fa-check"></i><b>18.8</b> Time Series</a></li>
@@ -412,7 +460,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="simple-linear-regression" class="section level1 hasAnchor">
+<div id="simple-linear-regression" class="section level1 hasAnchor" number="7">
 <h1><span class="header-section-number">Chapter 7</span> Simple Linear Regression<a href="simple-linear-regression.html#simple-linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <blockquote>
 <p>“All models are wrong, but some are useful.”</p>
@@ -426,33 +474,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Interpret regression coefficients and statistics in the context of real-world problems.</li>
 <li>Use a regression model to make predictions.</li>
 </ul>
-<div id="modeling" class="section level2 hasAnchor">
+<div id="modeling" class="section level2 hasAnchor" number="7.1">
 <h2><span class="header-section-number">7.1</span> Modeling<a href="simple-linear-regression.html#modeling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s consider a simple example of how the speed of a car affects its stopping distance, that is, how far it travels before it comes to a stop. To examine this relationship, we will use the <code>cars</code> dataset, which is a default <code>R</code> dataset. Thus, we don’t need to load a package first; it is immediately available.</p>
 <p>To get a first look at the data you can use the <code>View()</code> function inside RStudio.</p>
-<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="simple-linear-regression.html#cb422-1"></a><span class="kw">View</span>(cars)</span></code></pre></div>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="simple-linear-regression.html#cb422-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(cars)</span></code></pre></div>
 <p>We could also take a look at the variable names, the dimension of the data frame, and some sample observations with <code>str()</code>.</p>
-<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="simple-linear-regression.html#cb423-1"></a><span class="kw">str</span>(cars)</span></code></pre></div>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="simple-linear-regression.html#cb423-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(cars)</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    50 obs. of  2 variables:
 ##  $ speed: num  4 4 7 7 8 9 10 10 10 11 ...
 ##  $ dist : num  2 10 4 22 16 10 18 26 34 17 ...</code></pre>
 <p>As we have seen before with data frames, there are a number of additional functions to access some of this information directly.</p>
-<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="simple-linear-regression.html#cb425-1"></a><span class="kw">dim</span>(cars)</span></code></pre></div>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="simple-linear-regression.html#cb425-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(cars)</span></code></pre></div>
 <pre><code>## [1] 50  2</code></pre>
-<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="simple-linear-regression.html#cb427-1"></a><span class="kw">nrow</span>(cars)</span></code></pre></div>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="simple-linear-regression.html#cb427-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(cars)</span></code></pre></div>
 <pre><code>## [1] 50</code></pre>
-<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="simple-linear-regression.html#cb429-1"></a><span class="kw">ncol</span>(cars)</span></code></pre></div>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="simple-linear-regression.html#cb429-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(cars)</span></code></pre></div>
 <pre><code>## [1] 2</code></pre>
 <p>Other than the two variable names and the number of observations, this data is still just a bunch of numbers, so we should probably obtain some context.</p>
-<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="simple-linear-regression.html#cb431-1"></a>?cars</span></code></pre></div>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="simple-linear-regression.html#cb431-1" aria-hidden="true" tabindex="-1"></a>?cars</span></code></pre></div>
 <p>Reading the documentation we learn that this is data gathered during the 1920s about the speed of cars and the resulting distance it takes for the car to come to a stop. The interesting task here is to determine how far a car travels before stopping, when traveling at a certain speed. So, we will first plot the stopping distance against the speed.</p>
-<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="simple-linear-regression.html#cb432-1"></a><span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars,</span>
-<span id="cb432-2"><a href="simple-linear-regression.html#cb432-2"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,</span>
-<span id="cb432-3"><a href="simple-linear-regression.html#cb432-3"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,</span>
-<span id="cb432-4"><a href="simple-linear-regression.html#cb432-4"></a>     <span class="dt">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,</span>
-<span id="cb432-5"><a href="simple-linear-regression.html#cb432-5"></a>     <span class="dt">pch  =</span> <span class="dv">20</span>,</span>
-<span id="cb432-6"><a href="simple-linear-regression.html#cb432-6"></a>     <span class="dt">cex  =</span> <span class="dv">2</span>,</span>
-<span id="cb432-7"><a href="simple-linear-regression.html#cb432-7"></a>     <span class="dt">col  =</span> <span class="st">&quot;grey&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="simple-linear-regression.html#cb432-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dist <span class="sc">~</span> speed, <span class="at">data =</span> cars,</span>
+<span id="cb432-2"><a href="simple-linear-regression.html#cb432-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,</span>
+<span id="cb432-3"><a href="simple-linear-regression.html#cb432-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,</span>
+<span id="cb432-4"><a href="simple-linear-regression.html#cb432-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,</span>
+<span id="cb432-5"><a href="simple-linear-regression.html#cb432-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch  =</span> <span class="dv">20</span>,</span>
+<span id="cb432-6"><a href="simple-linear-regression.html#cb432-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">cex  =</span> <span class="dv">2</span>,</span>
+<span id="cb432-7"><a href="simple-linear-regression.html#cb432-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">col  =</span> <span class="st">&quot;grey&quot;</span>)</span></code></pre></div>
 <p><img src="slr_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Let’s now define some terminology. We have pairs of data, <span class="math inline">\((x_i, y_i)\)</span>, for <span class="math inline">\(i = 1, 2, \ldots n\)</span>, where <span class="math inline">\(n\)</span> is the sample size of the dataset.</p>
 <p>We use <span class="math inline">\(i\)</span> as an index, simply for notation. We use <span class="math inline">\(x_i\)</span> as the <strong>predictor</strong> (explanatory) variable. The predictor variable is used to help <em>predict</em> or explain the <strong>response</strong> (target, outcome) variable, <span class="math inline">\(y_i\)</span>.</p>
@@ -481,7 +529,7 @@ Y = f(X) + \epsilon.
 <p><span class="math display">\[
 Y = \beta_0 + \beta_1 X + \epsilon.
 \]</span></p>
-<div id="simple-linear-regression-model" class="section level3 hasAnchor">
+<div id="simple-linear-regression-model" class="section level3 hasAnchor" number="7.1.1">
 <h3><span class="header-section-number">7.1.1</span> Simple Linear Regression Model<a href="simple-linear-regression.html#simple-linear-regression-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We now define what we will call the simple linear regression model,</p>
 <p><span class="math display">\[
@@ -542,7 +590,7 @@ Y_i \mid X_i \sim N(\beta_0 + \beta_1 x_i, \sigma^2)
 <p>This last option is called the method of <strong>least squares</strong>. It is essentially the de-facto method for fitting a line to data. (You may have even seen it before in a linear algebra course.) Its popularity is largely due to the fact that it is mathematically “easy.” (Which was important historically, as computers are a modern contraption.) It is also very popular because many relationships are well approximated by a linear function.</p>
 </div>
 </div>
-<div id="least-squares-approach" class="section level2 hasAnchor">
+<div id="least-squares-approach" class="section level2 hasAnchor" number="7.2">
 <h2><span class="header-section-number">7.2</span> Least Squares Approach<a href="simple-linear-regression.html#least-squares-approach" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Given observations <span class="math inline">\((x_i, y_i)\)</span>, for <span class="math inline">\(i = 1, 2, \ldots n\)</span>, we want to find values of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> which minimize</p>
 <p><span class="math display">\[
@@ -592,24 +640,24 @@ S_{yy} &amp;= \sum_{i = 1}^{n} y_i^2 - \frac{(\sum_{i = 1}^{n} y_i)^2}{n}  = \su
 \]</span></p>
 <p>Traditionally we would now calculate <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> by hand for the <code>cars</code> dataset. However because we are living in the 21st century and are intelligent (or lazy or efficient, depending on your perspective), we will utilize <code>R</code> to do the number crunching for us.</p>
 <p>To keep some notation consistent with the above mathematics, we will store the response variable as <code>y</code> and the predictor variable as <code>x</code>.</p>
-<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="simple-linear-regression.html#cb433-1"></a>x =<span class="st"> </span>cars<span class="op">$</span>speed</span>
-<span id="cb433-2"><a href="simple-linear-regression.html#cb433-2"></a>y =<span class="st"> </span>cars<span class="op">$</span>dist</span></code></pre></div>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="simple-linear-regression.html#cb433-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> cars<span class="sc">$</span>speed</span>
+<span id="cb433-2"><a href="simple-linear-regression.html#cb433-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> cars<span class="sc">$</span>dist</span></code></pre></div>
 <p>We then calculate the three sums of squares defined above.</p>
-<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="simple-linear-regression.html#cb434-1"></a>Sxy =<span class="st"> </span><span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">*</span><span class="st"> </span>(y <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(y)))</span>
-<span id="cb434-2"><a href="simple-linear-regression.html#cb434-2"></a>Sxx =<span class="st"> </span><span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</span>
-<span id="cb434-3"><a href="simple-linear-regression.html#cb434-3"></a>Syy =<span class="st"> </span><span class="kw">sum</span>((y <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(y)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</span>
-<span id="cb434-4"><a href="simple-linear-regression.html#cb434-4"></a><span class="kw">c</span>(Sxy, Sxx, Syy)</span></code></pre></div>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="simple-linear-regression.html#cb434-1" aria-hidden="true" tabindex="-1"></a>Sxy <span class="ot">=</span> <span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">*</span> (y <span class="sc">-</span> <span class="fu">mean</span>(y)))</span>
+<span id="cb434-2"><a href="simple-linear-regression.html#cb434-2" aria-hidden="true" tabindex="-1"></a>Sxx <span class="ot">=</span> <span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">^</span> <span class="dv">2</span>)</span>
+<span id="cb434-3"><a href="simple-linear-regression.html#cb434-3" aria-hidden="true" tabindex="-1"></a>Syy <span class="ot">=</span> <span class="fu">sum</span>((y <span class="sc">-</span> <span class="fu">mean</span>(y)) <span class="sc">^</span> <span class="dv">2</span>)</span>
+<span id="cb434-4"><a href="simple-linear-regression.html#cb434-4" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(Sxy, Sxx, Syy)</span></code></pre></div>
 <pre><code>## [1]  5387.40  1370.00 32538.98</code></pre>
 <p>Then finally calculate <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>.</p>
-<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="simple-linear-regression.html#cb436-1"></a>beta_<span class="dv">1</span>_hat =<span class="st"> </span>Sxy <span class="op">/</span><span class="st"> </span>Sxx</span>
-<span id="cb436-2"><a href="simple-linear-regression.html#cb436-2"></a>beta_<span class="dv">0</span>_hat =<span class="st"> </span><span class="kw">mean</span>(y) <span class="op">-</span><span class="st"> </span>beta_<span class="dv">1</span>_hat <span class="op">*</span><span class="st"> </span><span class="kw">mean</span>(x)</span>
-<span id="cb436-3"><a href="simple-linear-regression.html#cb436-3"></a><span class="kw">c</span>(beta_<span class="dv">0</span>_hat, beta_<span class="dv">1</span>_hat)</span></code></pre></div>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="simple-linear-regression.html#cb436-1" aria-hidden="true" tabindex="-1"></a>beta_1_hat <span class="ot">=</span> Sxy <span class="sc">/</span> Sxx</span>
+<span id="cb436-2"><a href="simple-linear-regression.html#cb436-2" aria-hidden="true" tabindex="-1"></a>beta_0_hat <span class="ot">=</span> <span class="fu">mean</span>(y) <span class="sc">-</span> beta_1_hat <span class="sc">*</span> <span class="fu">mean</span>(x)</span>
+<span id="cb436-3"><a href="simple-linear-regression.html#cb436-3" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(beta_0_hat, beta_1_hat)</span></code></pre></div>
 <pre><code>## [1] -17.579095   3.932409</code></pre>
 <p>What do these values tell us about our dataset?</p>
 <p>The slope <em>parameter</em> <span class="math inline">\(\beta_1\)</span> tells us that for an increase in speed of one mile per hour, the <strong>mean</strong> stopping distance increases by <span class="math inline">\(\beta_1\)</span>. It is important to specify that we are talking about the mean. Recall that <span class="math inline">\(\beta_0 + \beta_1 x\)</span> is the mean of <span class="math inline">\(Y\)</span>, in this case stopping distance, for a particular value of <span class="math inline">\(x\)</span>. (In this case speed.) So <span class="math inline">\(\beta_1\)</span> tells us how the mean of <span class="math inline">\(Y\)</span> is affected by a change in <span class="math inline">\(x\)</span>.</p>
 <p>Similarly, the <em>estimate</em> <span class="math inline">\(\hat{\beta}_1 = 3.93\)</span> tells us that for an increase in speed of one mile per hour, the <strong>estimated</strong> <em>mean</em> stopping distance increases by <span class="math inline">\(3.93\)</span> feet. Here we should be sure to specify we are discussing an estimated quantity. Recall that <span class="math inline">\(\hat{y}\)</span> is the estimated mean of <span class="math inline">\(Y\)</span>, so <span class="math inline">\(\hat{\beta}_1\)</span> tells us how the estimated mean of <span class="math inline">\(Y\)</span> is affected by changing <span class="math inline">\(x\)</span>.</p>
 <p>The intercept <em>parameter</em> <span class="math inline">\(\beta_0\)</span> tells us the <strong>mean</strong> stopping distance for a car traveling zero miles per hour. (Not moving.) The <em>estimate</em> <span class="math inline">\(\hat{\beta}_0 = -17.58\)</span> tells us that the <strong>estimated</strong> mean stopping distance for a car traveling zero miles per hour is <span class="math inline">\(-17.58\)</span> feet. So when you apply the brakes to a car that is not moving, it moves backwards? This doesn’t seem right. (Extrapolation, which we will see later, is the issue here.)</p>
-<div id="making-predictions" class="section level3 hasAnchor">
+<div id="making-predictions" class="section level3 hasAnchor" number="7.2.1">
 <h3><span class="header-section-number">7.2.1</span> Making Predictions<a href="simple-linear-regression.html#making-predictions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We can now write the <strong>fitted</strong> or estimated line,</p>
 <p><span class="math display">\[
@@ -620,41 +668,41 @@ S_{yy} &amp;= \sum_{i = 1}^{n} y_i^2 - \frac{(\sum_{i = 1}^{n} y_i)^2}{n}  = \su
 \hat{y} = -17.58 + 3.93 x.
 \]</span></p>
 <p>We can now use this line to make predictions. First, let’s see the possible <span class="math inline">\(x\)</span> values in the <code>cars</code> dataset. Since some <span class="math inline">\(x\)</span> values may appear more than once, we use the <code>unique()</code> to return each unique value only once.</p>
-<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="simple-linear-regression.html#cb438-1"></a><span class="kw">unique</span>(cars<span class="op">$</span>speed)</span></code></pre></div>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="simple-linear-regression.html#cb438-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(cars<span class="sc">$</span>speed)</span></code></pre></div>
 <pre><code>##  [1]  4  7  8  9 10 11 12 13 14 15 16 17 18 19 20 22 23 24 25</code></pre>
 <p>Let’s make a prediction for the stopping distance of a car traveling at 8 miles per hour.</p>
 <p><span class="math display">\[
 \hat{y} = -17.58 + 3.93 \times 8 % = 13.88
 \]</span></p>
-<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="simple-linear-regression.html#cb440-1"></a>beta_<span class="dv">0</span>_hat <span class="op">+</span><span class="st"> </span>beta_<span class="dv">1</span>_hat <span class="op">*</span><span class="st"> </span><span class="dv">8</span></span></code></pre></div>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="simple-linear-regression.html#cb440-1" aria-hidden="true" tabindex="-1"></a>beta_0_hat <span class="sc">+</span> beta_1_hat <span class="sc">*</span> <span class="dv">8</span></span></code></pre></div>
 <pre><code>## [1] 13.88018</code></pre>
 <p>This tells us that the estimated mean stopping distance of a car traveling at 8 miles per hour is <span class="math inline">\(13.88\)</span>.</p>
 <p>Now let’s make a prediction for the stopping distance of a car traveling at 21 miles per hour. This is considered <strong>interpolation</strong> as 21 is not an observed value of <span class="math inline">\(x\)</span>. (But is in the data range.) We can use the special <code>%in%</code> operator to quickly verify this in <code>R</code>.</p>
-<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="simple-linear-regression.html#cb442-1"></a><span class="dv">8</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">unique</span>(cars<span class="op">$</span>speed)</span></code></pre></div>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="simple-linear-regression.html#cb442-1" aria-hidden="true" tabindex="-1"></a><span class="dv">8</span> <span class="sc">%in%</span> <span class="fu">unique</span>(cars<span class="sc">$</span>speed)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="simple-linear-regression.html#cb444-1"></a><span class="dv">21</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">unique</span>(cars<span class="op">$</span>speed)</span></code></pre></div>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="simple-linear-regression.html#cb444-1" aria-hidden="true" tabindex="-1"></a><span class="dv">21</span> <span class="sc">%in%</span> <span class="fu">unique</span>(cars<span class="sc">$</span>speed)</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="simple-linear-regression.html#cb446-1"></a><span class="kw">min</span>(cars<span class="op">$</span>speed) <span class="op">&lt;</span><span class="st"> </span><span class="dv">21</span> <span class="op">&amp;</span><span class="st"> </span><span class="dv">21</span> <span class="op">&lt;</span><span class="st"> </span><span class="kw">max</span>(cars<span class="op">$</span>speed)</span></code></pre></div>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="simple-linear-regression.html#cb446-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(cars<span class="sc">$</span>speed) <span class="sc">&lt;</span> <span class="dv">21</span> <span class="sc">&amp;</span> <span class="dv">21</span> <span class="sc">&lt;</span> <span class="fu">max</span>(cars<span class="sc">$</span>speed)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p><span class="math display">\[
 \hat{y} = -17.58 + 3.93 \times 21 % = 65
 \]</span></p>
-<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="simple-linear-regression.html#cb448-1"></a>beta_<span class="dv">0</span>_hat <span class="op">+</span><span class="st"> </span>beta_<span class="dv">1</span>_hat <span class="op">*</span><span class="st"> </span><span class="dv">21</span></span></code></pre></div>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="simple-linear-regression.html#cb448-1" aria-hidden="true" tabindex="-1"></a>beta_0_hat <span class="sc">+</span> beta_1_hat <span class="sc">*</span> <span class="dv">21</span></span></code></pre></div>
 <pre><code>## [1] 65.00149</code></pre>
 <p>Lastly, we can make a prediction for the stopping distance of a car traveling at 50 miles per hour. This is considered <a href="https://xkcd.com/605/" target="_blank"><strong>extrapolation</strong></a> as 50 is not an observed value of <span class="math inline">\(x\)</span> and is outside data range. We should be less confident in predictions of this type.</p>
-<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="simple-linear-regression.html#cb450-1"></a><span class="kw">range</span>(cars<span class="op">$</span>speed)</span></code></pre></div>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="simple-linear-regression.html#cb450-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(cars<span class="sc">$</span>speed)</span></code></pre></div>
 <pre><code>## [1]  4 25</code></pre>
-<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="simple-linear-regression.html#cb452-1"></a><span class="kw">range</span>(cars<span class="op">$</span>speed)[<span class="dv">1</span>] <span class="op">&lt;</span><span class="st"> </span><span class="dv">50</span> <span class="op">&amp;</span><span class="st"> </span><span class="dv">50</span> <span class="op">&lt;</span><span class="st"> </span><span class="kw">range</span>(cars<span class="op">$</span>speed)[<span class="dv">2</span>] </span></code></pre></div>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="simple-linear-regression.html#cb452-1" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(cars<span class="sc">$</span>speed)[<span class="dv">1</span>] <span class="sc">&lt;</span> <span class="dv">50</span> <span class="sc">&amp;</span> <span class="dv">50</span> <span class="sc">&lt;</span> <span class="fu">range</span>(cars<span class="sc">$</span>speed)[<span class="dv">2</span>] </span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <p><span class="math display">\[
 \hat{y} = -17.58 + 3.93 \times 50 % = 179.04
 \]</span></p>
-<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="simple-linear-regression.html#cb454-1"></a>beta_<span class="dv">0</span>_hat <span class="op">+</span><span class="st"> </span>beta_<span class="dv">1</span>_hat <span class="op">*</span><span class="st"> </span><span class="dv">50</span></span></code></pre></div>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="simple-linear-regression.html#cb454-1" aria-hidden="true" tabindex="-1"></a>beta_0_hat <span class="sc">+</span> beta_1_hat <span class="sc">*</span> <span class="dv">50</span></span></code></pre></div>
 <pre><code>## [1] 179.0413</code></pre>
 <p>Cars travel 50 miles per hour rather easily today, but not in the 1920s!</p>
 <p>This is also an issue we saw when interpreting <span class="math inline">\(\hat{\beta}_0 = -17.58\)</span>, which is equivalent to making a prediction at <span class="math inline">\(x = 0\)</span>. We should not be confident in the estimated linear relationship outside of the range of data we have observed.</p>
 </div>
-<div id="residuals" class="section level3 hasAnchor">
+<div id="residuals" class="section level3 hasAnchor" number="7.2.2">
 <h3><span class="header-section-number">7.2.2</span> Residuals<a href="simple-linear-regression.html#residuals" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>If we think of our model as “Response = Prediction + Error,” we can then write it as</p>
 <p><span class="math display">\[
@@ -665,23 +713,23 @@ y = \hat{y} + e.
 e_i = y_i - \hat{y}_i
 \]</span></p>
 <p>Let’s calculate the residual for the prediction we made for a car traveling 8 miles per hour. First, we need to obtain the observed value of <span class="math inline">\(y\)</span> for this <span class="math inline">\(x\)</span> value.</p>
-<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="simple-linear-regression.html#cb456-1"></a><span class="kw">which</span>(cars<span class="op">$</span>speed <span class="op">==</span><span class="st"> </span><span class="dv">8</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="simple-linear-regression.html#cb456-1" aria-hidden="true" tabindex="-1"></a><span class="fu">which</span>(cars<span class="sc">$</span>speed <span class="sc">==</span> <span class="dv">8</span>)</span></code></pre></div>
 <pre><code>## [1] 5</code></pre>
-<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="simple-linear-regression.html#cb458-1"></a>cars[<span class="dv">5</span>, ]</span></code></pre></div>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="simple-linear-regression.html#cb458-1" aria-hidden="true" tabindex="-1"></a>cars[<span class="dv">5</span>, ]</span></code></pre></div>
 <pre><code>##   speed dist
 ## 5     8   16</code></pre>
-<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="simple-linear-regression.html#cb460-1"></a>cars[<span class="kw">which</span>(cars<span class="op">$</span>speed <span class="op">==</span><span class="st"> </span><span class="dv">8</span>), ]</span></code></pre></div>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="simple-linear-regression.html#cb460-1" aria-hidden="true" tabindex="-1"></a>cars[<span class="fu">which</span>(cars<span class="sc">$</span>speed <span class="sc">==</span> <span class="dv">8</span>), ]</span></code></pre></div>
 <pre><code>##   speed dist
 ## 5     8   16</code></pre>
 <p>We can then calculate the residual.</p>
 <p><span class="math display">\[
 e = 16 - 13.88 = 2.12
 \]</span></p>
-<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="simple-linear-regression.html#cb462-1"></a><span class="dv">16</span> <span class="op">-</span><span class="st"> </span>(beta_<span class="dv">0</span>_hat <span class="op">+</span><span class="st"> </span>beta_<span class="dv">1</span>_hat <span class="op">*</span><span class="st"> </span><span class="dv">8</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="simple-linear-regression.html#cb462-1" aria-hidden="true" tabindex="-1"></a><span class="dv">16</span> <span class="sc">-</span> (beta_0_hat <span class="sc">+</span> beta_1_hat <span class="sc">*</span> <span class="dv">8</span>)</span></code></pre></div>
 <pre><code>## [1] 2.119825</code></pre>
 <p>The positive residual value indicates that the observed stopping distance is actually 2.12 feet more than what was predicted.</p>
 </div>
-<div id="variance-estimation" class="section level3 hasAnchor">
+<div id="variance-estimation" class="section level3 hasAnchor" number="7.2.3">
 <h3><span class="header-section-number">7.2.3</span> Variance Estimation<a href="simple-linear-regression.html#variance-estimation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We’ll now use the residuals for each of the points to create an estimate for the variance, <span class="math inline">\(\sigma^2\)</span>.</p>
 <p>Recall that,</p>
@@ -707,20 +755,20 @@ s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x_i - \bar{x})^2
 \]</span></p>
 <p>Here, <span class="math inline">\(s^2\)</span> is the estimate of <span class="math inline">\(\sigma^2\)</span> when we have a single random variable <span class="math inline">\(X\)</span>. In this case <span class="math inline">\(\bar{x}\)</span> is an estimate of <span class="math inline">\(\mu\)</span> which is assumed to be the same for each <span class="math inline">\(x\)</span>.</p>
 <p>Now, in the regression case, with <span class="math inline">\(s_e^2\)</span> each <span class="math inline">\(y\)</span> has a different mean because of the relationship with <span class="math inline">\(x\)</span>. Thus, for each <span class="math inline">\(y_i\)</span>, we use a different estimate of the mean, that is <span class="math inline">\(\hat{y}_i\)</span>.</p>
-<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="simple-linear-regression.html#cb464-1"></a>y_hat =<span class="st"> </span>beta_<span class="dv">0</span>_hat <span class="op">+</span><span class="st"> </span>beta_<span class="dv">1</span>_hat <span class="op">*</span><span class="st"> </span>x</span>
-<span id="cb464-2"><a href="simple-linear-regression.html#cb464-2"></a>e     =<span class="st"> </span>y <span class="op">-</span><span class="st"> </span>y_hat</span>
-<span id="cb464-3"><a href="simple-linear-regression.html#cb464-3"></a>n     =<span class="st"> </span><span class="kw">length</span>(e)</span>
-<span id="cb464-4"><a href="simple-linear-regression.html#cb464-4"></a>s2_e  =<span class="st"> </span><span class="kw">sum</span>(e<span class="op">^</span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)</span>
-<span id="cb464-5"><a href="simple-linear-regression.html#cb464-5"></a>s2_e</span></code></pre></div>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="simple-linear-regression.html#cb464-1" aria-hidden="true" tabindex="-1"></a>y_hat <span class="ot">=</span> beta_0_hat <span class="sc">+</span> beta_1_hat <span class="sc">*</span> x</span>
+<span id="cb464-2"><a href="simple-linear-regression.html#cb464-2" aria-hidden="true" tabindex="-1"></a>e     <span class="ot">=</span> y <span class="sc">-</span> y_hat</span>
+<span id="cb464-3"><a href="simple-linear-regression.html#cb464-3" aria-hidden="true" tabindex="-1"></a>n     <span class="ot">=</span> <span class="fu">length</span>(e)</span>
+<span id="cb464-4"><a href="simple-linear-regression.html#cb464-4" aria-hidden="true" tabindex="-1"></a>s2_e  <span class="ot">=</span> <span class="fu">sum</span>(e<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> (n <span class="sc">-</span> <span class="dv">2</span>)</span>
+<span id="cb464-5"><a href="simple-linear-regression.html#cb464-5" aria-hidden="true" tabindex="-1"></a>s2_e</span></code></pre></div>
 <pre><code>## [1] 236.5317</code></pre>
 <p>Just as with the univariate measure of variance, this value of 236.53 doesn’t have a practical interpretation in terms of stopping distance. Taking the square root, however, computes the standard deviation of the residuals, also known as <em>residual standard error</em>.</p>
-<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="simple-linear-regression.html#cb466-1"></a>s_e =<span class="st"> </span><span class="kw">sqrt</span>(s2_e)</span>
-<span id="cb466-2"><a href="simple-linear-regression.html#cb466-2"></a>s_e</span></code></pre></div>
+<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="simple-linear-regression.html#cb466-1" aria-hidden="true" tabindex="-1"></a>s_e <span class="ot">=</span> <span class="fu">sqrt</span>(s2_e)</span>
+<span id="cb466-2"><a href="simple-linear-regression.html#cb466-2" aria-hidden="true" tabindex="-1"></a>s_e</span></code></pre></div>
 <pre><code>## [1] 15.37959</code></pre>
 <p>This tells us that our estimates of mean stopping distance are “typically” off by 15.38 feet.</p>
 </div>
 </div>
-<div id="decomposition-of-variation" class="section level2 hasAnchor">
+<div id="decomposition-of-variation" class="section level2 hasAnchor" number="7.3">
 <h2><span class="header-section-number">7.3</span> Decomposition of Variation<a href="simple-linear-regression.html#decomposition-of-variation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We can re-express <span class="math inline">\(y_i - \bar{y}\)</span>, which measures the deviation of an observation from the sample mean, in the following way,</p>
 <p><span class="math display">\[
@@ -756,24 +804,24 @@ s ^ 2 = \frac{1}{n - 1}\sum_{i=1}^{n}(y_i - \bar{y})^2 = \frac{1}{n - 1} \text{S
 \text{SSE} = \text{RSS} = \sum_{i=1}^{n}(y_i - \hat{y}_i)^2
 \]</span></p>
 <p>The quantity “Sum of Squares Error,” <span class="math inline">\(\text{SSE}\)</span>, represents the <strong>unexplained variation</strong> of the observed <span class="math inline">\(y\)</span> values. You will often see <span class="math inline">\(\text{SSE}\)</span> written as <span class="math inline">\(\text{RSS}\)</span>, or “Residual Sum of Squares.”</p>
-<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="simple-linear-regression.html#cb468-1"></a>SST   =<span class="st"> </span><span class="kw">sum</span>((y <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(y)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</span>
-<span id="cb468-2"><a href="simple-linear-regression.html#cb468-2"></a>SSReg =<span class="st"> </span><span class="kw">sum</span>((y_hat <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(y)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</span>
-<span id="cb468-3"><a href="simple-linear-regression.html#cb468-3"></a>SSE   =<span class="st"> </span><span class="kw">sum</span>((y <span class="op">-</span><span class="st"> </span>y_hat) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</span>
-<span id="cb468-4"><a href="simple-linear-regression.html#cb468-4"></a><span class="kw">c</span>(<span class="dt">SST =</span> SST, <span class="dt">SSReg =</span> SSReg, <span class="dt">SSE =</span> SSE)</span></code></pre></div>
+<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="simple-linear-regression.html#cb468-1" aria-hidden="true" tabindex="-1"></a>SST   <span class="ot">=</span> <span class="fu">sum</span>((y <span class="sc">-</span> <span class="fu">mean</span>(y)) <span class="sc">^</span> <span class="dv">2</span>)</span>
+<span id="cb468-2"><a href="simple-linear-regression.html#cb468-2" aria-hidden="true" tabindex="-1"></a>SSReg <span class="ot">=</span> <span class="fu">sum</span>((y_hat <span class="sc">-</span> <span class="fu">mean</span>(y)) <span class="sc">^</span> <span class="dv">2</span>)</span>
+<span id="cb468-3"><a href="simple-linear-regression.html#cb468-3" aria-hidden="true" tabindex="-1"></a>SSE   <span class="ot">=</span> <span class="fu">sum</span>((y <span class="sc">-</span> y_hat) <span class="sc">^</span> <span class="dv">2</span>)</span>
+<span id="cb468-4"><a href="simple-linear-regression.html#cb468-4" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">SST =</span> SST, <span class="at">SSReg =</span> SSReg, <span class="at">SSE =</span> SSE)</span></code></pre></div>
 <pre><code>##      SST    SSReg      SSE 
 ## 32538.98 21185.46 11353.52</code></pre>
 <p>Note that,</p>
 <p><span class="math display">\[
 s_e^2 = \frac{\text{SSE}}{n - 2}.
 \]</span></p>
-<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="simple-linear-regression.html#cb470-1"></a>SSE <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="simple-linear-regression.html#cb470-1" aria-hidden="true" tabindex="-1"></a>SSE <span class="sc">/</span> (n <span class="sc">-</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 236.5317</code></pre>
 <p>We can use <code>R</code> to verify that this matches our previous calculation of <span class="math inline">\(s_e^2\)</span>.</p>
-<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="simple-linear-regression.html#cb472-1"></a>s2_e <span class="op">==</span><span class="st"> </span>SSE <span class="op">/</span><span class="st"> </span>(n <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="simple-linear-regression.html#cb472-1" aria-hidden="true" tabindex="-1"></a>s2_e <span class="sc">==</span> SSE <span class="sc">/</span> (n <span class="sc">-</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>These three measures also do not have an important practical interpretation individually. But together, they’re about to reveal a new statistic to help measure the strength of an SLR model.</p>
 </div>
-<div id="coefficient-of-determination" class="section level3 hasAnchor">
+<div id="coefficient-of-determination" class="section level3 hasAnchor" number="7.3.1">
 <h3><span class="header-section-number">7.3.1</span> Coefficient of Determination<a href="simple-linear-regression.html#coefficient-of-determination" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The <strong>coefficient of determination</strong>, <span class="math inline">\(R^2\)</span>, is defined as</p>
 <p><span class="math display">\[
@@ -785,8 +833,8 @@ R^2 &amp;= \frac{\text{SSReg}}{\text{SST}} = \frac{\sum_{i=1}^{n}(\hat{y}_i - \b
 \end{aligned}
 \]</span></p>
 <p>The coefficient of determination is interpreted as the proportion of observed variation in <span class="math inline">\(y\)</span> that can be explained by the simple linear regression model.</p>
-<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="simple-linear-regression.html#cb474-1"></a>R2 =<span class="st"> </span>SSReg <span class="op">/</span><span class="st"> </span>SST</span>
-<span id="cb474-2"><a href="simple-linear-regression.html#cb474-2"></a>R2</span></code></pre></div>
+<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="simple-linear-regression.html#cb474-1" aria-hidden="true" tabindex="-1"></a>R2 <span class="ot">=</span> SSReg <span class="sc">/</span> SST</span>
+<span id="cb474-2"><a href="simple-linear-regression.html#cb474-2" aria-hidden="true" tabindex="-1"></a>R2</span></code></pre></div>
 <pre><code>## [1] 0.6510794</code></pre>
 <p>For the <code>cars</code> example, we calculate <span class="math inline">\(R^2 = 0.65\)</span>. We then say that <span class="math inline">\(65\%\)</span> of the observed variability in stopping distance is explained by the linear relationship with speed.</p>
 <p>The following plots visually demonstrate the three “sums of squares” for a simulated dataset which has <span class="math inline">\(R^2 = 0.92\)</span> which is a somewhat high value. Notice in the final plot, that the orange arrows account for a larger proportion of the total arrow.</p>
@@ -795,15 +843,15 @@ R^2 &amp;= \frac{\text{SSReg}}{\text{SST}} = \frac{\sum_{i=1}^{n}(\hat{y}_i - \b
 <p><img src="slr_files/figure-html/unnamed-chunk-29-1.png" width="1152" style="display: block; margin: auto;" /></p>
 </div>
 </div>
-<div id="the-lm-function" class="section level2 hasAnchor">
+<div id="the-lm-function" class="section level2 hasAnchor" number="7.4">
 <h2><span class="header-section-number">7.4</span> The <code>lm</code> Function<a href="simple-linear-regression.html#the-lm-function" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>So far we have done regression by deriving the least squares estimates, then writing simple <code>R</code> commands to perform the necessary calculations. Since this is such a common task, this is functionality that is built directly into <code>R</code> via the <code>lm()</code> command.</p>
 <p>The <code>lm()</code> command is used to fit <strong>linear models</strong> which actually account for a broader class of models than simple linear regression, but we will use SLR as our first demonstration of <code>lm()</code>. The <code>lm()</code> function will be one of our most commonly used tools, so you may want to take a look at the documentation by using <code>?lm</code>. You’ll notice there is a lot of information there, but we will start with just the very basics. This is documentation you will want to return to often.</p>
 <p>We’ll continue using the <code>cars</code> data, and essentially use the <code>lm()</code> function to check the work we had previously done.</p>
-<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="simple-linear-regression.html#cb476-1"></a>stop_dist_model =<span class="st"> </span><span class="kw">lm</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars)</span></code></pre></div>
+<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="simple-linear-regression.html#cb476-1" aria-hidden="true" tabindex="-1"></a>stop_dist_model <span class="ot">=</span> <span class="fu">lm</span>(dist <span class="sc">~</span> speed, <span class="at">data =</span> cars)</span></code></pre></div>
 <p>This line of code fits our very first linear model. The syntax should look somewhat familiar. We use the <code>dist ~ speed</code> syntax to tell <code>R</code> we would like to model the response variable <code>dist</code> as a linear function of the predictor variable <code>speed</code>. In general, you should think of the syntax as <code>response ~ predictor</code>. The <code>data = cars</code> argument then tells <code>R</code> that the <code>dist</code> and <code>speed</code> variables are from the dataset <code>cars</code>. We then store this result in a variable <code>stop_dist_model</code>.</p>
 <p>The variable <code>stop_dist_model</code> now contains a wealth of information, and we will now see how to extract and use that information. The first thing we will do is simply output whatever is stored immediately in the variable <code>stop_dist_model</code>.</p>
-<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="simple-linear-regression.html#cb477-1"></a>stop_dist_model</span></code></pre></div>
+<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="simple-linear-regression.html#cb477-1" aria-hidden="true" tabindex="-1"></a>stop_dist_model</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = dist ~ speed, data = cars)
@@ -812,26 +860,26 @@ R^2 &amp;= \frac{\text{SSReg}}{\text{SST}} = \frac{\sum_{i=1}^{n}(\hat{y}_i - \b
 ## (Intercept)        speed  
 ##     -17.579        3.932</code></pre>
 <p>We see that it first tells us the formula we input into <code>R</code>, that is <code>lm(formula = dist ~ speed, data = cars)</code>. We also see the coefficients of the model. We can check that these are what we had calculated previously. (Minus some rounding that <code>R</code> is doing when displaying the results. They are stored with full precision.)</p>
-<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="simple-linear-regression.html#cb479-1"></a><span class="kw">c</span>(beta_<span class="dv">0</span>_hat, beta_<span class="dv">1</span>_hat)</span></code></pre></div>
+<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="simple-linear-regression.html#cb479-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(beta_0_hat, beta_1_hat)</span></code></pre></div>
 <pre><code>## [1] -17.579095   3.932409</code></pre>
 <p>Next, it would be nice to add the fitted line to the scatterplot. To do so we will use the <code>abline()</code> function.</p>
-<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="simple-linear-regression.html#cb481-1"></a><span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars,</span>
-<span id="cb481-2"><a href="simple-linear-regression.html#cb481-2"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,</span>
-<span id="cb481-3"><a href="simple-linear-regression.html#cb481-3"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,</span>
-<span id="cb481-4"><a href="simple-linear-regression.html#cb481-4"></a>     <span class="dt">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,</span>
-<span id="cb481-5"><a href="simple-linear-regression.html#cb481-5"></a>     <span class="dt">pch  =</span> <span class="dv">20</span>,</span>
-<span id="cb481-6"><a href="simple-linear-regression.html#cb481-6"></a>     <span class="dt">cex  =</span> <span class="dv">2</span>,</span>
-<span id="cb481-7"><a href="simple-linear-regression.html#cb481-7"></a>     <span class="dt">col  =</span> <span class="st">&quot;grey&quot;</span>)</span>
-<span id="cb481-8"><a href="simple-linear-regression.html#cb481-8"></a><span class="kw">abline</span>(stop_dist_model, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="simple-linear-regression.html#cb481-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dist <span class="sc">~</span> speed, <span class="at">data =</span> cars,</span>
+<span id="cb481-2"><a href="simple-linear-regression.html#cb481-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,</span>
+<span id="cb481-3"><a href="simple-linear-regression.html#cb481-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,</span>
+<span id="cb481-4"><a href="simple-linear-regression.html#cb481-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,</span>
+<span id="cb481-5"><a href="simple-linear-regression.html#cb481-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch  =</span> <span class="dv">20</span>,</span>
+<span id="cb481-6"><a href="simple-linear-regression.html#cb481-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">cex  =</span> <span class="dv">2</span>,</span>
+<span id="cb481-7"><a href="simple-linear-regression.html#cb481-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">col  =</span> <span class="st">&quot;grey&quot;</span>)</span>
+<span id="cb481-8"><a href="simple-linear-regression.html#cb481-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(stop_dist_model, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>)</span></code></pre></div>
 <p><img src="slr_files/figure-html/unnamed-chunk-33-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The <code>abline()</code> function is used to add lines of the form <span class="math inline">\(a + bx\)</span> to a plot. (Hence <strong><code>ab</code></strong><code>line</code>.) When we give it <code>stop_dist_model</code> as an argument, it automatically extracts the regression coefficient estimates (<span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>) and uses them as the intercept and slope of the line. Here we also use <code>lwd</code> to modify the width of the line, as well as <code>col</code> to modify the color of the line.</p>
 <p>The “thing” that is returned by the <code>lm()</code> function is actually an object of class <code>lm</code> which is a list. The exact details of this are unimportant unless you are seriously interested in the inner-workings of <code>R</code>, but know that we can determine the names of the elements of the list using the <code>names()</code> command.</p>
-<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="simple-linear-regression.html#cb482-1"></a><span class="kw">names</span>(stop_dist_model)</span></code></pre></div>
+<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="simple-linear-regression.html#cb482-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(stop_dist_model)</span></code></pre></div>
 <pre><code>##  [1] &quot;coefficients&quot;  &quot;residuals&quot;     &quot;effects&quot;       &quot;rank&quot;         
 ##  [5] &quot;fitted.values&quot; &quot;assign&quot;        &quot;qr&quot;            &quot;df.residual&quot;  
 ##  [9] &quot;xlevels&quot;       &quot;call&quot;          &quot;terms&quot;         &quot;model&quot;</code></pre>
 <p>We can then use this information to, for example, access the residuals using the <code>$</code> operator.</p>
-<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="simple-linear-regression.html#cb484-1"></a>stop_dist_model<span class="op">$</span>residuals</span></code></pre></div>
+<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="simple-linear-regression.html#cb484-1" aria-hidden="true" tabindex="-1"></a>stop_dist_model<span class="sc">$</span>residuals</span></code></pre></div>
 <pre><code>##          1          2          3          4          5          6          7 
 ##   3.849460  11.849460  -5.947766  12.052234   2.119825  -7.812584  -3.744993 
 ##          8          9         10         11         12         13         14 
@@ -849,10 +897,10 @@ R^2 &amp;= \frac{\text{SSReg}}{\text{SST}} = \frac{\sum_{i=1}^{n}(\hat{y}_i - \b
 ##         50 
 ##   4.268876</code></pre>
 <p>Another way to access stored information in <code>stop_dist_model</code> are the <code>coef()</code>, <code>resid()</code>, and <code>fitted()</code> functions. These return the coefficients, residuals, and fitted values, respectively.</p>
-<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="simple-linear-regression.html#cb486-1"></a><span class="kw">coef</span>(stop_dist_model)</span></code></pre></div>
+<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="simple-linear-regression.html#cb486-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(stop_dist_model)</span></code></pre></div>
 <pre><code>## (Intercept)       speed 
 ##  -17.579095    3.932409</code></pre>
-<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="simple-linear-regression.html#cb488-1"></a><span class="kw">resid</span>(stop_dist_model)</span></code></pre></div>
+<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="simple-linear-regression.html#cb488-1" aria-hidden="true" tabindex="-1"></a><span class="fu">resid</span>(stop_dist_model)</span></code></pre></div>
 <pre><code>##          1          2          3          4          5          6          7 
 ##   3.849460  11.849460  -5.947766  12.052234   2.119825  -7.812584  -3.744993 
 ##          8          9         10         11         12         13         14 
@@ -869,7 +917,7 @@ R^2 &amp;= \frac{\text{SSReg}}{\text{SST}} = \frac{\sum_{i=1}^{n}(\hat{y}_i - \b
 ##   2.930920  -2.933898 -18.866307  -6.798715  15.201285  16.201285  43.201285 
 ##         50 
 ##   4.268876</code></pre>
-<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="simple-linear-regression.html#cb490-1"></a><span class="kw">fitted</span>(stop_dist_model)</span></code></pre></div>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="simple-linear-regression.html#cb490-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted</span>(stop_dist_model)</span></code></pre></div>
 <pre><code>##         1         2         3         4         5         6         7         8 
 ## -1.849460 -1.849460  9.947766  9.947766 13.880175 17.812584 21.744993 21.744993 
 ##         9        10        11        12        13        14        15        16 
@@ -885,7 +933,7 @@ R^2 &amp;= \frac{\text{SSReg}}{\text{SST}} = \frac{\sum_{i=1}^{n}(\hat{y}_i - \b
 ##        49        50 
 ## 76.798715 80.731124</code></pre>
 <p>An <code>R</code> function that is useful in many situations is <code>summary()</code>. We see that when it is called on our model, it returns a good deal of information. By the end of the course, you will know what every value here is used for. For now, you should immediately notice the coefficient estimates, and you may recognize the <span class="math inline">\(R^2\)</span> value we saw earlier.</p>
-<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="simple-linear-regression.html#cb492-1"></a><span class="kw">summary</span>(stop_dist_model)</span></code></pre></div>
+<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="simple-linear-regression.html#cb492-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(stop_dist_model)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = dist ~ speed, data = cars)
@@ -905,15 +953,15 @@ R^2 &amp;= \frac{\text{SSReg}}{\text{SST}} = \frac{\sum_{i=1}^{n}(\hat{y}_i - \b
 ## Multiple R-squared:  0.6511, Adjusted R-squared:  0.6438 
 ## F-statistic: 89.57 on 1 and 48 DF,  p-value: 1.49e-12</code></pre>
 <p>The <code>summary()</code> command also returns a list, and we can again use <code>names()</code> to learn what about the elements of this list.</p>
-<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="simple-linear-regression.html#cb494-1"></a><span class="kw">names</span>(<span class="kw">summary</span>(stop_dist_model))</span></code></pre></div>
+<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="simple-linear-regression.html#cb494-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">summary</span>(stop_dist_model))</span></code></pre></div>
 <pre><code>##  [1] &quot;call&quot;          &quot;terms&quot;         &quot;residuals&quot;     &quot;coefficients&quot; 
 ##  [5] &quot;aliased&quot;       &quot;sigma&quot;         &quot;df&quot;            &quot;r.squared&quot;    
 ##  [9] &quot;adj.r.squared&quot; &quot;fstatistic&quot;    &quot;cov.unscaled&quot;</code></pre>
 <p>So, for example, if we wanted to directly access the value of <span class="math inline">\(R^2\)</span>, instead of copy and pasting it out of the printed statement from <code>summary()</code>, we could do so.</p>
-<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb496-1"><a href="simple-linear-regression.html#cb496-1"></a><span class="kw">summary</span>(stop_dist_model)<span class="op">$</span>r.squared</span></code></pre></div>
+<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb496-1"><a href="simple-linear-regression.html#cb496-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(stop_dist_model)<span class="sc">$</span>r.squared</span></code></pre></div>
 <pre><code>## [1] 0.6510794</code></pre>
 <p>Another value we may want to access is <span class="math inline">\(s_e\)</span>, which <code>R</code> calls <code>sigma</code>.</p>
-<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="simple-linear-regression.html#cb498-1"></a><span class="kw">summary</span>(stop_dist_model)<span class="op">$</span>sigma</span></code></pre></div>
+<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="simple-linear-regression.html#cb498-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(stop_dist_model)<span class="sc">$</span>sigma</span></code></pre></div>
 <pre><code>## [1] 15.37959</code></pre>
 <p>Note that this is the same result seen earlier as <code>s_e</code>. You may also notice that this value was displayed above as a result of the <code>summary()</code> command, which <code>R</code> labeled the “Residual Standard Error.”</p>
 <p><span class="math display">\[
@@ -921,12 +969,12 @@ s_e = \text{RSE} = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 \]</span></p>
 <p>Often it is useful to talk about <span class="math inline">\(s_e\)</span> (or RSE) instead of <span class="math inline">\(s_e^2\)</span> because of their units. The unit of <span class="math inline">\(s_e\)</span> in the <code>cars</code> example is feet, while the unit of <span class="math inline">\(s_e^2\)</span> is feet-squared.</p>
 <p>Another useful function, which we will use almost as often as <code>lm()</code> is the <code>predict()</code> function.</p>
-<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="simple-linear-regression.html#cb500-1"></a><span class="kw">predict</span>(stop_dist_model, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">speed =</span> <span class="dv">8</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="simple-linear-regression.html#cb500-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(stop_dist_model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">speed =</span> <span class="dv">8</span>))</span></code></pre></div>
 <pre><code>##        1 
 ## 13.88018</code></pre>
 <p>The above code reads “predict the stopping distance of a car traveling 8 miles per hour using the <code>stop_dist_model</code>.” Importantly, the second argument to <code>predict()</code> is a data frame that we make in place. We do this so that we can specify that <code>8</code> is a value of <code>speed</code>, so that predict knows how to use it with the model stored in <code>stop_dist_model</code>. We see that this result is what we had calculated “by hand” previously.</p>
 <p>We could also predict multiple values at once.</p>
-<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="simple-linear-regression.html#cb502-1"></a><span class="kw">predict</span>(stop_dist_model, <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">speed =</span> <span class="kw">c</span>(<span class="dv">8</span>, <span class="dv">21</span>, <span class="dv">50</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="simple-linear-regression.html#cb502-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(stop_dist_model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">speed =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">21</span>, <span class="dv">50</span>)))</span></code></pre></div>
 <pre><code>##         1         2         3 
 ##  13.88018  65.00149 179.04134</code></pre>
 <p><span class="math display">\[
@@ -937,7 +985,7 @@ s_e = \text{RSE} = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 \end{aligned}
 \]</span></p>
 <p>Or we could calculate the fitted value for each of the original data points. We can simply supply the original data frame, <code>cars</code>, since it contains a variables called <code>speed</code> which has the values we would like to predict at.</p>
-<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="simple-linear-regression.html#cb504-1"></a><span class="kw">predict</span>(stop_dist_model, <span class="dt">newdata =</span> cars)</span></code></pre></div>
+<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="simple-linear-regression.html#cb504-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(stop_dist_model, <span class="at">newdata =</span> cars)</span></code></pre></div>
 <pre><code>##         1         2         3         4         5         6         7         8 
 ## -1.849460 -1.849460  9.947766  9.947766 13.880175 17.812584 21.744993 21.744993 
 ##         9        10        11        12        13        14        15        16 
@@ -952,9 +1000,9 @@ s_e = \text{RSE} = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 ## 61.069080 61.069080 61.069080 68.933898 72.866307 76.798715 76.798715 76.798715 
 ##        49        50 
 ## 76.798715 80.731124</code></pre>
-<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="simple-linear-regression.html#cb506-1"></a><span class="co"># predict(stop_dist_model, newdata = data.frame(speed = cars$speed))</span></span></code></pre></div>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="simple-linear-regression.html#cb506-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predict(stop_dist_model, newdata = data.frame(speed = cars$speed))</span></span></code></pre></div>
 <p>This is actually equivalent to simply calling <code>predict()</code> on <code>stop_dist_model</code> without a second argument.</p>
-<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="simple-linear-regression.html#cb507-1"></a><span class="kw">predict</span>(stop_dist_model)</span></code></pre></div>
+<div class="sourceCode" id="cb507"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb507-1"><a href="simple-linear-regression.html#cb507-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(stop_dist_model)</span></code></pre></div>
 <pre><code>##         1         2         3         4         5         6         7         8 
 ## -1.849460 -1.849460  9.947766  9.947766 13.880175 17.812584 21.744993 21.744993 
 ##         9        10        11        12        13        14        15        16 
@@ -970,7 +1018,7 @@ s_e = \text{RSE} = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 ##        49        50 
 ## 76.798715 80.731124</code></pre>
 <p>Note that then in this case, this is the same as using <code>fitted()</code>.</p>
-<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb509-1"><a href="simple-linear-regression.html#cb509-1"></a><span class="kw">fitted</span>(stop_dist_model)</span></code></pre></div>
+<div class="sourceCode" id="cb509"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb509-1"><a href="simple-linear-regression.html#cb509-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fitted</span>(stop_dist_model)</span></code></pre></div>
 <pre><code>##         1         2         3         4         5         6         7         8 
 ## -1.849460 -1.849460  9.947766  9.947766 13.880175 17.812584 21.744993 21.744993 
 ##         9        10        11        12        13        14        15        16 
@@ -986,7 +1034,7 @@ s_e = \text{RSE} = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 ##        49        50 
 ## 76.798715 80.731124</code></pre>
 </div>
-<div id="maximum-likelihood-estimation-mle-approach" class="section level2 hasAnchor">
+<div id="maximum-likelihood-estimation-mle-approach" class="section level2 hasAnchor" number="7.5">
 <h2><span class="header-section-number">7.5</span> Maximum Likelihood Estimation (MLE) Approach<a href="simple-linear-regression.html#maximum-likelihood-estimation-mle-approach" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Recall the model,</p>
 <p><span class="math display">\[
@@ -1059,7 +1107,7 @@ s_e^2 &amp;= \frac{1}{n - 2} \sum_{i = 1}^{n}(y_i - \hat{y}_i)^2 = \frac{1}{n - 
 \]</span></p>
 <p>In the next chapter, we will discuss in detail the difference between these two estimates, which involves biasedness.</p>
 </div>
-<div id="simulating-slr" class="section level2 hasAnchor">
+<div id="simulating-slr" class="section level2 hasAnchor" number="7.6">
 <h2><span class="header-section-number">7.6</span> Simulating SLR<a href="simple-linear-regression.html#simulating-slr" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We return again to more examples of simulation. This will be a common theme!</p>
 <p>In practice you will almost never have a true model, and you will use data to attempt to recover information about the unknown true model. With simulation, we decide the true model and simulate data from it. Then, we apply a method to the data, in this case least squares. Now, since we know the true model, we can assess how well it did.</p>
@@ -1072,41 +1120,41 @@ Y = 5 - 2 x + \epsilon.
 Y \mid X \sim N(\mu = 5 - 2 x, \sigma^ 2 = 9).
 \]</span></p>
 <p>We first set the true parameters of the model to be simulated.</p>
-<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="simple-linear-regression.html#cb511-1"></a>num_obs =<span class="st"> </span><span class="dv">21</span></span>
-<span id="cb511-2"><a href="simple-linear-regression.html#cb511-2"></a>beta_<span class="dv">0</span>  =<span class="st"> </span><span class="dv">5</span></span>
-<span id="cb511-3"><a href="simple-linear-regression.html#cb511-3"></a>beta_<span class="dv">1</span>  =<span class="st"> </span><span class="dv">-2</span></span>
-<span id="cb511-4"><a href="simple-linear-regression.html#cb511-4"></a>sigma   =<span class="st"> </span><span class="dv">3</span></span></code></pre></div>
+<div class="sourceCode" id="cb511"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb511-1"><a href="simple-linear-regression.html#cb511-1" aria-hidden="true" tabindex="-1"></a>num_obs <span class="ot">=</span> <span class="dv">21</span></span>
+<span id="cb511-2"><a href="simple-linear-regression.html#cb511-2" aria-hidden="true" tabindex="-1"></a>beta_0  <span class="ot">=</span> <span class="dv">5</span></span>
+<span id="cb511-3"><a href="simple-linear-regression.html#cb511-3" aria-hidden="true" tabindex="-1"></a>beta_1  <span class="ot">=</span> <span class="sc">-</span><span class="dv">2</span></span>
+<span id="cb511-4"><a href="simple-linear-regression.html#cb511-4" aria-hidden="true" tabindex="-1"></a>sigma   <span class="ot">=</span> <span class="dv">3</span></span></code></pre></div>
 <p>Next, we obtain simulated values of <span class="math inline">\(\epsilon_i\)</span> after setting a seed for reproducibility.</p>
-<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="simple-linear-regression.html#cb512-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb512-2"><a href="simple-linear-regression.html#cb512-2"></a>epsilon =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n =</span> num_obs, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> sigma)</span></code></pre></div>
+<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="simple-linear-regression.html#cb512-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb512-2"><a href="simple-linear-regression.html#cb512-2" aria-hidden="true" tabindex="-1"></a>epsilon <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n =</span> num_obs, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sigma)</span></code></pre></div>
 <p>Now, since the <span class="math inline">\(x_i\)</span> values in SLR are considered fixed and known, we simply specify 21 values. Another common practice is to generate them from a uniform distribution, and then use them for the remainder of the analysis.</p>
-<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="simple-linear-regression.html#cb513-1"></a>x_vals =<span class="st"> </span><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">0</span>, <span class="dt">to =</span> <span class="dv">10</span>, <span class="dt">length.out =</span> num_obs)</span>
-<span id="cb513-2"><a href="simple-linear-regression.html#cb513-2"></a><span class="co"># set.seed(1)</span></span>
-<span id="cb513-3"><a href="simple-linear-regression.html#cb513-3"></a><span class="co"># x_vals = runif(num_obs, 0, 10)</span></span></code></pre></div>
+<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="simple-linear-regression.html#cb513-1" aria-hidden="true" tabindex="-1"></a>x_vals <span class="ot">=</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">10</span>, <span class="at">length.out =</span> num_obs)</span>
+<span id="cb513-2"><a href="simple-linear-regression.html#cb513-2" aria-hidden="true" tabindex="-1"></a><span class="co"># set.seed(1)</span></span>
+<span id="cb513-3"><a href="simple-linear-regression.html#cb513-3" aria-hidden="true" tabindex="-1"></a><span class="co"># x_vals = runif(num_obs, 0, 10)</span></span></code></pre></div>
 <p>We then generate the <span class="math inline">\(y\)</span> values according to the specified functional relationship.</p>
-<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="simple-linear-regression.html#cb514-1"></a>y_vals =<span class="st"> </span>beta_<span class="dv">0</span> <span class="op">+</span><span class="st"> </span>beta_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x_vals <span class="op">+</span><span class="st"> </span>epsilon</span></code></pre></div>
+<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="simple-linear-regression.html#cb514-1" aria-hidden="true" tabindex="-1"></a>y_vals <span class="ot">=</span> beta_0 <span class="sc">+</span> beta_1 <span class="sc">*</span> x_vals <span class="sc">+</span> epsilon</span></code></pre></div>
 <p>The data, <span class="math inline">\((x_i, y_i)\)</span>, represent a possible sample from the true distribution. Now to check how well the method of least squares works, we use <code>lm()</code> to fit the model to our simulated data, then take a look at the estimated coefficients.</p>
-<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="simple-linear-regression.html#cb515-1"></a>sim_fit =<span class="st"> </span><span class="kw">lm</span>(y_vals <span class="op">~</span><span class="st"> </span>x_vals)</span>
-<span id="cb515-2"><a href="simple-linear-regression.html#cb515-2"></a><span class="kw">coef</span>(sim_fit)</span></code></pre></div>
+<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="simple-linear-regression.html#cb515-1" aria-hidden="true" tabindex="-1"></a>sim_fit <span class="ot">=</span> <span class="fu">lm</span>(y_vals <span class="sc">~</span> x_vals)</span>
+<span id="cb515-2"><a href="simple-linear-regression.html#cb515-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(sim_fit)</span></code></pre></div>
 <pre><code>## (Intercept)      x_vals 
 ##    4.832639   -1.831401</code></pre>
 <p>And look at that, they aren’t too far from the true parameters we specified!</p>
-<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb517-1"><a href="simple-linear-regression.html#cb517-1"></a><span class="kw">plot</span>(y_vals <span class="op">~</span><span class="st"> </span>x_vals)</span>
-<span id="cb517-2"><a href="simple-linear-regression.html#cb517-2"></a><span class="kw">abline</span>(sim_fit)</span></code></pre></div>
+<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb517-1"><a href="simple-linear-regression.html#cb517-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y_vals <span class="sc">~</span> x_vals)</span>
+<span id="cb517-2"><a href="simple-linear-regression.html#cb517-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(sim_fit)</span></code></pre></div>
 <p><img src="slr_files/figure-html/unnamed-chunk-51-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We should say here, that we’re being sort of lazy, and not the good kind of lazy that could be considered efficient. Any time you simulate data, you should consider doing two things: writing a function, and storing the data in a data frame.</p>
 <p>The function below, <code>sim_slr()</code>, can be used for the same task as above, but is much more flexible. Notice that we provide <code>x</code> to the function, instead of generating <code>x</code> inside the function. In the SLR model, the <span class="math inline">\(x_i\)</span> are considered known values. That is, they are not random, so we do not assume a distribution for the <span class="math inline">\(x_i\)</span>. Because of this, we will repeatedly use the same <code>x</code> values across all simulations.</p>
-<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="simple-linear-regression.html#cb518-1"></a>sim_slr =<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">beta_0 =</span> <span class="dv">10</span>, <span class="dt">beta_1 =</span> <span class="dv">5</span>, <span class="dt">sigma =</span> <span class="dv">1</span>) {</span>
-<span id="cb518-2"><a href="simple-linear-regression.html#cb518-2"></a>  n =<span class="st"> </span><span class="kw">length</span>(x)</span>
-<span id="cb518-3"><a href="simple-linear-regression.html#cb518-3"></a>  epsilon =<span class="st"> </span><span class="kw">rnorm</span>(n, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> sigma)</span>
-<span id="cb518-4"><a href="simple-linear-regression.html#cb518-4"></a>  y =<span class="st"> </span>beta_<span class="dv">0</span> <span class="op">+</span><span class="st"> </span>beta_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>epsilon</span>
-<span id="cb518-5"><a href="simple-linear-regression.html#cb518-5"></a>  <span class="kw">data.frame</span>(<span class="dt">predictor =</span> x, <span class="dt">response =</span> y)</span>
-<span id="cb518-6"><a href="simple-linear-regression.html#cb518-6"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="simple-linear-regression.html#cb518-1" aria-hidden="true" tabindex="-1"></a>sim_slr <span class="ot">=</span> <span class="cf">function</span>(x, <span class="at">beta_0 =</span> <span class="dv">10</span>, <span class="at">beta_1 =</span> <span class="dv">5</span>, <span class="at">sigma =</span> <span class="dv">1</span>) {</span>
+<span id="cb518-2"><a href="simple-linear-regression.html#cb518-2" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">=</span> <span class="fu">length</span>(x)</span>
+<span id="cb518-3"><a href="simple-linear-regression.html#cb518-3" aria-hidden="true" tabindex="-1"></a>  epsilon <span class="ot">=</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sigma)</span>
+<span id="cb518-4"><a href="simple-linear-regression.html#cb518-4" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">=</span> beta_0 <span class="sc">+</span> beta_1 <span class="sc">*</span> x <span class="sc">+</span> epsilon</span>
+<span id="cb518-5"><a href="simple-linear-regression.html#cb518-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(<span class="at">predictor =</span> x, <span class="at">response =</span> y)</span>
+<span id="cb518-6"><a href="simple-linear-regression.html#cb518-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Here, we use the function to repeat the analysis above.</p>
-<div class="sourceCode" id="cb519"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb519-1"><a href="simple-linear-regression.html#cb519-1"></a><span class="kw">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb519-2"><a href="simple-linear-regression.html#cb519-2"></a>sim_data =<span class="st"> </span><span class="kw">sim_slr</span>(<span class="dt">x =</span> x_vals, <span class="dt">beta_0 =</span> <span class="dv">5</span>, <span class="dt">beta_1 =</span> <span class="dv">-2</span>, <span class="dt">sigma =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb519"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb519-1"><a href="simple-linear-regression.html#cb519-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb519-2"><a href="simple-linear-regression.html#cb519-2" aria-hidden="true" tabindex="-1"></a>sim_data <span class="ot">=</span> <span class="fu">sim_slr</span>(<span class="at">x =</span> x_vals, <span class="at">beta_0 =</span> <span class="dv">5</span>, <span class="at">beta_1 =</span> <span class="sc">-</span><span class="dv">2</span>, <span class="at">sigma =</span> <span class="dv">3</span>)</span></code></pre></div>
 <p>This time, the simulated observations are stored in a data frame.</p>
-<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="simple-linear-regression.html#cb520-1"></a><span class="kw">head</span>(sim_data)</span></code></pre></div>
+<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="simple-linear-regression.html#cb520-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sim_data)</span></code></pre></div>
 <pre><code>##   predictor   response
 ## 1       0.0  3.1206386
 ## 2       0.5  4.5509300
@@ -1115,29 +1163,29 @@ Y \mid X \sim N(\mu = 5 - 2 x, \sigma^ 2 = 9).
 ## 5       2.0  1.9885233
 ## 6       2.5 -2.4614052</code></pre>
 <p>Now when we fit the model with <code>lm()</code> we can use a <code>data</code> argument, a very good practice.</p>
-<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="simple-linear-regression.html#cb522-1"></a>sim_fit =<span class="st"> </span><span class="kw">lm</span>(response <span class="op">~</span><span class="st"> </span>predictor, <span class="dt">data =</span> sim_data)</span>
-<span id="cb522-2"><a href="simple-linear-regression.html#cb522-2"></a><span class="kw">coef</span>(sim_fit)</span></code></pre></div>
+<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="simple-linear-regression.html#cb522-1" aria-hidden="true" tabindex="-1"></a>sim_fit <span class="ot">=</span> <span class="fu">lm</span>(response <span class="sc">~</span> predictor, <span class="at">data =</span> sim_data)</span>
+<span id="cb522-2"><a href="simple-linear-regression.html#cb522-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(sim_fit)</span></code></pre></div>
 <pre><code>## (Intercept)   predictor 
 ##    4.832639   -1.831401</code></pre>
 <p>And this time, we’ll make the plot look a lot nicer.</p>
-<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="simple-linear-regression.html#cb524-1"></a><span class="kw">plot</span>(response <span class="op">~</span><span class="st"> </span>predictor, <span class="dt">data =</span> sim_data,</span>
-<span id="cb524-2"><a href="simple-linear-regression.html#cb524-2"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Simulated Predictor Variable&quot;</span>,</span>
-<span id="cb524-3"><a href="simple-linear-regression.html#cb524-3"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Simulated Response Variable&quot;</span>,</span>
-<span id="cb524-4"><a href="simple-linear-regression.html#cb524-4"></a>     <span class="dt">main =</span> <span class="st">&quot;Simulated Regression Data&quot;</span>,</span>
-<span id="cb524-5"><a href="simple-linear-regression.html#cb524-5"></a>     <span class="dt">pch  =</span> <span class="dv">20</span>,</span>
-<span id="cb524-6"><a href="simple-linear-regression.html#cb524-6"></a>     <span class="dt">cex  =</span> <span class="dv">2</span>,</span>
-<span id="cb524-7"><a href="simple-linear-regression.html#cb524-7"></a>     <span class="dt">col  =</span> <span class="st">&quot;grey&quot;</span>)</span>
-<span id="cb524-8"><a href="simple-linear-regression.html#cb524-8"></a><span class="kw">abline</span>(sim_fit, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</span>
-<span id="cb524-9"><a href="simple-linear-regression.html#cb524-9"></a><span class="kw">abline</span>(beta_<span class="dv">0</span>, beta_<span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span>
-<span id="cb524-10"><a href="simple-linear-regression.html#cb524-10"></a><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Estimate&quot;</span>, <span class="st">&quot;Truth&quot;</span>), <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">lwd =</span> <span class="dv">2</span>,</span>
-<span id="cb524-11"><a href="simple-linear-regression.html#cb524-11"></a>       <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="simple-linear-regression.html#cb524-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(response <span class="sc">~</span> predictor, <span class="at">data =</span> sim_data,</span>
+<span id="cb524-2"><a href="simple-linear-regression.html#cb524-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Simulated Predictor Variable&quot;</span>,</span>
+<span id="cb524-3"><a href="simple-linear-regression.html#cb524-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Simulated Response Variable&quot;</span>,</span>
+<span id="cb524-4"><a href="simple-linear-regression.html#cb524-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Simulated Regression Data&quot;</span>,</span>
+<span id="cb524-5"><a href="simple-linear-regression.html#cb524-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch  =</span> <span class="dv">20</span>,</span>
+<span id="cb524-6"><a href="simple-linear-regression.html#cb524-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">cex  =</span> <span class="dv">2</span>,</span>
+<span id="cb524-7"><a href="simple-linear-regression.html#cb524-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">col  =</span> <span class="st">&quot;grey&quot;</span>)</span>
+<span id="cb524-8"><a href="simple-linear-regression.html#cb524-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(sim_fit, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>)</span>
+<span id="cb524-9"><a href="simple-linear-regression.html#cb524-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(beta_0, beta_1, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span>
+<span id="cb524-10"><a href="simple-linear-regression.html#cb524-10" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;Estimate&quot;</span>, <span class="st">&quot;Truth&quot;</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb524-11"><a href="simple-linear-regression.html#cb524-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>))</span></code></pre></div>
 <p><img src="slr_files/figure-html/unnamed-chunk-56-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="history" class="section level2 hasAnchor">
+<div id="history" class="section level2 hasAnchor" number="7.7">
 <h2><span class="header-section-number">7.7</span> History<a href="simple-linear-regression.html#history" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>For some brief background on the history of linear regression, see <a href="https://www.tandfonline.com/doi/full/10.1080/10691898.2001.11910537" target="_blank">“Galton, Pearson, and the Peas: A Brief History of Linear Regression for Statistics Instructors”</a> from the <a href="https://www.tandfonline.com/journals/ujse20" target="_blank">Journal of Statistics Education</a> as well as the <a href="https://en.wikipedia.org/wiki/Regression_analysis#History" target="_blank">Wikipedia page on the history of regression analysis</a> and lastly the article for <a href="https://en.wikipedia.org/wiki/Regression_toward_the_mean" target="_blank">regression toward the mean</a> which details the origins of the term “regression.”</p>
 </div>
-<div id="r-markdown" class="section level2 hasAnchor">
+<div id="r-markdown" class="section level2 hasAnchor" number="7.8">
 <h2><span class="header-section-number">7.8</span> <code>R</code> Markdown<a href="simple-linear-regression.html#r-markdown" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The <code>R</code> Markdown file for this chapter can be found here:</p>
 <ul>
@@ -1213,7 +1261,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

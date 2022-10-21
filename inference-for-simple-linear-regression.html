@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 8 Inference for Simple Linear Regression | Applied Statistics with R</title>
   <meta name="description" content="Chapter 8 Inference for Simple Linear Regression | Applied Statistics with R" />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 8 Inference for Simple Linear Regression | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -48,25 +48,24 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -86,7 +85,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -136,21 +135,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Applied Statistics with R</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#about-this-book"><i class="fa fa-check"></i><b>1.1</b> About This Book</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#conventions"><i class="fa fa-check"></i><b>1.2</b> Conventions</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#acknowledgements"><i class="fa fa-check"></i><b>1.3</b> Acknowledgements</a></li>
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#license"><i class="fa fa-check"></i><b>1.4</b> License</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>2</b> Introduction to <code>R</code></a><ul>
+<li class="chapter" data-level="2" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>2</b> Introduction to <code>R</code></a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#getting-started"><i class="fa fa-check"></i><b>2.1</b> Getting Started</a></li>
 <li class="chapter" data-level="2.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#basic-calculations"><i class="fa fa-check"></i><b>2.2</b> Basic Calculations</a></li>
 <li class="chapter" data-level="2.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#getting-help"><i class="fa fa-check"></i><b>2.3</b> Getting Help</a></li>
 <li class="chapter" data-level="2.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#installing-packages"><i class="fa fa-check"></i><b>2.4</b> Installing Packages</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="data-and-programming.html"><a href="data-and-programming.html"><i class="fa fa-check"></i><b>3</b> Data and Programming</a><ul>
+<li class="chapter" data-level="3" data-path="data-and-programming.html"><a href="data-and-programming.html"><i class="fa fa-check"></i><b>3</b> Data and Programming</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="data-and-programming.html"><a href="data-and-programming.html#data-types"><i class="fa fa-check"></i><b>3.1</b> Data Types</a></li>
-<li class="chapter" data-level="3.2" data-path="data-and-programming.html"><a href="data-and-programming.html#data-structures"><i class="fa fa-check"></i><b>3.2</b> Data Structures</a><ul>
+<li class="chapter" data-level="3.2" data-path="data-and-programming.html"><a href="data-and-programming.html#data-structures"><i class="fa fa-check"></i><b>3.2</b> Data Structures</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="data-and-programming.html"><a href="data-and-programming.html#vectors"><i class="fa fa-check"></i><b>3.2.1</b> Vectors</a></li>
 <li class="chapter" data-level="3.2.2" data-path="data-and-programming.html"><a href="data-and-programming.html#vectorization"><i class="fa fa-check"></i><b>3.2.2</b> Vectorization</a></li>
 <li class="chapter" data-level="3.2.3" data-path="data-and-programming.html"><a href="data-and-programming.html#logical-operators"><i class="fa fa-check"></i><b>3.2.3</b> Logical Operators</a></li>
@@ -159,40 +162,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.6" data-path="data-and-programming.html"><a href="data-and-programming.html#lists"><i class="fa fa-check"></i><b>3.2.6</b> Lists</a></li>
 <li class="chapter" data-level="3.2.7" data-path="data-and-programming.html"><a href="data-and-programming.html#data-frames"><i class="fa fa-check"></i><b>3.2.7</b> Data Frames</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="data-and-programming.html"><a href="data-and-programming.html#programming-basics"><i class="fa fa-check"></i><b>3.3</b> Programming Basics</a><ul>
+<li class="chapter" data-level="3.3" data-path="data-and-programming.html"><a href="data-and-programming.html#programming-basics"><i class="fa fa-check"></i><b>3.3</b> Programming Basics</a>
+<ul>
 <li class="chapter" data-level="3.3.1" data-path="data-and-programming.html"><a href="data-and-programming.html#control-flow"><i class="fa fa-check"></i><b>3.3.1</b> Control Flow</a></li>
 <li class="chapter" data-level="3.3.2" data-path="data-and-programming.html"><a href="data-and-programming.html#functions"><i class="fa fa-check"></i><b>3.3.2</b> Functions</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="summarizing-data.html"><a href="summarizing-data.html"><i class="fa fa-check"></i><b>4</b> Summarizing Data</a><ul>
-<li class="chapter" data-level="4.1" data-path="summarizing-data.html"><a href="summarizing-data.html#summary-statistics"><i class="fa fa-check"></i><b>4.1</b> Summary Statistics</a><ul>
+<li class="chapter" data-level="4" data-path="summarizing-data.html"><a href="summarizing-data.html"><i class="fa fa-check"></i><b>4</b> Summarizing Data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="summarizing-data.html"><a href="summarizing-data.html#summary-statistics"><i class="fa fa-check"></i><b>4.1</b> Summary Statistics</a>
+<ul>
 <li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#central-tendency"><i class="fa fa-check"></i>Central Tendency</a></li>
 <li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#spread"><i class="fa fa-check"></i>Spread</a></li>
 <li class="chapter" data-level="" data-path="summarizing-data.html"><a href="summarizing-data.html#categorical"><i class="fa fa-check"></i>Categorical</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="summarizing-data.html"><a href="summarizing-data.html#plotting"><i class="fa fa-check"></i><b>4.2</b> Plotting</a><ul>
+<li class="chapter" data-level="4.2" data-path="summarizing-data.html"><a href="summarizing-data.html#plotting"><i class="fa fa-check"></i><b>4.2</b> Plotting</a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="summarizing-data.html"><a href="summarizing-data.html#histograms"><i class="fa fa-check"></i><b>4.2.1</b> Histograms</a></li>
 <li class="chapter" data-level="4.2.2" data-path="summarizing-data.html"><a href="summarizing-data.html#barplots"><i class="fa fa-check"></i><b>4.2.2</b> Barplots</a></li>
 <li class="chapter" data-level="4.2.3" data-path="summarizing-data.html"><a href="summarizing-data.html#boxplots"><i class="fa fa-check"></i><b>4.2.3</b> Boxplots</a></li>
 <li class="chapter" data-level="4.2.4" data-path="summarizing-data.html"><a href="summarizing-data.html#scatterplots"><i class="fa fa-check"></i><b>4.2.4</b> Scatterplots</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html"><i class="fa fa-check"></i><b>5</b> Probability and Statistics in <code>R</code></a><ul>
-<li class="chapter" data-level="5.1" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#probability-in-r"><i class="fa fa-check"></i><b>5.1</b> Probability in <code>R</code></a><ul>
+<li class="chapter" data-level="5" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html"><i class="fa fa-check"></i><b>5</b> Probability and Statistics in <code>R</code></a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#probability-in-r"><i class="fa fa-check"></i><b>5.1</b> Probability in <code>R</code></a>
+<ul>
 <li class="chapter" data-level="5.1.1" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#distributions"><i class="fa fa-check"></i><b>5.1.1</b> Distributions</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#hypothesis-tests-in-r"><i class="fa fa-check"></i><b>5.2</b> Hypothesis Tests in <code>R</code></a><ul>
+<li class="chapter" data-level="5.2" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#hypothesis-tests-in-r"><i class="fa fa-check"></i><b>5.2</b> Hypothesis Tests in <code>R</code></a>
+<ul>
 <li class="chapter" data-level="5.2.1" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#one-sample-t-test-review"><i class="fa fa-check"></i><b>5.2.1</b> One Sample t-Test: Review</a></li>
 <li class="chapter" data-level="5.2.2" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#one-sample-t-test-example"><i class="fa fa-check"></i><b>5.2.2</b> One Sample t-Test: Example</a></li>
 <li class="chapter" data-level="5.2.3" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#two-sample-t-test-review"><i class="fa fa-check"></i><b>5.2.3</b> Two Sample t-Test: Review</a></li>
 <li class="chapter" data-level="5.2.4" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#two-sample-t-test-example"><i class="fa fa-check"></i><b>5.2.4</b> Two Sample t-Test: Example</a></li>
 </ul></li>
-<li class="chapter" data-level="5.3" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#simulation"><i class="fa fa-check"></i><b>5.3</b> Simulation</a><ul>
+<li class="chapter" data-level="5.3" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#simulation"><i class="fa fa-check"></i><b>5.3</b> Simulation</a>
+<ul>
 <li class="chapter" data-level="5.3.1" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#paired-differences"><i class="fa fa-check"></i><b>5.3.1</b> Paired Differences</a></li>
 <li class="chapter" data-level="5.3.2" data-path="probability-and-statistics-in-r.html"><a href="probability-and-statistics-in-r.html#distribution-of-a-sample-mean"><i class="fa fa-check"></i><b>5.3.2</b> Distribution of a Sample Mean</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="r-resources.html"><a href="r-resources.html"><i class="fa fa-check"></i><b>6</b> <code>R</code> Resources</a><ul>
+<li class="chapter" data-level="6" data-path="r-resources.html"><a href="r-resources.html"><i class="fa fa-check"></i><b>6</b> <code>R</code> Resources</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="r-resources.html"><a href="r-resources.html#beginner-tutorials-and-references"><i class="fa fa-check"></i><b>6.1</b> Beginner Tutorials and References</a></li>
 <li class="chapter" data-level="6.2" data-path="r-resources.html"><a href="r-resources.html#intermediate-references"><i class="fa fa-check"></i><b>6.2</b> Intermediate References</a></li>
 <li class="chapter" data-level="6.3" data-path="r-resources.html"><a href="r-resources.html#advanced-references"><i class="fa fa-check"></i><b>6.3</b> Advanced References</a></li>
@@ -200,16 +212,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5" data-path="r-resources.html"><a href="r-resources.html#rstudio-and-rmarkdown-videos"><i class="fa fa-check"></i><b>6.5</b> RStudio and RMarkdown Videos</a></li>
 <li class="chapter" data-level="6.6" data-path="r-resources.html"><a href="r-resources.html#rmarkdown-template"><i class="fa fa-check"></i><b>6.6</b> RMarkdown Template</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> Simple Linear Regression</a><ul>
-<li class="chapter" data-level="7.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#modeling"><i class="fa fa-check"></i><b>7.1</b> Modeling</a><ul>
+<li class="chapter" data-level="7" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html"><i class="fa fa-check"></i><b>7</b> Simple Linear Regression</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#modeling"><i class="fa fa-check"></i><b>7.1</b> Modeling</a>
+<ul>
 <li class="chapter" data-level="7.1.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#simple-linear-regression-model"><i class="fa fa-check"></i><b>7.1.1</b> Simple Linear Regression Model</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#least-squares-approach"><i class="fa fa-check"></i><b>7.2</b> Least Squares Approach</a><ul>
+<li class="chapter" data-level="7.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#least-squares-approach"><i class="fa fa-check"></i><b>7.2</b> Least Squares Approach</a>
+<ul>
 <li class="chapter" data-level="7.2.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#making-predictions"><i class="fa fa-check"></i><b>7.2.1</b> Making Predictions</a></li>
 <li class="chapter" data-level="7.2.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#residuals"><i class="fa fa-check"></i><b>7.2.2</b> Residuals</a></li>
 <li class="chapter" data-level="7.2.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#variance-estimation"><i class="fa fa-check"></i><b>7.2.3</b> Variance Estimation</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#decomposition-of-variation"><i class="fa fa-check"></i><b>7.3</b> Decomposition of Variation</a><ul>
+<li class="chapter" data-level="7.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#decomposition-of-variation"><i class="fa fa-check"></i><b>7.3</b> Decomposition of Variation</a>
+<ul>
 <li class="chapter" data-level="7.3.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#coefficient-of-determination"><i class="fa fa-check"></i><b>7.3.1</b> Coefficient of Determination</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#the-lm-function"><i class="fa fa-check"></i><b>7.4</b> The <code>lm</code> Function</a></li>
@@ -218,15 +234,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.7" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#history"><i class="fa fa-check"></i><b>7.7</b> History</a></li>
 <li class="chapter" data-level="7.8" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#r-markdown"><i class="fa fa-check"></i><b>7.8</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html"><i class="fa fa-check"></i><b>8</b> Inference for Simple Linear Regression</a><ul>
+<li class="chapter" data-level="8" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html"><i class="fa fa-check"></i><b>8</b> Inference for Simple Linear Regression</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#gaussmarkov-theorem"><i class="fa fa-check"></i><b>8.1</b> Gauss–Markov Theorem</a></li>
-<li class="chapter" data-level="8.2" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#sampling-distributions"><i class="fa fa-check"></i><b>8.2</b> Sampling Distributions</a><ul>
+<li class="chapter" data-level="8.2" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#sampling-distributions"><i class="fa fa-check"></i><b>8.2</b> Sampling Distributions</a>
+<ul>
 <li class="chapter" data-level="8.2.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#simulating-sampling-distributions"><i class="fa fa-check"></i><b>8.2.1</b> Simulating Sampling Distributions</a></li>
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#standard-errors"><i class="fa fa-check"></i><b>8.3</b> Standard Errors</a></li>
 <li class="chapter" data-level="8.4" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-intervals-for-slope-and-intercept"><i class="fa fa-check"></i><b>8.4</b> Confidence Intervals for Slope and Intercept</a></li>
 <li class="chapter" data-level="8.5" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#hypothesis-tests"><i class="fa fa-check"></i><b>8.5</b> Hypothesis Tests</a></li>
-<li class="chapter" data-level="8.6" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#cars-example"><i class="fa fa-check"></i><b>8.6</b> <code>cars</code> Example</a><ul>
+<li class="chapter" data-level="8.6" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#cars-example"><i class="fa fa-check"></i><b>8.6</b> <code>cars</code> Example</a>
+<ul>
 <li class="chapter" data-level="8.6.1" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#tests-in-r"><i class="fa fa-check"></i><b>8.6.1</b> Tests in <code>R</code></a></li>
 <li class="chapter" data-level="8.6.2" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#significance-of-regression-t-test"><i class="fa fa-check"></i><b>8.6.2</b> Significance of Regression, t-Test</a></li>
 <li class="chapter" data-level="8.6.3" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#confidence-intervals-in-r"><i class="fa fa-check"></i><b>8.6.3</b> Confidence Intervals in <code>R</code></a></li>
@@ -237,9 +256,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.10" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#significance-of-regression-f-test"><i class="fa fa-check"></i><b>8.10</b> Significance of Regression, F-Test</a></li>
 <li class="chapter" data-level="8.11" data-path="inference-for-simple-linear-regression.html"><a href="inference-for-simple-linear-regression.html#r-markdown-1"><i class="fa fa-check"></i><b>8.11</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html"><i class="fa fa-check"></i><b>9</b> Multiple Linear Regression</a><ul>
+<li class="chapter" data-level="9" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html"><i class="fa fa-check"></i><b>9</b> Multiple Linear Regression</a>
+<ul>
 <li class="chapter" data-level="9.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#matrix-approach-to-regression"><i class="fa fa-check"></i><b>9.1</b> Matrix Approach to Regression</a></li>
-<li class="chapter" data-level="9.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#sampling-distribution"><i class="fa fa-check"></i><b>9.2</b> Sampling Distribution</a><ul>
+<li class="chapter" data-level="9.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#sampling-distribution"><i class="fa fa-check"></i><b>9.2</b> Sampling Distribution</a>
+<ul>
 <li class="chapter" data-level="9.2.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#single-parameter-tests"><i class="fa fa-check"></i><b>9.2.1</b> Single Parameter Tests</a></li>
 <li class="chapter" data-level="9.2.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#confidence-intervals"><i class="fa fa-check"></i><b>9.2.2</b> Confidence Intervals</a></li>
 <li class="chapter" data-level="9.2.3" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#confidence-intervals-for-mean-response"><i class="fa fa-check"></i><b>9.2.3</b> Confidence Intervals for Mean Response</a></li>
@@ -250,34 +271,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.5" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#simulation-1"><i class="fa fa-check"></i><b>9.5</b> Simulation</a></li>
 <li class="chapter" data-level="9.6" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#r-markdown-2"><i class="fa fa-check"></i><b>9.6</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="model-building.html"><a href="model-building.html"><i class="fa fa-check"></i><b>10</b> Model Building</a><ul>
-<li class="chapter" data-level="10.1" data-path="model-building.html"><a href="model-building.html#family-form-and-fit"><i class="fa fa-check"></i><b>10.1</b> Family, Form, and Fit</a><ul>
+<li class="chapter" data-level="10" data-path="model-building.html"><a href="model-building.html"><i class="fa fa-check"></i><b>10</b> Model Building</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="model-building.html"><a href="model-building.html#family-form-and-fit"><i class="fa fa-check"></i><b>10.1</b> Family, Form, and Fit</a>
+<ul>
 <li class="chapter" data-level="10.1.1" data-path="model-building.html"><a href="model-building.html#fit"><i class="fa fa-check"></i><b>10.1.1</b> Fit</a></li>
 <li class="chapter" data-level="10.1.2" data-path="model-building.html"><a href="model-building.html#form"><i class="fa fa-check"></i><b>10.1.2</b> Form</a></li>
 <li class="chapter" data-level="10.1.3" data-path="model-building.html"><a href="model-building.html#family"><i class="fa fa-check"></i><b>10.1.3</b> Family</a></li>
 <li class="chapter" data-level="10.1.4" data-path="model-building.html"><a href="model-building.html#assumed-model-fitted-model"><i class="fa fa-check"></i><b>10.1.4</b> Assumed Model, Fitted Model</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="model-building.html"><a href="model-building.html#explanation-versus-prediction"><i class="fa fa-check"></i><b>10.2</b> Explanation versus Prediction</a><ul>
+<li class="chapter" data-level="10.2" data-path="model-building.html"><a href="model-building.html#explanation-versus-prediction"><i class="fa fa-check"></i><b>10.2</b> Explanation versus Prediction</a>
+<ul>
 <li class="chapter" data-level="10.2.1" data-path="model-building.html"><a href="model-building.html#explanation"><i class="fa fa-check"></i><b>10.2.1</b> Explanation</a></li>
 <li class="chapter" data-level="10.2.2" data-path="model-building.html"><a href="model-building.html#prediction"><i class="fa fa-check"></i><b>10.2.2</b> Prediction</a></li>
 </ul></li>
 <li class="chapter" data-level="10.3" data-path="model-building.html"><a href="model-building.html#summary"><i class="fa fa-check"></i><b>10.3</b> Summary</a></li>
 <li class="chapter" data-level="10.4" data-path="model-building.html"><a href="model-building.html#r-markdown-3"><i class="fa fa-check"></i><b>10.4</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html"><i class="fa fa-check"></i><b>11</b> Categorical Predictors and Interactions</a><ul>
+<li class="chapter" data-level="11" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html"><i class="fa fa-check"></i><b>11</b> Categorical Predictors and Interactions</a>
+<ul>
 <li class="chapter" data-level="11.1" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#dummy-variables"><i class="fa fa-check"></i><b>11.1</b> Dummy Variables</a></li>
 <li class="chapter" data-level="11.2" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#interactions"><i class="fa fa-check"></i><b>11.2</b> Interactions</a></li>
-<li class="chapter" data-level="11.3" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#factor-variables"><i class="fa fa-check"></i><b>11.3</b> Factor Variables</a><ul>
+<li class="chapter" data-level="11.3" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#factor-variables"><i class="fa fa-check"></i><b>11.3</b> Factor Variables</a>
+<ul>
 <li class="chapter" data-level="11.3.1" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#factors-with-more-than-two-levels"><i class="fa fa-check"></i><b>11.3.1</b> Factors with More Than Two Levels</a></li>
 </ul></li>
 <li class="chapter" data-level="11.4" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#parameterization"><i class="fa fa-check"></i><b>11.4</b> Parameterization</a></li>
 <li class="chapter" data-level="11.5" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#building-larger-models"><i class="fa fa-check"></i><b>11.5</b> Building Larger Models</a></li>
 <li class="chapter" data-level="11.6" data-path="categorical-predictors-and-interactions.html"><a href="categorical-predictors-and-interactions.html#r-markdown-4"><i class="fa fa-check"></i><b>11.6</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html"><i class="fa fa-check"></i><b>12</b> Analysis of Variance</a><ul>
+<li class="chapter" data-level="12" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html"><i class="fa fa-check"></i><b>12</b> Analysis of Variance</a>
+<ul>
 <li class="chapter" data-level="12.1" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#experiments"><i class="fa fa-check"></i><b>12.1</b> Experiments</a></li>
 <li class="chapter" data-level="12.2" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#two-sample-t-test"><i class="fa fa-check"></i><b>12.2</b> Two-Sample t-Test</a></li>
-<li class="chapter" data-level="12.3" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#one-way-anova"><i class="fa fa-check"></i><b>12.3</b> One-Way ANOVA</a><ul>
+<li class="chapter" data-level="12.3" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#one-way-anova"><i class="fa fa-check"></i><b>12.3</b> One-Way ANOVA</a>
+<ul>
 <li class="chapter" data-level="12.3.1" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#factor-variables-1"><i class="fa fa-check"></i><b>12.3.1</b> Factor Variables</a></li>
 <li class="chapter" data-level="12.3.2" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#some-simulation"><i class="fa fa-check"></i><b>12.3.2</b> Some Simulation</a></li>
 <li class="chapter" data-level="12.3.3" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#power"><i class="fa fa-check"></i><b>12.3.3</b> Power</a></li>
@@ -286,36 +314,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.5" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#two-way-anova"><i class="fa fa-check"></i><b>12.5</b> Two-Way ANOVA</a></li>
 <li class="chapter" data-level="12.6" data-path="analysis-of-variance.html"><a href="analysis-of-variance.html#r-markdown-5"><i class="fa fa-check"></i><b>12.6</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i><b>13</b> Model Diagnostics</a><ul>
+<li class="chapter" data-level="13" data-path="model-diagnostics.html"><a href="model-diagnostics.html"><i class="fa fa-check"></i><b>13</b> Model Diagnostics</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#model-assumptions"><i class="fa fa-check"></i><b>13.1</b> Model Assumptions</a></li>
-<li class="chapter" data-level="13.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#checking-assumptions"><i class="fa fa-check"></i><b>13.2</b> Checking Assumptions</a><ul>
+<li class="chapter" data-level="13.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#checking-assumptions"><i class="fa fa-check"></i><b>13.2</b> Checking Assumptions</a>
+<ul>
 <li class="chapter" data-level="13.2.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#fitted-versus-residuals-plot"><i class="fa fa-check"></i><b>13.2.1</b> Fitted versus Residuals Plot</a></li>
 <li class="chapter" data-level="13.2.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#breusch-pagan-test"><i class="fa fa-check"></i><b>13.2.2</b> Breusch-Pagan Test</a></li>
 <li class="chapter" data-level="13.2.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#histograms-1"><i class="fa fa-check"></i><b>13.2.3</b> Histograms</a></li>
 <li class="chapter" data-level="13.2.4" data-path="model-diagnostics.html"><a href="model-diagnostics.html#q-q-plots"><i class="fa fa-check"></i><b>13.2.4</b> Q-Q Plots</a></li>
 <li class="chapter" data-level="13.2.5" data-path="model-diagnostics.html"><a href="model-diagnostics.html#shapiro-wilk-test"><i class="fa fa-check"></i><b>13.2.5</b> Shapiro-Wilk Test</a></li>
 </ul></li>
-<li class="chapter" data-level="13.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#unusual-observations"><i class="fa fa-check"></i><b>13.3</b> Unusual Observations</a><ul>
+<li class="chapter" data-level="13.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#unusual-observations"><i class="fa fa-check"></i><b>13.3</b> Unusual Observations</a>
+<ul>
 <li class="chapter" data-level="13.3.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#leverage"><i class="fa fa-check"></i><b>13.3.1</b> Leverage</a></li>
 <li class="chapter" data-level="13.3.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#outliers"><i class="fa fa-check"></i><b>13.3.2</b> Outliers</a></li>
 <li class="chapter" data-level="13.3.3" data-path="model-diagnostics.html"><a href="model-diagnostics.html#influence"><i class="fa fa-check"></i><b>13.3.3</b> Influence</a></li>
 </ul></li>
-<li class="chapter" data-level="13.4" data-path="model-diagnostics.html"><a href="model-diagnostics.html#data-analysis-examples"><i class="fa fa-check"></i><b>13.4</b> Data Analysis Examples</a><ul>
+<li class="chapter" data-level="13.4" data-path="model-diagnostics.html"><a href="model-diagnostics.html#data-analysis-examples"><i class="fa fa-check"></i><b>13.4</b> Data Analysis Examples</a>
+<ul>
 <li class="chapter" data-level="13.4.1" data-path="model-diagnostics.html"><a href="model-diagnostics.html#good-diagnostics"><i class="fa fa-check"></i><b>13.4.1</b> Good Diagnostics</a></li>
 <li class="chapter" data-level="13.4.2" data-path="model-diagnostics.html"><a href="model-diagnostics.html#suspect-diagnostics"><i class="fa fa-check"></i><b>13.4.2</b> Suspect Diagnostics</a></li>
 </ul></li>
 <li class="chapter" data-level="13.5" data-path="model-diagnostics.html"><a href="model-diagnostics.html#r-markdown-6"><i class="fa fa-check"></i><b>13.5</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="transformations.html"><a href="transformations.html"><i class="fa fa-check"></i><b>14</b> Transformations</a><ul>
-<li class="chapter" data-level="14.1" data-path="transformations.html"><a href="transformations.html#response-transformation"><i class="fa fa-check"></i><b>14.1</b> Response Transformation</a><ul>
+<li class="chapter" data-level="14" data-path="transformations.html"><a href="transformations.html"><i class="fa fa-check"></i><b>14</b> Transformations</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="transformations.html"><a href="transformations.html#response-transformation"><i class="fa fa-check"></i><b>14.1</b> Response Transformation</a>
+<ul>
 <li class="chapter" data-level="14.1.1" data-path="transformations.html"><a href="transformations.html#variance-stabilizing-transformations"><i class="fa fa-check"></i><b>14.1.1</b> Variance Stabilizing Transformations</a></li>
 <li class="chapter" data-level="14.1.2" data-path="transformations.html"><a href="transformations.html#box-cox-transformations"><i class="fa fa-check"></i><b>14.1.2</b> Box-Cox Transformations</a></li>
 </ul></li>
-<li class="chapter" data-level="14.2" data-path="transformations.html"><a href="transformations.html#predictor-transformation"><i class="fa fa-check"></i><b>14.2</b> Predictor Transformation</a><ul>
+<li class="chapter" data-level="14.2" data-path="transformations.html"><a href="transformations.html#predictor-transformation"><i class="fa fa-check"></i><b>14.2</b> Predictor Transformation</a>
+<ul>
 <li class="chapter" data-level="14.2.1" data-path="transformations.html"><a href="transformations.html#polynomials"><i class="fa fa-check"></i><b>14.2.1</b> Polynomials</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="transformations.html"><a href="transformations.html#response-transformations"><i class="fa fa-check"></i>Response Transformations</a></li>
-<li class="chapter" data-level="" data-path="transformations.html"><a href="transformations.html#predictor-transformations"><i class="fa fa-check"></i>Predictor Transformations</a><ul>
+<li class="chapter" data-level="" data-path="transformations.html"><a href="transformations.html#predictor-transformations"><i class="fa fa-check"></i>Predictor Transformations</a>
+<ul>
 <li class="chapter" data-level="14.2.2" data-path="transformations.html"><a href="transformations.html#a-quadratic-model"><i class="fa fa-check"></i><b>14.2.2</b> A Quadratic Model</a></li>
 <li class="chapter" data-level="14.2.3" data-path="transformations.html"><a href="transformations.html#overfitting-and-extrapolation"><i class="fa fa-check"></i><b>14.2.3</b> Overfitting and Extrapolation</a></li>
 <li class="chapter" data-level="14.2.4" data-path="transformations.html"><a href="transformations.html#comparing-polynomial-models"><i class="fa fa-check"></i><b>14.2.4</b> Comparing Polynomial Models</a></li>
@@ -325,42 +361,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="14.3" data-path="transformations.html"><a href="transformations.html#r-markdown-7"><i class="fa fa-check"></i><b>14.3</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="collinearity.html"><a href="collinearity.html"><i class="fa fa-check"></i><b>15</b> Collinearity</a><ul>
+<li class="chapter" data-level="15" data-path="collinearity.html"><a href="collinearity.html"><i class="fa fa-check"></i><b>15</b> Collinearity</a>
+<ul>
 <li class="chapter" data-level="15.1" data-path="collinearity.html"><a href="collinearity.html#exact-collinearity"><i class="fa fa-check"></i><b>15.1</b> Exact Collinearity</a></li>
-<li class="chapter" data-level="15.2" data-path="collinearity.html"><a href="collinearity.html#collinearity-1"><i class="fa fa-check"></i><b>15.2</b> Collinearity</a><ul>
+<li class="chapter" data-level="15.2" data-path="collinearity.html"><a href="collinearity.html#collinearity-1"><i class="fa fa-check"></i><b>15.2</b> Collinearity</a>
+<ul>
 <li class="chapter" data-level="15.2.1" data-path="collinearity.html"><a href="collinearity.html#variance-inflation-factor."><i class="fa fa-check"></i><b>15.2.1</b> Variance Inflation Factor.</a></li>
 </ul></li>
 <li class="chapter" data-level="15.3" data-path="collinearity.html"><a href="collinearity.html#simulation-2"><i class="fa fa-check"></i><b>15.3</b> Simulation</a></li>
 <li class="chapter" data-level="15.4" data-path="collinearity.html"><a href="collinearity.html#r-markdown-8"><i class="fa fa-check"></i><b>15.4</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html"><i class="fa fa-check"></i><b>16</b> Variable Selection and Model Building</a><ul>
-<li class="chapter" data-level="16.1" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#quality-criterion"><i class="fa fa-check"></i><b>16.1</b> Quality Criterion</a><ul>
+<li class="chapter" data-level="16" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html"><i class="fa fa-check"></i><b>16</b> Variable Selection and Model Building</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#quality-criterion"><i class="fa fa-check"></i><b>16.1</b> Quality Criterion</a>
+<ul>
 <li class="chapter" data-level="16.1.1" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#akaike-information-criterion"><i class="fa fa-check"></i><b>16.1.1</b> Akaike Information Criterion</a></li>
 <li class="chapter" data-level="16.1.2" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#bayesian-information-criterion"><i class="fa fa-check"></i><b>16.1.2</b> Bayesian Information Criterion</a></li>
 <li class="chapter" data-level="16.1.3" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#adjusted-r-squared"><i class="fa fa-check"></i><b>16.1.3</b> Adjusted R-Squared</a></li>
 <li class="chapter" data-level="16.1.4" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#cross-validated-rmse"><i class="fa fa-check"></i><b>16.1.4</b> Cross-Validated RMSE</a></li>
 </ul></li>
-<li class="chapter" data-level="16.2" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#selection-procedures"><i class="fa fa-check"></i><b>16.2</b> Selection Procedures</a><ul>
+<li class="chapter" data-level="16.2" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#selection-procedures"><i class="fa fa-check"></i><b>16.2</b> Selection Procedures</a>
+<ul>
 <li class="chapter" data-level="16.2.1" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#backward-search"><i class="fa fa-check"></i><b>16.2.1</b> Backward Search</a></li>
 <li class="chapter" data-level="16.2.2" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#forward-search"><i class="fa fa-check"></i><b>16.2.2</b> Forward Search</a></li>
 <li class="chapter" data-level="16.2.3" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#stepwise-search"><i class="fa fa-check"></i><b>16.2.3</b> Stepwise Search</a></li>
 <li class="chapter" data-level="16.2.4" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#exhaustive-search"><i class="fa fa-check"></i><b>16.2.4</b> Exhaustive Search</a></li>
 </ul></li>
 <li class="chapter" data-level="16.3" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#higher-order-terms"><i class="fa fa-check"></i><b>16.3</b> Higher Order Terms</a></li>
-<li class="chapter" data-level="16.4" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#explanation-versus-prediction-1"><i class="fa fa-check"></i><b>16.4</b> Explanation versus Prediction</a><ul>
+<li class="chapter" data-level="16.4" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#explanation-versus-prediction-1"><i class="fa fa-check"></i><b>16.4</b> Explanation versus Prediction</a>
+<ul>
 <li class="chapter" data-level="16.4.1" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#explanation-1"><i class="fa fa-check"></i><b>16.4.1</b> Explanation</a></li>
 <li class="chapter" data-level="16.4.2" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#prediction-1"><i class="fa fa-check"></i><b>16.4.2</b> Prediction</a></li>
 </ul></li>
 <li class="chapter" data-level="16.5" data-path="variable-selection-and-model-building.html"><a href="variable-selection-and-model-building.html#r-markdown-9"><i class="fa fa-check"></i><b>16.5</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>17</b> Logistic Regression</a><ul>
+<li class="chapter" data-level="17" data-path="logistic-regression.html"><a href="logistic-regression.html"><i class="fa fa-check"></i><b>17</b> Logistic Regression</a>
+<ul>
 <li class="chapter" data-level="17.1" data-path="logistic-regression.html"><a href="logistic-regression.html#generalized-linear-models"><i class="fa fa-check"></i><b>17.1</b> Generalized Linear Models</a></li>
-<li class="chapter" data-level="17.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-response"><i class="fa fa-check"></i><b>17.2</b> Binary Response</a><ul>
+<li class="chapter" data-level="17.2" data-path="logistic-regression.html"><a href="logistic-regression.html#binary-response"><i class="fa fa-check"></i><b>17.2</b> Binary Response</a>
+<ul>
 <li class="chapter" data-level="17.2.1" data-path="logistic-regression.html"><a href="logistic-regression.html#fitting-logistic-regression"><i class="fa fa-check"></i><b>17.2.1</b> Fitting Logistic Regression</a></li>
 <li class="chapter" data-level="17.2.2" data-path="logistic-regression.html"><a href="logistic-regression.html#fitting-issues"><i class="fa fa-check"></i><b>17.2.2</b> Fitting Issues</a></li>
 <li class="chapter" data-level="17.2.3" data-path="logistic-regression.html"><a href="logistic-regression.html#simulation-examples"><i class="fa fa-check"></i><b>17.2.3</b> Simulation Examples</a></li>
 </ul></li>
-<li class="chapter" data-level="17.3" data-path="logistic-regression.html"><a href="logistic-regression.html#working-with-logistic-regression"><i class="fa fa-check"></i><b>17.3</b> Working with Logistic Regression</a><ul>
+<li class="chapter" data-level="17.3" data-path="logistic-regression.html"><a href="logistic-regression.html#working-with-logistic-regression"><i class="fa fa-check"></i><b>17.3</b> Working with Logistic Regression</a>
+<ul>
 <li class="chapter" data-level="17.3.1" data-path="logistic-regression.html"><a href="logistic-regression.html#testing-with-glms"><i class="fa fa-check"></i><b>17.3.1</b> Testing with GLMs</a></li>
 <li class="chapter" data-level="17.3.2" data-path="logistic-regression.html"><a href="logistic-regression.html#wald-test"><i class="fa fa-check"></i><b>17.3.2</b> Wald Test</a></li>
 <li class="chapter" data-level="17.3.3" data-path="logistic-regression.html"><a href="logistic-regression.html#likelihood-ratio-test"><i class="fa fa-check"></i><b>17.3.3</b> Likelihood-Ratio Test</a></li>
@@ -370,20 +415,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="17.3.7" data-path="logistic-regression.html"><a href="logistic-regression.html#formula-syntax"><i class="fa fa-check"></i><b>17.3.7</b> Formula Syntax</a></li>
 <li class="chapter" data-level="17.3.8" data-path="logistic-regression.html"><a href="logistic-regression.html#deviance"><i class="fa fa-check"></i><b>17.3.8</b> Deviance</a></li>
 </ul></li>
-<li class="chapter" data-level="17.4" data-path="logistic-regression.html"><a href="logistic-regression.html#classification"><i class="fa fa-check"></i><b>17.4</b> Classification</a><ul>
+<li class="chapter" data-level="17.4" data-path="logistic-regression.html"><a href="logistic-regression.html#classification"><i class="fa fa-check"></i><b>17.4</b> Classification</a>
+<ul>
 <li class="chapter" data-level="17.4.1" data-path="logistic-regression.html"><a href="logistic-regression.html#spam-example"><i class="fa fa-check"></i><b>17.4.1</b> <code>spam</code> Example</a></li>
 <li class="chapter" data-level="17.4.2" data-path="logistic-regression.html"><a href="logistic-regression.html#evaluating-classifiers"><i class="fa fa-check"></i><b>17.4.2</b> Evaluating Classifiers</a></li>
 </ul></li>
 <li class="chapter" data-level="17.5" data-path="logistic-regression.html"><a href="logistic-regression.html#r-markdown-10"><i class="fa fa-check"></i><b>17.5</b> <code>R</code> Markdown</a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="beyond.html"><a href="beyond.html"><i class="fa fa-check"></i><b>18</b> Beyond</a><ul>
+<li class="chapter" data-level="18" data-path="beyond.html"><a href="beyond.html"><i class="fa fa-check"></i><b>18</b> Beyond</a>
+<ul>
 <li class="chapter" data-level="18.1" data-path="beyond.html"><a href="beyond.html#whats-next"><i class="fa fa-check"></i><b>18.1</b> What’s Next</a></li>
 <li class="chapter" data-level="18.2" data-path="beyond.html"><a href="beyond.html#rstudio"><i class="fa fa-check"></i><b>18.2</b> RStudio</a></li>
 <li class="chapter" data-level="18.3" data-path="beyond.html"><a href="beyond.html#tidy-data"><i class="fa fa-check"></i><b>18.3</b> Tidy Data</a></li>
 <li class="chapter" data-level="18.4" data-path="beyond.html"><a href="beyond.html#visualization"><i class="fa fa-check"></i><b>18.4</b> Visualization</a></li>
 <li class="chapter" data-level="18.5" data-path="beyond.html"><a href="beyond.html#web-applications"><i class="fa fa-check"></i><b>18.5</b> Web Applications</a></li>
 <li class="chapter" data-level="18.6" data-path="beyond.html"><a href="beyond.html#experimental-design"><i class="fa fa-check"></i><b>18.6</b> Experimental Design</a></li>
-<li class="chapter" data-level="18.7" data-path="beyond.html"><a href="beyond.html#machine-learning"><i class="fa fa-check"></i><b>18.7</b> Machine Learning</a><ul>
+<li class="chapter" data-level="18.7" data-path="beyond.html"><a href="beyond.html#machine-learning"><i class="fa fa-check"></i><b>18.7</b> Machine Learning</a>
+<ul>
 <li class="chapter" data-level="18.7.1" data-path="beyond.html"><a href="beyond.html#deep-learning"><i class="fa fa-check"></i><b>18.7.1</b> Deep Learning</a></li>
 </ul></li>
 <li class="chapter" data-level="18.8" data-path="beyond.html"><a href="beyond.html#time-series"><i class="fa fa-check"></i><b>18.8</b> Time Series</a></li>
@@ -412,7 +460,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="inference-for-simple-linear-regression" class="section level1 hasAnchor">
+<div id="inference-for-simple-linear-regression" class="section level1 hasAnchor" number="8">
 <h1><span class="header-section-number">Chapter 8</span> Inference for Simple Linear Regression<a href="inference-for-simple-linear-regression.html#inference-for-simple-linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <blockquote>
 <p>“There are three types of lies: lies, damn lies, and statistics.”</p>
@@ -445,8 +493,8 @@ s_e = \text{RSE} = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 \]</span></p>
 <p>which we also called <span class="math inline">\(\text{RSE}\)</span>, for “Residual Standard Error.”</p>
 <p>When applied to the <code>cars</code> data, we obtained the following results:</p>
-<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="inference-for-simple-linear-regression.html#cb525-1"></a>stop_dist_model =<span class="st"> </span><span class="kw">lm</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars)</span>
-<span id="cb525-2"><a href="inference-for-simple-linear-regression.html#cb525-2"></a><span class="kw">summary</span>(stop_dist_model)</span></code></pre></div>
+<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="inference-for-simple-linear-regression.html#cb525-1" aria-hidden="true" tabindex="-1"></a>stop_dist_model <span class="ot">=</span> <span class="fu">lm</span>(dist <span class="sc">~</span> speed, <span class="at">data =</span> cars)</span>
+<span id="cb525-2"><a href="inference-for-simple-linear-regression.html#cb525-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(stop_dist_model)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = dist ~ speed, data = cars)
@@ -466,14 +514,14 @@ s_e = \text{RSE} = \sqrt{\frac{1}{n - 2}\sum_{i = 1}^n e_i^2}
 ## Multiple R-squared:  0.6511, Adjusted R-squared:  0.6438 
 ## F-statistic: 89.57 on 1 and 48 DF,  p-value: 1.49e-12</code></pre>
 <p>Last chapter, we only discussed the <code>Estimate</code>, <code>Residual standard error</code>, and <code>Multiple R-squared</code> values. In this chapter, we will discuss all of the information under <code>Coefficients</code> as well as <code>F-statistic</code>.</p>
-<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="inference-for-simple-linear-regression.html#cb527-1"></a><span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars,</span>
-<span id="cb527-2"><a href="inference-for-simple-linear-regression.html#cb527-2"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,</span>
-<span id="cb527-3"><a href="inference-for-simple-linear-regression.html#cb527-3"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,</span>
-<span id="cb527-4"><a href="inference-for-simple-linear-regression.html#cb527-4"></a>     <span class="dt">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,</span>
-<span id="cb527-5"><a href="inference-for-simple-linear-regression.html#cb527-5"></a>     <span class="dt">pch  =</span> <span class="dv">20</span>,</span>
-<span id="cb527-6"><a href="inference-for-simple-linear-regression.html#cb527-6"></a>     <span class="dt">cex  =</span> <span class="dv">2</span>,</span>
-<span id="cb527-7"><a href="inference-for-simple-linear-regression.html#cb527-7"></a>     <span class="dt">col  =</span> <span class="st">&quot;grey&quot;</span>)</span>
-<span id="cb527-8"><a href="inference-for-simple-linear-regression.html#cb527-8"></a><span class="kw">abline</span>(stop_dist_model, <span class="dt">lwd =</span> <span class="dv">5</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="inference-for-simple-linear-regression.html#cb527-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dist <span class="sc">~</span> speed, <span class="at">data =</span> cars,</span>
+<span id="cb527-2"><a href="inference-for-simple-linear-regression.html#cb527-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,</span>
+<span id="cb527-3"><a href="inference-for-simple-linear-regression.html#cb527-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,</span>
+<span id="cb527-4"><a href="inference-for-simple-linear-regression.html#cb527-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,</span>
+<span id="cb527-5"><a href="inference-for-simple-linear-regression.html#cb527-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch  =</span> <span class="dv">20</span>,</span>
+<span id="cb527-6"><a href="inference-for-simple-linear-regression.html#cb527-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">cex  =</span> <span class="dv">2</span>,</span>
+<span id="cb527-7"><a href="inference-for-simple-linear-regression.html#cb527-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">col  =</span> <span class="st">&quot;grey&quot;</span>)</span>
+<span id="cb527-8"><a href="inference-for-simple-linear-regression.html#cb527-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(stop_dist_model, <span class="at">lwd =</span> <span class="dv">5</span>, <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>)</span></code></pre></div>
 <p><img src="slr-inf_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>To get started, we’ll note that there is another equivalent expression for <span class="math inline">\(S_{xy}\)</span> which we did not see last chapter,</p>
 <p><span class="math display">\[
@@ -489,7 +537,7 @@ S_{xy}= \sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y}) = \sum_{i = 1}^{n}(x_i - 
 \end{aligned}
 \]</span></p>
 <p>Last chapter we argued that these estimates of unknown model parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> were good because we obtained them by minimizing errors. We will now discuss the Gauss–Markov theorem, which takes this idea further, showing that these estimates are actually the “best” estimates, from a certain point of view.</p>
-<div id="gaussmarkov-theorem" class="section level2 hasAnchor">
+<div id="gaussmarkov-theorem" class="section level2 hasAnchor" number="8.1">
 <h2><span class="header-section-number">8.1</span> Gauss–Markov Theorem<a href="inference-for-simple-linear-regression.html#gaussmarkov-theorem" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The <strong>Gauss–Markov theorem</strong> tells us that when estimating the parameters of the simple linear regression model <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, the <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> which we derived are the <strong>best linear unbiased estimates</strong>, or <em>BLUE</em> for short. (The actual conditions for the Gauss–Markov theorem are more relaxed than the SLR model.)</p>
 <p>We will now discuss <em>linear</em>, <em>unbiased</em>, and <em>best</em> as they relate to these estimates.</p>
@@ -540,7 +588,7 @@ S_{xy}= \sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y}) = \sum_{i = 1}^{n}(x_i - 
 <p>These quantify the variability of the estimates due to random chance during sampling. Are these “the best”? Are these variances as small as we can possibly get? You’ll just have to take our word for it that they are because showing that this is true is beyond the scope of this course.</p>
 </div>
 </div>
-<div id="sampling-distributions" class="section level2 hasAnchor">
+<div id="sampling-distributions" class="section level2 hasAnchor" number="8.2">
 <h2><span class="header-section-number">8.2</span> Sampling Distributions<a href="inference-for-simple-linear-regression.html#sampling-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Now that we have “redefined” the estimates for <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> as random variables, we can discuss their <strong>sampling distribution</strong>, which is the distribution when a statistic is considered a random variable.</p>
 <p>Since both <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are a linear combination of the <span class="math inline">\(Y_i\)</span> and each <span class="math inline">\(Y_i\)</span> is normally distributed, then both <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> also follow a normal distribution.</p>
@@ -566,7 +614,7 @@ S_{xy}= \sum_{i = 1}^{n}(x_i - \bar{x})(y_i - \bar{y}) = \sum_{i = 1}^{n}(x_i - 
 \]</span></p>
 <p>At this point we have neglected to prove a number of these results. Instead of working through the tedious derivations of these sampling distributions, we will instead justify these results to ourselves using simulation.</p>
 <p>A note to current readers: These derivations and proofs may be added to an appendix at a later time. You can also find these results in nearly any standard linear regression textbook. At UIUC, these results will likely be presented in both STAT 424 and STAT 425. However, since you will not be asked to perform derivations of this type in this course, they are for now omitted.</p>
-<div id="simulating-sampling-distributions" class="section level3 hasAnchor">
+<div id="simulating-sampling-distributions" class="section level3 hasAnchor" number="8.2.1">
 <h3><span class="header-section-number">8.2.1</span> Simulating Sampling Distributions<a href="inference-for-simple-linear-regression.html#simulating-sampling-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To verify the above results, we will simulate samples of size <span class="math inline">\(n = 100\)</span> from the model</p>
 <p><span class="math display">\[
@@ -587,18 +635,18 @@ Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 \hat{\beta}_0 \sim N\left(  \beta_0, \sigma^2 \left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right) \right).
 \]</span></p>
 <p>First we need to decide ahead of time what our <span class="math inline">\(x\)</span> values will be for this simulation, since the <span class="math inline">\(x\)</span> values in SLR are also considered known quantities. The choice of <span class="math inline">\(x\)</span> values is arbitrary. Here we also set a seed for randomization, and calculate <span class="math inline">\(S_{xx}\)</span> which we will need going forward.</p>
-<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="inference-for-simple-linear-regression.html#cb528-1"></a><span class="kw">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb528-2"><a href="inference-for-simple-linear-regression.html#cb528-2"></a>sample_size =<span class="st"> </span><span class="dv">100</span> <span class="co"># this is n</span></span>
-<span id="cb528-3"><a href="inference-for-simple-linear-regression.html#cb528-3"></a>x =<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">length =</span> sample_size)</span>
-<span id="cb528-4"><a href="inference-for-simple-linear-regression.html#cb528-4"></a>Sxx =<span class="st"> </span><span class="kw">sum</span>((x <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(x)) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="inference-for-simple-linear-regression.html#cb528-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb528-2"><a href="inference-for-simple-linear-regression.html#cb528-2" aria-hidden="true" tabindex="-1"></a>sample_size <span class="ot">=</span> <span class="dv">100</span> <span class="co"># this is n</span></span>
+<span id="cb528-3"><a href="inference-for-simple-linear-regression.html#cb528-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="at">length =</span> sample_size)</span>
+<span id="cb528-4"><a href="inference-for-simple-linear-regression.html#cb528-4" aria-hidden="true" tabindex="-1"></a>Sxx <span class="ot">=</span> <span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">^</span> <span class="dv">2</span>)</span></code></pre></div>
 <p>We also fix our parameter values.</p>
-<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="inference-for-simple-linear-regression.html#cb529-1"></a>beta_<span class="dv">0</span> =<span class="st"> </span><span class="dv">3</span></span>
-<span id="cb529-2"><a href="inference-for-simple-linear-regression.html#cb529-2"></a>beta_<span class="dv">1</span> =<span class="st"> </span><span class="dv">6</span></span>
-<span id="cb529-3"><a href="inference-for-simple-linear-regression.html#cb529-3"></a>sigma  =<span class="st"> </span><span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="inference-for-simple-linear-regression.html#cb529-1" aria-hidden="true" tabindex="-1"></a>beta_0 <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb529-2"><a href="inference-for-simple-linear-regression.html#cb529-2" aria-hidden="true" tabindex="-1"></a>beta_1 <span class="ot">=</span> <span class="dv">6</span></span>
+<span id="cb529-3"><a href="inference-for-simple-linear-regression.html#cb529-3" aria-hidden="true" tabindex="-1"></a>sigma  <span class="ot">=</span> <span class="dv">2</span></span></code></pre></div>
 <p>With this information, we know the sampling distributions should be:</p>
-<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="inference-for-simple-linear-regression.html#cb530-1"></a>(<span class="dt">var_beta_1_hat =</span> sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>Sxx)</span></code></pre></div>
+<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="inference-for-simple-linear-regression.html#cb530-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">var_beta_1_hat =</span> sigma <span class="sc">^</span> <span class="dv">2</span> <span class="sc">/</span> Sxx)</span></code></pre></div>
 <pre><code>## [1] 0.1176238</code></pre>
-<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="inference-for-simple-linear-regression.html#cb532-1"></a>(<span class="dt">var_beta_0_hat =</span> sigma <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>sample_size <span class="op">+</span><span class="st"> </span><span class="kw">mean</span>(x) <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">/</span><span class="st"> </span>Sxx))</span></code></pre></div>
+<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="inference-for-simple-linear-regression.html#cb532-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">var_beta_0_hat =</span> sigma <span class="sc">^</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">/</span> sample_size <span class="sc">+</span> <span class="fu">mean</span>(x) <span class="sc">^</span> <span class="dv">2</span> <span class="sc">/</span> Sxx))</span></code></pre></div>
 <pre><code>## [1] 0.04</code></pre>
 <p><span class="math display">\[
 \hat{\beta}_1 \sim N(  6, 0.1176238)
@@ -622,68 +670,68 @@ Y_i = \beta_0 + \beta_1 x_i + \epsilon_i
 \end{aligned}
 \]</span></p>
 <p>We now simulate data from this model 10,000 times. Note this may not be the most <code>R</code> way of doing the simulation. We perform the simulation in this manner in an attempt at clarity. For example, we could have used the <code>sim_slr()</code> function from the previous chapter. We also simply store variables in the global environment instead of creating a data frame for each new simulated dataset.</p>
-<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="inference-for-simple-linear-regression.html#cb534-1"></a>num_samples =<span class="st"> </span><span class="dv">10000</span></span>
-<span id="cb534-2"><a href="inference-for-simple-linear-regression.html#cb534-2"></a>beta_<span class="dv">0</span>_hats =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, num_samples)</span>
-<span id="cb534-3"><a href="inference-for-simple-linear-regression.html#cb534-3"></a>beta_<span class="dv">1</span>_hats =<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, num_samples)</span>
-<span id="cb534-4"><a href="inference-for-simple-linear-regression.html#cb534-4"></a></span>
-<span id="cb534-5"><a href="inference-for-simple-linear-regression.html#cb534-5"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>num_samples) {</span>
-<span id="cb534-6"><a href="inference-for-simple-linear-regression.html#cb534-6"></a>  eps =<span class="st"> </span><span class="kw">rnorm</span>(sample_size, <span class="dt">mean =</span> <span class="dv">0</span>, <span class="dt">sd =</span> sigma)</span>
-<span id="cb534-7"><a href="inference-for-simple-linear-regression.html#cb534-7"></a>  y   =<span class="st"> </span>beta_<span class="dv">0</span> <span class="op">+</span><span class="st"> </span>beta_<span class="dv">1</span> <span class="op">*</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>eps</span>
-<span id="cb534-8"><a href="inference-for-simple-linear-regression.html#cb534-8"></a>  </span>
-<span id="cb534-9"><a href="inference-for-simple-linear-regression.html#cb534-9"></a>  sim_model =<span class="st"> </span><span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x)</span>
-<span id="cb534-10"><a href="inference-for-simple-linear-regression.html#cb534-10"></a>  </span>
-<span id="cb534-11"><a href="inference-for-simple-linear-regression.html#cb534-11"></a>  beta_<span class="dv">0</span>_hats[i] =<span class="st"> </span><span class="kw">coef</span>(sim_model)[<span class="dv">1</span>]</span>
-<span id="cb534-12"><a href="inference-for-simple-linear-regression.html#cb534-12"></a>  beta_<span class="dv">1</span>_hats[i] =<span class="st"> </span><span class="kw">coef</span>(sim_model)[<span class="dv">2</span>]</span>
-<span id="cb534-13"><a href="inference-for-simple-linear-regression.html#cb534-13"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="inference-for-simple-linear-regression.html#cb534-1" aria-hidden="true" tabindex="-1"></a>num_samples <span class="ot">=</span> <span class="dv">10000</span></span>
+<span id="cb534-2"><a href="inference-for-simple-linear-regression.html#cb534-2" aria-hidden="true" tabindex="-1"></a>beta_0_hats <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">0</span>, num_samples)</span>
+<span id="cb534-3"><a href="inference-for-simple-linear-regression.html#cb534-3" aria-hidden="true" tabindex="-1"></a>beta_1_hats <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">0</span>, num_samples)</span>
+<span id="cb534-4"><a href="inference-for-simple-linear-regression.html#cb534-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb534-5"><a href="inference-for-simple-linear-regression.html#cb534-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>num_samples) {</span>
+<span id="cb534-6"><a href="inference-for-simple-linear-regression.html#cb534-6" aria-hidden="true" tabindex="-1"></a>  eps <span class="ot">=</span> <span class="fu">rnorm</span>(sample_size, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sigma)</span>
+<span id="cb534-7"><a href="inference-for-simple-linear-regression.html#cb534-7" aria-hidden="true" tabindex="-1"></a>  y   <span class="ot">=</span> beta_0 <span class="sc">+</span> beta_1 <span class="sc">*</span> x <span class="sc">+</span> eps</span>
+<span id="cb534-8"><a href="inference-for-simple-linear-regression.html#cb534-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb534-9"><a href="inference-for-simple-linear-regression.html#cb534-9" aria-hidden="true" tabindex="-1"></a>  sim_model <span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
+<span id="cb534-10"><a href="inference-for-simple-linear-regression.html#cb534-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb534-11"><a href="inference-for-simple-linear-regression.html#cb534-11" aria-hidden="true" tabindex="-1"></a>  beta_0_hats[i] <span class="ot">=</span> <span class="fu">coef</span>(sim_model)[<span class="dv">1</span>]</span>
+<span id="cb534-12"><a href="inference-for-simple-linear-regression.html#cb534-12" aria-hidden="true" tabindex="-1"></a>  beta_1_hats[i] <span class="ot">=</span> <span class="fu">coef</span>(sim_model)[<span class="dv">2</span>]</span>
+<span id="cb534-13"><a href="inference-for-simple-linear-regression.html#cb534-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Each time we simulated the data, we obtained values of the estimated coefficients. The variables <code>beta_0_hats</code> and <code>beta_1_hats</code> now store 10,000 simulated values of <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> respectively.</p>
 <p>We first verify the distribution of <span class="math inline">\(\hat{\beta}_1\)</span>.</p>
-<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="inference-for-simple-linear-regression.html#cb535-1"></a><span class="kw">mean</span>(beta_<span class="dv">1</span>_hats) <span class="co"># empirical mean</span></span></code></pre></div>
+<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="inference-for-simple-linear-regression.html#cb535-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(beta_1_hats) <span class="co"># empirical mean</span></span></code></pre></div>
 <pre><code>## [1] 6.001998</code></pre>
-<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="inference-for-simple-linear-regression.html#cb537-1"></a>beta_<span class="dv">1</span>            <span class="co"># true mean</span></span></code></pre></div>
+<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="inference-for-simple-linear-regression.html#cb537-1" aria-hidden="true" tabindex="-1"></a>beta_1            <span class="co"># true mean</span></span></code></pre></div>
 <pre><code>## [1] 6</code></pre>
-<div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb539-1"><a href="inference-for-simple-linear-regression.html#cb539-1"></a><span class="kw">var</span>(beta_<span class="dv">1</span>_hats)  <span class="co"># empirical variance</span></span></code></pre></div>
+<div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb539-1"><a href="inference-for-simple-linear-regression.html#cb539-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(beta_1_hats)  <span class="co"># empirical variance</span></span></code></pre></div>
 <pre><code>## [1] 0.11899</code></pre>
-<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="inference-for-simple-linear-regression.html#cb541-1"></a>var_beta_<span class="dv">1</span>_hat    <span class="co"># true variance</span></span></code></pre></div>
+<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="inference-for-simple-linear-regression.html#cb541-1" aria-hidden="true" tabindex="-1"></a>var_beta_1_hat    <span class="co"># true variance</span></span></code></pre></div>
 <pre><code>## [1] 0.1176238</code></pre>
 <p>We see that the empirical and true means and variances are <em>very</em> similar. We also verify that the empirical distribution is normal. To do so, we plot a histogram of the <code>beta_1_hats</code>, and add the curve for the true distribution of <span class="math inline">\(\hat{\beta}_1\)</span>. We use <code>prob = TRUE</code> to put the histogram on the same scale as the normal curve.</p>
-<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="inference-for-simple-linear-regression.html#cb543-1"></a><span class="co"># note need to use prob = TRUE</span></span>
-<span id="cb543-2"><a href="inference-for-simple-linear-regression.html#cb543-2"></a><span class="kw">hist</span>(beta_<span class="dv">1</span>_hats, <span class="dt">prob =</span> <span class="ot">TRUE</span>, <span class="dt">breaks =</span> <span class="dv">20</span>, </span>
-<span id="cb543-3"><a href="inference-for-simple-linear-regression.html#cb543-3"></a>     <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">1</span>]), <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span>
-<span id="cb543-4"><a href="inference-for-simple-linear-regression.html#cb543-4"></a><span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> beta_<span class="dv">1</span>, <span class="dt">sd =</span> <span class="kw">sqrt</span>(var_beta_<span class="dv">1</span>_hat)), </span>
-<span id="cb543-5"><a href="inference-for-simple-linear-regression.html#cb543-5"></a>      <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="inference-for-simple-linear-regression.html#cb543-1" aria-hidden="true" tabindex="-1"></a><span class="co"># note need to use prob = TRUE</span></span>
+<span id="cb543-2"><a href="inference-for-simple-linear-regression.html#cb543-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(beta_1_hats, <span class="at">prob =</span> <span class="cn">TRUE</span>, <span class="at">breaks =</span> <span class="dv">20</span>, </span>
+<span id="cb543-3"><a href="inference-for-simple-linear-regression.html#cb543-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">hat</span>(beta)[<span class="dv">1</span>]), <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span>
+<span id="cb543-4"><a href="inference-for-simple-linear-regression.html#cb543-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="at">mean =</span> beta_1, <span class="at">sd =</span> <span class="fu">sqrt</span>(var_beta_1_hat)), </span>
+<span id="cb543-5"><a href="inference-for-simple-linear-regression.html#cb543-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span></code></pre></div>
 <p><img src="slr-inf_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We then repeat the process for <span class="math inline">\(\hat{\beta}_0\)</span>.</p>
-<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb544-1"><a href="inference-for-simple-linear-regression.html#cb544-1"></a><span class="kw">mean</span>(beta_<span class="dv">0</span>_hats) <span class="co"># empirical mean</span></span></code></pre></div>
+<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb544-1"><a href="inference-for-simple-linear-regression.html#cb544-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(beta_0_hats) <span class="co"># empirical mean</span></span></code></pre></div>
 <pre><code>## [1] 3.001147</code></pre>
-<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb546-1"><a href="inference-for-simple-linear-regression.html#cb546-1"></a>beta_<span class="dv">0</span>            <span class="co"># true mean</span></span></code></pre></div>
+<div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb546-1"><a href="inference-for-simple-linear-regression.html#cb546-1" aria-hidden="true" tabindex="-1"></a>beta_0            <span class="co"># true mean</span></span></code></pre></div>
 <pre><code>## [1] 3</code></pre>
-<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="inference-for-simple-linear-regression.html#cb548-1"></a><span class="kw">var</span>(beta_<span class="dv">0</span>_hats)  <span class="co"># empirical variance</span></span></code></pre></div>
+<div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="inference-for-simple-linear-regression.html#cb548-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(beta_0_hats)  <span class="co"># empirical variance</span></span></code></pre></div>
 <pre><code>## [1] 0.04017924</code></pre>
-<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="inference-for-simple-linear-regression.html#cb550-1"></a>var_beta_<span class="dv">0</span>_hat    <span class="co"># true variance</span></span></code></pre></div>
+<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="inference-for-simple-linear-regression.html#cb550-1" aria-hidden="true" tabindex="-1"></a>var_beta_0_hat    <span class="co"># true variance</span></span></code></pre></div>
 <pre><code>## [1] 0.04</code></pre>
-<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="inference-for-simple-linear-regression.html#cb552-1"></a><span class="kw">hist</span>(beta_<span class="dv">0</span>_hats, <span class="dt">prob =</span> <span class="ot">TRUE</span>, <span class="dt">breaks =</span> <span class="dv">25</span>, </span>
-<span id="cb552-2"><a href="inference-for-simple-linear-regression.html#cb552-2"></a>     <span class="dt">xlab =</span> <span class="kw">expression</span>(<span class="kw">hat</span>(beta)[<span class="dv">0</span>]), <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span>
-<span id="cb552-3"><a href="inference-for-simple-linear-regression.html#cb552-3"></a><span class="kw">curve</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean =</span> beta_<span class="dv">0</span>, <span class="dt">sd =</span> <span class="kw">sqrt</span>(var_beta_<span class="dv">0</span>_hat)),</span>
-<span id="cb552-4"><a href="inference-for-simple-linear-regression.html#cb552-4"></a>      <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">lwd =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="inference-for-simple-linear-regression.html#cb552-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(beta_0_hats, <span class="at">prob =</span> <span class="cn">TRUE</span>, <span class="at">breaks =</span> <span class="dv">25</span>, </span>
+<span id="cb552-2"><a href="inference-for-simple-linear-regression.html#cb552-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">hat</span>(beta)[<span class="dv">0</span>]), <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span>
+<span id="cb552-3"><a href="inference-for-simple-linear-regression.html#cb552-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="at">mean =</span> beta_0, <span class="at">sd =</span> <span class="fu">sqrt</span>(var_beta_0_hat)),</span>
+<span id="cb552-4"><a href="inference-for-simple-linear-regression.html#cb552-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span></code></pre></div>
 <p><img src="slr-inf_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>In this simulation study, we have only simulated a finite number of samples. To truly verify the distributional results, we would need to observe an infinite number of samples. However, the following plot should make it clear that if we continued simulating, the empirical results would get closer and closer to what we should expect.</p>
-<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="inference-for-simple-linear-regression.html#cb553-1"></a><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="co"># adjusted plot margins, otherwise the &quot;hat&quot; does not display</span></span>
-<span id="cb553-2"><a href="inference-for-simple-linear-regression.html#cb553-2"></a><span class="kw">plot</span>(<span class="kw">cumsum</span>(beta_<span class="dv">1</span>_hats) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(beta_<span class="dv">1</span>_hats)), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">5.95</span>, <span class="fl">6.05</span>),</span>
-<span id="cb553-3"><a href="inference-for-simple-linear-regression.html#cb553-3"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Number of Simulations&quot;</span>,</span>
-<span id="cb553-4"><a href="inference-for-simple-linear-regression.html#cb553-4"></a>     <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;Empirical Mean of &quot;</span> <span class="op">~</span><span class="st"> </span><span class="kw">hat</span>(beta)[<span class="dv">1</span>]),</span>
-<span id="cb553-5"><a href="inference-for-simple-linear-regression.html#cb553-5"></a>     <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span>
-<span id="cb553-6"><a href="inference-for-simple-linear-regression.html#cb553-6"></a><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">6</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="inference-for-simple-linear-regression.html#cb553-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="co"># adjusted plot margins, otherwise the &quot;hat&quot; does not display</span></span>
+<span id="cb553-2"><a href="inference-for-simple-linear-regression.html#cb553-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">cumsum</span>(beta_1_hats) <span class="sc">/</span> (<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(beta_1_hats)), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">5.95</span>, <span class="fl">6.05</span>),</span>
+<span id="cb553-3"><a href="inference-for-simple-linear-regression.html#cb553-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Number of Simulations&quot;</span>,</span>
+<span id="cb553-4"><a href="inference-for-simple-linear-regression.html#cb553-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;Empirical Mean of &quot;</span> <span class="sc">~</span> <span class="fu">hat</span>(beta)[<span class="dv">1</span>]),</span>
+<span id="cb553-5"><a href="inference-for-simple-linear-regression.html#cb553-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span>
+<span id="cb553-6"><a href="inference-for-simple-linear-regression.html#cb553-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">6</span>, <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="slr-inf_files/figure-html/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="inference-for-simple-linear-regression.html#cb554-1"></a><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="co"># adjusted plot margins, otherwise the &quot;hat&quot; does not display</span></span>
-<span id="cb554-2"><a href="inference-for-simple-linear-regression.html#cb554-2"></a><span class="kw">plot</span>(<span class="kw">cumsum</span>(beta_<span class="dv">0</span>_hats) <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(beta_<span class="dv">0</span>_hats)), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">2.95</span>, <span class="fl">3.05</span>),</span>
-<span id="cb554-3"><a href="inference-for-simple-linear-regression.html#cb554-3"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Number of Simulations&quot;</span>,</span>
-<span id="cb554-4"><a href="inference-for-simple-linear-regression.html#cb554-4"></a>     <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="st">&quot;Empirical Mean of &quot;</span> <span class="op">~</span><span class="st"> </span><span class="kw">hat</span>(beta)[<span class="dv">0</span>]),</span>
-<span id="cb554-5"><a href="inference-for-simple-linear-regression.html#cb554-5"></a>     <span class="dt">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span>
-<span id="cb554-6"><a href="inference-for-simple-linear-regression.html#cb554-6"></a><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="inference-for-simple-linear-regression.html#cb554-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="co"># adjusted plot margins, otherwise the &quot;hat&quot; does not display</span></span>
+<span id="cb554-2"><a href="inference-for-simple-linear-regression.html#cb554-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">cumsum</span>(beta_0_hats) <span class="sc">/</span> (<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(beta_0_hats)), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">2.95</span>, <span class="fl">3.05</span>),</span>
+<span id="cb554-3"><a href="inference-for-simple-linear-regression.html#cb554-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Number of Simulations&quot;</span>,</span>
+<span id="cb554-4"><a href="inference-for-simple-linear-regression.html#cb554-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="fu">expression</span>(<span class="st">&quot;Empirical Mean of &quot;</span> <span class="sc">~</span> <span class="fu">hat</span>(beta)[<span class="dv">0</span>]),</span>
+<span id="cb554-5"><a href="inference-for-simple-linear-regression.html#cb554-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span>
+<span id="cb554-6"><a href="inference-for-simple-linear-regression.html#cb554-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="slr-inf_files/figure-html/unnamed-chunk-12-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
-<div id="standard-errors" class="section level2 hasAnchor">
+<div id="standard-errors" class="section level2 hasAnchor" number="8.3">
 <h2><span class="header-section-number">8.3</span> Standard Errors<a href="inference-for-simple-linear-regression.html#standard-errors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>So now we believe the two distributional results,</p>
 <p><span class="math display">\[
@@ -752,23 +800,23 @@ T \sim t_d
 \]</span></p>
 <p>where <span class="math inline">\(Z \sim N(0,1)\)</span>.</p>
 <p>Recall that a <span class="math inline">\(t\)</span> distribution is similar to a standard normal, but with heavier tails. As the degrees of freedom increases, the <span class="math inline">\(t\)</span> distribution becomes more and more like a standard normal. Below we plot a standard normal distribution as well as two examples of a <span class="math inline">\(t\)</span> distribution with different degrees of freedom. Notice how the <span class="math inline">\(t\)</span> distribution with the larger degrees of freedom is more similar to the standard normal curve.</p>
-<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="inference-for-simple-linear-regression.html#cb555-1"></a><span class="co"># define grid of x values</span></span>
-<span id="cb555-2"><a href="inference-for-simple-linear-regression.html#cb555-2"></a>x =<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dt">length =</span> <span class="dv">100</span>)</span>
-<span id="cb555-3"><a href="inference-for-simple-linear-regression.html#cb555-3"></a></span>
-<span id="cb555-4"><a href="inference-for-simple-linear-regression.html#cb555-4"></a><span class="co"># plot curve for standard normal</span></span>
-<span id="cb555-5"><a href="inference-for-simple-linear-regression.html#cb555-5"></a><span class="kw">plot</span>(x, <span class="kw">dnorm</span>(x), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">2</span>,</span>
-<span id="cb555-6"><a href="inference-for-simple-linear-regression.html#cb555-6"></a>     <span class="dt">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Density&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;Normal vs t Distributions&quot;</span>)</span>
-<span id="cb555-7"><a href="inference-for-simple-linear-regression.html#cb555-7"></a><span class="co"># add curves for t distributions</span></span>
-<span id="cb555-8"><a href="inference-for-simple-linear-regression.html#cb555-8"></a><span class="kw">lines</span>(x, <span class="kw">dt</span>(x, <span class="dt">df =</span> <span class="dv">1</span>), <span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</span>
-<span id="cb555-9"><a href="inference-for-simple-linear-regression.html#cb555-9"></a><span class="kw">lines</span>(x, <span class="kw">dt</span>(x, <span class="dt">df =</span> <span class="dv">10</span>), <span class="dt">lty =</span> <span class="dv">2</span>, <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span>
-<span id="cb555-10"><a href="inference-for-simple-linear-regression.html#cb555-10"></a></span>
-<span id="cb555-11"><a href="inference-for-simple-linear-regression.html#cb555-11"></a><span class="co"># add legend</span></span>
-<span id="cb555-12"><a href="inference-for-simple-linear-regression.html#cb555-12"></a><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">title =</span> <span class="st">&quot;Distributions&quot;</span>,</span>
-<span id="cb555-13"><a href="inference-for-simple-linear-regression.html#cb555-13"></a>       <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;t, df = 1&quot;</span>, <span class="st">&quot;t, df = 10&quot;</span>, <span class="st">&quot;Standard Normal&quot;</span>), </span>
-<span id="cb555-14"><a href="inference-for-simple-linear-regression.html#cb555-14"></a>       <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">lty =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="inference-for-simple-linear-regression.html#cb555-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define grid of x values</span></span>
+<span id="cb555-2"><a href="inference-for-simple-linear-regression.html#cb555-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length =</span> <span class="dv">100</span>)</span>
+<span id="cb555-3"><a href="inference-for-simple-linear-regression.html#cb555-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb555-4"><a href="inference-for-simple-linear-regression.html#cb555-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot curve for standard normal</span></span>
+<span id="cb555-5"><a href="inference-for-simple-linear-regression.html#cb555-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, <span class="fu">dnorm</span>(x), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb555-6"><a href="inference-for-simple-linear-regression.html#cb555-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Density&quot;</span>, <span class="at">main =</span> <span class="st">&quot;Normal vs t Distributions&quot;</span>)</span>
+<span id="cb555-7"><a href="inference-for-simple-linear-regression.html#cb555-7" aria-hidden="true" tabindex="-1"></a><span class="co"># add curves for t distributions</span></span>
+<span id="cb555-8"><a href="inference-for-simple-linear-regression.html#cb555-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">dt</span>(x, <span class="at">df =</span> <span class="dv">1</span>), <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>)</span>
+<span id="cb555-9"><a href="inference-for-simple-linear-regression.html#cb555-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x, <span class="fu">dt</span>(x, <span class="at">df =</span> <span class="dv">10</span>), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span>
+<span id="cb555-10"><a href="inference-for-simple-linear-regression.html#cb555-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb555-11"><a href="inference-for-simple-linear-regression.html#cb555-11" aria-hidden="true" tabindex="-1"></a><span class="co"># add legend</span></span>
+<span id="cb555-12"><a href="inference-for-simple-linear-regression.html#cb555-12" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Distributions&quot;</span>,</span>
+<span id="cb555-13"><a href="inference-for-simple-linear-regression.html#cb555-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;t, df = 1&quot;</span>, <span class="st">&quot;t, df = 10&quot;</span>, <span class="st">&quot;Standard Normal&quot;</span>), </span>
+<span id="cb555-14"><a href="inference-for-simple-linear-regression.html#cb555-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;darkorange&quot;</span>, <span class="st">&quot;dodgerblue&quot;</span>, <span class="st">&quot;black&quot;</span>))</span></code></pre></div>
 <p><img src="slr-inf_files/figure-html/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="confidence-intervals-for-slope-and-intercept" class="section level2 hasAnchor">
+<div id="confidence-intervals-for-slope-and-intercept" class="section level2 hasAnchor" number="8.4">
 <h2><span class="header-section-number">8.4</span> Confidence Intervals for Slope and Intercept<a href="inference-for-simple-linear-regression.html#confidence-intervals-for-slope-and-intercept" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Recall that confidence intervals for means often take the form:</p>
 <p><span class="math display">\[
@@ -789,7 +837,7 @@ T \sim t_d
 \]</span></p>
 <p>where <span class="math inline">\(t_{\alpha/2, n - 2}\)</span> is the critical value such that <span class="math inline">\(P(t_{n-2} &gt; t_{\alpha/2, n - 2}) = \alpha/2\)</span>.</p>
 </div>
-<div id="hypothesis-tests" class="section level2 hasAnchor">
+<div id="hypothesis-tests" class="section level2 hasAnchor" number="8.5">
 <h2><span class="header-section-number">8.5</span> Hypothesis Tests<a href="inference-for-simple-linear-regression.html#hypothesis-tests" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <blockquote>
 <p>“We may speak of this hypothesis as the ‘<a href="https://xkcd.com/892/" target="_blank">null hypothesis</a>,’ and it should be noted that the null hypothesis is never proved or established, but is possibly disproved, in the course of experimentation.”</p>
@@ -819,11 +867,11 @@ t = \frac{\hat{\beta}_1-\beta_{10}}{\text{SE}[\hat{\beta}_1]} = \frac{\hat{\beta
 \]</span></p>
 <p>which again, under the null hypothesis, follows a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n - 2\)</span> degrees of freedom. We now use <span class="math inline">\(\beta_{10}\)</span> to denote the hypothesized value of <span class="math inline">\(\beta_1\)</span>.</p>
 </div>
-<div id="cars-example" class="section level2 hasAnchor">
+<div id="cars-example" class="section level2 hasAnchor" number="8.6">
 <h2><span class="header-section-number">8.6</span> <code>cars</code> Example<a href="inference-for-simple-linear-regression.html#cars-example" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We now return to the <code>cars</code> example from last chapter to illustrate these concepts. We first fit the model using <code>lm()</code> then use <code>summary()</code> to view the results in greater detail.</p>
-<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="inference-for-simple-linear-regression.html#cb556-1"></a>stop_dist_model =<span class="st"> </span><span class="kw">lm</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars)</span>
-<span id="cb556-2"><a href="inference-for-simple-linear-regression.html#cb556-2"></a><span class="kw">summary</span>(stop_dist_model)</span></code></pre></div>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="inference-for-simple-linear-regression.html#cb556-1" aria-hidden="true" tabindex="-1"></a>stop_dist_model <span class="ot">=</span> <span class="fu">lm</span>(dist <span class="sc">~</span> speed, <span class="at">data =</span> cars)</span>
+<span id="cb556-2"><a href="inference-for-simple-linear-regression.html#cb556-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(stop_dist_model)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = dist ~ speed, data = cars)
@@ -842,14 +890,14 @@ t = \frac{\hat{\beta}_1-\beta_{10}}{\text{SE}[\hat{\beta}_1]} = \frac{\hat{\beta
 ## Residual standard error: 15.38 on 48 degrees of freedom
 ## Multiple R-squared:  0.6511, Adjusted R-squared:  0.6438 
 ## F-statistic: 89.57 on 1 and 48 DF,  p-value: 1.49e-12</code></pre>
-<div id="tests-in-r" class="section level3 hasAnchor">
+<div id="tests-in-r" class="section level3 hasAnchor" number="8.6.1">
 <h3><span class="header-section-number">8.6.1</span> Tests in <code>R</code><a href="inference-for-simple-linear-regression.html#tests-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We will now discuss the results displayed called <code>Coefficients</code>. First recall that we can extract this information directly.</p>
-<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="inference-for-simple-linear-regression.html#cb558-1"></a><span class="kw">names</span>(<span class="kw">summary</span>(stop_dist_model))</span></code></pre></div>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="inference-for-simple-linear-regression.html#cb558-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">summary</span>(stop_dist_model))</span></code></pre></div>
 <pre><code>##  [1] &quot;call&quot;          &quot;terms&quot;         &quot;residuals&quot;     &quot;coefficients&quot; 
 ##  [5] &quot;aliased&quot;       &quot;sigma&quot;         &quot;df&quot;            &quot;r.squared&quot;    
 ##  [9] &quot;adj.r.squared&quot; &quot;fstatistic&quot;    &quot;cov.unscaled&quot;</code></pre>
-<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="inference-for-simple-linear-regression.html#cb560-1"></a><span class="kw">summary</span>(stop_dist_model)<span class="op">$</span>coefficients</span></code></pre></div>
+<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="inference-for-simple-linear-regression.html#cb560-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(stop_dist_model)<span class="sc">$</span>coefficients</span></code></pre></div>
 <pre><code>##               Estimate Std. Error   t value     Pr(&gt;|t|)
 ## (Intercept) -17.579095  6.7584402 -2.601058 1.231882e-02
 ## speed         3.932409  0.4155128  9.463990 1.489836e-12</code></pre>
@@ -863,7 +911,7 @@ t = \frac{\hat{\beta}_1-\beta_{10}}{\text{SE}[\hat{\beta}_1]} = \frac{\hat{\beta
 \]</span></p>
 <p>which are our estimates for the model parameters <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</p>
 <p>Let’s now focus on the second row of output, which is relevant to <span class="math inline">\(\beta_1\)</span>.</p>
-<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="inference-for-simple-linear-regression.html#cb562-1"></a><span class="kw">summary</span>(stop_dist_model)<span class="op">$</span>coefficients[<span class="dv">2</span>,]</span></code></pre></div>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="inference-for-simple-linear-regression.html#cb562-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(stop_dist_model)<span class="sc">$</span>coefficients[<span class="dv">2</span>,]</span></code></pre></div>
 <pre><code>##     Estimate   Std. Error      t value     Pr(&gt;|t|) 
 ## 3.932409e+00 4.155128e-01 9.463990e+00 1.489836e-12</code></pre>
 <p>Again, the first value, <code>Estimate</code> is</p>
@@ -884,32 +932,32 @@ t = \frac{\hat{\beta}_1-0}{\text{SE}[\hat{\beta}_1]} = \frac{\hat{\beta}_1-0}{s_
 \]</span></p>
 <p>Note here, we are specifically testing whether or not <span class="math inline">\(\beta_1 = 0\)</span>.</p>
 <p>The first row of output reports the same values, but for <span class="math inline">\(\beta_0\)</span>.</p>
-<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="inference-for-simple-linear-regression.html#cb564-1"></a><span class="kw">summary</span>(stop_dist_model)<span class="op">$</span>coefficients[<span class="dv">1</span>,]</span></code></pre></div>
+<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="inference-for-simple-linear-regression.html#cb564-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(stop_dist_model)<span class="sc">$</span>coefficients[<span class="dv">1</span>,]</span></code></pre></div>
 <pre><code>##     Estimate   Std. Error      t value     Pr(&gt;|t|) 
 ## -17.57909489   6.75844017  -2.60105800   0.01231882</code></pre>
 <p>In summary, the following code stores the information of <code>summary(stop_dist_model)$coefficients</code> in a new variable <code>stop_dist_model_test_info</code>, then extracts each element into a new variable which describes the information it contains.</p>
-<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="inference-for-simple-linear-regression.html#cb566-1"></a>stop_dist_model_test_info =<span class="st"> </span><span class="kw">summary</span>(stop_dist_model)<span class="op">$</span>coefficients</span>
-<span id="cb566-2"><a href="inference-for-simple-linear-regression.html#cb566-2"></a></span>
-<span id="cb566-3"><a href="inference-for-simple-linear-regression.html#cb566-3"></a>beta_<span class="dv">0</span>_hat      =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>, <span class="dv">1</span>] <span class="co"># Estimate</span></span>
-<span id="cb566-4"><a href="inference-for-simple-linear-regression.html#cb566-4"></a>beta_<span class="dv">0</span>_hat_se   =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>, <span class="dv">2</span>] <span class="co"># Std. Error</span></span>
-<span id="cb566-5"><a href="inference-for-simple-linear-regression.html#cb566-5"></a>beta_<span class="dv">0</span>_hat_t    =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>, <span class="dv">3</span>] <span class="co"># t value</span></span>
-<span id="cb566-6"><a href="inference-for-simple-linear-regression.html#cb566-6"></a>beta_<span class="dv">0</span>_hat_pval =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">1</span>, <span class="dv">4</span>] <span class="co"># Pr(&gt;|t|)</span></span>
-<span id="cb566-7"><a href="inference-for-simple-linear-regression.html#cb566-7"></a></span>
-<span id="cb566-8"><a href="inference-for-simple-linear-regression.html#cb566-8"></a>beta_<span class="dv">1</span>_hat      =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>, <span class="dv">1</span>] <span class="co"># Estimate</span></span>
-<span id="cb566-9"><a href="inference-for-simple-linear-regression.html#cb566-9"></a>beta_<span class="dv">1</span>_hat_se   =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>, <span class="dv">2</span>] <span class="co"># Std. Error</span></span>
-<span id="cb566-10"><a href="inference-for-simple-linear-regression.html#cb566-10"></a>beta_<span class="dv">1</span>_hat_t    =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>, <span class="dv">3</span>] <span class="co"># t value</span></span>
-<span id="cb566-11"><a href="inference-for-simple-linear-regression.html#cb566-11"></a>beta_<span class="dv">1</span>_hat_pval =<span class="st"> </span>stop_dist_model_test_info[<span class="dv">2</span>, <span class="dv">4</span>] <span class="co"># Pr(&gt;|t|)</span></span></code></pre></div>
+<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="inference-for-simple-linear-regression.html#cb566-1" aria-hidden="true" tabindex="-1"></a>stop_dist_model_test_info <span class="ot">=</span> <span class="fu">summary</span>(stop_dist_model)<span class="sc">$</span>coefficients</span>
+<span id="cb566-2"><a href="inference-for-simple-linear-regression.html#cb566-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb566-3"><a href="inference-for-simple-linear-regression.html#cb566-3" aria-hidden="true" tabindex="-1"></a>beta_0_hat      <span class="ot">=</span> stop_dist_model_test_info[<span class="dv">1</span>, <span class="dv">1</span>] <span class="co"># Estimate</span></span>
+<span id="cb566-4"><a href="inference-for-simple-linear-regression.html#cb566-4" aria-hidden="true" tabindex="-1"></a>beta_0_hat_se   <span class="ot">=</span> stop_dist_model_test_info[<span class="dv">1</span>, <span class="dv">2</span>] <span class="co"># Std. Error</span></span>
+<span id="cb566-5"><a href="inference-for-simple-linear-regression.html#cb566-5" aria-hidden="true" tabindex="-1"></a>beta_0_hat_t    <span class="ot">=</span> stop_dist_model_test_info[<span class="dv">1</span>, <span class="dv">3</span>] <span class="co"># t value</span></span>
+<span id="cb566-6"><a href="inference-for-simple-linear-regression.html#cb566-6" aria-hidden="true" tabindex="-1"></a>beta_0_hat_pval <span class="ot">=</span> stop_dist_model_test_info[<span class="dv">1</span>, <span class="dv">4</span>] <span class="co"># Pr(&gt;|t|)</span></span>
+<span id="cb566-7"><a href="inference-for-simple-linear-regression.html#cb566-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb566-8"><a href="inference-for-simple-linear-regression.html#cb566-8" aria-hidden="true" tabindex="-1"></a>beta_1_hat      <span class="ot">=</span> stop_dist_model_test_info[<span class="dv">2</span>, <span class="dv">1</span>] <span class="co"># Estimate</span></span>
+<span id="cb566-9"><a href="inference-for-simple-linear-regression.html#cb566-9" aria-hidden="true" tabindex="-1"></a>beta_1_hat_se   <span class="ot">=</span> stop_dist_model_test_info[<span class="dv">2</span>, <span class="dv">2</span>] <span class="co"># Std. Error</span></span>
+<span id="cb566-10"><a href="inference-for-simple-linear-regression.html#cb566-10" aria-hidden="true" tabindex="-1"></a>beta_1_hat_t    <span class="ot">=</span> stop_dist_model_test_info[<span class="dv">2</span>, <span class="dv">3</span>] <span class="co"># t value</span></span>
+<span id="cb566-11"><a href="inference-for-simple-linear-regression.html#cb566-11" aria-hidden="true" tabindex="-1"></a>beta_1_hat_pval <span class="ot">=</span> stop_dist_model_test_info[<span class="dv">2</span>, <span class="dv">4</span>] <span class="co"># Pr(&gt;|t|)</span></span></code></pre></div>
 <p>We can then verify some equivalent expressions: the <span class="math inline">\(t\)</span> test statistic for <span class="math inline">\(\hat{\beta}_1\)</span> and the two-sided p-value associated with that test statistic.</p>
-<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="inference-for-simple-linear-regression.html#cb567-1"></a>(beta_<span class="dv">1</span>_hat <span class="op">-</span><span class="st"> </span><span class="dv">0</span>) <span class="op">/</span><span class="st"> </span>beta_<span class="dv">1</span>_hat_se</span></code></pre></div>
+<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="inference-for-simple-linear-regression.html#cb567-1" aria-hidden="true" tabindex="-1"></a>(beta_1_hat <span class="sc">-</span> <span class="dv">0</span>) <span class="sc">/</span> beta_1_hat_se</span></code></pre></div>
 <pre><code>## [1] 9.46399</code></pre>
-<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="inference-for-simple-linear-regression.html#cb569-1"></a>beta_<span class="dv">1</span>_hat_t</span></code></pre></div>
+<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="inference-for-simple-linear-regression.html#cb569-1" aria-hidden="true" tabindex="-1"></a>beta_1_hat_t</span></code></pre></div>
 <pre><code>## [1] 9.46399</code></pre>
-<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="inference-for-simple-linear-regression.html#cb571-1"></a><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw">pt</span>(<span class="kw">abs</span>(beta_<span class="dv">1</span>_hat_t), <span class="dt">df =</span> <span class="kw">length</span>(<span class="kw">resid</span>(stop_dist_model)) <span class="op">-</span><span class="st"> </span><span class="dv">2</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="inference-for-simple-linear-regression.html#cb571-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pt</span>(<span class="fu">abs</span>(beta_1_hat_t), <span class="at">df =</span> <span class="fu">length</span>(<span class="fu">resid</span>(stop_dist_model)) <span class="sc">-</span> <span class="dv">2</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## [1] 1.489836e-12</code></pre>
-<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="inference-for-simple-linear-regression.html#cb573-1"></a>beta_<span class="dv">1</span>_hat_pval</span></code></pre></div>
+<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="inference-for-simple-linear-regression.html#cb573-1" aria-hidden="true" tabindex="-1"></a>beta_1_hat_pval</span></code></pre></div>
 <pre><code>## [1] 1.489836e-12</code></pre>
 </div>
-<div id="significance-of-regression-t-test" class="section level3 hasAnchor">
+<div id="significance-of-regression-t-test" class="section level3 hasAnchor" number="8.6.2">
 <h3><span class="header-section-number">8.6.2</span> Significance of Regression, t-Test<a href="inference-for-simple-linear-regression.html#significance-of-regression-t-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We pause to discuss the <strong>significance of regression</strong> test. First, note that based on the above distributional results, we could test <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> against any particular value, and perform both one and two-sided tests.</p>
 <p>However, one very specific test,</p>
@@ -942,10 +990,10 @@ Y_i = \beta_0 + \epsilon_i.
 <p><img src="slr-inf_files/figure-html/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>In this plot of simulated data, we see a clear relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, however it is not a linear relationship. If we fit a line to this data, it is very flat. The resulting test for <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs <span class="math inline">\(H_1: \beta_1 \neq 0\)</span> gives a large p-value, in this case <span class="math inline">\(0.7564548\)</span>, so we would fail to reject and say that there is no significant linear relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. We will see later how to fit a curve to this data using a “linear” model, but for now, realize that testing <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs <span class="math inline">\(H_1: \beta_1 \neq 0\)</span> can only detect straight line relationships.</p>
 </div>
-<div id="confidence-intervals-in-r" class="section level3 hasAnchor">
+<div id="confidence-intervals-in-r" class="section level3 hasAnchor" number="8.6.3">
 <h3><span class="header-section-number">8.6.3</span> Confidence Intervals in <code>R</code><a href="inference-for-simple-linear-regression.html#confidence-intervals-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Using <code>R</code> we can very easily obtain the confidence intervals for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</p>
-<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="inference-for-simple-linear-regression.html#cb575-1"></a><span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="inference-for-simple-linear-regression.html#cb575-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(stop_dist_model, <span class="at">level =</span> <span class="fl">0.99</span>)</span></code></pre></div>
 <pre><code>##                  0.5 %    99.5 %
 ## (Intercept) -35.706610 0.5484205
 ## speed         2.817919 5.0468988</code></pre>
@@ -954,31 +1002,31 @@ Y_i = \beta_0 + \epsilon_i.
 <p>Note that this 99% confidence interval does <strong>not</strong> contain the hypothesized value of 0. Since it does not contain 0, it is equivalent to rejecting the test of <span class="math inline">\(H_0: \beta_1 = 0\)</span> vs <span class="math inline">\(H_1: \beta_1 \neq 0\)</span> at <span class="math inline">\(\alpha = 0.01\)</span>, which we had seen previously.</p>
 <p>You should be somewhat suspicious of the confidence interval for <span class="math inline">\(\beta_0\)</span>, as it covers negative values, which correspond to negative stopping distances. Technically the interpretation would be that we are 99% confident that the average stopping distance of a car traveling 0 miles per hour is between -35.7066103 and 0.5484205 feet, but we don’t really believe that, since we are actually certain that it would be non-negative.</p>
 <p>Note, we can extract specific values from this output a number of ways. This code is not run, and instead, you should check how it relates to the output of the code above.</p>
-<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="inference-for-simple-linear-regression.html#cb577-1"></a><span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">1</span>,]</span>
-<span id="cb577-2"><a href="inference-for-simple-linear-regression.html#cb577-2"></a><span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">1</span>, <span class="dv">1</span>]</span>
-<span id="cb577-3"><a href="inference-for-simple-linear-regression.html#cb577-3"></a><span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">1</span>, <span class="dv">2</span>]</span>
-<span id="cb577-4"><a href="inference-for-simple-linear-regression.html#cb577-4"></a><span class="kw">confint</span>(stop_dist_model, <span class="dt">parm =</span> <span class="st">&quot;(Intercept)&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>)</span>
-<span id="cb577-5"><a href="inference-for-simple-linear-regression.html#cb577-5"></a><span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">2</span>,]</span>
-<span id="cb577-6"><a href="inference-for-simple-linear-regression.html#cb577-6"></a><span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">2</span>, <span class="dv">1</span>]</span>
-<span id="cb577-7"><a href="inference-for-simple-linear-regression.html#cb577-7"></a><span class="kw">confint</span>(stop_dist_model, <span class="dt">level =</span> <span class="fl">0.99</span>)[<span class="dv">2</span>, <span class="dv">2</span>]</span>
-<span id="cb577-8"><a href="inference-for-simple-linear-regression.html#cb577-8"></a><span class="kw">confint</span>(stop_dist_model, <span class="dt">parm =</span> <span class="st">&quot;speed&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="inference-for-simple-linear-regression.html#cb577-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(stop_dist_model, <span class="at">level =</span> <span class="fl">0.99</span>)[<span class="dv">1</span>,]</span>
+<span id="cb577-2"><a href="inference-for-simple-linear-regression.html#cb577-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(stop_dist_model, <span class="at">level =</span> <span class="fl">0.99</span>)[<span class="dv">1</span>, <span class="dv">1</span>]</span>
+<span id="cb577-3"><a href="inference-for-simple-linear-regression.html#cb577-3" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(stop_dist_model, <span class="at">level =</span> <span class="fl">0.99</span>)[<span class="dv">1</span>, <span class="dv">2</span>]</span>
+<span id="cb577-4"><a href="inference-for-simple-linear-regression.html#cb577-4" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(stop_dist_model, <span class="at">parm =</span> <span class="st">&quot;(Intercept)&quot;</span>, <span class="at">level =</span> <span class="fl">0.99</span>)</span>
+<span id="cb577-5"><a href="inference-for-simple-linear-regression.html#cb577-5" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(stop_dist_model, <span class="at">level =</span> <span class="fl">0.99</span>)[<span class="dv">2</span>,]</span>
+<span id="cb577-6"><a href="inference-for-simple-linear-regression.html#cb577-6" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(stop_dist_model, <span class="at">level =</span> <span class="fl">0.99</span>)[<span class="dv">2</span>, <span class="dv">1</span>]</span>
+<span id="cb577-7"><a href="inference-for-simple-linear-regression.html#cb577-7" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(stop_dist_model, <span class="at">level =</span> <span class="fl">0.99</span>)[<span class="dv">2</span>, <span class="dv">2</span>]</span>
+<span id="cb577-8"><a href="inference-for-simple-linear-regression.html#cb577-8" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(stop_dist_model, <span class="at">parm =</span> <span class="st">&quot;speed&quot;</span>, <span class="at">level =</span> <span class="fl">0.99</span>)</span></code></pre></div>
 <p>We can also verify that calculations that <code>R</code> is performing for the <span class="math inline">\(\beta_1\)</span> interval.</p>
-<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="inference-for-simple-linear-regression.html#cb578-1"></a><span class="co"># store estimate</span></span>
-<span id="cb578-2"><a href="inference-for-simple-linear-regression.html#cb578-2"></a>beta_<span class="dv">1</span>_hat =<span class="st"> </span><span class="kw">coef</span>(stop_dist_model)[<span class="dv">2</span>]</span>
-<span id="cb578-3"><a href="inference-for-simple-linear-regression.html#cb578-3"></a></span>
-<span id="cb578-4"><a href="inference-for-simple-linear-regression.html#cb578-4"></a><span class="co"># store standard error</span></span>
-<span id="cb578-5"><a href="inference-for-simple-linear-regression.html#cb578-5"></a>beta_<span class="dv">1</span>_hat_se =<span class="st"> </span><span class="kw">summary</span>(stop_dist_model)<span class="op">$</span>coefficients[<span class="dv">2</span>, <span class="dv">2</span>]</span>
-<span id="cb578-6"><a href="inference-for-simple-linear-regression.html#cb578-6"></a></span>
-<span id="cb578-7"><a href="inference-for-simple-linear-regression.html#cb578-7"></a><span class="co"># calculate critical value for two-sided 99% CI</span></span>
-<span id="cb578-8"><a href="inference-for-simple-linear-regression.html#cb578-8"></a>crit =<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.995</span>, <span class="dt">df =</span> <span class="kw">length</span>(<span class="kw">resid</span>(stop_dist_model)) <span class="op">-</span><span class="st"> </span><span class="dv">2</span>)</span>
-<span id="cb578-9"><a href="inference-for-simple-linear-regression.html#cb578-9"></a></span>
-<span id="cb578-10"><a href="inference-for-simple-linear-regression.html#cb578-10"></a><span class="co"># est - margin, est + margin</span></span>
-<span id="cb578-11"><a href="inference-for-simple-linear-regression.html#cb578-11"></a><span class="kw">c</span>(beta_<span class="dv">1</span>_hat <span class="op">-</span><span class="st"> </span>crit <span class="op">*</span><span class="st"> </span>beta_<span class="dv">1</span>_hat_se, beta_<span class="dv">1</span>_hat <span class="op">+</span><span class="st"> </span>crit <span class="op">*</span><span class="st"> </span>beta_<span class="dv">1</span>_hat_se)</span></code></pre></div>
+<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="inference-for-simple-linear-regression.html#cb578-1" aria-hidden="true" tabindex="-1"></a><span class="co"># store estimate</span></span>
+<span id="cb578-2"><a href="inference-for-simple-linear-regression.html#cb578-2" aria-hidden="true" tabindex="-1"></a>beta_1_hat <span class="ot">=</span> <span class="fu">coef</span>(stop_dist_model)[<span class="dv">2</span>]</span>
+<span id="cb578-3"><a href="inference-for-simple-linear-regression.html#cb578-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb578-4"><a href="inference-for-simple-linear-regression.html#cb578-4" aria-hidden="true" tabindex="-1"></a><span class="co"># store standard error</span></span>
+<span id="cb578-5"><a href="inference-for-simple-linear-regression.html#cb578-5" aria-hidden="true" tabindex="-1"></a>beta_1_hat_se <span class="ot">=</span> <span class="fu">summary</span>(stop_dist_model)<span class="sc">$</span>coefficients[<span class="dv">2</span>, <span class="dv">2</span>]</span>
+<span id="cb578-6"><a href="inference-for-simple-linear-regression.html#cb578-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb578-7"><a href="inference-for-simple-linear-regression.html#cb578-7" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate critical value for two-sided 99% CI</span></span>
+<span id="cb578-8"><a href="inference-for-simple-linear-regression.html#cb578-8" aria-hidden="true" tabindex="-1"></a>crit <span class="ot">=</span> <span class="fu">qt</span>(<span class="fl">0.995</span>, <span class="at">df =</span> <span class="fu">length</span>(<span class="fu">resid</span>(stop_dist_model)) <span class="sc">-</span> <span class="dv">2</span>)</span>
+<span id="cb578-9"><a href="inference-for-simple-linear-regression.html#cb578-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb578-10"><a href="inference-for-simple-linear-regression.html#cb578-10" aria-hidden="true" tabindex="-1"></a><span class="co"># est - margin, est + margin</span></span>
+<span id="cb578-11"><a href="inference-for-simple-linear-regression.html#cb578-11" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(beta_1_hat <span class="sc">-</span> crit <span class="sc">*</span> beta_1_hat_se, beta_1_hat <span class="sc">+</span> crit <span class="sc">*</span> beta_1_hat_se)</span></code></pre></div>
 <pre><code>##    speed    speed 
 ## 2.817919 5.046899</code></pre>
 </div>
 </div>
-<div id="confidence-interval-for-mean-response" class="section level2 hasAnchor">
+<div id="confidence-interval-for-mean-response" class="section level2 hasAnchor" number="8.7">
 <h2><span class="header-section-number">8.7</span> Confidence Interval for Mean Response<a href="inference-for-simple-linear-regression.html#confidence-interval-for-mean-response" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In addition to confidence intervals for <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, there are two other common interval estimates used with regression. The first is called a <strong>confidence interval for the mean response</strong>. Often, we would like an interval estimate for the mean, <span class="math inline">\(E[Y \mid X = x]\)</span> for a particular value of <span class="math inline">\(x\)</span>.</p>
 <p>In this situation we use <span class="math inline">\(\hat{y}(x)\)</span> as our estimate of <span class="math inline">\(E[Y \mid X = x]\)</span>. We modify our notation slightly to make it clear that the predicted value is a function of the <span class="math inline">\(x\)</span> value.</p>
@@ -1010,14 +1058,14 @@ Y_i = \beta_0 + \epsilon_i.
 \hat{y}(x) \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{\frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}
 \]</span></p>
 <p>To find confidence intervals for the mean response using <code>R</code>, we use the <code>predict()</code> function. We give the function our fitted model as well as new data, stored as a data frame. (This is important, so that <code>R</code> knows the name of the predictor variable.) Here, we are finding the confidence interval for the mean stopping distance when a car is travelling 5 miles per hour and when a car is travelling 21 miles per hour.</p>
-<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="inference-for-simple-linear-regression.html#cb580-1"></a>new_speeds =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">speed =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">21</span>))</span>
-<span id="cb580-2"><a href="inference-for-simple-linear-regression.html#cb580-2"></a><span class="kw">predict</span>(stop_dist_model, <span class="dt">newdata =</span> new_speeds, </span>
-<span id="cb580-3"><a href="inference-for-simple-linear-regression.html#cb580-3"></a>        <span class="dt">interval =</span> <span class="kw">c</span>(<span class="st">&quot;confidence&quot;</span>), <span class="dt">level =</span> <span class="fl">0.99</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="inference-for-simple-linear-regression.html#cb580-1" aria-hidden="true" tabindex="-1"></a>new_speeds <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">speed =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">21</span>))</span>
+<span id="cb580-2"><a href="inference-for-simple-linear-regression.html#cb580-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(stop_dist_model, <span class="at">newdata =</span> new_speeds, </span>
+<span id="cb580-3"><a href="inference-for-simple-linear-regression.html#cb580-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">interval =</span> <span class="fu">c</span>(<span class="st">&quot;confidence&quot;</span>), <span class="at">level =</span> <span class="fl">0.99</span>)</span></code></pre></div>
 <pre><code>##         fit       lwr      upr
 ## 1  2.082949 -10.89309 15.05898
 ## 2 65.001489  56.45836 73.54462</code></pre>
 </div>
-<div id="prediction-interval-for-new-observations" class="section level2 hasAnchor">
+<div id="prediction-interval-for-new-observations" class="section level2 hasAnchor" number="8.8">
 <h2><span class="header-section-number">8.8</span> Prediction Interval for New Observations<a href="inference-for-simple-linear-regression.html#prediction-interval-for-new-observations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Sometimes we would like an interval estimate for a new observation, <span class="math inline">\(Y\)</span>, for a particular value of <span class="math inline">\(x\)</span>. This is very similar to an interval for the mean response, <span class="math inline">\(\text{E}[Y \mid X = x]\)</span>, but different in one very important way.</p>
 <p>Our best guess for a new observation is still <span class="math inline">\(\hat{y}(x)\)</span>. The estimated mean is still the best prediction we can make. The difference is in the amount of variability. We know that observations will vary about the true regression line according to a <span class="math inline">\(N(0, \sigma^2)\)</span> distribution. Because of this we add an extra factor of <span class="math inline">\(\sigma^2\)</span> to our estimate’s variability in order to account for the variability of observations about the regression line.</p>
@@ -1039,39 +1087,39 @@ Y_i = \beta_0 + \epsilon_i.
 \hat{y}(x) \pm t_{\alpha/2, n - 2} \cdot s_e\sqrt{1 + \frac{1}{n}+\frac{(x-\bar{x})^2}{S_{xx}}}.
 \]</span></p>
 <p>To calculate this for a set of points in <code>R</code> notice there is only a minor change in syntax from finding a confidence interval for the mean response.</p>
-<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="inference-for-simple-linear-regression.html#cb582-1"></a><span class="kw">predict</span>(stop_dist_model, <span class="dt">newdata =</span> new_speeds, </span>
-<span id="cb582-2"><a href="inference-for-simple-linear-regression.html#cb582-2"></a>        <span class="dt">interval =</span> <span class="kw">c</span>(<span class="st">&quot;prediction&quot;</span>), <span class="dt">level =</span> <span class="fl">0.99</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="inference-for-simple-linear-regression.html#cb582-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(stop_dist_model, <span class="at">newdata =</span> new_speeds, </span>
+<span id="cb582-2"><a href="inference-for-simple-linear-regression.html#cb582-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">interval =</span> <span class="fu">c</span>(<span class="st">&quot;prediction&quot;</span>), <span class="at">level =</span> <span class="fl">0.99</span>)</span></code></pre></div>
 <pre><code>##         fit       lwr       upr
 ## 1  2.082949 -41.16099  45.32689
 ## 2 65.001489  22.87494 107.12803</code></pre>
 <p>Also notice that these two intervals are wider than the corresponding confidence intervals for the mean response.</p>
 </div>
-<div id="confidence-and-prediction-bands" class="section level2 hasAnchor">
+<div id="confidence-and-prediction-bands" class="section level2 hasAnchor" number="8.9">
 <h2><span class="header-section-number">8.9</span> Confidence and Prediction Bands<a href="inference-for-simple-linear-regression.html#confidence-and-prediction-bands" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Often we will like to plot both confidence intervals for the mean response and prediction intervals for all possible values of <span class="math inline">\(x\)</span>. We calls these confidence and prediction bands.</p>
-<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="inference-for-simple-linear-regression.html#cb584-1"></a>speed_grid =<span class="st"> </span><span class="kw">seq</span>(<span class="kw">min</span>(cars<span class="op">$</span>speed), <span class="kw">max</span>(cars<span class="op">$</span>speed), <span class="dt">by =</span> <span class="fl">0.01</span>)</span>
-<span id="cb584-2"><a href="inference-for-simple-linear-regression.html#cb584-2"></a>dist_ci_band =<span class="st"> </span><span class="kw">predict</span>(stop_dist_model, </span>
-<span id="cb584-3"><a href="inference-for-simple-linear-regression.html#cb584-3"></a>                       <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">speed =</span> speed_grid), </span>
-<span id="cb584-4"><a href="inference-for-simple-linear-regression.html#cb584-4"></a>                       <span class="dt">interval =</span> <span class="st">&quot;confidence&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>)</span>
-<span id="cb584-5"><a href="inference-for-simple-linear-regression.html#cb584-5"></a>dist_pi_band =<span class="st"> </span><span class="kw">predict</span>(stop_dist_model, </span>
-<span id="cb584-6"><a href="inference-for-simple-linear-regression.html#cb584-6"></a>                       <span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">speed =</span> speed_grid), </span>
-<span id="cb584-7"><a href="inference-for-simple-linear-regression.html#cb584-7"></a>                       <span class="dt">interval =</span> <span class="st">&quot;prediction&quot;</span>, <span class="dt">level =</span> <span class="fl">0.99</span>) </span>
-<span id="cb584-8"><a href="inference-for-simple-linear-regression.html#cb584-8"></a></span>
-<span id="cb584-9"><a href="inference-for-simple-linear-regression.html#cb584-9"></a><span class="kw">plot</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars,</span>
-<span id="cb584-10"><a href="inference-for-simple-linear-regression.html#cb584-10"></a>     <span class="dt">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,</span>
-<span id="cb584-11"><a href="inference-for-simple-linear-regression.html#cb584-11"></a>     <span class="dt">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,</span>
-<span id="cb584-12"><a href="inference-for-simple-linear-regression.html#cb584-12"></a>     <span class="dt">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,</span>
-<span id="cb584-13"><a href="inference-for-simple-linear-regression.html#cb584-13"></a>     <span class="dt">pch  =</span> <span class="dv">20</span>,</span>
-<span id="cb584-14"><a href="inference-for-simple-linear-regression.html#cb584-14"></a>     <span class="dt">cex  =</span> <span class="dv">2</span>,</span>
-<span id="cb584-15"><a href="inference-for-simple-linear-regression.html#cb584-15"></a>     <span class="dt">col  =</span> <span class="st">&quot;grey&quot;</span>,</span>
-<span id="cb584-16"><a href="inference-for-simple-linear-regression.html#cb584-16"></a>     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="kw">min</span>(dist_pi_band), <span class="kw">max</span>(dist_pi_band)))</span>
-<span id="cb584-17"><a href="inference-for-simple-linear-regression.html#cb584-17"></a><span class="kw">abline</span>(stop_dist_model, <span class="dt">lwd =</span> <span class="dv">5</span>, <span class="dt">col =</span> <span class="st">&quot;darkorange&quot;</span>)</span>
-<span id="cb584-18"><a href="inference-for-simple-linear-regression.html#cb584-18"></a></span>
-<span id="cb584-19"><a href="inference-for-simple-linear-regression.html#cb584-19"></a><span class="kw">lines</span>(speed_grid, dist_ci_band[,<span class="st">&quot;lwr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb584-20"><a href="inference-for-simple-linear-regression.html#cb584-20"></a><span class="kw">lines</span>(speed_grid, dist_ci_band[,<span class="st">&quot;upr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb584-21"><a href="inference-for-simple-linear-regression.html#cb584-21"></a><span class="kw">lines</span>(speed_grid, dist_pi_band[,<span class="st">&quot;lwr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">3</span>)</span>
-<span id="cb584-22"><a href="inference-for-simple-linear-regression.html#cb584-22"></a><span class="kw">lines</span>(speed_grid, dist_pi_band[,<span class="st">&quot;upr&quot;</span>], <span class="dt">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">lty =</span> <span class="dv">3</span>)</span>
-<span id="cb584-23"><a href="inference-for-simple-linear-regression.html#cb584-23"></a><span class="kw">points</span>(<span class="kw">mean</span>(cars<span class="op">$</span>speed), <span class="kw">mean</span>(cars<span class="op">$</span>dist), <span class="dt">pch =</span> <span class="st">&quot;+&quot;</span>, <span class="dt">cex =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="inference-for-simple-linear-regression.html#cb584-1" aria-hidden="true" tabindex="-1"></a>speed_grid <span class="ot">=</span> <span class="fu">seq</span>(<span class="fu">min</span>(cars<span class="sc">$</span>speed), <span class="fu">max</span>(cars<span class="sc">$</span>speed), <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb584-2"><a href="inference-for-simple-linear-regression.html#cb584-2" aria-hidden="true" tabindex="-1"></a>dist_ci_band <span class="ot">=</span> <span class="fu">predict</span>(stop_dist_model, </span>
+<span id="cb584-3"><a href="inference-for-simple-linear-regression.html#cb584-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">speed =</span> speed_grid), </span>
+<span id="cb584-4"><a href="inference-for-simple-linear-regression.html#cb584-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span>, <span class="at">level =</span> <span class="fl">0.99</span>)</span>
+<span id="cb584-5"><a href="inference-for-simple-linear-regression.html#cb584-5" aria-hidden="true" tabindex="-1"></a>dist_pi_band <span class="ot">=</span> <span class="fu">predict</span>(stop_dist_model, </span>
+<span id="cb584-6"><a href="inference-for-simple-linear-regression.html#cb584-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">speed =</span> speed_grid), </span>
+<span id="cb584-7"><a href="inference-for-simple-linear-regression.html#cb584-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>, <span class="at">level =</span> <span class="fl">0.99</span>) </span>
+<span id="cb584-8"><a href="inference-for-simple-linear-regression.html#cb584-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb584-9"><a href="inference-for-simple-linear-regression.html#cb584-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dist <span class="sc">~</span> speed, <span class="at">data =</span> cars,</span>
+<span id="cb584-10"><a href="inference-for-simple-linear-regression.html#cb584-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Speed (in Miles Per Hour)&quot;</span>,</span>
+<span id="cb584-11"><a href="inference-for-simple-linear-regression.html#cb584-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Stopping Distance (in Feet)&quot;</span>,</span>
+<span id="cb584-12"><a href="inference-for-simple-linear-regression.html#cb584-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Stopping Distance vs Speed&quot;</span>,</span>
+<span id="cb584-13"><a href="inference-for-simple-linear-regression.html#cb584-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch  =</span> <span class="dv">20</span>,</span>
+<span id="cb584-14"><a href="inference-for-simple-linear-regression.html#cb584-14" aria-hidden="true" tabindex="-1"></a>     <span class="at">cex  =</span> <span class="dv">2</span>,</span>
+<span id="cb584-15"><a href="inference-for-simple-linear-regression.html#cb584-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">col  =</span> <span class="st">&quot;grey&quot;</span>,</span>
+<span id="cb584-16"><a href="inference-for-simple-linear-regression.html#cb584-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fu">min</span>(dist_pi_band), <span class="fu">max</span>(dist_pi_band)))</span>
+<span id="cb584-17"><a href="inference-for-simple-linear-regression.html#cb584-17" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(stop_dist_model, <span class="at">lwd =</span> <span class="dv">5</span>, <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>)</span>
+<span id="cb584-18"><a href="inference-for-simple-linear-regression.html#cb584-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb584-19"><a href="inference-for-simple-linear-regression.html#cb584-19" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(speed_grid, dist_ci_band[,<span class="st">&quot;lwr&quot;</span>], <span class="at">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb584-20"><a href="inference-for-simple-linear-regression.html#cb584-20" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(speed_grid, dist_ci_band[,<span class="st">&quot;upr&quot;</span>], <span class="at">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb584-21"><a href="inference-for-simple-linear-regression.html#cb584-21" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(speed_grid, dist_pi_band[,<span class="st">&quot;lwr&quot;</span>], <span class="at">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb584-22"><a href="inference-for-simple-linear-regression.html#cb584-22" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(speed_grid, dist_pi_band[,<span class="st">&quot;upr&quot;</span>], <span class="at">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">3</span>)</span>
+<span id="cb584-23"><a href="inference-for-simple-linear-regression.html#cb584-23" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="fu">mean</span>(cars<span class="sc">$</span>speed), <span class="fu">mean</span>(cars<span class="sc">$</span>dist), <span class="at">pch =</span> <span class="st">&quot;+&quot;</span>, <span class="at">cex =</span> <span class="dv">3</span>)</span></code></pre></div>
 <p><img src="slr-inf_files/figure-html/unnamed-chunk-27-1.png" width="960" style="display: block; margin: auto;" /></p>
 <p>Some things to notice:</p>
 <ul>
@@ -1084,7 +1132,7 @@ Y_i = \beta_0 + \epsilon_i.
 <li>The prediction bands (dotted blue) are less curved than the confidence bands (dashed blue). This is a result of the extra factor of <span class="math inline">\(\sigma^2\)</span> added to the variance at any value of <span class="math inline">\(x\)</span>.</li>
 </ul>
 </div>
-<div id="significance-of-regression-f-test" class="section level2 hasAnchor">
+<div id="significance-of-regression-f-test" class="section level2 hasAnchor" number="8.10">
 <h2><span class="header-section-number">8.10</span> Significance of Regression, F-Test<a href="inference-for-simple-linear-regression.html#significance-of-regression-f-test" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In the case of simple linear regression, the <span class="math inline">\(t\)</span> test for the significance of the regression is equivalent to another test, the <span class="math inline">\(F\)</span> test for the significance of the regression. This equivalence will only be true for simple linear regression, and in the next chapter we will only use the <span class="math inline">\(F\)</span> test for the significance of the regression.</p>
 <p>Recall from last chapter the decomposition of variance we saw before calculating <span class="math inline">\(R^2\)</span>,</p>
@@ -1156,7 +1204,7 @@ F = \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2 / 1}{\sum_{i=1}^{n}(y_i - \hat{y
 \]</span></p>
 <p>In particular, we will reject the null when the <span class="math inline">\(F\)</span> statistic is large, that is, when there is a low probability that the observations could have come from the null model by chance. We will let <code>R</code> calculate the p-value for us.</p>
 <p>To perform the <span class="math inline">\(F\)</span> test in <code>R</code> you can look at the last row of the output from <code>summary()</code> called <code>F-statistic</code> which gives the value of the test statistic, the relevant degrees of freedom, as well as the p-value of the test.</p>
-<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="inference-for-simple-linear-regression.html#cb585-1"></a><span class="kw">summary</span>(stop_dist_model)</span></code></pre></div>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="inference-for-simple-linear-regression.html#cb585-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(stop_dist_model)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = dist ~ speed, data = cars)
@@ -1176,7 +1224,7 @@ F = \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2 / 1}{\sum_{i=1}^{n}(y_i - \hat{y
 ## Multiple R-squared:  0.6511, Adjusted R-squared:  0.6438 
 ## F-statistic: 89.57 on 1 and 48 DF,  p-value: 1.49e-12</code></pre>
 <p>Additionally, you can use the <code>anova()</code> function to display the information in an ANOVA table.</p>
-<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="inference-for-simple-linear-regression.html#cb587-1"></a><span class="kw">anova</span>(stop_dist_model)</span></code></pre></div>
+<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="inference-for-simple-linear-regression.html#cb587-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(stop_dist_model)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: dist
@@ -1187,7 +1235,7 @@ F = \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2 / 1}{\sum_{i=1}^{n}(y_i - \hat{y
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>This also gives a p-value for the test. You should notice that the p-value from the <span class="math inline">\(t\)</span> test was the same. You might also notice that the value of the test statistic for the <span class="math inline">\(t\)</span> test, <span class="math inline">\(9.46399\)</span>, can be squared to obtain the value of the <span class="math inline">\(F\)</span> statistic, <span class="math inline">\(89.5671065\)</span>.</p>
 <p>Note that there is another equivalent way to do this in <code>R</code>, which we will return to often to compare two models.</p>
-<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="inference-for-simple-linear-regression.html#cb589-1"></a><span class="kw">anova</span>(<span class="kw">lm</span>(dist <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">data =</span> cars), <span class="kw">lm</span>(dist <span class="op">~</span><span class="st"> </span>speed, <span class="dt">data =</span> cars))</span></code></pre></div>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="inference-for-simple-linear-regression.html#cb589-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(<span class="fu">lm</span>(dist <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> cars), <span class="fu">lm</span>(dist <span class="sc">~</span> speed, <span class="at">data =</span> cars))</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: dist ~ 1
@@ -1201,7 +1249,7 @@ F = \frac{\sum_{i=1}^{n}(\hat{y}_i - \bar{y})^2 / 1}{\sum_{i=1}^{n}(y_i - \hat{y
 <p>The model statement <code>lm(dist ~ speed, data = cars)</code> applies the model <span class="math inline">\(Y_i = \beta_0 + \beta_1 x_i + \epsilon_i\)</span>.</p>
 <p>We can then think of this usage of <code>anova()</code> as directly comparing the two models. (Notice we get the same p-value again.)</p>
 </div>
-<div id="r-markdown-1" class="section level2 hasAnchor">
+<div id="r-markdown-1" class="section level2 hasAnchor" number="8.11">
 <h2><span class="header-section-number">8.11</span> <code>R</code> Markdown<a href="inference-for-simple-linear-regression.html#r-markdown-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The <code>R</code> Markdown file for this chapter can be found here:</p>
 <ul>
@@ -1277,7 +1325,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
