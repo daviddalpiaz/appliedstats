@@ -105,6 +105,7 @@ Your name could be here! Suggest an edit! Correct a typo! If you submit a correc
 - [Will Tsai](https://github.com/willtsai){target="_blank"}
 - [Ellen Veomett](https://sites.google.com/a/stmarys-ca.edu/ellen-veomett/){target="_blank"}
 - [David Newman](https://github.com/djoldman/){target="_blank"}
+- [Yixing Zheng](https://github.com/yixingz3){target="_blank"}
 
 ## License
 
