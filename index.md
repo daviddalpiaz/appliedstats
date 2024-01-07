@@ -40,7 +40,7 @@ $$
 ```r
 a = 3
 b = 4
-sqrt(a ^ 2 + b ^ 2)
+sqrt(a^2 + b^2)
 ```
 
 `R` output lines, which would appear in the console will begin with `##`. They will generally not be syntax highlighted.
@@ -106,6 +106,7 @@ Your name could be here! Suggest an edit! Correct a typo! If you submit a correc
 - [Ellen Veomett](https://sites.google.com/a/stmarys-ca.edu/ellen-veomett/){target="_blank"}
 - [David Newman](https://github.com/djoldman/){target="_blank"}
 - [Yixing Zheng](https://github.com/yixingz3){target="_blank"}
+- [Ossama Sybesma](https://github.com/OssamaSijbesma){target="_blank"}
 
 ## License
 
