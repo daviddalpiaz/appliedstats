@@ -1651,7 +1651,7 @@ mpg
 ##  8 audi         a4 quattro   1.8  1999     4 manu~ 4        18    26 p     comp~
 ##  9 audi         a4 quattro   1.8  1999     4 auto~ 4        16    25 p     comp~
 ## 10 audi         a4 quattro   2    2008     4 manu~ 4        20    28 p     comp~
-## # ... with 224 more rows
+## # i 224 more rows
 ```
 
 The function `str()` will display the "structure" of the data frame. It will display the number of **observations** and **variables**, list the variables, give the type of each variable, and show some elements of each variable. This information can also be found in the "Environment" window in RStudio.
@@ -1949,8 +1949,8 @@ To test our function, we will take a random sample of size `n = 10` from a norma
 ```
 
 ```
-##  [1]  1.0011119 -0.8924812  1.3952092 -5.7941583 12.9114152 -1.5795204
-##  [7]  5.0909231 -7.6582372  9.1962799  3.7950510
+##  [1]  9.3725470 -0.3881391 -0.9134899  5.3499433  1.0275733 -1.1144719
+##  [7] -3.4440058  8.1253017 -0.2541194  8.1310970
 ```
 
 ```r
@@ -1958,8 +1958,8 @@ standardize(x = test_sample)
 ```
 
 ```
-##  [1] -0.11793891 -0.41752851 -0.05558789 -1.19303383  1.76641685 -0.52622653
-##  [7]  0.52911929 -1.48795393  1.17863699  0.32409646
+##  [1]  1.4507231 -0.6367570 -0.7491118  0.5904244 -0.3339841 -0.7920950
+##  [7] -1.2903034  1.1839796 -0.6080947  1.1852190
 ```
 
 This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.
@@ -2061,7 +2061,7 @@ get_var(test_sample)
 ```
 
 ```
-## [1] 39.95028
+## [1] 21.86331
 ```
 
 ```r
@@ -2069,7 +2069,7 @@ get_var(test_sample, biased = FALSE)
 ```
 
 ```
-## [1] 39.95028
+## [1] 21.86331
 ```
 
 ```r
@@ -2077,7 +2077,7 @@ var(test_sample)
 ```
 
 ```
-## [1] 39.95028
+## [1] 21.86331
 ```
 
 We see the function is working as expected, and when returning the unbiased estimate it matches `R`'s built-in function `var()`. Finally, let's examine the biased estimate of $\sigma^2$.
@@ -2088,7 +2088,7 @@ get_var(test_sample, biased = TRUE)
 ```
 
 ```
-## [1] 35.95525
+## [1] 19.67698
 ```
 
 

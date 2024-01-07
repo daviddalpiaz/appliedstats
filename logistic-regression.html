@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 17 Logistic Regression | Applied Statistics with R</title>
   <meta name="description" content="Chapter 17 Logistic Regression | Applied Statistics with R" />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 17 Logistic Regression | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -91,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -104,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -118,6 +118,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -572,10 +576,10 @@ Y \mid {\bf X} = {\bf x} \sim N(\beta_0 + \beta_1x_1 + \ldots + \beta_{p - 1}x_{
 <h2><span class="header-section-number">17.2</span> Binary Response<a href="logistic-regression.html#binary-response" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>To illustrate the use of a GLM we’ll focus on the case of binary responses variable coded using <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>. In practice, these <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>s will code for two classes such as yes/no, cat/dog, sick/healthy, etc.</p>
 <p><span class="math display">\[
-Y = 
-\begin{cases} 
+Y =
+\begin{cases}
       1 &amp; \text{yes} \\
-      0 &amp; \text{no} 
+      0 &amp; \text{no}
 \end{cases}
 \]</span></p>
 <p>First, we define some notation that we will use throughout.</p>
@@ -939,6 +943,18 @@ D \overset{\text{approx}}{\sim} \chi^2_{k}
 <span id="cb1456-2"><a href="logistic-regression.html#cb1456-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bestglm)</span>
 <span id="cb1456-3"><a href="logistic-regression.html#cb1456-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;SAheart&quot;</span>)</span></code></pre></div>
 <table>
+<colgroup>
+<col width="6%" />
+<col width="12%" />
+<col width="7%" />
+<col width="15%" />
+<col width="12%" />
+<col width="9%" />
+<col width="12%" />
+<col width="12%" />
+<col width="6%" />
+<col width="6%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="right">sbp</th>
@@ -1141,7 +1157,7 @@ H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{adiposity}} = \beta_{\texttt{obesity}
 <span id="cb1472-9"><a href="logistic-regression.html#cb1472-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">alcohol =</span> <span class="fl">23.89</span>,</span>
 <span id="cb1472-10"><a href="logistic-regression.html#cb1472-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> <span class="dv">60</span></span>
 <span id="cb1472-11"><a href="logistic-regression.html#cb1472-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p>Fist, we’ll use the <code>predict()</code> function to obtain <span class="math inline">\(\hat{\eta}({\bf x})\)</span> for this observation.</p>
+<p>First, we’ll use the <code>predict()</code> function to obtain <span class="math inline">\(\hat{\eta}({\bf x})\)</span> for this observation.</p>
 <div class="sourceCode" id="cb1473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1473-1"><a href="logistic-regression.html#cb1473-1" aria-hidden="true" tabindex="-1"></a>eta_hat <span class="ot">=</span> <span class="fu">predict</span>(chd_mod_selected, new_obs, <span class="at">se.fit =</span> <span class="cn">TRUE</span>, <span class="at">type =</span> <span class="st">&quot;link&quot;</span>)</span>
 <span id="cb1473-2"><a href="logistic-regression.html#cb1473-2" aria-hidden="true" tabindex="-1"></a>eta_hat</span></code></pre></div>
 <pre><code>## $fit
@@ -1179,10 +1195,6 @@ H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{adiposity}} = \beta_{\texttt{obesity}
 ## glm(formula = chd ~ alcohol + ldl + famhist + typea + age + ldl:famhist, 
 ##     family = binomial, data = SAheart)
 ## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.9082  -0.8308  -0.4550   0.9286   2.5152  
-## 
 ## Coefficients:
 ##                     Estimate Std. Error z value Pr(&gt;|z|)    
 ## (Intercept)        -6.043472   0.937186  -6.449 1.13e-10 ***
@@ -1215,10 +1227,6 @@ H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{adiposity}} = \beta_{\texttt{obesity}
 ## glm(formula = chd ~ alcohol + ldl + famhist + typea + age + ldl:famhist + 
 ##     I(ldl^2), family = binomial, data = SAheart)
 ## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.8953  -0.8311  -0.4556   0.9276   2.5204  
-## 
 ## Coefficients:
 ##                     Estimate Std. Error z value Pr(&gt;|z|)    
 ## (Intercept)        -6.096747   1.065952  -5.720 1.07e-08 ***
@@ -1242,7 +1250,7 @@ H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{adiposity}} = \beta_{\texttt{obesity}
 <p>Unsurprisingly, since this additional transformed variable wasn’t intelligently chosen, it is not significant. However, this does allow us to stress the fact that the syntax notation that we had been using with <code>lm()</code> works basically exactly the same for <code>glm()</code>, however now we understand that this is specifying the linear combination of predictions, <span class="math inline">\(\eta({\bf x})\)</span>.</p>
 <p>That is, the above fits the model</p>
 <p><span class="math display">\[
-\log\left(\frac{p({\bf x})}{1 - p({\bf x})}\right) = 
+\log\left(\frac{p({\bf x})}{1 - p({\bf x})}\right) =
 \beta_0 +
 \beta_{1}x_{\texttt{alcohol}} +
 \beta_{2}x_{\texttt{ldl}} +
@@ -1285,10 +1293,10 @@ C^B({\bf x}) = \underset{k}{\mathrm{argmax}} \ P[Y = k \mid {\bf X = x}].
 \]</span></p>
 <p>For a binary response, that is,</p>
 <p><span class="math display">\[
-\hat{C}(\bf x) = 
-\begin{cases} 
+\hat{C}(\bf x) =
+\begin{cases}
       1 &amp; p({\bf x}) &gt; 0.5 \\
-      0 &amp; p({\bf x}) \leq 0.5 
+      0 &amp; p({\bf x}) \leq 0.5
 \end{cases}
 \]</span></p>
 <p>Simply put, the Bayes classifier (not to be confused with the Naive Bayes Classifier) minimizes the probability of misclassification by classifying each observation to the class with the highest probability. Unfortunately, in practice, we won’t know the necessary probabilities to directly use the Bayes classifier. Instead we’ll have to use estimated probabilities. So to create a classifier that seeks to minimize misclassifications, we would use,</p>
@@ -1297,10 +1305,10 @@ C^B({\bf x}) = \underset{k}{\mathrm{argmax}} \ P[Y = k \mid {\bf X = x}].
 \]</span></p>
 <p>In the case of a binary response since <span class="math inline">\(\hat{p}({\bf x}) = 1 - \hat{p}({\bf x})\)</span>, this becomes</p>
 <p><span class="math display">\[
-\hat{C}(\bf x) = 
-\begin{cases} 
+\hat{C}(\bf x) =
+\begin{cases}
       1 &amp; \hat{p}({\bf x}) &gt; 0.5 \\
-      0 &amp; \hat{p}({\bf x}) \leq 0.5 
+      0 &amp; \hat{p}({\bf x}) \leq 0.5
 \end{cases}
 \]</span></p>
 <p>Using this simple classification rule, we can turn logistic regression into a classifier. To use logistic regression for classification, we first use logistic regression to obtain estimated probabilities, <span class="math inline">\(\hat{p}({\bf x})\)</span>, then use these in conjunction with the above classification rule.</p>
@@ -1314,7 +1322,10 @@ C^B({\bf x}) = \underset{k}{\mathrm{argmax}} \ P[Y = k \mid {\bf X = x}].
 <span id="cb1491-4"><a href="logistic-regression.html#cb1491-4" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">as.tibble</span>(spam)</span></code></pre></div>
 <pre><code>## Warning: `as.tibble()` was deprecated in tibble 2.0.0.
 ## ℹ Please use `as_tibble()` instead.
-## ℹ The signature and semantics have changed, see `?as_tibble`.</code></pre>
+## ℹ The signature and semantics have changed, see `?as_tibble`.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
 <pre><code>## # A tibble: 4,601 × 58
 ##     make address   all num3d   our  over remove internet order  mail receive
 ##    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
@@ -1328,13 +1339,13 @@ C^B({\bf x}) = \underset{k}{\mathrm{argmax}} \ P[Y = k \mid {\bf X = x}].
 ##  8  0       0     0        0  1.88  0      0        1.88  0     0       0   
 ##  9  0.15    0     0.46     0  0.61  0      0.3      0     0.92  0.76    0.76
 ## 10  0.06    0.12  0.77     0  0.19  0.32   0.38     0     0.06  0       0   
-## # … with 4,591 more rows, and 47 more variables: will &lt;dbl&gt;, people &lt;dbl&gt;,
-## #   report &lt;dbl&gt;, addresses &lt;dbl&gt;, free &lt;dbl&gt;, business &lt;dbl&gt;, email &lt;dbl&gt;,
-## #   you &lt;dbl&gt;, credit &lt;dbl&gt;, your &lt;dbl&gt;, font &lt;dbl&gt;, num000 &lt;dbl&gt;, money &lt;dbl&gt;,
-## #   hp &lt;dbl&gt;, hpl &lt;dbl&gt;, george &lt;dbl&gt;, num650 &lt;dbl&gt;, lab &lt;dbl&gt;, labs &lt;dbl&gt;,
-## #   telnet &lt;dbl&gt;, num857 &lt;dbl&gt;, data &lt;dbl&gt;, num415 &lt;dbl&gt;, num85 &lt;dbl&gt;,
-## #   technology &lt;dbl&gt;, num1999 &lt;dbl&gt;, parts &lt;dbl&gt;, pm &lt;dbl&gt;, direct &lt;dbl&gt;,
-## #   cs &lt;dbl&gt;, meeting &lt;dbl&gt;, original &lt;dbl&gt;, project &lt;dbl&gt;, re &lt;dbl&gt;, …</code></pre>
+## # ℹ 4,591 more rows
+## # ℹ 47 more variables: will &lt;dbl&gt;, people &lt;dbl&gt;, report &lt;dbl&gt;, addresses &lt;dbl&gt;,
+## #   free &lt;dbl&gt;, business &lt;dbl&gt;, email &lt;dbl&gt;, you &lt;dbl&gt;, credit &lt;dbl&gt;,
+## #   your &lt;dbl&gt;, font &lt;dbl&gt;, num000 &lt;dbl&gt;, money &lt;dbl&gt;, hp &lt;dbl&gt;, hpl &lt;dbl&gt;,
+## #   george &lt;dbl&gt;, num650 &lt;dbl&gt;, lab &lt;dbl&gt;, labs &lt;dbl&gt;, telnet &lt;dbl&gt;,
+## #   num857 &lt;dbl&gt;, data &lt;dbl&gt;, num415 &lt;dbl&gt;, num85 &lt;dbl&gt;, technology &lt;dbl&gt;,
+## #   num1999 &lt;dbl&gt;, parts &lt;dbl&gt;, pm &lt;dbl&gt;, direct &lt;dbl&gt;, cs &lt;dbl&gt;, …</code></pre>
 <p>This dataset, created in the late 1990s at Hewlett-Packard Labs, contains 4601 emails, of which 1813 are considered spam. The remaining are not spam. (Which for simplicity, we might call, ham.) Additional details can be obtained by using <code>?spam</code> or by visiting the <a href="https://archive.ics.uci.edu/ml/datasets/spambase" target="_blank">UCI Machine Learning Repository</a>.</p>
 <p>The response variable, <code>type</code>, is a <strong>factor</strong> with levels that label each email as <code>spam</code> or <code>nonspam</code>. When fitting models, <code>nonspam</code> will be the reference level, <span class="math inline">\(Y = 0\)</span>, as it comes first alphabetically.</p>
 <div class="sourceCode" id="cb1494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1494-1"><a href="logistic-regression.html#cb1494-1" aria-hidden="true" tabindex="-1"></a><span class="fu">is.factor</span>(spam<span class="sc">$</span>type)</span></code></pre></div>
@@ -1370,13 +1381,13 @@ C^B({\bf x}) = \underset{k}{\mathrm{argmax}} \ P[Y = k \mid {\bf X = x}].
 </div>
 <div id="evaluating-classifiers" class="section level3 hasAnchor" number="17.4.2">
 <h3><span class="header-section-number">17.4.2</span> Evaluating Classifiers<a href="logistic-regression.html#evaluating-classifiers" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The metric we’ll be most interested in for evaluating the overall performance of a classifier is the <strong>misclassification rate</strong>. (Sometimes, instead accuracy is reported, which is instead the proportion of correction classifications, so both metrics serve the same purpose.)</p>
+<p>The metric we’ll be most interested in for evaluating the overall performance of a classifier is the <strong>misclassification rate</strong>. (Sometimes, instead accuracy is reported, which is instead the proportion of correct classifications, so both metrics serve the same purpose.)</p>
 <p><span class="math display">\[
 \text{Misclass}(\hat{C}, \text{Data}) = \frac{1}{n}\sum_{i = 1}^{n}I(y_i \neq \hat{C}({\bf x_i}))
 \]</span></p>
 <p><span class="math display">\[
-I(y_i \neq \hat{C}({\bf x_i})) = 
-\begin{cases} 
+I(y_i \neq \hat{C}({\bf x_i})) =
+\begin{cases}
   0 &amp; y_i = \hat{C}({\bf x_i}) \\
   1 &amp; y_i \neq \hat{C}({\bf x_i}) \\
 \end{cases}
@@ -1410,7 +1421,7 @@ I(y_i \neq \hat{C}({\bf x_i})) =
 <div class="sourceCode" id="cb1516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1516-1"><a href="logistic-regression.html#cb1516-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cv.glm</span>(spam_trn, fit_additive, <span class="at">K =</span> <span class="dv">5</span>)<span class="sc">$</span>delta[<span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## [1] 0.08684467</code></pre>
 <div class="sourceCode" id="cb1518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1518-1"><a href="logistic-regression.html#cb1518-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cv.glm</span>(spam_trn, fit_over, <span class="at">K =</span> <span class="dv">5</span>)<span class="sc">$</span>delta[<span class="dv">1</span>]</span></code></pre></div>
-<pre><code>## [1] 0.161</code></pre>
+<pre><code>## [1] 0.146</code></pre>
 <p>Note that we’re suppressing warnings again here. (Now there would be a lot more, since were fitting a total of 20 models.)</p>
 <p>Based on these results, <code>fit_caps</code> and <code>fit_selected</code> are underfitting relative to <code>fit_additive</code>. Similarly, <code>fit_over</code> is overfitting relative to <code>fit_additive</code>. Thus, based on these results, we prefer the classifier created based on the logistic regression fit and stored in <code>fit_additive</code>.</p>
 <p>Going forward, to evaluate and report on the efficacy of this classifier, we’ll use the test dataset. We’re going to take the position that the test data set should <strong>never</strong> be used in training, which is why we used cross-validation within the training dataset to select a model. Even though cross-validation uses hold-out sets to generate metrics, at some point all of the data is used for training.</p>
@@ -1479,10 +1490,10 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 <pre><code>## [1] 0.9418498</code></pre>
 <p>Recall that we had created this classifier using a probability of <span class="math inline">\(0.5\)</span> as a “cutoff” for how observations should be classified. Now we’ll modify this cutoff. We’ll see that by modifying the cutoff, <span class="math inline">\(c\)</span>, we can improve sensitivity or specificity at the expense of the overall accuracy (misclassification rate).</p>
 <p><span class="math display">\[
-\hat{C}(\bf x) = 
-\begin{cases} 
+\hat{C}(\bf x) =
+\begin{cases}
       1 &amp; \hat{p}({\bf x}) &gt; c \\
-      0 &amp; \hat{p}({\bf x}) \leq c 
+      0 &amp; \hat{p}({\bf x}) \leq c
 \end{cases}
 \]</span></p>
 <p>Additionally, if we change the cutoff to improve sensitivity, we’ll decrease specificity, and vice versa.</p>
@@ -1527,7 +1538,7 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 <ul>
 <li><a href="logistic.Rmd" target="_blank"><code>logistic.Rmd</code></a></li>
 </ul>
-<p>The file was created using <code>R</code> version <code>4.2.1</code>.</p>
+<p>The file was created using <code>R</code> version <code>4.3.2</code>.</p>
 
 </div>
 </div>

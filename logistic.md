@@ -849,7 +849,7 @@ new_obs = data.frame(
 )
 ```
 
-Fist, we'll use the `predict()` function to obtain $\hat{\eta}({\bf x})$ for this observation.
+First, we'll use the `predict()` function to obtain $\hat{\eta}({\bf x})$ for this observation.
 
 
 ```r
@@ -926,10 +926,6 @@ summary(chd_mod_interaction)
 ## glm(formula = chd ~ alcohol + ldl + famhist + typea + age + ldl:famhist, 
 ##     family = binomial, data = SAheart)
 ## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.9082  -0.8308  -0.4550   0.9286   2.5152  
-## 
 ## Coefficients:
 ##                     Estimate Std. Error z value Pr(>|z|)    
 ## (Intercept)        -6.043472   0.937186  -6.449 1.13e-10 ***
@@ -969,10 +965,6 @@ summary(chd_mod_int_quad)
 ## Call:
 ## glm(formula = chd ~ alcohol + ldl + famhist + typea + age + ldl:famhist + 
 ##     I(ldl^2), family = binomial, data = SAheart)
-## 
-## Deviance Residuals: 
-##     Min       1Q   Median       3Q      Max  
-## -1.8953  -0.8311  -0.4556   0.9276   2.5204  
 ## 
 ## Coefficients:
 ##                     Estimate Std. Error z value Pr(>|z|)    
@@ -1115,6 +1107,9 @@ tibble::as.tibble(spam)
 ## Warning: `as.tibble()` was deprecated in tibble 2.0.0.
 ## i Please use `as_tibble()` instead.
 ## i The signature and semantics have changed, see `?as_tibble`.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
 ```
 
 ```
@@ -1131,13 +1126,13 @@ tibble::as.tibble(spam)
 ##  8  0       0     0        0  1.88  0      0        1.88  0     0       0   
 ##  9  0.15    0     0.46     0  0.61  0      0.3      0     0.92  0.76    0.76
 ## 10  0.06    0.12  0.77     0  0.19  0.32   0.38     0     0.06  0       0   
-## # ... with 4,591 more rows, and 47 more variables: will <dbl>, people <dbl>,
-## #   report <dbl>, addresses <dbl>, free <dbl>, business <dbl>, email <dbl>,
-## #   you <dbl>, credit <dbl>, your <dbl>, font <dbl>, num000 <dbl>, money <dbl>,
-## #   hp <dbl>, hpl <dbl>, george <dbl>, num650 <dbl>, lab <dbl>, labs <dbl>,
-## #   telnet <dbl>, num857 <dbl>, data <dbl>, num415 <dbl>, num85 <dbl>,
-## #   technology <dbl>, num1999 <dbl>, parts <dbl>, pm <dbl>, direct <dbl>,
-## #   cs <dbl>, meeting <dbl>, original <dbl>, project <dbl>, re <dbl>, ...
+## # i 4,591 more rows
+## # i 47 more variables: will <dbl>, people <dbl>, report <dbl>, addresses <dbl>,
+## #   free <dbl>, business <dbl>, email <dbl>, you <dbl>, credit <dbl>,
+## #   your <dbl>, font <dbl>, num000 <dbl>, money <dbl>, hp <dbl>, hpl <dbl>,
+## #   george <dbl>, num650 <dbl>, lab <dbl>, labs <dbl>, telnet <dbl>,
+## #   num857 <dbl>, data <dbl>, num415 <dbl>, num85 <dbl>, technology <dbl>,
+## #   num1999 <dbl>, parts <dbl>, pm <dbl>, direct <dbl>, cs <dbl>, ...
 ```
 
 This dataset, created in the late 1990s at Hewlett-Packard Labs, contains 4601 emails, of which 1813 are considered spam. The remaining are not spam. (Which for simplicity, we might call, ham.) Additional details can be obtained by using `?spam` or by visiting the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/spambase){target="_blank"}. 
@@ -1220,7 +1215,7 @@ In reality, we didn't actually suppress it, but instead changed `maxit` to `75`,
 
 ### Evaluating Classifiers
 
-The metric we'll be most interested in for evaluating the overall performance of a classifier is the **misclassification rate**. (Sometimes, instead accuracy is reported, which is instead the proportion of correction classifications, so both metrics serve the same purpose.)
+The metric we'll be most interested in for evaluating the overall performance of a classifier is the **misclassification rate**. (Sometimes, instead accuracy is reported, which is instead the proportion of correct classifications, so both metrics serve the same purpose.)
 
 $$
 \text{Misclass}(\hat{C}, \text{Data}) = \frac{1}{n}\sum_{i = 1}^{n}I(y_i \neq \hat{C}({\bf x_i}))
@@ -1316,7 +1311,7 @@ cv.glm(spam_trn, fit_over, K = 5)$delta[1]
 ```
 
 ```
-## [1] 0.161
+## [1] 0.146
 ```
  
 Note that we're suppressing warnings again here. (Now there would be a lot more, since were fitting a total of 20 models.)
@@ -1569,4 +1564,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`logistic.Rmd`](logistic.Rmd){target="_blank"}
 
-The file was created using `R` version `4.2.1`.
+The file was created using `R` version `4.3.2`.

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Data and Programming | Applied Statistics with R</title>
   <meta name="description" content="Chapter 3 Data and Programming | Applied Statistics with R" />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Data and Programming | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -91,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -104,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -118,6 +118,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -627,6 +631,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="logical-operators" class="section level3 hasAnchor" number="3.2.3">
 <h3><span class="header-section-number">3.2.3</span> Logical Operators<a href="data-and-programming.html#logical-operators" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <table>
+<colgroup>
+<col width="15%" />
+<col width="35%" />
+<col width="35%" />
+<col width="12%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Operator</th>
@@ -1240,7 +1250,7 @@ X^\top X
 ##  8 audi         a4 quattro   1.8  1999     4 manu… 4        18    26 p     comp…
 ##  9 audi         a4 quattro   1.8  1999     4 auto… 4        16    25 p     comp…
 ## 10 audi         a4 quattro   2    2008     4 manu… 4        20    28 p     comp…
-## # … with 224 more rows</code></pre>
+## # ℹ 224 more rows</code></pre>
 <p>The function <code>str()</code> will display the “structure” of the data frame. It will display the number of <strong>observations</strong> and <strong>variables</strong>, list the variables, give the type of each variable, and show some elements of each variable. This information can also be found in the “Environment” window in RStudio.</p>
 <div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="data-and-programming.html#cb278-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(mpg)</span></code></pre></div>
 <pre><code>## tibble [234 × 11] (S3: tbl_df/tbl/data.frame)
@@ -1390,11 +1400,11 @@ X^\top X
 <p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the output of the final line of the body is what is returned by the function. In this case the function returns the vector stored in the variable <code>result</code>.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
 <div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="data-and-programming.html#cb312-1" aria-hidden="true" tabindex="-1"></a>(<span class="at">test_sample =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">5</span>))</span></code></pre></div>
-<pre><code>##  [1]  0.1877686  8.2086397  1.9961876  4.6406713 -0.4300227  0.4596195
-##  [7]  1.8913546 -1.0686705  7.3368188  8.0480036</code></pre>
+<pre><code>##  [1]  5.2152952 -0.4088894 10.2547341  3.1708948  3.2387809  7.9702264
+##  [7] -0.1896785 -1.8623121  0.9840689  4.1656073</code></pre>
 <div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="data-and-programming.html#cb314-1" aria-hidden="true" tabindex="-1"></a><span class="fu">standardize</span>(<span class="at">x =</span> test_sample)</span></code></pre></div>
-<pre><code>##  [1] -0.8087731  1.3982607 -0.3111661  0.4164936 -0.9787654 -0.7339702
-##  [7] -0.3400121 -1.1544966  1.1583692  1.3540598</code></pre>
+<pre><code>##  [1]  0.511109876 -0.954447075  1.824293080 -0.021622507 -0.003932669
+##  [6]  1.228993240 -0.897324822 -1.333181759 -0.591468277  0.237580914</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
 <div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="data-and-programming.html#cb316-1" aria-hidden="true" tabindex="-1"></a>standardize <span class="ot">=</span> <span class="cf">function</span>(x) {</span>
 <span id="cb316-2"><a href="data-and-programming.html#cb316-2" aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">/</span> <span class="fu">sd</span>(x)</span>
@@ -1431,14 +1441,14 @@ s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2
 <span id="cb329-3"><a href="data-and-programming.html#cb329-3" aria-hidden="true" tabindex="-1"></a>  (<span class="dv">1</span> <span class="sc">/</span> n) <span class="sc">*</span> <span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">^</span> <span class="dv">2</span>)</span>
 <span id="cb329-4"><a href="data-and-programming.html#cb329-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="data-and-programming.html#cb330-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_var</span>(test_sample)</span></code></pre></div>
-<pre><code>## [1] 13.20764</code></pre>
+<pre><code>## [1] 14.72698</code></pre>
 <div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="data-and-programming.html#cb332-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_var</span>(test_sample, <span class="at">biased =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## [1] 13.20764</code></pre>
+<pre><code>## [1] 14.72698</code></pre>
 <div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="data-and-programming.html#cb334-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(test_sample)</span></code></pre></div>
-<pre><code>## [1] 13.20764</code></pre>
+<pre><code>## [1] 14.72698</code></pre>
 <p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built-in function <code>var()</code>. Finally, let’s examine the biased estimate of <span class="math inline">\(\sigma^2\)</span>.</p>
 <div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="data-and-programming.html#cb336-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_var</span>(test_sample, <span class="at">biased =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>## [1] 11.88687</code></pre>
+<pre><code>## [1] 13.25428</code></pre>
 
 </div>
 </div>

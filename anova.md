@@ -1180,4 +1180,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`anova.Rmd`](anova.Rmd){target="_blank"}
 
-The file was created using `R` version `4.2.1`.
+The file was created using `R` version `4.3.2`.
