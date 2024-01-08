@@ -1006,7 +1006,7 @@ table(spam_tst$type) / nrow(spam_tst)
 
 First, note that to be a reasonable classifier, it needs to outperform the obvious classifier of simply classifying all observations to the majority class. In this case, classifying everything as non-spam for a test misclassification rate of `r as.numeric((table(spam_tst$type) / nrow(spam_tst))[2])`
 
-Next, we can see that using the classifier created from `fit_additive`, only a total of $137 + 161 = 298$ from the total of 3601 emails in the test set are misclassified. Overall, the accuracy in the test set it
+Next, we can see that using the classifier created from `fit_additive`, only a total of $127 + 157 = 284$ from the total of 3601 emails in the test set are misclassified. Overall, the accuracy in the test set it
 
 ```{r}
 mean(spam_tst_pred == spam_tst$type)
@@ -1020,7 +1020,7 @@ mean(spam_tst_pred != spam_tst$type)
 
 This seems like a decent classifier...
 
-However, are all errors created equal? In this case, absolutely not. The 137 non-spam emails that were marked as spam (false positives) are a problem. We can't allow important information, say, a job offer, to miss our inbox and get sent to the spam folder. On the other hand, the 161 spam email that would make it to an inbox (false negatives) are easily dealt with, just delete them.
+However, are all errors created equal? In this case, absolutely not. The 127 non-spam emails that were marked as spam (false positives) are a problem. We can't allow important information, say, a job offer, to miss our inbox and get sent to the spam folder. On the other hand, the 157 spam email that would make it to an inbox (false negatives) are easily dealt with, just delete them.
 
 Instead of simply evaluating a classifier based on its misclassification rate (or accuracy), we'll define two additional metrics, sensitivity and specificity. Note that these are simply two of many more metrics that can be considered. The [Wikipedia page for sensitivity and specificity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity){target="_blank"} details a large number of metrics that can be derived from a confusion matrix.
 
