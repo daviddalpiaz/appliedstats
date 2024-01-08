@@ -1459,14 +1459,14 @@ Now we’ll use these predictions to create a confusion matrix.</p>
 ##   nonspam      spam 
 ## 0.6064982 0.3935018</code></pre>
 <p>First, note that to be a reasonable classifier, it needs to outperform the obvious classifier of simply classifying all observations to the majority class. In this case, classifying everything as non-spam for a test misclassification rate of 0.3935018</p>
-<p>Next, we can see that using the classifier created from <code>fit_additive</code>, only a total of <span class="math inline">\(137 + 161 = 298\)</span> from the total of 3601 emails in the test set are misclassified. Overall, the accuracy in the test set it</p>
+<p>Next, we can see that using the classifier created from <code>fit_additive</code>, only a total of <span class="math inline">\(127 + 157 = 284\)</span> from the total of 3601 emails in the test set are misclassified. Overall, the accuracy in the test set it</p>
 <div class="sourceCode" id="cb1526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1526-1"><a href="logistic-regression.html#cb1526-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(spam_tst_pred <span class="sc">==</span> spam_tst<span class="sc">$</span>type)</span></code></pre></div>
 <pre><code>## [1] 0.921133</code></pre>
 <p>In other words, the test misclassification is</p>
 <div class="sourceCode" id="cb1528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1528-1"><a href="logistic-regression.html#cb1528-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(spam_tst_pred <span class="sc">!=</span> spam_tst<span class="sc">$</span>type)</span></code></pre></div>
 <pre><code>## [1] 0.07886698</code></pre>
 <p>This seems like a decent classifier…</p>
-<p>However, are all errors created equal? In this case, absolutely not. The 137 non-spam emails that were marked as spam (false positives) are a problem. We can’t allow important information, say, a job offer, to miss our inbox and get sent to the spam folder. On the other hand, the 161 spam email that would make it to an inbox (false negatives) are easily dealt with, just delete them.</p>
+<p>However, are all errors created equal? In this case, absolutely not. The 127 non-spam emails that were marked as spam (false positives) are a problem. We can’t allow important information, say, a job offer, to miss our inbox and get sent to the spam folder. On the other hand, the 157 spam email that would make it to an inbox (false negatives) are easily dealt with, just delete them.</p>
 <p>Instead of simply evaluating a classifier based on its misclassification rate (or accuracy), we’ll define two additional metrics, sensitivity and specificity. Note that these are simply two of many more metrics that can be considered. The <a href="https://en.wikipedia.org/wiki/Sensitivity_and_specificity" target="_blank">Wikipedia page for sensitivity and specificity</a> details a large number of metrics that can be derived from a confusion matrix.</p>
 <p><strong>Sensitivity</strong> is essentially the true positive rate. So when sensitivity is high, the number of false negatives is low.</p>
 <p><span class="math display">\[
