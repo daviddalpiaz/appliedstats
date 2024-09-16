@@ -5,7 +5,7 @@
 `R` has built-in functions for a large number of summary statistics. For numeric variables, we can summarize data with the center and spread. We'll again look at the `mpg` dataset from the `ggplot2` package.
 
 
-```r
+``` r
 library(ggplot2)
 ```
 
@@ -32,7 +32,7 @@ library(ggplot2)
 For categorical variables, counts and percentages can be used for summary.
 
 
-```r
+``` r
 table(mpg$drv)
 ```
 
@@ -42,7 +42,7 @@ table(mpg$drv)
 ## 103 106  25
 ```
 
-```r
+``` r
 table(mpg$drv) / nrow(mpg)
 ```
 
@@ -68,7 +68,7 @@ We will look at four methods of visualizing data that we will use throughout the
 When visualizing a single numerical variable, a **histogram** will be our go-to tool, which can be created in `R` using the `hist()` function.
 
 
-```r
+``` r
 hist(mpg$cty)
 ```
 
@@ -77,7 +77,7 @@ hist(mpg$cty)
 The histogram function has a number of parameters which can be changed to make our plot look much nicer. Use the `?` operator to read the documentation for the `hist()` to see a full list of these parameters.
 
 
-```r
+``` r
 hist(mpg$cty,
      xlab   = "Miles Per Gallon (City)",
      main   = "Histogram of MPG (City)",
@@ -95,14 +95,14 @@ Importantly, you should always be sure to label your axes and give the plot a ti
 Somewhat similar to a histogram, a barplot can provide a visual summary of a categorical variable, or a numeric variable with a finite number of values, like a ranking from 1 to 10.
 
 
-```r
+``` r
 barplot(table(mpg$drv))
 ```
 
 ![](data-summary_files/figure-latex/unnamed-chunk-5-1.pdf)<!-- --> 
 
 
-```r
+``` r
 barplot(table(mpg$drv),
      xlab   = "Drivetrain (f = FWD, r = RWD, 4 = 4WD)",
      ylab   = "Frequency",
@@ -118,7 +118,7 @@ barplot(table(mpg$drv),
 To visualize the relationship between a numerical and categorical variable, we will use a **boxplot**. In the `mpg` dataset, the `drv` variable takes a small, finite number of values. A car can only be front wheel drive, 4 wheel drive, or rear wheel drive.
 
 
-```r
+``` r
 unique(mpg$drv)
 ```
 
@@ -129,7 +129,7 @@ unique(mpg$drv)
 First note that we can use a single boxplot as an alternative to a histogram for visualizing a single numerical variable. To do so in `R`, we use the `boxplot()` function.
 
 
-```r
+``` r
 boxplot(mpg$hwy)
 ```
 
@@ -138,7 +138,7 @@ boxplot(mpg$hwy)
 However, more often we will use boxplots to compare a numerical variable for different values of a categorical variable.
 
 
-```r
+``` r
 boxplot(hwy ~ drv, data = mpg)
 ```
 
@@ -147,7 +147,7 @@ boxplot(hwy ~ drv, data = mpg)
 Here we used the `boxplot()` command to create side-by-side boxplots. However, since we are now dealing with two variables, the syntax has changed. The `R` syntax `hwy ~ drv, data = mpg` reads "Plot the `hwy` variable against the `drv` variable using the dataset `mpg`." We see the use of a `~` (which specifies a formula) and also a `data = ` argument. This will be a syntax that is common to many functions we will use in this course. 
 
 
-```r
+``` r
 boxplot(hwy ~ drv, data = mpg,
      xlab   = "Drivetrain (f = FWD, r = RWD, 4 = 4WD)",
      ylab   = "Miles Per Gallon (Highway)",
@@ -167,14 +167,14 @@ Again, `boxplot()` has a number of additional arguments which have the ability t
 Lastly, to visualize the relationship between two numeric variables we will use a **scatterplot**. This can be done with the `plot()` function and the `~` syntax we just used with a boxplot. (The function `plot()` can also be used more generally; see the documentation for details.)
 
 
-```r
+``` r
 plot(hwy ~ displ, data = mpg)
 ```
 
 ![](data-summary_files/figure-latex/unnamed-chunk-11-1.pdf)<!-- --> 
 
 
-```r
+``` r
 plot(hwy ~ displ, data = mpg,
      xlab = "Engine Displacement (in Liters)",
      ylab = "Miles Per Gallon (Highway)",

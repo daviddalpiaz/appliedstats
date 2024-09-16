@@ -5,7 +5,7 @@
 `R` is both a programming language and software environment for statistical computing, which is *free* and *open-source*. To get started, you will need to install two pieces of software:
 
 - [`R`, the actual programming language.](http://cran.r-project.org/){target="_blank"}
-    - Chose your operating system, and select the most recent version, 4.3.2.
+    - Chose your operating system, and select the most recent version, 4.4.1.
 - [RStudio, an excellent IDE for working with `R`.](http://www.rstudio.com/){target="_blank"}
     - Note, you must have `R` installed to use RStudio. RStudio is simply an interface used to interact with `R`.
 
@@ -83,7 +83,7 @@ Note that we will use $\ln$ and $\log$ interchangeably to mean the natural logar
 In using `R` as a calculator, we have seen a number of functions: `sqrt()`, `exp()`, `log()` and `sin()`. To get documentation about a function in `R`, simply put a question mark in front of the function name and RStudio will display the documentation, for example: 
 
 
-```r
+``` r
 ?log
 ?sin
 ?paste
@@ -107,14 +107,14 @@ If you follow these steps, you will get your issue resolved much quicker, and po
 To install a package, use the `install.packages()` function. Think of this as buying a recipe book from the store, bringing it home, and putting it on your shelf.
 
 
-```r
+``` r
 install.packages("ggplot2")
 ```
 
 Once a package is installed, it must be loaded into your current `R` session before being used. Think of this as taking the book off of the shelf and opening it up to read.
 
 
-```r
+``` r
 library(ggplot2)
 ```
 

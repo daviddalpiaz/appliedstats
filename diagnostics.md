@@ -127,7 +127,7 @@ We'll now look at a number of tools for checking the assumptions of a linear mod
 \]
 
 
-```r
+``` r
 sim_1 = function(sample_size = 500) {
   x = runif(n = sample_size) * 5
   y = 3 + 5 * x + rnorm(n = sample_size, mean = 0, sd = 1)
@@ -154,7 +154,7 @@ Probably our most useful tool will be a **Fitted versus Residuals Plot**. It wil
 Data generated from Model 1 above should not show any signs of violating assumptions, so we'll use this to see what a good fitted versus residuals plot should look like. First, we'll simulate observations from this model.
 
 
-```r
+``` r
 set.seed(42)
 sim_data_1 = sim_1()
 head(sim_data_1)
@@ -173,7 +173,7 @@ head(sim_data_1)
 We then fit the model and add the fitted line to a scatterplot.
 
 
-```r
+``` r
 plot(y ~ x, data = sim_data_1, col = "grey", pch = 20,
      main = "Data from Model 1")
 fit_1 = lm(y ~ x, data = sim_data_1)
@@ -187,7 +187,7 @@ abline(fit_1, col = "darkorange", lwd = 3)
 We now plot a fitted versus residuals plot. Note, this is residuals on the $y$-axis despite the ordering in the name. Sometimes you will see this called a residuals versus fitted, or residuals versus predicted plot.
 
 
-```r
+``` r
 plot(fitted(fit_1), resid(fit_1), col = "grey", pch = 20,
      xlab = "Fitted", ylab = "Residuals", main = "Data from Model 1")
 abline(h = 0, col = "darkorange", lwd = 2)
@@ -209,7 +209,7 @@ To get a better idea of how a fitted versus residuals plot can be useful, we wil
 Model 2 is an example of non-constant variance. In this case, the variance is larger for larger values of the predictor variable $x$.
 
 
-```r
+``` r
 set.seed(42)
 sim_data_2 = sim_2()
 fit_2 = lm(y ~ x, data = sim_data_2)
@@ -225,7 +225,7 @@ abline(fit_2, col = "darkorange", lwd = 3)
 This actually is rather easy to see here by adding the fitted line to a scatterplot. This is because we are only performing simple linear regression. With multiple regression, a fitted versus residuals plot is a necessity, since adding a fitted regression to a scatterplot isn't exactly possible.
 
 
-```r
+``` r
 plot(fitted(fit_2), resid(fit_2), col = "grey", pch = 20,
      xlab = "Fitted", ylab = "Residuals", main = "Data from Model 2")
 abline(h = 0, col = "darkorange", lwd = 2)
@@ -240,7 +240,7 @@ On the fitted versus residuals plot, we see two things very clearly. For any fit
 Now we will demonstrate a model which does not meet the linearity assumption. Model 3 is an example of a model where $Y$ is not a linear combination of the predictors. In this case the predictor is $x$, but the model uses $x^2$. (We'll see later that this is something that a "linear" model can deal with. The fix is simple, just make $x^2$ a predictor!)
 
 
-```r
+``` r
 set.seed(42)
 sim_data_3 = sim_3()
 fit_3 = lm(y ~ x, data = sim_data_3)
@@ -256,7 +256,7 @@ abline(fit_3, col = "darkorange", lwd = 3)
 Again, this is rather clear on the scatterplot, but again, we wouldn't be able to check this plot for multiple regression.
 
 
-```r
+``` r
 plot(fitted(fit_3), resid(fit_3), col = "grey", pch = 20,
      xlab = "Fitted", ylab = "Residuals", main = "Data from Model 3")
 abline(h = 0, col = "darkorange", lwd = 2)
@@ -282,7 +282,7 @@ Isn't that convenient? A test that will specifically test the **constant varianc
 The Breusch-Pagan Test can not be performed by default in `R`, however the function `bptest` in the `lmtest` package implements the test.
 
 
-```r
+``` r
 #install.packages("lmtest")
 library(lmtest)
 ```
@@ -294,7 +294,7 @@ Let's try it on the three models we fit above. Recall,
 - `fit_3` violated linearity, but not constant variance.
 
 
-```r
+``` r
 bptest(fit_1)
 ```
 
@@ -309,7 +309,7 @@ bptest(fit_1)
 For `fit_1` we see a large p-value, so we do not reject the null of homoscedasticity, which is what we would expect.
 
 
-```r
+``` r
 bptest(fit_2)
 ```
 
@@ -324,7 +324,7 @@ bptest(fit_2)
 For `fit_2` we see a small p-value, so we reject the null of homoscedasticity. The constant variance assumption is violated. This matches our findings with a fitted versus residuals plot.
 
 
-```r
+``` r
 bptest(fit_3)
 ```
 
@@ -343,7 +343,7 @@ Lastly, for `fit_3` we again see a large p-value, so we do not reject the null o
 We have a number of tools for assessing the normality assumption. The most obvious would be to make a histogram of the residuals. If it appears roughly normal, then we'll believe the errors could truly be normal.
 
 
-```r
+``` r
 par(mfrow = c(1, 3))
 hist(resid(fit_1),
      xlab   = "Residuals",
@@ -378,7 +378,7 @@ Another visual method for assessing the normality of errors, which is more power
 In `R` these are very easy to make. The `qqnorm()` function plots the points, and the `qqline()` function adds the necessary line. We create a Q-Q plot for the residuals of `fit_1` to check if the errors could truly be normally distributed.
 
 
-```r
+``` r
 qqnorm(resid(fit_1), main = "Normal Q-Q Plot, fit_1", col = "darkgrey")
 qqline(resid(fit_1), col = "dodgerblue", lwd = 2)
 ```
@@ -396,7 +396,7 @@ The [Wikipedia page for Normal probability plots](http://en.wikipedia.org/wiki/N
 Also, to get a better idea of how Q-Q plots work, here is a quick function which creates a Q-Q plot:
 
 
-```r
+``` r
 qq_plot = function(e) {
 
   n = length(e)
@@ -422,7 +422,7 @@ qq_plot = function(e) {
 We can then verify that it is essentially equivalent to using `qqnorm()` and `qqline()` in `R`.
 
 
-```r
+``` r
 set.seed(420)
 x = rnorm(100, mean = 0 , sd = 1)
 par(mfrow = c(1, 2))
@@ -440,7 +440,7 @@ To get a better idea of what "close to the line" means, we perform a number of s
 First we simulate data from a normal distribution with different sample sizes, and each time create a Q-Q plot.
 
 
-```r
+``` r
 par(mfrow = c(1, 3))
 set.seed(420)
 qq_plot(rnorm(10))
@@ -457,7 +457,7 @@ Since this data **is** sampled from a normal distribution, these are all, by def
 Next, we simulate data from a $t$ distribution with a small degrees of freedom, for different sample sizes.
 
 
-```r
+``` r
 par(mfrow = c(1, 3))
 set.seed(420)
 qq_plot(rt(10, df = 4))
@@ -474,7 +474,7 @@ Recall that as the degrees of freedom for a $t$ distribution become larger, the 
 Next, we simulate data from an exponential distribution.
 
 
-```r
+``` r
 par(mfrow = c(1, 3))
 set.seed(420)
 qq_plot(rexp(10))
@@ -499,7 +499,7 @@ Returning to our three regressions, recall,
 We'll now create a Q-Q plot for each to assess normality of errors.
 
 
-```r
+``` r
 qqnorm(resid(fit_1), main = "Normal Q-Q Plot, fit_1", col = "darkgrey")
 qqline(resid(fit_1), col = "dodgerblue", lwd = 2)
 ```
@@ -511,7 +511,7 @@ qqline(resid(fit_1), col = "dodgerblue", lwd = 2)
 For `fit_1`, we have a near perfect Q-Q plot. We would believe the errors follow a normal distribution.
 
 
-```r
+``` r
 qqnorm(resid(fit_2), main = "Normal Q-Q Plot, fit_2", col = "darkgrey")
 qqline(resid(fit_2), col = "dodgerblue", lwd = 2)
 ```
@@ -523,7 +523,7 @@ qqline(resid(fit_2), col = "dodgerblue", lwd = 2)
 For `fit_2`, we have a suspect Q-Q plot. We would probably **not** believe the errors follow a normal distribution.
 
 
-```r
+``` r
 qqnorm(resid(fit_3), main = "Normal Q-Q Plot, fit_3", col = "darkgrey")
 qqline(resid(fit_3), col = "dodgerblue", lwd = 2)
 ```
@@ -539,7 +539,7 @@ Lastly, for `fit_3`, we again have a suspect Q-Q plot. We would probably **not**
 Histograms and Q-Q Plots give a nice visual representation of the residuals distribution, however if we are interested in formal testing, there are a number of options available. A commonly used test is the **Shapiro–Wilk test**, which is implemented in `R`.
 
 
-```r
+``` r
 set.seed(42)
 shapiro.test(rnorm(25))
 ```
@@ -552,7 +552,7 @@ shapiro.test(rnorm(25))
 ## W = 0.9499, p-value = 0.2495
 ```
 
-```r
+``` r
 shapiro.test(rexp(25))
 ```
 
@@ -573,7 +573,7 @@ In the above examples, we see we fail to reject for the data sampled from normal
 Returning again to `fit_1`, `fit_2`, and `fit_3`, we see the result of running `shapiro.test()` on the residuals of each, returns a result for each that matches decisions based on the Q-Q plots.
 
 
-```r
+``` r
 shapiro.test(resid(fit_1))
 ```
 
@@ -586,7 +586,7 @@ shapiro.test(resid(fit_1))
 ```
 
 
-```r
+``` r
 shapiro.test(resid(fit_2))
 ```
 
@@ -599,7 +599,7 @@ shapiro.test(resid(fit_2))
 ```
 
 
-```r
+``` r
 shapiro.test(resid(fit_3))
 ```
 
@@ -618,7 +618,7 @@ In addition to checking the assumptions of regression, we also look for any "unu
 The following three plots are inspired by an example from [Linear Models with R](http://www.maths.bath.ac.uk/~jjf23/LMR/){target="_blank"}.
 
 
-```r
+``` r
 par(mfrow = c(1, 3))
 set.seed(42)
 ex_data  = data.frame(x = 1:10,
@@ -671,7 +671,7 @@ The blue solid line in each plot is a regression fit to the 10 original data poi
 The slope of the regression for the original ten points, the solid blue line, is given by:
 
 
-```r
+``` r
 coef(ex_model)[2]
 ```
 
@@ -683,7 +683,7 @@ coef(ex_model)[2]
 The added point in the first plot has a *small* effect on the slope, which becomes:
 
 
-```r
+``` r
 coef(model_1)[2]
 ```
 
@@ -697,7 +697,7 @@ We will say that this point has low leverage, is an outlier due to its large res
 The added point in the second plot also has a *small* effect on the slope, which is:
 
 
-```r
+``` r
 coef(model_2)[2]
 ```
 
@@ -711,7 +711,7 @@ We will say that this point has high leverage, is not an outlier due to its smal
 Lastly, the added point in the third plot has a *large* effect on the slope, which is now:
 
 
-```r
+``` r
 coef(model_3)[2]
 ```
 
@@ -793,7 +793,7 @@ This expression should be familiar. (Think back to inference for SLR.) It sugges
 There are multiple ways to find leverages in `R`.
 
 
-```r
+``` r
 lev_ex = data.frame(
   x1 = c(0, 11, 11, 7, 4, 10, 5, 8),
   x2 = c(1, 5, 4, 3, 1, 4, 4, 2),
@@ -812,7 +812,7 @@ Here we've created some multivariate data. Notice that we have plotted the $x$ v
 We could calculate the leverages using the expressions defined above. We first create the $X$ matrix, then calculate $H$ as defined, and extract the diagonal elements.
 
 
-```r
+``` r
 X = cbind(rep(1, 8), lev_ex$x1, lev_ex$x2)
 H = X %*% solve(t(X) %*% X) %*% t(X)
 diag(H)
@@ -825,7 +825,7 @@ diag(H)
 Notice here, we have two predictors, so the regression would have 3 $\beta$ parameters, so the sum of the diagonal elements is 3.
 
 
-```r
+``` r
 sum(diag(H))
 ```
 
@@ -836,7 +836,7 @@ sum(diag(H))
 Alternatively, the method we will use more often, is to simply fit a regression, then use the `hatvalues()` function, which returns the leverages.
 
 
-```r
+``` r
 lev_fit = lm(y ~ ., data = lev_ex)
 hatvalues(lev_fit)
 ```
@@ -849,7 +849,7 @@ hatvalues(lev_fit)
 Again, note that here we have "used" the $y$ values to fit the regression, but `R` still ignores them when calculating the leverages, as leverages only depend on the $x$ values.
 
 
-```r
+``` r
 coef(lev_fit)
 ```
 
@@ -862,7 +862,7 @@ coef(lev_fit)
 Let's see what happens to these coefficients when we modify the `y` value of the point with the highest leverage.
 
 
-```r
+``` r
 which.max(hatvalues(lev_fit))
 ```
 
@@ -871,7 +871,7 @@ which.max(hatvalues(lev_fit))
 ## 1
 ```
 
-```r
+``` r
 lev_ex[which.max(hatvalues(lev_fit)),]
 ```
 
@@ -883,7 +883,7 @@ lev_ex[which.max(hatvalues(lev_fit)),]
 We see that the original `y` value is 11. We'll create a copy of the data, and modify this point to have a `y` value of `20`.
 
 
-```r
+``` r
 lev_ex_1 = lev_ex
 lev_ex_1$y[1] = 20
 lm(y ~ ., data = lev_ex_1)
@@ -904,7 +904,7 @@ Notice the **large** changes in the coefficients. Also notice that each of the c
 Now let's see what happens to these coefficients when we modify the `y` value of the point with the lowest leverage.
 
 
-```r
+``` r
 which.min(hatvalues(lev_fit))
 ```
 
@@ -913,7 +913,7 @@ which.min(hatvalues(lev_fit))
 ## 4
 ```
 
-```r
+``` r
 lev_ex[which.min(hatvalues(lev_fit)),]
 ```
 
@@ -925,7 +925,7 @@ lev_ex[which.min(hatvalues(lev_fit)),]
 We see that the original `y` value is 14. We'll again create a copy of the data, and modify this point to have a `y` value of `30`.
 
 
-```r
+``` r
 lev_ex_2 = lev_ex
 lev_ex_2$y[4] = 30
 lm(y ~ ., data = lev_ex_2)
@@ -944,7 +944,7 @@ lm(y ~ ., data = lev_ex_2)
 This time despite a large change in the `y` value, there is only small change in the coefficients. Also, only the intercept has changed!
 
 
-```r
+``` r
 mean(lev_ex$x1)
 ```
 
@@ -952,7 +952,7 @@ mean(lev_ex$x1)
 ## [1] 7
 ```
 
-```r
+``` r
 mean(lev_ex$x2)
 ```
 
@@ -960,7 +960,7 @@ mean(lev_ex$x2)
 ## [1] 3
 ```
 
-```r
+``` r
 lev_ex[4,]
 ```
 
@@ -974,7 +974,7 @@ Notice that this point was the mean of both of the predictors.
 Returning to our three plots, each with an added point, we can calculate the leverages for each. Note that the 11th data point each time is the added data point.
 
 
-```r
+``` r
 hatvalues(model_1)
 ```
 
@@ -985,7 +985,7 @@ hatvalues(model_1)
 ## 0.16721022 0.24014985 0.33732922 0.09100926
 ```
 
-```r
+``` r
 hatvalues(model_2)
 ```
 
@@ -996,7 +996,7 @@ hatvalues(model_2)
 ## 0.09919028 0.11578947 0.14129555 0.66599190
 ```
 
-```r
+``` r
 hatvalues(model_3)
 ```
 
@@ -1010,7 +1010,7 @@ hatvalues(model_3)
 Are any of these large?
 
 
-```r
+``` r
 hatvalues(model_1) > 2 * mean(hatvalues(model_1))
 ```
 
@@ -1019,7 +1019,7 @@ hatvalues(model_1) > 2 * mean(hatvalues(model_1))
 ## FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ```
 
-```r
+``` r
 hatvalues(model_2) > 2 * mean(hatvalues(model_2))
 ```
 
@@ -1028,7 +1028,7 @@ hatvalues(model_2) > 2 * mean(hatvalues(model_2))
 ## FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
 ```
 
-```r
+``` r
 hatvalues(model_3) > 2 * mean(hatvalues(model_3))
 ```
 
@@ -1074,7 +1074,7 @@ We can use this fact to identify "large" residuals. For example, standardized re
 Returning again to our three plots, each with an added point, we can calculate the residuals and standardized residuals for each. Standardized residuals can be obtained in `R` by using `rstandard()` where we would normally use `resid()`.
 
 
-```r
+``` r
 resid(model_1)
 ```
 
@@ -1085,7 +1085,7 @@ resid(model_1)
 ## -1.1459548  0.9420814 -1.1641029  4.4138254
 ```
 
-```r
+``` r
 rstandard(model_1)
 ```
 
@@ -1096,7 +1096,7 @@ rstandard(model_1)
 ## -0.7165857  0.6167268 -0.8160389  2.6418234
 ```
 
-```r
+``` r
 rstandard(model_1)[abs(rstandard(model_1)) > 2]
 ```
 
@@ -1108,7 +1108,7 @@ rstandard(model_1)[abs(rstandard(model_1)) > 2]
 In the first plot, we see that the 11th point, the added point, is a large standardized residual.
 
 
-```r
+``` r
 resid(model_2)
 ```
 
@@ -1119,7 +1119,7 @@ resid(model_2)
 ##  0.87788484 -0.77755647  1.28626601 -0.84413207  0.12449986
 ```
 
-```r
+``` r
 rstandard(model_2)
 ```
 
@@ -1130,7 +1130,7 @@ rstandard(model_2)
 ##  1.10506546 -0.98294409  1.64121833 -1.09295417  0.25846620
 ```
 
-```r
+``` r
 rstandard(model_2)[abs(rstandard(model_2)) > 2]
 ```
 
@@ -1141,7 +1141,7 @@ rstandard(model_2)[abs(rstandard(model_2)) > 2]
 In the second plot, we see that there are no points with large standardized residuals.
 
 
-```r
+``` r
 resid(model_3)
 ```
 
@@ -1152,7 +1152,7 @@ resid(model_3)
 ## -0.02113027 -2.03808722 -0.33578039 -2.82769411  3.69191633
 ```
 
-```r
+``` r
 rstandard(model_3)
 ```
 
@@ -1163,7 +1163,7 @@ rstandard(model_3)
 ## -0.01157256 -1.12656475 -0.18882474 -1.63206526  2.70453408
 ```
 
-```r
+``` r
 rstandard(model_3)[abs(rstandard(model_3)) > 2]
 ```
 
@@ -1210,7 +1210,7 @@ Recall that the circled points in each plot have different characteristics:
 We'll now directly check if each of these is influential.
 
 
-```r
+``` r
 cooks.distance(model_1)[11] > 4 / length(cooks.distance(model_1))
 ```
 
@@ -1219,7 +1219,7 @@ cooks.distance(model_1)[11] > 4 / length(cooks.distance(model_1))
 ## FALSE
 ```
 
-```r
+``` r
 cooks.distance(model_2)[11] > 4 / length(cooks.distance(model_2))
 ```
 
@@ -1228,7 +1228,7 @@ cooks.distance(model_2)[11] > 4 / length(cooks.distance(model_2))
 ## FALSE
 ```
 
-```r
+``` r
 cooks.distance(model_3)[11] > 4 / length(cooks.distance(model_3))
 ```
 
@@ -1248,12 +1248,12 @@ Last chapter we fit an additive regression to the `mtcars` data with `mpg` as th
 First, fit the model as we did last chapter.
 
 
-```r
+``` r
 mpg_hp_add = lm(mpg ~ hp + am, data = mtcars)
 ```
 
 
-```r
+``` r
 plot(fitted(mpg_hp_add), resid(mpg_hp_add), col = "grey", pch = 20,
      xlab = "Fitted", ylab = "Residual",
      main = "mtcars: Fitted versus Residuals")
@@ -1267,7 +1267,7 @@ abline(h = 0, col = "darkorange", lwd = 2)
 The fitted versus residuals plot looks good. We don't see any obvious pattern, and the variance looks roughly constant. (Maybe a little larger for large fitted values, but not enough to worry about.)
 
 
-```r
+``` r
 bptest(mpg_hp_add)
 ```
 
@@ -1282,7 +1282,7 @@ bptest(mpg_hp_add)
 The Breusch-Pagan test verifies this, at least for a small $\alpha$ value.
 
 
-```r
+``` r
 qqnorm(resid(mpg_hp_add), col = "darkgrey")
 qqline(resid(mpg_hp_add), col = "dodgerblue", lwd = 2)
 ```
@@ -1294,7 +1294,7 @@ qqline(resid(mpg_hp_add), col = "dodgerblue", lwd = 2)
 The Q-Q plot looks extremely good and the Shapiro-Wilk test agrees.
 
 
-```r
+``` r
 shapiro.test(resid(mpg_hp_add))
 ```
 
@@ -1307,7 +1307,7 @@ shapiro.test(resid(mpg_hp_add))
 ```
 
 
-```r
+``` r
 sum(hatvalues(mpg_hp_add) > 2 * mean(hatvalues(mpg_hp_add)))
 ```
 
@@ -1318,7 +1318,7 @@ sum(hatvalues(mpg_hp_add) > 2 * mean(hatvalues(mpg_hp_add)))
 We see that there are two points of large leverage.
 
 
-```r
+``` r
 sum(abs(rstandard(mpg_hp_add)) > 2)
 ```
 
@@ -1329,7 +1329,7 @@ sum(abs(rstandard(mpg_hp_add)) > 2)
 There is also one point with a large residual. Do these result in any points that are considered influential?
 
 
-```r
+``` r
 cd_mpg_hp_add = cooks.distance(mpg_hp_add)
 sum(cd_mpg_hp_add > 4 / length(cd_mpg_hp_add))
 ```
@@ -1338,7 +1338,7 @@ sum(cd_mpg_hp_add > 4 / length(cd_mpg_hp_add))
 ## [1] 2
 ```
 
-```r
+``` r
 large_cd_mpg = cd_mpg_hp_add > 4 / length(cd_mpg_hp_add)
 cd_mpg_hp_add[large_cd_mpg]
 ```
@@ -1351,7 +1351,7 @@ cd_mpg_hp_add[large_cd_mpg]
 We find two influential points. Interestingly, they are **very** different cars.
 
 
-```r
+``` r
 coef(mpg_hp_add)
 ```
 
@@ -1363,7 +1363,7 @@ coef(mpg_hp_add)
 Since the diagnostics looked good, there isn't much need to worry about these two points, but let's see how much the coefficients change if we remove them.
 
 
-```r
+``` r
 mpg_hp_add_fix = lm(mpg ~ hp + am,
                     data = mtcars,
                     subset = cd_mpg_hp_add <= 4 / length(cd_mpg_hp_add))
@@ -1378,7 +1378,7 @@ coef(mpg_hp_add_fix)
 It seems there isn't much of a change in the coefficients as a result of removing the supposed influential points. Notice we did not create a new dataset to accomplish this. We instead used the `subset` argument to `lm()`. Think about what the code `cd_mpg_hp_add <= 4 / length(cd_mpg_hp_add)` does here.
 
 
-```r
+``` r
 par(mfrow = c(2, 2))
 plot(mpg_hp_add)
 ```
@@ -1396,7 +1396,7 @@ Let's consider the model `big_model` from last chapter which was fit to the `aut
 
 
 
-```r
+``` r
 str(autompg)
 ```
 
@@ -1414,12 +1414,12 @@ str(autompg)
 ```
 
 
-```r
+``` r
 big_model = lm(mpg ~ disp * hp * domestic, data = autompg)
 ```
 
 
-```r
+``` r
 qqnorm(resid(big_model), col = "darkgrey")
 qqline(resid(big_model), col = "dodgerblue", lwd = 2)
 ```
@@ -1428,7 +1428,7 @@ qqline(resid(big_model), col = "dodgerblue", lwd = 2)
 
 \begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-63-1} \end{center}
 
-```r
+``` r
 shapiro.test(resid(big_model))
 ```
 
@@ -1443,7 +1443,7 @@ shapiro.test(resid(big_model))
 Here both the Q-Q plot, and the Shapiro-Wilk test suggest that the normality assumption is violated.
 
 
-```r
+``` r
 big_mod_cd = cooks.distance(big_model)
 sum(big_mod_cd > 4 / length(big_mod_cd))
 ```
@@ -1455,7 +1455,7 @@ sum(big_mod_cd > 4 / length(big_mod_cd))
 Here, we find 31, so perhaps removing them will help!
 
 
-```r
+``` r
 big_model_fix = lm(mpg ~ disp * hp * domestic,
                    data = autompg,
                    subset = big_mod_cd < 4 / length(big_mod_cd))
@@ -1467,7 +1467,7 @@ qqline(resid(big_model_fix), col = "dodgerblue", lwd = 2)
 
 \begin{center}\includegraphics{diagnostics_files/figure-latex/unnamed-chunk-65-1} \end{center}
 
-```r
+``` r
 shapiro.test(resid(big_model_fix))
 ```
 
@@ -1489,4 +1489,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`diagnostics.Rmd`](diagnostics.Rmd){target="_blank"}
 
-The file was created using `R` version `4.3.2`.
+The file was created using `R` version `4.4.1`.

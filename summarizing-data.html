@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 Summarizing Data | Applied Statistics with R</title>
   <meta name="description" content="Chapter 4 Summarizing Data | Applied Statistics with R" />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 Summarizing Data | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -55,7 +55,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -469,7 +469,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="summary-statistics" class="section level2 hasAnchor" number="4.1">
 <h2><span class="header-section-number">4.1</span> Summary Statistics<a href="summarizing-data.html#summary-statistics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><code>R</code> has built-in functions for a large number of summary statistics. For numeric variables, we can summarize data with the center and spread. We’ll again look at the <code>mpg</code> dataset from the <code>ggplot2</code> package.</p>
-<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="summarizing-data.html#cb338-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="summarizing-data.html#cb338-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
 <div id="central-tendency" class="section level3 unnumbered hasAnchor">
 <h3>Central Tendency<a href="summarizing-data.html#central-tendency" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <table>
@@ -541,11 +541,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="categorical" class="section level3 unnumbered hasAnchor">
 <h3>Categorical<a href="summarizing-data.html#categorical" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>For categorical variables, counts and percentages can be used for summary.</p>
-<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="summarizing-data.html#cb339-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(mpg<span class="sc">$</span>drv)</span></code></pre></div>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="summarizing-data.html#cb339-1" tabindex="-1"></a><span class="fu">table</span>(mpg<span class="sc">$</span>drv)</span></code></pre></div>
 <pre><code>## 
 ##   4   f   r 
 ## 103 106  25</code></pre>
-<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="summarizing-data.html#cb341-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(mpg<span class="sc">$</span>drv) <span class="sc">/</span> <span class="fu">nrow</span>(mpg)</span></code></pre></div>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="summarizing-data.html#cb341-1" tabindex="-1"></a><span class="fu">table</span>(mpg<span class="sc">$</span>drv) <span class="sc">/</span> <span class="fu">nrow</span>(mpg)</span></code></pre></div>
 <pre><code>## 
 ##         4         f         r 
 ## 0.4401709 0.4529915 0.1068376</code></pre>
@@ -564,66 +564,66 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="histograms" class="section level3 hasAnchor" number="4.2.1">
 <h3><span class="header-section-number">4.2.1</span> Histograms<a href="summarizing-data.html#histograms" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>When visualizing a single numerical variable, a <strong>histogram</strong> will be our go-to tool, which can be created in <code>R</code> using the <code>hist()</code> function.</p>
-<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="summarizing-data.html#cb343-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(mpg<span class="sc">$</span>cty)</span></code></pre></div>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="summarizing-data.html#cb343-1" tabindex="-1"></a><span class="fu">hist</span>(mpg<span class="sc">$</span>cty)</span></code></pre></div>
 <p><img src="data-summary_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>The histogram function has a number of parameters which can be changed to make our plot look much nicer. Use the <code>?</code> operator to read the documentation for the <code>hist()</code> to see a full list of these parameters.</p>
-<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="summarizing-data.html#cb344-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(mpg<span class="sc">$</span>cty,</span>
-<span id="cb344-2"><a href="summarizing-data.html#cb344-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab   =</span> <span class="st">&quot;Miles Per Gallon (City)&quot;</span>,</span>
-<span id="cb344-3"><a href="summarizing-data.html#cb344-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main   =</span> <span class="st">&quot;Histogram of MPG (City)&quot;</span>,</span>
-<span id="cb344-4"><a href="summarizing-data.html#cb344-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">breaks =</span> <span class="dv">12</span>,</span>
-<span id="cb344-5"><a href="summarizing-data.html#cb344-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">col    =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
-<span id="cb344-6"><a href="summarizing-data.html#cb344-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;darkorange&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="summarizing-data.html#cb344-1" tabindex="-1"></a><span class="fu">hist</span>(mpg<span class="sc">$</span>cty,</span>
+<span id="cb344-2"><a href="summarizing-data.html#cb344-2" tabindex="-1"></a>     <span class="at">xlab   =</span> <span class="st">&quot;Miles Per Gallon (City)&quot;</span>,</span>
+<span id="cb344-3"><a href="summarizing-data.html#cb344-3" tabindex="-1"></a>     <span class="at">main   =</span> <span class="st">&quot;Histogram of MPG (City)&quot;</span>,</span>
+<span id="cb344-4"><a href="summarizing-data.html#cb344-4" tabindex="-1"></a>     <span class="at">breaks =</span> <span class="dv">12</span>,</span>
+<span id="cb344-5"><a href="summarizing-data.html#cb344-5" tabindex="-1"></a>     <span class="at">col    =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
+<span id="cb344-6"><a href="summarizing-data.html#cb344-6" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;darkorange&quot;</span>)</span></code></pre></div>
 <p><img src="data-summary_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>Importantly, you should always be sure to label your axes and give the plot a title. The argument <code>breaks</code> is specific to <code>hist()</code>. Entering an integer will give a suggestion to <code>R</code> for how many bars to use for the histogram. By default <code>R</code> will attempt to intelligently guess a good number of <code>breaks</code>, but as we can see here, it is sometimes useful to modify this yourself.</p>
 </div>
 <div id="barplots" class="section level3 hasAnchor" number="4.2.2">
 <h3><span class="header-section-number">4.2.2</span> Barplots<a href="summarizing-data.html#barplots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Somewhat similar to a histogram, a barplot can provide a visual summary of a categorical variable, or a numeric variable with a finite number of values, like a ranking from 1 to 10.</p>
-<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="summarizing-data.html#cb345-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(mpg<span class="sc">$</span>drv))</span></code></pre></div>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="summarizing-data.html#cb345-1" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(mpg<span class="sc">$</span>drv))</span></code></pre></div>
 <p><img src="data-summary_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="summarizing-data.html#cb346-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(mpg<span class="sc">$</span>drv),</span>
-<span id="cb346-2"><a href="summarizing-data.html#cb346-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab   =</span> <span class="st">&quot;Drivetrain (f = FWD, r = RWD, 4 = 4WD)&quot;</span>,</span>
-<span id="cb346-3"><a href="summarizing-data.html#cb346-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab   =</span> <span class="st">&quot;Frequency&quot;</span>,</span>
-<span id="cb346-4"><a href="summarizing-data.html#cb346-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">main   =</span> <span class="st">&quot;Drivetrains&quot;</span>,</span>
-<span id="cb346-5"><a href="summarizing-data.html#cb346-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">col    =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
-<span id="cb346-6"><a href="summarizing-data.html#cb346-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;darkorange&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="summarizing-data.html#cb346-1" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(mpg<span class="sc">$</span>drv),</span>
+<span id="cb346-2"><a href="summarizing-data.html#cb346-2" tabindex="-1"></a>     <span class="at">xlab   =</span> <span class="st">&quot;Drivetrain (f = FWD, r = RWD, 4 = 4WD)&quot;</span>,</span>
+<span id="cb346-3"><a href="summarizing-data.html#cb346-3" tabindex="-1"></a>     <span class="at">ylab   =</span> <span class="st">&quot;Frequency&quot;</span>,</span>
+<span id="cb346-4"><a href="summarizing-data.html#cb346-4" tabindex="-1"></a>     <span class="at">main   =</span> <span class="st">&quot;Drivetrains&quot;</span>,</span>
+<span id="cb346-5"><a href="summarizing-data.html#cb346-5" tabindex="-1"></a>     <span class="at">col    =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
+<span id="cb346-6"><a href="summarizing-data.html#cb346-6" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;darkorange&quot;</span>)</span></code></pre></div>
 <p><img src="data-summary_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
 <div id="boxplots" class="section level3 hasAnchor" number="4.2.3">
 <h3><span class="header-section-number">4.2.3</span> Boxplots<a href="summarizing-data.html#boxplots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To visualize the relationship between a numerical and categorical variable, we will use a <strong>boxplot</strong>. In the <code>mpg</code> dataset, the <code>drv</code> variable takes a small, finite number of values. A car can only be front wheel drive, 4 wheel drive, or rear wheel drive.</p>
-<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="summarizing-data.html#cb347-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(mpg<span class="sc">$</span>drv)</span></code></pre></div>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="summarizing-data.html#cb347-1" tabindex="-1"></a><span class="fu">unique</span>(mpg<span class="sc">$</span>drv)</span></code></pre></div>
 <pre><code>## [1] &quot;f&quot; &quot;4&quot; &quot;r&quot;</code></pre>
 <p>First note that we can use a single boxplot as an alternative to a histogram for visualizing a single numerical variable. To do so in <code>R</code>, we use the <code>boxplot()</code> function.</p>
-<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="summarizing-data.html#cb349-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(mpg<span class="sc">$</span>hwy)</span></code></pre></div>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="summarizing-data.html#cb349-1" tabindex="-1"></a><span class="fu">boxplot</span>(mpg<span class="sc">$</span>hwy)</span></code></pre></div>
 <p><img src="data-summary_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>However, more often we will use boxplots to compare a numerical variable for different values of a categorical variable.</p>
-<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="summarizing-data.html#cb350-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(hwy <span class="sc">~</span> drv, <span class="at">data =</span> mpg)</span></code></pre></div>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="summarizing-data.html#cb350-1" tabindex="-1"></a><span class="fu">boxplot</span>(hwy <span class="sc">~</span> drv, <span class="at">data =</span> mpg)</span></code></pre></div>
 <p><img src="data-summary_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>Here we used the <code>boxplot()</code> command to create side-by-side boxplots. However, since we are now dealing with two variables, the syntax has changed. The <code>R</code> syntax <code>hwy ~ drv, data = mpg</code> reads “Plot the <code>hwy</code> variable against the <code>drv</code> variable using the dataset <code>mpg</code>.” We see the use of a <code>~</code> (which specifies a formula) and also a <code>data =</code> argument. This will be a syntax that is common to many functions we will use in this course.</p>
-<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="summarizing-data.html#cb351-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(hwy <span class="sc">~</span> drv, <span class="at">data =</span> mpg,</span>
-<span id="cb351-2"><a href="summarizing-data.html#cb351-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab   =</span> <span class="st">&quot;Drivetrain (f = FWD, r = RWD, 4 = 4WD)&quot;</span>,</span>
-<span id="cb351-3"><a href="summarizing-data.html#cb351-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab   =</span> <span class="st">&quot;Miles Per Gallon (Highway)&quot;</span>,</span>
-<span id="cb351-4"><a href="summarizing-data.html#cb351-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">main   =</span> <span class="st">&quot;MPG (Highway) vs Drivetrain&quot;</span>,</span>
-<span id="cb351-5"><a href="summarizing-data.html#cb351-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch    =</span> <span class="dv">20</span>,</span>
-<span id="cb351-6"><a href="summarizing-data.html#cb351-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">cex    =</span> <span class="dv">2</span>,</span>
-<span id="cb351-7"><a href="summarizing-data.html#cb351-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">col    =</span> <span class="st">&quot;darkorange&quot;</span>,</span>
-<span id="cb351-8"><a href="summarizing-data.html#cb351-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="summarizing-data.html#cb351-1" tabindex="-1"></a><span class="fu">boxplot</span>(hwy <span class="sc">~</span> drv, <span class="at">data =</span> mpg,</span>
+<span id="cb351-2"><a href="summarizing-data.html#cb351-2" tabindex="-1"></a>     <span class="at">xlab   =</span> <span class="st">&quot;Drivetrain (f = FWD, r = RWD, 4 = 4WD)&quot;</span>,</span>
+<span id="cb351-3"><a href="summarizing-data.html#cb351-3" tabindex="-1"></a>     <span class="at">ylab   =</span> <span class="st">&quot;Miles Per Gallon (Highway)&quot;</span>,</span>
+<span id="cb351-4"><a href="summarizing-data.html#cb351-4" tabindex="-1"></a>     <span class="at">main   =</span> <span class="st">&quot;MPG (Highway) vs Drivetrain&quot;</span>,</span>
+<span id="cb351-5"><a href="summarizing-data.html#cb351-5" tabindex="-1"></a>     <span class="at">pch    =</span> <span class="dv">20</span>,</span>
+<span id="cb351-6"><a href="summarizing-data.html#cb351-6" tabindex="-1"></a>     <span class="at">cex    =</span> <span class="dv">2</span>,</span>
+<span id="cb351-7"><a href="summarizing-data.html#cb351-7" tabindex="-1"></a>     <span class="at">col    =</span> <span class="st">&quot;darkorange&quot;</span>,</span>
+<span id="cb351-8"><a href="summarizing-data.html#cb351-8" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span></code></pre></div>
 <p><img src="data-summary_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>Again, <code>boxplot()</code> has a number of additional arguments which have the ability to make our plot more visually appealing.</p>
 </div>
 <div id="scatterplots" class="section level3 hasAnchor" number="4.2.4">
 <h3><span class="header-section-number">4.2.4</span> Scatterplots<a href="summarizing-data.html#scatterplots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Lastly, to visualize the relationship between two numeric variables we will use a <strong>scatterplot</strong>. This can be done with the <code>plot()</code> function and the <code>~</code> syntax we just used with a boxplot. (The function <code>plot()</code> can also be used more generally; see the documentation for details.)</p>
-<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="summarizing-data.html#cb352-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hwy <span class="sc">~</span> displ, <span class="at">data =</span> mpg)</span></code></pre></div>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="summarizing-data.html#cb352-1" tabindex="-1"></a><span class="fu">plot</span>(hwy <span class="sc">~</span> displ, <span class="at">data =</span> mpg)</span></code></pre></div>
 <p><img src="data-summary_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="summarizing-data.html#cb353-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hwy <span class="sc">~</span> displ, <span class="at">data =</span> mpg,</span>
-<span id="cb353-2"><a href="summarizing-data.html#cb353-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Engine Displacement (in Liters)&quot;</span>,</span>
-<span id="cb353-3"><a href="summarizing-data.html#cb353-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Miles Per Gallon (Highway)&quot;</span>,</span>
-<span id="cb353-4"><a href="summarizing-data.html#cb353-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;MPG (Highway) vs Engine Displacement&quot;</span>,</span>
-<span id="cb353-5"><a href="summarizing-data.html#cb353-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">pch  =</span> <span class="dv">20</span>,</span>
-<span id="cb353-6"><a href="summarizing-data.html#cb353-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">cex  =</span> <span class="dv">2</span>,</span>
-<span id="cb353-7"><a href="summarizing-data.html#cb353-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="summarizing-data.html#cb353-1" tabindex="-1"></a><span class="fu">plot</span>(hwy <span class="sc">~</span> displ, <span class="at">data =</span> mpg,</span>
+<span id="cb353-2"><a href="summarizing-data.html#cb353-2" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Engine Displacement (in Liters)&quot;</span>,</span>
+<span id="cb353-3"><a href="summarizing-data.html#cb353-3" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Miles Per Gallon (Highway)&quot;</span>,</span>
+<span id="cb353-4"><a href="summarizing-data.html#cb353-4" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;MPG (Highway) vs Engine Displacement&quot;</span>,</span>
+<span id="cb353-5"><a href="summarizing-data.html#cb353-5" tabindex="-1"></a>     <span class="at">pch  =</span> <span class="dv">20</span>,</span>
+<span id="cb353-6"><a href="summarizing-data.html#cb353-6" tabindex="-1"></a>     <span class="at">cex  =</span> <span class="dv">2</span>,</span>
+<span id="cb353-7"><a href="summarizing-data.html#cb353-7" tabindex="-1"></a>     <span class="at">col  =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span></code></pre></div>
 <p><img src="data-summary_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 
 </div>

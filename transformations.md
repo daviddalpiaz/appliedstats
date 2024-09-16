@@ -23,12 +23,12 @@ Let's look at some (*fictional*) salary data from the (*fictional*) company *Ini
 
 
 
-```r
+``` r
 initech = read.csv("data/initech.csv")
 ```
 
 
-```r
+``` r
 plot(salary ~ years, data = initech, col = "grey", pch = 20, cex = 1.5,
      main = "Salaries at Initech, By Seniority")
 ```
@@ -40,7 +40,7 @@ plot(salary ~ years, data = initech, col = "grey", pch = 20, cex = 1.5,
 We first fit a simple linear model.
 
 
-```r
+``` r
 initech_fit = lm(salary ~ years, data = initech)
 summary(initech_fit)
 ```
@@ -69,7 +69,7 @@ summary(initech_fit)
 This model appears significant, but does it meet the model assumptions?
 
 
-```r
+``` r
 plot(salary ~ years, data = initech, col = "grey", pch = 20, cex = 1.5,
      main = "Salaries at Initech, By Seniority")
 abline(initech_fit, col = "darkorange", lwd = 2)
@@ -82,7 +82,7 @@ abline(initech_fit, col = "darkorange", lwd = 2)
 Adding the fitted line to the plot, we see that the linear relationship appears correct.
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 
 plot(fitted(initech_fit), resid(initech_fit), col = "grey", pch = 20,
@@ -152,14 +152,14 @@ which has the errors entering the model in a multiplicative fashion.
 Fitting this model in `R` requires only a minor modification to our formula specification.
 
 
-```r
+``` r
 initech_fit_log = lm(log(salary) ~ years, data = initech)
 ```
 
 Note that while `log(y)` is considered the new response variable, we do not actually create a new variable in `R`, but simply transform the variable inside the model formula.
 
 
-```r
+``` r
 plot(log(salary) ~ years, data = initech, col = "grey", pch = 20, cex = 1.5,
      main = "Salaries at Initech, By Seniority")
 abline(initech_fit_log, col = "darkorange", lwd = 2)
@@ -172,7 +172,7 @@ abline(initech_fit_log, col = "darkorange", lwd = 2)
 Plotting the data on the transformed log scale and adding the fitted line, the relationship again appears linear, and we can already see that the variation about the fitted line looks constant.
 
 
-```r
+``` r
 plot(salary ~ years, data = initech, col = "grey", pch = 20, cex = 1.5,
      main = "Salaries at Initech, By Seniority")
 curve(exp(initech_fit_log$coef[1] + initech_fit_log$coef[2] * x),
@@ -186,7 +186,7 @@ curve(exp(initech_fit_log$coef[1] + initech_fit_log$coef[2] * x),
 By plotting the data on the original scale, and adding the fitted regression, we see an exponential relationship. However, this is still a *linear* model, since the new transformed response, $\log(y)$, is still a *linear* combination of the predictors.
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 
 plot(fitted(initech_fit_log), resid(initech_fit_log), col = "grey", pch = 20,
@@ -206,7 +206,7 @@ The fitted versus residuals plot looks much better. It appears the constant vari
 Comparing the RMSE using the original and transformed response, we also see that the log transformed model simply fits better, with a smaller average squared error.
 
 
-```r
+``` r
 sqrt(mean(resid(initech_fit) ^ 2))
 ```
 
@@ -214,7 +214,7 @@ sqrt(mean(resid(initech_fit) ^ 2))
 ## [1] 27080.16
 ```
 
-```r
+``` r
 sqrt(mean(resid(initech_fit_log) ^ 2))
 ```
 
@@ -225,7 +225,7 @@ sqrt(mean(resid(initech_fit_log) ^ 2))
 But wait, that isn't fair, this difference is simply due to the different scales being used.
 
 
-```r
+``` r
 sqrt(mean((initech$salary - fitted(initech_fit)) ^ 2))
 ```
 
@@ -233,7 +233,7 @@ sqrt(mean((initech$salary - fitted(initech_fit)) ^ 2))
 ## [1] 27080.16
 ```
 
-```r
+``` r
 sqrt(mean((initech$salary - exp(fitted(initech_fit_log))) ^ 2))
 ```
 
@@ -244,7 +244,7 @@ sqrt(mean((initech$salary - exp(fitted(initech_fit_log))) ^ 2))
 Transforming the fitted values of the log model back to the data scale, we do indeed see that it fits better!
 
 
-```r
+``` r
 summary(initech_fit_log)
 ```
 
@@ -313,7 +313,7 @@ A $100(1 - \alpha)\%$ confidence interval for $\lambda$ is,
 which `R` will plot for us to help quickly select an appropriate $\lambda$ value. We often choose a "nice" value from within the confidence interval, instead of the value of $\lambda$ that truly maximizes the likelihood.
 
 
-```r
+``` r
 library(MASS)
 library(faraway)
 ```
@@ -323,14 +323,14 @@ Here we need the `MASS` package for the `boxcox()` function, and we will conside
 First we will use the `savings` dataset as an example of using the Box-Cox method to justify the use of no transformation. We fit an additive multiple regression model with `sr` as the response and each of the other variables as predictors.
 
 
-```r
+``` r
 savings_model = lm(sr ~ ., data = savings)
 ```
 
 We then use the `boxcox()` function to find the best transformation of the form considered by the Box-Cox method.
 
 
-```r
+``` r
 boxcox(savings_model, plotit = TRUE)
 ```
 
@@ -341,7 +341,7 @@ boxcox(savings_model, plotit = TRUE)
 `R` automatically plots the log-Likelihood as a function of possible $\lambda$ values. It indicates both the value that maximizes the log-likelihood, as well as a confidence interval for the $\lambda$ value that maximizes the log-likelihood.
 
 
-```r
+``` r
 boxcox(savings_model, plotit = TRUE, lambda = seq(0.5, 1.5, by = 0.1))
 ```
 
@@ -358,7 +358,7 @@ Note that we can specify a range of $\lambda$ values to consider and thus be plo
 This is essentially not a transformation. It would not change the variance or make the model fit better. By subtracting 1 from every value, we would only change the intercept of the model, and the resulting errors would be the same.
 
 
-```r
+``` r
 plot(fitted(savings_model), resid(savings_model), col = "dodgerblue",
      pch = 20, cex = 1.5, xlab = "Fitted", ylab = "Residuals")
 abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
@@ -371,7 +371,7 @@ abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
 Looking at a fitted versus residuals plot verifies that there likely are not any issues with the assumptions of this model, which Breusch-Pagan and Shapiro-Wilk tests verify.
 
 
-```r
+``` r
 library(lmtest)
 bptest(savings_model)
 ```
@@ -384,7 +384,7 @@ bptest(savings_model)
 ## BP = 4.9852, df = 4, p-value = 0.2888
 ```
 
-```r
+``` r
 shapiro.test(resid(savings_model))
 ```
 
@@ -399,12 +399,12 @@ shapiro.test(resid(savings_model))
 Now we will use the `gala` dataset as an example of using the Box-Cox method to justify a transformation other than $\log$. We fit an additive multiple regression model with `Species` as the response and most of the other variables as predictors.
 
 
-```r
+``` r
 gala_model = lm(Species ~ Area + Elevation + Nearest + Scruz + Adjacent, data = gala)
 ```
 
 
-```r
+``` r
 plot(fitted(gala_model), resid(gala_model), col = "dodgerblue",
      pch = 20, cex = 1.5, xlab = "Fitted", ylab = "Residuals")
 abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
@@ -417,7 +417,7 @@ abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
 Even though there is not a lot of data for large fitted values, it still seems very clear that the constant variance assumption is violated.
 
 
-```r
+``` r
 boxcox(gala_model, lambda = seq(-0.25, 0.75, by = 0.05), plotit = TRUE)
 ```
 
@@ -434,12 +434,12 @@ Using the Box-Cox method, we see that $\lambda = 0.3$ is both in the confidence 
 We then fit a model with this transformation applied to the response.
 
 
-```r
+``` r
 gala_model_cox = lm((((Species ^ 0.3) - 1) / 0.3) ~ Area + Elevation + Nearest + Scruz + Adjacent, data = gala)
 ```
 
 
-```r
+``` r
 plot(fitted(gala_model_cox), resid(gala_model_cox), col = "dodgerblue",
      pch = 20, cex = 1.5, xlab = "Fitted", ylab = "Residuals")
 abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
@@ -454,7 +454,7 @@ The resulting fitted versus residuals plot looks much better!
 Lastly, we return to the `initech` data, and the `initech_fit` model we had used earlier. Recall that this was the untransformed model, that we used a $\log$ transform to fix.
 
 
-```r
+``` r
 boxcox(initech_fit)
 ```
 
@@ -477,7 +477,7 @@ In addition to transformation of the response variable, we can also consider tra
 
 
 
-```r
+``` r
 str(autompg)
 ```
 
@@ -497,7 +497,7 @@ str(autompg)
 Recall the `autompg` dataset from the previous chapter. Here we will attempt to model `mpg` as a function of `hp`.
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 plot(mpg ~ hp, data = autompg, col = "dodgerblue", pch = 20, cex = 1.5)
 mpg_hp = lm(mpg ~ hp, data = autompg)
@@ -514,7 +514,7 @@ abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
 We first attempt SLR, but we see a rather obvious pattern in the fitted versus residuals plot, which includes increasing variance, so we attempt a $\log$ transform of the response.
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 plot(log(mpg) ~ hp, data = autompg, col = "dodgerblue", pch = 20, cex = 1.5)
 mpg_hp_log = lm(log(mpg) ~ hp, data = autompg)
@@ -531,7 +531,7 @@ abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
 After performing the $\log$ transform of the response, we still have some of the same issues with the fitted versus response. Now, we will try also $\log$ transforming the **predictor**.
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 plot(log(mpg) ~ log(hp), data = autompg, col = "dodgerblue", pch = 20, cex = 1.5)
 mpg_hp_loglog = lm(log(mpg) ~ log(hp), data = autompg)
@@ -556,12 +556,12 @@ It should come as no surprise that sales of a product are related to the adverti
 Consider monthly data for the sales of *Initech* widgets, $y$, as a function of *Initech*'s advertising expenditure for said widget, $x$, both in ten thousand dollars. The data can be found in [`marketing.csv`](data/marketing.csv).
 
 
-```r
+``` r
 marketing = read.csv("data/marketing.csv")
 ```
 
 
-```r
+``` r
 plot(sales ~ advert, data = marketing, 
      xlab = "Advert Spending (in $10,000)", ylab = "Sales (in $10,000)",
      pch = 20, cex = 2)
@@ -618,7 +618,7 @@ We also maintain the same distributional results
 \]
 
 
-```r
+``` r
 mark_mod = lm(sales ~ advert, data = marketing)
 summary(mark_mod)
 ```
@@ -647,7 +647,7 @@ summary(mark_mod)
 While the SLR model is significant, the fitted versus residuals plot would have a very clear pattern.
 
 
-```r
+``` r
 mark_mod_poly2 = lm(sales ~ advert + I(advert ^ 2), data = marketing)
 summary(mark_mod_poly2)
 ```
@@ -677,7 +677,7 @@ summary(mark_mod_poly2)
 To add the second order term we need to use the `I()` function in the model specification around our newly created predictor. We see that with the first order term in the model, the quadratic term is also significant.
 
 
-```r
+``` r
 n = length(marketing$advert)
 X = cbind(rep(1, n), marketing$advert, marketing$advert ^ 2)
 t(X) %*% X
@@ -690,7 +690,7 @@ t(X) %*% X
 ## [3,] 1107.95 12385.86 151369.12
 ```
 
-```r
+``` r
 solve(t(X) %*% X) %*% t(X) %*% marketing$sales
 ```
 
@@ -720,7 +720,7 @@ We could also add higher order terms, such as a third degree predictor. This is 
 \]
 
 
-```r
+``` r
 mark_mod_poly3 = lm(sales ~ advert + I(advert ^ 2) + I(advert ^ 3), data = marketing)
 summary(mark_mod_poly3)
 ```
@@ -751,7 +751,7 @@ summary(mark_mod_poly3)
 Now we see that with the first and second order terms in the model, the third order term is also significant. But does this make sense practically? The following plot should gives hints as to why it doesn't. (The model with the third order term doesn't have diminishing returns!)
 
 
-```r
+``` r
 plot(sales ~ advert, data = marketing, 
      xlab = "Advert Spending (in $10,000)", ylab = "Sales (in $10,000)",
      pch = 20, cex = 2)
@@ -770,7 +770,7 @@ lines(xplot, predict(mark_mod_poly3, newdata = data.frame(advert = xplot)),
 The previous plot was made using base graphics in `R`. The next plot was made using the package [`ggplot2`](https://ggplot2.tidyverse.org/){target="_blank"}, an increasingly popular plotting method in `R`.
 
 
-```r
+``` r
 library(ggplot2)
 ggplot(data = marketing, aes(x = advert, y = sales)) +
   stat_smooth(method = "lm", se = FALSE, color = "green", formula = y ~ x) +
@@ -792,7 +792,7 @@ Note we could fit a polynomial of an arbitrary order,
 However, we should be careful about over-fitting, since with a polynomial of degree one less than the number of observations, it is sometimes possible to fit a model perfectly.
 
 
-```r
+``` r
 set.seed(1234)
 x = seq(0, 10)
 y = 3 + x + 4 * x ^ 2 + rnorm(11, 0, 20)
@@ -832,7 +832,7 @@ summary(fit_perf)
 ## F-statistic:   NaN on 10 and 0 DF,  p-value: NA
 ```
 
-```r
+``` r
 xplot = seq(0, 10, by = 0.1)
 lines(xplot, predict(fit, newdata = data.frame(x = xplot)),
       col = "dodgerblue", lwd = 2, lty = 1)
@@ -853,7 +853,7 @@ Suppose you work for an automobile manufacturer which makes a large luxury sedan
 Our goal then, is to fit a model to this data in order to be able to predict fuel efficiency when driving at certain speeds. The data from this example can be found in [`fuel_econ.csv`](data/fuel_econ.csv).
 
 
-```r
+``` r
 econ = read.csv("data/fuel_econ.csv")
 ```
 
@@ -862,7 +862,7 @@ In this example, we will be frequently looking at the fitted versus residuals pl
 We will also be adding fitted curves to scatterplots repeatedly, so smartly we will write a function to do so.
 
 
-```r
+``` r
 plot_econ_curve = function(model) {
   plot(mpg ~ mph, data = econ, xlab = "Speed (Miles per Hour)", 
        ylab = "Fuel Efficiency (Miles per Gallon)", col = "dodgerblue", 
@@ -876,12 +876,12 @@ plot_econ_curve = function(model) {
 So now we first fit a simple linear regression to this data.
 
 
-```r
+``` r
 fit1 = lm(mpg ~ mph, data = econ)
 ```
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 plot_econ_curve(fit1)
 plot(fitted(fit1), resid(fit1), xlab = "Fitted", ylab = "Residuals", 
@@ -898,7 +898,7 @@ Pretty clearly we can do better. Yes fuel efficiency does increase as speed incr
 We will now add polynomial terms until we fit a suitable fit.
 
 
-```r
+``` r
 fit2 = lm(mpg ~ mph + I(mph ^ 2), data = econ)
 summary(fit2)
 ```
@@ -926,7 +926,7 @@ summary(fit2)
 ```
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 plot_econ_curve(fit2)
 plot(fitted(fit2), resid(fit2), xlab = "Fitted", ylab = "Residuals", 
@@ -941,7 +941,7 @@ plot(fitted(fit2), resid(fit2), xlab = "Fitted", ylab = "Residuals",
 While this model clearly fits much better, and the second order term is significant, we still see a pattern in the fitted versus residuals plot which suggests higher order terms will help. Also, we would expect the curve to flatten as speed increases or decreases, not go sharply downward as we see here.
 
 
-```r
+``` r
 fit3 = lm(mpg ~ mph + I(mph ^ 2) + I(mph ^ 3), data = econ)
 summary(fit3)
 ```
@@ -970,7 +970,7 @@ summary(fit3)
 ```
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 plot_econ_curve(fit3)
 plot(fitted(fit3), resid(fit3), xlab = "Fitted", ylab = "Residuals", 
@@ -985,7 +985,7 @@ plot(fitted(fit3), resid(fit3), xlab = "Fitted", ylab = "Residuals",
 Adding the third order term doesn't seem to help at all. The fitted curve hardly changes. This makes sense, since what we would like is for the curve to flatten at the extremes. For this we will need an even degree polynomial term.
 
 
-```r
+``` r
 fit4 = lm(mpg ~ mph + I(mph ^ 2) + I(mph ^ 3) + I(mph ^ 4), data = econ)
 summary(fit4)
 ```
@@ -1015,7 +1015,7 @@ summary(fit4)
 ```
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 plot_econ_curve(fit4)
 plot(fitted(fit4), resid(fit4), xlab = "Fitted", ylab = "Residuals", 
@@ -1030,7 +1030,7 @@ plot(fitted(fit4), resid(fit4), xlab = "Fitted", ylab = "Residuals",
 Now we are making progress. The fourth order term is significant with the other terms in the model. Also we are starting to see what we expected for low and high speed. However, there still seems to be a bit of a pattern in the residuals, so we will again try more higher order terms. We will add the fifth and sixth together, since adding the fifth will be similar to adding the third.
 
 
-```r
+``` r
 fit6 = lm(mpg ~ mph + I(mph ^ 2) + I(mph ^ 3) + I(mph ^ 4) + I(mph ^ 5) + I(mph^6), data = econ)
 summary(fit6)
 ```
@@ -1063,7 +1063,7 @@ summary(fit6)
 ```
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 plot_econ_curve(fit6)
 plot(fitted(fit6), resid(fit6), xlab = "Fitted", ylab = "Residuals", 
@@ -1082,7 +1082,7 @@ H_0: \beta_5 = \beta_6 = 0.
 \]
 
 
-```r
+``` r
 anova(fit4, fit6)
 ```
 
@@ -1101,7 +1101,7 @@ anova(fit4, fit6)
 So, this test does not reject the null hypothesis at a level of significance of $\alpha = 0.05$, however the p-value is still rather small, and the fitted versus residuals plot is much better for the model with the sixth order term. This makes the sixth order model a good choice. We could repeat this process one more time.
 
 
-```r
+``` r
 fit8 = lm(mpg ~ mph + I(mph ^ 2) + I(mph ^ 3) + I(mph ^ 4) + I(mph ^ 5)
           + I(mph ^ 6) + I(mph ^ 7) + I(mph ^ 8), data = econ)
 summary(fit8)
@@ -1135,7 +1135,7 @@ summary(fit8)
 ```
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 plot_econ_curve(fit8)
 plot(fitted(fit8), resid(fit8), xlab = "Fitted", ylab = "Residuals", 
@@ -1148,7 +1148,7 @@ plot(fitted(fit8), resid(fit8), xlab = "Fitted", ylab = "Residuals",
 \begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-55-1} \end{center}
 
 
-```r
+``` r
 summary(fit8)
 ```
 
@@ -1179,7 +1179,7 @@ summary(fit8)
 ## F-statistic: 128.1 on 8 and 19 DF,  p-value: 7.074e-15
 ```
 
-```r
+``` r
 anova(fit6, fit8)
 ```
 
@@ -1199,7 +1199,7 @@ Here we would clearly stick with `fit6`. The eighth order term is not significan
 As an aside, be aware that there is a quicker way to specify a model with many higher order terms.
 
 
-```r
+``` r
 fit6_alt = lm(mpg ~ poly(mph, 6), data = econ)
 all.equal(fitted(fit6), fitted(fit6_alt))
 ```
@@ -1211,7 +1211,7 @@ all.equal(fitted(fit6), fitted(fit6_alt))
 We first verify that this method produces the same fitted values. However, the estimated coefficients are different.
 
 
-```r
+``` r
 coef(fit6)
 ```
 
@@ -1222,7 +1222,7 @@ coef(fit6)
 ##  3.585201e-06 -1.401995e-08
 ```
 
-```r
+``` r
 coef(fit6_alt)
 ```
 
@@ -1236,7 +1236,7 @@ coef(fit6_alt)
 This is because `poly()` uses *orthogonal polynomials*, which solves an issue we will discuss in the next chapter. 
 
 
-```r
+``` r
 summary(fit6)
 ```
 
@@ -1267,7 +1267,7 @@ summary(fit6)
 ## F-statistic:   186 on 6 and 21 DF,  p-value: < 2.2e-16
 ```
 
-```r
+``` r
 summary(fit6_alt)
 ```
 
@@ -1302,7 +1302,7 @@ Notice though that the p-value for testing the degree 6 term is the same. Becaus
 To use `poly()` to obtain the same results as using `I()` repeatedly, we would need to set `raw = TRUE`.
 
 
-```r
+``` r
 fit6_alt2 = lm(mpg ~ poly(mph, 6, raw = TRUE), data = econ)
 coef(fit6_alt2)
 ```
@@ -1323,12 +1323,12 @@ We've now seen how to transform predictor and response variables. In this chapte
 ## Response Transformations {-}
 
 
-```r
+``` r
 initech = read.csv("data/initech.csv")
 ```
 
 
-```r
+``` r
 plot(salary ~ years, data = initech, col = "grey", pch = 20, cex = 1.5,
      main = "Salaries at Initech, By Seniority")
 ```
@@ -1338,7 +1338,7 @@ plot(salary ~ years, data = initech, col = "grey", pch = 20, cex = 1.5,
 \begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-62-1} \end{center}
 
 
-```r
+``` r
 initech_fit = lm(salary ~ years, data = initech)
 summary(initech_fit)
 ```
@@ -1365,7 +1365,7 @@ summary(initech_fit)
 ```
 
 
-```r
+``` r
 plot(salary ~ years, data = initech, col = "grey", pch = 20, cex = 1.5,
      main = "Salaries at Initech, By Seniority")
 abline(initech_fit, col = "darkorange", lwd = 2)
@@ -1376,7 +1376,7 @@ abline(initech_fit, col = "darkorange", lwd = 2)
 \begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-64-1} \end{center}
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 
 plot(fitted(initech_fit), resid(initech_fit), col = "grey", pch = 20,
@@ -1392,7 +1392,7 @@ qqline(resid(initech_fit), col = "dodgerblue", lwd = 2)
 \begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-65-1} \end{center}
 
 
-```r
+``` r
 initech_fit_log = lm(log(salary) ~ years, data = initech)
 ```
 
@@ -1401,7 +1401,7 @@ $$
 $$
 
 
-```r
+``` r
 plot(log(salary) ~ years, data = initech, col = "grey", pch = 20, cex = 1.5,
      main = "Salaries at Initech, By Seniority")
 abline(initech_fit_log, col = "darkorange", lwd = 2)
@@ -1416,7 +1416,7 @@ Y_i = \exp(\beta_0 + \beta_1 x_i) \cdot \exp(\epsilon_i)
 $$
 
 
-```r
+``` r
 plot(salary ~ years, data = initech, col = "grey", pch = 20, cex = 1.5,
      main = "Salaries at Initech, By Seniority")
 curve(exp(initech_fit_log$coef[1] + initech_fit_log$coef[2] * x),
@@ -1428,7 +1428,7 @@ curve(exp(initech_fit_log$coef[1] + initech_fit_log$coef[2] * x),
 \begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-68-1} \end{center}
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 
 plot(fitted(initech_fit_log), resid(initech_fit_log), col = "grey", pch = 20,
@@ -1444,7 +1444,7 @@ qqline(resid(initech_fit_log), col = "dodgerblue", lwd = 2)
 \begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-69-1} \end{center}
 
 
-```r
+``` r
 sqrt(mean(resid(initech_fit) ^ 2))
 ```
 
@@ -1452,7 +1452,7 @@ sqrt(mean(resid(initech_fit) ^ 2))
 ## [1] 27080.16
 ```
 
-```r
+``` r
 sqrt(mean(resid(initech_fit_log) ^ 2))
 ```
 
@@ -1461,7 +1461,7 @@ sqrt(mean(resid(initech_fit_log) ^ 2))
 ```
 
 
-```r
+``` r
 sqrt(mean((initech$salary - fitted(initech_fit)) ^ 2))
 ```
 
@@ -1469,7 +1469,7 @@ sqrt(mean((initech$salary - fitted(initech_fit)) ^ 2))
 ## [1] 27080.16
 ```
 
-```r
+``` r
 sqrt(mean((initech$salary - exp(fitted(initech_fit_log))) ^ 2))
 ```
 
@@ -1482,7 +1482,7 @@ sqrt(mean((initech$salary - exp(fitted(initech_fit_log))) ^ 2))
 ### A Quadratic Model
 
 
-```r
+``` r
 sim_quad = function(sample_size = 500) {
   x = runif(n = sample_size) * 5
   y = 3 + 5 * x ^ 2 + rnorm(n = sample_size, mean = 0, sd = 5)
@@ -1491,13 +1491,13 @@ sim_quad = function(sample_size = 500) {
 ```
 
 
-```r
+``` r
 set.seed(314)
 quad_data = sim_quad(sample_size = 200)
 ```
 
 
-```r
+``` r
 lin_fit = lm(y ~ x, data = quad_data)
 summary(lin_fit)
 ```
@@ -1524,7 +1524,7 @@ summary(lin_fit)
 ```
 
 
-```r
+``` r
 plot(y ~ x, data = quad_data, col = "grey", pch = 20, cex = 1.5,
      main = "Simulated Quadratic Data")
 abline(lin_fit, col = "darkorange", lwd = 2)
@@ -1535,7 +1535,7 @@ abline(lin_fit, col = "darkorange", lwd = 2)
 \begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-75-1} \end{center}
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 
 plot(fitted(lin_fit), resid(lin_fit), col = "grey", pch = 20,
@@ -1555,7 +1555,7 @@ Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \epsilon_i
 $$
 
 
-```r
+``` r
 quad_fit = lm(y ~ x + I(x^2), data = quad_data)
 summary(quad_fit)
 ```
@@ -1583,7 +1583,7 @@ summary(quad_fit)
 ```
 
 
-```r
+``` r
 plot(y ~ x, data = quad_data, col = "grey", pch = 20, cex = 1.5,
      main = "Simulated Quadratic Data")
 curve(quad_fit$coef[1] + quad_fit$coef[2] * x + quad_fit$coef[3] * x ^ 2,
@@ -1595,7 +1595,7 @@ curve(quad_fit$coef[1] + quad_fit$coef[2] * x + quad_fit$coef[3] * x ^ 2,
 \begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-78-1} \end{center}
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 
 plot(fitted(quad_fit), resid(quad_fit), col = "grey", pch = 20,
@@ -1613,7 +1613,7 @@ qqline(resid(quad_fit), col = "dodgerblue", lwd = 2)
 ### Overfitting and Extrapolation
 
 
-```r
+``` r
 sim_for_perf = function() {
   x = seq(0, 10)
   y = 3 + x - 4 * x ^ 2 + rnorm(n = 11, mean = 0, sd = 25)
@@ -1622,13 +1622,13 @@ sim_for_perf = function() {
 ```
 
 
-```r
+``` r
 set.seed(1234)
 data_for_perf = sim_for_perf()
 ```
 
 
-```r
+``` r
 fit_correct = lm(y ~ x + I(x ^ 2), data = data_for_perf)
 fit_perfect = lm(y ~ x + I(x ^ 2) + I(x ^ 3) + I(x ^ 4) + I(x ^ 5) + I(x ^ 6) + 
                  I(x ^ 7) + I(x ^ 8) + I(x ^ 9) + I(x ^ 10), 
@@ -1636,7 +1636,7 @@ fit_perfect = lm(y ~ x + I(x ^ 2) + I(x ^ 3) + I(x ^ 4) + I(x ^ 5) + I(x ^ 6) +
 ```
 
 
-```r
+``` r
 x_plot = seq(-5, 15, by = 0.1)
 plot(y ~ x, data = data_for_perf, ylim = c(-450, 100), cex = 2, pch = 20)
 lines(x_plot, predict(fit_correct, newdata = data.frame(x = x_plot)),
@@ -1652,7 +1652,7 @@ lines(x_plot, predict(fit_perfect, newdata = data.frame(x = x_plot)),
 ### Comparing Polynomial Models
 
 
-```r
+``` r
 sim_higher = function(sample_size = 250) {
   x = runif(n = sample_size, min = -1, max = 1) * 2
   y = 3 + -6 * x ^ 2 + 1 * x ^ 4 + rnorm(n = sample_size, mean = 0, sd = 3)
@@ -1673,13 +1673,13 @@ Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \beta_3 x_i^3 + \beta_4 x_i^4 + \b
 $$
 
 
-```r
+``` r
 set.seed(42)
 data_higher = sim_higher()
 ```
 
 
-```r
+``` r
 plot(y ~ x, data = data_higher, col = "grey", pch = 20, cex = 1.5,
      main = "Simulated Quartic Data")
 ```
@@ -1689,13 +1689,13 @@ plot(y ~ x, data = data_higher, col = "grey", pch = 20, cex = 1.5,
 \begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-86-1} \end{center}
 
 
-```r
+``` r
 fit_2 = lm(y ~ poly(x, 2), data = data_higher)
 fit_4 = lm(y ~ poly(x, 4), data = data_higher)
 ```
 
 
-```r
+``` r
 plot(y ~ x, data = data_higher, col = "grey", pch = 20, cex = 1.5,
      main = "Simulated Quartic Data")
 x_plot = seq(-5, 5, by = 0.05)
@@ -1710,7 +1710,7 @@ lines(x_plot, predict(fit_4, newdata = data.frame(x = x_plot)),
 \begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-88-1} \end{center}
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 
 plot(fitted(fit_2), resid(fit_2), col = "grey", pch = 20,
@@ -1726,7 +1726,7 @@ qqline(resid(fit_2), col = "dodgerblue", lwd = 2)
 \begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-89-1} \end{center}
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 
 plot(fitted(fit_4), resid(fit_4), col = "grey", pch = 20,
@@ -1742,7 +1742,7 @@ qqline(resid(fit_4), col = "dodgerblue", lwd = 2)
 \begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-90-1} \end{center}
 
 
-```r
+``` r
 anova(fit_2, fit_4)
 ```
 
@@ -1759,12 +1759,12 @@ anova(fit_2, fit_4)
 ```
 
 
-```r
+``` r
 fit_6 = lm(y ~ poly(x, 6), data = data_higher)
 ```
 
 
-```r
+``` r
 anova(fit_4, fit_6)
 ```
 
@@ -1785,14 +1785,14 @@ Y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \beta_3 x_i^3 + \beta_4 x_i^4 + \e
 $$
 
 
-```r
+``` r
 fit_4a = lm(y ~ poly(x, degree = 4), data = data_higher)
 fit_4b = lm(y ~ poly(x, degree = 4, raw = TRUE), data = data_higher)
 fit_4c = lm(y ~ x + I(x^2) + I(x^3) + I(x^4), data = data_higher)
 ```
 
 
-```r
+``` r
 coef(fit_4a)
 ```
 
@@ -1803,7 +1803,7 @@ coef(fit_4a)
 ##             0.669874            20.519759
 ```
 
-```r
+``` r
 coef(fit_4b)
 ```
 
@@ -1816,7 +1816,7 @@ coef(fit_4b)
 ##                        1.0282139
 ```
 
-```r
+``` r
 coef(fit_4c)
 ```
 
@@ -1826,7 +1826,7 @@ coef(fit_4c)
 ```
 
 
-```r
+``` r
 unname(coef(fit_4a))
 ```
 
@@ -1834,7 +1834,7 @@ unname(coef(fit_4a))
 ## [1]  -1.980036  -2.053929 -49.344752   0.669874  20.519759
 ```
 
-```r
+``` r
 unname(coef(fit_4b))
 ```
 
@@ -1842,7 +1842,7 @@ unname(coef(fit_4b))
 ## [1]  2.9996256 -0.3880250 -6.1511166  0.1269046  1.0282139
 ```
 
-```r
+``` r
 unname(coef(fit_4c))
 ```
 
@@ -1851,7 +1851,7 @@ unname(coef(fit_4c))
 ```
 
 
-```r
+``` r
 all.equal(fitted(fit_4a),
           fitted(fit_4b))
 ```
@@ -1861,7 +1861,7 @@ all.equal(fitted(fit_4a),
 ```
 
 
-```r
+``` r
 all.equal(resid(fit_4a),
           resid(fit_4b))
 ```
@@ -1871,7 +1871,7 @@ all.equal(resid(fit_4a),
 ```
 
 
-```r
+``` r
 summary(fit_4a)
 ```
 
@@ -1900,7 +1900,7 @@ summary(fit_4a)
 ```
 
 
-```r
+``` r
 summary(fit_4c)
 ```
 
@@ -1931,7 +1931,7 @@ summary(fit_4c)
 ### Inhibit Function
 
 
-```r
+``` r
 coef(lm(y ~ x + x ^ 2, data = quad_data))
 ```
 
@@ -1940,7 +1940,7 @@ coef(lm(y ~ x + x ^ 2, data = quad_data))
 ##   -18.32715    24.87163
 ```
 
-```r
+``` r
 coef(lm(y ~ x + I(x ^ 2), data = quad_data))
 ```
 
@@ -1950,7 +1950,7 @@ coef(lm(y ~ x + I(x ^ 2), data = quad_data))
 ```
 
 
-```r
+``` r
 coef(lm(y ~ x + x:x, data = quad_data))
 ```
 
@@ -1959,7 +1959,7 @@ coef(lm(y ~ x + x:x, data = quad_data))
 ##   -18.32715    24.87163
 ```
 
-```r
+``` r
 coef(lm(y ~ x * x, data = quad_data))
 ```
 
@@ -1968,7 +1968,7 @@ coef(lm(y ~ x * x, data = quad_data))
 ##   -18.32715    24.87163
 ```
 
-```r
+``` r
 coef(lm(y ~ x ^ 2, data = quad_data))
 ```
 
@@ -1977,7 +1977,7 @@ coef(lm(y ~ x ^ 2, data = quad_data))
 ##   -18.32715    24.87163
 ```
 
-```r
+``` r
 coef(lm(y ~ x + x ^ 2, data = quad_data))
 ```
 
@@ -1987,7 +1987,7 @@ coef(lm(y ~ x + x ^ 2, data = quad_data))
 ```
 
 
-```r
+``` r
 coef(lm(y ~ I(x + x), data = quad_data))
 ```
 
@@ -1996,7 +1996,7 @@ coef(lm(y ~ I(x + x), data = quad_data))
 ##   -18.32715    12.43582
 ```
 
-```r
+``` r
 coef(lm(y ~ x + x, data = quad_data))
 ```
 
@@ -2010,7 +2010,7 @@ coef(lm(y ~ x + x, data = quad_data))
 
 
 
-```r
+``` r
 pairs(autompg)
 ```
 
@@ -2019,7 +2019,7 @@ pairs(autompg)
 \begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-105-1} \end{center}
 
 
-```r
+``` r
 mpg_hp = lm(mpg ~ hp, data = autompg)
 
 par(mfrow = c(1, 2))
@@ -2037,7 +2037,7 @@ abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
 \begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-106-1} \end{center}
 
 
-```r
+``` r
 mpg_hp_log = lm(mpg ~ hp + I(hp ^ 2), data = autompg)
 
 par(mfrow = c(1, 2))
@@ -2057,7 +2057,7 @@ abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
 \begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-107-1} \end{center}
 
 
-```r
+``` r
 mpg_hp_log = lm(log(mpg) ~ hp + I(hp ^ 2), data = autompg)
 
 par(mfrow = c(1, 2))
@@ -2077,7 +2077,7 @@ abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
 \begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-108-1} \end{center}
 
 
-```r
+``` r
 mpg_hp_loglog = lm(log(mpg) ~ log(hp), data = autompg)
 
 par(mfrow = c(1, 2))
@@ -2094,12 +2094,12 @@ abline(h = 0, lty = 2, col = "darkorange", lwd = 2)
 \begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-109-1} \end{center}
 
 
-```r
+``` r
 big_model = lm(mpg ~ disp * hp * domestic, data = autompg)
 ```
 
 
-```r
+``` r
 qqnorm(resid(big_model), col = "darkgrey")
 qqline(resid(big_model), col = "dodgerblue", lwd = 2)
 ```
@@ -2109,7 +2109,7 @@ qqline(resid(big_model), col = "dodgerblue", lwd = 2)
 \begin{center}\includegraphics{transformations_files/figure-latex/unnamed-chunk-111-1} \end{center}
 
 
-```r
+``` r
 bigger_model = lm(log(mpg) ~ disp * hp * domestic + 
                I(disp ^ 2) + I(hp ^ 2), data = autompg)
 summary(bigger_model)
@@ -2146,7 +2146,7 @@ summary(bigger_model)
 ```
 
 
-```r
+``` r
 qqnorm(resid(bigger_model), col = "darkgrey")
 qqline(resid(bigger_model), col = "dodgerblue", lwd = 2)
 ```
@@ -2161,4 +2161,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`transformations.Rmd`](transformations.Rmd){target="_blank"}
 
-The file was created using `R` version `4.3.2`.
+The file was created using `R` version `4.4.1`.

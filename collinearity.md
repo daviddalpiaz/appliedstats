@@ -16,7 +16,7 @@ After reading this chapter you will be able to:
 Let's create a dataset where one of the predictors, $x_3$, is a linear combination of the other predictors.
 
 
-```r
+``` r
 gen_exact_collin_data = function(num_samples = 100) {
   x1 = rnorm(n = num_samples, mean = 80, sd = 10)
   x2 = rnorm(n = num_samples, mean = 70, sd = 5)
@@ -29,7 +29,7 @@ gen_exact_collin_data = function(num_samples = 100) {
 Notice that the way we are generating this data, the response $y$ only really depends on $x_1$ and $x_2$.
 
 
-```r
+``` r
 set.seed(42)
 exact_collin_data = gen_exact_collin_data()
 head(exact_collin_data)
@@ -48,7 +48,7 @@ head(exact_collin_data)
 What happens when we attempt to fit a regression model in `R` using all of the predictors?
 
 
-```r
+``` r
 exact_collin_fit = lm(y ~ x1 + x2 + x3, data = exact_collin_data)
 summary(exact_collin_fit)
 ```
@@ -79,7 +79,7 @@ summary(exact_collin_fit)
 We see that `R` simply decides to exclude a variable. Why is this happening?
 
 
-```r
+``` r
 X = cbind(1, as.matrix(exact_collin_data[,-1]))
 solve(t(X) %*% X)
 ```
@@ -91,7 +91,7 @@ When this happens, we say there is **exact collinearity** in the dataset.
 As a result of this issue, `R` essentially chose to fit the model `y ~ x1 + x2`. However notice that two other models would accomplish exactly the same fit.
 
 
-```r
+``` r
 fit1 = lm(y ~ x1 + x2, data = exact_collin_data)
 fit2 = lm(y ~ x1 + x3, data = exact_collin_data)
 fit3 = lm(y ~ x2 + x3, data = exact_collin_data)
@@ -100,7 +100,7 @@ fit3 = lm(y ~ x2 + x3, data = exact_collin_data)
 We see that the fitted values for each of the three models are exactly the same. This is a result of $x_3$ containing all of the information from $x_1$ and $x_2$. As long as one of $x_1$ or $x_2$ is included in the model, $x_3$ can be used to recover the information from the variable not included.
 
 
-```r
+``` r
 all.equal(fitted(fit1), fitted(fit2))
 ```
 
@@ -108,7 +108,7 @@ all.equal(fitted(fit1), fitted(fit2))
 ## [1] TRUE
 ```
 
-```r
+``` r
 all.equal(fitted(fit2), fitted(fit3))
 ```
 
@@ -119,7 +119,7 @@ all.equal(fitted(fit2), fitted(fit3))
 While their fitted values are all the same, their estimated coefficients are wildly different. The sign of $x_2$ is switched in two of the models! So only `fit1` properly *explains* the relationship between the variables, `fit2` and `fit3` still *predict* as well as `fit1`, despite the coefficients having little to no meaning, a concept we will return to later.
 
 
-```r
+``` r
 coef(fit1)
 ```
 
@@ -128,7 +128,7 @@ coef(fit1)
 ##   2.9573357   0.9856291   1.0170586
 ```
 
-```r
+``` r
 coef(fit2)
 ```
 
@@ -137,7 +137,7 @@ coef(fit2)
 ##   2.1945418   0.4770998   0.2542647
 ```
 
-```r
+``` r
 coef(fit3)
 ```
 
@@ -155,7 +155,7 @@ Looking at the `seatpos` dataset from the `faraway` package, we will see an exam
 We will attempt to fit a model that predicts `hipcenter`. Two predictor variables are immediately interesting to us: `HtShoes` and `Ht`. We certainly expect a person's height to be highly correlated to their height when wearing shoes. We'll pay special attention to these two variables when fitting models.
 
 
-```r
+``` r
 library(faraway)
 pairs(seatpos, col = "dodgerblue")
 ```
@@ -164,7 +164,7 @@ pairs(seatpos, col = "dodgerblue")
 
 \begin{center}\includegraphics{collinearity_files/figure-latex/unnamed-chunk-9-1} \end{center}
 
-```r
+``` r
 round(cor(seatpos), 2)
 ```
 
@@ -188,7 +188,7 @@ We can also do this numerically with the `cor()` function, which when applied to
 Unlike exact collinearity, here we can still fit a model with all of the predictors, but what effect does this have?
 
 
-```r
+``` r
 hip_model = lm(hipcenter ~ ., data = seatpos)
 summary(hip_model)
 ```
@@ -228,7 +228,7 @@ This happens as a result of the predictors being highly correlated. For example,
 We define $R_j^2$ to be the proportion of observed variation in the $j$-th predictor explained by the other predictors. In other words $R_j^2$ is the multiple R-Squared for the regression of $x_j$ on each of the other predictors.
 
 
-```r
+``` r
 ht_shoes_model = lm(HtShoes ~ . - hipcenter, data = seatpos)
 summary(ht_shoes_model)$r.squared
 ```
@@ -266,7 +266,7 @@ the **variance inflation factor.** The variance inflation factor quantifies the 
 The `vif` function from the `faraway` package calculates the VIFs for each of the predictors of a model.
 
 
-```r
+``` r
 vif(hip_model)
 ```
 
@@ -282,7 +282,7 @@ In practice it is common to say that any VIF greater than $5$ is cause for conce
 Let's further investigate how the presence of collinearity actually affects a model. If we add a moderate amount of noise to the data, we see that the estimates of the coefficients change drastically. This is a rather undesirable effect. Adding random noise should not affect the coefficients of a model.
 
 
-```r
+``` r
 set.seed(1337)
 noise = rnorm(n = nrow(seatpos), mean = 0, sd = 5)
 hip_model_noise = lm(hipcenter + noise ~ ., data = seatpos)
@@ -291,7 +291,7 @@ hip_model_noise = lm(hipcenter + noise ~ ., data = seatpos)
 Adding the noise had such a large effect, the sign of the coefficient for `Ht` has changed.
 
 
-```r
+``` r
 coef(hip_model)
 ```
 
@@ -302,7 +302,7 @@ coef(hip_model)
 ##  -1.32806864  -1.14311888  -6.43904627
 ```
 
-```r
+``` r
 coef(hip_model_noise)
 ```
 
@@ -316,7 +316,7 @@ coef(hip_model_noise)
 This tells us that a model with collinearity is bad at explaining the relationship between the response and the predictors. We cannot even be confident in the direction of the relationship. However, does collinearity affect prediction?
 
 
-```r
+``` r
 plot(fitted(hip_model), fitted(hip_model_noise), col = "dodgerblue", pch = 20,
      xlab = "Predicted, Without Noise", ylab = "Predicted, With Noise", cex = 1.5)
 abline(a = 0, b = 1, col = "darkorange", lwd = 2)
@@ -331,7 +331,7 @@ We see that by plotting the predicted values using both models against each othe
 Let's now look at a smaller model,
 
 
-```r
+``` r
 hip_model_small = lm(hipcenter ~ Age + Arm + Ht, data = seatpos)
 summary(hip_model_small)
 ```
@@ -359,7 +359,7 @@ summary(hip_model_small)
 ## F-statistic:  22.3 on 3 and 34 DF,  p-value: 3.649e-08
 ```
 
-```r
+``` r
 vif(hip_model_small)
 ```
 
@@ -371,7 +371,7 @@ vif(hip_model_small)
 Immediately we see that multicollinearity isn't an issue here.
 
 
-```r
+``` r
 anova(hip_model_small, hip_model)
 ```
 
@@ -396,7 +396,7 @@ To quantify this effect we will look at a **variable added plot** and a **partia
 - Regressing the predictor of interest (`HtShoes`) against the other predictors (`Age`, `Arm`, and `Ht`).
 
 
-```r
+``` r
 ht_shoes_model_small = lm(HtShoes ~ Age + Arm + Ht, data = seatpos)
 ```
 
@@ -405,7 +405,7 @@ So now, the residuals of `hip_model_small` give us the variation of `hipcenter` 
 The correlation of these two residuals gives us the **partial correlation coefficient** of `HtShoes` and `hipcenter` with the effects of `Age`, `Arm`, and `Ht` removed.
 
 
-```r
+``` r
 cor(resid(ht_shoes_model_small), resid(hip_model_small))
 ```
 
@@ -418,7 +418,7 @@ Since this value is small, close to zero, it means that the variation of `hipcen
 Similarly a **variable added plot** visualizes these residuals against each other. It is also helpful to regress the residuals of the response against the residuals of the predictor and add the regression line to the plot.
 
 
-```r
+``` r
 plot(resid(hip_model_small) ~ resid(ht_shoes_model_small), 
      col = "dodgerblue", pch = 20,
      xlab = "Residuals, Added Predictor", 
@@ -455,7 +455,7 @@ Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \epsilon
 where $\epsilon \sim N(\mu = 0, \sigma^2 = 25)$ and the $\beta$ coefficients defined below.
 
 
-```r
+``` r
 set.seed(42)
 beta_0 = 7
 beta_1 = 3
@@ -466,7 +466,7 @@ sigma  = 5
 We will use a sample size of 10, and 2500 simulations for both situations.
 
 
-```r
+``` r
 sample_size = 10
 num_sim     = 2500
 ```
@@ -474,13 +474,13 @@ num_sim     = 2500
 We'll first consider the situation with a collinearity issue, so we manually create the two predictor variables.
 
 
-```r
+``` r
 x1 = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 x2 = c(1, 2, 3, 4, 5, 7, 6, 10, 9, 8)
 ```
 
 
-```r
+``` r
 c(sd(x1), sd(x2))
 ```
 
@@ -488,7 +488,7 @@ c(sd(x1), sd(x2))
 ## [1] 3.02765 3.02765
 ```
 
-```r
+``` r
 cor(x1, x2)
 ```
 
@@ -499,7 +499,7 @@ cor(x1, x2)
 Notice that they have extremely high correlation.
 
 
-```r
+``` r
 true_line_bad = beta_0 + beta_1 * x1 + beta_2 * x2
 beta_hat_bad  = matrix(0, num_sim, 2)
 mse_bad       = rep(0, num_sim)
@@ -508,7 +508,7 @@ mse_bad       = rep(0, num_sim)
 We perform the simulation 2500 times, each time fitting a regression model, and storing the estimated coefficients and the MSE.
 
 
-```r
+``` r
 for (s in 1:num_sim) {
   y = true_line_bad + rnorm(n = sample_size, mean = 0, sd = sigma)
   reg_out = lm(y ~ x1 + x2)
@@ -520,7 +520,7 @@ for (s in 1:num_sim) {
 Now we move to  the situation without a collinearity issue, so we again manually create the two predictor variables.
 
 
-```r
+``` r
 z1 = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 z2 = c(9, 2, 7, 4, 5, 6, 3, 8, 1, 10)
 ```
@@ -528,7 +528,7 @@ z2 = c(9, 2, 7, 4, 5, 6, 3, 8, 1, 10)
 Notice that the standard deviations of each are the same as before, however, now the correlation is extremely close to 0.
 
 
-```r
+``` r
 c(sd(z1), sd(z2))
 ```
 
@@ -536,7 +536,7 @@ c(sd(z1), sd(z2))
 ## [1] 3.02765 3.02765
 ```
 
-```r
+``` r
 cor(z1, z2)
 ```
 
@@ -545,7 +545,7 @@ cor(z1, z2)
 ```
 
 
-```r
+``` r
 true_line_good = beta_0 + beta_1 * z1 + beta_2 * z2
 beta_hat_good  = matrix(0, num_sim, 2)
 mse_good       = rep(0, num_sim)
@@ -554,7 +554,7 @@ mse_good       = rep(0, num_sim)
 We then perform simulations and store the same results.
 
 
-```r
+``` r
 for (s in 1:num_sim) {
   y = true_line_good + rnorm(n = sample_size, mean = 0, sd = sigma)
   reg_out = lm(y ~ z1 + z2)
@@ -566,7 +566,7 @@ for (s in 1:num_sim) {
 We'll now investigate the differences.
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 hist(beta_hat_bad[, 1],
      col = "darkorange",
@@ -589,7 +589,7 @@ hist(beta_hat_good[, 1],
 First, for $\beta_1$, which has a true value of $3$, we see that both with and without collinearity, the simulated values are centered near $3$.
 
 
-```r
+``` r
 mean(beta_hat_bad[, 1])
 ```
 
@@ -597,7 +597,7 @@ mean(beta_hat_bad[, 1])
 ## [1] 2.963325
 ```
 
-```r
+``` r
 mean(beta_hat_good[, 1])
 ```
 
@@ -608,7 +608,7 @@ mean(beta_hat_good[, 1])
 The way the predictors were created, the $S_{x_j x_j}$ portion of the variance is the same for the predictors in both cases, but the variance is still much larger in the simulations performed with collinearity. The variance is so large in the collinear case, that sometimes the estimated coefficient for $\beta_1$ is negative! 
 
 
-```r
+``` r
 sd(beta_hat_bad[, 1])
 ```
 
@@ -616,7 +616,7 @@ sd(beta_hat_bad[, 1])
 ## [1] 1.633294
 ```
 
-```r
+``` r
 sd(beta_hat_good[, 1])
 ```
 
@@ -625,7 +625,7 @@ sd(beta_hat_good[, 1])
 ```
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 hist(beta_hat_bad[, 2],
      col = "darkorange",
@@ -648,7 +648,7 @@ hist(beta_hat_good[, 2],
 We see the same issues with $\beta_2$. On average the estimates are correct, but the variance is again much larger with collinearity.
 
 
-```r
+``` r
 mean(beta_hat_bad[, 2])
 ```
 
@@ -656,7 +656,7 @@ mean(beta_hat_bad[, 2])
 ## [1] 4.025059
 ```
 
-```r
+``` r
 mean(beta_hat_good[, 2])
 ```
 
@@ -665,7 +665,7 @@ mean(beta_hat_good[, 2])
 ```
 
 
-```r
+``` r
 sd(beta_hat_bad[, 2])
 ```
 
@@ -673,7 +673,7 @@ sd(beta_hat_bad[, 2])
 ## [1] 1.642592
 ```
 
-```r
+``` r
 sd(beta_hat_good[, 2])
 ```
 
@@ -682,7 +682,7 @@ sd(beta_hat_good[, 2])
 ```
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 hist(mse_bad,
      col = "darkorange",
@@ -703,7 +703,7 @@ hist(mse_good,
 Interestingly, in both cases, the MSE is roughly the same on average. Again, this is because collinearity affects a model's ability to *explain*, but not predict.
 
 
-```r
+``` r
 mean(mse_bad)
 ```
 
@@ -711,7 +711,7 @@ mean(mse_bad)
 ## [1] 17.7186
 ```
 
-```r
+``` r
 mean(mse_good)
 ```
 
@@ -725,4 +725,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`collinearity.Rmd`](collinearity.Rmd){target="_blank"}
 
-The file was created using `R` version `4.3.2`.
+The file was created using `R` version `4.4.1`.

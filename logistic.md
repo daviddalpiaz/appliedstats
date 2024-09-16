@@ -222,7 +222,7 @@ When this happens, the model is still "fit," but there are consequences, namely,
 ### Simulation Examples
 
 
-```r
+``` r
 sim_logistic_data = function(sample_size = 25, beta_0 = -2, beta_1 = 3) {
   x = rnorm(n = sample_size)
   eta = beta_0 + beta_1 * x
@@ -260,7 +260,7 @@ p_i &= p({\bf x_i}) = \frac{1}{1 + e^{-\eta({\bf x_i})}} \\
 $$
 
 
-```r
+``` r
 set.seed(1)
 example_data = sim_logistic_data()
 head(example_data)
@@ -279,7 +279,7 @@ head(example_data)
 After simulating a dataset, we'll then fit both ordinary linear regression and logistic regression. Notice that currently the responses variable `y` is a numeric variable that only takes values `0` and `1`. Later we'll see that we can also fit logistic regression when the response is a factor variable with only two levels. (Generally, having a factor response is preferred, but having a dummy response allows us to make the comparison to using ordinary linear regression.)
 
 
-```r
+``` r
 # ordinary linear regression
 fit_lm  = lm(y ~ x, data = example_data)
 # logistic regression
@@ -294,7 +294,7 @@ Notice that the syntax is extremely similar. What's changed?
 In a lot of ways, `lm()` is just a more specific version of `glm()`. For example
 
 
-```r
+``` r
 glm(y ~ x, data = example_data)
 ```
 
@@ -303,7 +303,7 @@ would actually fit the ordinary linear regression that we have seen in the past.
 The `family` argument to `glm()` actually specifies both the distribution and the link function. If not made explicit, the link function is chosen to be the **canonical link function**, which is essentially the most mathematical convenient link function. See `?glm` and `?family` for details. For example, the following code explicitly specifies the link function which was previously used by default.
 
 
-```r
+``` r
 # more detailed call to glm for logistic regression
 fit_glm = glm(y ~ x, data = example_data, family = binomial(link = "logit"))
 ```
@@ -318,7 +318,7 @@ Making predictions with an object of type  `glm` is slightly different than maki
 That is, `type = "link"` will get you the log odds, while `type = "response"` will return the estimated mean, in this case, $P[Y = 1 \mid {\bf X} = {\bf x}]$ for each observation.
 
 
-```r
+``` r
 predict(fit_glm, data.frame(x = 1.2)) # type = "link" as default
 ```
 
@@ -327,7 +327,7 @@ predict(fit_glm, data.frame(x = 1.2)) # type = "link" as default
 ## 2.076166
 ```
 
-```r
+``` r
 predict(fit_glm, data.frame(x = 1.2), type = "link")
 ```
 
@@ -336,7 +336,7 @@ predict(fit_glm, data.frame(x = 1.2), type = "link")
 ## 2.076166
 ```
 
-```r
+``` r
 predict(fit_glm, data.frame(x = 1.2), type = "response")
 ```
 
@@ -346,7 +346,7 @@ predict(fit_glm, data.frame(x = 1.2), type = "response")
 ```
 
 
-```r
+``` r
 plot(y ~ x, data = example_data, 
      pch = 20, ylab = "Estimated Probability", 
      main = "Ordinary vs Logistic Regression")
@@ -373,7 +373,7 @@ We immediately see why ordinary linear regression is not a good idea. While it i
 Enter logistic regression. Since the output of the inverse logit function is restricted to be between 0 and 1, our estimates make much more sense as probabilities. Let's look at our estimated coefficients. (With a lot of rounding, for simplicity.)
 
 
-```r
+``` r
 round(coef(fit_glm), 1)
 ```
 
@@ -423,7 +423,7 @@ $$
 In this model, as $x$ increases, the log odds decrease.
 
 
-```r
+``` r
 set.seed(1)
 example_data = sim_logistic_data(sample_size = 50, beta_0 = 1, beta_1 = -4)
 ```
@@ -431,12 +431,12 @@ example_data = sim_logistic_data(sample_size = 50, beta_0 = 1, beta_1 = -4)
 We again simulate some observations form this model, then fit logistic regression.
 
 
-```r
+``` r
 fit_glm = glm(y ~ x, data = example_data, family = binomial)
 ```
 
 
-```r
+``` r
 plot(y ~ x, data = example_data, 
      pch = 20, ylab = "Estimated Probability", 
      main = "Logistic Regression, Decreasing Probability")
@@ -457,7 +457,7 @@ We see that this time, as $x$ increases, $\hat{p}({\bf x})$ decreases.
 Now let's look at an example where the estimated probability doesn't always simply increase or decrease. Much like ordinary linear regression, the linear combination of predictors can contain transformations of predictors (in this case a quadratic term) and interactions.
 
 
-```r
+``` r
 sim_quadratic_logistic_data = function(sample_size = 25) {
   x = rnorm(n = sample_size)
   eta = -1.5 + 0.5 * x + x ^ 2
@@ -482,18 +482,18 @@ p_i &= p({\bf x_i}) = \frac{1}{1 + e^{-\eta({\bf x_i})}} \\
 $$
 
 
-```r
+``` r
 set.seed(42)
 example_data = sim_quadratic_logistic_data(sample_size = 50)
 ```
 
 
-```r
+``` r
 fit_glm = glm(y ~ x + I(x^2), data = example_data, family = binomial)
 ```
 
 
-```r
+``` r
 plot(y ~ x, data = example_data, 
      pch = 20, ylab = "Estimated Probability", 
      main = "Logistic Regression, Quadratic Relationship")
@@ -615,14 +615,14 @@ The Likelihood-Ratio Test is actually a rather general test, however, here we ha
 To illustrate the use of logistic regression, we will use the `SAheart` dataset from the `bestglm` package. 
 
 
-```r
+``` r
 # "leaps" is required for "bestglm"
 if (!require("leaps")) install.packages("leaps")
 if (!require("bestglm")) install.packages("bestglm")
 ```
 
 
-```r
+``` r
 library(leaps)
 library(bestglm)
 data("SAheart")
@@ -658,7 +658,7 @@ $$
 $$
 
 
-```r
+``` r
 chd_mod_ldl = glm(chd ~ ldl, data = SAheart, family = binomial)
 plot(jitter(chd, factor = 0.1) ~ ldl, data = SAheart, pch = 20, 
      ylab = "Probability of CHD", xlab = "Low Density Lipoprotein Cholesterol")
@@ -676,7 +676,7 @@ As before, we plot the data in addition to the estimated probabilities. Note tha
 As we would expect, this plot indicates that as `ldl` increases, so does the probability of `chd`.
 
 
-```r
+``` r
 coef(summary(chd_mod_ldl))
 ```
 
@@ -697,7 +697,7 @@ we use the `summary()` function as we have done so many times before. Like the $
 When fitting logistic regression, we can use the same formula syntax as ordinary linear regression. So, to fit an additive model using all available predictors, we use:
 
 
-```r
+``` r
 chd_mod_additive = glm(chd ~ ., data = SAheart, family = binomial)
 ```
 
@@ -710,7 +710,7 @@ $$
 We could manually calculate the test statistic,
 
 
-```r
+``` r
 -2 * as.numeric(logLik(chd_mod_ldl) - logLik(chd_mod_additive))
 ```
 
@@ -721,7 +721,7 @@ We could manually calculate the test statistic,
 Or we could utilize the `anova()` function. By specifying `test = "LRT"`, `R` will use the likelihood-ratio test to compare the two models.
 
 
-```r
+``` r
 anova(chd_mod_ldl, chd_mod_additive, test = "LRT")
 ```
 
@@ -743,7 +743,7 @@ We see that the test statistic that we had just calculated appears in the output
 While we prefer the additive model compared to the model with only a single predictor, do we actually need all of the predictors in the additive model? To select a subset of predictors, we can use a stepwise procedure as we did with ordinary linear regression. Recall that AIC and BIC were defined in terms of likelihoods. Here we demonstrate using AIC with a backwards selection procedure.
 
 
-```r
+``` r
 chd_mod_selected = step(chd_mod_additive, trace = 0)
 coef(chd_mod_selected)
 ```
@@ -762,7 +762,7 @@ H_0: \beta_{\texttt{sbp}} = \beta_{\texttt{adiposity}} = \beta_{\texttt{obesity}
 $$
 
 
-```r
+``` r
 anova(chd_mod_selected, chd_mod_additive, test = "LRT")
 ```
 
@@ -784,7 +784,7 @@ Here it seems that we would prefer the selected model.
 We can create confidence intervals for the $\beta$ parameters using the `confint()` function as we did with ordinary linear regression.
 
 
-```r
+``` r
 confint(chd_mod_selected, level = 0.99)
 ```
 
@@ -835,7 +835,7 @@ $$
 To demonstrate creating these intervals, we'll consider a new observation.
 
 
-```r
+``` r
 new_obs = data.frame(
   sbp = 148.0,
   tobacco = 5,
@@ -852,7 +852,7 @@ new_obs = data.frame(
 First, we'll use the `predict()` function to obtain $\hat{\eta}({\bf x})$ for this observation.
 
 
-```r
+``` r
 eta_hat = predict(chd_mod_selected, new_obs, se.fit = TRUE, type = "link")
 eta_hat
 ```
@@ -872,7 +872,7 @@ eta_hat
 By setting `se.fit = TRUE`, `R` also computes $\text{SE}[\hat{\eta}({\bf x})]$. Note that we used `type = "link"`, but this is actually a default value. We added it here to stress that the output from `predict()` will be the value of the link function.
 
 
-```r
+``` r
 z_crit = qnorm(0.975)
 round(z_crit, 2)
 ```
@@ -884,7 +884,7 @@ round(z_crit, 2)
 After obtaining the correct critical value, we can easily create a $95\%$ confidence interval for $\eta({\bf x})$.
 
 
-```r
+``` r
 eta_hat$fit + c(-1, 1) * z_crit * eta_hat$se.fit
 ```
 
@@ -895,7 +895,7 @@ eta_hat$fit + c(-1, 1) * z_crit * eta_hat$se.fit
 Now we simply need to apply the correct transformation to make this a confidence interval for $p({\bf x})$, the probability of coronary heart disease for this observation. Note that the `boot` package contains functions `logit()` and `inv.logit()` which are the logit and inverse logit transformations, respectively.
 
 
-```r
+``` r
 boot::inv.logit(eta_hat$fit + c(-1, 1) * z_crit * eta_hat$se.fit)
 ```
 
@@ -914,7 +914,7 @@ Without really thinking about it, we've been using our previous knowledge of `R`
 Let's add an interaction between LDL and family history for the model we selected.
 
 
-```r
+``` r
 chd_mod_interaction = glm(chd ~ alcohol + ldl + famhist + typea + age + ldl:famhist, 
                           data = SAheart, family = binomial)
 summary(chd_mod_interaction)
@@ -954,7 +954,7 @@ Based on the $z$-test seen in the above summary, this interaction is significant
 Let's take the previous model, and now add a polynomial term.
 
 
-```r
+``` r
 chd_mod_int_quad = glm(chd ~ alcohol + ldl + famhist + typea + age + ldl:famhist + I(ldl^2),
                        data = SAheart, family = binomial)
 summary(chd_mod_int_quad)
@@ -1013,7 +1013,7 @@ You have probably noticed that the output from `summary()` is also very similar 
 [**Deviance**](https://en.wikipedia.org/wiki/Deviance_(statistics)){target="_blank"} compares the model to a saturated model. (Without repeated observations, a saturated model is a model that fits perfectly, using a parameter for each observation.) Essentially, deviance is a generalized *residual sum of squares* for GLMs. Like RSS, deviance decreases as the model complexity increases.
 
 
-```r
+``` r
 deviance(chd_mod_ldl)
 ```
 
@@ -1021,7 +1021,7 @@ deviance(chd_mod_ldl)
 ## [1] 564.2788
 ```
 
-```r
+``` r
 deviance(chd_mod_selected)
 ```
 
@@ -1029,7 +1029,7 @@ deviance(chd_mod_selected)
 ## [1] 475.6856
 ```
 
-```r
+``` r
 deviance(chd_mod_additive)
 ```
 
@@ -1096,7 +1096,7 @@ Logistic regression is just one of many ways that these probabilities could be e
 To illustrate the use of logistic regression as a classifier, we will use the `spam` dataset from the `kernlab` package. 
 
 
-```r
+``` r
 # install.packages("kernlab")
 library(kernlab)
 data("spam")
@@ -1140,7 +1140,7 @@ This dataset, created in the late 1990s at Hewlett-Packard Labs, contains 4601 e
 The response variable, `type`, is a **factor** with levels that label each email as `spam` or `nonspam`. When fitting models, `nonspam` will be the reference level, $Y = 0$, as it comes first alphabetically.
 
 
-```r
+``` r
 is.factor(spam$type)
 ```
 
@@ -1148,7 +1148,7 @@ is.factor(spam$type)
 ## [1] TRUE
 ```
 
-```r
+``` r
 levels(spam$type)
 ```
 
@@ -1161,7 +1161,7 @@ Many of the predictors (often called features in machine learning) are engineere
 To get started, we'll first test-train split the data.
 
 
-```r
+``` r
 set.seed(42)
 # spam_idx = sample(nrow(spam), round(nrow(spam) / 2))
 spam_idx = sample(nrow(spam), 1000)
@@ -1172,7 +1172,7 @@ spam_tst = spam[-spam_idx, ]
 We've used a somewhat small train set relative to the total size of the dataset. In practice it should likely be larger, but this is simply to keep training time low for illustration and rendering of this document.
 
 
-```r
+``` r
 fit_caps = glm(type ~ capitalTotal, 
                data = spam_trn, family = binomial)
 fit_selected = glm(type ~ edu + money + capitalTotal + charDollar, 
@@ -1193,7 +1193,7 @@ We'll fit four logistic regressions, each more complex than the previous. Note t
 Note that, when we receive this warning, we should be highly suspicious of the parameter estimates.
 
 
-```r
+``` r
 coef(fit_selected)
 ```
 
@@ -1232,7 +1232,7 @@ $$
 When using this metric on the training data, it will have the same issues as RSS did for ordinary linear regression, that is, it will only go down.
 
 
-```r
+``` r
 # training misclassification rate
 mean(ifelse(predict(fit_caps) > 0, "spam", "nonspam") != spam_trn$type)
 ```
@@ -1241,7 +1241,7 @@ mean(ifelse(predict(fit_caps) > 0, "spam", "nonspam") != spam_trn$type)
 ## [1] 0.339
 ```
 
-```r
+``` r
 mean(ifelse(predict(fit_selected) > 0, "spam", "nonspam") != spam_trn$type)
 ```
 
@@ -1249,7 +1249,7 @@ mean(ifelse(predict(fit_selected) > 0, "spam", "nonspam") != spam_trn$type)
 ## [1] 0.224
 ```
 
-```r
+``` r
 mean(ifelse(predict(fit_additive) > 0, "spam", "nonspam") != spam_trn$type)
 ```
 
@@ -1257,7 +1257,7 @@ mean(ifelse(predict(fit_additive) > 0, "spam", "nonspam") != spam_trn$type)
 ## [1] 0.066
 ```
 
-```r
+``` r
 mean(ifelse(predict(fit_over) > 0, "spam", "nonspam") != spam_trn$type)
 ```
 
@@ -1280,7 +1280,7 @@ Essentially we'll repeat the following process 5 times:
 The 5-fold cross-validated misclassification rate will be the average of these misclassification rates. By only needing to refit the model 5 times, instead of $n$ times, we will save a lot of computation time.
 
 
-```r
+``` r
 library(boot)
 set.seed(1)
 cv.glm(spam_trn, fit_caps, K = 5)$delta[1]
@@ -1290,7 +1290,7 @@ cv.glm(spam_trn, fit_caps, K = 5)$delta[1]
 ## [1] 0.2166961
 ```
 
-```r
+``` r
 cv.glm(spam_trn, fit_selected, K = 5)$delta[1]
 ```
 
@@ -1298,7 +1298,7 @@ cv.glm(spam_trn, fit_selected, K = 5)$delta[1]
 ## [1] 0.1587043
 ```
 
-```r
+``` r
 cv.glm(spam_trn, fit_additive, K = 5)$delta[1]
 ```
 
@@ -1306,12 +1306,12 @@ cv.glm(spam_trn, fit_additive, K = 5)$delta[1]
 ## [1] 0.08684467
 ```
 
-```r
+``` r
 cv.glm(spam_trn, fit_over, K = 5)$delta[1]
 ```
 
 ```
-## [1] 0.146
+## [1] 0.153
 ```
  
 Note that we're suppressing warnings again here. (Now there would be a lot more, since were fitting a total of 20 models.)
@@ -1327,7 +1327,7 @@ To quickly summarize how well this classifier works, we'll create a confusion ma
 It further breaks down the classification errors into false positives and false negatives.
 
 
-```r
+``` r
 make_conf_mat = function(predicted, actual) {
   table(predicted = predicted, actual = actual)
 }
@@ -1336,7 +1336,7 @@ make_conf_mat = function(predicted, actual) {
 Let's explicitly store the predicted values of our classifier on the test dataset.
 
 
-```r
+``` r
 spam_tst_pred = ifelse(predict(fit_additive, spam_tst) > 0, 
                        "spam", 
                        "nonspam")
@@ -1353,7 +1353,7 @@ $$
 Now we'll use these predictions to create a confusion matrix.
 
 
-```r
+``` r
 (conf_mat_50 = make_conf_mat(predicted = spam_tst_pred, actual = spam_tst$type))
 ```
 
@@ -1369,7 +1369,7 @@ $$
 $$
 
 
-```r
+``` r
 table(spam_tst$type) / nrow(spam_tst)
 ```
 
@@ -1384,7 +1384,7 @@ First, note that to be a reasonable classifier, it needs to outperform the obvio
 Next, we can see that using the classifier created from `fit_additive`, only a total of $127 + 157 = 284$ from the total of 3601 emails in the test set are misclassified. Overall, the accuracy in the test set it
 
 
-```r
+``` r
 mean(spam_tst_pred == spam_tst$type)
 ```
 
@@ -1395,7 +1395,7 @@ mean(spam_tst_pred == spam_tst$type)
 In other words, the test misclassification is
 
 
-```r
+``` r
 mean(spam_tst_pred != spam_tst$type)
 ```
 
@@ -1418,7 +1418,7 @@ $$
 Here we have an `R` function to calculate the sensitivity based on the confusion matrix. Note that this function is good for illustrative purposes, but is easily broken. (Think about what happens if there are no "positives" predicted.)
 
 
-```r
+``` r
 get_sens = function(conf_mat) {
   conf_mat[2, 2] / sum(conf_mat[, 2])
 }
@@ -1431,7 +1431,7 @@ $$
 $$
 
 
-```r
+``` r
 get_spec =  function(conf_mat) {
   conf_mat[1, 1] / sum(conf_mat[, 1])
 }
@@ -1440,7 +1440,7 @@ get_spec =  function(conf_mat) {
 We calculate both based on the confusion matrix we had created for our classifier. 
 
 
-```r
+``` r
 get_sens(conf_mat_50)
 ```
 
@@ -1448,7 +1448,7 @@ get_sens(conf_mat_50)
 ## [1] 0.8892025
 ```
 
-```r
+``` r
 get_spec(conf_mat_50)
 ```
 
@@ -1471,7 +1471,7 @@ Additionally, if we change the cutoff to improve sensitivity, we'll decrease spe
 First let's see what happens when we lower the cutoff from $0.5$ to $0.1$ to create a new classifier, and thus new predictions.
 
 
-```r
+``` r
 spam_tst_pred_10 = ifelse(predict(fit_additive, spam_tst, type = "response") > 0.1, 
                           "spam", 
                           "nonspam")
@@ -1480,7 +1480,7 @@ spam_tst_pred_10 = ifelse(predict(fit_additive, spam_tst, type = "response") > 0
 This is essentially *decreasing* the threshold for an email to be labeled as spam, so far *more* emails will be labeled as spam. We see that in the following confusion matrix.
 
 
-```r
+``` r
 (conf_mat_10 = make_conf_mat(predicted = spam_tst_pred_10, actual = spam_tst$type))
 ```
 
@@ -1494,7 +1494,7 @@ This is essentially *decreasing* the threshold for an email to be labeled as spa
 Unfortunately, while this does greatly reduce false negatives, false positives have almost quadrupled. We see this reflected in the sensitivity and specificity.
 
 
-```r
+``` r
 get_sens(conf_mat_10)
 ```
 
@@ -1502,7 +1502,7 @@ get_sens(conf_mat_10)
 ## [1] 0.9795342
 ```
 
-```r
+``` r
 get_spec(conf_mat_10)
 ```
 
@@ -1513,7 +1513,7 @@ get_spec(conf_mat_10)
 This classifier, using $0.1$ instead of $0.5$ has a higher sensitivity, but a much lower specificity. Clearly, we should have moved the cutoff in the other direction. Let's try $0.9$.
 
 
-```r
+``` r
 spam_tst_pred_90 = ifelse(predict(fit_additive, spam_tst, type = "response") > 0.9, 
                           "spam", 
                           "nonspam")
@@ -1522,7 +1522,7 @@ spam_tst_pred_90 = ifelse(predict(fit_additive, spam_tst, type = "response") > 0
 This is essentially *increasing* the threshold for an email to be labeled as spam, so far *fewer* emails will be labeled as spam. Again, we see that in the following confusion matrix.
 
 
-```r
+``` r
 (conf_mat_90 = make_conf_mat(predicted = spam_tst_pred_90, actual = spam_tst$type))
 ```
 
@@ -1536,7 +1536,7 @@ This is essentially *increasing* the threshold for an email to be labeled as spa
 This is the result we're looking for. We have far fewer false positives. While sensitivity is greatly reduced, specificity has gone up.
 
 
-```r
+``` r
 get_sens(conf_mat_90)
 ```
 
@@ -1544,7 +1544,7 @@ get_sens(conf_mat_90)
 ## [1] 0.6210303
 ```
 
-```r
+``` r
 get_spec(conf_mat_90)
 ```
 
@@ -1564,4 +1564,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`logistic.Rmd`](logistic.Rmd){target="_blank"}
 
-The file was created using `R` version `4.3.2`.
+The file was created using `R` version `4.4.1`.

@@ -20,7 +20,7 @@ So far in each of our analyses, we have only used numeric variables as predictor
 For this chapter, we will briefly use the built-in dataset `mtcars` before returning to our `autompg` dataset that we created in the last chapter. The `mtcars` dataset is somewhat smaller, so we'll quickly take a look at the entire dataset.
 
 
-```r
+``` r
 mtcars
 ```
 
@@ -69,7 +69,7 @@ We will be interested in three of the variables: `mpg `, `hp`, and `am`.
 As we often do, we will start by plotting the data. We are interested in `mpg` as the response variable, and `hp` as a predictor.
 
 
-```r
+``` r
 plot(mpg ~ hp, data = mtcars, cex = 2)
 ```
 
@@ -80,7 +80,7 @@ plot(mpg ~ hp, data = mtcars, cex = 2)
 Since we are also interested in the transmission type, we could also label the points accordingly.
 
 
-```r
+``` r
 plot(mpg ~ hp, data = mtcars, col = am + 1, pch = am + 1, cex = 2)
 legend("topright", c("Automatic", "Manual"), col = c(1, 2), pch = c(1, 2))
 ```
@@ -100,14 +100,14 @@ Y = \beta_0 + \beta_1 x_1 + \epsilon,
 where $Y$ is `mpg` and $x_1$ is `hp`. For notational brevity, we drop the index $i$ for observations.
 
 
-```r
+``` r
 mpg_hp_slr = lm(mpg ~ hp, data = mtcars)
 ```
 
 We then re-plot the data and add the fitted line to the plot.
 
 
-```r
+``` r
 plot(mpg ~ hp, data = mtcars, col = am + 1, pch = am + 1, cex = 2)
 abline(mpg_hp_slr, lwd = 3, col = "grey")
 legend("topright", c("Automatic", "Manual"), col = c(1, 2), pch = c(1, 2))
@@ -142,14 +142,14 @@ First, note that `am` is already a dummy variable, since it uses the values `0` 
 So, to fit the above model, we do so like any other multiple regression model we have seen before.
 
 
-```r
+``` r
 mpg_hp_add = lm(mpg ~ hp + am, data = mtcars)
 ```
 
 Briefly checking the output, we see that `R` has estimated the three $\beta$ parameters.
 
 
-```r
+``` r
 mpg_hp_add
 ```
 
@@ -188,7 +188,7 @@ We'll now calculate the estimated slope and intercept of these two models so tha
 We can then combine these to calculate the estimated slope and intercepts.
 
 
-```r
+``` r
 int_auto = coef(mpg_hp_add)[1]
 int_manu = coef(mpg_hp_add)[1] + coef(mpg_hp_add)[3]
 
@@ -199,7 +199,7 @@ slope_manu = coef(mpg_hp_add)[2]
 Re-plotting the data, we use these slopes and intercepts to add the "two" fitted models to the plot.
 
 
-```r
+``` r
 plot(mpg ~ hp, data = mtcars, col = am + 1, pch = am + 1, cex = 2)
 abline(int_auto, slope_auto, col = 1, lty = 1, lwd = 2) # add line for auto
 abline(int_manu, slope_manu, col = 2, lty = 2, lwd = 2) # add line for manual
@@ -223,7 +223,7 @@ This is nothing new. Again, the math is the same as the multiple regression anal
 To obtain the test statistic and p-value for the $t$-test, we would use
 
 
-```r
+``` r
 summary(mpg_hp_add)$coefficients["am",]
 ```
 
@@ -235,7 +235,7 @@ summary(mpg_hp_add)$coefficients["am",]
 To do the same for the $F$ test, we would use
 
 
-```r
+``` r
 anova(mpg_hp_slr, mpg_hp_add)
 ```
 
@@ -276,7 +276,7 @@ Here we restricted ourselves to a single numerical predictor $x_1$ and one dummy
 To remove the "same slope" restriction, we will now discuss **interaction**. To illustrate this concept, we will return to the `autompg` dataset we created in the last chapter, with a few more modifications.
 
 
-```r
+``` r
 # read data frame from the web
 autompg = read.table(
   "http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data",
@@ -307,7 +307,7 @@ autompg$cyl = as.factor(autompg$cyl)
 ```
 
 
-```r
+``` r
 str(autompg)
 ```
 
@@ -349,7 +349,7 @@ x_2 =
 We will fit this model, extract the slope and intercept for the "two lines," plot the data and add the lines.
 
 
-```r
+``` r
 mpg_disp_add = lm(mpg ~ disp + domestic, data = autompg)
 
 int_for = coef(mpg_disp_add)[1]
@@ -404,7 +404,7 @@ How do we fit this model in `R`? There are a number of ways.
 One method would be to simply create a new variable, then fit a model like any other.
 
 
-```r
+``` r
 autompg$x3 = autompg$disp * autompg$domestic # THIS CODE NOT RUN!
 do_not_do_this = lm(mpg ~ disp + domestic + x3, data = autompg) # THIS CODE NOT RUN!
 ```
@@ -412,21 +412,21 @@ do_not_do_this = lm(mpg ~ disp + domestic + x3, data = autompg) # THIS CODE NOT 
 You should only do this as a last resort. We greatly prefer not to have to modify our data simply to fit a model. Instead, we can tell `R` we would like to use the existing data with an interaction term, which it will create automatically when we use the `:` operator.
 
 
-```r
+``` r
 mpg_disp_int = lm(mpg ~ disp + domestic + disp:domestic, data = autompg)
 ```
 
 An alternative method, which will fit the exact same model as above would be to use the `*` operator. This method automatically creates the interaction term, as well as any "lower order terms," which in this case are the first order terms for `disp` and `domestic`
 
 
-```r
+``` r
 mpg_disp_int2 = lm(mpg ~ disp * domestic, data = autompg)
 ```
 
 We can quickly verify that these are doing the same thing.
 
 
-```r
+``` r
 coef(mpg_disp_int)
 ```
 
@@ -435,7 +435,7 @@ coef(mpg_disp_int)
 ##    46.0548423    -0.1569239   -12.5754714     0.1025184
 ```
 
-```r
+``` r
 coef(mpg_disp_int2)
 ```
 
@@ -447,7 +447,7 @@ coef(mpg_disp_int2)
 We see that both the variables, and their coefficient estimates are indeed the same for both models.
 
 
-```r
+``` r
 summary(mpg_disp_int)
 ```
 
@@ -485,7 +485,7 @@ In this case, testing for $\beta_3 = 0$ is testing for two lines with parallel s
 We could also use an ANOVA $F$-test. The additive model without interaction is our null model, and the interaction model is the alternative.
 
 
-```r
+``` r
 anova(mpg_disp_add, mpg_disp_int)
 ```
 
@@ -494,9 +494,9 @@ anova(mpg_disp_add, mpg_disp_int)
 ## 
 ## Model 1: mpg ~ disp + domestic
 ## Model 2: mpg ~ disp + domestic + disp:domestic
-##   Res.Df    RSS Df Sum of Sq      F    Pr(>F)    
-## 1    380 7714.0                                  
-## 2    379 7032.6  1    681.36 36.719 3.294e-09 ***
+##   Res.Df    RSS Df Sum of Sq     F    Pr(>F)    
+## 1    380 7714.0                                 
+## 2    379 7032.6  1    681.36 36.72 3.294e-09 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
@@ -504,7 +504,7 @@ anova(mpg_disp_add, mpg_disp_int)
 Again we see this test has the same p-value as the $t$-test. Also the p-value is extremely low, so between the two, we choose the interaction model.
 
 
-```r
+``` r
 int_for = coef(mpg_disp_int)[1]
 int_dom = coef(mpg_disp_int)[1] + coef(mpg_disp_int)[3]
 
@@ -515,7 +515,7 @@ slope_dom = coef(mpg_disp_int)[2] + coef(mpg_disp_int)[4]
 Here we again calculate the slope and intercepts for the two lines for use in plotting.
 
 
-```r
+``` r
 plot(mpg ~ disp, data = autompg, col = domestic + 1, pch = domestic + 1)
 abline(int_for, slope_for, col = 1, lty = 1, lwd = 2) # line for foreign cars
 abline(int_dom, slope_dom, col = 2, lty = 2, lwd = 2) # line for domestic cars
@@ -553,7 +553,7 @@ So, for a one unit increase in $x_1$ (`disp`), the mean of $Y$ (`mpg`) increases
 Since we're now working in three dimensions, this model can't be easily justified via visualizations like the previous example. Instead, we will have to rely on a test.
 
 
-```r
+``` r
 mpg_disp_add_hp = lm(mpg ~ disp + hp, data = autompg)
 mpg_disp_int_hp = lm(mpg ~ disp * hp, data = autompg)
 summary(mpg_disp_int_hp)
@@ -591,7 +591,7 @@ H_0: \beta_3 = 0.
 Again, we see a very low p-value so we reject the null (additive model) in favor of the interaction model. Again, there is an equivalent $F$-test.
 
 
-```r
+``` r
 anova(mpg_disp_add_hp, mpg_disp_int_hp)
 ```
 
@@ -610,7 +610,7 @@ anova(mpg_disp_add_hp, mpg_disp_int_hp)
 We can take a closer look at the coefficients of our fitted interaction model.
 
 
-```r
+``` r
 coef(mpg_disp_int_hp)
 ```
 
@@ -659,7 +659,7 @@ So far in this chapter, we have limited our use of categorical variables to bina
 We will now discuss **factor** variables, which is a special way that `R` deals with categorical variables. With factor variables, a human user can simply think about the categories of a variable, and `R` will take care of the necessary dummy variables without any 0/1 assignment being done by the user.
 
 
-```r
+``` r
 is.factor(autompg$domestic)
 ```
 
@@ -670,7 +670,7 @@ is.factor(autompg$domestic)
 Earlier when we used the `domestic` variable, it was **not** a factor variable. It was simply a numerical variable that only took two possible values, `1` for domestic, and `0` for foreign. Let's create a new variable `origin` that stores the same information, but in a different way.
 
 
-```r
+``` r
 autompg$origin[autompg$domestic == 1] = "domestic"
 autompg$origin[autompg$domestic == 0] = "foreign"
 head(autompg$origin)
@@ -683,7 +683,7 @@ head(autompg$origin)
 Now the `origin` variable stores `"domestic"` for domestic cars and `"foreign"` for foreign cars.
 
 
-```r
+``` r
 is.factor(autompg$origin)
 ```
 
@@ -694,14 +694,14 @@ is.factor(autompg$origin)
 However, this is simply a vector of character values. A vector of car models is a character variable in `R`. A vector of Vehicle Identification Numbers (VINs) is a character variable as well. But those don't represent a short list of levels that might influence a response variable. We will want to **coerce** this origin variable to be something more: a factor variable.
 
 
-```r
+``` r
 autompg$origin = as.factor(autompg$origin)
 ```
 
 Now when we check the structure of the `autompg` dataset, we see that `origin` is a factor variable.
 
 
-```r
+``` r
 str(autompg)
 ```
 
@@ -721,7 +721,7 @@ str(autompg)
 Factor variables have **levels** which are the possible values (categories) that the variable may take, in this case foreign or domestic.
 
 
-```r
+``` r
 levels(autompg$origin)
 ```
 
@@ -742,7 +742,7 @@ where
 - $x_2$ is `domestic`, a dummy variable where `1` indicates a domestic car.
 
 
-```r
+``` r
 (mod_dummy = lm(mpg ~ disp * domestic, data = autompg))
 ```
 
@@ -767,7 +767,7 @@ is the estimated average `mpg` for a **domestic** car with 0 `disp`.
 Now let's try to do the same, but using our new factor variable.
 
 
-```r
+``` r
 (mod_factor = lm(mpg ~ disp * origin, data = autompg))
 ```
 
@@ -814,7 +814,7 @@ So the two models have different estimated coefficients, but due to the differen
 Let's now consider a factor variable with more than two levels. In this dataset, `cyl` is an example.
 
 
-```r
+``` r
 is.factor(autompg$cyl)
 ```
 
@@ -822,7 +822,7 @@ is.factor(autompg$cyl)
 ## [1] TRUE
 ```
 
-```r
+``` r
 levels(autompg$cyl)
 ```
 
@@ -863,7 +863,7 @@ v_3 =
 Now, let's fit an additive model in `R`, using `mpg` as the response, and `disp` and `cyl` as predictors. This should be a model that uses "three regression lines" to model `mpg`, one for each of the possible `cyl` levels. They will all have the same slope (since it is an additive model), but each will have its own intercept.
 
 
-```r
+``` r
 (mpg_disp_add_cyl = lm(mpg ~ disp + cyl, data = autompg))
 ```
 
@@ -906,7 +906,7 @@ So because 4 cylinder is the reference level, $\beta_0$ is specific to 4 cylinde
 As we have done before, we can extract these intercepts and slopes for the three lines, and plot them accordingly.
 
 
-```r
+``` r
 int_4cyl = coef(mpg_disp_add_cyl)[1]
 int_6cyl = coef(mpg_disp_add_cyl)[1] + coef(mpg_disp_add_cyl)[3]
 int_8cyl = coef(mpg_disp_add_cyl)[1] + coef(mpg_disp_add_cyl)[4]
@@ -937,7 +937,7 @@ The odd result here is that we're estimating that 8 cylinder cars have better fu
 To attempt to fix this, we will try using an interaction model, that is, instead of simply three intercepts and one slope, we will allow for three slopes. Again, we'll let `R` take the wheel (no pun intended), then figure out what model it has applied.
 
 
-```r
+``` r
 (mpg_disp_int_cyl = lm(mpg ~ disp * cyl, data = autompg))
 ```
 
@@ -951,7 +951,7 @@ To attempt to fix this, we will try using an interaction model, that is, instead
 ##    43.59052     -0.13069    -13.20026    -20.85706      0.08299      0.10817
 ```
 
-```r
+``` r
 # could also use mpg ~ disp + cyl + disp:cyl
 ```
 
@@ -981,7 +981,7 @@ Now, similarly $\gamma_2$ and $\gamma_3$ change the slopes for 6 and 8 cylinder 
 Once again, we extract the coefficients and plot the results.
 
 
-```r
+``` r
 int_4cyl = coef(mpg_disp_int_cyl)[1]
 int_6cyl = coef(mpg_disp_int_cyl)[1] + coef(mpg_disp_int_cyl)[3]
 int_8cyl = coef(mpg_disp_int_cyl)[1] + coef(mpg_disp_int_cyl)[4]
@@ -1022,7 +1022,7 @@ Y = \beta_0 + \beta_1 x + \beta_2 v_2 + \beta_3 v_3 + \epsilon.
 Again, this is a difference of two parameters, thus no $t$-test will be useful.
 
 
-```r
+``` r
 anova(mpg_disp_add_cyl, mpg_disp_int_cyl)
 ```
 
@@ -1049,7 +1049,7 @@ Recapping a bit:
     
     
 
-```r
+``` r
 length(coef(mpg_disp_int_cyl)) - length(coef(mpg_disp_add_cyl))
 ```
 
@@ -1060,7 +1060,7 @@ length(coef(mpg_disp_int_cyl)) - length(coef(mpg_disp_add_cyl))
 We see there is a difference of two parameters, which is also displayed in the resulting ANOVA table from `R`. Notice that the following two values also appear on the ANOVA table.
 
 
-```r
+``` r
 nrow(autompg) - length(coef(mpg_disp_int_cyl))
 ```
 
@@ -1068,7 +1068,7 @@ nrow(autompg) - length(coef(mpg_disp_int_cyl))
 ## [1] 377
 ```
 
-```r
+``` r
 nrow(autompg) - length(coef(mpg_disp_add_cyl))
 ```
 
@@ -1081,7 +1081,7 @@ nrow(autompg) - length(coef(mpg_disp_add_cyl))
 So far we have been simply letting `R` decide how to create the dummy variables, and thus `R` has been deciding the parameterization of the models. To illustrate the ability to use alternative parameterizations, we will recreate the data, but directly creating the dummy variables ourselves.
 
 
-```r
+``` r
 new_param_data = data.frame(
   y = autompg$mpg,
   x = autompg$disp,
@@ -1125,7 +1125,7 @@ Now,
 First let's try to fit an additive model using `x` as well as the three dummy variables.
 
 
-```r
+``` r
 lm(y ~ x + v1 + v2 + v3, data = new_param_data)
 ```
 
@@ -1150,7 +1150,7 @@ which means that $\boldsymbol{1}$, $v_1$, $v_2$, and $v_3$ are linearly dependen
 If we remove the intercept, then we can directly obtain all "three intercepts" without a reference level.
 
 
-```r
+``` r
 lm(y ~ 0 + x + v1 + v2 + v3, data = new_param_data)
 ```
 
@@ -1179,7 +1179,7 @@ Thus we have:
 We could also do something similar with the interaction model, and give each line an intercept and slope, without the need for a reference level.
 
 
-```r
+``` r
 lm(y ~ 0 + v1 + v2 + v3 + x:v1 + x:v2 + x:v3, data = new_param_data)
 ```
 
@@ -1204,7 +1204,7 @@ Y = \mu_1 v_1 + \mu_2 v_2 + \mu_3 v_3 + \beta_1 x v_1 + \beta_2 x v_2 + \beta_3 
 Using the original data, we have (at least) three equivalent ways to specify the interaction model with `R`.
 
 
-```r
+``` r
 lm(mpg ~ disp * cyl, data = autompg)
 ```
 
@@ -1218,7 +1218,7 @@ lm(mpg ~ disp * cyl, data = autompg)
 ##    43.59052     -0.13069    -13.20026    -20.85706      0.08299      0.10817
 ```
 
-```r
+``` r
 lm(mpg ~ 0 + cyl + disp : cyl, data = autompg)
 ```
 
@@ -1232,7 +1232,7 @@ lm(mpg ~ 0 + cyl + disp : cyl, data = autompg)
 ##  43.59052   30.39026   22.73346   -0.13069   -0.04770   -0.02252
 ```
 
-```r
+``` r
 lm(mpg ~ 0 + disp + cyl + disp : cyl, data = autompg)
 ```
 
@@ -1251,7 +1251,7 @@ They all fit the same model, importantly each using six parameters, but the coef
 Use `?all.equal` to learn about the `all.equal()` function, and think about how the following code verifies that the residuals of the two models are the same.
 
 
-```r
+``` r
 all.equal(fitted(lm(mpg ~ disp * cyl, data = autompg)), 
           fitted(lm(mpg ~ 0 + cyl + disp : cyl, data = autompg)))
 ```
@@ -1332,7 +1332,7 @@ It is so flexible, it is becoming hard to interpret!
 Let's fit this three-way interaction model in `R`.
 
 
-```r
+``` r
 big_model = lm(mpg ~ disp * hp * domestic, data = autompg)
 summary(big_model)
 ```
@@ -1378,7 +1378,7 @@ So,
 We fit the null model in `R` as `two_way_int_mod`, then use `anova()` to perform an $F$-test as usual.
 
 
-```r
+``` r
 two_way_int_mod = lm(mpg ~ disp * hp + disp * domestic + hp * domestic, data = autompg)
 #two_way_int_mod = lm(mpg ~ (disp + hp + domestic) ^ 2, data = autompg)
 anova(two_way_int_mod, big_model)
@@ -1399,7 +1399,7 @@ We see the p-value is somewhat large, so we would fail to reject. We prefer the 
 A quick note here: the full model does still "fit better." Notice that it has a smaller RMSE than the null model, which means the full model makes smaller (squared) errors on average.
 
 
-```r
+``` r
 mean(resid(big_model) ^ 2)
 ```
 
@@ -1407,7 +1407,7 @@ mean(resid(big_model) ^ 2)
 ## [1] 14.74053
 ```
 
-```r
+``` r
 mean(resid(two_way_int_mod) ^ 2)
 ```
 
@@ -1431,7 +1431,7 @@ Remember we already chose $\beta_7 = 0$, so,
 We fit the null model in `R` as `additive_mod`, then use `anova()` to perform an $F$-test as usual.
 
 
-```r
+``` r
 additive_mod = lm(mpg ~ disp + hp + domestic, data = autompg)
 anova(additive_mod, two_way_int_mod)
 ```
@@ -1460,4 +1460,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`cat-int.Rmd`](cat-int.Rmd){target="_blank"}
 
-The file was created using `R` version `4.3.2`.
+The file was created using `R` version `4.4.1`.

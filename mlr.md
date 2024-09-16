@@ -25,7 +25,7 @@ where $\epsilon_i \sim N(0, \sigma^2)$.
 However, it is rarely the case that a dataset will have a single predictor variable. It is also rarely the case that a response variable will only depend on a single variable. So in this chapter, we will extend our current linear model to allow a response to depend on *multiple* predictors.
 
 
-```r
+``` r
 # read the data from the web
 autompg = read.table(
   "http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data",
@@ -109,7 +109,7 @@ n \beta_0 + \beta_1 \sum_{i = 1}^{n} x_{i1} + \beta_2 \sum_{i = 1}^{n} x_{i2} &=
 We now have three equations and three variables, which we could solve, or we could simply let `R` solve for us.
 
 
-```r
+``` r
 mpg_model = lm(mpg ~ wt + year, data = autompg)
 coef(mpg_model)
 ```
@@ -248,7 +248,7 @@ We can then solve this expression by multiplying both sides by the inverse of $X
 To verify that this is what `R` has done for us in the case of two predictors, we create an $X$ matrix. Note that the first column is all 1s, and the remaining columns contain the data.
 
 
-```r
+``` r
 n = nrow(autompg)
 p = length(coef(mpg_model))
 X = cbind(rep(1, n), autompg$wt, autompg$year)
@@ -264,7 +264,7 @@ y = autompg$mpg
 ## [3,]   0.761401955
 ```
 
-```r
+``` r
 coef(mpg_model)
 ```
 
@@ -330,7 +330,7 @@ s_e = \sqrt{\frac{\sum_{i=1}^n (y_i - \hat{y}_i)^2}{n - p}}.
 In `R`, we could directly access $s_e$ for a fitted model, as we have seen before.
 
 
-```r
+``` r
 summary(mpg_model)$sigma
 ```
 
@@ -341,7 +341,7 @@ summary(mpg_model)$sigma
 And we can now verify that our math above is indeed calculating the same quantities.
 
 
-```r
+``` r
 y_hat = X %*% solve(t(X) %*% X) %*% t(X) %*% y
 e     = y - y_hat
 sqrt(t(e) %*% e / (n - p))
@@ -352,7 +352,7 @@ sqrt(t(e) %*% e / (n - p))
 ## [1,] 3.431367
 ```
 
-```r
+``` r
 sqrt(sum((y - y_hat) ^ 2) / (n - p))
 ```
 
@@ -365,7 +365,7 @@ sqrt(sum((y - y_hat) ^ 2) / (n - p))
 As we can see in the output below, the results of calling `summary()` are similar to SLR, but there are some differences, most obviously a new row for the added predictor variable.
 
 
-```r
+``` r
 summary(mpg_model)
 ```
 
@@ -530,7 +530,7 @@ H_0: \beta_1 = 0 \quad \text{vs} \quad H_1: \beta_1 \neq 0
 can be found in the `summary()` output, in particular:
 
 
-```r
+``` r
 summary(mpg_model)$coef
 ```
 
@@ -573,7 +573,7 @@ and the sampling distribution of $\hat{\beta}_j$ is Normal, then we can easily c
 We can find these in `R` using the same method as before. Now there will simply be additional rows for the additional $\beta$.
 
 
-```r
+``` r
 confint(mpg_model, level = 0.99)
 ```
 
@@ -631,7 +631,7 @@ Putting it all together, we obtain a confidence interval for the mean response.
 The math has changed a bit, but the process in `R` remains almost identical. Here, we create a data frame for two additional cars. One car that weighs 3500 pounds produced in 1976, as well as a second car that weighs 5000 pounds which was produced in 1981.
 
 
-```r
+``` r
 new_cars = data.frame(wt = c(3500, 5000), year = c(76, 81))
 new_cars
 ```
@@ -645,7 +645,7 @@ new_cars
 We can then use the `predict()` function with `interval = "confidence"` to obtain intervals for the mean fuel efficiency for both new cars. Again, it is important to make the data passed to `newdata` a data frame, so that `R` knows which values are for which variables.
 
 
-```r
+``` r
 predict(mpg_model, newdata = new_cars, interval = "confidence", level = 0.99)
 ```
 
@@ -660,7 +660,7 @@ predict(mpg_model, newdata = new_cars, interval = "confidence", level = 0.99)
 A word of caution here: one of these estimates is good while one is suspect.
 
 
-```r
+``` r
 new_cars$wt
 ```
 
@@ -668,7 +668,7 @@ new_cars$wt
 ## [1] 3500 5000
 ```
 
-```r
+``` r
 range(autompg$wt)
 ```
 
@@ -679,7 +679,7 @@ range(autompg$wt)
 Note that both of the weights of the new cars are within the range of observed values.
 
 
-```r
+``` r
 new_cars$year
 ```
 
@@ -687,7 +687,7 @@ new_cars$year
 ## [1] 76 81
 ```
 
-```r
+``` r
 range(autompg$year)
 ```
 
@@ -698,7 +698,7 @@ range(autompg$year)
 As are the years of each of the new cars.
 
 
-```r
+``` r
 plot(year ~ wt, data = autompg, pch = 20, col = "dodgerblue", cex = 1.5)
 points(new_cars, col = "darkorange", cex = 3, pch = "X")
 ```
@@ -712,7 +712,7 @@ However, we have to consider weight and year together now. And based on the abov
 Shifting gears back to the new data pair that can be reasonably estimated, we do a quick verification of some of the mathematics in `R`.
 
 
-```r
+``` r
 x0 = c(1, 3500, 76)
 x0 %*% beta_hat
 ```
@@ -755,7 +755,7 @@ x_{0} = \begin{bmatrix}
 Also note that, using a particular value for $x_0$, we can essentially extract certain $\hat{\beta}_j$ values.
 
 
-```r
+``` r
 beta_hat
 ```
 
@@ -766,7 +766,7 @@ beta_hat
 ## [3,]   0.761401955
 ```
 
-```r
+``` r
 x0 = c(0, 0, 1)
 x0 %*% beta_hat
 ```
@@ -811,7 +811,7 @@ Then we arrive at our updated prediction interval for MLR.
 \]
 
 
-```r
+``` r
 new_cars
 ```
 
@@ -821,7 +821,7 @@ new_cars
 ## 2 5000   81
 ```
 
-```r
+``` r
 predict(mpg_model, newdata = new_cars, interval = "prediction", level = 0.99)
 ```
 
@@ -848,7 +848,7 @@ That is,
 This means that we can still calculate $R^2$ in the same manner as before, which `R` continues to do automatically.
 
 
-```r
+``` r
 summary(mpg_model)$r.squared
 ```
 
@@ -924,7 +924,7 @@ In this case,
 That is, in the null model, we use neither of the predictors, whereas in the full (alternative) model, at least one of the predictors is useful.
 
 
-```r
+``` r
 null_mpg_model = lm(mpg ~ 1, data = autompg)
 full_mpg_model = lm(mpg ~ wt + year, data = autompg)
 anova(null_mpg_model, full_mpg_model)
@@ -945,7 +945,7 @@ anova(null_mpg_model, full_mpg_model)
 First, notice that `R` does not display the results in the same manner as the table above. More important than the layout of the table are its contents. We see that the value of the $F$ statistic is 815.55, and the p-value is extremely low, so we reject the null hypothesis at any reasonable $\alpha$ and say that the regression is significant. At least one of `wt` or `year` has a useful linear relationship with `mpg`.
 
 
-```r
+``` r
 summary(mpg_model)
 ```
 
@@ -978,7 +978,7 @@ Also, note that none of the individual $t$-tests are equivalent to the $F$-test 
 We can also verify the sums of squares and degrees of freedom directly in `R`. You should match these to the table from `R` and use this to match `R`'s output to the written table above. 
 
 
-```r
+``` r
 # SSReg
 sum((fitted(full_mpg_model) - fitted(null_mpg_model)) ^ 2)
 ```
@@ -987,7 +987,7 @@ sum((fitted(full_mpg_model) - fitted(null_mpg_model)) ^ 2)
 ## [1] 19205.03
 ```
 
-```r
+``` r
 # SSE
 sum(resid(full_mpg_model) ^ 2)
 ```
@@ -996,7 +996,7 @@ sum(resid(full_mpg_model) ^ 2)
 ## [1] 4556.646
 ```
 
-```r
+``` r
 # SST
 sum(resid(null_mpg_model) ^ 2)
 ```
@@ -1005,7 +1005,7 @@ sum(resid(null_mpg_model) ^ 2)
 ## [1] 23761.67
 ```
 
-```r
+``` r
 # Degrees of Freedom: Regression
 length(coef(full_mpg_model)) - length(coef(null_mpg_model))
 ```
@@ -1014,7 +1014,7 @@ length(coef(full_mpg_model)) - length(coef(null_mpg_model))
 ## [1] 2
 ```
 
-```r
+``` r
 # Degrees of Freedom: Error
 length(resid(full_mpg_model)) - length(coef(full_mpg_model))
 ```
@@ -1023,7 +1023,7 @@ length(resid(full_mpg_model)) - length(coef(full_mpg_model))
 ## [1] 387
 ```
 
-```r
+``` r
 # Degrees of Freedom: Total
 length(resid(null_mpg_model)) - length(coef(null_mpg_model))
 ```
@@ -1077,7 +1077,7 @@ Notice that the row for "Diff" compares the sum of the squared differences of th
 For example, the `autompg` dataset has a number of additional variables that we have yet to use.
 
 
-```r
+``` r
 names(autompg)
 ```
 
@@ -1101,7 +1101,7 @@ The alternative is simply that at least one of the $\beta_{j}$ from the null is 
 To perform this test in `R` we first define both models, then give them to the `anova()` commands.
 
 
-```r
+``` r
 null_mpg_model = lm(mpg ~ wt + year, data = autompg)
 #full_mpg_model = lm(mpg ~ wt + year + cyl + disp + hp + acc, data = autompg)
 full_mpg_model = lm(mpg ~ ., data = autompg)
@@ -1125,7 +1125,7 @@ Here we see that the value of the $F$ statistic is 0.553, and the p-value is ver
 Again, we verify the sums of squares and degrees of freedom directly in `R`. You should match these to the table from `R`, and use this to match `R`'s output to the written table above. 
 
 
-```r
+``` r
 # SSDiff
 sum((fitted(full_mpg_model) - fitted(null_mpg_model)) ^ 2)
 ```
@@ -1134,7 +1134,7 @@ sum((fitted(full_mpg_model) - fitted(null_mpg_model)) ^ 2)
 ## [1] 26.17981
 ```
 
-```r
+``` r
 # SSE (For Full)
 sum(resid(full_mpg_model) ^ 2)
 ```
@@ -1143,7 +1143,7 @@ sum(resid(full_mpg_model) ^ 2)
 ## [1] 4530.466
 ```
 
-```r
+``` r
 # SST (For Null)
 sum(resid(null_mpg_model) ^ 2)
 ```
@@ -1152,7 +1152,7 @@ sum(resid(null_mpg_model) ^ 2)
 ## [1] 4556.646
 ```
 
-```r
+``` r
 # Degrees of Freedom: Diff
 length(coef(full_mpg_model)) - length(coef(null_mpg_model))
 ```
@@ -1161,7 +1161,7 @@ length(coef(full_mpg_model)) - length(coef(null_mpg_model))
 ## [1] 4
 ```
 
-```r
+``` r
 # Degrees of Freedom: Full
 length(resid(full_mpg_model)) - length(coef(full_mpg_model))
 ```
@@ -1170,7 +1170,7 @@ length(resid(full_mpg_model)) - length(coef(full_mpg_model))
 ## [1] 383
 ```
 
-```r
+``` r
 # Degrees of Freedom: Null
 length(resid(null_mpg_model)) - length(coef(null_mpg_model))
 ```
@@ -1190,7 +1190,7 @@ Y_i = 5 + -2 x_{i1} + 6 x_{i2} + \epsilon_i, \qquad i = 1, 2, \ldots, n
 where $\epsilon_i \sim N(0, \sigma^2 = 16)$. Here we have two predictors, so $p = 3$.
 
 
-```r
+``` r
 set.seed(1337)
 n = 100 # sample size
 p = 3
@@ -1204,7 +1204,7 @@ sigma  = 4
 As is the norm with regression, the $x$ values are considered fixed and known quantities, so we will simulate those first, and they remain the same for the rest of the simulation study. Also note we create an `x0` which is all `1`, which we need to create our `X` matrix. If you look at the matrix formulation of regression, this unit vector of all `1`s is a "predictor" that puts the intercept into the model. We also calculate the `C` matrix for later use.
 
 
-```r
+``` r
 x0 = rep(1, n)
 x1 = sample(seq(1, 10, length = n))
 x2 = sample(seq(1, 10, length = n))
@@ -1215,7 +1215,7 @@ C = solve(t(X) %*% X)
 We then simulate the response according the model above. Lastly, we place the two predictors and response into a data frame. Note that we do **not** place `x0` in the data frame. This is a result of `R` adding an intercept by default.
 
 
-```r
+``` r
 eps      = rnorm(n, mean = 0, sd = sigma)
 y        = beta_0 + beta_1 * x1 + beta_2 * x2 + eps
 sim_data = data.frame(x1, x2, y)
@@ -1233,7 +1233,7 @@ We then calculate
 \]
 
 
-```r
+``` r
 (beta_hat = C %*% t(X) %*% y)
 ```
 
@@ -1247,7 +1247,7 @@ We then calculate
 Notice that these values are the same as the coefficients found using `lm()` in `R`.
 
 
-```r
+``` r
 coef(lm(y ~ x1 + x2, data = sim_data))
 ```
 
@@ -1259,7 +1259,7 @@ coef(lm(y ~ x1 + x2, data = sim_data))
 Also, these values are close to what we would expect.
 
 
-```r
+``` r
 c(beta_0, beta_1, beta_2)
 ```
 
@@ -1270,7 +1270,7 @@ c(beta_0, beta_1, beta_2)
 We then calculated the fitted values in order to calculate $s_e$, which we see is the same as the `sigma` which is returned by `summary()`.
 
 
-```r
+``` r
 y_hat = X %*% beta_hat
 (s_e = sqrt(sum((y - y_hat) ^ 2) / (n - p)))
 ```
@@ -1279,7 +1279,7 @@ y_hat = X %*% beta_hat
 ## [1] 4.294307
 ```
 
-```r
+``` r
 summary(lm(y ~ x1 + x2, data = sim_data))$sigma
 ```
 
@@ -1308,7 +1308,7 @@ In this case,
 Note that $C_{22}$ corresponds to the element in the **third** row and **third** column since $\beta_2$ is the **third** parameter in the model and because `R` is indexed starting at `1`. However, we index the $C$ matrix starting at `0` to match the diagonal elements to the corresponding $\beta_j$.
 
 
-```r
+``` r
 C[3, 3]
 ```
 
@@ -1316,7 +1316,7 @@ C[3, 3]
 ## [1] 0.00145343
 ```
 
-```r
+``` r
 C[2 + 1, 2 + 1]
 ```
 
@@ -1324,7 +1324,7 @@ C[2 + 1, 2 + 1]
 ## [1] 0.00145343
 ```
 
-```r
+``` r
 sigma ^ 2 * C[2 + 1, 2 + 1]
 ```
 
@@ -1335,7 +1335,7 @@ sigma ^ 2 * C[2 + 1, 2 + 1]
 We now perform the simulation a large number of times. Each time, we update the `y` variable in the data frame, leaving the `x` variables the same. We then fit a model, and store $\hat{\beta}_2$.
 
 
-```r
+``` r
 num_sims = 10000
 beta_hat_2 = rep(0, num_sims)
 for(i in 1:num_sims) {
@@ -1349,7 +1349,7 @@ for(i in 1:num_sims) {
 We then see that the mean of the simulated values is close to the true value of $\beta_2$.
 
 
-```r
+``` r
 mean(beta_hat_2)
 ```
 
@@ -1357,7 +1357,7 @@ mean(beta_hat_2)
 ## [1] 5.999723
 ```
 
-```r
+``` r
 beta_2
 ```
 
@@ -1372,7 +1372,7 @@ We also see that the variance of the simulated values is close to the true varia
 \]
 
 
-```r
+``` r
 var(beta_hat_2)
 ```
 
@@ -1380,7 +1380,7 @@ var(beta_hat_2)
 ## [1] 0.02343408
 ```
 
-```r
+``` r
 sigma ^ 2 * C[2 + 1, 2 + 1]
 ```
 
@@ -1391,7 +1391,7 @@ sigma ^ 2 * C[2 + 1, 2 + 1]
 The standard deviations found from the simulated data and the parent population are also very close.
 
 
-```r
+``` r
 sd(beta_hat_2)
 ```
 
@@ -1399,7 +1399,7 @@ sd(beta_hat_2)
 ## [1] 0.1530819
 ```
 
-```r
+``` r
 sqrt(sigma ^ 2 * C[2 + 1, 2 + 1])
 ```
 
@@ -1410,7 +1410,7 @@ sqrt(sigma ^ 2 * C[2 + 1, 2 + 1])
 Lastly, we plot a histogram of the *simulated values*, and overlay the *true distribution*.
 
 
-```r
+``` r
 hist(beta_hat_2, prob = TRUE, breaks = 20, 
      xlab = expression(hat(beta)[2]), main = "", border = "dodgerblue")
 curve(dnorm(x, mean = beta_2, sd = sqrt(sigma ^ 2 * C[2 + 1, 2 + 1])), 
@@ -1426,7 +1426,7 @@ This looks good! The simulation-based histogram appears to be Normal with mean 6
 One last check, we verify the $68 - 95 - 99.7$ rule.
 
 
-```r
+``` r
 sd_bh2 = sqrt(sigma ^ 2 * C[2 + 1, 2 + 1])
 # We expect these to be: 0.68, 0.95, 0.997
 mean(beta_2 - 1 * sd_bh2 < beta_hat_2 & beta_hat_2 < beta_2 + 1 * sd_bh2)
@@ -1436,7 +1436,7 @@ mean(beta_2 - 1 * sd_bh2 < beta_hat_2 & beta_hat_2 < beta_2 + 1 * sd_bh2)
 ## [1] 0.6807
 ```
 
-```r
+``` r
 mean(beta_2 - 2 * sd_bh2 < beta_hat_2 & beta_hat_2 < beta_2 + 2 * sd_bh2)
 ```
 
@@ -1444,7 +1444,7 @@ mean(beta_2 - 2 * sd_bh2 < beta_hat_2 & beta_hat_2 < beta_2 + 2 * sd_bh2)
 ## [1] 0.9529
 ```
 
-```r
+``` r
 mean(beta_2 - 3 * sd_bh2 < beta_hat_2 & beta_hat_2 < beta_2 + 3 * sd_bh2)
 ```
 
@@ -1458,4 +1458,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`mlr.Rmd`](mlr.Rmd){target="_blank"}
 
-The file was created using `R` version `4.3.2`.
+The file was created using `R` version `4.4.1`.

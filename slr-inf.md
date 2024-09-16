@@ -44,7 +44,7 @@ which we also called $\text{RSE}$, for "Residual Standard Error."
 When applied to the `cars` data, we obtained the following results:
 
 
-```r
+``` r
 stop_dist_model = lm(dist ~ speed, data = cars)
 summary(stop_dist_model)
 ```
@@ -73,7 +73,7 @@ summary(stop_dist_model)
 Last chapter, we only discussed the `Estimate`, `Residual standard error`, and `Multiple R-squared` values. In this chapter, we will discuss all of the information under `Coefficients` as well as `F-statistic`.
 
 
-```r
+``` r
 plot(dist ~ speed, data = cars,
      xlab = "Speed (in Miles Per Hour)",
      ylab = "Stopping Distance (in Feet)",
@@ -245,7 +245,7 @@ and
 First we need to decide ahead of time what our $x$ values will be for this simulation, since the $x$ values in SLR are also considered known quantities. The choice of $x$ values is arbitrary. Here we also set a seed for randomization, and calculate $S_{xx}$ which we will need going forward.
 
 
-```r
+``` r
 set.seed(42)
 sample_size = 100 # this is n
 x = seq(-1, 1, length = sample_size)
@@ -255,7 +255,7 @@ Sxx = sum((x - mean(x)) ^ 2)
 We also fix our parameter values.
 
 
-```r
+``` r
 beta_0 = 3
 beta_1 = 6
 sigma  = 2
@@ -264,7 +264,7 @@ sigma  = 2
 With this information, we know the sampling distributions should be:
 
 
-```r
+``` r
 (var_beta_1_hat = sigma ^ 2 / Sxx)
 ```
 
@@ -272,7 +272,7 @@ With this information, we know the sampling distributions should be:
 ## [1] 0.1176238
 ```
 
-```r
+``` r
 (var_beta_0_hat = sigma ^ 2 * (1 / sample_size + mean(x) ^ 2 / Sxx))
 ```
 
@@ -311,7 +311,7 @@ and
 We now simulate data from this model 10,000 times. Note this may not be the most `R` way of doing the simulation. We perform the simulation in this manner in an attempt at clarity. For example, we could have used the `sim_slr()` function from the previous chapter. We also simply store variables in the global environment instead of creating a data frame for each new simulated dataset.
 
 
-```r
+``` r
 num_samples = 10000
 beta_0_hats = rep(0, num_samples)
 beta_1_hats = rep(0, num_samples)
@@ -332,7 +332,7 @@ Each time we simulated the data, we obtained values of the estimated coefficient
 We first verify the distribution of $\hat{\beta}_1$.
 
 
-```r
+``` r
 mean(beta_1_hats) # empirical mean
 ```
 
@@ -340,7 +340,7 @@ mean(beta_1_hats) # empirical mean
 ## [1] 6.001998
 ```
 
-```r
+``` r
 beta_1            # true mean
 ```
 
@@ -348,7 +348,7 @@ beta_1            # true mean
 ## [1] 6
 ```
 
-```r
+``` r
 var(beta_1_hats)  # empirical variance
 ```
 
@@ -356,7 +356,7 @@ var(beta_1_hats)  # empirical variance
 ## [1] 0.11899
 ```
 
-```r
+``` r
 var_beta_1_hat    # true variance
 ```
 
@@ -367,7 +367,7 @@ var_beta_1_hat    # true variance
 We see that the empirical and true means and variances are *very* similar. We also verify that the empirical distribution is normal. To do so, we plot a histogram of the `beta_1_hats`, and add the curve for the true distribution of $\hat{\beta}_1$. We use `prob = TRUE` to put the histogram on the same scale as the normal curve.
 
 
-```r
+``` r
 # note need to use prob = TRUE
 hist(beta_1_hats, prob = TRUE, breaks = 20, 
      xlab = expression(hat(beta)[1]), main = "", border = "dodgerblue")
@@ -382,7 +382,7 @@ curve(dnorm(x, mean = beta_1, sd = sqrt(var_beta_1_hat)),
 We then repeat the process for $\hat{\beta}_0$.
 
 
-```r
+``` r
 mean(beta_0_hats) # empirical mean
 ```
 
@@ -390,7 +390,7 @@ mean(beta_0_hats) # empirical mean
 ## [1] 3.001147
 ```
 
-```r
+``` r
 beta_0            # true mean
 ```
 
@@ -398,7 +398,7 @@ beta_0            # true mean
 ## [1] 3
 ```
 
-```r
+``` r
 var(beta_0_hats)  # empirical variance
 ```
 
@@ -406,7 +406,7 @@ var(beta_0_hats)  # empirical variance
 ## [1] 0.04017924
 ```
 
-```r
+``` r
 var_beta_0_hat    # true variance
 ```
 
@@ -415,7 +415,7 @@ var_beta_0_hat    # true variance
 ```
 
 
-```r
+``` r
 hist(beta_0_hats, prob = TRUE, breaks = 25, 
      xlab = expression(hat(beta)[0]), main = "", border = "dodgerblue")
 curve(dnorm(x, mean = beta_0, sd = sqrt(var_beta_0_hat)),
@@ -429,7 +429,7 @@ curve(dnorm(x, mean = beta_0, sd = sqrt(var_beta_0_hat)),
 In this simulation study, we have only simulated a finite number of samples. To truly verify the distributional results, we would need to observe an infinite number of samples. However, the following plot should make it clear that if we continued simulating, the empirical results would get closer and closer to what we should expect.
 
 
-```r
+``` r
 par(mar = c(5, 5, 1, 1)) # adjusted plot margins, otherwise the "hat" does not display
 plot(cumsum(beta_1_hats) / (1:length(beta_1_hats)), type = "l", ylim = c(5.95, 6.05),
      xlab = "Number of Simulations",
@@ -442,7 +442,7 @@ abline(h = 6, col = "darkorange", lwd = 2)
 
 \begin{center}\includegraphics{slr-inf_files/figure-latex/unnamed-chunk-12-1} \end{center}
 
-```r
+``` r
 par(mar = c(5, 5, 1, 1)) # adjusted plot margins, otherwise the "hat" does not display
 plot(cumsum(beta_0_hats) / (1:length(beta_0_hats)), type = "l", ylim = c(2.95, 3.05),
      xlab = "Number of Simulations",
@@ -554,7 +554,7 @@ where $Z \sim N(0,1)$.
 Recall that a $t$ distribution is similar to a standard normal, but with heavier tails. As the degrees of freedom increases, the $t$ distribution becomes more and more like a standard normal. Below we plot a standard normal distribution as well as two examples of a $t$ distribution with different degrees of freedom. Notice how the $t$ distribution with the larger degrees of freedom is more similar to the standard normal curve.
 
 
-```r
+``` r
 # define grid of x values
 x = seq(-4, 4, length = 100)
 
@@ -652,7 +652,7 @@ which again, under the null hypothesis, follows a $t$ distribution with $n - 2$ 
 We now return to the `cars` example from last chapter to illustrate these concepts. We first fit the model using `lm()` then use `summary()` to view the results in greater detail.
 
 
-```r
+``` r
 stop_dist_model = lm(dist ~ speed, data = cars)
 summary(stop_dist_model)
 ```
@@ -683,7 +683,7 @@ summary(stop_dist_model)
 We will now discuss the results displayed called `Coefficients`. First recall that we can extract this information directly.
 
 
-```r
+``` r
 names(summary(stop_dist_model))
 ```
 
@@ -693,7 +693,7 @@ names(summary(stop_dist_model))
 ##  [9] "adj.r.squared" "fstatistic"    "cov.unscaled"
 ```
 
-```r
+``` r
 summary(stop_dist_model)$coefficients
 ```
 
@@ -720,7 +720,7 @@ which are our estimates for the model parameters $\beta_0$ and $\beta_1$.
 Let's now focus on the second row of output, which is relevant to $\beta_1$.
 
 
-```r
+``` r
 summary(stop_dist_model)$coefficients[2,]
 ```
 
@@ -758,7 +758,7 @@ Note here, we are specifically testing whether or not $\beta_1 = 0$.
 The first row of output reports the same values, but for $\beta_0$.
 
 
-```r
+``` r
 summary(stop_dist_model)$coefficients[1,]
 ```
 
@@ -770,7 +770,7 @@ summary(stop_dist_model)$coefficients[1,]
 In summary, the following code stores the information of `summary(stop_dist_model)$coefficients` in a new variable `stop_dist_model_test_info`, then extracts each element into a new variable which describes the information it contains.
 
 
-```r
+``` r
 stop_dist_model_test_info = summary(stop_dist_model)$coefficients
 
 beta_0_hat      = stop_dist_model_test_info[1, 1] # Estimate
@@ -787,7 +787,7 @@ beta_1_hat_pval = stop_dist_model_test_info[2, 4] # Pr(>|t|)
 We can then verify some equivalent expressions: the $t$ test statistic for $\hat{\beta}_1$ and the two-sided p-value associated with that test statistic.
 
 
-```r
+``` r
 (beta_1_hat - 0) / beta_1_hat_se
 ```
 
@@ -795,7 +795,7 @@ We can then verify some equivalent expressions: the $t$ test statistic for $\hat
 ## [1] 9.46399
 ```
 
-```r
+``` r
 beta_1_hat_t
 ```
 
@@ -804,7 +804,7 @@ beta_1_hat_t
 ```
 
 
-```r
+``` r
 2 * pt(abs(beta_1_hat_t), df = length(resid(stop_dist_model)) - 2, lower.tail = FALSE)
 ```
 
@@ -812,7 +812,7 @@ beta_1_hat_t
 ## [1] 1.489836e-12
 ```
 
-```r
+``` r
 beta_1_hat_pval
 ```
 
@@ -870,7 +870,7 @@ In this plot of simulated data, we see a clear relationship between $x$ and $y$,
 Using `R` we can very easily obtain the confidence intervals for $\beta_0$ and $\beta_1$.
 
 
-```r
+``` r
 confint(stop_dist_model, level = 0.99)
 ```
 
@@ -891,7 +891,7 @@ You should be somewhat suspicious of the confidence interval for $\beta_0$, as i
 Note, we can extract specific values from this output a number of ways. This code is not run, and instead, you should check how it relates to the output of the code above.
 
 
-```r
+``` r
 confint(stop_dist_model, level = 0.99)[1,]
 confint(stop_dist_model, level = 0.99)[1, 1]
 confint(stop_dist_model, level = 0.99)[1, 2]
@@ -905,7 +905,7 @@ confint(stop_dist_model, parm = "speed", level = 0.99)
 We can also verify that calculations that `R` is performing for the $\beta_1$ interval.
 
 
-```r
+``` r
 # store estimate
 beta_1_hat = coef(stop_dist_model)[2]
 
@@ -973,7 +973,7 @@ We can then use this to find the confidence interval for the mean response,
 To find confidence intervals for the mean response using `R`, we use the `predict()` function. We give the function our fitted model as well as new data, stored as a data frame. (This is important, so that `R` knows the name of the predictor variable.) Here, we are finding the confidence interval for the mean stopping distance when a car is travelling 5 miles per hour and when a car is travelling 21 miles per hour.
 
 
-```r
+``` r
 new_speeds = data.frame(speed = c(5, 21))
 predict(stop_dist_model, newdata = new_speeds, 
         interval = c("confidence"), level = 0.99)
@@ -1016,7 +1016,7 @@ We can then find a **prediction interval** using,
 To calculate this for a set of points in `R` notice there is only a minor change in syntax from finding a confidence interval for the mean response.
 
 
-```r
+``` r
 predict(stop_dist_model, newdata = new_speeds, 
         interval = c("prediction"), level = 0.99)
 ```
@@ -1034,7 +1034,7 @@ Also notice that these two intervals are wider than the corresponding confidence
 Often we will like to plot both confidence intervals for the mean response and prediction intervals for all possible values of $x$. We calls these confidence and prediction bands.
 
 
-```r
+``` r
 speed_grid = seq(min(cars$speed), max(cars$speed), by = 0.01)
 dist_ci_band = predict(stop_dist_model, 
                        newdata = data.frame(speed = speed_grid), 
@@ -1127,7 +1127,7 @@ In particular, we will reject the null when the $F$ statistic is large, that is,
 To perform the $F$ test in `R` you can look at the last row of the output from `summary()` called `F-statistic` which gives the value of the test statistic, the relevant degrees of freedom, as well as the p-value of the test.
 
 
-```r
+``` r
 summary(stop_dist_model)
 ```
 
@@ -1155,7 +1155,7 @@ summary(stop_dist_model)
 Additionally, you can use the `anova()` function to display the information in an ANOVA table.
 
 
-```r
+``` r
 anova(stop_dist_model)
 ```
 
@@ -1175,7 +1175,7 @@ This also gives a p-value for the test. You should notice that the p-value from 
 Note that there is another equivalent way to do this in `R`, which we will return to often to compare two models.
 
 
-```r
+``` r
 anova(lm(dist ~ 1, data = cars), lm(dist ~ speed, data = cars))
 ```
 
@@ -1203,4 +1203,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`slr-inf.Rmd`](slr-inf.Rmd){target="_blank"}
 
-The file was created using `R` version `4.3.2`.
+The file was created using `R` version `4.4.1`.

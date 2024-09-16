@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 15 Collinearity | Applied Statistics with R</title>
   <meta name="description" content="Chapter 15 Collinearity | Applied Statistics with R" />
-  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 15 Collinearity | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -55,7 +55,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -478,17 +478,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="exact-collinearity" class="section level2 hasAnchor" number="15.1">
 <h2><span class="header-section-number">15.1</span> Exact Collinearity<a href="collinearity.html#exact-collinearity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s create a dataset where one of the predictors, <span class="math inline">\(x_3\)</span>, is a linear combination of the other predictors.</p>
-<div class="sourceCode" id="cb1210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1210-1"><a href="collinearity.html#cb1210-1" aria-hidden="true" tabindex="-1"></a>gen_exact_collin_data <span class="ot">=</span> <span class="cf">function</span>(<span class="at">num_samples =</span> <span class="dv">100</span>) {</span>
-<span id="cb1210-2"><a href="collinearity.html#cb1210-2" aria-hidden="true" tabindex="-1"></a>  x1 <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n =</span> num_samples, <span class="at">mean =</span> <span class="dv">80</span>, <span class="at">sd =</span> <span class="dv">10</span>)</span>
-<span id="cb1210-3"><a href="collinearity.html#cb1210-3" aria-hidden="true" tabindex="-1"></a>  x2 <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n =</span> num_samples, <span class="at">mean =</span> <span class="dv">70</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span>
-<span id="cb1210-4"><a href="collinearity.html#cb1210-4" aria-hidden="true" tabindex="-1"></a>  x3 <span class="ot">=</span> <span class="dv">2</span> <span class="sc">*</span> x1 <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span> x2 <span class="sc">+</span> <span class="dv">3</span></span>
-<span id="cb1210-5"><a href="collinearity.html#cb1210-5" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">=</span> <span class="dv">3</span> <span class="sc">+</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> num_samples, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb1210-6"><a href="collinearity.html#cb1210-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">data.frame</span>(y, x1, x2, x3)</span>
-<span id="cb1210-7"><a href="collinearity.html#cb1210-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb1210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1210-1"><a href="collinearity.html#cb1210-1" tabindex="-1"></a>gen_exact_collin_data <span class="ot">=</span> <span class="cf">function</span>(<span class="at">num_samples =</span> <span class="dv">100</span>) {</span>
+<span id="cb1210-2"><a href="collinearity.html#cb1210-2" tabindex="-1"></a>  x1 <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n =</span> num_samples, <span class="at">mean =</span> <span class="dv">80</span>, <span class="at">sd =</span> <span class="dv">10</span>)</span>
+<span id="cb1210-3"><a href="collinearity.html#cb1210-3" tabindex="-1"></a>  x2 <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n =</span> num_samples, <span class="at">mean =</span> <span class="dv">70</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span>
+<span id="cb1210-4"><a href="collinearity.html#cb1210-4" tabindex="-1"></a>  x3 <span class="ot">=</span> <span class="dv">2</span> <span class="sc">*</span> x1 <span class="sc">+</span> <span class="dv">4</span> <span class="sc">*</span> x2 <span class="sc">+</span> <span class="dv">3</span></span>
+<span id="cb1210-5"><a href="collinearity.html#cb1210-5" tabindex="-1"></a>  y <span class="ot">=</span> <span class="dv">3</span> <span class="sc">+</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> num_samples, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb1210-6"><a href="collinearity.html#cb1210-6" tabindex="-1"></a>  <span class="fu">data.frame</span>(y, x1, x2, x3)</span>
+<span id="cb1210-7"><a href="collinearity.html#cb1210-7" tabindex="-1"></a>}</span></code></pre></div>
 <p>Notice that the way we are generating this data, the response <span class="math inline">\(y\)</span> only really depends on <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>.</p>
-<div class="sourceCode" id="cb1211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1211-1"><a href="collinearity.html#cb1211-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb1211-2"><a href="collinearity.html#cb1211-2" aria-hidden="true" tabindex="-1"></a>exact_collin_data <span class="ot">=</span> <span class="fu">gen_exact_collin_data</span>()</span>
-<span id="cb1211-3"><a href="collinearity.html#cb1211-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(exact_collin_data)</span></code></pre></div>
+<div class="sourceCode" id="cb1211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1211-1"><a href="collinearity.html#cb1211-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb1211-2"><a href="collinearity.html#cb1211-2" tabindex="-1"></a>exact_collin_data <span class="ot">=</span> <span class="fu">gen_exact_collin_data</span>()</span>
+<span id="cb1211-3"><a href="collinearity.html#cb1211-3" tabindex="-1"></a><span class="fu">head</span>(exact_collin_data)</span></code></pre></div>
 <pre><code>##          y       x1       x2       x3
 ## 1 170.7135 93.70958 76.00483 494.4385
 ## 2 152.9106 74.35302 75.22376 452.6011
@@ -497,8 +497,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 152.3320 84.04268 66.66613 437.7499
 ## 6 151.3155 78.93875 70.52757 442.9878</code></pre>
 <p>What happens when we attempt to fit a regression model in <code>R</code> using all of the predictors?</p>
-<div class="sourceCode" id="cb1213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1213-1"><a href="collinearity.html#cb1213-1" aria-hidden="true" tabindex="-1"></a>exact_collin_fit <span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3, <span class="at">data =</span> exact_collin_data)</span>
-<span id="cb1213-2"><a href="collinearity.html#cb1213-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(exact_collin_fit)</span></code></pre></div>
+<div class="sourceCode" id="cb1213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1213-1"><a href="collinearity.html#cb1213-1" tabindex="-1"></a>exact_collin_fit <span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3, <span class="at">data =</span> exact_collin_data)</span>
+<span id="cb1213-2"><a href="collinearity.html#cb1213-2" tabindex="-1"></a><span class="fu">summary</span>(exact_collin_fit)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ x1 + x2 + x3, data = exact_collin_data)
@@ -520,27 +520,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Multiple R-squared:  0.9923, Adjusted R-squared:  0.9921 
 ## F-statistic:  6236 on 2 and 97 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>We see that <code>R</code> simply decides to exclude a variable. Why is this happening?</p>
-<div class="sourceCode" id="cb1215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1215-1"><a href="collinearity.html#cb1215-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> <span class="fu">cbind</span>(<span class="dv">1</span>, <span class="fu">as.matrix</span>(exact_collin_data[,<span class="sc">-</span><span class="dv">1</span>]))</span>
-<span id="cb1215-2"><a href="collinearity.html#cb1215-2" aria-hidden="true" tabindex="-1"></a><span class="fu">solve</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> X)</span></code></pre></div>
-<p>If we attempt to find <span class="math inline">\(\boldsymbol{\hat{\beta}}\)</span> using <span class="math inline">\(\left( \boldsymbol{X}^T \boldsymbol{X} \right)^{-1}\)</span>, we see that this is not possible, due to the fact that the columns of <span class="math inline">\(\boldsymbol{X}\)</span> are linearly dependent. The previous lines of code were not run, because they produce an error!</p>
+<div class="sourceCode" id="cb1215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1215-1"><a href="collinearity.html#cb1215-1" tabindex="-1"></a>X <span class="ot">=</span> <span class="fu">cbind</span>(<span class="dv">1</span>, <span class="fu">as.matrix</span>(exact_collin_data[,<span class="sc">-</span><span class="dv">1</span>]))</span>
+<span id="cb1215-2"><a href="collinearity.html#cb1215-2" tabindex="-1"></a><span class="fu">solve</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> X)</span></code></pre></div>
+<p>If we attempt to find <span class="math inline">\(\boldsymbol{\hat{\beta}}\)</span> using <span class="math inline">\(\left(  \boldsymbol{X}^T \boldsymbol{X}  \right)^{-1}\)</span>, we see that this is not possible, due to the fact that the columns of <span class="math inline">\(\boldsymbol{X}\)</span> are linearly dependent. The previous lines of code were not run, because they produce an error!</p>
 <p>When this happens, we say there is <strong>exact collinearity</strong> in the dataset.</p>
 <p>As a result of this issue, <code>R</code> essentially chose to fit the model <code>y ~ x1 + x2</code>. However notice that two other models would accomplish exactly the same fit.</p>
-<div class="sourceCode" id="cb1216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1216-1"><a href="collinearity.html#cb1216-1" aria-hidden="true" tabindex="-1"></a>fit1 <span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> exact_collin_data)</span>
-<span id="cb1216-2"><a href="collinearity.html#cb1216-2" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x3, <span class="at">data =</span> exact_collin_data)</span>
-<span id="cb1216-3"><a href="collinearity.html#cb1216-3" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> x2 <span class="sc">+</span> x3, <span class="at">data =</span> exact_collin_data)</span></code></pre></div>
+<div class="sourceCode" id="cb1216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1216-1"><a href="collinearity.html#cb1216-1" tabindex="-1"></a>fit1 <span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> exact_collin_data)</span>
+<span id="cb1216-2"><a href="collinearity.html#cb1216-2" tabindex="-1"></a>fit2 <span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x3, <span class="at">data =</span> exact_collin_data)</span>
+<span id="cb1216-3"><a href="collinearity.html#cb1216-3" tabindex="-1"></a>fit3 <span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> x2 <span class="sc">+</span> x3, <span class="at">data =</span> exact_collin_data)</span></code></pre></div>
 <p>We see that the fitted values for each of the three models are exactly the same. This is a result of <span class="math inline">\(x_3\)</span> containing all of the information from <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>. As long as one of <span class="math inline">\(x_1\)</span> or <span class="math inline">\(x_2\)</span> is included in the model, <span class="math inline">\(x_3\)</span> can be used to recover the information from the variable not included.</p>
-<div class="sourceCode" id="cb1217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1217-1"><a href="collinearity.html#cb1217-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(<span class="fu">fitted</span>(fit1), <span class="fu">fitted</span>(fit2))</span></code></pre></div>
+<div class="sourceCode" id="cb1217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1217-1"><a href="collinearity.html#cb1217-1" tabindex="-1"></a><span class="fu">all.equal</span>(<span class="fu">fitted</span>(fit1), <span class="fu">fitted</span>(fit2))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb1219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1219-1"><a href="collinearity.html#cb1219-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(<span class="fu">fitted</span>(fit2), <span class="fu">fitted</span>(fit3))</span></code></pre></div>
+<div class="sourceCode" id="cb1219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1219-1"><a href="collinearity.html#cb1219-1" tabindex="-1"></a><span class="fu">all.equal</span>(<span class="fu">fitted</span>(fit2), <span class="fu">fitted</span>(fit3))</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>While their fitted values are all the same, their estimated coefficients are wildly different. The sign of <span class="math inline">\(x_2\)</span> is switched in two of the models! So only <code>fit1</code> properly <em>explains</em> the relationship between the variables, <code>fit2</code> and <code>fit3</code> still <em>predict</em> as well as <code>fit1</code>, despite the coefficients having little to no meaning, a concept we will return to later.</p>
-<div class="sourceCode" id="cb1221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1221-1"><a href="collinearity.html#cb1221-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(fit1)</span></code></pre></div>
+<div class="sourceCode" id="cb1221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1221-1"><a href="collinearity.html#cb1221-1" tabindex="-1"></a><span class="fu">coef</span>(fit1)</span></code></pre></div>
 <pre><code>## (Intercept)          x1          x2 
 ##   2.9573357   0.9856291   1.0170586</code></pre>
-<div class="sourceCode" id="cb1223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1223-1"><a href="collinearity.html#cb1223-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(fit2)</span></code></pre></div>
+<div class="sourceCode" id="cb1223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1223-1"><a href="collinearity.html#cb1223-1" tabindex="-1"></a><span class="fu">coef</span>(fit2)</span></code></pre></div>
 <pre><code>## (Intercept)          x1          x3 
 ##   2.1945418   0.4770998   0.2542647</code></pre>
-<div class="sourceCode" id="cb1225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1225-1"><a href="collinearity.html#cb1225-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(fit3)</span></code></pre></div>
+<div class="sourceCode" id="cb1225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1225-1"><a href="collinearity.html#cb1225-1" tabindex="-1"></a><span class="fu">coef</span>(fit3)</span></code></pre></div>
 <pre><code>## (Intercept)          x2          x3 
 ##   1.4788921  -0.9541995   0.4928145</code></pre>
 </div>
@@ -549,10 +549,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Exact collinearity is an extreme example of <strong>collinearity</strong>, which occurs in multiple regression when predictor variables are highly correlated. Collinearity is often called <em>multicollinearity</em>, since it is a phenomenon that really only occurs during multiple regression.</p>
 <p>Looking at the <code>seatpos</code> dataset from the <code>faraway</code> package, we will see an example of this concept. The predictors in this dataset are various attributes of car drivers, such as their height, weight and age. The response variable <code>hipcenter</code> measures the “horizontal distance of the midpoint of the hips from a fixed location in the car in mm.” Essentially, it measures the position of the seat for a given driver. This is potentially useful information for car manufacturers considering comfort and safety when designing vehicles.</p>
 <p>We will attempt to fit a model that predicts <code>hipcenter</code>. Two predictor variables are immediately interesting to us: <code>HtShoes</code> and <code>Ht</code>. We certainly expect a person’s height to be highly correlated to their height when wearing shoes. We’ll pay special attention to these two variables when fitting models.</p>
-<div class="sourceCode" id="cb1227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1227-1"><a href="collinearity.html#cb1227-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(faraway)</span>
-<span id="cb1227-2"><a href="collinearity.html#cb1227-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(seatpos, <span class="at">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1227-1"><a href="collinearity.html#cb1227-1" tabindex="-1"></a><span class="fu">library</span>(faraway)</span>
+<span id="cb1227-2"><a href="collinearity.html#cb1227-2" tabindex="-1"></a><span class="fu">pairs</span>(seatpos, <span class="at">col =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span></code></pre></div>
 <p><img src="collinearity_files/figure-html/unnamed-chunk-9-1.png" width="768" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb1228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1228-1"><a href="collinearity.html#cb1228-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(seatpos), <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1228-1"><a href="collinearity.html#cb1228-1" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(seatpos), <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>##             Age Weight HtShoes    Ht Seated   Arm Thigh   Leg hipcenter
 ## Age        1.00   0.08   -0.08 -0.09  -0.17  0.36  0.09 -0.04      0.21
 ## Weight     0.08   1.00    0.83  0.83   0.78  0.70  0.57  0.78     -0.64
@@ -566,8 +566,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>After loading the <code>faraway</code> package, we do some quick checks of correlation between the predictors. Visually, we can do this with the <code>pairs()</code> function, which plots all possible scatterplots between pairs of variables in the dataset.</p>
 <p>We can also do this numerically with the <code>cor()</code> function, which when applied to a dataset, returns all pairwise correlations. Notice this is a symmetric matrix. Recall that correlation measures strength and direction of the linear relationship between two variables. The correlation between <code>Ht</code> and <code>HtShoes</code> is extremely high. So high, that rounded to two decimal places, it appears to be 1!</p>
 <p>Unlike exact collinearity, here we can still fit a model with all of the predictors, but what effect does this have?</p>
-<div class="sourceCode" id="cb1230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1230-1"><a href="collinearity.html#cb1230-1" aria-hidden="true" tabindex="-1"></a>hip_model <span class="ot">=</span> <span class="fu">lm</span>(hipcenter <span class="sc">~</span> ., <span class="at">data =</span> seatpos)</span>
-<span id="cb1230-2"><a href="collinearity.html#cb1230-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hip_model)</span></code></pre></div>
+<div class="sourceCode" id="cb1230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1230-1"><a href="collinearity.html#cb1230-1" tabindex="-1"></a>hip_model <span class="ot">=</span> <span class="fu">lm</span>(hipcenter <span class="sc">~</span> ., <span class="at">data =</span> seatpos)</span>
+<span id="cb1230-2"><a href="collinearity.html#cb1230-2" tabindex="-1"></a><span class="fu">summary</span>(hip_model)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = hipcenter ~ ., data = seatpos)
@@ -596,8 +596,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>One of the first things we should notice is that the <span class="math inline">\(F\)</span>-test for the regression tells us that the regression is significant, however each individual predictor is not. Another interesting result is the opposite signs of the coefficients for <code>Ht</code> and <code>HtShoes</code>. This should seem rather counter-intuitive. Increasing <code>Ht</code> increases <code>hipcenter</code>, but increasing <code>HtShoes</code> decreases <code>hipcenter</code>?</p>
 <p>This happens as a result of the predictors being highly correlated. For example, the <code>HtShoe</code> variable explains a large amount of the variation in <code>Ht</code>. When they are both in the model, their effects on the response are lessened individually, but together they still explain a large portion of the variation of <code>hipcenter</code>.</p>
 <p>We define <span class="math inline">\(R_j^2\)</span> to be the proportion of observed variation in the <span class="math inline">\(j\)</span>-th predictor explained by the other predictors. In other words <span class="math inline">\(R_j^2\)</span> is the multiple R-Squared for the regression of <span class="math inline">\(x_j\)</span> on each of the other predictors.</p>
-<div class="sourceCode" id="cb1232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1232-1"><a href="collinearity.html#cb1232-1" aria-hidden="true" tabindex="-1"></a>ht_shoes_model <span class="ot">=</span> <span class="fu">lm</span>(HtShoes <span class="sc">~</span> . <span class="sc">-</span> hipcenter, <span class="at">data =</span> seatpos)</span>
-<span id="cb1232-2"><a href="collinearity.html#cb1232-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ht_shoes_model)<span class="sc">$</span>r.squared</span></code></pre></div>
+<div class="sourceCode" id="cb1232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1232-1"><a href="collinearity.html#cb1232-1" tabindex="-1"></a>ht_shoes_model <span class="ot">=</span> <span class="fu">lm</span>(HtShoes <span class="sc">~</span> . <span class="sc">-</span> hipcenter, <span class="at">data =</span> seatpos)</span>
+<span id="cb1232-2"><a href="collinearity.html#cb1232-2" tabindex="-1"></a><span class="fu">summary</span>(ht_shoes_model)<span class="sc">$</span>r.squared</span></code></pre></div>
 <pre><code>## [1] 0.9967472</code></pre>
 <p>Here we see that the other predictors explain <span class="math inline">\(99.67\%\)</span> of the variation in <code>HtShoe</code>. When fitting this model, we removed <code>hipcenter</code> since it is not a predictor.</p>
 <div id="variance-inflation-factor." class="section level3 hasAnchor" number="15.2.1">
@@ -617,36 +617,36 @@ S_{x_j x_j} = \sum(x_{ij}-\bar{x}_j)^2.
 \]</span></p>
 <p>the <strong>variance inflation factor.</strong> The variance inflation factor quantifies the effect of collinearity on the variance of our regression estimates. When <span class="math inline">\(R_j^2\)</span> is large, that is close to 1, <span class="math inline">\(x_j\)</span> is well explained by the other predictors. With a large <span class="math inline">\(R_j^2\)</span> the variance inflation factor becomes large. This tells us that when <span class="math inline">\(x_j\)</span> is highly correlated with other predictors, our estimate of <span class="math inline">\(\beta_j\)</span> is highly variable.</p>
 <p>The <code>vif</code> function from the <code>faraway</code> package calculates the VIFs for each of the predictors of a model.</p>
-<div class="sourceCode" id="cb1234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1234-1"><a href="collinearity.html#cb1234-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(hip_model)</span></code></pre></div>
+<div class="sourceCode" id="cb1234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1234-1"><a href="collinearity.html#cb1234-1" tabindex="-1"></a><span class="fu">vif</span>(hip_model)</span></code></pre></div>
 <pre><code>##        Age     Weight    HtShoes         Ht     Seated        Arm      Thigh 
 ##   1.997931   3.647030 307.429378 333.137832   8.951054   4.496368   2.762886 
 ##        Leg 
 ##   6.694291</code></pre>
 <p>In practice it is common to say that any VIF greater than <span class="math inline">\(5\)</span> is cause for concern. So in this example we see there is a huge multicollinearity issue as many of the predictors have a VIF greater than 5.</p>
 <p>Let’s further investigate how the presence of collinearity actually affects a model. If we add a moderate amount of noise to the data, we see that the estimates of the coefficients change drastically. This is a rather undesirable effect. Adding random noise should not affect the coefficients of a model.</p>
-<div class="sourceCode" id="cb1236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1236-1"><a href="collinearity.html#cb1236-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1337</span>)</span>
-<span id="cb1236-2"><a href="collinearity.html#cb1236-2" aria-hidden="true" tabindex="-1"></a>noise <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fu">nrow</span>(seatpos), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span>
-<span id="cb1236-3"><a href="collinearity.html#cb1236-3" aria-hidden="true" tabindex="-1"></a>hip_model_noise <span class="ot">=</span> <span class="fu">lm</span>(hipcenter <span class="sc">+</span> noise <span class="sc">~</span> ., <span class="at">data =</span> seatpos)</span></code></pre></div>
+<div class="sourceCode" id="cb1236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1236-1"><a href="collinearity.html#cb1236-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1337</span>)</span>
+<span id="cb1236-2"><a href="collinearity.html#cb1236-2" tabindex="-1"></a>noise <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fu">nrow</span>(seatpos), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span>
+<span id="cb1236-3"><a href="collinearity.html#cb1236-3" tabindex="-1"></a>hip_model_noise <span class="ot">=</span> <span class="fu">lm</span>(hipcenter <span class="sc">+</span> noise <span class="sc">~</span> ., <span class="at">data =</span> seatpos)</span></code></pre></div>
 <p>Adding the noise had such a large effect, the sign of the coefficient for <code>Ht</code> has changed.</p>
-<div class="sourceCode" id="cb1237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1237-1"><a href="collinearity.html#cb1237-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(hip_model)</span></code></pre></div>
+<div class="sourceCode" id="cb1237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1237-1"><a href="collinearity.html#cb1237-1" tabindex="-1"></a><span class="fu">coef</span>(hip_model)</span></code></pre></div>
 <pre><code>##  (Intercept)          Age       Weight      HtShoes           Ht       Seated 
 ## 436.43212823   0.77571620   0.02631308  -2.69240774   0.60134458   0.53375170 
 ##          Arm        Thigh          Leg 
 ##  -1.32806864  -1.14311888  -6.43904627</code></pre>
-<div class="sourceCode" id="cb1239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1239-1"><a href="collinearity.html#cb1239-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(hip_model_noise)</span></code></pre></div>
+<div class="sourceCode" id="cb1239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1239-1"><a href="collinearity.html#cb1239-1" tabindex="-1"></a><span class="fu">coef</span>(hip_model_noise)</span></code></pre></div>
 <pre><code>##  (Intercept)          Age       Weight      HtShoes           Ht       Seated 
 ## 415.32909380   0.76578240   0.01910958  -2.90377584  -0.12068122   2.03241638 
 ##          Arm        Thigh          Leg 
 ##  -1.02127944  -0.89034509  -5.61777220</code></pre>
 <p>This tells us that a model with collinearity is bad at explaining the relationship between the response and the predictors. We cannot even be confident in the direction of the relationship. However, does collinearity affect prediction?</p>
-<div class="sourceCode" id="cb1241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1241-1"><a href="collinearity.html#cb1241-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(hip_model), <span class="fu">fitted</span>(hip_model_noise), <span class="at">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="at">pch =</span> <span class="dv">20</span>,</span>
-<span id="cb1241-2"><a href="collinearity.html#cb1241-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Predicted, Without Noise&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Predicted, With Noise&quot;</span>, <span class="at">cex =</span> <span class="fl">1.5</span>)</span>
-<span id="cb1241-3"><a href="collinearity.html#cb1241-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1241-1"><a href="collinearity.html#cb1241-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(hip_model), <span class="fu">fitted</span>(hip_model_noise), <span class="at">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="at">pch =</span> <span class="dv">20</span>,</span>
+<span id="cb1241-2"><a href="collinearity.html#cb1241-2" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Predicted, Without Noise&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Predicted, With Noise&quot;</span>, <span class="at">cex =</span> <span class="fl">1.5</span>)</span>
+<span id="cb1241-3"><a href="collinearity.html#cb1241-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="collinearity_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>We see that by plotting the predicted values using both models against each other, they are actually rather similar.</p>
 <p>Let’s now look at a smaller model,</p>
-<div class="sourceCode" id="cb1242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1242-1"><a href="collinearity.html#cb1242-1" aria-hidden="true" tabindex="-1"></a>hip_model_small <span class="ot">=</span> <span class="fu">lm</span>(hipcenter <span class="sc">~</span> Age <span class="sc">+</span> Arm <span class="sc">+</span> Ht, <span class="at">data =</span> seatpos)</span>
-<span id="cb1242-2"><a href="collinearity.html#cb1242-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(hip_model_small)</span></code></pre></div>
+<div class="sourceCode" id="cb1242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1242-1"><a href="collinearity.html#cb1242-1" tabindex="-1"></a>hip_model_small <span class="ot">=</span> <span class="fu">lm</span>(hipcenter <span class="sc">~</span> Age <span class="sc">+</span> Arm <span class="sc">+</span> Ht, <span class="at">data =</span> seatpos)</span>
+<span id="cb1242-2"><a href="collinearity.html#cb1242-2" tabindex="-1"></a><span class="fu">summary</span>(hip_model_small)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = hipcenter ~ Age + Arm + Ht, data = seatpos)
@@ -667,11 +667,11 @@ S_{x_j x_j} = \sum(x_{ij}-\bar{x}_j)^2.
 ## Residual standard error: 36.12 on 34 degrees of freedom
 ## Multiple R-squared:  0.6631, Adjusted R-squared:  0.6333 
 ## F-statistic:  22.3 on 3 and 34 DF,  p-value: 3.649e-08</code></pre>
-<div class="sourceCode" id="cb1244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1244-1"><a href="collinearity.html#cb1244-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(hip_model_small)</span></code></pre></div>
+<div class="sourceCode" id="cb1244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1244-1"><a href="collinearity.html#cb1244-1" tabindex="-1"></a><span class="fu">vif</span>(hip_model_small)</span></code></pre></div>
 <pre><code>##      Age      Arm       Ht 
 ## 1.749943 3.996766 3.508693</code></pre>
 <p>Immediately we see that multicollinearity isn’t an issue here.</p>
-<div class="sourceCode" id="cb1246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1246-1"><a href="collinearity.html#cb1246-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(hip_model_small, hip_model)</span></code></pre></div>
+<div class="sourceCode" id="cb1246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1246-1"><a href="collinearity.html#cb1246-1" tabindex="-1"></a><span class="fu">anova</span>(hip_model_small, hip_model)</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Model 1: hipcenter ~ Age + Arm + Ht
@@ -687,22 +687,22 @@ S_{x_j x_j} = \sum(x_{ij}-\bar{x}_j)^2.
 <li>Regressing the response (<code>hipcenter</code>) against all of the predictors except the predictor of interest (<code>HtShoes</code>).</li>
 <li>Regressing the predictor of interest (<code>HtShoes</code>) against the other predictors (<code>Age</code>, <code>Arm</code>, and <code>Ht</code>).</li>
 </ul>
-<div class="sourceCode" id="cb1248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1248-1"><a href="collinearity.html#cb1248-1" aria-hidden="true" tabindex="-1"></a>ht_shoes_model_small <span class="ot">=</span> <span class="fu">lm</span>(HtShoes <span class="sc">~</span> Age <span class="sc">+</span> Arm <span class="sc">+</span> Ht, <span class="at">data =</span> seatpos)</span></code></pre></div>
+<div class="sourceCode" id="cb1248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1248-1"><a href="collinearity.html#cb1248-1" tabindex="-1"></a>ht_shoes_model_small <span class="ot">=</span> <span class="fu">lm</span>(HtShoes <span class="sc">~</span> Age <span class="sc">+</span> Arm <span class="sc">+</span> Ht, <span class="at">data =</span> seatpos)</span></code></pre></div>
 <p>So now, the residuals of <code>hip_model_small</code> give us the variation of <code>hipcenter</code> that is <em>unexplained</em> by <code>Age</code>, <code>Arm</code>, and <code>Ht</code>. Similarly, the residuals of <code>ht_shoes_model_small</code> give us the variation of <code>HtShoes</code> unexplained by <code>Age</code>, <code>Arm</code>, and <code>Ht</code>.</p>
 <p>The correlation of these two residuals gives us the <strong>partial correlation coefficient</strong> of <code>HtShoes</code> and <code>hipcenter</code> with the effects of <code>Age</code>, <code>Arm</code>, and <code>Ht</code> removed.</p>
-<div class="sourceCode" id="cb1249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1249-1"><a href="collinearity.html#cb1249-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">resid</span>(ht_shoes_model_small), <span class="fu">resid</span>(hip_model_small))</span></code></pre></div>
+<div class="sourceCode" id="cb1249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1249-1"><a href="collinearity.html#cb1249-1" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">resid</span>(ht_shoes_model_small), <span class="fu">resid</span>(hip_model_small))</span></code></pre></div>
 <pre><code>## [1] -0.03311061</code></pre>
 <p>Since this value is small, close to zero, it means that the variation of <code>hipcenter</code> that is unexplained by <code>Age</code>, <code>Arm</code>, and <code>Ht</code> shows very little correlation with the variation of <code>HtShoes</code> that is not explained by <code>Age</code>, <code>Arm</code>, and <code>Ht</code>. Thus adding <code>HtShoes</code> to the model would likely be of little benefit.</p>
 <p>Similarly a <strong>variable added plot</strong> visualizes these residuals against each other. It is also helpful to regress the residuals of the response against the residuals of the predictor and add the regression line to the plot.</p>
-<div class="sourceCode" id="cb1251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1251-1"><a href="collinearity.html#cb1251-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">resid</span>(hip_model_small) <span class="sc">~</span> <span class="fu">resid</span>(ht_shoes_model_small), </span>
-<span id="cb1251-2"><a href="collinearity.html#cb1251-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="at">pch =</span> <span class="dv">20</span>,</span>
-<span id="cb1251-3"><a href="collinearity.html#cb1251-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Residuals, Added Predictor&quot;</span>, </span>
-<span id="cb1251-4"><a href="collinearity.html#cb1251-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Residuals, Original Model&quot;</span>,</span>
-<span id="cb1251-5"><a href="collinearity.html#cb1251-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Variable Added Plot&quot;</span>)</span>
-<span id="cb1251-6"><a href="collinearity.html#cb1251-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb1251-7"><a href="collinearity.html#cb1251-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb1251-8"><a href="collinearity.html#cb1251-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(<span class="fu">resid</span>(hip_model_small) <span class="sc">~</span> <span class="fu">resid</span>(ht_shoes_model_small)),</span>
-<span id="cb1251-9"><a href="collinearity.html#cb1251-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1251-1"><a href="collinearity.html#cb1251-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">resid</span>(hip_model_small) <span class="sc">~</span> <span class="fu">resid</span>(ht_shoes_model_small), </span>
+<span id="cb1251-2"><a href="collinearity.html#cb1251-2" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;dodgerblue&quot;</span>, <span class="at">pch =</span> <span class="dv">20</span>,</span>
+<span id="cb1251-3"><a href="collinearity.html#cb1251-3" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Residuals, Added Predictor&quot;</span>, </span>
+<span id="cb1251-4"><a href="collinearity.html#cb1251-4" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Residuals, Original Model&quot;</span>,</span>
+<span id="cb1251-5"><a href="collinearity.html#cb1251-5" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Variable Added Plot&quot;</span>)</span>
+<span id="cb1251-6"><a href="collinearity.html#cb1251-6" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb1251-7"><a href="collinearity.html#cb1251-7" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb1251-8"><a href="collinearity.html#cb1251-8" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(<span class="fu">resid</span>(hip_model_small) <span class="sc">~</span> <span class="fu">resid</span>(ht_shoes_model_small)),</span>
+<span id="cb1251-9"><a href="collinearity.html#cb1251-9" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
 <p><img src="collinearity_files/figure-html/unnamed-chunk-20-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Here the variable added plot shows almost no linear relationship. This tells us that adding <code>HtShoes</code> to the model would probably not be worthwhile. Since its variation is largely explained by the other predictors, adding it to the model will not do much to improve the model. However it will increase the variation of the estimates and make the model much harder to interpret.</p>
 <p>Had there been a strong linear relationship here, thus a large partial correlation coefficient, it would likely have been useful to add the additional predictor to the model.</p>
@@ -718,114 +718,114 @@ S_{x_j x_j} = \sum(x_{ij}-\bar{x}_j)^2.
 Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \epsilon
 \]</span></p>
 <p>where <span class="math inline">\(\epsilon \sim N(\mu = 0, \sigma^2 = 25)\)</span> and the <span class="math inline">\(\beta\)</span> coefficients defined below.</p>
-<div class="sourceCode" id="cb1252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1252-1"><a href="collinearity.html#cb1252-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb1252-2"><a href="collinearity.html#cb1252-2" aria-hidden="true" tabindex="-1"></a>beta_0 <span class="ot">=</span> <span class="dv">7</span></span>
-<span id="cb1252-3"><a href="collinearity.html#cb1252-3" aria-hidden="true" tabindex="-1"></a>beta_1 <span class="ot">=</span> <span class="dv">3</span></span>
-<span id="cb1252-4"><a href="collinearity.html#cb1252-4" aria-hidden="true" tabindex="-1"></a>beta_2 <span class="ot">=</span> <span class="dv">4</span></span>
-<span id="cb1252-5"><a href="collinearity.html#cb1252-5" aria-hidden="true" tabindex="-1"></a>sigma  <span class="ot">=</span> <span class="dv">5</span></span></code></pre></div>
+<div class="sourceCode" id="cb1252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1252-1"><a href="collinearity.html#cb1252-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb1252-2"><a href="collinearity.html#cb1252-2" tabindex="-1"></a>beta_0 <span class="ot">=</span> <span class="dv">7</span></span>
+<span id="cb1252-3"><a href="collinearity.html#cb1252-3" tabindex="-1"></a>beta_1 <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb1252-4"><a href="collinearity.html#cb1252-4" tabindex="-1"></a>beta_2 <span class="ot">=</span> <span class="dv">4</span></span>
+<span id="cb1252-5"><a href="collinearity.html#cb1252-5" tabindex="-1"></a>sigma  <span class="ot">=</span> <span class="dv">5</span></span></code></pre></div>
 <p>We will use a sample size of 10, and 2500 simulations for both situations.</p>
-<div class="sourceCode" id="cb1253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1253-1"><a href="collinearity.html#cb1253-1" aria-hidden="true" tabindex="-1"></a>sample_size <span class="ot">=</span> <span class="dv">10</span></span>
-<span id="cb1253-2"><a href="collinearity.html#cb1253-2" aria-hidden="true" tabindex="-1"></a>num_sim     <span class="ot">=</span> <span class="dv">2500</span></span></code></pre></div>
+<div class="sourceCode" id="cb1253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1253-1"><a href="collinearity.html#cb1253-1" tabindex="-1"></a>sample_size <span class="ot">=</span> <span class="dv">10</span></span>
+<span id="cb1253-2"><a href="collinearity.html#cb1253-2" tabindex="-1"></a>num_sim     <span class="ot">=</span> <span class="dv">2500</span></span></code></pre></div>
 <p>We’ll first consider the situation with a collinearity issue, so we manually create the two predictor variables.</p>
-<div class="sourceCode" id="cb1254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1254-1"><a href="collinearity.html#cb1254-1" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>)</span>
-<span id="cb1254-2"><a href="collinearity.html#cb1254-2" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">10</span>, <span class="dv">9</span>, <span class="dv">8</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb1255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1255-1"><a href="collinearity.html#cb1255-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">sd</span>(x1), <span class="fu">sd</span>(x2))</span></code></pre></div>
+<div class="sourceCode" id="cb1254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1254-1"><a href="collinearity.html#cb1254-1" tabindex="-1"></a>x1 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>)</span>
+<span id="cb1254-2"><a href="collinearity.html#cb1254-2" tabindex="-1"></a>x2 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">10</span>, <span class="dv">9</span>, <span class="dv">8</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1255-1"><a href="collinearity.html#cb1255-1" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">sd</span>(x1), <span class="fu">sd</span>(x2))</span></code></pre></div>
 <pre><code>## [1] 3.02765 3.02765</code></pre>
-<div class="sourceCode" id="cb1257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1257-1"><a href="collinearity.html#cb1257-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x1, x2)</span></code></pre></div>
+<div class="sourceCode" id="cb1257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1257-1"><a href="collinearity.html#cb1257-1" tabindex="-1"></a><span class="fu">cor</span>(x1, x2)</span></code></pre></div>
 <pre><code>## [1] 0.9393939</code></pre>
 <p>Notice that they have extremely high correlation.</p>
-<div class="sourceCode" id="cb1259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1259-1"><a href="collinearity.html#cb1259-1" aria-hidden="true" tabindex="-1"></a>true_line_bad <span class="ot">=</span> beta_0 <span class="sc">+</span> beta_1 <span class="sc">*</span> x1 <span class="sc">+</span> beta_2 <span class="sc">*</span> x2</span>
-<span id="cb1259-2"><a href="collinearity.html#cb1259-2" aria-hidden="true" tabindex="-1"></a>beta_hat_bad  <span class="ot">=</span> <span class="fu">matrix</span>(<span class="dv">0</span>, num_sim, <span class="dv">2</span>)</span>
-<span id="cb1259-3"><a href="collinearity.html#cb1259-3" aria-hidden="true" tabindex="-1"></a>mse_bad       <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">0</span>, num_sim)</span></code></pre></div>
+<div class="sourceCode" id="cb1259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1259-1"><a href="collinearity.html#cb1259-1" tabindex="-1"></a>true_line_bad <span class="ot">=</span> beta_0 <span class="sc">+</span> beta_1 <span class="sc">*</span> x1 <span class="sc">+</span> beta_2 <span class="sc">*</span> x2</span>
+<span id="cb1259-2"><a href="collinearity.html#cb1259-2" tabindex="-1"></a>beta_hat_bad  <span class="ot">=</span> <span class="fu">matrix</span>(<span class="dv">0</span>, num_sim, <span class="dv">2</span>)</span>
+<span id="cb1259-3"><a href="collinearity.html#cb1259-3" tabindex="-1"></a>mse_bad       <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">0</span>, num_sim)</span></code></pre></div>
 <p>We perform the simulation 2500 times, each time fitting a regression model, and storing the estimated coefficients and the MSE.</p>
-<div class="sourceCode" id="cb1260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1260-1"><a href="collinearity.html#cb1260-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (s <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>num_sim) {</span>
-<span id="cb1260-2"><a href="collinearity.html#cb1260-2" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">=</span> true_line_bad <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> sample_size, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sigma)</span>
-<span id="cb1260-3"><a href="collinearity.html#cb1260-3" aria-hidden="true" tabindex="-1"></a>  reg_out <span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2)</span>
-<span id="cb1260-4"><a href="collinearity.html#cb1260-4" aria-hidden="true" tabindex="-1"></a>  beta_hat_bad[s, ] <span class="ot">=</span> <span class="fu">coef</span>(reg_out)[<span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb1260-5"><a href="collinearity.html#cb1260-5" aria-hidden="true" tabindex="-1"></a>  mse_bad[s] <span class="ot">=</span> <span class="fu">mean</span>(<span class="fu">resid</span>(reg_out) <span class="sc">^</span> <span class="dv">2</span>)</span>
-<span id="cb1260-6"><a href="collinearity.html#cb1260-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb1260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1260-1"><a href="collinearity.html#cb1260-1" tabindex="-1"></a><span class="cf">for</span> (s <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>num_sim) {</span>
+<span id="cb1260-2"><a href="collinearity.html#cb1260-2" tabindex="-1"></a>  y <span class="ot">=</span> true_line_bad <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> sample_size, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sigma)</span>
+<span id="cb1260-3"><a href="collinearity.html#cb1260-3" tabindex="-1"></a>  reg_out <span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2)</span>
+<span id="cb1260-4"><a href="collinearity.html#cb1260-4" tabindex="-1"></a>  beta_hat_bad[s, ] <span class="ot">=</span> <span class="fu">coef</span>(reg_out)[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb1260-5"><a href="collinearity.html#cb1260-5" tabindex="-1"></a>  mse_bad[s] <span class="ot">=</span> <span class="fu">mean</span>(<span class="fu">resid</span>(reg_out) <span class="sc">^</span> <span class="dv">2</span>)</span>
+<span id="cb1260-6"><a href="collinearity.html#cb1260-6" tabindex="-1"></a>}</span></code></pre></div>
 <p>Now we move to the situation without a collinearity issue, so we again manually create the two predictor variables.</p>
-<div class="sourceCode" id="cb1261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1261-1"><a href="collinearity.html#cb1261-1" aria-hidden="true" tabindex="-1"></a>z1 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>)</span>
-<span id="cb1261-2"><a href="collinearity.html#cb1261-2" aria-hidden="true" tabindex="-1"></a>z2 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">2</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1261-1"><a href="collinearity.html#cb1261-1" tabindex="-1"></a>z1 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>)</span>
+<span id="cb1261-2"><a href="collinearity.html#cb1261-2" tabindex="-1"></a>z2 <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">2</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">10</span>)</span></code></pre></div>
 <p>Notice that the standard deviations of each are the same as before, however, now the correlation is extremely close to 0.</p>
-<div class="sourceCode" id="cb1262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1262-1"><a href="collinearity.html#cb1262-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">sd</span>(z1), <span class="fu">sd</span>(z2))</span></code></pre></div>
+<div class="sourceCode" id="cb1262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1262-1"><a href="collinearity.html#cb1262-1" tabindex="-1"></a><span class="fu">c</span>(<span class="fu">sd</span>(z1), <span class="fu">sd</span>(z2))</span></code></pre></div>
 <pre><code>## [1] 3.02765 3.02765</code></pre>
-<div class="sourceCode" id="cb1264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1264-1"><a href="collinearity.html#cb1264-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(z1, z2)</span></code></pre></div>
+<div class="sourceCode" id="cb1264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1264-1"><a href="collinearity.html#cb1264-1" tabindex="-1"></a><span class="fu">cor</span>(z1, z2)</span></code></pre></div>
 <pre><code>## [1] 0.03030303</code></pre>
-<div class="sourceCode" id="cb1266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1266-1"><a href="collinearity.html#cb1266-1" aria-hidden="true" tabindex="-1"></a>true_line_good <span class="ot">=</span> beta_0 <span class="sc">+</span> beta_1 <span class="sc">*</span> z1 <span class="sc">+</span> beta_2 <span class="sc">*</span> z2</span>
-<span id="cb1266-2"><a href="collinearity.html#cb1266-2" aria-hidden="true" tabindex="-1"></a>beta_hat_good  <span class="ot">=</span> <span class="fu">matrix</span>(<span class="dv">0</span>, num_sim, <span class="dv">2</span>)</span>
-<span id="cb1266-3"><a href="collinearity.html#cb1266-3" aria-hidden="true" tabindex="-1"></a>mse_good       <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">0</span>, num_sim)</span></code></pre></div>
+<div class="sourceCode" id="cb1266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1266-1"><a href="collinearity.html#cb1266-1" tabindex="-1"></a>true_line_good <span class="ot">=</span> beta_0 <span class="sc">+</span> beta_1 <span class="sc">*</span> z1 <span class="sc">+</span> beta_2 <span class="sc">*</span> z2</span>
+<span id="cb1266-2"><a href="collinearity.html#cb1266-2" tabindex="-1"></a>beta_hat_good  <span class="ot">=</span> <span class="fu">matrix</span>(<span class="dv">0</span>, num_sim, <span class="dv">2</span>)</span>
+<span id="cb1266-3"><a href="collinearity.html#cb1266-3" tabindex="-1"></a>mse_good       <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">0</span>, num_sim)</span></code></pre></div>
 <p>We then perform simulations and store the same results.</p>
-<div class="sourceCode" id="cb1267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1267-1"><a href="collinearity.html#cb1267-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (s <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>num_sim) {</span>
-<span id="cb1267-2"><a href="collinearity.html#cb1267-2" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">=</span> true_line_good <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> sample_size, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sigma)</span>
-<span id="cb1267-3"><a href="collinearity.html#cb1267-3" aria-hidden="true" tabindex="-1"></a>  reg_out <span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> z1 <span class="sc">+</span> z2)</span>
-<span id="cb1267-4"><a href="collinearity.html#cb1267-4" aria-hidden="true" tabindex="-1"></a>  beta_hat_good[s, ] <span class="ot">=</span> <span class="fu">coef</span>(reg_out)[<span class="sc">-</span><span class="dv">1</span>]</span>
-<span id="cb1267-5"><a href="collinearity.html#cb1267-5" aria-hidden="true" tabindex="-1"></a>  mse_good[s] <span class="ot">=</span> <span class="fu">mean</span>(<span class="fu">resid</span>(reg_out) <span class="sc">^</span> <span class="dv">2</span>)</span>
-<span id="cb1267-6"><a href="collinearity.html#cb1267-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb1267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1267-1"><a href="collinearity.html#cb1267-1" tabindex="-1"></a><span class="cf">for</span> (s <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>num_sim) {</span>
+<span id="cb1267-2"><a href="collinearity.html#cb1267-2" tabindex="-1"></a>  y <span class="ot">=</span> true_line_good <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> sample_size, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sigma)</span>
+<span id="cb1267-3"><a href="collinearity.html#cb1267-3" tabindex="-1"></a>  reg_out <span class="ot">=</span> <span class="fu">lm</span>(y <span class="sc">~</span> z1 <span class="sc">+</span> z2)</span>
+<span id="cb1267-4"><a href="collinearity.html#cb1267-4" tabindex="-1"></a>  beta_hat_good[s, ] <span class="ot">=</span> <span class="fu">coef</span>(reg_out)[<span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb1267-5"><a href="collinearity.html#cb1267-5" tabindex="-1"></a>  mse_good[s] <span class="ot">=</span> <span class="fu">mean</span>(<span class="fu">resid</span>(reg_out) <span class="sc">^</span> <span class="dv">2</span>)</span>
+<span id="cb1267-6"><a href="collinearity.html#cb1267-6" tabindex="-1"></a>}</span></code></pre></div>
 <p>We’ll now investigate the differences.</p>
-<div class="sourceCode" id="cb1268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1268-1"><a href="collinearity.html#cb1268-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb1268-2"><a href="collinearity.html#cb1268-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(beta_hat_bad[, <span class="dv">1</span>],</span>
-<span id="cb1268-3"><a href="collinearity.html#cb1268-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>,</span>
-<span id="cb1268-4"><a href="collinearity.html#cb1268-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
-<span id="cb1268-5"><a href="collinearity.html#cb1268-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">expression</span>(<span class="st">&quot;Histogram of &quot;</span> <span class="sc">*</span><span class="fu">hat</span>(beta)[<span class="dv">1</span>]<span class="sc">*</span> <span class="st">&quot; with Collinearity&quot;</span>),</span>
-<span id="cb1268-6"><a href="collinearity.html#cb1268-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">hat</span>(beta)[<span class="dv">1</span>]),</span>
-<span id="cb1268-7"><a href="collinearity.html#cb1268-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">breaks =</span> <span class="dv">20</span>)</span>
-<span id="cb1268-8"><a href="collinearity.html#cb1268-8" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(beta_hat_good[, <span class="dv">1</span>],</span>
-<span id="cb1268-9"><a href="collinearity.html#cb1268-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>,</span>
-<span id="cb1268-10"><a href="collinearity.html#cb1268-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
-<span id="cb1268-11"><a href="collinearity.html#cb1268-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">expression</span>(<span class="st">&quot;Histogram of &quot;</span> <span class="sc">*</span><span class="fu">hat</span>(beta)[<span class="dv">1</span>]<span class="sc">*</span> <span class="st">&quot; without Collinearity&quot;</span>),</span>
-<span id="cb1268-12"><a href="collinearity.html#cb1268-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">hat</span>(beta)[<span class="dv">1</span>]),</span>
-<span id="cb1268-13"><a href="collinearity.html#cb1268-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">breaks =</span> <span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1268-1"><a href="collinearity.html#cb1268-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb1268-2"><a href="collinearity.html#cb1268-2" tabindex="-1"></a><span class="fu">hist</span>(beta_hat_bad[, <span class="dv">1</span>],</span>
+<span id="cb1268-3"><a href="collinearity.html#cb1268-3" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>,</span>
+<span id="cb1268-4"><a href="collinearity.html#cb1268-4" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
+<span id="cb1268-5"><a href="collinearity.html#cb1268-5" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">expression</span>(<span class="st">&quot;Histogram of &quot;</span> <span class="sc">*</span><span class="fu">hat</span>(beta)[<span class="dv">1</span>]<span class="sc">*</span> <span class="st">&quot; with Collinearity&quot;</span>),</span>
+<span id="cb1268-6"><a href="collinearity.html#cb1268-6" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">hat</span>(beta)[<span class="dv">1</span>]),</span>
+<span id="cb1268-7"><a href="collinearity.html#cb1268-7" tabindex="-1"></a>     <span class="at">breaks =</span> <span class="dv">20</span>)</span>
+<span id="cb1268-8"><a href="collinearity.html#cb1268-8" tabindex="-1"></a><span class="fu">hist</span>(beta_hat_good[, <span class="dv">1</span>],</span>
+<span id="cb1268-9"><a href="collinearity.html#cb1268-9" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>,</span>
+<span id="cb1268-10"><a href="collinearity.html#cb1268-10" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
+<span id="cb1268-11"><a href="collinearity.html#cb1268-11" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">expression</span>(<span class="st">&quot;Histogram of &quot;</span> <span class="sc">*</span><span class="fu">hat</span>(beta)[<span class="dv">1</span>]<span class="sc">*</span> <span class="st">&quot; without Collinearity&quot;</span>),</span>
+<span id="cb1268-12"><a href="collinearity.html#cb1268-12" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">hat</span>(beta)[<span class="dv">1</span>]),</span>
+<span id="cb1268-13"><a href="collinearity.html#cb1268-13" tabindex="-1"></a>     <span class="at">breaks =</span> <span class="dv">20</span>)</span></code></pre></div>
 <p><img src="collinearity_files/figure-html/unnamed-chunk-31-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>First, for <span class="math inline">\(\beta_1\)</span>, which has a true value of <span class="math inline">\(3\)</span>, we see that both with and without collinearity, the simulated values are centered near <span class="math inline">\(3\)</span>.</p>
-<div class="sourceCode" id="cb1269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1269-1"><a href="collinearity.html#cb1269-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(beta_hat_bad[, <span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb1269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1269-1"><a href="collinearity.html#cb1269-1" tabindex="-1"></a><span class="fu">mean</span>(beta_hat_bad[, <span class="dv">1</span>])</span></code></pre></div>
 <pre><code>## [1] 2.963325</code></pre>
-<div class="sourceCode" id="cb1271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1271-1"><a href="collinearity.html#cb1271-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(beta_hat_good[, <span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb1271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1271-1"><a href="collinearity.html#cb1271-1" tabindex="-1"></a><span class="fu">mean</span>(beta_hat_good[, <span class="dv">1</span>])</span></code></pre></div>
 <pre><code>## [1] 3.013414</code></pre>
 <p>The way the predictors were created, the <span class="math inline">\(S_{x_j x_j}\)</span> portion of the variance is the same for the predictors in both cases, but the variance is still much larger in the simulations performed with collinearity. The variance is so large in the collinear case, that sometimes the estimated coefficient for <span class="math inline">\(\beta_1\)</span> is negative!</p>
-<div class="sourceCode" id="cb1273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1273-1"><a href="collinearity.html#cb1273-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(beta_hat_bad[, <span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb1273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1273-1"><a href="collinearity.html#cb1273-1" tabindex="-1"></a><span class="fu">sd</span>(beta_hat_bad[, <span class="dv">1</span>])</span></code></pre></div>
 <pre><code>## [1] 1.633294</code></pre>
-<div class="sourceCode" id="cb1275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1275-1"><a href="collinearity.html#cb1275-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(beta_hat_good[, <span class="dv">1</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb1275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1275-1"><a href="collinearity.html#cb1275-1" tabindex="-1"></a><span class="fu">sd</span>(beta_hat_good[, <span class="dv">1</span>])</span></code></pre></div>
 <pre><code>## [1] 0.5484684</code></pre>
-<div class="sourceCode" id="cb1277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1277-1"><a href="collinearity.html#cb1277-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb1277-2"><a href="collinearity.html#cb1277-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(beta_hat_bad[, <span class="dv">2</span>],</span>
-<span id="cb1277-3"><a href="collinearity.html#cb1277-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>,</span>
-<span id="cb1277-4"><a href="collinearity.html#cb1277-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
-<span id="cb1277-5"><a href="collinearity.html#cb1277-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">expression</span>(<span class="st">&quot;Histogram of &quot;</span> <span class="sc">*</span><span class="fu">hat</span>(beta)[<span class="dv">2</span>]<span class="sc">*</span> <span class="st">&quot; with Collinearity&quot;</span>),</span>
-<span id="cb1277-6"><a href="collinearity.html#cb1277-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">hat</span>(beta)[<span class="dv">2</span>]),</span>
-<span id="cb1277-7"><a href="collinearity.html#cb1277-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">breaks =</span> <span class="dv">20</span>)</span>
-<span id="cb1277-8"><a href="collinearity.html#cb1277-8" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(beta_hat_good[, <span class="dv">2</span>],</span>
-<span id="cb1277-9"><a href="collinearity.html#cb1277-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>,</span>
-<span id="cb1277-10"><a href="collinearity.html#cb1277-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
-<span id="cb1277-11"><a href="collinearity.html#cb1277-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">expression</span>(<span class="st">&quot;Histogram of &quot;</span> <span class="sc">*</span><span class="fu">hat</span>(beta)[<span class="dv">2</span>]<span class="sc">*</span> <span class="st">&quot; without Collinearity&quot;</span>),</span>
-<span id="cb1277-12"><a href="collinearity.html#cb1277-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">hat</span>(beta)[<span class="dv">2</span>]),</span>
-<span id="cb1277-13"><a href="collinearity.html#cb1277-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">breaks =</span> <span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1277-1"><a href="collinearity.html#cb1277-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb1277-2"><a href="collinearity.html#cb1277-2" tabindex="-1"></a><span class="fu">hist</span>(beta_hat_bad[, <span class="dv">2</span>],</span>
+<span id="cb1277-3"><a href="collinearity.html#cb1277-3" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>,</span>
+<span id="cb1277-4"><a href="collinearity.html#cb1277-4" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
+<span id="cb1277-5"><a href="collinearity.html#cb1277-5" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">expression</span>(<span class="st">&quot;Histogram of &quot;</span> <span class="sc">*</span><span class="fu">hat</span>(beta)[<span class="dv">2</span>]<span class="sc">*</span> <span class="st">&quot; with Collinearity&quot;</span>),</span>
+<span id="cb1277-6"><a href="collinearity.html#cb1277-6" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">hat</span>(beta)[<span class="dv">2</span>]),</span>
+<span id="cb1277-7"><a href="collinearity.html#cb1277-7" tabindex="-1"></a>     <span class="at">breaks =</span> <span class="dv">20</span>)</span>
+<span id="cb1277-8"><a href="collinearity.html#cb1277-8" tabindex="-1"></a><span class="fu">hist</span>(beta_hat_good[, <span class="dv">2</span>],</span>
+<span id="cb1277-9"><a href="collinearity.html#cb1277-9" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>,</span>
+<span id="cb1277-10"><a href="collinearity.html#cb1277-10" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
+<span id="cb1277-11"><a href="collinearity.html#cb1277-11" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">expression</span>(<span class="st">&quot;Histogram of &quot;</span> <span class="sc">*</span><span class="fu">hat</span>(beta)[<span class="dv">2</span>]<span class="sc">*</span> <span class="st">&quot; without Collinearity&quot;</span>),</span>
+<span id="cb1277-12"><a href="collinearity.html#cb1277-12" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="fu">expression</span>(<span class="fu">hat</span>(beta)[<span class="dv">2</span>]),</span>
+<span id="cb1277-13"><a href="collinearity.html#cb1277-13" tabindex="-1"></a>     <span class="at">breaks =</span> <span class="dv">20</span>)</span></code></pre></div>
 <p><img src="collinearity_files/figure-html/unnamed-chunk-34-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>We see the same issues with <span class="math inline">\(\beta_2\)</span>. On average the estimates are correct, but the variance is again much larger with collinearity.</p>
-<div class="sourceCode" id="cb1278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1278-1"><a href="collinearity.html#cb1278-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(beta_hat_bad[, <span class="dv">2</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb1278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1278-1"><a href="collinearity.html#cb1278-1" tabindex="-1"></a><span class="fu">mean</span>(beta_hat_bad[, <span class="dv">2</span>])</span></code></pre></div>
 <pre><code>## [1] 4.025059</code></pre>
-<div class="sourceCode" id="cb1280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1280-1"><a href="collinearity.html#cb1280-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(beta_hat_good[, <span class="dv">2</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb1280"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1280-1"><a href="collinearity.html#cb1280-1" tabindex="-1"></a><span class="fu">mean</span>(beta_hat_good[, <span class="dv">2</span>])</span></code></pre></div>
 <pre><code>## [1] 4.004913</code></pre>
-<div class="sourceCode" id="cb1282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1282-1"><a href="collinearity.html#cb1282-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(beta_hat_bad[, <span class="dv">2</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb1282"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1282-1"><a href="collinearity.html#cb1282-1" tabindex="-1"></a><span class="fu">sd</span>(beta_hat_bad[, <span class="dv">2</span>])</span></code></pre></div>
 <pre><code>## [1] 1.642592</code></pre>
-<div class="sourceCode" id="cb1284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1284-1"><a href="collinearity.html#cb1284-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(beta_hat_good[, <span class="dv">2</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb1284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1284-1"><a href="collinearity.html#cb1284-1" tabindex="-1"></a><span class="fu">sd</span>(beta_hat_good[, <span class="dv">2</span>])</span></code></pre></div>
 <pre><code>## [1] 0.5470381</code></pre>
-<div class="sourceCode" id="cb1286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1286-1"><a href="collinearity.html#cb1286-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb1286-2"><a href="collinearity.html#cb1286-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(mse_bad,</span>
-<span id="cb1286-3"><a href="collinearity.html#cb1286-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>,</span>
-<span id="cb1286-4"><a href="collinearity.html#cb1286-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
-<span id="cb1286-5"><a href="collinearity.html#cb1286-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;MSE, with Collinearity&quot;</span>,</span>
-<span id="cb1286-6"><a href="collinearity.html#cb1286-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;MSE&quot;</span>)</span>
-<span id="cb1286-7"><a href="collinearity.html#cb1286-7" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(mse_good,</span>
-<span id="cb1286-8"><a href="collinearity.html#cb1286-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>,</span>
-<span id="cb1286-9"><a href="collinearity.html#cb1286-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
-<span id="cb1286-10"><a href="collinearity.html#cb1286-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;MSE, without Collinearity&quot;</span>,</span>
-<span id="cb1286-11"><a href="collinearity.html#cb1286-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;MSE&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1286-1"><a href="collinearity.html#cb1286-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb1286-2"><a href="collinearity.html#cb1286-2" tabindex="-1"></a><span class="fu">hist</span>(mse_bad,</span>
+<span id="cb1286-3"><a href="collinearity.html#cb1286-3" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>,</span>
+<span id="cb1286-4"><a href="collinearity.html#cb1286-4" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
+<span id="cb1286-5"><a href="collinearity.html#cb1286-5" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;MSE, with Collinearity&quot;</span>,</span>
+<span id="cb1286-6"><a href="collinearity.html#cb1286-6" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;MSE&quot;</span>)</span>
+<span id="cb1286-7"><a href="collinearity.html#cb1286-7" tabindex="-1"></a><span class="fu">hist</span>(mse_good,</span>
+<span id="cb1286-8"><a href="collinearity.html#cb1286-8" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">&quot;darkorange&quot;</span>,</span>
+<span id="cb1286-9"><a href="collinearity.html#cb1286-9" tabindex="-1"></a>     <span class="at">border =</span> <span class="st">&quot;dodgerblue&quot;</span>,</span>
+<span id="cb1286-10"><a href="collinearity.html#cb1286-10" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;MSE, without Collinearity&quot;</span>,</span>
+<span id="cb1286-11"><a href="collinearity.html#cb1286-11" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;MSE&quot;</span>)</span></code></pre></div>
 <p><img src="collinearity_files/figure-html/unnamed-chunk-37-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>Interestingly, in both cases, the MSE is roughly the same on average. Again, this is because collinearity affects a model’s ability to <em>explain</em>, but not predict.</p>
-<div class="sourceCode" id="cb1287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1287-1"><a href="collinearity.html#cb1287-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(mse_bad)</span></code></pre></div>
+<div class="sourceCode" id="cb1287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1287-1"><a href="collinearity.html#cb1287-1" tabindex="-1"></a><span class="fu">mean</span>(mse_bad)</span></code></pre></div>
 <pre><code>## [1] 17.7186</code></pre>
-<div class="sourceCode" id="cb1289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1289-1"><a href="collinearity.html#cb1289-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(mse_good)</span></code></pre></div>
+<div class="sourceCode" id="cb1289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1289-1"><a href="collinearity.html#cb1289-1" tabindex="-1"></a><span class="fu">mean</span>(mse_good)</span></code></pre></div>
 <pre><code>## [1] 17.70513</code></pre>
 </div>
 <div id="r-markdown-8" class="section level2 hasAnchor" number="15.4">
@@ -834,7 +834,7 @@ Y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \epsilon
 <ul>
 <li><a href="collinearity.Rmd" target="_blank"><code>collinearity.Rmd</code></a></li>
 </ul>
-<p>The file was created using <code>R</code> version <code>4.3.2</code>.</p>
+<p>The file was created using <code>R</code> version <code>4.4.1</code>.</p>
 
 </div>
 </div>

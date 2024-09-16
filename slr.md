@@ -22,14 +22,14 @@ Let's consider a simple example of how the speed of a car affects its stopping d
 To get a first look at the data you can use the `View()` function inside RStudio.
 
 
-```r
+``` r
 View(cars)
 ```
 
 We could also take a look at the variable names, the dimension of the data frame, and some sample observations with `str()`.
 
 
-```r
+``` r
 str(cars)
 ```
 
@@ -42,7 +42,7 @@ str(cars)
 As we have seen before with data frames, there are a number of additional functions to access some of this information directly.
 
 
-```r
+``` r
 dim(cars)
 ```
 
@@ -50,7 +50,7 @@ dim(cars)
 ## [1] 50  2
 ```
 
-```r
+``` r
 nrow(cars)
 ```
 
@@ -58,7 +58,7 @@ nrow(cars)
 ## [1] 50
 ```
 
-```r
+``` r
 ncol(cars)
 ```
 
@@ -69,14 +69,14 @@ ncol(cars)
 Other than the two variable names and the number of observations, this data is still just a bunch of numbers, so we should probably obtain some context.
 
 
-```r
+``` r
 ?cars
 ```
 
 Reading the documentation we learn that this is data gathered during the 1920s about the speed of cars and the resulting distance it takes for the car to come to a stop. The interesting task here is to determine how far a car travels before stopping, when traveling at a certain speed. So, we will first plot the stopping distance against the speed.
 
 
-```r
+``` r
 plot(dist ~ speed, data = cars,
      xlab = "Speed (in Miles Per Hour)",
      ylab = "Stopping Distance (in Feet)",
@@ -177,7 +177,7 @@ $$
 
 This is visually displayed in the image below. We see that for any value $x$, the expected value of $Y$ is $\beta_0 + \beta_1 x$. At each value of $x$, $Y$ has the same variance $\sigma^2$.
 
-![Simple Linear Regression Model [Introductory Statistics (Shafer and Zhang), UC Davis Stat Wiki](http://statwiki.ucdavis.edu/Textbook_Maps/General_Statistics/Map%3A_Introductory_Statistics_(Shafer_and_Zhang)/10%3A_Correlation_and_Regression/10.3_Modelling_Linear_Relationships_with_Randomness_Present){target="_blank"}](images/model.jpg)
+![Simple Linear Regression Model [Introductory Statistics (Shafer and Zhang), UC Davis Stat Wiki](https://stats.libretexts.org/Bookshelves/Introductory_Statistics/Introductory_Statistics_(Shafer_and_Zhang)/10%3A_Correlation_and_Regression/10.03%3A_Modelling_Linear_Relationships_with_Randomness_Present){target="_blank"}](images/model.jpg)
 
 Often, we directly talk about the assumptions that this model makes. They can be cleverly shortened to **LINE**.  
 
@@ -286,7 +286,7 @@ Traditionally we would now calculate $\hat{\beta}_0$ and $\hat{\beta}_1$ by hand
 To keep some notation consistent with the above mathematics, we will store the response variable as `y` and the predictor variable as `x`.
 
 
-```r
+``` r
 x = cars$speed
 y = cars$dist
 ```
@@ -294,7 +294,7 @@ y = cars$dist
 We then calculate the three sums of squares defined above.
 
 
-```r
+``` r
 Sxy = sum((x - mean(x)) * (y - mean(y)))
 Sxx = sum((x - mean(x)) ^ 2)
 Syy = sum((y - mean(y)) ^ 2)
@@ -308,7 +308,7 @@ c(Sxy, Sxx, Syy)
 Then finally calculate $\hat{\beta}_0$ and $\hat{\beta}_1$.
 
 
-```r
+``` r
 beta_1_hat = Sxy / Sxx
 beta_0_hat = mean(y) - beta_1_hat * mean(x)
 c(beta_0_hat, beta_1_hat)
@@ -343,7 +343,7 @@ $$
 We can now use this line to make predictions. First, let's see the possible $x$ values in the `cars` dataset. Since some $x$ values may appear more than once, we use the `unique()` to return each unique value only once.
 
 
-```r
+``` r
 unique(cars$speed)
 ```
 
@@ -358,7 +358,7 @@ $$
 $$
 
 
-```r
+``` r
 beta_0_hat + beta_1_hat * 8
 ```
 
@@ -371,7 +371,7 @@ This tells us that the estimated mean stopping distance of a car traveling at 8 
 Now let's make a prediction for the stopping distance of a car traveling at 21 miles per hour. This is considered **interpolation** as 21 is not an observed value of $x$. (But is in the data range.) We can use the special `%in%` operator to quickly verify this in `R`.
 
 
-```r
+``` r
 8 %in% unique(cars$speed)
 ```
 
@@ -379,7 +379,7 @@ Now let's make a prediction for the stopping distance of a car traveling at 21 m
 ## [1] TRUE
 ```
 
-```r
+``` r
 21 %in% unique(cars$speed)
 ```
 
@@ -388,7 +388,7 @@ Now let's make a prediction for the stopping distance of a car traveling at 21 m
 ```
 
 
-```r
+``` r
 min(cars$speed) < 21 & 21 < max(cars$speed)
 ```
 
@@ -401,7 +401,7 @@ $$
 $$
 
 
-```r
+``` r
 beta_0_hat + beta_1_hat * 21
 ```
 
@@ -412,7 +412,7 @@ beta_0_hat + beta_1_hat * 21
 Lastly, we can make a prediction for the stopping distance of a car traveling at 50 miles per hour. This is considered [**extrapolation**](https://xkcd.com/605/){target="_blank"} as 50 is not an observed value of $x$ and is outside data range. We should be less confident in predictions of this type.
 
 
-```r
+``` r
 range(cars$speed)
 ```
 
@@ -420,7 +420,7 @@ range(cars$speed)
 ## [1]  4 25
 ```
 
-```r
+``` r
 range(cars$speed)[1] < 50 & 50 < range(cars$speed)[2] 
 ```
 
@@ -433,7 +433,7 @@ $$
 $$
 
 
-```r
+``` r
 beta_0_hat + beta_1_hat * 50
 ```
 
@@ -462,7 +462,7 @@ $$
 Let's calculate the residual for the prediction we made for a car traveling 8 miles per hour. First, we need to obtain the observed value of $y$ for this $x$ value.
 
 
-```r
+``` r
 which(cars$speed == 8)
 ```
 
@@ -470,7 +470,7 @@ which(cars$speed == 8)
 ## [1] 5
 ```
 
-```r
+``` r
 cars[5, ]
 ```
 
@@ -479,7 +479,7 @@ cars[5, ]
 ## 5     8   16
 ```
 
-```r
+``` r
 cars[which(cars$speed == 8), ]
 ```
 
@@ -495,7 +495,7 @@ e = 16 - 13.88 = 2.12
 $$
 
 
-```r
+``` r
 16 - (beta_0_hat + beta_1_hat * 8)
 ```
 
@@ -544,7 +544,7 @@ Here, $s^2$ is the estimate of $\sigma^2$ when we have a single random variable 
 Now, in the regression case, with $s_e^2$ each $y$ has a different mean because of the relationship with $x$. Thus, for each $y_i$, we use a different estimate of the mean, that is $\hat{y}_i$.
 
 
-```r
+``` r
 y_hat = beta_0_hat + beta_1_hat * x
 e     = y - y_hat
 n     = length(e)
@@ -559,7 +559,7 @@ s2_e
 Just as with the univariate measure of variance, this value of 236.53 doesn't have a practical interpretation in terms of stopping distance. Taking the square root, however, computes the standard deviation of the residuals, also known as *residual standard error*.
 
 
-```r
+``` r
 s_e = sqrt(s2_e)
 s_e
 ```
@@ -620,7 +620,7 @@ $$
 The quantity "Sum of Squares Error," $\text{SSE}$, represents the **unexplained variation** of the observed $y$ values. You will often see $\text{SSE}$ written as $\text{RSS}$, or "Residual Sum of Squares."
 
 
-```r
+``` r
 SST   = sum((y - mean(y)) ^ 2)
 SSReg = sum((y_hat - mean(y)) ^ 2)
 SSE   = sum((y - y_hat) ^ 2)
@@ -639,7 +639,7 @@ s_e^2 = \frac{\text{SSE}}{n - 2}.
 $$
 
 
-```r
+``` r
 SSE / (n - 2)
 ```
 
@@ -650,7 +650,7 @@ SSE / (n - 2)
 We can use `R` to verify that this matches our previous calculation of $s_e^2$.
 
 
-```r
+``` r
 s2_e == SSE / (n - 2)
 ```
 
@@ -676,7 +676,7 @@ $$
 The coefficient of determination is interpreted as the proportion of observed variation in $y$ that can be explained by the simple linear regression model.
 
 
-```r
+``` r
 R2 = SSReg / SST
 R2
 ```
@@ -713,7 +713,7 @@ The `lm()` command is used to fit **linear models** which actually account for a
 We'll continue using the `cars` data, and essentially use the `lm()` function to check the work we had previously done.
 
 
-```r
+``` r
 stop_dist_model = lm(dist ~ speed, data = cars)
 ```
 
@@ -722,7 +722,7 @@ This line of code fits our very first linear model. The syntax should look somew
 The variable `stop_dist_model` now contains a wealth of information, and we will now see how to extract and use that information. The first thing we will do is simply output whatever is stored immediately in the variable `stop_dist_model`.
 
 
-```r
+``` r
 stop_dist_model
 ```
 
@@ -739,7 +739,7 @@ stop_dist_model
 We see that it first tells us the formula we input into `R`, that is `lm(formula = dist ~ speed, data = cars)`. We also see the coefficients of the model. We can check that these are what we had calculated previously. (Minus some rounding that `R` is doing when displaying the results. They are stored with full precision.)
 
 
-```r
+``` r
 c(beta_0_hat, beta_1_hat)
 ```
 
@@ -750,7 +750,7 @@ c(beta_0_hat, beta_1_hat)
 Next, it would be nice to add the fitted line to the scatterplot. To do so we will use the `abline()` function.
 
 
-```r
+``` r
 plot(dist ~ speed, data = cars,
      xlab = "Speed (in Miles Per Hour)",
      ylab = "Stopping Distance (in Feet)",
@@ -770,7 +770,7 @@ The `abline()` function is used to add lines of the form $a + bx$ to a plot. (He
 The "thing" that is returned by the `lm()` function is actually an object of class `lm` which is a list. The exact details of this are unimportant unless you are seriously interested in the inner-workings of `R`, but know that we can determine the names of the elements of the list using the `names()` command.
 
 
-```r
+``` r
 names(stop_dist_model)
 ```
 
@@ -783,7 +783,7 @@ names(stop_dist_model)
 We can then use this information to, for example, access the residuals using the `$` operator.
 
 
-```r
+``` r
 stop_dist_model$residuals
 ```
 
@@ -809,7 +809,7 @@ stop_dist_model$residuals
 Another way to access stored information in `stop_dist_model` are the `coef()`, `resid()`, and `fitted()` functions. These return the coefficients, residuals, and fitted values, respectively.
 
 
-```r
+``` r
 coef(stop_dist_model)
 ```
 
@@ -818,7 +818,7 @@ coef(stop_dist_model)
 ##  -17.579095    3.932409
 ```
 
-```r
+``` r
 resid(stop_dist_model)
 ```
 
@@ -841,7 +841,7 @@ resid(stop_dist_model)
 ##   4.268876
 ```
 
-```r
+``` r
 fitted(stop_dist_model)
 ```
 
@@ -865,7 +865,7 @@ fitted(stop_dist_model)
 An `R` function that is useful in many situations is `summary()`. We see that when it is called on our model, it returns a good deal of information. By the end of the course, you will know what every value here is used for. For now, you should immediately notice the coefficient estimates, and you may recognize the $R^2$ value we saw earlier.
 
 
-```r
+``` r
 summary(stop_dist_model)
 ```
 
@@ -893,7 +893,7 @@ summary(stop_dist_model)
 The `summary()` command also returns a list, and we can again use `names()` to learn what about the elements of this list.
 
 
-```r
+``` r
 names(summary(stop_dist_model))
 ```
 
@@ -906,7 +906,7 @@ names(summary(stop_dist_model))
 So, for example, if we wanted to directly access the value of $R^2$, instead of copy and pasting it out of the printed statement from `summary()`, we could do so.
 
 
-```r
+``` r
 summary(stop_dist_model)$r.squared
 ```
 
@@ -917,7 +917,7 @@ summary(stop_dist_model)$r.squared
 Another value we may want to access is $s_e$, which `R` calls `sigma`.
 
 
-```r
+``` r
 summary(stop_dist_model)$sigma
 ```
 
@@ -936,7 +936,7 @@ Often it is useful to talk about $s_e$ (or RSE) instead of $s_e^2$ because of th
 Another useful function, which we will use almost as often as `lm()` is the `predict()` function.
 
 
-```r
+``` r
 predict(stop_dist_model, newdata = data.frame(speed = 8))
 ```
 
@@ -950,7 +950,7 @@ The above code reads "predict the stopping distance of a car traveling 8 miles p
 We could also predict multiple values at once.
 
 
-```r
+``` r
 predict(stop_dist_model, newdata = data.frame(speed = c(8, 21, 50)))
 ```
 
@@ -970,7 +970,7 @@ $$
 Or we could calculate the fitted value for each of the original data points. We can simply supply the original data frame, `cars`, since it contains a variables called `speed` which has the values we would like to predict at.
 
 
-```r
+``` r
 predict(stop_dist_model, newdata = cars)
 ```
 
@@ -991,14 +991,14 @@ predict(stop_dist_model, newdata = cars)
 ## 76.798715 80.731124
 ```
 
-```r
+``` r
 # predict(stop_dist_model, newdata = data.frame(speed = cars$speed))
 ```
 
 This is actually equivalent to simply calling `predict()` on `stop_dist_model` without a second argument.
 
 
-```r
+``` r
 predict(stop_dist_model)
 ```
 
@@ -1022,7 +1022,7 @@ predict(stop_dist_model)
 Note that then in this case, this is the same as using `fitted()`.
 
 
-```r
+``` r
 fitted(stop_dist_model)
 ```
 
@@ -1168,7 +1168,7 @@ $$
 We first set the true parameters of the model to be simulated.
 
 
-```r
+``` r
 num_obs = 21
 beta_0  = 5
 beta_1  = -2
@@ -1178,7 +1178,7 @@ sigma   = 3
 Next, we obtain simulated values of $\epsilon_i$ after setting a seed for reproducibility.
 
 
-```r
+``` r
 set.seed(1)
 epsilon = rnorm(n = num_obs, mean = 0, sd = sigma)
 ```
@@ -1186,7 +1186,7 @@ epsilon = rnorm(n = num_obs, mean = 0, sd = sigma)
 Now, since the $x_i$ values in SLR are considered fixed and known, we simply specify 21 values. Another common practice is to generate them from a uniform distribution, and then use them for the remainder of the analysis.
 
 
-```r
+``` r
 x_vals = seq(from = 0, to = 10, length.out = num_obs)
 # set.seed(1)
 # x_vals = runif(num_obs, 0, 10)
@@ -1195,14 +1195,14 @@ x_vals = seq(from = 0, to = 10, length.out = num_obs)
 We then generate the $y$ values according to the specified functional relationship.
 
 
-```r
+``` r
 y_vals = beta_0 + beta_1 * x_vals + epsilon
 ```
 
 The data, $(x_i, y_i)$, represent a possible sample from the true distribution. Now to check how well the method of least squares works, we use `lm()` to fit the model to our simulated data, then take a look at the estimated coefficients.
 
 
-```r
+``` r
 sim_fit = lm(y_vals ~ x_vals)
 coef(sim_fit)
 ```
@@ -1215,7 +1215,7 @@ coef(sim_fit)
 And look at that, they aren't too far from the true parameters we specified!
 
 
-```r
+``` r
 plot(y_vals ~ x_vals)
 abline(sim_fit)
 ```
@@ -1229,7 +1229,7 @@ We should say here, that we're being sort of lazy, and not the good kind of lazy
 The function below, `sim_slr()`, can be used for the same task as above, but is much more flexible. Notice that we provide `x` to the function, instead of generating `x` inside the function. In the SLR model, the $x_i$ are considered known values. That is, they are not random, so we do not assume a distribution for the $x_i$. Because of this, we will repeatedly use the same `x` values across all simulations.
 
 
-```r
+``` r
 sim_slr = function(x, beta_0 = 10, beta_1 = 5, sigma = 1) {
   n = length(x)
   epsilon = rnorm(n, mean = 0, sd = sigma)
@@ -1241,7 +1241,7 @@ sim_slr = function(x, beta_0 = 10, beta_1 = 5, sigma = 1) {
 Here, we use the function to repeat the analysis above.
 
 
-```r
+``` r
 set.seed(1)
 sim_data = sim_slr(x = x_vals, beta_0 = 5, beta_1 = -2, sigma = 3)
 ```
@@ -1249,7 +1249,7 @@ sim_data = sim_slr(x = x_vals, beta_0 = 5, beta_1 = -2, sigma = 3)
 This time, the simulated observations are stored in a data frame.
 
 
-```r
+``` r
 head(sim_data)
 ```
 
@@ -1266,7 +1266,7 @@ head(sim_data)
 Now when we fit the model with `lm()` we can use a `data` argument, a very good practice.
 
 
-```r
+``` r
 sim_fit = lm(response ~ predictor, data = sim_data)
 coef(sim_fit)
 ```
@@ -1279,7 +1279,7 @@ coef(sim_fit)
 And this time, we'll make the plot look a lot nicer.
 
 
-```r
+``` r
 plot(response ~ predictor, data = sim_data,
      xlab = "Simulated Predictor Variable",
      ylab = "Simulated Response Variable",
@@ -1309,4 +1309,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`slr.Rmd`](slr.Rmd){target="_blank"}
 
-The file was created using `R` version `4.3.2`.
+The file was created using `R` version `4.4.1`.

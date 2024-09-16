@@ -84,7 +84,7 @@ For the stated model and assuming the null hypothesis is true, the $t$ test stat
 As an example, suppose we are interested in the effect of [melatonin](https://en.wikipedia.org/wiki/Melatonin){target="_blank"} on sleep duration. A researcher obtains a random sample of 20 adult males. Of these subjects, 10 are randomly chosen for the control group, which will receive a placebo. The remaining 10 will be given 5mg of melatonin before bed. The sleep duration in hours of each subject is then measured. The researcher chooses a significance level of $\alpha = 0.10$. Was sleep duration affected by the melatonin?
 
 
-```r
+``` r
 melatonin
 ```
 
@@ -121,7 +121,7 @@ H_0: \mu_C = \mu_T \quad \text{vs} \quad H_1: \mu_C \neq \mu_T
 To do so in `R`, we use the `t.test()` function, with the `var.equal` argument set to `TRUE`.
 
 
-```r
+``` r
 t.test(sleep ~ group, data = melatonin, var.equal = TRUE)
 ```
 
@@ -142,7 +142,7 @@ t.test(sleep ~ group, data = melatonin, var.equal = TRUE)
 At a significance level of $\alpha = 0.10$, we reject the null hypothesis. It seems that the melatonin had a **statistically significant** effect. Be aware that statistical significance is not always the same as scientific or **practical significance**. To determine practical significance, we need to investigate the **effect size** in the context of the situation. Here the effect size is the difference of the sample means.
 
 
-```r
+``` r
 t.test(sleep ~ group, data = melatonin, var.equal = TRUE)$estimate
 ```
 
@@ -156,7 +156,7 @@ Here we see that the subjects in the melatonin group sleep an average of about 1
 With a big enough sample size, we could make an effect size of say, four minutes statistically significant. Is it worth taking a pill every night to get an extra four minutes of sleep? (Probably not.)
 
 
-```r
+``` r
 boxplot(sleep ~ group, data = melatonin, col = 5:6)
 ```
 
@@ -332,7 +332,7 @@ H_0: \mu_A = \mu_B = \mu_C = \mu_D
 where, for example, $\mu_A$ is the mean blood coagulation time for an animal that ate diet `A`.
 
 
-```r
+``` r
 library(faraway)
 names(coagulation)
 ```
@@ -341,7 +341,7 @@ names(coagulation)
 ## [1] "coag" "diet"
 ```
 
-```r
+``` r
 plot(coag ~ diet, data = coagulation, col = 2:5)
 ```
 
@@ -352,7 +352,7 @@ plot(coag ~ diet, data = coagulation, col = 2:5)
 We first load the data and create the relevant boxplot. The plot alone suggests a difference of means. The `aov()` function is used to obtain the relevant sums of squares. Using the `summary()` function on the output from `aov()` creates the desired ANOVA table (without the unneeded row for total).
 
 
-```r
+``` r
 coag_aov = aov(coag ~ diet, data = coagulation)
 coag_aov
 ```
@@ -370,7 +370,7 @@ coag_aov
 ## Estimated effects may be unbalanced
 ```
 
-```r
+``` r
 summary(coag_aov)
 ```
 
@@ -385,7 +385,7 @@ summary(coag_aov)
 Were we to run this experiment, we would have pre-specified a significance level. However, notice that the p-value of this test is incredibly low, so using any reasonable significance level we would reject the null hypothesis. Thus we believe the diets had an effect on blood coagulation time.
 
 
-```r
+``` r
 diets = data.frame(diet = unique(coagulation$diet))
 data.frame(diets, coag = predict(coag_aov, diets))
 ```
@@ -405,7 +405,7 @@ Here, we've created a dataframe with a row for each diet. By predicting on this 
 When performing ANOVA in `R`, be sure the grouping variable is a factor variable. If it is not, your result might not be ANOVA, but instead a linear regression with the predictor variable considered numeric.
 
 
-```r
+``` r
 set.seed(42)
 response = rnorm(15)
 group    = c(rep(1, 5), rep(2, 5), rep(3, 5))
@@ -419,7 +419,7 @@ summary(aov(response ~ group, data = bad)) # wrong DF!
 ## Residuals   13 14.698  1.1306
 ```
 
-```r
+``` r
 good = data.frame(response, group = as.factor(group))
 summary(aov(response ~ group, data = good))
 ```
@@ -430,7 +430,7 @@ summary(aov(response ~ group, data = good))
 ## Residuals   12 14.484  1.2070
 ```
 
-```r
+``` r
 is.factor(bad$group)  # 1, 2, and 3 are numbers.
 ```
 
@@ -438,7 +438,7 @@ is.factor(bad$group)  # 1, 2, and 3 are numbers.
 ## [1] FALSE
 ```
 
-```r
+``` r
 is.factor(good$group) # 1, 2, and 3 are labels.
 ```
 
@@ -451,7 +451,7 @@ is.factor(good$group) # 1, 2, and 3 are labels.
 Here we verify the distribution of the test statistic under the null hypothesis. We simulate from a null model (equal variance) to obtain an empirical distribution of the $F$ statistic. We add the curve for the expected distribution.
 
 
-```r
+``` r
 library(broom)
 
 sim_anova = function(n = 10, mu_a = 0, mu_b = 0, mu_c = 0, mu_d = 0, sigma = 1, stat = TRUE) {
@@ -481,7 +481,7 @@ sim_anova = function(n = 10, mu_a = 0, mu_b = 0, mu_c = 0, mu_d = 0, sigma = 1, 
 ```
 
 
-```r
+``` r
 f_stats = replicate(n = 5000, sim_anova(stat = TRUE))
 ```
 
@@ -491,7 +491,7 @@ f_stats = replicate(n = 5000, sim_anova(stat = TRUE))
 
 
 
-```r
+``` r
 hist(f_stats, breaks = 100, prob = TRUE, border = "dodgerblue", main = "Empirical Distribution of F")
 curve(df(x, df1 = 4 - 1, df2 = 40 - 4), col = "darkorange", add = TRUE, lwd = 2)
 ```
@@ -526,7 +526,7 @@ A number of things can affect the power of a test:
 The following simulations look at the effect of significance level, effect size, and noise level on the power of an ANOVA $F$-test. Homework will look into sample size and balance.
 
 
-```r
+``` r
 p_vals = replicate(n = 1000, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1,
                                      sigma = 1.5, stat = FALSE))
 mean(p_vals < 0.05)
@@ -536,7 +536,7 @@ mean(p_vals < 0.05)
 ## [1] 0.661
 ```
 
-```r
+``` r
 mean(p_vals < 0.01)
 ```
 
@@ -545,7 +545,7 @@ mean(p_vals < 0.01)
 ```
 
 
-```r
+``` r
 p_vals = replicate(n = 1000, sim_anova(mu_a = -1, mu_b = 0, mu_c = 0, mu_d = 1,
                                      sigma = 2.0, stat = FALSE))
 mean(p_vals < 0.05)
@@ -555,7 +555,7 @@ mean(p_vals < 0.05)
 ## [1] 0.425
 ```
 
-```r
+``` r
 mean(p_vals < 0.01)
 ```
 
@@ -564,7 +564,7 @@ mean(p_vals < 0.01)
 ```
 
 
-```r
+``` r
 p_vals = replicate(n = 1000, sim_anova(mu_a = -2, mu_b = 0, mu_c = 0, mu_d = 2,
                                      sigma = 2.0, stat = FALSE))
 mean(p_vals < 0.05)
@@ -574,7 +574,7 @@ mean(p_vals < 0.05)
 ## [1] 0.956
 ```
 
-```r
+``` r
 mean(p_vals < 0.01)
 ```
 
@@ -587,7 +587,7 @@ mean(p_vals < 0.01)
 Suppose we reject the null hypothesis from the ANOVA test for equal means. That tells us that the means are different. But which means? All of them? Some of them? The obvious strategy is to test all possible comparisons of two means. We can do this easily in `R`.
 
 
-```r
+``` r
 with(coagulation, pairwise.t.test(coag, diet, p.adj = "none"))
 ```
 
@@ -605,7 +605,7 @@ with(coagulation, pairwise.t.test(coag, diet, p.adj = "none"))
 ## P value adjustment method: none
 ```
 
-```r
+``` r
 # pairwise.t.test(coagulation$coag, coagulation$diet, p.adj = "none")
 ```
 
@@ -624,7 +624,7 @@ With this in mind, one of the simplest adjustments we can make, is to increase t
 \]
 
 
-```r
+``` r
 with(coagulation, pairwise.t.test(coag, diet, p.adj = "bonferroni"))
 ```
 
@@ -647,7 +647,7 @@ We see that these p-values are much higher than the unadjusted p-values, thus, w
 We can simulate the 100 test scenarios to illustrate this point.
 
 
-```r
+``` r
 get_p_val = function() {
   
   # create data for two groups, equal mean
@@ -663,7 +663,7 @@ get_p_val = function() {
 
 
 
-```r
+``` r
 set.seed(1337)
 
 # FWER with 100 tests
@@ -678,7 +678,7 @@ mean(replicate(1000, any(replicate(100, get_p_val()) < 0.05)))
 ```
 
 
-```r
+``` r
 # FWER with 100 tests
 # desired rate = 0.05
 # bonferroni adjustment
@@ -695,7 +695,7 @@ For the specific case of testing all two-way mean differences after an ANOVA tes
 Tukey's Honest Significance difference can be applied directly to an object which was created using `aov()`. It will adjust the p-values of the pairwise comparisons of the means to control the FWER, in this case, for 0.05. Notice it also gives confidence intervals for the difference of the means.
 
 
-```r
+``` r
 TukeyHSD(coag_aov, conf.level = 0.95)
 ```
 
@@ -720,7 +720,7 @@ Based on these results, we see no difference between `A` and `D` as well as `B` 
 Also, nicely, we can easily produce a plot of these confidence intervals.
 
 
-```r
+``` r
 plot(TukeyHSD(coag_aov, conf.level = 0.95))
 ```
 
@@ -811,7 +811,7 @@ The question then, is which of these models should we use if we have two factors
 Let's discuss these comparisons by looking at some examples. We'll first look at the `rats` data from the `faraway` package. There are two factors here: `poison` and `treat`. We use the `levels()` function to extract the levels of a factor variable.
 
 
-```r
+``` r
 levels(rats$poison)
 ```
 
@@ -819,7 +819,7 @@ levels(rats$poison)
 ## [1] "I"   "II"  "III"
 ```
 
-```r
+``` r
 levels(rats$treat)
 ```
 
@@ -832,7 +832,7 @@ Here, 48 rats were randomly assigned both one of three poisons and one of four p
 Before running any tests, we should first look at the data. We will create **interaction plots**, which will help us visualize the effect of one factor, as we move through the levels of another factor.
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 with(rats, interaction.plot(poison, treat, time, lwd = 2, col = 1:4))
 with(rats, interaction.plot(treat, poison, time, lwd = 2, col = 1:3))
@@ -849,7 +849,7 @@ The obvious indication of interaction would be lines that cross while heading in
 Let's fit each of the possible models, then investigate their estimates for each of the group means.
 
 
-```r
+``` r
 rats_int   = aov(time ~ poison * treat, data = rats) # interaction model
 rats_add   = aov(time ~ poison + treat, data = rats) # additive model
 rats_pois  = aov(time ~ poison , data = rats)        # single factor model   
@@ -860,7 +860,7 @@ rats_null  = aov(time ~ 1, data = rats)              # null model
 To get the estimates, we'll create a table which we will predict on. 
 
 
-```r
+``` r
 rats_table = expand.grid(poison = unique(rats$poison), treat = unique(rats$treat))
 rats_table
 ```
@@ -881,7 +881,7 @@ rats_table
 ## 12    III     D
 ```
 
-```r
+``` r
 matrix(paste0(rats_table$poison, "-", rats_table$treat) , 4, 3, byrow = TRUE)
 ```
 
@@ -896,7 +896,7 @@ matrix(paste0(rats_table$poison, "-", rats_table$treat) , 4, 3, byrow = TRUE)
 Since we'll be repeating ourselves a number of times, we write a function to perform the prediction. Some housekeeping is done to keep the estimates in order, and provide row and column names. Above, we've shown where each of the estimates will be placed in the resulting matrix.
 
 
-```r
+``` r
 get_est_means = function(model, table) {
   mat = matrix(predict(model, table), nrow = 4, ncol = 3, byrow = TRUE)
   colnames(mat) = c("I", "II", "III")
@@ -908,7 +908,7 @@ get_est_means = function(model, table) {
 First, we obtain the estimates from the **interaction** model. Note that each cell has a different value. 
 
 
-```r
+``` r
 knitr::kable(get_est_means(model = rats_int, table = rats_table))
 ```
 
@@ -932,7 +932,7 @@ D & 0.6100 & 0.6675 & 0.325\\
 Next, we obtain the estimates from the **additive** model. Again, each cell has a different value. We also see that these estimates are somewhat close to those from the interaction model.
 
 
-```r
+``` r
 knitr::kable(get_est_means(model = rats_add, table = rats_table))
 ```
 
@@ -954,7 +954,7 @@ D & 0.6722917 & 0.5991667 & 0.3310417\\
 To understand the difference, let's consider the effect of the treatments.
 
 
-```r
+``` r
 additive_means = get_est_means(model = rats_add, table = rats_table)
 additive_means["A",] - additive_means["B",]
 ```
@@ -965,7 +965,7 @@ additive_means["A",] - additive_means["B",]
 ```
 
 
-```r
+``` r
 interaction_means = get_est_means(model = rats_int, table = rats_table)
 interaction_means["A",] - interaction_means["B",]
 ```
@@ -980,7 +980,7 @@ This is the key difference between the interaction and additive models. The diff
 The remaining three models are much simpler, having either only row or only column effects. Or no effects in the case of the null model.
 
 
-```r
+``` r
 knitr::kable(get_est_means(model = rats_pois, table = rats_table))
 ```
 
@@ -1000,7 +1000,7 @@ D & 0.6175 & 0.544375 & 0.27625\\
 \end{tabular}
 
 
-```r
+``` r
 knitr::kable(get_est_means(model = rats_treat, table = rats_table))
 ```
 
@@ -1020,7 +1020,7 @@ D & 0.5341667 & 0.5341667 & 0.5341667\\
 \end{tabular}
 
 
-```r
+``` r
 knitr::kable(get_est_means(model = rats_null, table = rats_table))
 ```
 
@@ -1087,7 +1087,7 @@ These tests should be performed according to the model **hierarchy**. First cons
 ![Model Hierarchy](images/hierarchy.png)
 
 
-```r
+``` r
 summary(aov(time ~ poison * treat, data = rats))
 ```
 
@@ -1110,7 +1110,7 @@ Using a significance level of $\alpha = 0.05$, we see that the interaction is no
 Within the additive model, we could do further testing about the main effects.
 
 
-```r
+``` r
 TukeyHSD(aov(time ~ poison + treat, data = rats))
 ```
 
@@ -1141,7 +1141,7 @@ TukeyHSD(aov(time ~ poison + treat, data = rats))
 For an example **with** interaction, we investigate the `warpbreaks` dataset, a default dataset in `R`.
 
 
-```r
+``` r
 par(mfrow = c(1, 2))
 with(warpbreaks, interaction.plot(wool, tension, breaks, lwd = 2, col = 2:4))
 with(warpbreaks, interaction.plot(tension, wool, breaks, lwd = 2, col = 2:3))
@@ -1154,7 +1154,7 @@ with(warpbreaks, interaction.plot(tension, wool, breaks, lwd = 2, col = 2:3))
 Either plot makes it rather clear that the `wool` and `tensions` factors interact.
 
 
-```r
+``` r
 summary(aov(breaks ~ wool * tension, data = warpbreaks))
 ```
 
@@ -1180,4 +1180,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`anova.Rmd`](anova.Rmd){target="_blank"}
 
-The file was created using `R` version `4.3.2`.
+The file was created using `R` version `4.4.1`.

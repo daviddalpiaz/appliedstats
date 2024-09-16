@@ -137,7 +137,7 @@ assumes that $y$ is a linear combination of $x_{1}$, $x_{3}$, and $x_{5}$ as wel
 Suppose we then *fit* this model to some data and obtain the **fitted model**. For example, in `R` we would use
 
 
-```r
+``` r
 fit = lm(y ~ x1 + x3 + x5, data = some_data)
 ```
 
@@ -196,7 +196,7 @@ A word of caution when using a model to *explain* a relationship. There are two 
 Just because two variables are correlated does not necessarily mean that one causes the other. For example, consider modeling `mpg` as only a function of `hp`.
 
 
-```r
+``` r
 plot(mpg ~ hp, data = autompg, col = "dodgerblue", pch = 20, cex = 1.5)
 ```
 
@@ -275,4 +275,4 @@ The `R` Markdown file for this chapter can be found here:
 
 - [`model-building.Rmd`](model-building.Rmd){target="_blank"}
 
-The file was created using `R` version `4.3.2`.
+The file was created using `R` version `4.4.1`.

@@ -37,7 +37,7 @@ $$
 `R` code will be typeset using a `monospace` font which is syntax highlighted.
 
 
-```r
+``` r
 a = 3
 b = 4
 sqrt(a^2 + b^2)

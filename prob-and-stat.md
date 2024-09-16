@@ -29,7 +29,7 @@ For example, consider a random variable $X$ which is $N(\mu = 2, \sigma^2 = 25)$
 To calculate the value of the pdf at `x = 3`, that is, the height of the curve at `x = 3`, use:
 
 
-```r
+``` r
 dnorm(x = 3, mean = 2, sd = 5)
 ```
 
@@ -40,7 +40,7 @@ dnorm(x = 3, mean = 2, sd = 5)
 To calculate the value of the cdf at `x = 3`, that is, $P(X \leq 3)$, the probability that $X$ is less than or equal to `3`, use:
 
 
-```r
+``` r
 pnorm(q = 3, mean = 2, sd = 5)
 ```
 
@@ -51,7 +51,7 @@ pnorm(q = 3, mean = 2, sd = 5)
 Or, to calculate the quantile for probability 0.975, use:
 
 
-```r
+``` r
 qnorm(p = 0.975, mean = 2, sd = 5)
 ```
 
@@ -62,13 +62,13 @@ qnorm(p = 0.975, mean = 2, sd = 5)
 Lastly, to generate a random sample of size `n = 10`, use:
 
 
-```r
+``` r
 rnorm(n = 10, mean = 2, sd = 5)
 ```
 
 ```
-##  [1]  8.0283428  3.1691218 11.4638375  5.8073649 -1.1075880  2.1513125
-##  [7]  0.2073891  6.2238014  8.8360299  0.4046592
+##  [1] -3.4256036  8.7541787 -0.8925227  0.7328776  8.3390382 -0.2870347
+##  [7]  9.4780333 -3.6029543  7.1857806  7.4014080
 ```
 
 These functions exist for many other distributions, including but not limited to:
@@ -84,7 +84,7 @@ These functions exist for many other distributions, including but not limited to
 Where `*` can be `d`, `p`, `q`, and `r`. Each distribution will have its own set of parameters which need to be passed to the functions as arguments. For example, `dbinom()` would not have arguments for `mean` and `sd`, since those are not parameters of the distribution. Instead a binomial distribution is usually parameterized by $n$ and $p$, however `R` chooses to call them something else. To find the names that `R` uses we would use `?dbinom` and see that `R` instead calls the arguments `size` and `prob`. For example:
 
 
-```r
+``` r
 dbinom(x = 6, size = 10, prob = 0.75)
 ```
 
@@ -134,7 +134,7 @@ where $t_{\alpha/2, n-1}$ is the critical value such that $P\left(t>t_{\alpha/2,
 Suppose a grocery store sells "16 ounce" boxes of *Captain Crisp* cereal. A random sample of 9 boxes was taken and weighed. The weight in ounces is stored in the data frame `capt_crisp`.
 
 
-```r
+``` r
 capt_crisp = data.frame(weight = c(15.5, 16.2, 16.1, 15.8, 15.6, 16.0, 15.8, 15.9, 16.2))
 ```
 
@@ -149,7 +149,7 @@ t = \frac{\bar{x} - \mu_{0}}{s / \sqrt{n}}
 The sample mean $\bar{x}$ and the sample standard deviation $s$ can be easily computed using `R`. We also create variables which store the hypothesized mean and the sample size.
 
 
-```r
+``` r
 x_bar = mean(capt_crisp$weight)
 s     = sd(capt_crisp$weight)
 mu_0  = 16
@@ -159,7 +159,7 @@ n     = 9
 We can then easily compute the test statistic.
 
 
-```r
+``` r
 t = (x_bar - mu_0) / (s / sqrt(n))
 t
 ```
@@ -177,7 +177,7 @@ P(t_{8} < -1.2)
 \]
 
 
-```r
+``` r
 pt(t, df = n - 1)
 ```
 
@@ -190,7 +190,7 @@ We now have the p-value of our test, which is greater than our significance leve
 Alternatively, this entire process could have been completed using one line of `R` code.
 
 
-```r
+``` r
 t.test(x = capt_crisp$weight, mu = 16, alternative = c("less"), conf.level = 0.95)
 ```
 
@@ -219,7 +219,7 @@ We supply `R` with the data, the hypothesized value of $\mu$, the alternative, a
 Since the test was one-sided, `R` returned a one-sided confidence interval. If instead we wanted a two-sided interval for the mean weight of boxes of *Captain Crisp* cereal we could modify our code.
 
 
-```r
+``` r
 capt_test_results = t.test(capt_crisp$weight, mu = 16,
                            alternative = c("two.sided"), conf.level = 0.95)
 ```
@@ -227,7 +227,7 @@ capt_test_results = t.test(capt_crisp$weight, mu = 16,
 This time we have stored the results. By doing so, we can directly access portions of the output from `t.test()`. To see what information is available we use the `names()` function.
 
 
-```r
+``` r
 names(capt_test_results)
 ```
 
@@ -239,7 +239,7 @@ names(capt_test_results)
 We are interested in the confidence interval which is stored in `conf.int`.
 
 
-```r
+``` r
 capt_test_results$conf.int
 ```
 
@@ -252,7 +252,7 @@ capt_test_results$conf.int
 Let's check this interval "by hand." The one piece of information we are missing is the critical value, $t_{\alpha/2, n-1} = t_{8}(0.025)$, which can be calculated in `R` using the `qt()` function.
 
 
-```r
+``` r
 qt(0.975, df = 8)
 ```
 
@@ -267,7 +267,7 @@ So, the 95\% CI for the mean weight of a cereal box is calculated by plugging in
 \]
 
 
-```r
+``` r
 c(mean(capt_crisp$weight) - qt(0.975, df = 8) * sd(capt_crisp$weight) / sqrt(9),
   mean(capt_crisp$weight) + qt(0.975, df = 8) * sd(capt_crisp$weight) / sqrt(9))
 ```
@@ -303,7 +303,7 @@ where $t_{\alpha/2, n+m-2}$ is the critical value such that $P\left(t>t_{\alpha/
 Assume that the distributions of $X$ and $Y$ are $\mathrm{N}(\mu_{1},\sigma^{2})$ and $\mathrm{N}(\mu_{2},\sigma^{2})$, respectively. Given the $n = 6$ observations of $X$,
 
 
-```r
+``` r
 x = c(70, 82, 78, 74, 94, 82)
 n = length(x)
 ```
@@ -311,7 +311,7 @@ n = length(x)
 and the $m = 8$ observations of $Y$,
 
 
-```r
+``` r
 y = c(64, 72, 60, 76, 72, 80, 84, 68)
 m = length(y)
 ```
@@ -321,7 +321,7 @@ we will test $H_{0}: \mu_{1} = \mu_{2}$ versus $H_{1}: \mu_{1} > \mu_{2}$.
 First, note that we can calculate the sample means and standard deviations.
 
 
-```r
+``` r
 x_bar = mean(x)
 s_x   = sd(x)
 y_bar = mean(y)
@@ -335,7 +335,7 @@ s_{p} = \sqrt{\frac{(n-1)s_{x}^{2}+(m-1)s_{y}^{2}}{n+m-2}}
 \]
 
 
-```r
+``` r
 s_p = sqrt(((n - 1) * s_x ^ 2 + (m - 1) * s_y ^ 2) / (n + m - 2))
 ```
 
@@ -346,7 +346,7 @@ t = \frac{(\bar{x}-\bar{y})-\mu_{0}}{s_{p}\sqrt{\frac{1}{n}+\frac{1}{m}}}.
 \]
 
 
-```r
+``` r
 t = ((x_bar - y_bar) - 0) / (s_p * sqrt(1 / n + 1 / m))
 t
 ```
@@ -362,7 +362,7 @@ P(t_{12} > 1.8233692).
 \]
 
 
-```r
+``` r
 1 - pt(t, df = n + m - 2)
 ```
 
@@ -373,7 +373,7 @@ P(t_{12} > 1.8233692).
 But, then again, we could have simply performed this test in one line of `R`.
 
 
-```r
+``` r
 t.test(x, y, alternative = c("greater"), var.equal = TRUE)
 ```
 
@@ -396,7 +396,7 @@ Recall that a two-sample $t$-test can be done with or without an equal variance 
 Above we carried out the analysis using two vectors `x` and `y`. In general, we will have a preference for using data frames.
 
 
-```r
+``` r
 t_test_data = data.frame(values = c(x, y),
                          group  = c(rep("A", length(x)), rep("B", length(y))))
 ```
@@ -404,7 +404,7 @@ t_test_data = data.frame(values = c(x, y),
 We now have the data stored in a single variables (`values`) and have created a second variable (`group`) which indicates which "sample" the value belongs to.
 
 
-```r
+``` r
 t_test_data
 ```
 
@@ -429,7 +429,7 @@ t_test_data
 Now to perform the test, we still use the `t.test()` function but with the `~` syntax and a `data` argument.
 
 
-```r
+``` r
 t.test(values ~ group, data = t_test_data,
        alternative = c("greater"), var.equal = TRUE)
 ```
@@ -519,7 +519,7 @@ P(0 < D < 2) = P(D < 2) - P(D < 0).
 This can then be calculated using `R` without a need to first standardize, or use a table.
 
 
-```r
+``` r
 pnorm(2, mean = 1, sd = sqrt(0.32)) - pnorm(0, mean = 1, sd = sqrt(0.32))
 ```
 
@@ -538,7 +538,7 @@ Our strategy will be to repeatedly:
 We will repeat the process a large number of times. Then we will use the distribution of the simulated observations of $d_s$ as an estimate for the true distribution of $D$.
 
 
-```r
+``` r
 set.seed(42)
 num_samples = 10000
 differences = rep(0, num_samples)
@@ -549,7 +549,7 @@ Before starting our `for` loop to perform the operation, we set a seed for repro
 By using `set.seed()` we can reproduce the random results of `rnorm()` each time starting from that line. 
 
 
-```r
+``` r
 for (s in 1:num_samples) {
   x1 = rnorm(n = 25, mean = 6, sd = 2)
   x2 = rnorm(n = 25, mean = 5, sd = 2)
@@ -560,7 +560,7 @@ for (s in 1:num_samples) {
 To estimate $P(0 < D < 2)$ we will find the proportion of values of $d_s$ (among the \ensuremath{10^{4}} values of $d_s$ generated) that are between 0 and 2.
 
 
-```r
+``` r
 mean(0 < differences & differences < 2)
 ```
 
@@ -573,7 +573,7 @@ Recall that above we derived the distribution of $D$ to be $N(\mu = 1, \sigma^2 
 If we look at a histogram of the differences, we find that it looks very much like a normal distribution.
 
 
-```r
+``` r
 hist(differences, breaks = 20, 
      main   = "Empirical Distribution of D",
      xlab   = "Simulated Values of D",
@@ -586,7 +586,7 @@ hist(differences, breaks = 20,
 Also the sample mean and variance are very close to what we would expect.
 
 
-```r
+``` r
 mean(differences)
 ```
 
@@ -594,7 +594,7 @@ mean(differences)
 ## [1] 1.001423
 ```
 
-```r
+``` r
 var(differences)
 ```
 
@@ -605,7 +605,7 @@ var(differences)
 We could have also accomplished this task with a single line of more "idiomatic" `R`.
 
 
-```r
+``` r
 set.seed(42)
 diffs = replicate(10000, mean(rnorm(25, 6, 2)) - mean(rnorm(25, 5, 2)))
 ```
@@ -613,7 +613,7 @@ diffs = replicate(10000, mean(rnorm(25, 6, 2)) - mean(rnorm(25, 5, 2)))
 Use `?replicate` to take a look at the documentation for the `replicate` function and see if you can understand how this line performs the same operations that our `for` loop above executed.
 
 
-```r
+``` r
 mean(differences == diffs)
 ```
 
@@ -654,7 +654,7 @@ Also, recall that for a random variable $X$ with finite mean $\mu$ and finite va
 The following verifies this result for a Poisson distribution with $\mu = 10$ and a sample size of $n = 50$.
 
 
-```r
+``` r
 set.seed(1337)
 mu          = 10
 sample_size = 50
@@ -663,14 +663,14 @@ x_bars      = rep(0, samples)
 ```
 
 
-```r
+``` r
 for(i in 1:samples){
   x_bars[i] = mean(rpois(sample_size, lambda = mu))
 }
 ```
 
 
-```r
+``` r
 x_bar_hist = hist(x_bars, breaks = 50, 
                   main = "Histogram of Sample Means",
                   xlab = "Sample Means")
@@ -681,7 +681,7 @@ x_bar_hist = hist(x_bars, breaks = 50,
 Now we will compare sample statistics from the empirical distribution with their known values based on the parent distribution.
 
 
-```r
+``` r
 c(mean(x_bars), mu)
 ```
 
@@ -690,7 +690,7 @@ c(mean(x_bars), mu)
 ```
 
 
-```r
+``` r
 c(var(x_bars), mu / sample_size)
 ```
 
@@ -699,7 +699,7 @@ c(var(x_bars), mu / sample_size)
 ```
 
 
-```r
+``` r
 c(sd(x_bars), sqrt(mu) / sqrt(sample_size))
 ```
 
@@ -710,7 +710,7 @@ c(sd(x_bars), sqrt(mu) / sqrt(sample_size))
 And here, we will calculate the proportion of sample means that are within 2 standard deviations of the population mean.
 
 
-```r
+``` r
 mean(x_bars > mu - 2 * sqrt(mu) / sqrt(sample_size) &
      x_bars < mu + 2 * sqrt(mu) / sqrt(sample_size))
 ```
@@ -722,7 +722,7 @@ mean(x_bars > mu - 2 * sqrt(mu) / sqrt(sample_size) &
 This last histogram uses a bit of a trick to approximately shade the bars that are within two standard deviations of the mean.)
 
 
-```r
+``` r
 shading = ifelse(x_bar_hist$breaks > mu - 2 * sqrt(mu) / sqrt(sample_size) & 
                    x_bar_hist$breaks < mu + 2 * sqrt(mu) / sqrt(sample_size),
                   "darkorange", "dodgerblue")
