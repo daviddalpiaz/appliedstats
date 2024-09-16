@@ -107,6 +107,7 @@ Your name could be here! Suggest an edit! Correct a typo! If you submit a correc
 - [David Newman](https://github.com/djoldman/){target="_blank"}
 - [Yixing Zheng](https://github.com/yixingz3){target="_blank"}
 - [Ossama Sybesma](https://github.com/OssamaSijbesma){target="_blank"}
+- [Shaneal Findley](https://github.com/sfindley899){target="_blank"}
 
 ## License
 
