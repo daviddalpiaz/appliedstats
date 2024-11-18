@@ -1429,7 +1429,10 @@ ex_list$d
 ```
 
 ```
-## function(arg = 42) {print("Hello World!")}
+## function (arg = 42) 
+## {
+##     print("Hello World!")
+## }
 ```
 
 ``` r
@@ -1949,8 +1952,8 @@ To test our function, we will take a random sample of size `n = 10` from a norma
 ```
 
 ```
-##  [1]  5.5588628 10.3876969  6.4513614 11.3077184 -4.2592033 -0.7962697
-##  [7] -0.3575199 -0.3326412 -1.7829676  7.7160442
+##  [1] -3.298803 -2.184287  6.856264  0.640245  3.919706 -3.628988  1.998146
+##  [8]  4.252494 -1.076952  6.303846
 ```
 
 ``` r
@@ -1958,8 +1961,8 @@ standardize(x = test_sample)
 ```
 
 ```
-##  [1]  0.3923835  1.2657218  0.5538000  1.4321160 -1.3833024 -0.7569996
-##  [7] -0.6776477 -0.6731482 -0.9354528  0.7825293
+##  [1] -1.2049749 -0.9178308  1.4113772 -0.1901183  0.6548021 -1.2900438
+##  [7]  0.1597315  0.7405417 -0.6325369  1.2690523
 ```
 
 This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.
@@ -2061,7 +2064,7 @@ get_var(test_sample)
 ```
 
 ```
-## [1] 30.5717
+## [1] 15.06514
 ```
 
 ``` r
@@ -2069,7 +2072,7 @@ get_var(test_sample, biased = FALSE)
 ```
 
 ```
-## [1] 30.5717
+## [1] 15.06514
 ```
 
 ``` r
@@ -2077,7 +2080,7 @@ var(test_sample)
 ```
 
 ```
-## [1] 30.5717
+## [1] 15.06514
 ```
 
 We see the function is working as expected, and when returning the unbiased estimate it matches `R`'s built-in function `var()`. Finally, let's examine the biased estimate of $\sigma^2$.
@@ -2088,7 +2091,7 @@ get_var(test_sample, biased = TRUE)
 ```
 
 ```
-## [1] 27.51453
+## [1] 13.55863
 ```
 
 

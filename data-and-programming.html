@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Data and Programming | Applied Statistics with R</title>
   <meta name="description" content="Chapter 3 Data and Programming | Applied Statistics with R" />
-  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Data and Programming | Applied Statistics with R" />
   <meta property="og:type" content="book" />
@@ -1132,7 +1132,10 @@ X^\top X
 ## [4,]    0    0    0    1    0
 ## [5,]    0    0    0    0    1</code></pre>
 <div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="data-and-programming.html#cb249-1" tabindex="-1"></a>ex_list<span class="sc">$</span>d</span></code></pre></div>
-<pre><code>## function(arg = 42) {print(&quot;Hello World!&quot;)}</code></pre>
+<pre><code>## function (arg = 42) 
+## {
+##     print(&quot;Hello World!&quot;)
+## }</code></pre>
 <div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="data-and-programming.html#cb251-1" tabindex="-1"></a>ex_list<span class="sc">$</span><span class="fu">d</span>(<span class="at">arg =</span> <span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Hello World!&quot;</code></pre>
 </div>
@@ -1400,11 +1403,11 @@ X^\top X
 <p>Here the name of the function is <code>standardize</code>, and the function has a single argument <code>x</code> which is used in the body of function. Note that the output of the final line of the body is what is returned by the function. In this case the function returns the vector stored in the variable <code>result</code>.</p>
 <p>To test our function, we will take a random sample of size <code>n = 10</code> from a normal distribution with a mean of <code>2</code> and a standard deviation of <code>5</code>.</p>
 <div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="data-and-programming.html#cb312-1" tabindex="-1"></a>(<span class="at">test_sample =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">5</span>))</span></code></pre></div>
-<pre><code>##  [1]  4.3739701  7.8123334  0.8049539  9.0578998  4.6352177 -7.5363113
-##  [7] -2.3655660 -7.7944228  6.2973004  4.0238428</code></pre>
+<pre><code>##  [1] 10.458578  2.930041 -1.665755  2.234228 -1.022909  2.326216 -6.044460
+##  [8]  3.662433  2.423046 -7.319337</code></pre>
 <div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="data-and-programming.html#cb314-1" tabindex="-1"></a><span class="fu">standardize</span>(<span class="at">x =</span> test_sample)</span></code></pre></div>
-<pre><code>##  [1]  0.4058923  0.9771480 -0.1870703  1.1840886  0.4492965 -1.5729027
-##  [7] -0.7138260 -1.6157858  0.7254378  0.3477216</code></pre>
+<pre><code>##  [1]  1.8896649  0.4170079 -0.4819758  0.2808999 -0.3562287  0.2988936
+##  [7] -1.3384942  0.5602709  0.3178345 -1.5878730</code></pre>
 <p>This function could be written much more succinctly, simply performing all the operations on one line and immediately returning the result, without storing any of the intermediate results.</p>
 <div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="data-and-programming.html#cb316-1" tabindex="-1"></a>standardize <span class="ot">=</span> <span class="cf">function</span>(x) {</span>
 <span id="cb316-2"><a href="data-and-programming.html#cb316-2" tabindex="-1"></a>  (x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">/</span> <span class="fu">sd</span>(x)</span>
@@ -1441,14 +1444,14 @@ s^2 = \frac{1}{n - 1}\sum_{i=1}^{n}(x - \bar{x})^2
 <span id="cb329-3"><a href="data-and-programming.html#cb329-3" tabindex="-1"></a>  (<span class="dv">1</span> <span class="sc">/</span> n) <span class="sc">*</span> <span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">^</span> <span class="dv">2</span>)</span>
 <span id="cb329-4"><a href="data-and-programming.html#cb329-4" tabindex="-1"></a>}</span></code></pre></div>
 <div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="data-and-programming.html#cb330-1" tabindex="-1"></a><span class="fu">get_var</span>(test_sample)</span></code></pre></div>
-<pre><code>## [1] 36.22784</code></pre>
+<pre><code>## [1] 26.13473</code></pre>
 <div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="data-and-programming.html#cb332-1" tabindex="-1"></a><span class="fu">get_var</span>(test_sample, <span class="at">biased =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## [1] 36.22784</code></pre>
+<pre><code>## [1] 26.13473</code></pre>
 <div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="data-and-programming.html#cb334-1" tabindex="-1"></a><span class="fu">var</span>(test_sample)</span></code></pre></div>
-<pre><code>## [1] 36.22784</code></pre>
+<pre><code>## [1] 26.13473</code></pre>
 <p>We see the function is working as expected, and when returning the unbiased estimate it matches <code>R</code>’s built-in function <code>var()</code>. Finally, let’s examine the biased estimate of <span class="math inline">\(\sigma^2\)</span>.</p>
 <div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="data-and-programming.html#cb336-1" tabindex="-1"></a><span class="fu">get_var</span>(test_sample, <span class="at">biased =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>## [1] 32.60505</code></pre>
+<pre><code>## [1] 23.52125</code></pre>
 
 </div>
 </div>
